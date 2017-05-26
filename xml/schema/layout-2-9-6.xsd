@@ -9,8 +9,8 @@
 <!-- Attributes need to get types right esp. for enumerated           -->
 <!-- Attributes need REQUIRED/IMPLIED                                 -->
 
-<!-- 
-Top Level Elements not brought over from DTD 
+<!--
+Top Level Elements not brought over from DTD
 
 securityelements - thought to be obsolete
 aspectgenerator - thought to be obsolete
@@ -41,7 +41,7 @@ signals - obsolete, EMPTY, never used
           both the panels themselves and configuration information.
           <p/>
           This version of the schema is for files created by JMRI
-          version 2.9.6 and later.  
+          version 2.9.6 and later.
           Version 4.7.1 is the current development version.
         </xs:documentation>
         <xs:appinfo>
@@ -152,7 +152,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="wrapstyle" type="xs:integer" />
             </xs:complexType>
         </xs:element>
-        
+
         <xs:element name="fileLocations" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:documentation>
@@ -178,7 +178,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="defaultThrottleLocation" type="xs:string"/>
             </xs:complexType>
         </xs:element>
-        
+
         <xs:element name="managerdefaults" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
             <xs:documentation>
@@ -242,7 +242,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
             </xs:complexType>
         </xs:element>
-      
+
         <xs:element name="roster" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:documentation>
@@ -258,7 +258,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="ownerDefault" type="xs:string" />
             </xs:complexType>
         </xs:element>
-      
+
         <xs:element name="perform" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:documentation>
@@ -288,20 +288,20 @@ signals - obsolete, EMPTY, never used
 
         <xs:element name="connection"   type="ConnectionType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="UserMessagePreferences"   type="UserPrefsType" minOccurs="0" maxOccurs="unbounded" />
-        
+
         <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensors"      type="SensorManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="lights"       type="LightManagerType" minOccurs="0" maxOccurs="unbounded" >
           <xs:key name="lightSystemName">
             <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./light"/> 
-            <xs:field xpath="@systemName"/>           
+            <xs:selector xpath="./light/systemName"/>
+            <xs:field xpath="."/>
           </xs:key>
           <xs:unique name="lightUserName">
             <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./light"/> 
-            <xs:field xpath="@userName"/>           
+            <xs:selector xpath="./light/userName"/>
+            <xs:field xpath="."/>
           </xs:unique>
         </xs:element>
 
@@ -322,13 +322,13 @@ signals - obsolete, EMPTY, never used
         <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded">
           <xs:key name="signalMastSystemName">
             <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./signalmast/systemName | ./turnoutsignalmast/systemName "/> 
-            <xs:field xpath="."/>           
+            <xs:selector xpath="./signalmast/systemName | ./turnoutsignalmast/systemName "/>
+            <xs:field xpath="."/>
           </xs:key>
           <xs:unique name="signalMastUserName">
             <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./signalmast/userName | ./turnoutsignalmast/userName"/> 
-            <xs:field xpath="."/>           
+            <xs:selector xpath="./signalmast/userName | ./turnoutsignalmast/userName"/>
+            <xs:field xpath="."/>
           </xs:unique>
         </xs:element>
 
@@ -338,8 +338,8 @@ signals - obsolete, EMPTY, never used
         <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded">
           <xs:key name="signalElementName">
             <xs:annotation><xs:documentation>Insist that at most one appear for each signal</xs:documentation></xs:annotation>
-            <xs:selector xpath="./signalelement"/> 
-            <xs:field xpath="@signal"/>           
+            <xs:selector xpath="./signalelement"/>
+            <xs:field xpath="@signal"/>
           </xs:key>
         </xs:element>
 
@@ -355,27 +355,27 @@ signals - obsolete, EMPTY, never used
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
             <xs:key name="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>
-              <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable|./layoutturnout"/> 
+              <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable|./layoutturnout"/>
                 <!-- elements like sensoricon, memoryicon dont have ident attributes; standardization would have been better -->
-            <xs:field xpath="@ident"/>           
+            <xs:field xpath="@ident"/>
             </xs:key>
-            
-            <xs:keyref name="trackSegmentConnect1NameValueExists" refer="layoutEditorElementIdent"> 
+
+            <xs:keyref name="trackSegmentConnect1NameValueExists" refer="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each tracksegment connection1name attribute value refer to an existing ident</xs:documentation></xs:annotation>
-              <xs:selector xpath="tracksegment"/> 
-              <xs:field xpath="@connect1name"/> 
-            </xs:keyref> 
-            <xs:keyref name="trackSegmentConnect2NameValueExists" refer="layoutEditorElementIdent"> 
+              <xs:selector xpath="tracksegment"/>
+              <xs:field xpath="@connect1name"/>
+            </xs:keyref>
+            <xs:keyref name="trackSegmentConnect2NameValueExists" refer="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each tracksegment connection2name attribute value refer to an existing ident</xs:documentation></xs:annotation>
-              <xs:selector xpath="tracksegment"/> 
-              <xs:field xpath="@connect2name"/> 
-            </xs:keyref> 
+              <xs:selector xpath="tracksegment"/>
+              <xs:field xpath="@connect2name"/>
+            </xs:keyref>
         </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 
-        
+
       </xs:sequence>
     </xs:complexType>
 
@@ -384,79 +384,79 @@ signals - obsolete, EMPTY, never used
     <!-- As a general rule, we do not check deprecated content -->
     <!-- such as the userName and systemName attributes which -->
     <!-- were deprecated when replaced by elements in JMRI 2.9.6 -->
-    
+
     <!-- It would be nice to structure these by e.g. putting them in -->
     <!-- different files, but XInclude doesn't work inside XML Schema -->
     <!-- at present. To get cross-referencing right, the cross-checks -->
     <!-- need to be defined in the layout config top level element, -->
     <!-- e.g. here.  The more specific checks could perhaps be moved -->
     <!-- inside the relevant manager type definition later on, though. -->
-    
+
       <xs:key name="turnoutSystemName">
         <xs:annotation><xs:documentation>Insist that each turnout system name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./turnouts/turnout/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./turnouts/turnout/systemName"/>
+        <xs:field xpath="."/>
       </xs:key>
       <xs:unique name="turnoutUserName">
         <xs:annotation><xs:documentation>Insist that each turnout user name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./turnouts/turnout/userName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./turnouts/turnout/userName"/>
+        <xs:field xpath="."/>
       </xs:unique>
       <xs:key name="turnoutName">
         <xs:annotation><xs:documentation>Insist that all turnout user and system names are unique</xs:documentation></xs:annotation>
         <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
              workaround this by merely duplicating the turnoutSystemName constraints
-        <xs:selector xpath="./turnouts/turnout/systemName | ./turnouts/turnout/userName"/> 
+        <xs:selector xpath="./turnouts/turnout/systemName | ./turnouts/turnout/userName"/>
         -->
-        <xs:selector xpath="./turnouts/turnout/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./turnouts/turnout/systemName"/>
+        <xs:field xpath="."/>
       </xs:key>
 
       <xs:key name="sensorSystemName">
         <xs:annotation><xs:documentation>Insist that each sensor system name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./sensors/sensor/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./sensors/sensor/systemName"/>
+        <xs:field xpath="."/>
       </xs:key>
       <xs:unique name="sensorUserName">
         <xs:annotation><xs:documentation>Insist that each sensor user name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./sensors/sensor/userName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./sensors/sensor/userName"/>
+        <xs:field xpath="."/>
       </xs:unique>
       <xs:unique name="sensorName">
         <xs:annotation><xs:documentation>Insist that all sensor user and system names are unique</xs:documentation></xs:annotation>
         <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
              workaround this by merely duplicating the sensorSystemName constraints
-        <xs:selector xpath="./sensors/sensor/systemName | ./sensors/sensor/userName "/> 
+        <xs:selector xpath="./sensors/sensor/systemName | ./sensors/sensor/userName "/>
         -->
-        <xs:selector xpath="./sensors/sensor/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./sensors/sensor/systemName"/>
+        <xs:field xpath="."/>
       </xs:unique>
 
       <xs:key name="signalHeadSystemName">
         <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./signalheads/signalhead/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./signalheads/signalhead/systemName"/>
+        <xs:field xpath="."/>
       </xs:key>
       <xs:unique name="signalHeadUserName">
         <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
-        <xs:selector xpath="./signalheads/signalhead/userName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./signalheads/signalhead/userName"/>
+        <xs:field xpath="."/>
       </xs:unique>
       <xs:unique name="signalHeadName">
         <xs:annotation><xs:documentation>Insist that all user and system names are unique</xs:documentation></xs:annotation>
         <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
              workaround this by merely duplicating the signalHeadSystemName constraints
-        <xs:selector xpath="./signalheads/signalhead/systemName | ./signalheads/signalhead/userName "/> 
+        <xs:selector xpath="./signalheads/signalhead/systemName | ./signalheads/signalhead/userName "/>
         -->
-        <xs:selector xpath="./signalheads/signalhead/systemName"/> 
-        <xs:field xpath="."/>           
+        <xs:selector xpath="./signalheads/signalhead/systemName"/>
+        <xs:field xpath="."/>
       </xs:unique>
 
       <!-- depends on turnout user names being unique from turnout system names
       <xs:keyref name="signalElementTurnoutPresent" refer="turnoutName">
         <xs:annotation><xs:documentation>Insist that watchedturnout be defined in signalelement</xs:documentation></xs:annotation>
-        <xs:selector xpath="./signalelements/signalelement"/> 
-        <xs:field xpath="@watchedturnout"/>           
+        <xs:selector xpath="./signalelements/signalelement"/>
+        <xs:field xpath="@watchedturnout"/>
       </xs:keyref>
       -->
 

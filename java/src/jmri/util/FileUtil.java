@@ -53,11 +53,10 @@ public final class FileUtil {
     static public final char SEPARATOR = '/'; // NOI18N
 
     /**
-     * The types of locations to use when falling back on default locations in {@link #findURL(java.lang.String, java.lang.String...)
-     * }.
+     * The types of locations to use when falling back on default locations in
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      */
     static public enum Location {
-
         INSTALLED, USER, ALL, NONE
     }
 
@@ -583,13 +582,16 @@ public final class FileUtil {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
-     * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link #PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link #PROFILE} directory</li></ol>
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to

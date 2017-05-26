@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
 public class FileUtilSupport extends Bean {
 
     /* User's home directory */
-    private static final String homePath = System.getProperty("user.home") + File.separator; // NOI18N
+    private static final String HOME_PATH = System.getProperty("user.home") + File.separator; // NOI18N
     /*
      * Settable directories
      */
@@ -486,7 +486,7 @@ public class FileUtilSupport extends Bean {
      * @return User's home directory as a String
      */
     public String getHomePath() {
-        return homePath;
+        return HOME_PATH;
     }
 
     /**
@@ -760,7 +760,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the URL of a portable filename if it can be located using
-     * {@link #findURL(java.lang.String)}
+     * {@link #findURI(java.lang.String)}
      *
      * @param path the path to find
      * @return URL of portable or absolute path
@@ -793,17 +793,18 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.io.InputStream} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...) }.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      * No limits are placed on search locations.
      *
      * @param path The relative path of the file or resource
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String, java.lang.String...)
-     * @see #findInputStream(java.lang.String, jmri.util.Location,
+     * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      * @see #findURL(java.lang.String)
      * @see #findURL(java.lang.String, java.lang.String...)
-     * @see #findURL(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public InputStream findInputStream(String path) {
         return this.findInputStream(path, new String[]{});
@@ -812,14 +813,14 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.io.InputStream} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...) }.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      * No limits are placed on search locations.
      *
      * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String)
-     * @see #findInputStream(java.lang.String, jmri.util.Location,
+     * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
     public InputStream findInputStream(String path, @Nonnull String... searchPaths) {
@@ -829,13 +830,13 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.io.InputStream} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...) }.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      *
      * @param path      The relative path of the file or resource
      * @param locations The type of locations to limit the search to
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String)
-     * @see #findInputStream(java.lang.String, jmri.util.Location,
+     * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
     public InputStream findInputStream(String path, Location locations) {
@@ -845,7 +846,7 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.io.InputStream} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...) }.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      *
      * @param path        The relative path of the file or resource
      * @param locations   The type of locations to limit the search to
@@ -869,14 +870,15 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URI} for that file. Search order is defined by
-     * {@link #findURI(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
      *
      * @param path The relative path of the file or resource.
      * @return The URI or null.
      * @see #findURI(java.lang.String, java.lang.String...)
-     * @see #findURI(java.lang.String, jmri.util.Location)
-     * @see #findURI(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URI findURI(String path) {
         return this.findURI(path, new String[]{});
@@ -885,20 +887,21 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URI} for that file. Search order is defined by
-     * {@link #findURI(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
      *
      * Note that if the file for path is not found in one of the searchPaths,
      * all standard locations are also be searched through to find the file. If
      * you need to limit the locations where the file can be found use
-     * {@link #findURI(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      *
      * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return The URI or null
      * @see #findURI(java.lang.String)
-     * @see #findURI(java.lang.String, jmri.util.Location)
-     * @see #findURI(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URI findURI(String path, @Nonnull String... searchPaths) {
         return this.findURI(path, Location.ALL, searchPaths);
@@ -907,14 +910,15 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URI} for that file. Search order is defined by
-     * {@link #findURI(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      *
      * @param path      The relative path of the file or resource
      * @param locations The types of locations to limit the search to
      * @return The URI or null
      * @see #findURI(java.lang.String)
      * @see #findURI(java.lang.String, java.lang.String...)
-     * @see #findURI(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URI findURI(String path, Location locations) {
         return this.findURI(path, locations, new String[]{});
@@ -942,20 +946,23 @@ public class FileUtilSupport extends Bean {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
-     * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link FileUtil#PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link FileUtil#PROFILE} directory</li></ol>
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
      * @param searchPaths a list of paths to search for the path in
      * @return The URI or null
      * @see #findURI(java.lang.String)
-     * @see #findURI(java.lang.String, jmri.util.Location)
+     * @see #findURI(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURI(java.lang.String, java.lang.String...)
      */
     public URI findURI(String path, Location locations, @Nonnull String... searchPaths) {
@@ -979,7 +986,17 @@ public class FileUtilSupport extends Bean {
         File file;
         if (locations == Location.ALL || locations == Location.USER) {
             // attempt to return path from preferences directory
-            file = new File(this.getUserFilesPath() + path);
+            file = new File(this.getUserFilesPath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+            // attempt to return path from profile directory
+            file = new File(this.getProfilePath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+            // attempt to return path from preferences directory
+            file = new File(this.getPreferencesPath(), path);
             if (file.exists()) {
                 return file.toURI();
             }
@@ -1027,14 +1044,15 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URL} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
      *
      * @param path The relative path of the file or resource.
      * @return The URL or null.
      * @see #findURL(java.lang.String, java.lang.String...)
-     * @see #findURL(java.lang.String, jmri.util.Location)
-     * @see #findURL(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URL findURL(String path) {
         return this.findURL(path, new String[]{});
@@ -1043,15 +1061,16 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URL} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
      *
      * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return The URL or null
      * @see #findURL(java.lang.String)
-     * @see #findURL(java.lang.String, jmri.util.Location)
-     * @see #findURL(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URL findURL(String path, @Nonnull String... searchPaths) {
         return this.findURL(path, Location.ALL, searchPaths);
@@ -1060,14 +1079,15 @@ public class FileUtilSupport extends Bean {
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URL} for that file. Search order is defined by
-     * {@link #findURL(java.lang.String, jmri.util.Location, java.lang.String...)}.
+     * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      *
      * @param path      The relative path of the file or resource
      * @param locations The types of locations to limit the search to
      * @return The URL or null
      * @see #findURL(java.lang.String)
      * @see #findURL(java.lang.String, java.lang.String...)
-     * @see #findURL(java.lang.String, jmri.util.Location, java.lang.String...)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
+     * java.lang.String...)
      */
     public URL findURL(String path, Location locations) {
         return this.findURL(path, locations, new String[]{});
@@ -1103,7 +1123,7 @@ public class FileUtilSupport extends Bean {
      * @param searchPaths a list of paths to search for the path in
      * @return The URL or null
      * @see #findURL(java.lang.String)
-     * @see #findURL(java.lang.String, jmri.util.Location)
+     * @see #findURL(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURL(java.lang.String, java.lang.String...)
      */
     public URL findURL(String path, Location locations, @Nonnull String... searchPaths) {

@@ -73,6 +73,8 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
+
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();

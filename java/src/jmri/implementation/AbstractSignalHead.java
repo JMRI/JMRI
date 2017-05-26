@@ -12,7 +12,7 @@ import jmri.Turnout;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
-        implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
+        implements SignalHead, java.beans.VetoableChangeListener {
 
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);

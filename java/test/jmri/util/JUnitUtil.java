@@ -1,6 +1,8 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -531,6 +533,26 @@ public class JUnitUtil {
      */
     public static void setGUITestOutput(TestOut output) {
         org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
+    }
+
+    public static void resetWindows(boolean logWindow) {
+        // close any open remaining windows from earlier tests
+        for (Frame frame : Frame.getFrames()) {
+            if (frame.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
+                }
+                ThreadingUtil.runOnGUI( () -> { frame.dispose(); } );
+            }
+        }
+        for (Window window : Window.getWindows()) {
+            if (window.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
+                }
+                ThreadingUtil.runOnGUI( () -> { window.dispose(); } );
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

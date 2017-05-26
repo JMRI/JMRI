@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
-        implements Logix, java.io.Serializable {
+        implements Logix {
 
     public DefaultLogix(String systemName, String userName) {
         super(systemName, userName);
@@ -310,6 +310,13 @@ public class DefaultLogix extends AbstractNamedBean
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
             String cName = _conditionalSystemNames.get(i);
             Conditional conditional = getConditional(cName);
+            if (conditional == null) {
+                // A Logix index entry exists without a corresponding conditional.  This
+                // should never happen.
+                log.error("setGuiNames: Missing conditional for Logix index entry,  Logix name = '{}', Conditional index name = '{}'",
+                    getSystemName(), cName);
+                continue;
+            }
             ArrayList<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
             boolean isDirty = false;
             for (ConditionalVariable var : varList) {
@@ -320,7 +327,7 @@ public class DefaultLogix extends AbstractNamedBean
                     if (cRef != null) {
                         // re-arrange names as needed
                         var.setName(cRef.getSystemName());      // The state variable reference is now a conditional system name
-                        if (cRef.getUserName() == null || cRef.getUserName().equals("")) {
+                        if (cRef.getUserName() == null || cRef.getUserName().length() < 1) {
                             var.setGuiName(cRef.getSystemName());
                         } else {
                             var.setGuiName(cRef.getUserName());
@@ -328,6 +335,9 @@ public class DefaultLogix extends AbstractNamedBean
                         // Add the conditional reference to the where used map
                         InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(var.getName(), cName);
                         isDirty = true;
+                    } else {
+                        log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced conditional, '{}',  does not exist",
+                             cName, getSystemName(), var.getName());
                     }
                 }
             }
@@ -440,7 +450,9 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_ENTRYEXIT;
                             break;
                         default:
-                            log.warn("Unhandled conditional variable type: {}", varType);
+                            if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
+                                log.warn("Unhandled conditional variable type: {}", varType);
+                            }
                             break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);

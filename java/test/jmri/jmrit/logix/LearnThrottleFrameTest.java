@@ -1,14 +1,13 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -21,6 +20,7 @@ public class LearnThrottleFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

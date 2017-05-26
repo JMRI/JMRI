@@ -355,10 +355,11 @@ public class Setup {
     }
 
     public static void setAutoSaveEnabled(boolean enabled) {
-        boolean old = getDefault().autoSave;
         getDefault().autoSave = enabled;
-        if (!old && enabled) {
-            new AutoSave();
+        if (enabled) {
+            new AutoSave().start();
+        } else {
+            new AutoSave().stop();
         }
     }
 

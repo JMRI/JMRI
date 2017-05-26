@@ -138,5 +138,6 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadTest.class.getName());
+
+    //static protected Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadTest.class.getName());
 }

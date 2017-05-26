@@ -5,8 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,7 +14,6 @@ public class SerialLightTest {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = null;
 
     @Test
     public void test2ParamCTor() {
@@ -39,7 +36,7 @@ public class SerialLightTest {
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
-        n = new SerialNode(0, SerialNode.SMINI,tcis);
+        new SerialNode(0, SerialNode.SMINI,tcis);
     }
 
     @After
@@ -47,7 +44,5 @@ public class SerialLightTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
 
 }

@@ -1,9 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.fourth;
-import static jmri.util.MathUtil.midpoint;
-import static jmri.util.MathUtil.third;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -43,6 +39,7 @@ import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAc
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,13 +154,12 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
     protected LayoutBlock block = null;
     protected LayoutBlock blockB = null;  // Xover - second block, if there is one
-    protected LayoutBlock blockC = null;  // Xover - third block, if there is one
-    protected LayoutBlock blockD = null;  // Xover - fourth block, if there is one
+    protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
+    protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
     protected LayoutEditor layoutEditor = null;
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
-    public String ident;   // name of this layout turnout (hidden from user)
     public String turnoutName = "";   // should be the name (system or user) of
     //  an existing physical turnout
     public String secondTurnoutName = "";
@@ -175,8 +171,8 @@ public class LayoutTurnout extends LayoutTrack {
 
     public String blockName = "";  // name for block, if there is one
     public String blockBName = "";  // Xover/slip - name for second block, if there is one
-    public String blockCName = "";  // Xover/slip - name for third block, if there is one
-    public String blockDName = "";  // Xover/slip - name for fourth block, if there is one
+    public String blockCName = "";  // Xover/slip - name for oneThirdPoint block, if there is one
+    public String blockDName = "";  // Xover/slip - name for oneFourthPoint block, if there is one
 
     //public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
     //public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
@@ -361,7 +357,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected void rotateCoords(double rotDEG) {
         // rotate coordinates
-        double rotRAD = rotDEG * Math.PI / 180.0;
+        double rotRAD = Math.toRadians(rotDEG);
         double sineRot = Math.sin(rotRAD);
         double cosineRot = Math.cos(rotRAD);
 
@@ -380,17 +376,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    @Override
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
-    }
-
     /**
      * Accessor methods
      */
@@ -400,10 +385,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setVersion(int v) {
         version = v;
-    }
-
-    public String getName() {
-        return ident;
     }
 
     public boolean useBlockSpeed() {
@@ -1272,6 +1253,51 @@ public class LayoutTurnout extends LayoutTrack {
         return new Point2D.Double(x, y);
     }
 
+    /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case TURNOUT_CENTER:
+                break;
+            case TURNOUT_A:
+                result = getCoordsA();
+                break;
+            case TURNOUT_B:
+                result = getCoordsB();
+                break;
+            case TURNOUT_C:
+                result = getCoordsC();
+                break;
+            case TURNOUT_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this turnout
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            result.add(getCoordsD());
+        }
+        return result;
+    }
+
     // updates connectivity for blocks assigned to this turnout and connected track segments
     private void updateBlockInfo() {
         LayoutBlock bA = null;
@@ -1570,29 +1596,113 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * return the connection type for a point
-     *
+     * @param p the point
+     * @param useRectangles use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return value representing the point connection type
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (useRectangles) {
-            // calculate turnout's control rectangle
-            Rectangle2D r = layoutEditor.turnoutCircleRectAt(getCoordsCenter());
-            if (r.contains(p)) {
-                //point is in this turnout's control rectangle
-                result = TURNOUT_CENTER;
+            // calculate points control rectangle
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+
+            if (!requireUnconnected) {
+                if (r.contains(center)) {
+                    result = LayoutTrack.TURNOUT_CENTER;
+                }
+            }
+            //check the A connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    if (r.contains(getCoordsA())) {
+                        result = LayoutTrack.TURNOUT_A;
+                    }
+                }
+            }
+
+            //check the B connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    if (r.contains(getCoordsB())) {
+                        result = LayoutTrack.TURNOUT_B;
+                    }
+                }
+            }
+
+            //check the C connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectC() == null)) {
+                    if (r.contains(getCoordsC())) {
+                        result = LayoutTrack.TURNOUT_C;
+                    }
+                }
+            }
+
+            //check the D connection point
+            if (NONE == result) {
+                if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+                    if (!requireUnconnected || (getConnectD() == null)) {
+                        if (r.contains(getCoordsD())) {
+                            result = LayoutTrack.TURNOUT_D;
+                        }
+                    }
+                }
             }
         } else {
-            // calculate the distance to the center point of this turnout
-            Double distance = p.distance(getCoordsCenter());
-
             // calculate radius of turnout control circle
-            // note: 3 is layoutEditor.SIZE (not public)
-            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
-            if (distance <= circleRadius) {
-                // point is in this turnout's control circle
-                result = TURNOUT_CENTER;
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+
+            if (!requireUnconnected) {
+                // calculate the distance to the center point of this turnout
+                Double distance = p.distance(getCoordsCenter());
+                if (distance <= circleRadius) {
+                    result = TURNOUT_CENTER;
+                }
+            }
+
+            //check the A connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    Double distance = p.distance(getCoordsA());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_A;
+                    }
+                }
+            }
+
+            //check the B connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    Double distance = p.distance(getCoordsB());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_B;
+                    }
+                }
+            }
+
+            //check the C connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectC() == null)) {
+                    Double distance = p.distance(getCoordsC());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_C;
+                    }
+                }
+            }
+
+            //check the D connection point
+            if (NONE == result) {
+                if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+                    if (!requireUnconnected || (getConnectD() == null)) {
+                        Double distance = p.distance(getCoordsD());
+                        if (distance <= circleRadius) {
+                            result = LayoutTrack.TURNOUT_D;
+                        }
+                    }
+                }
             }
         }
         return result;
@@ -2034,34 +2144,72 @@ public class LayoutTurnout extends LayoutTrack {
             popup = new JPopupMenu();
         }
         if (editable) {
+            JMenuItem jmi = null;
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    popup.add(Bundle.getMessage("RightTurnout"));
+                    jmi = popup.add(Bundle.getMessage("RightTurnout"));
                     break;
                 case LH_TURNOUT:
-                    popup.add(Bundle.getMessage("LeftTurnout"));
+                    jmi = popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
                 case WYE_TURNOUT:
-                    popup.add(rb.getString("WYETurnout"));
+                    jmi = popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    popup.add(rb.getString("DoubleCrossOver"));
+                    jmi = popup.add(rb.getString("DoubleCrossOver"));
                     break;
                 case RH_XOVER:
-                    popup.add(Bundle.getMessage("RightCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
                 case LH_XOVER:
-                    popup.add(Bundle.getMessage("LeftCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
                     break;
             }
-            popup.add(ident);
+            jmi.setEnabled(false);
+
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
             if (getTurnout() == null) {
-                popup.add(rb.getString("NoTurnout"));
+                jmi = popup.add(rb.getString("NoTurnout"));
             } else {
-                popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
+            jmi.setEnabled(false);
+
+            if (blockName.equals("")) {
+                jmi = popup.add(rb.getString("NoBlock"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            }
+            jmi.setEnabled(false);
+
+            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+                // check if extra blocks have been entered
+                if (blockB != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
+                    jmi.setEnabled(false);
+                }
+                if (blockC != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
+                    jmi.setEnabled(false);
+                }
+                if (blockD != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
+                    jmi.setEnabled(false);
+                }
+            }
+            if (hidden) {
+                jmi = popup.add(rb.getString("Hidden"));
+            } else {
+                jmi = popup.add(rb.getString("NotHidden"));
+            }
+            jmi.setEnabled(false);
+
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
                     && (connectC == null) && (connectD == null)) {
@@ -2114,29 +2262,7 @@ public class LayoutTurnout extends LayoutTrack {
             disableWhenOccupiedItem.addActionListener((java.awt.event.ActionEvent e3) -> {
                 disableWhenOccupied = disableWhenOccupiedItem.isSelected();
             });
-            if (blockName.equals("")) {
-                popup.add(rb.getString("NoBlock"));
-            } else {
-                popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
-            }
-            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-                // check if extra blocks have been entered
-                if (blockB != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
-                }
-                if (blockC != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
-                }
-                if (blockD != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
-                }
-            }
-            if (hidden) {
-                popup.add(rb.getString("Hidden"));
-            } else {
-                popup.add(rb.getString("NotHidden"));
-            }
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -3307,8 +3433,12 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void draw(Graphics2D g2) {
+    /**
+     * draw this turnout
+     * @param g2 the graphics port to draw to
+     */
 
+    public void draw(Graphics2D g2) {
         Turnout to = getTurnout();
 
         Point2D pointA = getCoordsA();
@@ -3328,9 +3458,9 @@ public class LayoutTurnout extends LayoutTrack {
             if (to == null) {
                 // no physical turnout linked - draw A corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointC)));
 
                 // change block if needed
                 b = getLayoutBlockB();
@@ -3341,9 +3471,9 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw B corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointA, pointB)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
-                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointD)));
                 // change block if needed
                 b = getLayoutBlockC();
                 if (b != null) {
@@ -3353,9 +3483,9 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw C corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
-                g2.draw(new Line2D.Double(pointC, midpoint(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointA, pointC)));
                 // change block if needed
                 b = getLayoutBlockD();
                 if (b != null) {
@@ -3365,9 +3495,9 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw D corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointC, pointD)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
-                g2.draw(new Line2D.Double(pointD, midpoint(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointB, pointD)));
             } else {
                 int state = Turnout.CLOSED;
                 if (layoutEditor.isAnimating()) {
@@ -3376,12 +3506,12 @@ public class LayoutTurnout extends LayoutTrack {
                 if (state == Turnout.CLOSED) {
                     // continuing path - not crossed over
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockTrackColor());
                     }
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointC)));
 
                     b = getLayoutBlockB();
                     if (b != null) {
@@ -3390,12 +3520,12 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointA, pointB)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockTrackColor());
                     }
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointD)));
 
                     b = getLayoutBlockC();
                     if (b != null) {
@@ -3404,12 +3534,12 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockTrackColor());
                     }
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointA)));
 
                     b = getLayoutBlockD();
                     if (b != null) {
@@ -3418,19 +3548,19 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointC, pointD)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockTrackColor());
                     }
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointB)));
                 } else if (state == Turnout.THROWN) {
                     // diverting (crossed) path
                     if (b != null) {
                         g2.setColor(b.getBlockTrackColor());
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointB)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3444,7 +3574,7 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointA)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointA)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3459,7 +3589,7 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointD)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3474,7 +3604,7 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointC)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointC)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3483,9 +3613,9 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     // unknown or inconsistent
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointB)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointC)));
                     b = getLayoutBlockB();
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3493,9 +3623,9 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointA)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointA)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointD)));
                     b = getLayoutBlockC();
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3503,9 +3633,9 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointD)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointA)));
                     b = getLayoutBlockD();
                     if (b != null) {
                         g2.setColor(b.getBlockColor());
@@ -3513,9 +3643,9 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointC)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointC)));
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointB)));
                 }
             }
         } else if ((type == RH_XOVER)
@@ -3524,10 +3654,10 @@ public class LayoutTurnout extends LayoutTrack {
             if (to == null) {
                 // no physical turnout linked - draw A corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                 if (type == RH_XOVER) {
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
                 }
                 // change block if needed
                 b = getLayoutBlockB();
@@ -3538,10 +3668,10 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw B corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointA, pointB)));
                 if (type == LH_XOVER) {
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
                 }
                 // change block if needed
                 b = getLayoutBlockC();
@@ -3552,10 +3682,10 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw C corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                 if (type == RH_XOVER) {
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
                 }
                 // change block if needed
                 b = getLayoutBlockD();
@@ -3566,10 +3696,10 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 // draw D corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointC, pointD)));
                 if (type == LH_XOVER) {
                     layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
                 }
             } else {
                 int state = Turnout.CLOSED;
@@ -3579,13 +3709,13 @@ public class LayoutTurnout extends LayoutTrack {
                 if (state == Turnout.CLOSED) {
                     // continuing path - not crossed over
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                     if (type == RH_XOVER) {
                         layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
                         }
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointA, pointB))));
                     }
                     b = getLayoutBlockB();
                     if (b != null) {
@@ -3594,13 +3724,13 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
+                    g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointA, pointB)));
                     if (type == LH_XOVER) {
                         layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
                         }
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointA, pointB))));
                     }
                     b = getLayoutBlockC();
                     if (b != null) {
@@ -3609,13 +3739,13 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                     if (type == RH_XOVER) {
                         layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
                         }
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointC, pointD))));
                     }
                     b = getLayoutBlockD();
                     if (b != null) {
@@ -3624,23 +3754,23 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
+                    g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointC, pointD)));
                     if (type == LH_XOVER) {
                         layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
                         }
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointC, pointD))));
                     }
                 } else if (state == Turnout.THROWN) {
                     // diverting (crossed) path
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                     if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                        g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
+                        g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
                     } else if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointA, fourth(pointA, pointB)));
+                        g2.draw(new Line2D.Double(pointA, MathUtil.oneFourthPoint(pointA, pointB)));
                     }
                     b = getLayoutBlockB();
                     if (b != null) {
@@ -3650,11 +3780,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                     if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointA)));
+                        g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointA)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
+                        g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
                     } else if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointB, fourth(pointB, pointA)));
+                        g2.draw(new Line2D.Double(pointB, MathUtil.oneFourthPoint(pointB, pointA)));
                     }
                     b = getLayoutBlockC();
                     if (b != null) {
@@ -3664,11 +3794,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                     if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
+                        g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
                     } else if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointC, fourth(pointC, pointD)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.oneFourthPoint(pointC, pointD)));
                     }
                     b = getLayoutBlockD();
                     if (b != null) {
@@ -3678,21 +3808,21 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                     if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointC)));
+                        g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointC)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
+                        g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
                     } else if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointD, fourth(pointD, pointC)));
+                        g2.draw(new Line2D.Double(pointD, MathUtil.oneFourthPoint(pointD, pointC)));
                     }
                 } else {
                     // unknown or inconsistent
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                     if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
+                        g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointB)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointA, pointB))));
                     } else if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointA, fourth(pointA, pointB)));
+                        g2.draw(new Line2D.Double(pointA, MathUtil.oneFourthPoint(pointA, pointB)));
                     }
                     b = getLayoutBlockB();
                     if (b != null) {
@@ -3702,11 +3832,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                     if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointA)));
+                        g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointA)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointA, pointB))));
                     } else if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointB, fourth(pointB, pointA)));
+                        g2.draw(new Line2D.Double(pointB, MathUtil.oneFourthPoint(pointB, pointA)));
                     }
                     b = getLayoutBlockC();
                     if (b != null) {
@@ -3716,11 +3846,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                     if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointD)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointC, pointD))));
                     } else if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointC, fourth(pointC, pointD)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.oneFourthPoint(pointC, pointD)));
                     }
                     b = getLayoutBlockD();
                     if (b != null) {
@@ -3730,11 +3860,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                     if (type == LH_XOVER) {
-                        g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
+                        g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointC, pointD)));
                         //layoutEditor.setTrackStrokeWidth(g2, false);
-                        g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
+                        g2.draw(new Line2D.Double(center, MathUtil.oneThirdPoint(center, MathUtil.midPoint(pointC, pointD))));
                     } else if (type == RH_XOVER) {
-                        g2.draw(new Line2D.Double(pointD, fourth(pointD, pointC)));
+                        g2.draw(new Line2D.Double(pointD, MathUtil.oneFourthPoint(pointD, pointC)));
                     }
                 }
             }
@@ -3768,7 +3898,7 @@ public class LayoutTurnout extends LayoutTrack {
                                 if (b != null) {
                                     g2.setColor(b.getBlockTrackColor());
                                 }
-                                g2.draw(new Line2D.Double(pointC, midpoint(center, pointC)));
+                                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(center, pointC)));
                             }
                         } else {
                             layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
@@ -3780,7 +3910,7 @@ public class LayoutTurnout extends LayoutTrack {
                                 if (b != null) {
                                     g2.setColor(b.getBlockTrackColor());
                                 }
-                                g2.draw(new Line2D.Double(pointB, midpoint(center, pointB)));
+                                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(center, pointB)));
                             }
                         }
                         break;
@@ -3793,7 +3923,7 @@ public class LayoutTurnout extends LayoutTrack {
                                 if (b != null) {
                                     g2.setColor(b.getBlockTrackColor());
                                 }
-                                g2.draw(new Line2D.Double(pointC, midpoint(center, pointC)));
+                                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(center, pointC)));
                             }
                         } else {
                             layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
@@ -3803,27 +3933,27 @@ public class LayoutTurnout extends LayoutTrack {
                                 if (b != null) {
                                     g2.setColor(b.getBlockTrackColor());
                                 }
-                                g2.draw(new Line2D.Double(pointB, midpoint(center, pointB)));
+                                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(center, pointB)));
                             }
                         }
                         break;
                     default:
                         // inconsistent or unknown
                         layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                        g2.draw(new Line2D.Double(pointC, midpoint(center, pointC)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(center, pointC)));
                         layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                        g2.draw(new Line2D.Double(pointB, midpoint(center, pointB)));
+                        g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(center, pointB)));
                 }
             }
         }
     }   // draw(Graphics2D g2)
 
-    public void drawTurnoutCircle(Graphics2D g2) {
-        g2.draw(layoutEditor.turnoutCircleAt(center));
+    public void drawControls(Graphics2D g2) {
+        g2.draw(layoutEditor.trackControlCircleAt(center));
     }
 
-    public void drawTurnoutRect(Graphics2D g2) {
-        drawTurnoutCircle(g2);
+    public void drawEditControls(Graphics2D g2) {
+        drawControls(g2);
 
         Point2D pt = getCoordsA();
         if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
@@ -3839,7 +3969,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3847,7 +3977,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3855,7 +3985,8 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
         if ((type == DOUBLE_XOVER)
                 || (type == RH_XOVER)
                 || (type == LH_XOVER)) {
@@ -3865,7 +3996,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.controlPointRectAt(pt));
+            g2.draw(layoutEditor.trackControlPointRectAt(pt));
         }
     }
 

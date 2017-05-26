@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
-import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +76,13 @@ public class DefaultConditionalManager extends AbstractManager
         Conditional c = null;
 
         // Check system name
-        if (systemName != null && systemName.length() > 0) {
-            c = getBySystemName(systemName);
-            if (c != null) {
-                return null;        // Conditional already exists
-            }
+        if (systemName == null || systemName.length() < 1) {
+            log.error("createNewConditional: systemName is null or empty");
+            return null;
+        }
+        c = getBySystemName(systemName);
+        if (c != null) {
+            return null;        // Conditional already exists
         }
 
         // Get the potential parent Logix
@@ -101,7 +101,7 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         // Conditional does not exist, create a new Conditional
-        if (systemName.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
+        if (systemName.startsWith(SensorGroupFrame.logixSysName)) {
             c = new SensorGroupConditional(systemName, userName);
         } else {
             c = new DefaultConditional(systemName, userName);
@@ -127,6 +127,18 @@ public class DefaultConditionalManager extends AbstractManager
     }
 
     /**
+     * Regex patterns to derive the logix system name from the conditional system name
+     * The 3 route patterns deal with Route Logix names that end with a number,
+     * such as Logix RTX123 with Conditional RTX1231T.
+     */
+    private static final String[] PATTERNS = {
+        "(.*?)(C\\d+$)",               // Standard IX
+        "(.*?)([1-9]{1}[ALT]$)",       // LRoute/Route, 1-9
+        "(.*?)([0-9]{2}[ALT]$)",       // LRoute/Route, 10-99
+        "(.*?)([0-9]{3}[ALT]$)"        // LRoute/Route, 100-999
+    };
+
+    /**
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.  For sensor groups, the parent
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
@@ -137,17 +149,12 @@ public class DefaultConditionalManager extends AbstractManager
      */
     @Override
     public Logix getParentLogix(String name) {
-        if (name.length() < 4) {
+        if (name == null || name.length() < 4) {
             return null;
         }
 
-        if (name.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
-            return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("SYS");
-        } else {
-            String pattern = "(.*?)(C\\d+$)";                            // Default pattern: ???Cn
-            if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {    // LRoutes and exported Routes
-                pattern = "(.*?)([1-9]{1}[ALT]$)";                      // Pattern: ???nA, nL or nT (one digit, 1-9)
-            }
+        // Check for standard names
+        for (String pattern : PATTERNS) {
             Pattern r = Pattern.compile(pattern);
             Matcher m = r.matcher(name);
             if (m.find()) {
@@ -155,15 +162,18 @@ public class DefaultConditionalManager extends AbstractManager
                 if (lgx != null) {
                     return lgx;
                 }
+
             }
-            // Old style LRoutes can have more than 9 conditionals
-            if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {
-                // Try again with 2 digits (10-99)
-                pattern = "(.*?)([0-9]{2}[ALT]$)";
-                r = Pattern.compile(pattern);
-                m = r.matcher(name);
-                if (m.find()) {
-                    return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+        }
+
+        // Now try non-standard names using a brute force scan
+        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        for (String xName : logixManager.getSystemNameList()) {
+            Logix lgx = logixManager.getLogix(xName);
+            for (int i = 0; i < lgx.getNumConditionals(); i++) {
+                String cdlName = lgx.getConditionalByNumberOrder(i);
+                if (cdlName.equals(name)) {
+                    return lgx;
                 }
             }
         }
@@ -340,10 +350,11 @@ public class DefaultConditionalManager extends AbstractManager
      * Return a copy of the entire map.  Used by
      * {@link jmri.jmrit.beantable.LogixTableAction#buildWhereUsedListing}
      * @since 4.7.4
+     * @return a copy of the map
      */
     @Override
     public HashMap<String, ArrayList<String>> getWhereUsedMap() {
-        return conditionalWhereUsed;
+        return new HashMap<>(conditionalWhereUsed);
     }
 
     /**
@@ -364,13 +375,13 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         if (conditionalWhereUsed.containsKey(target)) {
-            ArrayList refList = conditionalWhereUsed.get(target);
+            ArrayList<String> refList = conditionalWhereUsed.get(target);
             if (!refList.contains(reference)) {
                 refList.add(reference);
                 conditionalWhereUsed.replace(target, refList);
             }
         } else {
-            ArrayList refList = new ArrayList<String>();
+            ArrayList<String> refList = new ArrayList<>();
             refList.add(reference);
             conditionalWhereUsed.put(target, refList);
         }
@@ -442,7 +453,7 @@ public class DefaultConditionalManager extends AbstractManager
      */
     @Override
     public ArrayList<String> getTargetList(String reference) {
-        ArrayList<String> targetList = new ArrayList();
+        ArrayList<String> targetList = new ArrayList<>();
         SortedSet<String> keys = new TreeSet<>(conditionalWhereUsed.keySet());
         for (String key : keys) {
             ArrayList<String> refList = conditionalWhereUsed.get(key);
