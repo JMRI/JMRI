@@ -215,7 +215,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Local method to do specific port configuration.
      *
-     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
+     * @throws UnsupportedCommOperationException if unable to configure
      *                                                  port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {

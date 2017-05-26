@@ -220,7 +220,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Local method to do specific port configuration
-     * @throws gnu.io.UnsupportedCommOperationException if options not supported by port
+     * @throws UnsupportedCommOperationException if options not supported by port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

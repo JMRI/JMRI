@@ -329,7 +329,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the gnu.io library has not been installed properly");
+            log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
             log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
