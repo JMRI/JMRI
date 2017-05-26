@@ -391,7 +391,7 @@ Section "Main"
   DetailPrint "...finished"
   
   ; -- Build options string
-  ; -- JVM and RMI options
+  ; -- JVM options
 
   ; -- Read environment variable
   ; -- JMRI_OPTIONS - additional JMRI options
@@ -405,7 +405,6 @@ Section "Main"
   contOptions:
   StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
-  StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs

@@ -483,7 +483,7 @@ fi
 
 # create the option string
 #
-# Add JVM and RMI options to user options, if any
+# Add JVM options to user options, if any
 
 if [ "$OS" = "macosx" ] ; then
     # since bash mangles the application name and icon in $OPTIONS,
@@ -499,8 +499,6 @@ if [ "$OS" = "macosx" ] ; then
 fi
 
 OPTIONS="${jmri_options} -noverify"
-OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits

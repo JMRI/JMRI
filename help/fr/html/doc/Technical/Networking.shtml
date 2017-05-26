@@ -73,7 +73,7 @@
               "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
               to LbServer</a>
 
-              <p>Celui-ci utilise Java RMI pour donner acc&egrave;s
+              <p>Cela donne acc&egrave;s
               &agrave; un flux de messages LocoNet via le <a href=
               "http://loconetovertcp.sourceforge.net/">liensProtocole
               LbServer</a>.</p>

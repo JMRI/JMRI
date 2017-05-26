@@ -85,19 +85,16 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
     macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
     macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
 
-##### security.policy
-- (JMRI file)
-
 ##### xercesImpl.jar
 - version Xerces-J 2.9.1
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar
-- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
+- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
 - version 1.1
 - from <jdom.org>
 
-##### jdom-2.0.5.jar               
+##### jdom-2.0.5.jar
 - version 2.0.5
 - from <jdom.org>
 
@@ -293,7 +290,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ## Older, no longer present:
 
-##### crimson.jar             
+##### crimson.jar
 - version 1.1.3
 - from <http://xml.apache.org/crimson/>
 - No longer used as of JMRI 2.7.6

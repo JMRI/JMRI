@@ -286,12 +286,11 @@
             <pre>
 -Xms10m
 -Xmx300m
--Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
 </pre>Si vous utilisez un syst&egrave;me Windows 32 bits ajouter le
 chemin de la biblioth&egrave;que:
             <pre>
--Djava.library.path=.;lib;lib/windows/x86 
+-Djava.library.path=.;lib;lib/windows/x86
 </pre>Notez que si vous utilisez un syst&egrave;me Windows 64 bits
 modifier le chemin de la biblioth&egrave;que pour:
             <pre>

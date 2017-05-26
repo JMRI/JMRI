@@ -124,7 +124,7 @@ CP="${CP}:/usr/share/ant/lib/ant.jar"
 
 # create the option string
 #
-# Add JVM and RMI options to user options, if any
+# Add JVM options to user options, if any
 OPTIONS=" ${JMRI_OPTIONS} "
 
 # Format to add more options:
