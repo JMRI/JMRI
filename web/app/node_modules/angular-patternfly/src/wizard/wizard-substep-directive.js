@@ -39,9 +39,24 @@ angular.module('patternfly.wizard').directive('pfWizardSubstep', function () {
       showReviewDetails: '@?',
       reviewTemplate: '@?'
     },
-    require: '^pf-wizard-step',
     templateUrl: 'wizard/wizard-substep.html',
     controller: function ($scope) {
+      var findWizardStep = function (scope) {
+        var wizardStep;
+
+        if (scope) {
+          if (angular.isDefined(scope.wizardStep)) {
+            wizardStep = scope.wizardStep;
+          } else {
+            wizardStep = findWizardStep(scope.$parent);
+          }
+        }
+
+        return wizardStep;
+      };
+
+      $scope.wizardStep = findWizardStep($scope);
+
       if (angular.isUndefined($scope.nextEnabled)) {
         $scope.nextEnabled = true;
       }
@@ -74,9 +89,9 @@ angular.module('patternfly.wizard').directive('pfWizardSubstep', function () {
       };
 
     },
-    link: function ($scope, $element, $attrs, step) {
+    link: function ($scope, $element, $attrs) {
       $scope.title = $scope.stepTitle;
-      step.addStep($scope);
+      $scope.wizardStep.addStep($scope);
     }
   };
 });

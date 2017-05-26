@@ -17,9 +17,23 @@ angular.module('patternfly.wizard').directive('pfWizardReviewPage', function () 
       shown: '=',
       wizardData: "="
     },
-    require: '^pf-wizard',
     templateUrl: 'wizard/wizard-review-page.html',
     controller: function ($scope) {
+      var findWizard = function (scope) {
+        var wizard;
+        if (scope) {
+          if (angular.isDefined(scope.wizard)) {
+            wizard = scope.wizard;
+          } else {
+            wizard = findWizard(scope.$parent);
+          }
+        }
+
+        return wizard;
+      };
+
+      $scope.wizard = findWizard($scope.$parent);
+
       $scope.toggleShowReviewDetails = function (step) {
         if (step.showReviewDetails === true) {
           step.showReviewDetails = false;
@@ -38,10 +52,10 @@ angular.module('patternfly.wizard').directive('pfWizardReviewPage', function () 
         $scope.reviewSteps = wizard.getReviewSteps();
       };
     },
-    link: function ($scope, $element, $attrs, wizard) {
+    link: function ($scope, $element, $attrs) {
       $scope.$watch('shown', function (value) {
         if (value) {
-          $scope.updateReviewSteps(wizard);
+          $scope.updateReviewSteps($scope.wizard);
         }
       });
     }

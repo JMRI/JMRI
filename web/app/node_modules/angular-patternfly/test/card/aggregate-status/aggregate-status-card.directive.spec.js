@@ -31,7 +31,7 @@ describe('Directive: pfAggregateStatusCard', function() {
       expect(angular.element(element).find('.card-pf-aggregate-status-count').html()).toBe("793");
 
       //Make sure a link renders in the title
-      expect(angular.element(element).find('.card-pf-title').find('a').size()).toBe(1);
+      expect(angular.element(element).find('.card-pf-title').find('a').length).toBe(1);
 
       //Make sure the class is getting set for the title icon
       expect(angular.element(element).find('.card-pf-title').find('.fa').hasClass('fa-shield')).toBeTruthy();
@@ -53,7 +53,7 @@ describe('Directive: pfAggregateStatusCard', function() {
       element = compileCard('<div pf-aggregate-status-card status="status"></div>', $scope);
 
       //Make sure a link renders in the title
-      expect(angular.element(element).find('.card-pf-title').find('a').size()).toBe(0);
+      expect(angular.element(element).find('.card-pf-title').find('a').length).toBe(0);
     });
 
     it("should set the notifications", function() {
@@ -81,13 +81,13 @@ describe('Directive: pfAggregateStatusCard', function() {
       notifications = angular.element(element).find('.card-pf-aggregate-status-notification');
 
       //Make sure two notifications render
-      expect(notifications.size()).toBe(2);
+      expect(notifications.length).toBe(2);
 
       //First notification should have a link
-      expect(notifications.eq(0).find('a').size()).toBe(1);
+      expect(notifications.eq(0).find('a').length).toBe(1);
 
       //Second notification should not have a link
-      expect(notifications.eq(1).find('a').size()).toBe(0);
+      expect(notifications.eq(1).find('a').length).toBe(0);
 
       //first notification should have the following class
       expect(notifications.eq(0).find('span')).toHaveClass('pficon pficon-error-circle-o');
@@ -135,7 +135,7 @@ describe('Directive: pfAggregateStatusCard', function() {
 
       // should show the main icon
       cardClass = angular.element(element).find('.fa-shield');
-      expect(cardClass.size()).toBe(1);
+      expect(cardClass.length).toBe(1);
 
       notifications = angular.element(element).find('.card-pf-aggregate-status-notification');
 
@@ -166,7 +166,7 @@ describe('Directive: pfAggregateStatusCard', function() {
 
       // should not show the main icon
       cardClass = angular.element(element).find('.fa-shield');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
 
       notifications = angular.element(element).find('.card-pf-aggregate-status-notification');
 

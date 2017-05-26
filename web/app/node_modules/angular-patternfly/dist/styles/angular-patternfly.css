@@ -470,3 +470,13 @@ accordion > .panel-group .panel-open .panel-title > a:before {
 .pf-expand-placeholder {
   margin-right: 15px;
 }
+
+.wizard-pf-steps-indicator li a.disabled {
+  cursor: default;
+}
+
+.wizard-pf-steps-indicator li a.disabled:hover .wizard-pf-step-number {
+  background-color: #fff;
+  border-color: #bbb;
+  color: #bbb;
+}

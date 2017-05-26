@@ -44,6 +44,22 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>deselectAllText</td>
+    <td>string</td>
+    <td><code>'Deselect All'</code></td>
+    <td>
+      <p>The text on the button that deselects all options when <code>actionsBox</code> is enabled.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>dropdownAlignRight</td>
+    <td>boolean | <code>'auto'</code></td>
+    <td><code>false</code></td>
+    <td>
+      <p>Align the menu to the right instead of the left. If set to <code>'auto'</code>, the menu will automatically align right if there isn't room for the menu's full width when aligned to the left.</p>
+    </td>
+  </tr>
+  <tr>
     <td>dropupAuto</td>
     <td>boolean</td>
     <td><code>true</code></td>
@@ -70,11 +86,27 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>iconBase</td>
+    <td>string</td>
+    <td><code>'glyphicon'</code></td>
+    <td>
+      <p>Set the base to use a different icon font instead of Glyphicons. If changing iconBase, you might also want to change <code>tickIcon</code>, in case the new icon font uses a different naming scheme.</p>
+    </td>
+  </tr>
+  <tr>
     <td>liveSearch</td>
     <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>true</code>, adds a search box to the top of the selectpicker dropdown.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>liveSearchNormalize</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>Setting liveSearchNormalize to <code>true</code> allows for accent-insensitive searching.</p>
     </td>
   </tr>
   <tr>
@@ -86,6 +118,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchStyle</td>
+    <td>string</td>
+    <td><code>'contains'</code></td>
+    <td>
+      <p>When set to <code>'contains'</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>'startsWith'</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain.</p>
+    </td>
+  </tr>
+  <tr>
     <td>maxOptions</td>
     <td>integer | false</td>
     <td><code>false</code></td>
@@ -93,6 +133,15 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
       <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
       <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only 
       applies to that <code>&lt;optgroup&gt;</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>maxOptionsText</td>
+    <td>string | array | function</td>
+    <td><code>function</code></td>
+    <td>
+      <p>The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have been selected.</p>
+      <p>If a function is used, it must return an array. array[0] is the text used when maxOptions is applied to the entire select element. array[1] is the text used when maxOptions is used on an optgroup. If a string is used, the same text is used for both the element and the optgroup.</p>
     </td>
   </tr>
   <tr>
@@ -120,11 +169,20 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>selectAllText</td>
+    <td>string</td>
+    <td><code>'Select All'</code></td>
+    <td>
+      <p>The text on the button that selects all options when <code>actionsBox</code> is enabled.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectedTextFormat</td>
     <td><code>'values'</code> | <code>'static'</code> | <code>'count'</code> | <code>'count > x'</code> (where x is an integer)</td>
     <td><code>'values'</code></td>
     <td>
       <p>Specifies how the selection is displayed with a multiple select.</p>
+      <p><code>'values'</code> displays a list of the selected options (separated by <code>multipleSeparator</code>. <code>'static'</code> simply displays the select element's title. <code>'count'</code> displays the total number of selected options. <code>'count > x'</code> behaves like <code>'values'</code> until the number of selected options is greater than x; after that, it behaves like <code>'count'</code>.
     </td>
   </tr>
   <tr>
@@ -189,6 +247,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>tickIcon</td>
+    <td>string</td>
+    <td><code>'glyphicon-ok'</code></td>
+    <td>
+      <p>Set which icon to use to display as the "tick" next to selected options.</p>
+    </td>
+  </tr>
+  <tr>
     <td>title</td>
     <td>string | null</td>
     <td><code>null</code></td>
@@ -205,6 +271,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
       widest option.</p>
       <p>When set to a css-width, the width of the selectpicker is forced inline to the given value.</p>
       <p>When set to <code>false</code>, all width information is removed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>windowPadding</td>
+    <td>integer | array</td>
+    <td><code>0</code></td>
+    <td>
+      <p>This is useful in cases where the window has areas that the dropdown menu should not cover - for instance a fixed header. When set to an integer, the same padding will be added to all sides. Alternatively, an array of integers can be used in the format <code>[top, right, bottom, left]</code>.</p>
     </td>
   </tr>
   </tbody>
@@ -227,14 +301,6 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
   </thead>
   <tbody>
     <tr>
-      <td>loaded.bs.select</td>
-      <td>This event fires after the select has been initialized.</td>
-    </tr>
-    <tr>
-      <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
-    </tr>
-    <tr>
       <td>show.bs.select</td>
       <td>This event fires immediately when the show instance method is called.</td>
     </tr>
@@ -251,12 +317,20 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
       <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
     </tr>
     <tr>
+      <td>loaded.bs.select</td>
+      <td>This event fires after the select has been initialized.</td>
+    </tr>
+    <tr>
       <td>rendered.bs.select</td>
       <td>This event fires after the render instance has been called.</td>
     </tr>
     <tr>
       <td>refreshed.bs.select</td>
       <td>This event fires after the refresh instance has been called.</td>
+    </tr>
+    <tr>
+      <td>changed.bs.select</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
     </tr>
   </tbody>
 </table>

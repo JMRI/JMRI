@@ -5,17 +5,32 @@
       .directive(action, function () {
         return {
           restrict: 'A',
-          require: '^pf-wizard',
           scope: {
             callback: "=?"
           },
-          link: function ($scope, $element, $attrs, wizard) {
+          controller: function ($scope) {
+            var findWizard = function (scope) {
+              var wizard;
+
+              if (scope) {
+                if (angular.isDefined(scope.wizard)) {
+                  wizard = scope.wizard;
+                } else {
+                  wizard = findWizard(scope.$parent);
+                }
+              }
+
+              return wizard;
+            };
+            $scope.wizard = findWizard($scope);
+          },
+          link: function ($scope, $element, $attrs) {
             $element.on("click", function (e) {
               e.preventDefault();
               $scope.$apply(function () {
                 // scope apply in button module
                 $scope.$eval($attrs[action]);
-                wizard[action.replace("pfWiz", "").toLowerCase()]($scope.callback);
+                $scope.wizard[action.replace("pfWiz", "").toLowerCase()]($scope.callback);
               });
             });
           }

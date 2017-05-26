@@ -65,23 +65,23 @@ describe('Directive: pfCard', function() {
       // by default, bottom border should be shown
       element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</div>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
-      expect(cardClass.size()).toBe(1);
+      expect(cardClass.length).toBe(1);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
 
       // setting to false should hide the bottom border
       element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="false">Inner content goes here</div>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
-      expect(cardClass.size()).toBe(1);
+      expect(cardClass.length).toBe(1);
 
       // setting to true should show the bottom border
       element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="true">Inner content goes here</div>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
-      expect(cardClass.size()).toBe(1);
+      expect(cardClass.length).toBe(1);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
 
     });
 
@@ -90,7 +90,7 @@ describe('Directive: pfCard', function() {
       // by default, if footer not defined, footer should not be shown
       element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</div>', $scope);
       cardClass = angular.element(element).find('.card-pf-footer');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
     });
 
     it("should show the action bar footer", function() {
@@ -106,7 +106,7 @@ describe('Directive: pfCard', function() {
       cardClass = angular.element(element).find('a');
       expect(cardClass.attr('href')).toBe('#addCluster');
       var spans = cardClass.find('span');
-      expect(spans.size()).toBe(2);
+      expect(spans.length).toBe(2);
       expect(spans.eq(0)).toHaveClass('fa fa-plus-circle');
       expect(spans.eq(1).html()).toBe('Add New Cluster');
 
@@ -129,7 +129,7 @@ describe('Directive: pfCard', function() {
       expect(isoScope.footerCallBackResult).toEqual('Footer Callback Fn Called');
 
       var spans = cardClass.find('span');
-      expect(spans.size()).toBe(2);
+      expect(spans.length).toBe(2);
       expect(spans.eq(0)).toHaveClass('fa fa-flag');
       expect(spans.eq(1).html()).toBe('View All Events');
     });
@@ -145,7 +145,7 @@ describe('Directive: pfCard', function() {
 
       element = compileCard('<div pf-card head-title="title" footer="actionBarConfig">Inner content</div>', $scope);
       cardClass = angular.element(element).find('.card-pf-footer').find('button');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
     });
 
     it("should show the filter in the footer if specified", function() {
@@ -164,7 +164,7 @@ describe('Directive: pfCard', function() {
 
       // should find 3 filters
       cardClass = angular.element(element).find('.card-pf-footer').find('a');
-      expect(cardClass.size()).toBe(3);
+      expect(cardClass.length).toBe(3);
 
       // test setting default menu item
       var filterItem = angular.element(element).find('.card-pf-footer').find('button');
@@ -196,11 +196,11 @@ describe('Directive: pfCard', function() {
 
       // should NOT find any filters in the footer
       cardClass = angular.element(element).find('.card-pf-footer').find('a');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
 
       // should find filters in the header
       cardClass = angular.element(element).find('.card-pf-heading').find('a');
-      expect(cardClass.size()).toBe(3);
+      expect(cardClass.length).toBe(3);
 
       // test setting default menu item
       var filterItem = angular.element(element).find('.card-pf-heading').find('button');
@@ -221,11 +221,11 @@ describe('Directive: pfCard', function() {
 
       // should NOT find any header artifacts
       cardClass = angular.element(element).find('.card-pf-heading');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
 
       // should find filters in the header
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
-      expect(cardClass.size()).toBe(0);
+      expect(cardClass.length).toBe(0);
     });
   });
 

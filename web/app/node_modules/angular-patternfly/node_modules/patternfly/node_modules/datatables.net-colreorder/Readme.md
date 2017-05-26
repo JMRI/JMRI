@@ -1,6 +1,6 @@
 # ColReorder for DataTables 
 
-This package contains distribution files for the [ColReorder extension](https://datatables.net/extensions/colreorder) for [DataTables](https://datatables.net/). Only the core software for this library is contained in this package - to be correctly styled, a styling package for ColReorder must also be included. Styling options include DataTable's native styling, [Bootstrap](http://getboostrap.com) and [Foundation](http://foundation.zurb.com/).
+This package contains distribution files for the [ColReorder extension](https://datatables.net/extensions/colreorder) for [DataTables](https://datatables.net/). Only the core software for this library is contained in this package - to be correctly styled, a styling package for ColReorder must also be included. Styling options include DataTable's native styling, [Bootstrap](http://getbootstrap.com) and [Foundation](http://foundation.zurb.com/).
 
 ColReorder allows the end user to modify the column order of a table through drop-and-drag of column headers.
 

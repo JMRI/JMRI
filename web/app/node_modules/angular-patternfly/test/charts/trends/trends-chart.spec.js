@@ -66,20 +66,20 @@ describe('Directive: pfTrendsChart', function() {
   it("should show large or small trend card layouts", function() {
     // by default, should show a large card
     trendCard = element.find('.trend-card-large-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     // check small card isn't being shown by default
     expect(trendCard.hasClass('.trend-card-small-pf')).toBeFalsy();
 
     $scope.config.layout = 'small';
     $scope.$digest();
     trendCard = element.find('.trend-card-small-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     expect(trendCard.hasClass('.trend-card-large-pf')).toBeFalsy();
 
     $scope.config.layout = 'large';
     $scope.$digest();
     trendCard = element.find('.trend-card-large-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     expect(trendCard.hasClass('.trend-card-small-pf')).toBeFalsy();
   });
 
@@ -88,11 +88,11 @@ describe('Directive: pfTrendsChart', function() {
     $scope.$digest();
 
     trendCard = element.find('.trend-row');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     trendCard = element.find('.trend-title-compact-big-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     trendCard = element.find('.trend-title-compact-small-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
   });
 
   it("should show inline card layout", function() {
@@ -100,11 +100,11 @@ describe('Directive: pfTrendsChart', function() {
     $scope.$digest();
 
     trendCard = element.find('.trend-row');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
     trendCard = element.find('.trend-flat-col');
-    expect(trendCard.size()).toBe(2);
+    expect(trendCard.length).toBe(2);
     trendCard = element.find('.trend-label-flat-strong-pf');
-    expect(trendCard.size()).toBe(1);
+    expect(trendCard.length).toBe(1);
 
     trendCard = element.find('.trend-title-flat-big-pf');
     expect(trendCard.html()).toBe('76%');

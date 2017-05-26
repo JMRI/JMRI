@@ -42,7 +42,7 @@ describe('Directive: pfHeatmap', function() {
   it("should generate 7 blocks", function() {
     element = compileChart('<div pf-heatmap chart-title="title" data="data"></div>',$scope);
 
-    expect(angular.element(element).find('.heatmap-pf-svg').find('rect').size()).toBe(7);
+    expect(angular.element(element).find('.heatmap-pf-svg').find('rect').length).toBe(7);
   });
 
   it("should set color and tooltip of the block based on defaults", function() {

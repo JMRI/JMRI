@@ -1,0 +1,15 @@
+<div pf-wizard title="Wizard Title"
+  wizard-ready="deployReady"
+  on-finish="finishedWizard()"
+  on-cancel="cancelDeploymentWizard()"
+  next-title="nextButtonTitle"
+  next-callback="nextCallback"
+  back-callback="backCallback"
+  current-step="currentStep"
+  hide-indicators="hideIndicators"
+  hide-sidebar="true"
+  hide-header="true"
+  wizard-done="deployComplete || deployInProgress"
+  loading-secondary-information="secondaryLoadInformation">
+  <div ng-include="'test/wizard/wizard-test-steps.html'"></div>
+ </div>

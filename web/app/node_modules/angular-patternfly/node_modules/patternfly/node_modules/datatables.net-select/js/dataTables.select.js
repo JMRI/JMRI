@@ -1,4 +1,4 @@
-/*! Select for DataTables 1.2.1
+/*! Select for DataTables 1.2.2
  * 2015-2016 SpryMedia Ltd - datatables.net/license/mit
  */
 
@@ -6,7 +6,7 @@
  * @summary     Select for DataTables
  * @description A collection of API methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
- * @version     1.2.1
+ * @version     1.2.2
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     datatables.net/forums
@@ -54,7 +54,7 @@ var DataTable = $.fn.dataTable;
 // Version information for debugger
 DataTable.select = {};
 
-DataTable.select.version = '1.2.1';
+DataTable.select.version = '1.2.2';
 
 DataTable.select.init = function ( dt ) {
 	var ctx = dt.settings()[0];
@@ -310,7 +310,7 @@ function disableMouseSelection( dt )
 		.off( 'mouseup.dtSelect', selector )
 		.off( 'click.dtSelect', selector );
 
-	$('body').off( 'click.dtSelect' );
+	$('body').off( 'click.dtSelect' + dt.table().node().id );
 }
 
 /**
@@ -348,7 +348,7 @@ function enableMouseSelection ( dt )
 
 			// If text was selected (click and drag), then we shouldn't change
 			// the row's selected state
-			if ( window.getSelection && window.getSelection().toString() ) {
+			if ( window.getSelection && $.trim( window.getSelection().toString() ) ) {
 				return;
 			}
 
@@ -392,10 +392,16 @@ function enableMouseSelection ( dt )
 		} );
 
 	// Blurable
-	$('body').on( 'click.dtSelect', function ( e ) {
+	$('body').on( 'click.dtSelect' + dt.table().node().id, function ( e ) {
 		if ( ctx._select.blurable ) {
 			// If the click was inside the DataTables container, don't blur
 			if ( $(e.target).parents().filter( dt.table().container() ).length ) {
+				return;
+			}
+
+			// Ignore elements which have been removed from the DOM (i.e. paging
+			// buttons)
+			if ( e.target.getRootNode() !== document ) {
 				return;
 			}
 
@@ -431,7 +437,7 @@ function eventTrigger ( api, type, args, any )
 
 	args.unshift( api );
 
-	$(api.table().node()).triggerHandler( type, args );
+	$(api.table().node()).trigger( type, args );
 }
 
 /**
@@ -449,22 +455,26 @@ function info ( api )
 		return;
 	}
 
-	var output  = $('<span class="select-info"/>');
-	var add = function ( name, num ) {
-		output.append( $('<span class="select-item"/>').append( api.i18n(
+	var rows    = api.rows( { selected: true } ).flatten().length;
+	var columns = api.columns( { selected: true } ).flatten().length;
+	var cells   = api.cells( { selected: true } ).flatten().length;
+
+	var add = function ( el, name, num ) {
+		el.append( $('<span class="select-item"/>').append( api.i18n(
 			'select.'+name+'s',
 			{ _: '%d '+name+'s selected', 0: '', 1: '1 '+name+' selected' },
 			num
 		) ) );
 	};
 
-	add( 'row',    api.rows( { selected: true } ).flatten().length );
-	add( 'column', api.columns( { selected: true } ).flatten().length );
-	add( 'cell',   api.cells( { selected: true } ).flatten().length );
-
 	// Internal knowledge of DataTables to loop over all information elements
 	$.each( ctx.aanFeatures.i, function ( i, el ) {
 		el = $(el);
+
+		var output  = $('<span class="select-info"/>');
+		add( output, 'row', rows );
+		add( output, 'column', columns );
+		add( output, 'cell', cells  );
 
 		var exisiting = el.children('span.select-info');
 		if ( exisiting.length ) {

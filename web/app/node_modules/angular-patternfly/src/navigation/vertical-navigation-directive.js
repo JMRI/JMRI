@@ -551,7 +551,7 @@ angular.module('patternfly.navigation').directive('pfVerticalNavigation', ['$loc
         initBodyElement();
         checkNavState();
 
-        angular.element($window).bind('resize', function () {
+        angular.element($window).on('resize', function () {
           checkNavState();
           $timeout(function () {
             try {

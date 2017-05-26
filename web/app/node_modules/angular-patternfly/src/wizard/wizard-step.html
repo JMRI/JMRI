@@ -1,5 +1,5 @@
 <section ng-show="selected" ng-class="{current: selected, done: completed}">
-  <div class="wizard-pf-sidebar" ng-style="contentStyle" ng-if="substeps === true">
+  <div ng-if="!wizard.hideSidebar" class="wizard-pf-sidebar" ng-style="contentStyle"  ng-class="wizard.sidebarClass" ng-if="substeps === true">
     <ul class="list-group">
       <li class="list-group-item" ng-class="{active: step.selected}" ng-repeat="step in getEnabledSteps()">
         <a ng-click="stepClick(step)">
@@ -9,7 +9,7 @@
       </li>
     </ul>
   </div>
-  <div class="wizard-pf-main" ng-class="{'wizard-pf-singlestep': !substeps}" ng-style="contentStyle">
+  <div class="wizard-pf-main {{wizard.stepClass}}" ng-style="contentStyle"  ng-class="{'wizard-pf-singlestep': !substeps || wizard.hideSidebar}">
     <div class="wizard-pf-contents" ng-transclude></div>
   </div>
 </section>

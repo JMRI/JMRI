@@ -65,7 +65,7 @@ describe('Directive: pfUtilizationBarChart', function() {
 
     element = compileChart("<div pf-utilization-bar-chart chart-data=data layout=layoutInline chart-title=title units=units></div>", $scope);
     utilizationBar = angular.element(element).find('.progress-container');
-    expect(utilizationBar.size()).toBe(1);
+    expect(utilizationBar.length).toBe(1);
 
     utilizationBar = angular.element(element).find('.progress-container').css('padding-left');
     expect(utilizationBar).toBe("120px");
@@ -77,12 +77,12 @@ describe('Directive: pfUtilizationBarChart', function() {
     element = compileChart("<div pf-utilization-bar-chart chart-data=data threshold-error='85' threshold-warning='45' chart-title=title units=units></div>", $scope);
 
     utilizationBar = angular.element(element).find('.progress-bar-warning');
-    expect(utilizationBar.size()).toBe(1);
+    expect(utilizationBar.length).toBe(1);
 
     element = compileChart("<div pf-utilization-bar-chart chart-data=data threshold-error='45' threshold-warning='15' chart-title=title units=units></div>", $scope);
 
     utilizationBar = angular.element(element).find('.progress-bar-danger');
-    expect(utilizationBar.size()).toBe(1);
+    expect(utilizationBar.length).toBe(1);
   });
 
   it("should use custom footer labels", function() {

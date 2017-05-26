@@ -375,7 +375,7 @@ angular.module('patternfly.charts').directive('pfHeatmap', function ($compile, $
         setStyles();
       });
 
-      angular.element($window).bind('resize', function () {
+      angular.element($window).on('resize', function () {
         setSizes();
         redraw();
       });

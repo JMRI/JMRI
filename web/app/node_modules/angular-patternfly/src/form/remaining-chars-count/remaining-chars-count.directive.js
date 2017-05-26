@@ -164,7 +164,7 @@ angular.module('patternfly.form').directive('pfRemainingCharsCount', function ($
         checkCharactersRemaining();
       });
 
-      $element.bind('keypress', function (event) {
+      $element.on('keypress', function (event) {
         // Once the charsMaxLimit has been met or exceeded, prevent all keypresses from working
         if (blockInputAtMaxLimit && $element.val().length >= charsMaxLimit) {
           // Except backspace

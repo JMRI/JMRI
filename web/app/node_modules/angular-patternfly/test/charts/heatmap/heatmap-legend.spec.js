@@ -22,7 +22,7 @@ describe('Directive: pfHeatmapLegend', function() {
 
   it("should use the default legend text and colors", function() {
     element = compileChart('<div pf-heatmap-legend ></div>',$scope);
-    expect(angular.element(element).find('li').size()).toBe(4);
+    expect(angular.element(element).find('li').length).toBe(4);
 
     legendItem = angular.element(element).find('li')[0];
     legendText = legendItem.querySelector('.legend-pf-text');
@@ -35,7 +35,7 @@ describe('Directive: pfHeatmapLegend', function() {
     $scope.heatmapColorPattern = ['#d4f0fa', '#F9D67A'];
 
     element = compileChart('<div pf-heatmap-legend legend="legendLabels" legend-colors="heatmapColorPattern"></div>',$scope);
-    expect(angular.element(element).find('li').size()).toBe(2);
+    expect(angular.element(element).find('li').length).toBe(2);
 
     legendItem = angular.element(element).find('li')[0];
     legendText = legendItem.querySelector('.legend-pf-text');

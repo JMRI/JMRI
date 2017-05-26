@@ -15,12 +15,17 @@ describe('Directive:  pfWizard', function () {
     'wizard/wizard-review-page.html',
     'wizard/wizard.html',
     'form/form-group/form-group.html',
+    'test/wizard/wizard-test-steps.html',
     'test/wizard/deployment.html',
     'test/wizard/detail-page.html',
     'test/wizard/review-second-template.html',
     'test/wizard/review-template.html',
     'test/wizard/summary.html',
-    'test/wizard/wizard-container.html'
+    'test/wizard/wizard-container.html',
+    'test/wizard/wizard-container-hidden.html',
+    'test/wizard/wizard-container-step-class.html',
+    'test/wizard/wizard-container-step-side-class.html',
+    'test/wizard/wizard-container-hide-back.html'
   ));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _$httpBackend_, _$templateCache_, _$timeout_) {
@@ -92,18 +97,21 @@ describe('Directive:  pfWizard', function () {
     initializeWizard();
   };
 
-  beforeEach(function () {
+  var setupWizard = function(wizardHtml) {
     setupWizardScope();
-    var modalHtml = $templateCache.get('test/wizard/wizard-container.html');
+
+    var modalHtml = $templateCache.get(wizardHtml);
     element = compileHtml(modalHtml, $scope);
     $scope.$digest();
 
     // there are two dependent timeouts in the wizard that need to be flushed
-    $timeout.flush();
-    $timeout.flush();
-  });
+//    $timeout.flush();
+//    $timeout.flush();
+  };
 
   it('should dispatch the cancel event on the close button click', function () {
+    setupWizard('test/wizard/wizard-container.html');
+
     var closeButton = element.find('.close');
     spyOn($rootScope, '$emit');
     eventFire(closeButton[0], 'click');
@@ -112,11 +120,13 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('should have three step indicators in the header', function () {
+    setupWizard('test/wizard/wizard-container.html');
     var stepsIndicator = element.find('.wizard-pf-steps .wizard-pf-step');
     expect(stepsIndicator.length).toBe(3);
   });
 
   it('should have two sections in the left-hand pane', function () {
+    setupWizard('test/wizard/wizard-container.html');
     var stepsIndicator = element.find('.wizard-pf-sidebar .list-group-item');
     var hiddenStepsIndicator = element.find('section.ng-hide .wizard-pf-sidebar .list-group-item');
 
@@ -125,11 +135,17 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('should have disabled the next button', function () {
+    setupWizard('test/wizard/wizard-container.html');
+    $timeout.flush();
+    $timeout.flush();
     var checkDisabled = element.find('.wizard-pf-next').attr('disabled');
     expect(checkDisabled).toBe('disabled');
   });
 
   it('should have enabled the next button after input and allowed navigation', function () {
+    setupWizard('test/wizard/wizard-container.html');
+    $timeout.flush();
+    $timeout.flush();
     var nextButton = element.find('.wizard-pf-next');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
@@ -139,7 +155,10 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('should have allowed moving back to first page after input and allowed navigation', function () {
-    var nextButton = element.find('.wizard-pf-next');
+    setupWizard('test/wizard/wizard-container.html');
+    $timeout.flush();
+    $timeout.flush();
+     var nextButton = element.find('.wizard-pf-next');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
     eventFire(nextButton[0], 'click');
@@ -153,6 +172,7 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('should have allowed navigation to review page', function () {
+    setupWizard('test/wizard/wizard-container.html');
     var nextButton = element.find('.wizard-pf-next');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
@@ -168,8 +188,8 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('should hide indicators if the property is set', function () {
-    var modalHtml = $templateCache.get('test/wizard/wizard-container.html');
-    element = compileHtml(modalHtml, $scope);
+    setupWizard('test/wizard/wizard-container.html');
+
     $scope.hideIndicators = true;
     $scope.$digest();
     var indicators = element.find('.wizard-pf-steps');
@@ -183,6 +203,7 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('clicking indicators should navigate wizard', function () {
+    setupWizard('test/wizard/wizard-container.html');
     var indicator = element.find('.wizard-pf-steps .wizard-pf-step a');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
@@ -195,11 +216,59 @@ describe('Directive:  pfWizard', function () {
   });
 
   it('clicking indicators should not navigate wizard if prevented from doing so', function () {
+    setupWizard('test/wizard/wizard-container.html');
     var indicator = element.find('.wizard-pf-steps .wizard-pf-step a');
     eventFire(indicator[1], 'click');
     $scope.$digest();
 
     var selectedSectionTitle = element.find('.wizard-pf-row section.current').attr("step-title");
     expect(selectedSectionTitle).not.toBe('Second Step');
+  });
+
+  it('should hide the sidebar when set', function () {
+    setupWizard('test/wizard/wizard-container-hidden.html');
+
+    var sidebar = element.find('.wizard-pf-sidebar');
+
+    expect(sidebar.length).toBe(0);
+  });
+
+  it('should hide the header when set', function () {
+    setupWizard('test/wizard/wizard-container-hidden.html');
+    var header = element.find('.modal-header');
+
+    expect(header.length).toBe(0);
+  });
+
+  it('should set the step class when given', function () {
+    setupWizard('test/wizard/wizard-container-step-class.html');
+
+    var mainStepPanel = element.find('.wizard-pf-main');
+    expect(mainStepPanel.length).toBe(3);
+
+    var sidebarPanel = element.find('.wizard-pf-sidebar.test-step-class');
+    expect(sidebarPanel.length).toBe(3);
+  });
+
+  it('should set the sidebar class when given', function () {
+    setupWizard('test/wizard/wizard-container-step-side-class.html');
+
+    var mainStepPanel = element.find('.wizard-pf-main');
+    expect(mainStepPanel.length).toBe(3);
+
+    var sidebarPanel = element.find('.wizard-pf-sidebar.test-step-class');
+    expect(sidebarPanel.length).toBe(0);
+
+    var sidebarPanel = element.find('.wizard-pf-sidebar.test-sidebar-class');
+    expect(sidebarPanel.length).toBe(3);
+  });
+
+  it('should hide the back button when specified', function () {
+    setupWizard('test/wizard/wizard-container-hide-back.html');
+    $timeout.flush();
+    $timeout.flush();
+
+    var backButton = element.find('.wizard-pf-footer #backButton');
+    expect(backButton.length).toBe(0);
   });
 });
