@@ -542,7 +542,7 @@ public class JUnitUtil {
                 if (logWindow) {
                     log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
                 }
-                frame.dispose();
+                ThreadingUtil.runOnGUI( () -> { frame.dispose(); } );
             }
         }
         for (Window window : Window.getWindows()) {
@@ -550,7 +550,7 @@ public class JUnitUtil {
                 if (logWindow) {
                     log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
                 }
-                window.dispose();
+                ThreadingUtil.runOnGUI( () -> { window.dispose(); } );
             }
         }
     }

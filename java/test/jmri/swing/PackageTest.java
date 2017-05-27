@@ -14,9 +14,11 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     EditableListTest.class,
     JmriJTablePersistenceManagerTest.class,
+    ConnectionLabelTest.class,
     AboutDialogTest.class,
     DefaultEditableListModelTest.class,
-    RowSorterUtilTest.class
+    RowSorterUtilTest.class,
+    JTitledSeparatorTest.class
 })
 public class PackageTest {
 }

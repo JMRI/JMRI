@@ -3,6 +3,7 @@ package jmri.swing;
 import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -22,7 +23,6 @@ public class AboutDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AboutDialog dialog = new AboutDialog(null, true);
         Assert.assertNotNull(dialog);
-        dialog.dispose();
     }
 
     @Test
@@ -35,23 +35,26 @@ public class AboutDialogTest {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout", jmri.Application.getApplicationName()));
             jdo.close();
         }).start();
-        dialog.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> { dialog.setVisible(true); });
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
-        dialog.dispose();
     }
 
     @Before
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(true);
         JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(false); // don't display the list of windows, 
+                                       // it will display only show the ones
+                                       // from the current test. 
         Log4JFixture.tearDown();
     }
 }
