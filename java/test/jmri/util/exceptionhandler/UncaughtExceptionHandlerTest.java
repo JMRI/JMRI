@@ -4,6 +4,8 @@ import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
@@ -41,7 +43,9 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         } catch (java.lang.reflect.InvocationTargetException e) {
             caught = true;
         }
-        jmri.util.JUnitUtil.waitFor(()->{return caught;}, "threw exception");
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return caught;
+        }, "threw exception");
         // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
 
@@ -62,17 +66,18 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
         super.setUp();
     }
 
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
         Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
         apps.tests.Log4JFixture.tearDown();
