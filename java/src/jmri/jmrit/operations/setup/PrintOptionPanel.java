@@ -352,7 +352,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
         use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
         printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
-        sortByTrackCheckBox.setSelected(Setup.isSortByTrackEnabled());
+        sortByTrackCheckBox.setSelected(Setup.isSortByTrackNameEnabled());
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
         truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
@@ -842,7 +842,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
         Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
         Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
-        Setup.setSortByTrackEnabled(sortByTrackCheckBox.isSelected());
+        Setup.setSortByTrackNameEnabled(sortByTrackCheckBox.isSelected());
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
         Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
         Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
@@ -893,7 +893,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 Setup.isPrintLoadsAndEmptiesEnabled() != printLoadsEmptiesCheckBox.isSelected() ||
                 Setup.is12hrFormatEnabled() != use12hrFormatCheckBox.isSelected() ||
                 Setup.isPrintValidEnabled() != printValidCheckBox.isSelected() ||
-                Setup.isSortByTrackEnabled() != sortByTrackCheckBox.isSelected() ||
+                Setup.isSortByTrackNameEnabled() != sortByTrackCheckBox.isSelected() ||
                 Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
                 Setup.isPrintTimetableNameEnabled() != printTimetableNameCheckBox.isSelected() ||
                 Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
