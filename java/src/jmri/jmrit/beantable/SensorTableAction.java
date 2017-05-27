@@ -178,7 +178,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysName.getText();
+        String curAddress = sysName.getText().trim();
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -200,10 +200,10 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
 
-            String user = userName.getText();
+            String user = userName.getText().trim();
             if ((x != 0) && user != null && !user.equals("")) {
                 user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
@@ -421,7 +421,7 @@ public class SensorTableAction extends AbstractTableAction {
                 showDebounceChanged();
             }
         });
-        f.addToBottomBox(showPullUpBox, systemPrefix); 
+        f.addToBottomBox(showPullUpBox, systemPrefix);
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
         showPullUpBox.addActionListener(new ActionListener() {
             @Override

@@ -23,7 +23,6 @@ public class AboutDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AboutDialog dialog = new AboutDialog(null, true);
         Assert.assertNotNull(dialog);
-        dialog.dispose();
     }
 
     @Test
@@ -40,7 +39,6 @@ public class AboutDialogTest {
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
-        dialog.dispose();
     }
 
     @Before
@@ -54,6 +52,9 @@ public class AboutDialogTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(false); // don't display the list of windows, 
+                                       // it will display only show the ones
+                                       // from the current test. 
         Log4JFixture.tearDown();
     }
 }

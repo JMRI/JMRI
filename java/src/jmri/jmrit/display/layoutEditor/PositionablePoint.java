@@ -1,10 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
@@ -105,7 +109,6 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Accessor methods
      */
-
     public int getType() {
         return type;
     }
@@ -127,6 +130,17 @@ public class PositionablePoint extends LayoutTrack {
 
     public void setCoords(Point2D p) {
         coords = p;
+    }
+
+    /**
+     * @return the bounds of this positional point
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoords();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        return result;
     }
 
     private PositionablePoint linkedPoint;
@@ -976,6 +990,7 @@ public class PositionablePoint extends LayoutTrack {
         return dir;
     }
 
+    JDialog editLink = null;
     JComboBox<String> linkPointsBox;
     JComboBox<JCBHandle<LayoutEditor>> editorCombo; // Stores with LayoutEditor or "None"
 
@@ -993,8 +1008,8 @@ public class PositionablePoint extends LayoutTrack {
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
                 (ActionEvent a) -> {
-            updateLink();
-        });
+                    updateLink();
+                });
 
         // make this button the default button (return or enter activates)
         // Note: We have to invoke this later because we don't currently have a root pane
@@ -1107,7 +1122,79 @@ public class PositionablePoint extends LayoutTrack {
 
     }
 
-    JDialog editLink = null;
+    /**
+     * return the connection type for a point
+     *
+     * @param p                  the point
+     * @param useRectangles      use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return value representing the point connection type
+     * @since 7.4.3
+     */
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        if (!requireUnconnected || (getConnect1() == null)
+                || ((getType() == PositionablePoint.ANCHOR) && (getConnect2() == null))) {
+            // test point control rectangle
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoords());
+            if (r.contains(p)) {
+                result = POS_POINT;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * return the coordinates for a specified connection type
+     *
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = getCoords();
+        if (connectionType != POS_POINT) {
+            log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * draw this PositionablePoint
+     *
+     * @param g2 the graphics port to draw to
+     */
+    public void draw(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        switch (getType()) {
+            case PositionablePoint.ANCHOR:
+            case PositionablePoint.EDGE_CONNECTOR: {
+                if (getConnect1() == null) {
+                    g2.setColor(Color.red);
+                } else if (getConnect2() == null) {
+                    g2.setColor(Color.blue);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                break;
+            }
+            case PositionablePoint.END_BUMPER: {
+                if (getConnect1() == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                break;
+            }
+            default: {
+                log.error("Illegal type of Positionable Point");
+                break;
+            }
+        }   //switch
+        // drawHidden locater rectangle
+        Point2D pt = getCoords();
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+    }
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
 

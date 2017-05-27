@@ -154,7 +154,7 @@ public class PositionableShape extends PositionableJComponent
         if (_degrees == 0) {
             _transform = null;
         } else {
-            double rad = _degrees * Math.PI / 180.0;
+            double rad = Math.toRadians(_degrees);
             _transform = new AffineTransform();
             // use bit shift to avoid FindBugs paranoia
             _transform.setToRotation(rad, (_width >>> 1), (_height >>> 1));
@@ -169,13 +169,13 @@ public class PositionableShape extends PositionableJComponent
         }
         Graphics2D g2d = (Graphics2D) g;
         /*
-         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
-         RenderingHints.VALUE_RENDER_QUALITY); 
-         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+         RenderingHints.VALUE_RENDER_QUALITY);
+         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
          RenderingHints.VALUE_ANTIALIAS_ON);
-         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
+         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
          RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
+         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
          RenderingHints.VALUE_INTERPOLATION_BICUBIC);
          */
         g2d.setClip(null);
@@ -234,7 +234,7 @@ public class PositionableShape extends PositionableJComponent
         pos.rotate(getDegrees());       // must be after makeShape due to updateSize call
         return super.finishClone(pos);
     }
-    
+
     @Override
     public Dimension getSize(Dimension rv) {
         return new Dimension(maxWidth(), maxHeight());
@@ -293,7 +293,7 @@ public class PositionableShape extends PositionableJComponent
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: \"{}\"= {} for {}", 
+            log.debug("property change: \"{}\"= {} for {}",
                    evt.getPropertyName(), evt.getNewValue(), getClass().getName());
         }
         if (!_editor.isEditable()) {
@@ -316,8 +316,8 @@ public class PositionableShape extends PositionableJComponent
                     super.setDisplayLevel(_saveLevel);
                     setVisible(true);
                 }
-                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this, 
-                        MouseEvent.MOUSE_MOVED, System.currentTimeMillis(), 
+                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this,
+                        MouseEvent.MOUSE_MOVED, System.currentTimeMillis(),
                         0, getX(), getY(), 0, false));
                 repaint();
                 _editor.getTargetPanel().revalidate();
@@ -327,8 +327,8 @@ public class PositionableShape extends PositionableJComponent
             setVisible(true);
         }
         if (log.isDebugEnabled()) {
-            log.debug("_changeLevel= {} _saveLevel= {} displayLevel= {} _doHide= {} visible= {}", 
-                    _changeLevel, _saveLevel, getDisplayLevel(), _doHide, isVisible()); 
+            log.debug("_changeLevel= {} _saveLevel= {} displayLevel= {} _doHide= {} visible= {}",
+                    _changeLevel, _saveLevel, getDisplayLevel(), _doHide, isVisible());
         }
     }
 
@@ -418,7 +418,7 @@ public class PositionableShape extends PositionableJComponent
     public int getChangeLevel() {
         return _changeLevel;
     }
-    
+
     public void setChangeLevel(int l) {
         _changeLevel = l;
     }
@@ -431,7 +431,7 @@ public class PositionableShape extends PositionableJComponent
     }
 
     DrawFrame _editFrame;
-    
+
     protected void setEditFrame(DrawFrame f) {
         _editFrame = f;
     }
