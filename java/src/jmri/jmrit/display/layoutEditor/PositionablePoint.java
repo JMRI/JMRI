@@ -137,7 +137,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         Point2D pointA = getCoords();
         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
         return result;
@@ -1154,6 +1154,42 @@ public class PositionablePoint extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoords();
         if (connectionType != POS_POINT) {
+            log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * get the object connected to this track for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     * @throws jmri.JmriException
+     */
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        Object result = null;
+        if (connectionType == POS_POINT) {
+            result = getConnect1();
+            if (null == result) {
+                result = getConnect2();
+            }
+        } else {
+            log.error("Invalid connection type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Point");
+        }
+        return result;
+    }
+
+    /**
+     * return true if this connection type is disconnected
+     * @param connectionType
+     * @return
+     */
+    public boolean isDisconnected(int connectionType) {
+        boolean result = false;
+        if (connectionType == POS_POINT) {
+            result = ((getConnect1() == null) || (getConnect2() == null));
+        } else {
             log.error("Invalid connection type " + connectionType); //I18IN
         }
         return result;

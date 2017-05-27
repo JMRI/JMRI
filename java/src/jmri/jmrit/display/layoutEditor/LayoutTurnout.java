@@ -1102,6 +1102,7 @@ public class LayoutTurnout extends LayoutTrack {
         return disableWhenOccupied;
     }
 
+    @Override
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
             case TURNOUT_A:
@@ -1287,7 +1288,7 @@ public class LayoutTurnout extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         Point2D pointA = getCoordsA();
         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
         result.add(getCoordsB());

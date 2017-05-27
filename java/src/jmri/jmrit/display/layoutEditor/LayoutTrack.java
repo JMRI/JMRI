@@ -18,7 +18,7 @@ public abstract class LayoutTrack {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    // connection types
+    // hit location (& connection) types
     public static final int NONE = 0;
     public static final int POS_POINT = 1;
     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
@@ -45,9 +45,6 @@ public abstract class LayoutTrack {
     public static final int SLIP_D = 24; // offset for slip connection points
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
-    public static final int FLEX_CENTER = 27;
-    public static final int FLEX_A = 28;
-    public static final int FLEX_B = 29;
     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
     //NOTE: if(/when) you need another control/hit point type leave at least four (if not eight) unused here (for more Bezier control points)
@@ -133,6 +130,7 @@ public abstract class LayoutTrack {
      * @since 7.4.?
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        log.error("virtual method: override in sub-classes and don't call super...].");
         return NONE;
     }
 
@@ -147,8 +145,8 @@ public abstract class LayoutTrack {
     }
 
     // some connection types aren't actually connections
-    // they're only used for hit testing (to determine what was clicked)
-    protected boolean isConnectionType(int connectionType) {
+    // they're only used for hit testing (to determine what is at a location)
+    protected static boolean isConnectionType(int connectionType) {
         boolean result = false; // assume failure (pessimist!)
         switch (connectionType) {
             case POS_POINT:
@@ -165,8 +163,6 @@ public abstract class LayoutTrack {
             case SLIP_B:
             case SLIP_C:
             case SLIP_D:
-            case FLEX_A:
-            case FLEX_B:
                 result = true;  // these are all connection types
                 break;
             case NONE:
@@ -181,14 +177,13 @@ public abstract class LayoutTrack {
             case SLIP_CENTER:
             case SLIP_LEFT:
             case SLIP_RIGHT:
-            case FLEX_CENTER:
             default:
-                result = false; // these are all hit types
+                result = false; // these are not
                 break;
         }
         if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-            result = false; // these are all hit types
-        } else if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = false; // these are not
+        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all connection types
         }
         return result;
@@ -201,7 +196,6 @@ public abstract class LayoutTrack {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         log.error("virtual method: override in sub-classes and don't call super...].");
-        log.error("Invalid connection type " + connectionType); //I18IN
         return center;
     }
 
@@ -215,6 +209,81 @@ public abstract class LayoutTrack {
     public Rectangle2D getBounds() {
         log.error("virtual method: override in sub-classes and don't call super...].");
         return new Rectangle2D.Double();
+    }
+
+    /**
+     * get the object connected to this track for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     * @throws jmri.JmriException
+     */
+    public Object getConnection(int connectionType) /* throws jmri.JmriException */ {
+        Object result = null;
+        try {
+            switch (connectionType) {
+                case POS_POINT: {
+                    result = ((PositionablePoint)this).getConnection(connectionType);
+                    break;
+                }
+                case TURNOUT_A:
+                case TURNOUT_B:
+                case TURNOUT_C:
+                case TURNOUT_D: {
+                    result = ((LayoutTurnout)this).getConnection(connectionType);
+                    break;
+                }
+                case LEVEL_XING_A:
+                case LEVEL_XING_B:
+                case LEVEL_XING_C:
+                case LEVEL_XING_D: {
+                    result = ((LevelXing)this).getConnection(connectionType);
+                    break;
+                }
+
+                case TRACK: {
+                    result = ((TrackSegment)this).getConnection(connectionType);
+                    break;
+                }
+
+                case SLIP_A:
+                case SLIP_B:
+                case SLIP_C:
+                case SLIP_D: {
+                    result = ((LayoutSlip)this).getConnection(connectionType);
+                    break;
+                }
+                default: {
+                    if (connectionType >= TURNTABLE_RAY_OFFSET) {
+                        result = ((LayoutTurntable)this).getConnection(connectionType);
+                    } else {
+                        log.error("Invalid connection type " + connectionType); //I18IN
+                    }
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            //exceptions make me throw up…
+            log.error("This error message, which nobody will ever see, shuts my IDE up.");
+        }
+        return result;
+    }
+
+    /**
+     * return true if this connection type is disconnected
+     * @param connectionType
+     * @return
+     */
+    public boolean isDisconnected(int connectionType) {
+        boolean result = false;
+        if (isConnectionType(connectionType)) {
+            try {
+                result = (null == getConnection(connectionType));
+            } catch (Exception e) {
+                //exceptions make me throw up…
+                log.error("This error message, which nobody will ever see, shuts my IDE up.");
+            }
+        }
+        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

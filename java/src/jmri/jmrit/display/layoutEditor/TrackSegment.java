@@ -512,14 +512,14 @@ public class TrackSegment extends LayoutTrack {
         String info = rb.getString("TrackSegment");
         if (getArc()) {
             if (getCircle()) {
-                info = info + "( " + Bundle.getMessage("Circle") + ")";
+                info = info + " (" + Bundle.getMessage("Circle") + ")";
             } else {
-                info = info + "( " + Bundle.getMessage("Ellipse") + ")";
+                info = info + " (" + Bundle.getMessage("Ellipse") + ")";
             }
         } else if (getBezier()) {
-            info = info + "( " + Bundle.getMessage("Bezier") + ")";
+            info = info + " (" + Bundle.getMessage("Bezier") + ")";
         } else {
-            info = info + "( " + Bundle.getMessage("Line") + ")";
+            info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
         JMenuItem jmi = popup.add(info);
