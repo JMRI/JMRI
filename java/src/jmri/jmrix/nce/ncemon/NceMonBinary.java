@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class NceMonBinary {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.ncemon.NceMonBinaryBundle");
-    Logger log = LoggerFactory.getLogger(NceMonBinary.class);
+    private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
 
     private static final String NEW_LINE = "\n";
 
