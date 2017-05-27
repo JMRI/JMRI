@@ -250,6 +250,7 @@ public abstract class LayoutTrack {
                     result = ((LayoutTurntable)this).getConnection(connectionType);
                 } else {
                     log.error("Invalid connection type " + connectionType); //I18IN
+                    throw new jmri.JmriException("Invalid Point");
                 }
                 break;
             }

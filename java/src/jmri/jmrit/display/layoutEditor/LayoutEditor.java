@@ -5359,7 +5359,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (result1) {
                         if (layoutTrack instanceof LayoutTurntable) {
                             if (layoutTrack.isConnectionType(selectedPointType)) {
-                                selectedObject = layoutTrack.getConnection(selectedPointType);
+                                try {
+                                    selectedObject = layoutTrack.getConnection(selectedPointType);
+                                } catch (jmri.JmriException e) {
+                                    // nothing to see here… move along…
+                                }
                             } else {
                                 selectedPointType = LayoutTrack.NONE;
                             }
