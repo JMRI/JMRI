@@ -1,10 +1,9 @@
-package jmri.jmrit.logix;
+package jmri.jmrix.rps.trackingpanel;
 
-import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LearnThrottleFrameTest {
+public class RpsTrackingControlPaneTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        RpsTrackingPanel p = new RpsTrackingPanel();
+        RpsTrackingControlPane t = new RpsTrackingControlPane(p);
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -36,6 +34,6 @@ public class LearnThrottleFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LearnThrottleFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsTrackingControlPaneTest.class.getName());
 
 }

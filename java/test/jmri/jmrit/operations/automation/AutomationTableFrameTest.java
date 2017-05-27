@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
+public class AutomationTableFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testNewFrameCreation() {
