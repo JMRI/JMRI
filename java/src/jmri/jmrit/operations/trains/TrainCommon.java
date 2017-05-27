@@ -247,7 +247,7 @@ public class TrainCommon {
                 }
                 found = true;
                 for (Car car : carList) {
-                    if (Setup.isSortByTrackEnabled() &&
+                    if (Setup.isSortByTrackNameEnabled() &&
                             !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                         continue;
                     }
@@ -297,9 +297,9 @@ public class TrainCommon {
             }
             // now do set outs and local moves
             for (Car car : carList) {
-                if (Setup.isSortByTrackEnabled() && car.getRouteLocation() != null && car.getRouteDestination() == rl) {
+                if (Setup.isSortByTrackNameEnabled() && car.getRouteLocation() != null && car.getRouteDestination() == rl) {
                     // must sort local moves by car's destination track name and not car's track name
-                    // sorting by car's track name fails it there are "similar" location names.
+                    // sorting by car's track name fails if there are "similar" location names.
                     if (!splitString(track.getName()).equals(splitString(car.getDestinationTrackName()))) {
                         continue;
                     }
@@ -349,7 +349,7 @@ public class TrainCommon {
                     }
                 }
             }
-            if (!Setup.isSortByTrackEnabled()) {
+            if (!Setup.isSortByTrackNameEnabled()) {
                 break; // done
             }
         }
@@ -397,7 +397,7 @@ public class TrainCommon {
                             ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
                                     (rld == routeList.get(routeList.size() - 1) &&
                                             (car.isCaboose() || car.hasFred())))) {
-                        if (Setup.isSortByTrackEnabled() &&
+                        if (Setup.isSortByTrackNameEnabled() &&
                                 !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                             continue;
                         }
@@ -435,7 +435,7 @@ public class TrainCommon {
                     }
                 }
             }
-            if (!Setup.isSortByTrackEnabled()) {
+            if (!Setup.isSortByTrackNameEnabled()) {
                 break; // done
             }
         }
