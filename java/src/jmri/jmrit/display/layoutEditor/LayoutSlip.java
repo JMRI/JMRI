@@ -166,6 +166,12 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * get the object connected to this slip for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     */
+ 
     @Override
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {

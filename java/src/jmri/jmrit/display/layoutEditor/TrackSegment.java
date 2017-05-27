@@ -481,7 +481,6 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-
     /**
      * @return the bounds of this track segment
      */
@@ -1555,6 +1554,11 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)
+
+    public void reCheckBlockBoundary()
+    {
+        // nothing to do here… move along…
+    }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }

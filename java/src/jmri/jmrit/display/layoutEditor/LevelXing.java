@@ -576,7 +576,13 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    public Object getConnection(int location) throws jmri.JmriException {
+    /**
+     * get the object connected to this track for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     */
+    @Override
+     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
             case LEVEL_XING_A:
                 return connectA;

@@ -1102,7 +1102,12 @@ public class LayoutTurnout extends LayoutTrack {
         return disableWhenOccupied;
     }
 
-    @Override
+    /**
+     * get the object connected to this track for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     */
+     @Override
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
             case TURNOUT_A:

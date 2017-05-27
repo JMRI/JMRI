@@ -124,15 +124,13 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return the connection type for a point (abstract; should be overridden by
-     * sub-classes)
-     *
-     * @since 7.4.?
+     * find the hit (location) type for a point (abstract: should be overridden by ALL subclasses)
+     * @param p the point
+     * @param useRectangles whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected whether to only return hit types for free connections
+     * @return 
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
-        log.error("virtual method: override in sub-classes and don't call super...].");
-        return NONE;
-    }
+    protected abstract int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     protected int findHitPointType(Point2D p) {
@@ -191,87 +189,77 @@ public abstract class LayoutTrack {
 
     /**
      * return the coordinates for a specified connection type
+     * (abstract: should be overridden by ALL subclasses)
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
-    public Point2D getCoordsForConnectionType(int connectionType) {
-        log.error("virtual method: override in sub-classes and don't call super...].");
-        return center;
-    }
+    public abstract Point2D getCoordsForConnectionType(int connectionType);
 
-    public void reCheckBlockBoundary() {
-        log.error("virtual method: override in sub-classes and don't call super...].");
-    }
+    /**
+     * abstract method… subclasses should implement _IF_ they need to recheck their block boundaries
+     */
+    public abstract void reCheckBlockBoundary();
 
     /**
      * @return the bounds of this track
+     * (abstract: should be overridden by ALL subclasses)
      */
-    public Rectangle2D getBounds() {
-        log.error("virtual method: override in sub-classes and don't call super...].");
-        return new Rectangle2D.Double();
-    }
+    public abstract Rectangle2D getBounds();
 
     /**
      * get the object connected to this track for this connection type
      * @param connectionType
      * @return the object connected to this layout track connected for the connection type
-     * @throws jmri.JmriException
      */
-    public Object getConnection(int connectionType) /* throws jmri.JmriException */ {
+    public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
-        try {
-            switch (connectionType) {
-                case POS_POINT: {
-                    result = ((PositionablePoint)this).getConnection(connectionType);
-                    break;
-                }
-                case TURNOUT_A:
-                case TURNOUT_B:
-                case TURNOUT_C:
-                case TURNOUT_D: {
-                    result = ((LayoutTurnout)this).getConnection(connectionType);
-                    break;
-                }
-                case LEVEL_XING_A:
-                case LEVEL_XING_B:
-                case LEVEL_XING_C:
-                case LEVEL_XING_D: {
-                    result = ((LevelXing)this).getConnection(connectionType);
-                    break;
-                }
-
-                case TRACK: {
-                    result = ((TrackSegment)this).getConnection(connectionType);
-                    break;
-                }
-
-                case SLIP_A:
-                case SLIP_B:
-                case SLIP_C:
-                case SLIP_D: {
-                    result = ((LayoutSlip)this).getConnection(connectionType);
-                    break;
-                }
-                default: {
-                    if (connectionType >= TURNTABLE_RAY_OFFSET) {
-                        result = ((LayoutTurntable)this).getConnection(connectionType);
-                    } else {
-                        log.error("Invalid connection type " + connectionType); //I18IN
-                    }
-                    break;
-                }
+        switch (connectionType) {
+            case POS_POINT: {
+                result = ((PositionablePoint)this).getConnection(connectionType);
+                break;
             }
-        } catch (Exception e) {
-            //exceptions make me throw up…
-            log.error("This error message, which nobody will ever see, shuts my IDE up.");
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D: {
+                result = ((LayoutTurnout)this).getConnection(connectionType);
+                break;
+            }
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D: {
+                result = ((LevelXing)this).getConnection(connectionType);
+                break;
+            }
+
+            case TRACK: {
+                result = ((TrackSegment)this).getConnection(connectionType);
+                break;
+            }
+
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D: {
+                result = ((LayoutSlip)this).getConnection(connectionType);
+                break;
+            }
+            default: {
+                if (connectionType >= TURNTABLE_RAY_OFFSET) {
+                    result = ((LayoutTurntable)this).getConnection(connectionType);
+                } else {
+                    log.error("Invalid connection type " + connectionType); //I18IN
+                }
+                break;
+            }
         }
         return result;
     }
 
     /**
-     * return true if this connection type is disconnected
      * @param connectionType
-     * @return
+     * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {
         boolean result = false;

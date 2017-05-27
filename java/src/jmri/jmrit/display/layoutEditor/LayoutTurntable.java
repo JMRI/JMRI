@@ -331,6 +331,12 @@ public class LayoutTurntable extends LayoutTrack {
         return result;
     }
 
+    /**
+     * get the object connected to this track for this connection type
+     * @param connectionType
+     * @return the object connected to this layout track connected for the connection type
+     */
+    @Override
     public Object getConnection(int locationType) throws jmri.JmriException {
         Object result = null;
         if (locationType >= TURNTABLE_RAY_OFFSET) {
@@ -1078,5 +1084,10 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
+    public void reCheckBlockBoundary()
+    {
+        // nothing to do here… move along…
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
 }
