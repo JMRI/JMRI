@@ -375,8 +375,7 @@ public class NXFrame extends WarrantRoute {
         }
         if (msg == null) {
             warrant.setTrainName(name);
-            warrant.setBlockOrders(getOrders());
-            warrant.setOrders(getOrders());
+            warrant.setBlockOrders(orders);
         }
         int mode;
         if (msg == null && !_runManual.isSelected()) {

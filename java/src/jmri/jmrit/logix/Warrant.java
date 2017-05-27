@@ -54,10 +54,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public static final String Clear = "Clear";     // NOI18N
     
     // permanent members.
-    private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
+    protected List<BlockOrder> _orders;
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;
-    private List<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
+    private List<ThrottleSetting> _commands = new ArrayList<ThrottleSetting>();
     protected String _trainName;    // User train name for icon
     private String _trainId;        // Roster Id
     private DccLocoAddress _dccAddress;
@@ -66,11 +66,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private boolean _noRamp;        // do not ramp speed changes. make immediate speed change when entering approach block.
 
     // transient members
-    protected List<BlockOrder> _orders;     // temp orders used in run mode
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
     private boolean _tempRunBlind;          // run mode flag to allow running on ET only
     private boolean _delayStart;            // allows start block unoccupied and wait for train
-    protected List <ThrottleSetting> _commands;   // temp commands used in run mode
     protected int     _idxCurrentOrder;       // Index of block at head of train (if running)
     protected int     _idxLastOrder;          // Index of block at tail of train just left
     private String  _curSpeedType;  // name of last moving speed, i.e. never "Stop".  Used to restore previous speed 
@@ -158,39 +156,23 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     
     /**
-     * Return copy of permanently saved BlockOrders
+     * Return BlockOrders
      * @return list of block orders
      */
     public List<BlockOrder> getBlockOrders() {
-        return new ArrayList<BlockOrder>(_savedOrders);
+        return _orders;
     }
     
-    public List<BlockOrder> getSavedOrders() {
-        return _savedOrders;
-    }
-
     /**
      * Add permanently saved BlockOrder
      * @param order block order
      */
     public void addBlockOrder(BlockOrder order) {
-        _savedOrders.add(order);
+        _orders.add(order);
     }
 
     public void setBlockOrders(List<BlockOrder> orders) {
-        _savedOrders.clear();
-        for (int i = 0; i < orders.size(); i++) {
-            _savedOrders.add(new BlockOrder(orders.get(i)));
-        }
-    }
-    protected void setOrders(List<BlockOrder> orders) {
         _orders = orders;
-    }
-    protected List<BlockOrder> getOrders() {
-        if (_orders!=null && _orders.size()>0) {
-            return _orders;            
-        }
-        return getBlockOrders();
     }
 
     /**
@@ -198,10 +180,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return origin block order
      */
     public BlockOrder getfirstOrder() {
-        if (_savedOrders.size() == 0) {
+        if (_orders.size() == 0) {
             return null;
         }
-        return new BlockOrder(_savedOrders.get(0));
+        return new BlockOrder(_orders.get(0));
     }
 
     /**
@@ -209,14 +191,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return destination block order
      */
     public BlockOrder getLastOrder() {
-        if (_savedOrders.size() == 0) {
-            if (_orders.size()==0) {
-                return null;
-            } else {
-                return new BlockOrder(_orders.get(_orders.size() - 1));                
-            }
+        int size = _orders.size();
+        if (size < 2) {
+            return null;
         }
-        return new BlockOrder(_savedOrders.get(_savedOrders.size() - 1));
+        return new BlockOrder(_orders.get(size - 1));
     }
 
     /**
@@ -246,13 +225,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     protected String getRoutePathInBlock(OBlock block) {
-        List<BlockOrder> orders = _orders;
-        if (orders == null) {
-            orders = getBlockOrders();
-        }
-        for (int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getBlock().equals(block)) {
-                return orders.get(i).getPathName();
+        for (int i = 0; i < _orders.size(); i++) {
+            if (_orders.get(i).getBlock().equals(block)) {
+                return _orders.get(i).getPathName();
             }
         }
         return null;
@@ -372,15 +347,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return copy
      */
     public List<ThrottleSetting> getThrottleCommands() {
-        return  new ArrayList<ThrottleSetting>(_throttleCommands);
+        return  new ArrayList<ThrottleSetting>(_commands);
     }
 
     public void setThrottleCommands(List<ThrottleSetting> list) {
-        _throttleCommands = list;
+        _commands = list;
     }
 
     public void addThrottleCommand(ThrottleSetting ts) {
-        _throttleCommands.add(ts);
+        _commands.add(ts);
     }
     
     public void setNoRamp(boolean set) {
@@ -540,8 +515,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return true if route is free
      */
     public boolean routeIsFree() {
-        for (int i = 0; i < _savedOrders.size(); i++) {
-            OBlock block = _savedOrders.get(i).getBlock();
+        for (int i = 0; i < _orders.size(); i++) {
+            OBlock block = _orders.get(i).getBlock();
             if (!block.isFree()) {
                 return false;
             }
@@ -554,8 +529,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return true if any block is occupied
      */
     public boolean routeIsOccupied() {
-        for (int i = 1; i < _savedOrders.size(); i++) {
-            OBlock block = _savedOrders.get(i).getBlock();
+        for (int i = 1; i < _orders.size(); i++) {
+            OBlock block = _orders.get(i).getBlock();
             if ((block.getState() & OBlock.OCCUPIED) != 0) {
                 return true;
             }
@@ -604,7 +579,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (getDccAddress() == null) {
                     return Bundle.getMessage("NoLoco");
                 }
-                if (!(this instanceof SCWarrant) && _throttleCommands.size() <= _savedOrders.size()) {
+                if (!(this instanceof SCWarrant) && _commands.size() <= _orders.size()) {
                     return Bundle.getMessage("NoCommands", getDisplayName());
                 }
                 if (_idxCurrentOrder!=0 && _idxLastOrder ==_idxCurrentOrder) {
@@ -788,9 +763,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // set mode before notifyThrottleFound is called
             _runMode = mode;
         } else if (mode == MODE_RUN || mode == MODE_MANUAL) {
-            if (commands == null || commands.size() == 0) {
-                _commands = _throttleCommands;
-            } else {
+            if (commands != null && commands.size() > _orders.size()) {
                 _commands = commands;
             }
             // set mode before setStoppingBlock and callback to notifyThrottleFound are called
@@ -1053,9 +1026,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return null;
         }
         _totalAllocated = false;
-        if (orders == null) {
-            _orders = getBlockOrders();
-        } else {
+        if (orders != null) {
             _orders = orders;
         }
         _allocated = false;

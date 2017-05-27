@@ -70,7 +70,7 @@ public class WarrantManagerXml //extends XmlFile
                 elem.addContent(c);
             }
             
-            List <BlockOrder> orders = warrant.getSavedOrders();
+            List <BlockOrder> orders = warrant.getBlockOrders();
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }

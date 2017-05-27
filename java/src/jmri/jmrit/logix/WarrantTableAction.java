@@ -237,7 +237,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getSavedOrders();
+            List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();
@@ -257,7 +257,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getSavedOrders();
+            List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();
@@ -599,7 +599,7 @@ public class WarrantTableAction extends AbstractAction {
          */
         private void doConcatenate(Warrant w) {
             if (_startW != null) {
-                List<BlockOrder> orders = _startW.getOrders();
+                List<BlockOrder> orders = _startW.getBlockOrders();
                 int limit = orders.size() - 1;
                 for (int i = 0; i < limit; i++) {
                     w.addBlockOrder(new BlockOrder(orders.get(i)));
@@ -611,7 +611,7 @@ public class WarrantTableAction extends AbstractAction {
                 }
                 BlockOrder bo = new BlockOrder(orders.get(limit));
                 if (_endW != null) {
-                    orders = _endW.getOrders();
+                    orders = _endW.getBlockOrders();
                     bo.setExitName(orders.get(0).getExitName());
                     w.addBlockOrder(bo);
                     for (int i = 1; i < orders.size(); i++) {
