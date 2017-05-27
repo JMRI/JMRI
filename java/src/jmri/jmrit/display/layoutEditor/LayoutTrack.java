@@ -212,7 +212,6 @@ public abstract class LayoutTrack {
      * @return the object connected to this slip for the specified connection type
      * @throws jmri.JmriException
      */
-    @Override
     public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
         switch (connectionType) {
