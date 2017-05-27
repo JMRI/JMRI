@@ -196,7 +196,7 @@ public class NamedIcon extends ImageIcon {
     private String mName = null;
     private String mURL = null;
     private Image mDefaultImage;
-    /*    
+    /*
      public Image getOriginalImage() {
      return mDefaultImage;
      }*/
@@ -347,9 +347,9 @@ public class NamedIcon extends ImageIcon {
      jmri.jmrit.display.Positionable pos = (jmri.jmrit.display.Positionable)c;
      java.awt.Rectangle r = c.getBounds();
      log.debug(pos.getNameString()+" "+op);
-     System.out.println("\tBounds at ("+r.x+", "+r.y+") width= "+r.width+", height= "+r.height); 
+     System.out.println("\tBounds at ("+r.x+", "+r.y+") width= "+r.width+", height= "+r.height);
      System.out.println("\tLocation at ("+c.getX()+", "+c.getY()+") width= "+
-     c.getWidth()+", height= "+c.getHeight()); 
+     c.getWidth()+", height= "+c.getHeight());
      }
      */
     /**
@@ -389,7 +389,7 @@ public class NamedIcon extends ImageIcon {
         if (degree == 0) {
             return;
         }
-        double rad = degree * Math.PI / 180.0;
+        double rad = Math.toRadians(degree);
         double w = getIconWidth();
         double h = getIconHeight();
         int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));

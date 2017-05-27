@@ -39,12 +39,12 @@
       you may want to jump to <a href="#finish">Putting Finishing
       Touches on your Panel</a> to see more of what's possible
       before reading the various other sections in detail.</p>
-      
-      <p>Notice:  The signal related portions of this help file have not been updated and
-      apply mainly to signal <em>heads</em>.  Those discussions predate signal masts.
-      <span class="since">since 2.14</span>
-      Masts are fully supported in Layout Editor Panels, but only described briefly.
-	  </p>
+
+      <p>Notice:  The signal related portions of this help file have not
+      been updated and apply mainly to signal <em>heads</em>.  Those
+      discussions predate signal masts. <span class="since">since
+      2.14</span> Masts are fully supported in Layout Editor Panels, but
+      only described briefly. </p>
 
       <ul>
         <li><a href="#intro">Introduction to Layout Editor
@@ -187,17 +187,16 @@
       them.) Move the cursor over the radio buttons, check boxes and
       entry fields in the tool bar, noting that each has a tool tip.</p>
 
-      <p>3. To add a right-handed turnout, first, select RH for
-      Turnout Type in the top row of the tool bar. Then, while
-      depressing the shift key, click the mouse (left click on a
-      two-button mouse) on a point about one third down and one
-      third across from the upper left of your panel. A
-      right-handed turnout should appear. The three red squares at
-      the ends of the throat and the continuing and diverging legs
-      of the turnout are connection points for <b>Track
-      Segments</b>. The round circle at the center of the turnout
-      is where you should point to get the turnout's popup
-      menu.</p>
+      <p>3. To add a right-handed turnout, first, select RH for Turnout
+      Type in the top row of the tool bar. Then, while depressing the
+      shift key, click the mouse (left click on a two-button mouse) on a
+      point about one third down and one third across from the upper
+      left of your panel. A right-handed turnout should appear. The
+      three <strong><span style="color:red">red</span></strong> squares
+      at the ends of the throat and the continuing and diverging legs of
+      the turnout are connection points for <b>Track Segments</b>. The
+      round circle at the center of the turnout is where you should
+      point to get the turnout's popup menu.</p>
 
       <p>4. To add a left-handed turnout, first, select LH for
       turnout type. (Note that the selection is automatically turned
@@ -215,7 +214,8 @@
       drag to the diverging connection point of the other turnout,
       and release the mouse button when the cursor changes shape.
       You should see a track segment connecting the two turnouts,
-      and both connection points should change color to green,
+      and both connection points should change color to
+      <strong><span style="color:green">green</span></strong>,
       indicating they are <i>full</i>, that is they have the
       maximum number of connections allowed. Similarly press and
       drag with shift pressed to add a track segment connecting the
@@ -227,25 +227,25 @@
       pressed, click on a point a couple of inches below and
       slightly to the right of the turnout on your left.</p>
 
-      <p>7. To connect this turnout with the upper passing track
-      and form a simple oval track diagram, select Anchor Point on
-      the third row of the tool bar. An <b>Anchor Point</b> is a
-      node in a track diagram that can accept two connecting track
-      segments; it's used to place connected track segments so that
-      they look reasonably nice (and also to divide blocks). While
-      holding shift down, click on a point exactly to the left of
-      the turnout on your upper left, and again on a point directly
-      below this one, but exactly to the left of the lower turnout.
-      Next click on a point about 1/2 inch to the left and 1/2 inch
-      below the upper anchor point, and again on a point 1/2 inch
-      to the left and 1/2 inch above the lower anchor point. You
-      should now have four anchor points outlining the left side of
-      the oval. Connect these four points and the turnout throat
-      connection points with track segments--select Track Segment,
-      then with shift pressed, click and drag to create each of the
-      five track segments needed. Note that the anchor point
-      rectangle will change from red to green when it has two
-      connections. Similarly repeat this procedure to draw the
+      <p>7. To connect this turnout with the upper passing track and
+      form a simple oval track diagram, select Anchor Point on the third
+      row of the tool bar. An <b>Anchor Point</b> is a node in a track
+      diagram that can accept two connecting track segments; it's used
+      to place connected track segments so that they look reasonably
+      nice (and also to divide blocks). While holding shift down, click
+      on a point exactly to the left of the turnout on your upper left,
+      and again on a point directly below this one, but exactly to the
+      left of the lower turnout. Next click on a point about 1/2 inch to
+      the left and 1/2 inch below the upper anchor point, and again on a
+      point 1/2 inch to the left and 1/2 inch above the lower anchor
+      point. You should now have four anchor points outlining the left
+      side of the oval. Connect these four points and the turnout throat
+      connection points with track segments--select Track Segment, then
+      with shift pressed, click and drag to create each of the five
+      track segments needed. Note that the anchor point rectangle will
+      change from <strong><span style="color:red">red</span></strong> to
+      <strong><span style="color:green">green</span></strong> when it
+      has two connections. Similarly repeat this procedure to draw the
       right side of the oval.</p>
 
       <p>8. Turnout positions and anchor point positions may be
@@ -255,17 +255,17 @@
       the position of a turnout, drag the center point of the
       turnout with the meta key pressed.</p>
 
-      <p>9. Next complete the industry siding. The diverging
-      connection point of the lower turnout should be the only box
-      needing a connection (colored red). Select End Bumper in the
-      tool bar. An <b>End Bumper</b> is a node in a track diagram
-      that can accept only one connection. With shift pressed,
-      click on a point exactly to the right of the diverging
-      connection point of the lower turnout. Connect your end
-      bumper to the diverging connection point by holding shift
-      down, while pressing the mouse button on the diverging
-      connection point and dragging to the end bumper. Your track
-      diagram should look like the following:</p>
+      <p>9. Next complete the industry siding. The diverging connection
+      point of the lower turnout should be the only box needing a
+      connection (colored <strong><span
+      style="color:red">red</span></strong>). Select End Bumper in the
+      tool bar. An <b>End Bumper</b> is a node in a track diagram that
+      can accept only one connection. With shift pressed, click on a
+      point exactly to the right of the diverging connection point of
+      the lower turnout. Connect your end bumper to the diverging
+      connection point by holding shift down, while pressing the mouse
+      button on the diverging connection point and dragging to the end
+      bumper. Your track diagram should look like the following:</p>
 
       <p><a href="./images/OvalLayoutEditMode.gif"><img src=
       "./images/OvalLayoutEditMode.gif" align="middle" width="563"
@@ -328,8 +328,7 @@
         <li><b>Level Crossing</b> - selects a level crossing track
         (a diamond)</li>
 
-        <li><b>Track Segment</b> - selects a piece of straight
-        track</li>
+        <li><b>Track Segment</b> - selects a piece of connecting track</li>
 
         <li><b>End Bumper</b> - selects a connection point at the
         end of a track</li>
@@ -392,12 +391,15 @@
         <li>Release the mouse, and then release the shift key.</li>
       </ol>
 
-      <p>A Track Segment is a piece of straight track connecting
-      two connection points (red squares on a turnout, anchor
-      point, end bumper, edge connector or level crossing). Before
-      you can add a Track Segment, two red connection points must
-      be visible on the panel. To add a Track Segment connecting
-      two red connection points:</p>
+      <p>A Track Segment is a piece of track connecting two connection
+      points (<strong><span style="color:red">red</span></strong>
+      squares on a turnout, anchor point, end bumper, edge connector,
+      turnout's, crossover's, or level crossing). Before you can add a
+      Track Segment, two <strong><span
+      style="color:red">red</span></strong> connection points must be
+      visible on the panel. To add a Track Segment connecting two
+      <strong><span style="color:red">red</span></strong> connection
+      points:</p>
 
       <ol>
         <li>Select the Track Segment radio button in the tool
@@ -431,6 +433,30 @@
       below, along with which created items they apply to and
       whether they are optional or required.</p>
 
+      <p>
+      <span class="since">Since 4.7.3</span>:
+      Most of the toolbar's <b>text fields</b> have now been replaced with
+      <b>combo boxes</b>. A <b>combo box</b> combines a <b>text field</b>
+      with a <b>drop down list</b>. You may ether type text into the
+      <b>text field</b> or select an item from the <b>drop down list</b>.
+      Selecting an item from the <b>drop down list</b> will copy it
+      into the <b>text field</b> where you may edit it.
+      </p>
+      <p>
+      Note: Toolbar <b>Combo boxes</b> are color coded! If you enter the name of an
+      existing item then the background color of the <b>combo box</b> will turn
+      <strong><span style="background-color: #BDECB6">green</span></strong>.
+      If the item doesn't match the name of an existing item then the
+      background will ether turn
+      <strong><span style="background-color: #FDFD96">yellow</span></strong>
+      if a new item with that name will be created or
+      <strong><span style="background-color: #FFC0C0">red</span></strong>
+      if that name can not be used.
+      </p>
+      <p>
+      <b>Combo boxes</b> that are not applicable for the currently
+      selected edit toolbar item are disabled.
+      </p>
       <ul>
         <li><b>Turnout: Name</b> (ComboBox) - applies to RH, LH, WYE,
         Double X-over, RH X-over, LH X-over, Single Slip, Double Slip -
@@ -531,9 +557,6 @@
       using a black background you may need to switch to white
       icons that are available in the same area, since the default
       icons have black borders.</p>
-      <p>The <b>combo</b> boxes provide a list of available items from
-      which to choose.  In some cases, as mentioned above, a new name can
-      be entered which will be used to create a new item.</p>
 
       <a name="toolbox" id="toolbox"></a>
 
@@ -542,13 +565,13 @@
       <p>The classic toolbar resides to the top or side of the panel.  The
       <b>toolbox</b> floats on the screen and can be moved around.  It provides
       all of the same functions as the toolbar.</p>
-      
+
       <p>The radio buttons, checkboxes, combo boxes and labels are grouped
       together on 4 tabs:  <b>Turnouts</b>, <b>Track</b>, <b>Labels</b> and
       <b>Icons</b>. Below the tab section is a line that displays the current
       zoom factor and cursor location.  The title bar includes the name
       of the related panel.</p>
-      
+
       <p>Since the Toolbox is a standard window, it contains the Close
 	  and Minimize buttons.  The Close button <b><em>hides</em></b> the toolbox,
       it does not delete it.  To show it again, select the toolbox name
@@ -1099,6 +1122,10 @@
       Zoom</b> selected. Since zooming is temporary, the zoom
       factor is not preserved when a panel is saved.</p>
 
+      <p> <span class="since">As of 4.7.3</span> the Layout Editor Zoom
+      is saved and restored per-system. Also the mouse wheel (with
+      alt-(option-)key) may be used to zoom in and out.</p>
+
       <a name="markermenu" id="markermenu"></a>
       <h2>Using Layout Editor's Marker Menu</h2>
 
@@ -1378,23 +1405,28 @@
 
       <h2>Track Segments and Connection Points</h2>
 
-      <p>A <b>Track Segment</b> is a piece of straight track
-      stretching between two connection points. Connection points
-      are drawn as small red or green squares. Connection points
-      are found on turnouts, anchor points, end bumpers, edge
-      connectors, and level crossings. Each turnout has three or
-      four connection points, each accepting one connection. Each
-      anchor point has one connection point that can accept two
-      connections. An end bumper is similar, but only accepts one
-      connection. An Edge Connector will only accept one
-      connection, and is used to mark the "Edge" of the current
-      panel. Level crossings have four connection points, each
-      accepting one connection. A connection point that can accept
-      a connecting track segment is drawn red. When a connection
-      point has its capacity of connections, its color is changed
-      to green. When all connection points are green, a track
-      diagram is complete, with all connections defined.</p>
-
+      <p>A <b>Track Segment</b> is a two ended piece of track between
+      two connection points. Connection points are found on anchor
+      points, end bumpers, edge connectors, turnouts, slips, cross
+      overs, level crossings and turn tables.
+      </p>
+      <p>Anchor points have one connection point that accept two
+      connections. All other connection points only accept one.
+      End bumpers have one connection point. An Edge Connector
+      only accepts one connection and is used to mark the "Edge"
+      of the current layout. Each turnout has three connection
+      points and each slip, cross over and level crossing has four.
+      </p>
+      <p>
+      A connection point that can accept a connecting track segment
+      is drawn <strong><span style="color:red">red</span></strong>.
+      When a connection point has its capacity of connections, its
+      color is changed to
+      <strong><span style="color:green">green</span></strong>.
+      When all  connection points are
+      <strong><span style="color:green">green</span></strong>
+      , the layout diagram is complete with all connections defined.
+      </p>
       <p>Track segments are normally drawn as solid lines. but you
       can designate that a track segment be drawn <i>dashed</i> to
       show tunnels or tracks crossing at different grades. You can
@@ -1409,7 +1441,21 @@
       diagrams drawn as multiple rows where the end of one row
       connects to the beginning of the same or another row. To make
       a track segment hidden, check <b>Hide Track</b> in the Edit
-      Track Segment dialog.</p>
+      Track Segment dialog.
+      </p>
+
+      <p>The default appearance of a track segment is a straight
+      line however you may change its appearance to <b>Circle</b>,
+      <b>Ellipse</b> or <b>Bezier</b> via its popup menu (when in edit
+      mode). Circled track segments are drawn as fixed radius arc's
+      connecting the two end points. When in edit mode the radius may
+      be adjusted by dragging the center point of the circle. An
+      ellipsed track segments end points are connected with an arc
+      and a Bezier track segments end points are connected with a
+      Bezier curve. Control points are used to effect the curve of
+      Bezier track segments and may be added or deleted via the
+      track segment's popup menu (when in edit mode).
+      </p>
 
       <p>Optionally, track segments are used to designate
       <i>mainline track</i> or <i>side track</i>. The legs of
@@ -1439,21 +1485,23 @@
       be entered or changed. (Blocks are discussed more fully
       below.)</p>
 
-      <p>An <b>Edge Connector</b> is used to denote that the
-      current track finished on this panel and can continue on
-      another one. The connector uses the same red/green states of
-      an Anchor point, along with a third blue state which means
-      that the connector has not been linked with a track segment
-      on a different panel. To do the linking, right click on the
-      edge connector and select "edit link", the dialogue box which
-      appears will be populated with a list of available layout
-      panels, and any valid edge connectors. A valid edge connector
-      is defined as one that is not already linked, is connected to
-      a track segment that is configured with a block, which is not
-      the same as the block our connected track segment is
-      configured as (ie the edge connector becomes a block
-      boundary). And that the two track segments are going in the
-      same direction.</p>
+      <p>An <b>Edge Connector</b> is used to denote that the current
+      track finished on this panel and can continue on another one. The
+      connector uses the same <strong><span
+      style="color:red">red</span></strong> / <strong><span
+      style="color:green">green</span></strong> states of an Anchor
+      point, along with a third <strong><span
+      style="color:blue">blue</span></strong> state which means that the
+      connector has not been linked with a track segment on a different
+      panel. To do the linking, right click on the edge connector and
+      select "edit link", the dialogue box which appears will be
+      populated with a list of available layout panels, and any valid
+      edge connectors. A valid edge connector is defined as one that is
+      not already linked, is connected to a track segment that is
+      configured with a block, which is not the same as the block our
+      connected track segment is configured as (ie the edge connector
+      becomes a block boundary). And that the two track segments are
+      going in the same direction.</p>
 
       <p><a name="xing" id="xing"></a></p>
 
@@ -1849,13 +1897,13 @@
         set up using <b>Set Signals at Block Boundary</b> by
         following a similar procedure.</li>
 
-        <li>Since all signal heads will show red if occupancy sensors
-        are in an "Unknown" state, the Sensor Table was opened and
-        all occupancy sensors were set to "Inactive" (unoccupied)
-        by clicking "Unknown" once. Then the industry turnout was
-        clicked to set it to thrown, producing the panel shown
-        above (with Edit Mode switched off in the Options
-        menu).</li>
+        <li>Since all signal heads will show <strong><span
+        style="color:red">red</span></strong> if occupancy sensors are
+        in an "Unknown" state, the Sensor Table was opened and all
+        occupancy sensors were set to "Inactive" (unoccupied) by
+        clicking "Unknown" once. Then the industry turnout was clicked
+        to set it to thrown, producing the panel shown above (with Edit
+        Mode switched off in the Options menu).</li>
       </ul>
 
       <p>You should be able to toggle your turnouts by clicking at

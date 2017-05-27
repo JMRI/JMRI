@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
-import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +76,13 @@ public class DefaultConditionalManager extends AbstractManager
         Conditional c = null;
 
         // Check system name
-        if (systemName != null && systemName.length() > 0) {
-            c = getBySystemName(systemName);
-            if (c != null) {
-                return null;        // Conditional already exists
-            }
+        if (systemName == null || systemName.length() < 1) {
+            log.error("createNewConditional: systemName is null or empty");
+            return null;
+        }
+        c = getBySystemName(systemName);
+        if (c != null) {
+            return null;        // Conditional already exists
         }
 
         // Get the potential parent Logix
@@ -162,7 +162,7 @@ public class DefaultConditionalManager extends AbstractManager
                 if (lgx != null) {
                     return lgx;
                 }
-                
+
             }
         }
 
@@ -350,10 +350,11 @@ public class DefaultConditionalManager extends AbstractManager
      * Return a copy of the entire map.  Used by
      * {@link jmri.jmrit.beantable.LogixTableAction#buildWhereUsedListing}
      * @since 4.7.4
+     * @return a copy of the map
      */
     @Override
     public HashMap<String, ArrayList<String>> getWhereUsedMap() {
-        return conditionalWhereUsed;
+        return new HashMap<>(conditionalWhereUsed);
     }
 
     /**
@@ -374,13 +375,13 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         if (conditionalWhereUsed.containsKey(target)) {
-            ArrayList refList = conditionalWhereUsed.get(target);
+            ArrayList<String> refList = conditionalWhereUsed.get(target);
             if (!refList.contains(reference)) {
                 refList.add(reference);
                 conditionalWhereUsed.replace(target, refList);
             }
         } else {
-            ArrayList refList = new ArrayList<String>();
+            ArrayList<String> refList = new ArrayList<>();
             refList.add(reference);
             conditionalWhereUsed.put(target, refList);
         }
@@ -452,7 +453,7 @@ public class DefaultConditionalManager extends AbstractManager
      */
     @Override
     public ArrayList<String> getTargetList(String reference) {
-        ArrayList<String> targetList = new ArrayList();
+        ArrayList<String> targetList = new ArrayList<>();
         SortedSet<String> keys = new TreeSet<>(conditionalWhereUsed.keySet());
         for (String key : keys) {
             ArrayList<String> refList = conditionalWhereUsed.get(key);

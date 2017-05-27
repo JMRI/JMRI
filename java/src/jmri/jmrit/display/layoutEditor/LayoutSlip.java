@@ -1,9 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.lerp;
-import static jmri.util.MathUtil.midpoint;
-import static jmri.util.MathUtil.third;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -40,6 +36,7 @@ import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -374,18 +371,32 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_CENTER:
                 break;
             case SLIP_LEFT:
-                Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+                Point2D leftCenter = MathUtil.midPoint(getCoordsA(), getCoordsB());
                 double leftFract = circleRadius / center.distance(leftCenter);
-                result = lerp(center, leftCenter, leftFract);
+                result = MathUtil.lerp(center, leftCenter, leftFract);
                 break;
             case SLIP_RIGHT:
-                Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+                Point2D rightCenter = MathUtil.midPoint(getCoordsC(), getCoordsD());
                 double rightFract = circleRadius / center.distance(rightCenter);
-                result = lerp(center, rightCenter, rightFract);
+                result = MathUtil.lerp(center, rightCenter, rightFract);
                 break;
             default:
                 log.error("Invalid connection type " + connectionType); //I18IN
         }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this slip
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
         return result;
     }
 
@@ -523,85 +534,75 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @since 7.4.?
      */
-    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        // TODO: A faster way to check to see if p is in the rects for
-        // all these locations is to create a rect around p and see if
-        // those locations are in that rect instead of creating rects
-        // for all those locations… Just saying… ;-)
-        //
-        // Rectangle2D pointRect = layoutEditor.trackControlCircleRectAt(p);
-        // calculate radius of turnout control circle
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        if (!requireUnconnected) {
+            // calculate radius of turnout control circle
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
-        // calculate left center
-        Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
+            // calculate left center
+            Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
 
-        // calculate right center
-        Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
+            // calculate right center
+            Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
 
-        if (useRectangles) {
-            // calculate turnout's left control rectangle
-            Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
-            if (leftRectangle.contains(p)) {
-                //point is in this turnout's left control rectangle
-                result = SLIP_LEFT;
-            }
-            Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
-            if (rightRectangle.contains(p)) {
-                //point is in this turnout's right control rectangle
-                result = SLIP_RIGHT;
-            }
-        } else {
-            //check east/west turnout control circles
-            double leftDistance = p.distance(leftCenter);
-            double rightDistance = p.distance(rightCenter);
+            if (useRectangles) {
+                // calculate turnout's left control rectangle
+                Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
+                if (leftRectangle.contains(p)) {
+                    //point is in this turnout's left control rectangle
+                    result = SLIP_LEFT;
+                }
+                Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
+                if (rightRectangle.contains(p)) {
+                    //point is in this turnout's right control rectangle
+                    result = SLIP_RIGHT;
+                }
+            } else {
+                //check east/west turnout control circles
+                double leftDistance = p.distance(leftCenter);
+                double rightDistance = p.distance(rightCenter);
 
-            if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
-                //mouse was pressed on this slip
-                result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
+                    //mouse was pressed on this slip
+                    result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                }
             }
         }
 
         // have we found anything yet?
         if (result == NONE) {
+            // rather than create rectangles for all the points below and
+            // see if the passed in point is in one of those rectangles
+            // we can create a rectangle for the passed in point and then
+            // test if any of the points below are in that rectangle instead.
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
-                Point2D pt = getCoordsA();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsA())) {
                     result = LayoutTrack.SLIP_A;
                 }
             }
 
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
-                Point2D pt = getCoordsB();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsB())) {
                     result = LayoutTrack.SLIP_B;
                 }
             }
 
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
-                Point2D pt = getCoordsC();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsC())) {
                     result = LayoutTrack.SLIP_C;
                 }
             }
 
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
-                Point2D pt = getCoordsD();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsD())) {
                     result = LayoutTrack.SLIP_D;
                 }
             }
@@ -732,20 +733,51 @@ public class LayoutSlip extends LayoutTurnout {
             popup = new JPopupMenu();
         }
         if (editable) {
-            popup.add(getName());
+            JMenuItem jmi = null;
+            switch (type) {
+                case SINGLE_SLIP: {
+                    jmi = popup.add(rb.getString("LayoutSingleSlip"));
+                    break;
+                }
+                case DOUBLE_SLIP: {
+                    jmi = popup.add(rb.getString("LayoutDoubleSlip"));
+                    break;
+                }
+            }
+            jmi.setEnabled(false);
+
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
+            if (getTurnout() == null) {
+                jmi = popup.add(rb.getString("NoTurnout"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
+            }
+            jmi.setEnabled(false);
+
+            if (getTurnoutB() == null) {
+                jmi = popup.add(rb.getString("NoTurnout"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutBName);
+            }
+            jmi.setEnabled(false);
+
             boolean blockAssigned = false;
             if ((blockName == null) || (blockName.equals(""))) {
-                popup.add(rb.getString("NoBlock"));
+                jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
                 blockAssigned = true;
             }
+            jmi.setEnabled(false);
 
             if (hidden) {
-                popup.add(rb.getString("Hidden"));
+                jmi = popup.add(rb.getString("Hidden"));
             } else {
-                popup.add(rb.getString("NotHidden"));
+                jmi = popup.add(rb.getString("NotHidden"));
             }
+            jmi.setEnabled(false);
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
@@ -1062,26 +1094,26 @@ public class LayoutSlip extends LayoutTurnout {
 
         g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        g2.draw(new Line2D.Double(A, third(A, C)));
-        g2.draw(new Line2D.Double(C, third(C, A)));
+        g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, C)));
+        g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, A)));
 
         if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
-            g2.draw(new Line2D.Double(A, third(A, D)));
-            g2.draw(new Line2D.Double(D, third(D, A)));
+            g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
             if (getSlipType() == DOUBLE_SLIP) {
-                g2.draw(new Line2D.Double(B, third(B, C)));
-                g2.draw(new Line2D.Double(C, third(C, B)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
+                g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(B, third(B, D)));
-            g2.draw(new Line2D.Double(D, third(D, B)));
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
         }
 
         if (getSlipType() == DOUBLE_SLIP) {
             if (state == STATE_AC) {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -1089,32 +1121,32 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
             } else if (state == STATE_AD) {
-                g2.draw(new Line2D.Double(B, third(B, C)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
 
-                g2.draw(new Line2D.Double(C, third(C, B)));
+                g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
             } else if (state == STATE_BC) {
-                g2.draw(new Line2D.Double(A, third(A, D)));
+                g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
 
-                g2.draw(new Line2D.Double(D, third(D, A)));
+                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, C));
             } else {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(A, third(A, D)));
-            g2.draw(new Line2D.Double(D, third(D, A)));
+            g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
             if (state == STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
             } else if (state == STATE_AC) {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -1122,8 +1154,8 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
             } else {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
             }
         }
     }
@@ -1390,6 +1422,11 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * draw this slip
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
@@ -1439,73 +1476,73 @@ public class LayoutSlip extends LayoutTurnout {
             if (getSlipState() == STATE_AC) {
                 g2.setColor(mainColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointC)));
 
                 g2.setColor(mainColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointA)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointA)));
             } else {
                 g2.setColor(subColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointC)));
 
                 g2.setColor(subColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointA)));
             }
 
             if (getSlipState() == STATE_BD) {
                 g2.setColor(mainColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointD)));
 
                 g2.setColor(mainColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointB)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointB)));
             } else {
                 g2.setColor(subColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointD)));
 
                 g2.setColor(subColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointB)));
             }
 
             if (getSlipState() == STATE_AD) {
                 g2.setColor(mainColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointD)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointD)));
 
                 g2.setColor(mainColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointA)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointA)));
             } else {
                 g2.setColor(subColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointD)));
 
                 g2.setColor(subColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointA)));
             }
 
             if (getSlipState() == STATE_BC) {
                 g2.setColor(mainColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointC)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointC)));
 
                 g2.setColor(mainColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointB)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointB)));
             } else if (getSlipType() == DOUBLE_SLIP) {
                 g2.setColor(subColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointC)));
 
                 g2.setColor(subColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+                g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
             }
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
     }   // draw(Graphics2D g2)

@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
@@ -901,9 +902,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void blockEditDonePressed(ActionEvent a) {
         boolean needsRedraw = false;
         //check if Sensor changed
-        if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
+        String newName = NamedBean.normalizeUserName(sensorNameField.getText());
+        if (!(getOccupancySensorName()).equals(newName)) {
             //sensor has changed
-            String newName = sensorNameField.getText().trim();
             if (newName.length() == 0) {
                 setOccupancySensorName(newName);
                 sensorNameField.setText("");
@@ -975,9 +976,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         //check if Memory changed
-        if (!memoryName.equals(memoryNameField.getText().trim())) {
+
+        newName = NamedBean.normalizeUserName(memoryNameField.getText());
+        if (!memoryName.equals(newName)) {
             //memory has changed
-            String newName = memoryNameField.getText().trim();
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
             if (getMemory() == null) {
                 //invalid memory entered
@@ -1120,9 +1122,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         needsRedraw = true;
                     }
                     //check if Memory changed
-                    if (!memoryName.equals(memoryNameField.getText().trim())) {
+                    String newName = NamedBean.normalizeUserName(memoryNameField.getText());
+                    if (!memoryName.equals(newName)) {
                         //memory has changed
-                        String newName = memoryNameField.getText().trim();
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
                         if (getMemory() == null) {
                             //invalid memory entered

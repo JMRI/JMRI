@@ -31,8 +31,10 @@ public class JmriServer {
 
     private static JmriServer _instance = null;
 
-    /*
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
+    /**
+     * @return the default instance of a JmriServer
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()}
+     * instead.
      */
     @Deprecated
     public synchronized static JmriServer instance() {
