@@ -332,17 +332,18 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for this connection type
-     * @param connectionType
-     * @return the object connected to this layout track connected for the connection type
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException
      */
     @Override
-    public Object getConnection(int locationType) throws jmri.JmriException {
+    public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
-        if (locationType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayConnectIndexed(locationType - TURNTABLE_RAY_OFFSET);
+        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid Turntable connection type " + locationType); //I18IN
+            log.error("Invalid Turntable connection type " + connectionType); //I18IN
             throw new jmri.JmriException("Invalid Point");
         }
         return result;
@@ -1088,6 +1089,6 @@ public class LayoutTurntable extends LayoutTrack {
     {
         // nothing to do here… move along…
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
 }

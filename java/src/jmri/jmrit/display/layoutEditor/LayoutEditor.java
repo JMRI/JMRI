@@ -5345,37 +5345,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void checkControls(boolean useRectangles) {
-        if (true) {
-            List<List> listOfLists = new ArrayList<List>();
-            listOfLists.add(turnoutList);
-            listOfLists.add(slipList);
-            listOfLists.add(turntableList);
+        List<List> listOfLists = new ArrayList<List>();
+        listOfLists.add(turnoutList);
+        listOfLists.add(slipList);
+        listOfLists.add(turntableList);
 
-            Boolean found = forEachItemInListOfListsDo(listOfLists,
-                (Object o) -> {
-                    LayoutTrack layoutTrack = (LayoutTrack) o;
-                    selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-                    boolean result1 = (LayoutTrack.NONE != selectedPointType);
-                    if (result1) {
-                        if (layoutTrack instanceof LayoutTurntable) {
-                            if (layoutTrack.isConnectionType(selectedPointType)) {
-                                try {
-                                    selectedObject = layoutTrack.getConnection(selectedPointType);
-                                } catch (jmri.JmriException e) {
-                                    // nothing to see here… move along…
-                                }
-                            } else {
-                                selectedPointType = LayoutTrack.NONE;
+        Boolean found = forEachItemInListOfListsDo(listOfLists,
+            (Object o) -> {
+                LayoutTrack layoutTrack = (LayoutTrack) o;
+                selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
+                boolean result1 = (LayoutTrack.NONE != selectedPointType);
+                if (result1) {
+                    if (layoutTrack instanceof LayoutTurntable) {
+                        if (layoutTrack.isConnectionType(selectedPointType)) {
+                            try {
+                                selectedObject = layoutTrack.getConnection(selectedPointType);
+                            } catch (jmri.JmriException e) {
+                                // nothing to see here… move along…
                             }
                         } else {
-                            selectedObject = layoutTrack;
+                            selectedPointType = LayoutTrack.NONE;
                         }
+                    } else {
+                        selectedObject = layoutTrack;
                     }
-                    return result1;
                 }
-            );
-        }
-     }   // checkControls
+                return result1;
+            }
+        );
+    }   // checkControls
 
     // optional parameter avoid
     private boolean checkSelects(Point2D loc, boolean requireUnconnected) {

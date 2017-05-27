@@ -167,14 +167,14 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * get the object connected to this slip for this connection type
-     * @param connectionType
-     * @return the object connected to this layout track connected for the connection type
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException
      */
- 
     @Override
-    public Object getConnection(int location) throws jmri.JmriException {
-        switch (location) {
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        switch (connectionType) {
             case SLIP_A:
                 return connectA;
             case SLIP_B:
@@ -184,17 +184,17 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
         }
-        log.error("Invalid Point Type " + location); //I18IN
+        log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
     @Override
-    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
         }
-        switch (location) {
+        switch (connectionType) {
             case SLIP_A:
                 connectA = o;
                 break;
@@ -208,7 +208,7 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
+                log.error("Invalid Point Type " + connectionType); //I18IN
                 throw new jmri.JmriException("Invalid Point");
         }
     }
@@ -397,7 +397,7 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         Point2D pointA = getCoordsA();
         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
         result.add(getCoordsB());

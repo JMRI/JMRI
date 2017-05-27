@@ -577,13 +577,14 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for this connection type
-     * @param connectionType
-     * @return the object connected to this layout track connected for the connection type
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException
      */
     @Override
-     public Object getConnection(int location) throws jmri.JmriException {
-        switch (location) {
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        switch (connectionType) {
             case LEVEL_XING_A:
                 return connectA;
             case LEVEL_XING_B:
@@ -593,10 +594,10 @@ public class LevelXing extends LayoutTrack {
             case LEVEL_XING_D:
                 return connectD;
             default:
-                log.warn("Unhandled loc: {}", location);
+                log.warn("Unhandled loc: {}", connectionType);
                 break;
         }
-        log.error("Invalid Point Type " + location); //I18IN
+        log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
@@ -751,7 +752,7 @@ public class LevelXing extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         Point2D pointA = getCoordsA();
         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
         result.add(getCoordsB());

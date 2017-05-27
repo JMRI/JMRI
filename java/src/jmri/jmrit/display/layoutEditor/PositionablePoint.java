@@ -1160,9 +1160,9 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for this connection type
-     * @param connectionType
-     * @return the object connected to this layout track connected for the connection type
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
      * @throws jmri.JmriException
      */
     @Override

@@ -1103,13 +1103,14 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for this connection type
-     * @param connectionType
-     * @return the object connected to this layout track connected for the connection type
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException
      */
-     @Override
-    public Object getConnection(int location) throws jmri.JmriException {
-        switch (location) {
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        switch (connectionType) {
             case TURNOUT_A:
                 return connectA;
             case TURNOUT_B:
@@ -1121,16 +1122,16 @@ public class LayoutTurnout extends LayoutTrack {
             default:
                 // fall out
         }
-        log.error("Invalid Point Type " + location); //I18IN
+        log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
-    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
         }
-        switch (location) {
+        switch (connectionType) {
             case TURNOUT_A:
                 connectA = o;
                 break;
@@ -1144,7 +1145,7 @@ public class LayoutTurnout extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
+                log.error("Invalid Point Type " + connectionType); //I18IN
                 throw new jmri.JmriException("Invalid Point");
         }
     }
