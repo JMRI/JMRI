@@ -5594,6 +5594,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return result;
     }   //checkMarkerPopUps
 
+    /**
+     * get the coordinates for the connection type of the specified object
+     * @param o the object (Layout track subclass)
+     * @param connectionType the type of connection
+     * @return the coordinates for the connection type of the specified object
+     */
     public Point2D getCoords(Object o, int connectionType) {
         Point2D result = MathUtil.zeroPoint2D();
         if (o != null) {
