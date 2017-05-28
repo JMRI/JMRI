@@ -197,7 +197,7 @@ public abstract class LayoutTrack {
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * abstract method… subclasses should implement _IF_ they need to recheck their block boundaries
+     * abstract method... subclasses should implement _IF_ they need to recheck their block boundaries
      */
     public abstract void reCheckBlockBoundary();
 
@@ -331,7 +331,7 @@ public abstract class LayoutTrack {
             try {
                 result = (null == getConnection(connectionType));
             } catch (Exception e) {
-                //exceptions make me throw up…
+                //exceptions make me throw up...
                 //log.error("This error message, which nobody will ever see, shuts my IDE up.");
             }
         }

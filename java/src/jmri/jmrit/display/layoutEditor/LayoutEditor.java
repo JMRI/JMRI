@@ -905,7 +905,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
 
         //fourth row of edit tool bar items
-        //multi sensor…
+        //multi sensor...
         multiSensorButton.setToolTipText(rb.getString("MultiSensorToolTip"));
 
         //Signal Mast & text
@@ -972,7 +972,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //icon label
         iconLabelButton.setToolTipText(rb.getString("IconLabelToolTip"));
 
-        //change icons…
+        //change icons...
         //this is enabled/disabled via selectionListAction above
         changeIconsButton.addActionListener((ActionEvent a) -> {
             if (sensorButton.isSelected()) {
@@ -2031,7 +2031,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 try {
                     code = field.getInt(null);
                 } catch (Exception e) {
-                    //exceptions make me throw up…
+                    //exceptions make me throw up...
                     log.error("This error message, which nobody will ever see, shuts my IDE up.");
                 }
 
@@ -3017,9 +3017,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             ddldoPrefName = ddldoPrefName + "." + ttt;
                             //try to get the preference
                             ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                            if (null != ddldoProp) {                //if we found it…
+                            if (null != ddldoProp) {                //if we found it...
                                 ddldoPref = ddldoProp.toString();   //get it's (string value
-                            } else {    //…otherwise…
+                            } else {    //...otherwise...
                                 //save it in the users preferences
                                 prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                             }
@@ -3038,7 +3038,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
                         jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
                     } else {
-                        //must be a bogus value… lets re-set everything to DISPLAYNAME
+                        //must be a bogus value... lets re-set everything to DISPLAYNAME
                         ddldoPref = "DISPLAYNAME";
                         prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                         jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -3049,7 +3049,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     updateComboBoxDropDownListDisplayOrderFromPrefs(c);
                 }
             } else {
-                //nothing to do here… move along…
+                //nothing to do here... move along...
             }
         }   //if (null != inComponent) {
     }       //updateComboBoxDropDownListDisplayOrderFromPrefs
@@ -3058,7 +3058,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     private void setToolBarSide(eToolBarSide newToolBarSide) {
-        // null if edit toolbar is not setup yet…
+        // null if edit toolbar is not setup yet...
         if ((editModeItem != null) && !newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -3088,9 +3088,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
             } else if (showHelpBar) {
-                //not sure why… but this is the only way I could
+                //not sure why... but this is the only way I could
                 //get everything to layout correctly
-                //when the helpbar is visible…
+                //when the helpbar is visible...
                 boolean editMode = editModeItem.isSelected();
                 setAllEditable(!editMode);
                 setAllEditable(editMode);
@@ -3104,7 +3104,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     private void setToolBarWide(boolean newToolBarIsWide) {
-        //null if edit toolbar not setup yet…
+        //null if edit toolbar not setup yet...
         if ((editModeItem != null) && (toolBarIsWide != newToolBarIsWide)) {
             toolBarIsWide = newToolBarIsWide;
 
@@ -3119,9 +3119,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setupToolBar(); //re-layout all the toolbar items
 
             if (showHelpBar) {
-                //not sure why… but this is the only way I could
+                //not sure why... but this is the only way I could
                 //get everything to layout correctly
-                //when the helpbar is visible…
+                //when the helpbar is visible...
                 boolean editMode = editModeItem.isSelected();
                 setAllEditable(!editMode);
                 setAllEditable(editMode);
@@ -3235,7 +3235,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         zoomButtonGroup.add(zoom60Item);
 
         //note: because this LayoutEditor object was just instantiated its
-        //zoom attribute is 1.0… if it's being instantiated from an XML file
+        //zoom attribute is 1.0... if it's being instantiated from an XML file
         //that has a zoom attribute for this object then setZoom will be
         //called after this method returns and we'll select the appropriate
         //menu item then.
@@ -3295,7 +3295,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // convert to target panel coordinates
             SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
 
-            // correct for scaling…
+            // correct for scaling...
             double theZoom = getZoom();
             xLoc = (int) (mouseLoc.getX() / theZoom);
             yLoc = (int) (mouseLoc.getY() / theZoom);
@@ -4723,7 +4723,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
             String windowFrameRef = getWindowFrameRef();
 
-            //the restore code for this isn't working…
+            //the restore code for this isn't working...
             prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
             prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
 
@@ -5346,7 +5346,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             try {
                                 selectedObject = layoutTrack.getConnection(selectedPointType);
                             } catch (jmri.JmriException e) {
-                                // nothing to see here… move along…
+                                // nothing to see here... move along...
                             }
                         } else {
                             selectedPointType = LayoutTrack.NONE;
@@ -5406,7 +5406,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //NOTE: Rather than calculate all the hit rectangles for all
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
-        // see if any of those points are in it instead…
+        // see if any of those points are in it instead...
         Rectangle2D r = trackControlCircleRectAt(loc);
 
         //check Track Segments, if any
@@ -5606,6 +5606,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 
+            // released the mouse with shift down... see what we're adding
             if ((!event.isPopupTrigger()) && (!event.isMetaDown()) && (!event.isAltDown())
                     && event.isShiftDown()) {
                 currentPoint = new Point2D.Double(xLoc, yLoc);
@@ -5674,8 +5675,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selectedPointType = LayoutTrack.NONE;
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
-            } //check if controlling turnouts
-            else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
+            } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
                     && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
                 //controlling turnouts, in edit mode
@@ -5697,11 +5697,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
                     && allControlling() && (event.isMetaDown()) && (!event.isAltDown())
                     && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
-                //controlling turnouts, in edit mode
+                // We just dropped a turnout... see if it will connect to anything
                 checkPointsOfTurnout((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.POS_POINT)
                     && allControlling() && (event.isMetaDown()) && (!event.isAltDown())
                     && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
+                // We just dropped a PositionablePoint... see if it will connect to anything
                 PositionablePoint p = (PositionablePoint) selectedObject;
 
                 if ((p.getConnect1() == null) || (p.getConnect2() == null)) {
@@ -6164,9 +6165,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     if ((p2.getType() == PositionablePoint.ANCHOR) && p2.setTrackConnection(t)) {
                         if (t.getConnect1() == p) {
-                            t.setNewConnect1(p2, LayoutTrack.POS_POINT);
+                            t.setNewConnect1(p2, foundPointType);
                         } else {
-                            t.setNewConnect2(p2, LayoutTrack.POS_POINT);
+                            t.setNewConnect2(p2, foundPointType);
                         }
                         p.removeTrackConnection(t);
 
@@ -6246,25 +6247,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         foundObject = null;
     }   //checkPointOfPositionable
 
+    // We just dropped a turnout... see if it will connect to anything
     private void checkPointsOfTurnout(LayoutTurnout lt) {
         beginObject = lt;
 
         if (lt.getConnectA() == null) {
             beginPointType = LayoutTrack.TURNOUT_A;
             dLoc = lt.getCoordsA();
-            checkPointsOfTurnoutSub(lt.getCoordsA());
+            checkPointsOfTurnoutSub(dLoc);
         }
 
         if (lt.getConnectB() == null) {
             beginPointType = LayoutTrack.TURNOUT_B;
             dLoc = lt.getCoordsB();
-            checkPointsOfTurnoutSub(lt.getCoordsB());
+            checkPointsOfTurnoutSub(dLoc);
         }
 
         if (lt.getConnectC() == null) {
             beginPointType = LayoutTrack.TURNOUT_C;
             dLoc = lt.getCoordsC();
-            checkPointsOfTurnoutSub(lt.getCoordsC());
+            checkPointsOfTurnoutSub(dLoc);
         }
 
         if ((lt.getConnectD() == null) && ((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
@@ -6272,7 +6274,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 || (lt.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
             beginPointType = LayoutTrack.TURNOUT_D;
             dLoc = lt.getCoordsD();
-            checkPointsOfTurnoutSub(lt.getCoordsD());
+            checkPointsOfTurnoutSub(dLoc);
         }
         beginObject = null;
         foundObject = null;
@@ -9471,7 +9473,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setDisplayLevel(SENSORS);
 
         //Sensor xSensor = l.getSensor();
-        //(Note: I don't see the point of this section of code because…
+        //(Note: I don't see the point of this section of code because...
         if (l.getSensor() != null) {
             if ((l.getNamedSensor().getName() == null)
                     || (!(l.getNamedSensor().getName().equals(newName)))) {
@@ -9479,7 +9481,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        //…because this is called regardless of the code above?!?
+        //...because this is called regardless of the code above?!?
         sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
 
         setNextLocation(l);
@@ -9965,7 +9967,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setScroll(_scrollState);
         }
 
-        //these may not be setup yet…
+        //these may not be setup yet...
         if (helpBarPanel != null) {
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(editable && showHelpBar);
@@ -10241,7 +10243,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (showHelpBar != state) {
             showHelpBar = state;
 
-            //these may not be setup yet…
+            //these may not be setup yet...
             if (showHelpItem != null) {
                 showHelpItem.setSelected(showHelpBar);
             }
@@ -10288,7 +10290,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (antialiasingOn != state) {
             antialiasingOn = state;
 
-            //this may not be setup yet…
+            //this may not be setup yet...
             if (antialiasingOnItem != null) {
                 antialiasingOnItem.setSelected(antialiasingOn);
 
@@ -10305,7 +10307,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (highlightSelectedBlockFlag != state) {
             highlightSelectedBlockFlag = state;
 
-            //this may not be setup yet…
+            //this may not be setup yet...
             if (highlightSelectedBlockItem != null) {
                 highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
 

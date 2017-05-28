@@ -347,12 +347,12 @@ public class TrackSegment extends LayoutTrack {
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+        if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { // findObjectByName failed… try findObjectByTypeAndName
+        if (null == connect2) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
@@ -1558,7 +1558,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void reCheckBlockBoundary()
     {
-        // nothing to do here… move along…
+        // nothing to do here... move along...
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());

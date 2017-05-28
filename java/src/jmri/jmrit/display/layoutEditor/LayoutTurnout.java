@@ -350,7 +350,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutTurnout " + ident;
     }

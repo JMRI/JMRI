@@ -96,7 +96,7 @@ public final class MathUtil {
      * @param p the point
      * @return the point multiplied by the scalar
      */
-    // (again just so parameter order doesn't matter…)
+    // (again just so parameter order doesn't matter...)
     public static Point2D multiply(double s, Point2D p) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
@@ -451,20 +451,20 @@ public final class MathUtil {
         return offset(r1, subtract(center(r2), center(r1)));
     }
 
-    // recursive routine to draw a cubic Bezier…
+    // recursive routine to draw a cubic Bezier...
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
         double result = 0;
 
-        // calculate flatness to determine if we need to recurse…
+        // calculate flatness to determine if we need to recurse...
         double l01 = distance(p0, p1);
         double l12 = distance(p1, p2);
         double l23 = distance(p2, p3);
         double l03 = distance(p0, p3);
         double flatness = (l01 + l12 + l23) / l03;
 
-        // depth prevents stack overflow…
-        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // depth prevents stack overflow...
+        // (I picked 12 because 2^12 = 2048... is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
@@ -504,13 +504,13 @@ public final class MathUtil {
         return drawBezier(g2, p0, p1, p2, p3, 0);
     }
 
-    // recursive routine to draw a Bezier curve…
+    // recursive routine to draw a Bezier curve...
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D points[], int depth) {
         int len = points.length, idx, jdx;
         double result = 0;
 
-        // calculate flatness to determine if we need to recurse…
+        // calculate flatness to determine if we need to recurse...
         double outer_distance = 0;
         for (idx = 1; idx < len; idx++) {
             outer_distance += MathUtil.distance(points[idx - 1], points[idx]);
@@ -518,8 +518,8 @@ public final class MathUtil {
         double inner_distance = MathUtil.distance(points[0], points[len - 1]);
         double flatness = outer_distance / inner_distance;
 
-        // depth prevents stack overflow…
-        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // depth prevents stack overflow...
+        // (I picked 12 because 2^12 = 2048... is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {

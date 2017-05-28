@@ -103,7 +103,7 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutTurntable " + ident;
     }
@@ -321,7 +321,7 @@ public class LayoutTurntable extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
-            // nothing to do here… move along…
+            // nothing to do here... move along...
             // (results are already correct)
         } else if (locationType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
@@ -1107,7 +1107,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     public void reCheckBlockBoundary()
     {
-        // nothing to do here… move along…
+        // nothing to do here... move along...
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
