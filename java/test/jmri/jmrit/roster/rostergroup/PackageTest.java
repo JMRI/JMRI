@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   RosterGroupTest.class
 })
 /**
  * Tests for the jmri.jmrit.roster.rostergroup package

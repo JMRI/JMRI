@@ -151,10 +151,9 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     public static WebServerPreferences getDefault() {
-        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
-            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
-        }
-        return InstanceManager.getDefault(WebServerPreferences.class);
+        return InstanceManager.getOptionalDefault(WebServerPreferences.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
+        });
     }
 
     private void readPreferences(Preferences sharedPreferences) {
