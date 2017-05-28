@@ -1302,11 +1302,11 @@ public class TurnoutTableAction extends AbstractTableAction {
         dialog.pack();
         dialog.show();
 
+        if(pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
+            return;
+        }
         Object retval = pane.getValue();
         log.debug("Retval = {}", retval.toString());
-//        if(retval == null) { // pane close button clicked // flagged by FindBugs as redundant null check
-//            return;
-//        }
         // only 2 buttons to choose from, OK = button 2
         if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
