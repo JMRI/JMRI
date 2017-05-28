@@ -117,7 +117,7 @@ public class LevelXing extends LayoutTrack {
         center = c;
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging
     public String toString() {
         return "LevelXing " + ident;
     }

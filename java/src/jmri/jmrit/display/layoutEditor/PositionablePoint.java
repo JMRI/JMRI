@@ -101,7 +101,7 @@ public class PositionablePoint extends LayoutTrack {
         coords = p;
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging
     public String toString() {
         return "PositionablePoint " + ident;
     }

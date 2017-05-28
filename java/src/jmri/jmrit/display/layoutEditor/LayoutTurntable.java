@@ -103,7 +103,7 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging
     public String toString() {
         return "LayoutTurntable " + ident;
     }
@@ -313,7 +313,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * return the coordinates for a specified connection type
+     * Get the coordinates for a specified connection type.
      *
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
@@ -321,7 +321,7 @@ public class LayoutTurntable extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == connectionType) {
-            // nothing to do here… move along…
+            // nothing to do here, move along
             // (results are already correct)
         } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
@@ -343,9 +343,11 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Methods to test if ray is a mainline track or not Returns true if
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segment is missing
+     * Test if ray is a mainline track or not.
+     * <p>
+     * Defaults to false (not mainline) if
+     * connecting track segment is missing.
+     * @return true if connecting track segment is mainline
      */
     public boolean isMainlineIndexed(int index) {
         boolean result = false; // assume failure (pessimist!)
