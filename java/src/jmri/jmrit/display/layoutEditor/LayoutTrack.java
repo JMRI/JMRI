@@ -335,7 +335,7 @@ public abstract class LayoutTrack {
         if (isConnectionType(connectionType)) {
             try {
                 result = (null == getConnection(connectionType));
-            } catch (Exception e) {
+            } catch (jmri.JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
         }
