@@ -696,9 +696,9 @@ public class LayoutEditorAuxTools {
         double angleRAD = Math.atan2(dh, dv);
         double angleDEG = Math.toDegrees(angleRAD);
         if (angleDEG < 0.0) {
-            angleDEG += 360.0;  // don't want to deal with negative numbers here…
+            angleDEG += 360.0;  // don't want to deal with negative numbers here...
         }
-        // note: because we use round here… the octants are offset by half (-22.5°)
+        // note: because we use round here... the octants are offset by half (-22.5°)
         // so SOUTH isn't from 0-45°; it's from -22.5° to +22.5°; etc. for other octants.
         // (this is what we want!)
         int octant = (int) Math.round(angleDEG / 45.0);
