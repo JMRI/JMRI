@@ -270,7 +270,7 @@ public abstract class LayoutTrack {
                 result = (null == getConnection(connectionType));
             } catch (Exception e) {
                 //exceptions make me throw up…
-                log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                //log.error("This error message, which nobody will ever see, shuts my IDE up.");
             }
         }
         return result;
