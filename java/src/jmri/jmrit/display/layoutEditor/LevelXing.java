@@ -601,12 +601,20 @@ public class LevelXing extends LayoutTrack {
         throw new jmri.JmriException("Invalid Point");
     }
 
-    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to layoutturnout - " + type);
-            throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
+            log.error("unexpected type of connection to LevelXing - " + type);
+            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
         }
-        switch (location) {
+        switch (connectionType) {
             case LEVEL_XING_A:
                 connectA = o;
                 break;
@@ -620,8 +628,8 @@ public class LevelXing extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
-                throw new jmri.JmriException("Invalid Point");
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 

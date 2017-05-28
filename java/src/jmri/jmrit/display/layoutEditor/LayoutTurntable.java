@@ -350,6 +350,27 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to LevelXing - " + type);
+            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+        }
+        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+        } else {
+            log.error("Invalid Connection Type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+        }
+    }
+
+    /**
      * Methods to test if ray is a mainline track or not Returns true if
      * connecting track segment is mainline Defaults to not mainline if
      * connecting track segment is missing

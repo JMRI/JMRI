@@ -1180,6 +1180,42 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to positionable point - " + type);
+            throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
+        }
+        if (connectionType == POS_POINT) {
+            /*
+            // Note: Not used
+            TrackSegment ts = (TrackSegment) o;
+            if ((getType() == PositionablePoint.ANCHOR) && setTrackConnection(ts)) {
+                if (o.getConnect1() == p) {
+                    o.setNewConnect1(this, LayoutTrack.POS_POINT);
+                } else {
+                    o.setNewConnect2(this, LayoutTrack.POS_POINT);
+                }
+                ts.removeTrackConnection(ts);
+
+                if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
+                    removePositionablePoint(p);
+                }
+            }
+            */
+        } else {
+            log.error("Invalid Connection Type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+        }
+    }
+
+    /**
      * return true if this connection type is disconnected
      * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
