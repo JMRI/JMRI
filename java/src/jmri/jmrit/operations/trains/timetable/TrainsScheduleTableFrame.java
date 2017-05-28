@@ -61,6 +61,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JRadioButton sortByTime = new JRadioButton(Bundle.getMessage("Time"));
 
     JRadioButton noneButton = new JRadioButton(Bundle.getMessage("None"));
+    JRadioButton anyButton = new JRadioButton(Bundle.getMessage("Any"));
 
     // radio button groups
     ButtonGroup schGroup = new ButtonGroup();
@@ -204,6 +205,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         addRadioButtonAction(sortByName);
 
         addRadioButtonAction(noneButton);
+        addRadioButtonAction(anyButton);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -237,9 +239,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
-        } else if (ae.getSource() == noneButton) {
+        } else if (ae.getSource() == noneButton || ae.getSource() == anyButton) {
             enableButtons(false);
-            commentTextArea.setText(""); // no text for the noneButton
+            commentTextArea.setText(""); // no text for the noneButton or anyButton
             // must be one of the schedule radio buttons
         } else {
             enableButtons(true);
@@ -325,9 +327,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
      */
     private void updateControlPanel() {
         schedule.removeAll();
-        noneButton.setName(""); // Name holds schedule id for the selected radio button
+        noneButton.setName(TrainSchedule.NONE); // Name holds schedule id for the selected radio button
         noneButton.setSelected(true);
-        commentTextArea.setText(""); // no text for the noneButton
+        commentTextArea.setText(""); // no text for the noneButton or anyButton
         enableButtons(false);
         schedule.add(noneButton);
         schGroup.add(noneButton);
@@ -350,6 +352,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 }
             }
         }
+        anyButton.setName(TrainSchedule.ANY); // Name holds schedule id for the selected radio button
+        schedule.add(anyButton);
+        schGroup.add(anyButton);
+        anyButton.setSelected(trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY));
         schedule.revalidate();
     }
 

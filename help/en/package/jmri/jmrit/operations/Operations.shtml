@@ -4329,6 +4329,10 @@
     Timetable" window found under "Tools". You can change the order by dragging the column with your
     mouse pointer. Press the "Save" button to complete your changes.</p>
 
+   <p>When the "None" radio button is selected, cars with a scheduled pick up day will not be
+    serviced. The "Any" radio button allows you to service all cars, even ones those that have a
+    scheduled pick up day.</p>
+
    <p>
     There are four buttons labeled "Build", "Print/Preview", "Print Switch Lists/Update Switch
     Lists", and "Terminate". These buttons facilitate the building of trains, printing the Manifests
