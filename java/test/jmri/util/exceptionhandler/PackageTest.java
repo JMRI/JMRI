@@ -1,5 +1,6 @@
 package jmri.util.exceptionhandler;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,6 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.exceptionhandler.PackageTest");   // no tests in this class itself
 
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(UncaughtExceptionHandlerTest.suite());
 
         return suite;
