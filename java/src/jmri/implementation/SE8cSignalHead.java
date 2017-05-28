@@ -35,8 +35,8 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Primary ctor.
      *
-     * @param lowTO  lower-numbered Turnout reference
-     * @param highTO higher-numbered Turnout reference
+     * @param lowTO    lower-numbered Turnout reference
+     * @param highTO   higher-numbered Turnout reference
      * @param userName user name for mast
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO,
@@ -69,9 +69,9 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name and user name.
      *
-     * @param sname system name for mast
-     * @param lowTO  lower-numbered Turnout reference
-     * @param highTO higher-numbered Turnout reference
+     * @param sname    system name for mast
+     * @param lowTO    lower-numbered Turnout reference
+     * @param highTO   higher-numbered Turnout reference
      * @param userName user name for mast
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO,
@@ -88,7 +88,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name.
      *
-     * @param sname system name for mast
+     * @param sname  system name for mast
      * @param lowTO  lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
@@ -105,7 +105,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Compatibility ctor.
      *
-     * @param pNumber number (address) of low turnout
+     * @param pNumber  number (address) of low turnout
      * @param userName name to use for this signal head
      */
     public SE8cSignalHead(int pNumber, String userName) {
@@ -184,10 +184,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Type-specific routine to handle output to the layout hardware.
-     * Implemented to handle a request to change state by sending a LocoNet command.
+     * Implemented to handle a request to change state by sending a LocoNet
+     * command.
      * <p>
-     * Does not notify listeners of changes; that's done elsewhere. Should consider
-     * the following variables to determine what to send:
+     * Does not notify listeners of changes; that's done elsewhere. Should
+     * consider the following variables to determine what to send:
      * <ul>
      * <li>mAppearance
      * <li>mLit
@@ -202,7 +203,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
                 && ((mAppearance == FLASHGREEN)
                 || (mAppearance == FLASHYELLOW)
                 || (mAppearance == FLASHRED))) {
-            // flash says to make output dark; 
+            // flash says to make output dark;
             // flashing-but-lit is handled below
             highTurnout.getBean().setCommandedState(Turnout.CLOSED);
         } else {
@@ -224,8 +225,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
                     highTurnout.getBean().setCommandedState(Turnout.CLOSED);
                     break;
                 default:
-                    log.error("Invalid state request: " + mAppearance);
-                    return;
+                    log.error("Invalid state request: {}", mAppearance);
             }
         }
     }
@@ -244,52 +244,39 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     @Override
     boolean isTurnoutUsed(Turnout t) {
-        if (getLow() != null && t.equals(getLow().getBean())) {
-            return true;
-        }
-        if (getHigh() != null && t.equals(getHigh().getBean())) {
-            return true;
-        }
-        return false;
+        return (getLow() != null && t.equals(getLow().getBean()))
+                || (getHigh() != null && t.equals(getHigh().getBean()));
     }
 
     void addListeners() {
-        lowTurnout.getBean().addPropertyChangeListener(
-                new java.beans.PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
-                        if (e.getPropertyName().equals("KnownState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
-                                setLocalAppearance(GREEN);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != RED) {
-                                setLocalAppearance(RED);
-                            }
-                        }
-                    }
+        lowTurnout.getBean().addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {
+            // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
+            if (e.getPropertyName().equals("KnownState")) {
+                if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
+                    setLocalAppearance(GREEN);
+                } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != RED) {
+                    setLocalAppearance(RED);
                 }
-        );
-        highTurnout.getBean().addPropertyChangeListener(
-                new java.beans.PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
-                        if (e.getPropertyName().equals("KnownState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
-                                setLocalAppearance(DARK);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
-                                setLocalAppearance(YELLOW);
-                            }
-                        }
-                    }
+            }
+        });
+        highTurnout.getBean().addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {
+            // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
+            if (e.getPropertyName().equals("KnownState")) {
+                if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
+                    setLocalAppearance(DARK);
+                } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
+                    setLocalAppearance(YELLOW);
                 }
-        );
+            }
+        });
     }
 
     /**
-     * Local method for when external (turnout) input
-     * sets the appearance.  Does everything setAppearance does
-     * _except_ drive the outputs to avoid a LocoNet loop.
+     * Local method for when external (turnout) input sets the appearance. Does
+     * everything setAppearance does <em>except</em> drive the outputs to avoid
+     * a LocoNet loop.
+     *
+     * @param newAppearance the new appearance
      */
     void setLocalAppearance(int newAppearance) {
         int oldAppearance = mAppearance; // store the current appearance
@@ -297,8 +284,8 @@ public class SE8cSignalHead extends DefaultSignalHead {
         appearanceSetsFlashTimer(newAppearance);
 
         // notify listeners, if any
-        firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
+        firePropertyChange("Appearance", oldAppearance, newAppearance);
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
