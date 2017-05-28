@@ -335,7 +335,7 @@ public class LayoutTurntable extends LayoutTrack {
      * get the object connected to this track for the specified connection type
      * @param connectionType the specified connection type
      * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
     public Object getConnection(int connectionType) throws jmri.JmriException {
@@ -397,13 +397,12 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      use hit rectangle (false: use hit circles)
-     * @param requireUnconnected (only hit disconnected connections)
-     * @return value representing the point connection type
-     * @since 7.4.?
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return - the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection

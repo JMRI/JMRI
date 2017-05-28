@@ -126,9 +126,10 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point (abstract: should be overridden by ALL subclasses)
      * @param p the point
-     * @param useRectangles whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected whether to only return hit types for free connections
-     * @return
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return - the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected abstract int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected);
 
@@ -210,7 +211,7 @@ public abstract class LayoutTrack {
      * get the object connected to this track for the specified connection type
      * @param connectionType the specified connection type
      * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException - if the connectionType is invalid
      */
     public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
@@ -260,7 +261,8 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * @param connectionType
+     * return true if this connection type is disconnected
+     * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {

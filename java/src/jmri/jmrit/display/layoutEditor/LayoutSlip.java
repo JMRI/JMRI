@@ -170,7 +170,7 @@ public class LayoutSlip extends LayoutTurnout {
      * get the object connected to this track for the specified connection type
      * @param connectionType the specified connection type
      * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
     public Object getConnection(int connectionType) throws jmri.JmriException {
@@ -536,9 +536,12 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * return the connection type for a point
-     *
-     * @since 7.4.?
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return - the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
