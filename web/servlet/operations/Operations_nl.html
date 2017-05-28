@@ -28,30 +28,30 @@
     </head>
     <body>
         <!--[if lt IE 7]>
-            <p class="chromeframe">Sie benützen ein <strong>veralteten</strong> Browser. Bitte <a href="http://browsehappy.com/">Ihre Browser aktualisieren</a> oder <a href="http://www.google.com/chromeframe/?redirect=true">aktiviere Google Chrome Frame</a> um die Erfahrung zu verbessern.</p>
+        <p class="chromeframe">U gebruikt een <strong>verouderde</strong> Browser. <a href="http://browsehappy.com/">werk uw browser bij</a> of <a href="http://www.google.com/chromeframe/?redirect=true">activeer Google Chrome Frame</a> om de gebruikerservaring te verbeteren.</p>
         <![endif]-->
         <div id="wrap">
             <!-- Navigation Bar %2$s -->
 
             <div class="container">
 
-                <div id="activity-alert" class="alert alert-info alert-dismissable">Züge lesen...</div>
-                <div id="warning-no-trains" class="alert alert-warning hidden">Keine Züge eingegeben für Betrieb.</div>
-                <div id="warning-no-trains-built" class="alert alert-warning hidden">Keine Züge zusammengestellt für Betrieb.</div>
-                <div id="error-listing-trains" class="alert alert-error hidden">Fehler beim Auflisten von Züge:<br></div>
+                <div id="activity-alert" class="alert alert-info alert-dismissable">Treinen lezen...</div>
+                <div id="warning-no-trains" class="alert alert-warning hidden">Geen Treinen ingevoerd voor Operations.</div>
+                <div id="warning-no-trains-built" class="alert alert-warning hidden">Geen Treinen samengesteld voor Operations.</div>
+                <div id="error-listing-trains" class="alert alert-error hidden">Fout bij het ophalen van Treinlijst:<br></div>
 
                 <table id="trains" class="table table-hover hidden">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Beschreibung</th>
-                            <th>Leitlok</th>
-                            <th>Fährt ab</th>
-                            <th class='hideable'>Zeit</th>
+                            <th>Naam</th>
+                            <th>Omschrijving</th>
+                            <th>Stuurloc</th>
+                            <th>Vertrekt</th>
+                            <th class='hideable'>Tijd</th>
                             <th>Status</th>
-                            <th class='hideable'>Aktuell</th>
-                            <th class='hideable'>Endet</th>
-                            <th class='hideable'>Strecke</th>
+                            <th class='hideable'>Actueel</th>
+                            <th class='hideable'>Eindigt</th>
+                            <th class='hideable'>Route</th>
                         </tr>
                     </thead>
                     <tbody><!-- list of trains goes here --></tbody>
@@ -60,8 +60,8 @@
                     <div class="checkbox">
                         <label id="show-all-trains">
                             <input type="checkbox">
-                            <span title="Zeige alle Züge, auch ohne Wagen und beendete Züge." data-toggle="tooltip" data-placement="auto top" data-delay='{"show":"5000", "hide":"3000"}'>
-                                Zeige alle Züge
+                            <span title="Toon alle Treinen, ook indien zonder wagons of beëindigd." data-toggle="tooltip" data-placement="auto top" data-delay='{"show":"5000", "hide":"3000"}'>
+                                Toon alle Treinen
                             </span>
                         </label>
                     </div>
