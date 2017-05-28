@@ -2518,25 +2518,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     rb.getString("NewGridSize") + ":",
                     rb.getString("EditGridsizeMessageTitle"),
                     JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(gridSize));
-
-            if (newSize == null) {
-                return; //cancelled
+            if (newSize != null) {
+                int gSize = Integer.parseInt(newSize);
+                if (gSize != gridSize) {
+                    if ((gSize < 5) || (gSize > 100)) {
+                        JOptionPane.showMessageDialog(null, rb.getString("GridSizeInvalid"), rb.getString("CannotEditGridSize"),
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        setGridSize(gSize);
+                        setDirty(true);
+                        repaint();
+                    }
+                }
             }
-            int gSize = Integer.parseInt(newSize);
-
-            if (gSize == gridSize) {
-                return; //no change
-            }
-
-            if ((gSize < 5) || (gSize > 100)) {
-                JOptionPane.showMessageDialog(null, rb.getString("GridSizeInvalid"), rb.getString("CannotEditGridSize"),
-                        JOptionPane.ERROR_MESSAGE);
-
-                return;
-            }
-            setGridSize(gSize);
-            setDirty(true);
-            repaint();
         });
 
         //
@@ -5626,9 +5620,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
                 if (snapToGridOnAdd) {
-                    xLoc = ((xLoc + (gridSize / 2)) / gridSize) * gridSize;
-                    yLoc = ((yLoc + (gridSize / 2)) / gridSize) * gridSize;
-                    currentPoint.setLocation(xLoc, yLoc);
+                    currentPoint = MathUtil.granulize(currentPoint, gridSize);
+                    xLoc = (int) currentPoint.getX();
+                    yLoc = (int) currentPoint.getY();
                 }
 
                 if (turnoutRHButton.isSelected()) {
@@ -7583,9 +7577,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
                 //moving a point
                 if (snapToGridOnMove) {
-                    double xx = Math.round(newPos.getX() / gridSize) * gridSize;
-                    double yy = Math.round(newPos.getY() / gridSize) * gridSize;
-                    newPos.setLocation(xx, yy);
+                    newPos = MathUtil.granulize(newPos, gridSize);
                 }
 
                 if ((_pointSelection != null) || (_turntableSelection != null) || (_xingSelection != null)

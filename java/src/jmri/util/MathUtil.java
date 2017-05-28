@@ -81,8 +81,8 @@ public final class MathUtil {
     }
 
     /**
-     *  multiply a point times a scalar
-     * @param p the  point
+     * multiply a point times a scalar
+     * @param p the point
      * @param s the scalar
      * @return the point multiplied by the scalar
      */
@@ -91,9 +91,9 @@ public final class MathUtil {
     }
 
     /**
-     *  multiply a scalar times a point
+     * multiply a scalar times a point
      * @param s the scalar
-     * @param p the  point
+     * @param p the point
      * @return the point multiplied by the scalar
      */
     // (again just so parameter order doesn't matter…)
@@ -102,7 +102,7 @@ public final class MathUtil {
     }
 
     /**
-     *  divide a point times a scalar
+     * divide a point times a scalar
      * @param p the point
      * @param s the scalar
      * @return the point divided by the scalar
@@ -198,6 +198,37 @@ public final class MathUtil {
         return new Point2D.Double(
             lerp(pA.getX(), pB.getX(), t),
             lerp(pA.getY(), pB.getY(), t));
+    }
+
+    /**
+     * round value to granular increment
+     * @param v the value to granulize
+     * @param g the granularity
+     * @return the value granulized to the granularity
+     */
+    public static double granulize(double v, double g) {
+        return Math.round(v / g) * g;
+    }
+
+    /**
+     * round point to horzontal and vertical granular increments
+     * @param p the point to granulize
+     * @param gH the horzontal granularity
+     * @param gV the vertical granularity
+     * @return the point granulized to the granularity
+     */
+    public static Point2D granulize(Point2D p, double gH, double gV) {
+        return new Point2D.Double(granulize(p.getX(), gH), granulize(p.getY(), gV));
+    }
+
+    /**
+     * round point to granulur increment
+     * @param p the point to granulize
+     * @param g the granularity
+     * @return the point granulized to the granularity
+     */
+    public static Point2D granulize(Point2D p, double g) {
+        return granulize(p, g, g);
     }
 
     /**
@@ -467,7 +498,7 @@ public final class MathUtil {
      * @param p1 first control point
      * @param p2 second control point
      * @param p3 terminating control point
-     * @return  the length of the Bezier curve
+     * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
         return drawBezier(g2, p0, p1, p2, p3, 0);
@@ -535,7 +566,7 @@ public final class MathUtil {
      * Draw a Bezier curve
      * @param g2 the Graphics2D to draw to
      * @param p[] control points
-     * @return  the length of the Bezier curve
+     * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, Point2D p[]) {
         if (p.length == 4) {    // draw cubic bezier?

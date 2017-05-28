@@ -434,7 +434,7 @@ public class TrackSegment extends LayoutTrack {
      * @param p the point
      * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
      * @param requireUnconnected - whether to only return hit types for free connections
-     * @return - the location type for the point (or NONE)
+     * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
