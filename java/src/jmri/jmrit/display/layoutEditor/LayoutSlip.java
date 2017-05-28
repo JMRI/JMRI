@@ -735,13 +735,13 @@ public class LayoutSlip extends LayoutTurnout {
      * Display popup menu for information and editing
      */
     @Override
-    protected void showPopUp(MouseEvent e, boolean editable) {
+    protected void showPopUp(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        if (editable) {
+        if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
             switch (type) {
                 case SINGLE_SLIP: {

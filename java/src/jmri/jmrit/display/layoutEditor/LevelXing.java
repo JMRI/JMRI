@@ -1073,13 +1073,13 @@ public class LevelXing extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e, boolean isEditable) {
+    protected void showPopUp(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        if (isEditable) {
+        if (layoutEditor.isEditable()) {
             JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
             jmi.setEnabled(false);
 

@@ -5718,24 +5718,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
             createSelectionGroups();
-        } //check if controlling turnouts out of edit mode
-        else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
+        } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
                 && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                 && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
-            //controlling layout, not in edit mode
+            //controlling turnout out of edit mode
+            LayoutTurnout t = (LayoutTurnout) selectedObject;
             if (useDirectTurnoutControl) {
-                LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.setState(jmri.Turnout.CLOSED);
             } else {
-                LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
             }
-        } //check if controlling turnouts out of edit mode
-        else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
+        } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                 || (selectedPointType == LayoutTrack.SLIP_RIGHT))
                 && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                 && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
-            //controlling layout, not in edit mode
+            // controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedPointType);
         } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
@@ -5743,8 +5740,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-        } //check if requesting marker popup out of edit mode
-        else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
+        } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
+            //requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
 
             if (lo != null) {
@@ -5758,19 +5755,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 LayoutTurnout t = (LayoutTurnout) foundObject;
                                 t.setState(jmri.Turnout.THROWN);
                             } else {
-                                ((LayoutTurnout) foundObject).showPopUp(event, isEditable());
+                                ((LayoutTurnout) foundObject).showPopUp(event);
                             }
                             break;
                         }
 
                         case LayoutTrack.LEVEL_XING_CENTER: {
-                            ((LevelXing) foundObject).showPopUp(event, isEditable());
+                            ((LevelXing) foundObject).showPopUp(event);
                             break;
                         }
 
                         case LayoutTrack.SLIP_RIGHT:
                         case LayoutTrack.SLIP_LEFT: {
-                            ((LayoutSlip) foundObject).showPopUp(event, isEditable());
+                            ((LayoutSlip) foundObject).showPopUp(event);
                             break;
                         }
 
@@ -5780,12 +5777,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }   //switch
                 }
                 AnalogClock2Display c = checkClockPopUps(dLoc);
-
                 if (c != null) {
                     showPopUp(c, event);
                 } else {
                     SignalMastIcon sm = checkSignalMastIconPopUps(dLoc);
-
                     if (sm != null) {
                         showPopUp(sm, event);
                     } else {
@@ -5801,7 +5796,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (!event.isPopupTrigger() && !isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-
             if (selections.size() > 0) {
                 selections.get(0).doMouseReleased(event);
                 whenReleased = event.getWhen();
@@ -5811,7 +5805,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //train icon needs to know when moved
         if (event.isPopupTrigger() && isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-
             if (selections.size() > 0) {
                 selections.get(0).doMouseDragged(event);
             }
@@ -5836,27 +5829,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 case LayoutTrack.TURNOUT_CENTER: {
-                    ((LayoutTurnout) foundObject).showPopUp(event, isEditable());
+                    ((LayoutTurnout) foundObject).showPopUp(event);
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_CENTER: {
-                    ((LevelXing) foundObject).showPopUp(event, isEditable());
+                    ((LevelXing) foundObject).showPopUp(event);
                     break;
                 }
 
                 case LayoutTrack.SLIP_LEFT:
                 case LayoutTrack.SLIP_RIGHT: {
-                    ((LayoutSlip) foundObject).showPopUp(event, isEditable());
+                    ((LayoutSlip) foundObject).showPopUp(event);
                     break;
                 }
 
                 case LayoutTrack.TURNTABLE_CENTER: {
                     ((LayoutTurntable) foundObject).showPopUp(event);
-                    break;
-                }
-
-                default: {
                     break;
                 }
             }   //switch

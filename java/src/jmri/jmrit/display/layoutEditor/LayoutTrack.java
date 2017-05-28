@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ResourceBundle;
@@ -207,6 +208,10 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
+    protected void showPopUp(MouseEvent e) {
+
+    }
+
     /**
      * get the object connected to this track for the specified connection type
      * @param connectionType the specified connection type
@@ -331,8 +336,7 @@ public abstract class LayoutTrack {
             try {
                 result = (null == getConnection(connectionType));
             } catch (Exception e) {
-                //exceptions make me throw up...
-                //log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
         }
         return result;
