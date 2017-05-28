@@ -213,6 +213,10 @@ public abstract class LayoutTrack {
      * @return the object connected to this slip for the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
+     // Note: There are times when subclass instances are stored in variables
+     // of this (base) class so when this method is called on them they
+     // are dispatched here instead of directly to their subclass implementation.
+     // So basicly this is just a subclass dispatcher
     public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
         switch (connectionType) {
@@ -258,6 +262,62 @@ public abstract class LayoutTrack {
             }
         }
         return result;
+    }
+
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+     // Note: There are times when subclass instances are stored in variables
+     // of this (base) class so when this method is called on them they
+     // are dispatched here instead of directly to their subclass implementation.
+     // So basicly this is just a subclass dispatcher
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        switch (connectionType) {
+            case POS_POINT: {
+                ((PositionablePoint)this).setConnection(connectionType, o, type);
+                break;
+            }
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D: {
+                ((LayoutTurnout)this).setConnection(connectionType, o, type);
+                break;
+            }
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D: {
+                ((LevelXing)this).setConnection(connectionType, o, type);
+                break;
+            }
+
+            case TRACK: {
+                ((TrackSegment)this).setConnection(connectionType, o, type);
+                break;
+            }
+
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D: {
+                ((LayoutSlip)this).setConnection(connectionType, o, type);
+                break;
+            }
+            default: {
+                if (connectionType >= TURNTABLE_RAY_OFFSET) {
+                    ((LayoutTurntable)this).setConnection(connectionType, o, type);
+                } else {
+                    log.error("Invalid connection type " + connectionType); //I18IN
+                    throw new jmri.JmriException("Invalid Point");
+                }
+                break;
+            }
+        }
     }
 
     /**

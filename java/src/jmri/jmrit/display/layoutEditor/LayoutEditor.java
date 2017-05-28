@@ -2653,29 +2653,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     rb.getString("EditTitleMessageTitle"),
                     JOptionPane.PLAIN_MESSAGE, null, null, layoutName);
 
-            if (newName == null) {
-                return; //cancelled
-            }
+            if (newName != null) {
+                if (!newName.equals(layoutName)) {
+                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)) {
+                        JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        setTitle(newName);
+                        layoutName = newName;
+                        jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(thisPanel);
+                        setDirty(true);
 
-            if (newName.equals(layoutName)) {
-                return;
-            }
-
-            if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)) {
-                JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
-                        JOptionPane.ERROR_MESSAGE);
-
-                return;
-            }
-            setTitle(newName);
-            layoutName = newName;
-            jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(thisPanel);
-            setDirty(true);
-
-            if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
-                // Rebuild the toolbox after a name change.
-                deleteFloatingEditToolBox();
-                createFloatingEditToolBox();
+                        if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
+                            // Rebuild the toolbox after a name change.
+                            deleteFloatingEditToolBox();
+                            createFloatingEditToolBox();
+                        }
+                    }
+                }
             }
         });
 
@@ -3696,16 +3691,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 javax.swing.JOptionPane.showMessageDialog(null,
                         ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").
                                 getString("NoTransitsMessage"));
-
-                return;
-            }
-            jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
-
-            if (!df.getNewTrainActive()) {
-                df.getActiveTrainFrame().initiateTrain(event, null, null);
-                df.setNewTrainActive(true);
             } else {
-                df.getActiveTrainFrame().showActivateFrame(null);
+                jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+
+                if (!df.getNewTrainActive()) {
+                    df.getActiveTrainFrame().initiateTrain(event, null, null);
+                    df.setNewTrainActive(true);
+                } else {
+                    df.getActiveTrainFrame().showActivateFrame(null);
+                }
             }
         });
         menuBar.add(dispMenu);
@@ -3756,7 +3750,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     protected void enterTrackWidth() {
         if (enterWidthOpen) {
             enterTrackWidthFrame.setVisible(true);
-
             return;
         }
 
@@ -3875,24 +3868,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             new Object[]{" " + wid + " "}),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (mainlineTrackWidth != wid) {
+                mainlineTrackWidth = wid;
+                trackWidthChange = true;
+            }
 
-            return;
-        }
+            //success - hide dialog and repaint if needed
+            enterWidthOpen = false;
+            enterTrackWidthFrame.setVisible(false);
+            enterTrackWidthFrame.dispose();
+            enterTrackWidthFrame = null;
 
-        if (mainlineTrackWidth != wid) {
-            mainlineTrackWidth = wid;
-            trackWidthChange = true;
-        }
-
-        //success - hide dialog and repaint if needed
-        enterWidthOpen = false;
-        enterTrackWidthFrame.setVisible(false);
-        enterTrackWidthFrame.dispose();
-        enterTrackWidthFrame = null;
-
-        if (trackWidthChange) {
-            repaint();
-            setDirty(true);
+            if (trackWidthChange) {
+                repaint();
+                setDirty(true);
+            }
         }
     }   //trackWidthDonePressed
 
@@ -6185,12 +6176,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                     break;
                 }
-
                 case LayoutTrack.TURNOUT_A:
                 case LayoutTrack.TURNOUT_B:
                 case LayoutTrack.TURNOUT_C:
-                case LayoutTrack.TURNOUT_D: {
-                    LayoutTurnout lt = (LayoutTurnout) foundObject;
+                case LayoutTrack.TURNOUT_D:
+                case LayoutTrack.LEVEL_XING_A:
+                case LayoutTrack.LEVEL_XING_B:
+                case LayoutTrack.LEVEL_XING_C:
+                case LayoutTrack.LEVEL_XING_D:
+                case LayoutTrack.SLIP_A:
+                case LayoutTrack.SLIP_B:
+                case LayoutTrack.SLIP_C:
+                case LayoutTrack.SLIP_D: {
+                    LayoutTrack lt = (LayoutTrack) foundObject;
                     try {
                         if (lt.getConnection(foundPointType) == null) {
                             lt.setConnection(foundPointType, t, LayoutTrack.TRACK);
@@ -6212,60 +6210,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
 
-                case LayoutTrack.LEVEL_XING_A:
-                case LayoutTrack.LEVEL_XING_B:
-                case LayoutTrack.LEVEL_XING_C:
-                case LayoutTrack.LEVEL_XING_D: {
-                    LevelXing lx = (LevelXing) foundObject;
-                    try {
-                        if (lx.getConnection(foundPointType) == null) {
-                            lx.setConnection(foundPointType, t, LayoutTrack.TRACK);
-
-                            if (t.getConnect1() == p) {
-                                t.setNewConnect1(lx, foundPointType);
-                            } else {
-                                t.setNewConnect2(lx, foundPointType);
-                            }
-                            p.removeTrackConnection(t);
-
-                            if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
-                                removePositionablePoint(p);
-                            }
-                        }
-                    } catch (jmri.JmriException e) {
-                        log.debug("Unable to set location");
-                    }
-                    break;
-                }
-
-                case LayoutTrack.SLIP_A:
-                case LayoutTrack.SLIP_B:
-                case LayoutTrack.SLIP_C:
-                case LayoutTrack.SLIP_D: {
-                    LayoutSlip ls = (LayoutSlip) foundObject;
-                    try {
-                        if (ls.getConnection(foundPointType) == null) {
-                            ls.setConnection(foundPointType, t, LayoutTrack.TRACK);
-
-                            if (t.getConnect1() == p) {
-                                t.setNewConnect1(ls, foundPointType);
-                            } else {
-                                t.setNewConnect2(ls, foundPointType);
-                            }
-                            p.removeTrackConnection(t);
-
-                            if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
-                                removePositionablePoint(p);
-                            }
-                        }
-                    } catch (jmri.JmriException e) {
-                        log.debug("Unable to set location");
-                    }
-                    break;
-                }
-
-                default:
-
+                default: {
                     if (foundPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                         LayoutTurntable tt = (LayoutTurntable) foundObject;
                         int ray = foundPointType - LayoutTrack.TURNTABLE_RAY_OFFSET;
@@ -6288,6 +6233,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         log.debug("No valid point, so will quit");
                         return;
                     }
+                    break;
+                }
             }   //switch
             repaint();
 
