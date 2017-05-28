@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -1266,11 +1265,11 @@ public class TurnoutTableAction extends AbstractTableAction {
         closedCombo.setEditable(true);
 
         JPanel thrown = new JPanel();
-        thrown.add(new JLabel(Bundle.getMessage("ThrownSpeed")));
+        thrown.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ThrownSpeed"))));
         thrown.add(thrownCombo);
 
         JPanel closed = new JPanel();
-        closed.add(new JLabel(Bundle.getMessage("ClosedSpeed")));
+        closed.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ClosedSpeed"))));
         closed.add(closedCombo);
 
         thrownCombo.removeItem(defaultThrownSpeedText);
@@ -1279,15 +1278,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownCombo.setSelectedItem(turnManager.getDefaultThrownSpeed());
         closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
 
-        // gleaned from Maintenance.makeDialog(), looks better than a horizontal JOptionPane with options in same row as buttons
-        // and can be accessed by Jemmy in GUI test
+        // block of options above row of buttons; gleaned from Maintenance.makeDialog()
+        // can be accessed by Jemmy in GUI test
         String title = Bundle.getMessage("TurnoutGlobalSpeedMessageTitle");
         // build JPanel for comboboxes
         JPanel speedspanel = new JPanel();
-        speedspanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.PAGE_AXIS));
         speedspanel.add(new JLabel(Bundle.getMessage("TurnoutGlobalSpeedMessage")));
-        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.Y_AXIS));
+        //default LEFT_ALIGNMENT
+        thrown.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(thrown);
+        closed.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(closed);
 
         JOptionPane pane = new JOptionPane(
@@ -1298,6 +1299,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
         //pane.setxxx(value); // Configure more?
         JDialog dialog = pane.createDialog(_who, title);
+        dialog.pack();
         dialog.show();
 
         Object retval = pane.getValue();
