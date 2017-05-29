@@ -352,7 +352,7 @@ public class TrackSegment extends LayoutTrack {
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { // findObjectByName failed... try findObjectByTypeAndName
+        if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
@@ -430,7 +430,8 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
+     * Find the hit (location) type for a point.
+     *
      * @param p the point
      * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
      * @param requireUnconnected - whether to only return hit types for free connections

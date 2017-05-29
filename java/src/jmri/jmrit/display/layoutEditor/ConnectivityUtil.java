@@ -2353,7 +2353,7 @@ public class ConnectivityUtil {
         Object curObj = ob;
 
         if (logInfoFor_trackSegmentLeadsTo) {
-            log.info("•trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
