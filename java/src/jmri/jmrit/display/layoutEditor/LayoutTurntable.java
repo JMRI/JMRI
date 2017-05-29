@@ -103,7 +103,7 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutTurntable " + ident;
     }
@@ -128,7 +128,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         result = new Rectangle2D.Double(center.getX(), center.getY(), 0, 0);
         for (int k = 0; k < getNumberRays(); k++) {
             result.add(getRayCoordsOrdered(k));
@@ -315,31 +315,59 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * return the coordinates for a specified connection type
      *
-     * @param connectionType the connection type
+     * @param locationType the connection type
      * @return the coordinates for the specified connection type
      */
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
-        if (TURNTABLE_CENTER == connectionType) {
-            // nothing to do here… move along…
+        if (TURNTABLE_CENTER == locationType) {
+            // nothing to do here... move along...
             // (results are already correct)
-        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
+        } else if (locationType >= TURNTABLE_RAY_OFFSET) {
+            result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid connection type " + connectionType); //I18IN
+            log.error("Invalid connection type " + locationType); //I18IN
         }
         return result;
     }
 
-    public Object getConnection(int connection) throws jmri.JmriException {
+    /**
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException - if the connectionType is invalid
+     */
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
-        if (connection >= TURNTABLE_RAY_OFFSET) {
-            result = getRayConnectIndexed(connection - TURNTABLE_RAY_OFFSET);
+        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid Turntable connection type " + connection); //I18IN
+            log.error("Invalid Turntable connection type " + connectionType); //I18IN
             throw new jmri.JmriException("Invalid Point");
         }
         return result;
+    }
+
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to LevelXing - " + type);
+            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+        }
+        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+        } else {
+            log.error("Invalid Connection Type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+        }
     }
 
     /**
@@ -357,7 +385,7 @@ public class LayoutTurntable extends LayoutTrack {
                     result = ts.getMainline();
                     break;
                 }
-            }        
+            }
         }
         return result;
     }
@@ -390,13 +418,12 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      use hit rectangle (false: use hit circles)
-     * @param requireUnconnected (only hit disconnected connections)
-     * @return value representing the point connection type
-     * @since 7.4.?
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
@@ -482,7 +509,7 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             rayPopup = new JPopupMenu();
         }
-        
+
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
@@ -1076,6 +1103,11 @@ public class LayoutTurntable extends LayoutTrack {
             }
             g2.draw(layoutEditor.trackControlPointRectAt(pt));
         }
+    }
+
+    public void reCheckBlockBoundary()
+    {
+        // nothing to do here... move along...
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
