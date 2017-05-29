@@ -200,7 +200,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
-    // this should only be used for debugging
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutBlock " + getDisplayName();
     }

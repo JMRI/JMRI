@@ -101,7 +101,7 @@ public class PositionablePoint extends LayoutTrack {
         coords = p;
     }
 
-    // this should only be used for debugging
+    // this should only be used for debugging...
     public String toString() {
         return "PositionablePoint " + ident;
     }
@@ -137,7 +137,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Rectangle2D result;
-        
+
         Point2D pointA = getCoords();
         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
         return result;
@@ -1123,12 +1123,11 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      use hit rectangle (false: use hit circles)
-     * @param requireUnconnected (only hit disconnected connections)
-     * @return value representing the point connection type
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
@@ -1154,6 +1153,78 @@ public class PositionablePoint extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoords();
         if (connectionType != POS_POINT) {
+            log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException - if the connectionType is invalid
+     */
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        Object result = null;
+        if (connectionType == POS_POINT) {
+            result = getConnect1();
+            if (null == result) {
+                result = getConnect2();
+            }
+        } else {
+            log.error("Invalid connection type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Point");
+        }
+        return result;
+    }
+
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to positionable point - " + type);
+            throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
+        }
+        if (connectionType == POS_POINT) {
+            /*
+            // Note: Not used
+            TrackSegment ts = (TrackSegment) o;
+            if ((getType() == PositionablePoint.ANCHOR) && setTrackConnection(ts)) {
+                if (o.getConnect1() == p) {
+                    o.setNewConnect1(this, LayoutTrack.POS_POINT);
+                } else {
+                    o.setNewConnect2(this, LayoutTrack.POS_POINT);
+                }
+                ts.removeTrackConnection(ts);
+
+                if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
+                    removePositionablePoint(p);
+                }
+            }
+            */
+        } else {
+            log.error("Invalid Connection Type " + connectionType); //I18IN
+            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+        }
+    }
+
+    /**
+     * return true if this connection type is disconnected
+     * @param connectionType - the connection type to test
+     * @return true if the connection for this connection type is free
+     */
+    public boolean isDisconnected(int connectionType) {
+        boolean result = false;
+        if (connectionType == POS_POINT) {
+            result = ((getConnect1() == null) || (getConnect2() == null));
+        } else {
             log.error("Invalid connection type " + connectionType); //I18IN
         }
         return result;

@@ -347,7 +347,7 @@ public class TrackSegment extends LayoutTrack {
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { // findObjectByName failed; try findObjectByTypeAndName
+        if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
@@ -430,11 +430,13 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Get the connection type for a point.
+     * Find the hit (location) type for a point.
      *
-     * @param p the point to hit test
-     * @return the type of point that was hit (NONE means none)
-     * @since 7.4.?
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
@@ -481,7 +483,6 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-
     /**
      * @return the bounds of this track segment
      */
@@ -512,14 +513,14 @@ public class TrackSegment extends LayoutTrack {
         String info = rb.getString("TrackSegment");
         if (getArc()) {
             if (getCircle()) {
-                info = info + "( " + Bundle.getMessage("Circle") + ")";
+                info = info + " (" + Bundle.getMessage("Circle") + ")";
             } else {
-                info = info + "( " + Bundle.getMessage("Ellipse") + ")";
+                info = info + " (" + Bundle.getMessage("Ellipse") + ")";
             }
         } else if (getBezier()) {
-            info = info + "( " + Bundle.getMessage("Bezier") + ")";
+            info = info + " (" + Bundle.getMessage("Bezier") + ")";
         } else {
-            info = info + "( " + Bundle.getMessage("Line") + ")";
+            info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
         JMenuItem jmi = popup.add(info);
@@ -1555,6 +1556,11 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)
+
+    public void reCheckBlockBoundary()
+    {
+        // nothing to do here... move along...
+    }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }

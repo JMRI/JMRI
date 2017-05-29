@@ -2564,7 +2564,7 @@ public class ConnectivityUtil {
                             }
                         } else {
                             if (conType == LayoutTrack.TURNOUT_A) {
-                                // if the connect B or C are in the next block
+                                // if the connect B or C are in the next block...
                                 if ((((TrackSegment) lt.getConnectB()).getLayoutBlock() == nlb)
                                         || (((TrackSegment) lt.getConnectC()).getLayoutBlock() == nlb)) {
                                     return true;    //(yes!) done!
