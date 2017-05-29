@@ -313,7 +313,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * return the coordinates for a specified connection type
+     * Get the coordinates for a specified connection type.
      *
      * @param locationType the connection type
      * @return the coordinates for the specified connection type
@@ -321,12 +321,12 @@ public class LayoutTurntable extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
-            // nothing to do here... move along...
+            // nothing to do here, move along...
             // (results are already correct)
         } else if (locationType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid connection type " + locationType); //I18IN
+            log.error("Invalid connection type " + locationType); // NOI18N
         }
         return result;
     }
@@ -343,14 +343,15 @@ public class LayoutTurntable extends LayoutTrack {
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid Turntable connection type " + connectionType); //I18IN
+            log.error("Invalid Turntable connection type " + connectionType); // NOI18N
             throw new jmri.JmriException("Invalid Point");
         }
         return result;
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
+     * Set the object connected to this turnout for the specified connection type.
+     *
      * @param connectionType the connection type (where it is connected to the us)
      * @param o the object that is being connected
      * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
@@ -365,15 +366,17 @@ public class LayoutTurntable extends LayoutTrack {
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid Connection Type " + connectionType); //I18IN
+            log.error("Invalid Connection Type " + connectionType); // NOI18N
             throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 
     /**
-     * Methods to test if ray is a mainline track or not Returns true if
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segment is missing
+     * Test if ray is a mainline track or not.
+     * <p>
+     * Defaults to false (not mainline) if
+     * connecting track segment is missing.
+     * @return true if connecting track segment is mainline
      */
     public boolean isMainlineIndexed(int index) {
         boolean result = false; // assume failure (pessimist!)

@@ -3019,7 +3019,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
                             if (null != ddldoProp) {                //if we found it...
                                 ddldoPref = ddldoProp.toString();   //get it's (string value
-                            } else {    //...otherwise...
+                            } else {    //otherwise...
                                 //save it in the users preferences
                                 prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                             }
@@ -3119,7 +3119,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setupToolBar(); //re-layout all the toolbar items
 
             if (showHelpBar) {
-                //not sure why... but this is the only way I could
+                //not sure why, but this is the only way I could
                 //get everything to layout correctly
                 //when the helpbar is visible...
                 boolean editMode = editModeItem.isSelected();
@@ -3235,7 +3235,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         zoomButtonGroup.add(zoom60Item);
 
         //note: because this LayoutEditor object was just instantiated its
-        //zoom attribute is 1.0... if it's being instantiated from an XML file
+        //zoom attribute is 1.0; if it's being instantiated from an XML file
         //that has a zoom attribute for this object then setZoom will be
         //called after this method returns and we'll select the appropriate
         //menu item then.
@@ -3294,7 +3294,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             Point mouseLoc = mpi.getLocation();
             // convert to target panel coordinates
             SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
-
             // correct for scaling...
             double theZoom = getZoom();
             xLoc = (int) (mouseLoc.getX() / theZoom);
@@ -5407,6 +5406,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
         // see if any of those points are in it instead...
+
         Rectangle2D r = trackControlCircleRectAt(loc);
 
         //check Track Segments, if any
@@ -9470,7 +9470,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        //...because this is called regardless of the code above?!?
+        //...because this is called regardless of the code above
         sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
 
         setNextLocation(l);
@@ -9956,7 +9956,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setScroll(_scrollState);
         }
 
-        //these may not be setup yet...
+        //these may not be set up yet...
         if (helpBarPanel != null) {
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(editable && showHelpBar);
@@ -10232,7 +10232,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (showHelpBar != state) {
             showHelpBar = state;
 
-            //these may not be setup yet...
+            //these may not be set up yet...
             if (showHelpItem != null) {
                 showHelpItem.setSelected(showHelpBar);
             }
@@ -10279,7 +10279,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (antialiasingOn != state) {
             antialiasingOn = state;
 
-            //this may not be setup yet...
+            //this may not be set up yet...
             if (antialiasingOnItem != null) {
                 antialiasingOnItem.setSelected(antialiasingOn);
 
@@ -10296,7 +10296,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (highlightSelectedBlockFlag != state) {
             highlightSelectedBlockFlag = state;
 
-            //this may not be setup yet...
+            //this may not be set up yet...
             if (highlightSelectedBlockItem != null) {
                 highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
 

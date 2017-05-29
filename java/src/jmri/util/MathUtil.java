@@ -463,8 +463,8 @@ public final class MathUtil {
         double l03 = distance(p0, p3);
         double flatness = (l01 + l12 + l23) / l03;
 
-        // depth prevents stack overflow...
-        // (I picked 12 because 2^12 = 2048... is larger than most monitors ;-)
+        // depth prevents stack overflow
+        // (I picked 12 because 2^12 = 2048 is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
@@ -518,8 +518,8 @@ public final class MathUtil {
         double inner_distance = MathUtil.distance(points[0], points[len - 1]);
         double flatness = outer_distance / inner_distance;
 
-        // depth prevents stack overflow...
-        // (I picked 12 because 2^12 = 2048... is larger than most monitors ;-)
+        // depth prevents stack overflow
+        // (I picked 12 because 2^12 = 2048 is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
