@@ -320,7 +320,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
-        if (TURNTABLE_CENTER == connectionType) {
+        if (TURNTABLE_CENTER == locationType) {
             // nothing to do here, move along...
             // (results are already correct)
         } else if (locationType >= TURNTABLE_RAY_OFFSET) {
