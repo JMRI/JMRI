@@ -17,7 +17,8 @@ import org.junit.runners.Suite.SuiteClasses;
     ConnectionLabelTest.class,
     AboutDialogTest.class,
     DefaultEditableListModelTest.class,
-    RowSorterUtilTest.class
+    RowSorterUtilTest.class,
+    JTitledSeparatorTest.class
 })
 public class PackageTest {
 }
