@@ -76,7 +76,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setShowAll(boolean showAll) {
         _showAll = showAll;
         updateList();
-        fireTableStructureChanged();
+        //fireTableStructureChanged();
         initTable();
     }
 
