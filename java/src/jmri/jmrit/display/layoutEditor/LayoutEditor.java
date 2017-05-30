@@ -37,9 +37,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -3382,20 +3384,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     private void selectZoomMenuItem(double zoomFactor) {
-        //this will put zoomFactor on 25% increments
-        //(so it will more likely match one of these values)
-        int newZoomFactor = ((int) (zoomFactor * 4)) * 25;
-
-        zoom025Item.setSelected(newZoomFactor == 25);
-        zoom05Item.setSelected(newZoomFactor == 50);
-        zoom075Item.setSelected(newZoomFactor == 75);
+        int newZoomFactor = (int) (zoomFactor * 100);
         noZoomItem.setSelected(newZoomFactor == 100);
-        zoom15Item.setSelected(newZoomFactor == 150);
         zoom20Item.setSelected(newZoomFactor == 200);
         zoom30Item.setSelected(newZoomFactor == 300);
         zoom40Item.setSelected(newZoomFactor == 400);
         zoom50Item.setSelected(newZoomFactor == 500);
         zoom60Item.setSelected(newZoomFactor == 600);
+
+        //this will put zoomFactor on 50% increments
+        //(so it will more likely match one of these values)
+        newZoomFactor = ((int) (zoomFactor * 2)) * 50;
+        zoom05Item.setSelected(newZoomFactor == 50);
+        zoom15Item.setSelected(newZoomFactor == 150);
+
+        //this will put zoomFactor on 25% increments
+        //(so it will more likely match one of these values)
+        zoom025Item.setSelected(newZoomFactor == 25);
+        zoom075Item.setSelected(newZoomFactor == 75);
     }   //selectZoomMenuItem
 
     //
@@ -3596,6 +3602,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 bounds = bounds.createUnion(o.getBounds());
             }
         }
+
         // expand by grid size
         bounds = MathUtil.inset(bounds, -getGridSize());
         bounds = new Rectangle2D.Double(
@@ -5299,30 +5306,31 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         thisPanel.requestFocusInWindow();
     }   //mousePressed
 
-    // this is a method to iterate over a list of items
+    // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
-    private static boolean forEachItemInListDo(
-            List listOfObjects,
+    // all matching items are then added to the resulting ArrayList
+    private static List forEachItemInListOfListsDo(
+            List<List> listOfListsOfObjects,
             Predicate<Object> tester) {
-        boolean result = false;
-        for (Object object : listOfObjects) {
-            if (tester.test(object)) {
-                result = true;
-                break;
-            }
+        List result = new ArrayList();
+        for (List<Object> listOfObjects : listOfListsOfObjects) {
+            List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
+            result.addAll(l);
         }
         return result;
     }
 
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
-    private static boolean forEachItemInListOfListsDo(
+    // and return the first one that matches
+    private static Object findFirstMatchingItemInListOfLists(
             List<List> listOfListsOfObjects,
             Predicate<Object> tester) {
-        boolean result = false;
+        Object result = null;
         for (List listOfObjects : listOfListsOfObjects) {
-            result = forEachItemInListDo(listOfObjects, tester);
-            if (result) {
+            Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
+            if (opt.isPresent()) {
+                result = opt.get();
                 break;
             }
         }
@@ -5335,29 +5343,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         listOfLists.add(slipList);
         listOfLists.add(turntableList);
 
-        Boolean found = forEachItemInListOfListsDo(listOfLists,
+        Object obj = findFirstMatchingItemInListOfLists(listOfLists,
             (Object o) -> {
                 LayoutTrack layoutTrack = (LayoutTrack) o;
                 selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-                boolean result1 = (LayoutTrack.NONE != selectedPointType);
-                if (result1) {
-                    if (layoutTrack instanceof LayoutTurntable) {
-                        if (layoutTrack.isConnectionType(selectedPointType)) {
-                            try {
-                                selectedObject = layoutTrack.getConnection(selectedPointType);
-                            } catch (jmri.JmriException e) {
-                                // nothing to see here... move along...
-                            }
-                        } else {
-                            selectedPointType = LayoutTrack.NONE;
-                        }
-                    } else {
-                        selectedObject = layoutTrack;
-                    }
-                }
-                return result1;
+                return (LayoutTrack.NONE != selectedPointType);
             }
         );
+        if (null != obj) {
+            if (obj instanceof LayoutTurntable) {
+                LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
+                if (layoutTurntable.isConnectionType(selectedPointType)) {
+                    try {
+                        selectedObject = layoutTurntable.getConnection(selectedPointType);
+                    } catch (jmri.JmriException e) {
+                        // this should never happed because .isConnectionType will catch
+                        // invalid connection types before .getConnection is called
+                    }
+                } else {
+                    selectedPointType = LayoutTrack.NONE;
+                }
+            } else {
+                selectedObject = obj;
+            }
+        }
     }   // checkControls
 
     // optional parameter avoid
@@ -5382,21 +5391,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         listOfLists.add(turntableList);
         listOfLists.add(trackList);
 
-        result = forEachItemInListOfListsDo(listOfLists,
-                (Object o) -> {
-                    boolean result1 = false;
-                    LayoutTrack layoutTrack = (LayoutTrack) o;
-                    if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
-                        foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
-                        result1 = (LayoutTrack.NONE != foundPointType);
-                        if (result1) {
-                            foundObject = layoutTrack;
-                            foundLocation = layoutTrack.getCoordsForConnectionType(foundPointType);
-                            foundNeedsConnect = layoutTrack.isDisconnected(foundPointType);
-                        }
-                    }
-                    return result1;
-                });
+        foundPointType = LayoutTrack.NONE;
+        Object obj = findFirstMatchingItemInListOfLists(listOfLists,
+            (Object o) -> {
+                LayoutTrack layoutTrack = (LayoutTrack) o;
+                if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
+                    foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
+                }
+                return (LayoutTrack.NONE != foundPointType);
+            }
+        );
+        if (null != obj) {
+            LayoutTrack layoutTrack = (LayoutTrack) obj;
+            foundObject = layoutTrack;
+            foundLocation = layoutTrack.getCoordsForConnectionType(foundPointType);
+            foundNeedsConnect = layoutTrack.isDisconnected(foundPointType);
+            result = true;
+        }
         return result;
     }   //checkSelect
 
@@ -10048,21 +10059,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //setGridSize
 
     public int getGridSize() {
-        int gs = gridSize;
-
-        return gs;
+        return gridSize;
     }   //getGridSize
 
     public int getMainlineTrackWidth() {
-        int wid = (int) mainlineTrackWidth;
-
-        return wid;
+        return (int) mainlineTrackWidth;
     }   //getMainlineTrackWidth
 
     public int getSideTrackWidth() {
-        int wid = (int) sideTrackWidth;
-
-        return wid;
+        return (int) sideTrackWidth;
     }   //getSideTrackWidth
 
     public double getXScale() {
@@ -10588,9 +10593,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     boolean main = true;
     float trackWidth = sideTrackWidth;
 
-    //had to make this public so the LayoutTrack classes could access it
+    //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
-    public float setTrackStrokeWidth(Graphics2D g2, boolean need) {
+    protected float setTrackStrokeWidth(Graphics2D g2, boolean need) {
         if (main != need) {
             main = need;
 
@@ -10601,7 +10606,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return trackWidth;
     }   //setTrackStrokeWidth
 
-    protected void drawTurnouts(Graphics2D g2) {
+    private void drawTurnouts(Graphics2D g2) {
         // loop over all turnouts
         for (LayoutTurnout t : turnoutList) {
             if (!t.isHidden() || isEditable()) {
@@ -10626,10 +10631,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawSlips
 
     private void drawTurnoutControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setColor(turnoutCircleColor);
         // loop over all turnouts
         for (LayoutTurnout t : turnoutList) {
-            g2.setColor(turnoutCircleColor);
-
             if (!(t.isHidden() && !isEditable())) {
                 t.drawControls(g2);
             }
@@ -10637,9 +10642,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawTurnoutControls
 
     private void drawSlipControls(Graphics2D g2) {
-        // loop over all slips
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
-
+        // loop over all slips
         for (LayoutSlip sl : slipList) {
             if (!(sl.isHidden() && !isEditable())) {
                 sl.drawControls(g2);
@@ -10688,18 +10693,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawHiddenTrackSegments(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        main = false;
-        g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
+        setTrackStrokeWidth(g2, false);
         for (TrackSegment ts : trackList) {
             if (ts.isHidden()) {
                 ts.drawHidden(g2);
-                setTrackStrokeWidth(g2, !main);
             }
         }
     }   //drawHiddenTrackSegments
 
     private void drawDashedTrackSegments(Graphics2D g2, boolean mainline) {
+        setTrackStrokeWidth(g2, mainline);
         for (TrackSegment ts : trackList) {
             ts.drawDashed(g2, mainline);
         }
@@ -10979,7 +10982,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public String toString() {
-        return getLayoutName();
+        return "LayoutEditor: " + getLayoutName();
     }
 
     @Override

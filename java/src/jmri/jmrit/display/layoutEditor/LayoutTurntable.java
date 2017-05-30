@@ -1065,12 +1065,7 @@ public class LayoutTurntable extends LayoutTrack {
             TrackSegment ts = getRayConnectOrdered(j);
             if (ts != null) {
                 layoutEditor.setTrackStrokeWidth(g2, ts.getMainline());
-                LayoutBlock b = ts.getLayoutBlock();
-                if (b != null) {
-                    g2.setColor(b.getBlockColor());
-                } else {
-                    g2.setColor(defaultTrackColor);
-                }
+                setColorForTrackBlock(g2, ts.getLayoutBlock());
             } else {
                 layoutEditor.setTrackStrokeWidth(g2, false);
                 g2.setColor(defaultTrackColor);
