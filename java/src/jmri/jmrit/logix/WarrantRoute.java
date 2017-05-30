@@ -88,6 +88,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
+    private JRadioButton _updateProfile = new JRadioButton(Bundle.getMessage("UpdateProfile"));
     private SpeedProfileTable _spTable = null;
 
 
@@ -131,6 +132,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _depth = d;
         _searchDepth.setText(Integer.toString(_depth));
     }
+    
+    public boolean getUpateSpeedProfile() {
+        return _updateProfile.isSelected();
+    }
+    public void setUpateSpeedProfile(boolean set) {
+        _updateProfile.setSelected(set);
+    }
 
     public JPanel searchDepthPanel(boolean vertical) {
         _searchDepth.setText(Integer.toString(_depth));
@@ -161,7 +169,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
         panel.add(Box.createVerticalStrut(2));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
-        panel.add(_viewProfile);
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(_viewProfile);
+        p.add(_updateProfile);
+        _updateProfile.setToolTipText(Bundle.getMessage("toolTipUpdateProfile"));
+        panel.add(p);
         if (comp != null) {
             panel.add(comp);
         }
@@ -299,7 +312,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return trainName;
     }
 
-    protected void setAddress(String address) {
+    private void setAddress(String address) {
         _dccNumBox.setText(address);
         if (address == null) {
             _rosterBox.setSelectedIndex(0);
@@ -318,17 +331,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_train != null) {
             return _train.getDccLocoAddress();
         }
-        if (_trainId != null) {
+        String address = getAddress();
+        if (address == null) {
+            address = _trainId;
+        }
+        if (address != null) {
             String numId;
-            int index = _trainId.indexOf('(');
+            int index = address.indexOf('(');
             if (index >= 0) {
-                numId = _trainId.substring(0, index);
+                numId = address.substring(0, index);
             } else {
-                numId = _trainId;
+                numId = address;
             }
             boolean isLong = true;
-            if ((index + 1) < _trainId.length()
-                    && (_trainId.charAt(index + 1) == 'S' || _trainId.charAt(index + 1) == 's')) {
+            if ((index + 1) < address.length()
+                    && (address.charAt(index + 1) == 'S' || address.charAt(index + 1) == 's')) {
                 isLong = false;
             }
             try {

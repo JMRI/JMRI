@@ -18,7 +18,7 @@ public class ControlPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "ControlPanelTestWarrant")));
         ControlPanel t = new ControlPanel(f);
         Assert.assertNotNull("exists",t);
         f.dispose();

@@ -6,8 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,26 +46,28 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     final ReentrantLock _lock = new ReentrantLock(true);
     private boolean _atHalt = false;
     private boolean _atClear = false;
-    SignalSpeedMap _speedMap;
-    RosterSpeedProfile _speedProfile;
-    private static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
+    private SpeedUtil _speedUtil;
+//    SignalSpeedMap _speedMap;
+//    RosterSpeedProfile _speedProfile;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
+        _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
+        _speedUtil.makeSpeedTree();
         _idxCurrentCommand = 0;
         _idxNoSpeedCommand = -1;
         _throttle = throttle;
         _syncIdx = -1;
         _waitForSensor = false;
-        _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
-        jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
+//        _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+/*        jmri.jmrit.roster.RosterEntry ent = _speedUtil.getRosterEntry();
         if (ent != null) {
             _speedProfile = ent.getSpeedProfile();
         }
         if (_speedProfile == null) {
             log.warn("RosterSpeedProfile not found. Using default ThrottleFactor " + _speedMap.getDefaultThrottleFactor());
-        }
+        }*/
     }
 
     int cmdBlockIdx = 0;
@@ -84,7 +84,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ThrottleSetting ts = _commands.get(_idxCurrentCommand);
             _runOnET = _setRunOnET;     // OK to set here
             long time = ts.getTime();
-            if (getSpeed() > 0.0f) {
+            if (_speedUtil.getSpeed() > 0.0f) {
                 time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
             }
             String command = ts.getCommand().toUpperCase();
@@ -205,7 +205,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         if (!_halt && !_waitForClear) {
                             float speed = Float.parseFloat(ts.getValue());
                             _normalSpeed = speed;
-                            float speedMod = modifySpeed(speed, _speedType);
+                            float speedMod = _speedUtil.modifySpeed(speed, _speedType);
                             if (Math.abs(speed - speedMod) > .0001f) {
                                 _timeRatio = speed / speedMod;
                             } else {
@@ -366,60 +366,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param sType named speed restriction
      * @return modified throttle setting
      */
-    protected float modifySpeed(float tSpeed, String sType) {
-        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
-        if (sType.equals(Warrant.Stop)) {
-            return 0.0f;
-        }
-        if (sType.equals(Warrant.EStop)) {
-            return -1.0f;
-        }
-        float throttleSpeed = tSpeed;       // throttleSpeed is a throttle setting
-        if (sType.equals(Warrant.Normal)) {
-            return throttleSpeed;
-        }
-        float signalSpeed = _speedMap.getSpeed(sType);
-
-        switch (_speedMap.getInterpretation()) {
-            case SignalSpeedMap.PERCENT_NORMAL:
-                throttleSpeed *= signalSpeed / 100;      // ratio of normal
-                break;
-            case SignalSpeedMap.PERCENT_THROTTLE:
-                signalSpeed = signalSpeed / 100;            // ratio of full throttle setting
-                if (signalSpeed < throttleSpeed) {
-                    throttleSpeed = signalSpeed;
-                }
-                break;
-
-            case SignalSpeedMap.SPEED_MPH:          // convert miles per hour to track speed
-                signalSpeed = signalSpeed / _speedMap.getLayoutScale();
-                signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph as mm/ms
-                float trackSpeed = getTrackSpeed(throttleSpeed);
-                if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSetting(signalSpeed);
-                }
-                break;
-
-            case SignalSpeedMap.SPEED_KMPH:
-                signalSpeed = signalSpeed / _speedMap.getLayoutScale();
-                signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms for kmph
-                trackSpeed = getTrackSpeed(throttleSpeed);
-                if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSetting(signalSpeed);
-                }
-                break;
-            default:
-                log.error("Unknown speed interpretation {}", _speedMap.getInterpretation());
-                throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
-        }
-        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {} using interpretation {}",
-                tSpeed, throttleSpeed, signalSpeed, _speedMap.getInterpretation());
-        return throttleSpeed;
-    }
 
     synchronized protected void setSpeed(float s) {
         if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
+        _speedUtil.speedChange();
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -427,15 +378,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         });
         if (log.isDebugEnabled()) log.debug("Speed Set to {}, _speedType={},  _waitForClear= {} _waitForSync= {}, _halt= {}, warrant {}",
                 speed, _speedType,  _waitForClear, _waitForSync, _halt, _warrant.getDisplayName());
-    }
-
-    synchronized protected float getSpeed() {
-        float speed = _throttle.getSpeedSetting();
-        if (speed < 0.0) {
-            speed = 0.0f;
-            _throttle.setSpeedSetting(speed);
-        }
-        return speed;
     }
 
     /**
@@ -449,8 +391,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
-        Float speed = getSpeed();
-        if (Math.abs(speed - modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
+        Float speed = _speedUtil.getSpeed();
+        if (Math.abs(speed - _speedUtil.modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
             // already at speed, no need to reset throttle
             _speedType = speedType;
             return false;
@@ -466,7 +408,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 return true;
             } else {
                 _speedType = speedType;
-                float speedMod = modifySpeed(1.0f, _speedType);
+                float speedMod = _speedUtil.modifySpeed(1.0f, _speedType);
                 if (Math.abs(1.0f - speedMod) > .0001f) {
                     _timeRatio = 1.0f / speedMod;
                 } else {
@@ -486,11 +428,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             setSpeed(0.0f);
             return;
         }
-        setSpeed(modifySpeed(_normalSpeed, speedType));
+        setSpeed(_speedUtil.modifySpeed(_normalSpeed, speedType));
     }
 
     protected float getExpectedSpeed(String speedType) {
-        return modifySpeed(_normalSpeed, speedType);
+        return _speedUtil.modifySpeed(_normalSpeed, speedType);
     }
 
     /**
@@ -570,26 +512,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Calculates the scale speed of the current throttle setting for display
-     * @return text message
-     */
-    @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="speed type name in message is ok")
-    public String getSpeedMessage() {
-        float curSpeed = getSpeed();
-        float speed = getTrackSpeed(curSpeed) * _speedMap.getLayoutScale();
-
-        String units;
-        if (_speedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
-            units = "Kmph";
-            speed = speed * 3.6f;
-        } else {
-            units = "Mph";
-            speed = speed * 2.2369363f;
-        }
-        return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
-    }
-
-    /**
      * Flag from user to end run
      */
     public void abort() {
@@ -605,17 +527,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 setFunction(i, false);
             }
             try {
-                InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrant);
+                InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _speedUtil);
             } catch (Exception e) {
                 // null pointer catch and maybe other such.
                 log.warn("Throttle release and cancel threw: " + e);
             }
         }
         if (log.isDebugEnabled()) log.debug("Abort called. Engineer shut down. warrant {}", _warrant.getDisplayName());
-    }
-
-    protected void releaseThrottle() {
-        InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrant);
     }
 
     private void setFunction(int cmdNum, boolean isSet) {
@@ -935,7 +853,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             w.startupWarrant();
             msg = "Launching warrant \"" + _warrant.getDisplayName() + "\" again.";
         } else {
-            if (w.getDccAddress().equals(_warrant.getDccAddress())) {
+            if (w.getSpeedUtil().getDccAddress().equals(_speedUtil.getDccAddress())) {
                 OBlock block = w.getfirstOrder().getBlock();
                 block.deAllocate(_warrant);     // insure w can start
             }
@@ -951,113 +869,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug(msg);
     }
 
-    // todo replace generic factors with factors specific to locomotive for next 3 methods.
-    // Unless great care has been taken to match speeds of locos and their speed curves,
-    // _speedMap.getDefaultThrottleFactor() is a very unreliable parameter to
-    // calculate times or distances.  A speedProfile per loco is needed.
-    protected float getDistanceTraveled(float speedSetting, String speedtype, long time) {
-        float speed = modifySpeed(speedSetting, speedtype);
-        float distance;
-        boolean isForward = _throttle.getIsForward();
-        if (_speedProfile != null) {
-            distance = _speedProfile.getSpeed(speed, isForward) * time / 1000;
-        } else {
-            float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
-            distance = speed * time * distanceFactor;
-        }
-        if (log.isTraceEnabled()) log.trace("getDistanceTraveled = {} in time={}ms from speedSetting= {}, type {} by {}",
-                distance, time, speedSetting, speedtype,
-                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
-        return distance;
-    }
-
-    protected long getTimeForDistance(float speed, float distance) {
-        boolean isForward = _throttle.getIsForward();
-        float time;
-        if (_speedProfile != null) {
-            time = distance * 1000 / _speedProfile.getSpeed(speed, isForward);
-        } else {
-            float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
-            time = distance / (distanceFactor * speed);
-        }
-        if (log.isTraceEnabled()) log.trace("getTimeForDistance = {}ms from speedSetting= {} in distance {} by {}",
-                time, speed, distance,
-                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
-        return (long) time;
-    }
-
-    protected RampData rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType) {
-        if (curSpeedType.equals(toSpeedType)) {
-            return new RampData(0.0f, 0);
-        }
-        float fromSpeed = modifySpeed(curSpeed, curSpeedType);
-        float toSpeed = modifySpeed(curSpeed, toSpeedType);
-        if (toSpeed > fromSpeed) {
-            float tmp = fromSpeed;
-            fromSpeed = toSpeed;
-            toSpeed = tmp;
-        }
-        float rampLength = 0.0f;
-        float delta = _speedMap.getStepIncrement();
-        int incr = _speedMap.getStepDelay();
-        boolean isForward = _throttle.getIsForward();
-        float speed = fromSpeed;
-        int steps = 0;
-        while (speed >= toSpeed) {
-            float dist;
-            if (_speedProfile != null) {
-                dist = _speedProfile.getSpeed((speed - delta / 2), isForward) * incr / 1000;
-            } else {
-                float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
-                dist = (speed - delta / 2) * incr * distanceFactor;
-            }
-            if (dist <= 0.0f) {
-                break;
-            }
-            speed -= delta;
-            if (speed >= toSpeed) {
-                rampLength += dist;
-            } else {
-                rampLength += (speed+delta - toSpeed) * dist / delta;
-            }
-            steps++;
-        }
-        int rampTime = incr*steps;
-        if (log.isTraceEnabled()) log.trace("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
-                rampLength, rampTime, fromSpeed, curSpeedType, toSpeedType, toSpeed,
-                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
-        return new RampData(rampLength, rampTime);   // add 1cm for safety (all scales)
-    }
-
-    // return millimeters per millisecond (= meters/sec)
-    private float getTrackSpeed(float throttleSetting) {
-        if (_speedProfile != null) {
-            return _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward()) / 1000;
-        }
-        return throttleSetting *_speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
-    }
-
-    private float getThrottleSetting(float trackSpeed) {
-        float setting;
-        if (_speedProfile != null) {
-            setting = _speedProfile.getThrottleSetting(trackSpeed, _throttle.getIsForward());
-        } else {
-            setting = trackSpeed * _speedMap.getLayoutScale() / (SCALE_FACTOR *_speedMap.getDefaultThrottleFactor());
-        }
-        return setting;
-    }
-    // return a boolean so minSpeedType() can return a non-null String if possible
-    protected boolean secondGreaterThanFirst(String speed1, String speed2) {
-        if (speed1 == null) {
-            return false;
-        }
-        if (speed2 == null) {
-            return true;
-        }
-        float s1 = modifySpeed(1.0f, speed1);
-        float s2 = modifySpeed(1.0f, speed2);
-        return (s1 < s2);
-    }
 
     protected DccThrottle getThrottle() {
         return _throttle;
@@ -1086,12 +897,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         public void run() {
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
-            float endSpeed = modifySpeed(_normalSpeed, endSpeedType);   // requested endspeed
-            float speed = getSpeed();
-            float incr = _speedMap.getStepIncrement();
-            int delay = _speedMap.getStepDelay();
+            float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType);   // requested endspeed
+            float speed = _speedUtil.getSpeed();
+            float incr = _speedUtil.getStepIncrement();
+            int delay = _speedUtil.getStepDelay();
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
-                    modifySpeed(_normalSpeed, _speedType), speed);
+                    _speedUtil.modifySpeed(_normalSpeed, _speedType), speed);
             // endSpeed should not exceed scripted speed modified by _speedType
             float scriptSpeed = 0.0f;
             for (int idx = 0; idx < _idxCurrentCommand; idx++) {
@@ -1101,7 +912,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             }
             // this assumes ramp will end waiting on the current command
-            endSpeed = Math.min(modifySpeed(scriptSpeed, _speedType), endSpeed);
+            endSpeed = Math.min(_speedUtil.modifySpeed(scriptSpeed, _speedType), endSpeed);
 
             synchronized (this) {
                 try {

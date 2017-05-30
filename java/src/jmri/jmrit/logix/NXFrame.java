@@ -370,7 +370,7 @@ public class NXFrame extends WarrantRoute {
         }
         String s = ("" + Math.random()).substring(2);
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");
-        if (!warrant.setDccAddress(getTrainId())) {
+        if (!warrant.getSpeedUtil().setDccAddress(getTrainId())) {
             msg = Bundle.getMessage("BadDccAddress", getTrainId());
         }
         if (msg == null) {

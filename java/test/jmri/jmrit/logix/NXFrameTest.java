@@ -87,7 +87,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
 
         pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
         confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("NoLoco"), "OK");
-        nxFrame.setAddress("666");
+        nxFrame.setTrainInfo("666");
         nxFrame.setTrainName("Nick");
         flushAWT();
         pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
@@ -193,7 +193,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
 //       TestHelper.disposeWindow(dialogList.get(0), this);
 
         // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {

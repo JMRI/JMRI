@@ -156,10 +156,13 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
         _warrant.setRunBlind(warrant.getRunBlind());
+        setUpateSpeedProfile(warrant.getUpdateSpeedProfile());
+        _warrant.setUpdateSpeedProfile(warrant.getUpdateSpeedProfile());
         setTrainName(warrant.getTrainName());
-        setTrainInfo(warrant.getTrainId());
         _warrant.setTrainName(warrant.getTrainName());
-        _warrant.setTrainId(warrant.getTrainId());
+        String trainId = warrant.getSpeedUtil().getTrainId();
+        setTrainInfo(trainId);
+        _warrant.getSpeedUtil().setTrainId(trainId);
     }
 
     private void init() {
@@ -1341,11 +1344,12 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
-        _warrant.setDccAddress(getTrainId());
+        _warrant.getSpeedUtil().setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
+        _warrant.setUpdateSpeedProfile(getUpateSpeedProfile());
         _warrant.setUserName(_userNameBox.getText());
 
         _warrant.setViaOrder(getViaBlockOrder());

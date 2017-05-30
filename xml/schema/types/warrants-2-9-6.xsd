@@ -118,6 +118,7 @@
                   <xs:attribute name="runBlind" type="xs:string"></xs:attribute>
                   <xs:attribute name="shareRoute" type="trueFalseType"></xs:attribute>
                   <xs:attribute name="noRamp" type="trueFalseType"></xs:attribute>
+                  <xs:attribute name="updateSpeedProfile" type="trueFalseType"></xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.SCWarrant;
+import jmri.jmrit.logix.SpeedUtil;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -99,11 +100,12 @@ public class WarrantManagerXml //extends XmlFile
 
     static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
-        String str = warrant.getTrainId();
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
+        String str = speedUtil.getTrainId();
         if (str==null) str = "";
         elem.setAttribute("trainId", str);
 
-        DccLocoAddress addr = warrant.getDccAddress();
+        DccLocoAddress addr = speedUtil.getDccAddress();
         if (addr != null) {
             elem.setAttribute("dccAddress", ""+addr.getNumber());
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
@@ -111,6 +113,7 @@ public class WarrantManagerXml //extends XmlFile
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
         elem.setAttribute("shareRoute", warrant.getShareRoute()?"true":"false");
         elem.setAttribute("noRamp", warrant.getNoRamp()?"true":"false");
+        elem.setAttribute("updateSpeedProfile", warrant.getUpdateSpeedProfile()?"true":"false");
 
         str = warrant.getTrainName();
         if (str==null) str = "";
@@ -286,8 +289,9 @@ public class WarrantManagerXml //extends XmlFile
     }
 
     static void loadTrain(Element elem, Warrant warrant) {
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
-            warrant.setTrainId(elem.getAttribute("trainId").getValue());
+            speedUtil.setTrainId(elem.getAttribute("trainId").getValue());
         }
         if (elem.getAttribute("dccAddress") != null) {
             int address = 0;
@@ -297,7 +301,7 @@ public class WarrantManagerXml //extends XmlFile
                 log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
             }
             String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
-            warrant.setDccAddress(addr);
+            speedUtil.setDccAddress(addr);
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
@@ -307,6 +311,9 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("noRamp") != null) {
             warrant.setNoRamp(elem.getAttribute("noRamp").getValue().equals("true"));
+        }
+        if (elem.getAttribute("updateSpeedProfile") != null) {
+            warrant.setUpdateSpeedProfile(elem.getAttribute("updateSpeedProfile").getValue().equals("true"));
         }
         if (elem.getAttribute("trainName") != null) {
             warrant.setTrainName(elem.getAttribute("trainName").getValue());
