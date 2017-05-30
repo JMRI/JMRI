@@ -316,7 +316,7 @@ public class Profile implements Comparable<Profile> {
                 return true;
             }
             // version 1
-            if ((new File(path, PROPERTIES)).canRead()) {
+            if ((new File(path, PROPERTIES)).canRead() && !path.getName().equals(PROFILE)) {
                 return true;
             }
         }

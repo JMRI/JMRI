@@ -15,7 +15,10 @@ import org.junit.runners.Suite;
     ProfileManagerTest.class,
     ProfilePreferencesPanelTest.class,
     ProfileTableModelTest.class,
-    SearchPathTableModelTest.class
+    SearchPathTableModelTest.class,
+    ProfileConfigurationTest.class,
+    ProfilePropertiesTest.class,
+    NullProfileTest.class
 })
 public class PackageTest {
 }
