@@ -190,8 +190,14 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
     private void stopReadNCEconsistThread() {
         if (mb != null) {
-            mb.stop();
-            mb = null;
+            try {
+                mb.stop();
+                mb.join();
+            } catch (InterruptedException ex) {
+                log.warn("stopReadNCEconsistThread interrupted");
+            } finally {
+                mb = null;
+            }
         }
     }
 
