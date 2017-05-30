@@ -295,7 +295,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean panelChanged = false;
 
     //grid size in pixels
-    private int gridSize = 10;
+    private int gridSize1st = 10;
+    // secondary grid
+    private int gridSize2nd = 10;
 
     //size of point boxes
     private static final double SIZE = 3.0;
@@ -2512,27 +2514,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //specify grid square size
         //
-        JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
+        JMenuItem gridSizeItem = new JMenuItem(rb.getString("SetGridSizes") + "...");
         optionMenu.add(gridSizeItem);
         gridSizeItem.addActionListener((ActionEvent event) -> {
-            //prompt for new size
-            String newSize = (String) JOptionPane.showInputDialog(getTargetFrame(),
-                    rb.getString("NewGridSize") + ":",
-                    rb.getString("EditGridsizeMessageTitle"),
-                    JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(gridSize));
-            if (newSize != null) {
-                int gSize = Integer.parseInt(newSize);
-                if (gSize != gridSize) {
-                    if ((gSize < 5) || (gSize > 100)) {
-                        JOptionPane.showMessageDialog(null, rb.getString("GridSizeInvalid"), rb.getString("CannotEditGridSize"),
-                                JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        setGridSize(gSize);
-                        setDirty(true);
-                        repaint();
-                    }
-                }
-            }
+            enterGridSizes();
         });
 
         //
@@ -3603,7 +3588,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         // expand by grid size
-        bounds = MathUtil.inset(bounds, -getGridSize());
+        bounds = MathUtil.inset(bounds, -gridSize1st);
         bounds = new Rectangle2D.Double(
                 Math.max(bounds.getX(), 0), Math.max(bounds.getY(), 0),
                 bounds.getWidth(), bounds.getHeight());
@@ -3743,18 +3728,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         repaint();
     }   //removeMarkers
 
+    /*****************************************\
+    |*  Dialog box to enter new track widths *|
+    \*****************************************/
+
     //operational variables for enter track width pane
     private JmriJFrame enterTrackWidthFrame = null;
-    private boolean enterWidthOpen = false;
+    private boolean enterTrackWidthOpen = false;
     private boolean trackWidthChange = false;
-    private JTextField sideWidthField = new JTextField(6);
-    private JTextField mainlineWidthField = new JTextField(6);
+    private JTextField sideTrackWidthField = new JTextField(6);
+    private JTextField mainlineTrackWidthField = new JTextField(6);
     private JButton trackWidthDone;
     private JButton trackWidthCancel;
 
     //display dialog for entering track widths
     protected void enterTrackWidth() {
-        if (enterWidthOpen) {
+        if (enterTrackWidthOpen) {
             enterTrackWidthFrame.setVisible(true);
             return;
         }
@@ -3772,8 +3761,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel3.setLayout(new FlowLayout());
             JLabel mainlineWidthLabel = new JLabel(rb.getString("MainlineTrackWidth"));
             panel3.add(mainlineWidthLabel);
-            panel3.add(mainlineWidthField);
-            mainlineWidthField.setToolTipText(rb.getString("MainlineTrackWidthHint"));
+            panel3.add(mainlineTrackWidthField);
+            mainlineTrackWidthField.setToolTipText(rb.getString("MainlineTrackWidthHint"));
             theContentPane.add(panel3);
 
             //setup side track width
@@ -3781,8 +3770,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel2.setLayout(new FlowLayout());
             JLabel sideWidthLabel = new JLabel(rb.getString("SideTrackWidth"));
             panel2.add(sideWidthLabel);
-            panel2.add(sideWidthField);
-            sideWidthField.setToolTipText(rb.getString("SideTrackWidthHint"));
+            panel2.add(sideTrackWidthField);
+            sideTrackWidthField.setToolTipText(rb.getString("SideTrackWidthHint"));
             theContentPane.add(panel2);
 
             //set up Done and Cancel buttons
@@ -3811,8 +3800,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //Set up for Entry of Track Widths
-        mainlineWidthField.setText("" + getMainlineTrackWidth());
-        sideWidthField.setText("" + getSideTrackWidth());
+        mainlineTrackWidthField.setText("" + getMainlineTrackWidth());
+        sideTrackWidthField.setText("" + getSideTrackWidth());
         enterTrackWidthFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -3822,7 +3811,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterTrackWidthFrame.pack();
         enterTrackWidthFrame.setVisible(true);
         trackWidthChange = false;
-        enterWidthOpen = true;
+        enterTrackWidthOpen = true;
     }   //enterTrackWidth
 
     void trackWidthDonePressed(ActionEvent a) {
@@ -3830,7 +3819,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         float wid = 0.0F;
 
         //get side track width
-        newWidth = sideWidthField.getText().trim();
+        newWidth = sideTrackWidthField.getText().trim();
         try {
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
@@ -3857,7 +3846,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //get mainline track width
-        newWidth = mainlineWidthField.getText().trim();
+        newWidth = mainlineTrackWidthField.getText().trim();
         try {
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
@@ -3881,7 +3870,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             //success - hide dialog and repaint if needed
-            enterWidthOpen = false;
+            enterTrackWidthOpen = false;
             enterTrackWidthFrame.setVisible(false);
             enterTrackWidthFrame.dispose();
             enterTrackWidthFrame = null;
@@ -3894,7 +3883,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //trackWidthDonePressed
 
     void trackWidthCancelPressed(ActionEvent a) {
-        enterWidthOpen = false;
+        enterTrackWidthOpen = false;
         enterTrackWidthFrame.setVisible(false);
         enterTrackWidthFrame.dispose();
         enterTrackWidthFrame = null;
@@ -3904,6 +3893,176 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
         }
     }   //trackWidthCancelPressed
+
+    /***************************************\
+    |*  Dialog box to enter new grid sizes *|
+    \***************************************/
+
+    //operational variables for enter grid sizes pane
+    private JmriJFrame enterGridSizesFrame = null;
+    private boolean enterGridSizesOpen = false;
+    private boolean gridSizesChange = false;
+    private JTextField primaryGridSizeField = new JTextField(6);
+    private JTextField secondaryGridSizeField = new JTextField(6);
+    private JButton gridSizesDone;
+    private JButton gridSizesCancel;
+
+    //display dialog for entering grid sizes
+    protected void enterGridSizes() {
+        if (enterGridSizesOpen) {
+            enterGridSizesFrame.setVisible(true);
+            return;
+        }
+
+        //Initialize if needed
+        if (enterGridSizesFrame == null) {
+            enterGridSizesFrame = new JmriJFrame(rb.getString("SetGridSizes"));
+            enterGridSizesFrame.addHelpMenu("package.jmri.jmrit.display.EnterGridSizes", true);
+            enterGridSizesFrame.setLocation(70, 30);
+            Container theContentPane = enterGridSizesFrame.getContentPane();
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
+
+            //setup primary grid sizes
+            JPanel panel3 = new JPanel();
+            panel3.setLayout(new FlowLayout());
+            JLabel primaryGridSIzeLabel = new JLabel(rb.getString("PrimaryGridSize"));
+            panel3.add(primaryGridSIzeLabel);
+            panel3.add(primaryGridSizeField);
+            primaryGridSizeField.setToolTipText(rb.getString("PrimaryGridSizeHint"));
+            theContentPane.add(panel3);
+
+            //setup side track width
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+            JLabel secondaryGridSizeLabel = new JLabel(rb.getString("SecondaryGridSize"));
+            panel2.add(secondaryGridSizeLabel);
+            panel2.add(secondaryGridSizeField);
+            secondaryGridSizeField.setToolTipText(rb.getString("SecondaryGridSizeHint"));
+            theContentPane.add(panel2);
+
+            //set up Done and Cancel buttons
+            JPanel panel5 = new JPanel();
+            panel5.setLayout(new FlowLayout());
+            panel5.add(gridSizesDone = new JButton(Bundle.getMessage("ButtonDone")));
+            gridSizesDone.addActionListener((ActionEvent event) -> {
+                gridSizesDonePressed(event);
+            });
+            gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            //make this button the default button (return or enter activates)
+            //Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(gridSizesDone);
+                rootPane.setDefaultButton(gridSizesDone);
+            });
+
+            //Cancel
+            panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            gridSizesCancel.addActionListener((ActionEvent event) -> {
+                gridSizesCancelPressed(event);
+            });
+            gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            theContentPane.add(panel5);
+        }
+
+        //Set up for Entry of Track Widths
+        primaryGridSizeField.setText("" + gridSize1st);
+        secondaryGridSizeField.setText("" + gridSize2nd);
+        enterGridSizesFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                gridSizesCancelPressed(null);
+            }
+        });
+        enterGridSizesFrame.pack();
+        enterGridSizesFrame.setVisible(true);
+        gridSizesChange = false;
+        enterGridSizesOpen = true;
+    }   //enterGridSizes
+
+    void gridSizesDonePressed(ActionEvent a) {
+        String newGridSize = "";
+        float siz = 0.0F;
+
+        //get secondary grid size
+        newGridSize = secondaryGridSizeField.getText().trim();
+        try {
+            siz = Float.parseFloat(newGridSize);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame, rb.getString("EntryError") + ": "
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if ((siz < 5.0) || (siz > 100.0)) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame,
+                    java.text.MessageFormat.format(rb.getString("Error2a"),
+                            new Object[]{" " + siz + " "}),
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if (gridSize2nd != siz) {
+            gridSize2nd = (int) siz;
+            gridSizesChange = true;
+        }
+
+        //get mainline track width
+        newGridSize = primaryGridSizeField.getText().trim();
+        try {
+            siz = Float.parseFloat(newGridSize);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame, rb.getString("EntryError") + ": "
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if ((siz < 5) || (siz > 100.0)) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame,
+                    java.text.MessageFormat.format(rb.getString("Error2a"),
+                            new Object[]{" " + siz + " "}),
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (gridSize1st != siz) {
+                gridSize1st = (int) siz;
+                gridSizesChange = true;
+            }
+
+            //success - hide dialog and repaint if needed
+            enterGridSizesOpen = false;
+            enterGridSizesFrame.setVisible(false);
+            enterGridSizesFrame.dispose();
+            enterGridSizesFrame = null;
+
+            if (gridSizesChange) {
+                repaint();
+                setDirty(true);
+            }
+        }
+    }   //gridSizesDonePressed
+
+    void gridSizesCancelPressed(ActionEvent a) {
+        enterGridSizesOpen = false;
+        enterGridSizesFrame.setVisible(false);
+        enterGridSizesFrame.dispose();
+        enterGridSizesFrame = null;
+
+        if (gridSizesChange) {
+            repaint();
+            setDirty(true);
+        }
+    }   //gridSizesCancelPressed
+
+    /******************************************\
+    |*  Dialog box to enter new reporter info *|
+    \******************************************/
 
     //operational variables for enter reporter pane
     private JmriJFrame enterReporterFrame = null;
@@ -4087,6 +4246,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterReporterFrame = null;
         repaint();
     }   //reporterCancelPressed
+
+    /*************************************************************\
+    |*  Dialog box to enter scale / translate track diagram info *|
+    \*************************************************************/
 
     //operational variables for scale/translate track diagram pane
     private JmriJFrame scaleTrackDiagramFrame = null;
@@ -4367,6 +4530,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         return true;
     }   //scaleTrack
+
+    /********************************************\
+    |*  Dialog box to enter move selection info *|
+    \********************************************/
 
     //operational variables for move selection pane
     private JmriJFrame moveSelectionFrame = null;
@@ -5623,7 +5790,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
                 if (snapToGridOnAdd) {
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize);
+                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                 }
@@ -7526,7 +7693,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
                 //moving a point
                 if (snapToGridOnMove) {
-                    newPos = MathUtil.granulize(newPos, gridSize);
+                    newPos = MathUtil.granulize(newPos, gridSize1st);
                 }
 
                 if ((_pointSelection != null) || (_turntableSelection != null) || (_xingSelection != null)
@@ -10053,13 +10220,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //getScroll
 
     public int setGridSize(int newSize) {
-        gridSize = newSize;
-
-        return gridSize;
+        gridSize1st = newSize;
+        return gridSize1st;
     }   //setGridSize
 
     public int getGridSize() {
-        return gridSize;
+        return gridSize1st;
+    }   //getGridSize
+
+    public int setGridSize2nd(int newSize) {
+        gridSize2nd = newSize;
+        return gridSize2nd;
+    }   //setGridSize
+
+    public int getGridSize2nd() {
+        return gridSize2nd;
     }   //getGridSize
 
     public int getMainlineTrackWidth() {
@@ -10765,15 +10940,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawBlockContentsRects
 
     private void drawPanelGrid(Graphics2D g2) {
-        int wideMod = gridSize * 10;
-        int wideMin = gridSize / 2;
+        int wideMod = gridSize1st * gridSize2nd;
+        int wideMin = gridSize1st / 2;
 
         Dimension dim = getSize();
         double maxX = dim.width;
         double maxY = dim.height;
 
-        Point2D startPt = new Point2D.Double(0.0, gridSize);
-        Point2D stopPt = new Point2D.Double(maxX, gridSize);
+        Point2D startPt = new Point2D.Double(0.0, gridSize1st);
+        Point2D stopPt = new Point2D.Double(maxX, gridSize1st);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -10781,7 +10956,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(narrow);
 
         //draw horizontal lines
-        double pix = gridSize;
+        double pix = gridSize1st;
 
         while (pix < maxY) {
             startPt.setLocation(0.0, pix);
@@ -10794,11 +10969,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize;
+            pix += gridSize1st;
         }
 
         //draw vertical lines
-        pix = gridSize;
+        pix = gridSize1st;
 
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
@@ -10811,7 +10986,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize;
+            pix += gridSize1st;
         }
     }   //drawPanelGrid
 
