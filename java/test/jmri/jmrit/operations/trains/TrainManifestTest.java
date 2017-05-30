@@ -16,7 +16,7 @@ public class TrainManifestTest {
 
     @Test
     public void testCTor() {
-        Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+        Train train1 = TrainManager.instance().getTrainById("1");
         TrainManifest t = new TrainManifest(train1);
         Assert.assertNotNull("exists",t);
     }
@@ -26,10 +26,13 @@ public class TrainManifestTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
