@@ -350,7 +350,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutTurnout " + ident;
     }
@@ -1102,29 +1102,54 @@ public class LayoutTurnout extends LayoutTrack {
         return disableWhenOccupied;
     }
 
-    public Object getConnection(int location) throws jmri.JmriException {
-        switch (location) {
-            case TURNOUT_A:
-                return connectA;
-            case TURNOUT_B:
-                return connectB;
-            case TURNOUT_C:
-                return connectC;
-            case TURNOUT_D:
-                return connectD;
-            default:
-                // fall out
+    /**
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException - if the connectionType is invalid
+     */
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        Object result = null;
+        switch (connectionType) {
+            case TURNOUT_A: {
+                result = connectA;
+                break;
+            }
+            case TURNOUT_B: {
+                result = connectB;
+                break;
+            }
+            case TURNOUT_C: {
+                result = connectC;
+                break;
+            }
+            case TURNOUT_D: {
+                result = connectD;
+                break;
+            }
+            default: {
+                log.error("Invalid Point Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Point");
+            }
         }
-        log.error("Invalid Point Type " + location); //I18IN
-        throw new jmri.JmriException("Invalid Point");
+        return result;
     }
 
-    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
         }
-        switch (location) {
+        switch (connectionType) {
             case TURNOUT_A:
                 connectA = o;
                 break;
@@ -1138,8 +1163,8 @@ public class LayoutTurnout extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
-                throw new jmri.JmriException("Invalid Point");
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 
@@ -1278,6 +1303,22 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             default:
                 log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this turnout
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            result.add(getCoordsD());
         }
         return result;
     }
@@ -1579,12 +1620,12 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
+     * find the hit (location) type for a point
      * @param p the point
-     * @param useRectangles use hit rectangle (false: use hit circles)
-     * @param requireUnconnected (only hit disconnected connections)
-     * @return value representing the point connection type
-     * @since 7.4.?
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
@@ -2121,13 +2162,14 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e, boolean editable) {
+    protected void showPopUp(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        if (editable) {
+
+        if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
             switch (getTurnoutType()) {
                 case RH_TURNOUT:

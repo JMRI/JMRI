@@ -227,8 +227,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setFlip(boolean boo) {
-        flip = boo;
-        changed = true;
+        if (flip != boo) {
+            flip = boo;
+            changed = true;
+        }
     }
 
     public boolean getBezier() {
@@ -238,7 +240,7 @@ public class TrackSegment extends LayoutTrack {
     public void setBezier(boolean boo) {
         if (bezier != boo) {
             bezier = boo;
-            if (bezier) {
+            if (getBezier()) {
                 arc = false;
                 circle = false;
             }
@@ -345,12 +347,12 @@ public class TrackSegment extends LayoutTrack {
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+        if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { // findObjectByName failed… try findObjectByTypeAndName
+        if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
@@ -428,11 +430,13 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Get the connection type for a point.
+     * Find the hit (location) type for a point.
      *
-     * @param p the point to hit test
-     * @return the type of point that was hit (NONE means none… (Duh!))
-     * @since 7.4.?
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
@@ -479,6 +483,20 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
+    /**
+     * @return the bounds of this track segment
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        result.add(ep2);
+
+        return result;
+    }
+
     JPopupMenu popup = null;
 
     /**
@@ -490,7 +508,27 @@ public class TrackSegment extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        JMenuItem jmi = null;
+
+
+        String info = rb.getString("TrackSegment");
+        if (getArc()) {
+            if (getCircle()) {
+                info = info + " (" + Bundle.getMessage("Circle") + ")";
+            } else {
+                info = info + " (" + Bundle.getMessage("Ellipse") + ")";
+            }
+        } else if (getBezier()) {
+            info = info + " (" + Bundle.getMessage("Bezier") + ")";
+        } else {
+            info = info + " (" + Bundle.getMessage("Line") + ")";
+        }
+
+        JMenuItem jmi = popup.add(info);
+        jmi.setEnabled(false);
+
+        jmi = popup.add(ident);
+        jmi.setEnabled(false);
+
         if (!dashed) {
             jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
         } else {
@@ -818,7 +856,7 @@ public class TrackSegment extends LayoutTrack {
 
             contentPane.add(panel2);
 
-            if (getArc() && getCircle()) {
+            if (getArc() && circle) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -1514,10 +1552,15 @@ public class TrackSegment extends LayoutTrack {
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
-        if (getCircle() && showConstructionLinesLE()) {
+        if (circle && showConstructionLinesLE()) {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)
+
+    public void reCheckBlockBoundary()
+    {
+        // nothing to do here... move along...
+    }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }

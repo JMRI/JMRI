@@ -28,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -790,7 +791,6 @@ public class BlockTableAction extends AbstractTableAction {
             }
         });
         menuBar.add(speedMenu, pos + offset + 1); // put it to the right of the Paths menu
-
     }
 
     protected void setDefaultSpeeds(JFrame _who) {
@@ -805,11 +805,35 @@ public class BlockTableAction extends AbstractTableAction {
 
         blockSpeedCombo.setSelectedItem(InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
 
-        int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("BlockSpeedSelectDialog"), Bundle.getMessage("BlockSpeedLabel"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), block}, null);
-        if (retval != 1) {
+        // block of options above row of buttons; gleaned from Maintenance.makeDialog()
+        // can be accessed by Jemmy in GUI test
+        String title = Bundle.getMessage("BlockSpeedLabel");
+        // build JPanel for comboboxes
+        JPanel speedspanel = new JPanel();
+        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.PAGE_AXIS));
+        speedspanel.add(new JLabel(Bundle.getMessage("BlockSpeedSelectDialog")));
+        //default LEFT_ALIGNMENT
+        block.setAlignmentX(Component.LEFT_ALIGNMENT);
+        speedspanel.add(block);
+
+        JOptionPane pane = new JOptionPane(
+                speedspanel,
+                JOptionPane.INFORMATION_MESSAGE,
+                0,
+                null,
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
+        //pane.setxxx(value); // Configure more?
+        JDialog dialog = pane.createDialog(_who, title);
+        dialog.pack();
+        dialog.show();
+
+        if(pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
+            return;
+        }
+        Object retval = pane.getValue();
+        log.debug("Retval = {}", retval.toString());
+        // only 2 buttons to choose from, OK = button 2
+        if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
         }
 

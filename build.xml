@@ -548,6 +548,7 @@
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
                 <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+                <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
         </sequential>
     </macrodef>
@@ -589,7 +590,6 @@
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
         </javac>
     </target>
-
 
     <!-- Note if modifying the debug target, please be sure to up date the -->
     <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
@@ -1571,7 +1571,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2375"/><!-- change from default 100 warnings -->
+            <arg value="2350"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1638,7 +1638,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2375"/><!-- change from default 100 warnings -->
+            <arg value="2350"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->

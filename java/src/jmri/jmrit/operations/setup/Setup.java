@@ -873,11 +873,15 @@ public class Setup {
         return getDefault().printValid;
     }
 
-    public static void setSortByTrackEnabled(boolean enable) {
+    public static void setSortByTrackNameEnabled(boolean enable) {
         getDefault().sortByTrack = enable;
     }
 
-    public static boolean isSortByTrackEnabled() {
+    /**
+     * when true manifest work is sorted by track names.
+     * @return true if work at a location is to be sorted by track names.
+     */
+    public static boolean isSortByTrackNameEnabled() {
         return getDefault().sortByTrack;
     }
 
@@ -1903,7 +1907,7 @@ public class Setup {
         values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2185,7 +2189,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
@@ -2489,7 +2493,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();

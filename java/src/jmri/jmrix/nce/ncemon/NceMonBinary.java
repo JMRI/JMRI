@@ -6,7 +6,8 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.util.StringUtil;
-import org.python.jline.internal.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A utility class for formatting NCE binary command and replies into
@@ -14,11 +15,12 @@ import org.python.jline.internal.Log;
  * published November 2007 and is used with NCE's permission.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * 
+ *
  */
 public class NceMonBinary {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.ncemon.NceMonBinaryBundle");
+    private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
 
     private static final String NEW_LINE = "\n";
 
@@ -219,7 +221,7 @@ public class NceMonBinary {
                             return MessageFormat.format(rb.getString("LOCO_CMD_Op1_17"),
                                     new Object[]{getLocoAddress(m), m.getElement(4)});
                         default:
-                            Log.error("Unhandled loco cmd op1 code: {}", m.getElement(3));
+                            log.error("Unhandled loco cmd op1 code: {}", m.getElement(3));
                             break;
                     }
                 }
@@ -272,7 +274,7 @@ public class NceMonBinary {
                             return MessageFormat.format(rb.getString("ACC_CMD_Op1_05"),
                                     new Object[]{getNumber(m), m.getElement(4)});
                         default:
-                            Log.error("Unhandled acc cmd op1 code: {}", m.getElement(3));
+                            log.error("Unhandled acc cmd op1 code: {}", m.getElement(3));
                             break;
                     }
                 }
@@ -302,7 +304,7 @@ public class NceMonBinary {
                 }
                 break;
             default:
-                Log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
+                log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
                 break;
         }
         // 2nd pass, check for messages that have a data reply
@@ -357,10 +359,10 @@ public class NceMonBinary {
             case (NceBinaryCommand.SW_REV_CMD):
                 return rb.getString("SW_REV_CMD");
             default:
-                Log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
+                log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
                 break;
         }
-        // this is one we don't know about or haven't coded it up 
+        // this is one we don't know about or haven't coded it up
         replyType = REPLY_UNKNOWN;
         return MessageFormat.format(rb.getString("BIN_CMD"), new Object[]{m.toString()});
     }
@@ -370,9 +372,9 @@ public class NceMonBinary {
     }
 
     private String getDataBytes(NceMessage m, int start, int number) {
-        StringBuffer sb = new StringBuffer(" ");
+        StringBuilder sb = new StringBuilder(" ");
         for (int i = start; i < start + number; i++) {
-            sb.append(StringUtil.twoHexFromInt(m.getElement(i)) + " ");
+            sb.append(StringUtil.twoHexFromInt(m.getElement(i))).append(" ");
         }
         return sb.toString();
     }
@@ -394,26 +396,26 @@ public class NceMonBinary {
         // byte three is the Op_1
         switch (m.getElement(3)) {
             case (7): {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 if ((m.getElement(4) & 0x10) != 0) {
-                    buf.append(rb.getString("F0_ON") + ", ");
+                    buf.append(rb.getString("F0_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F0_OFF") + ", ");
+                    buf.append(rb.getString("F0_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x01) != 0) {
-                    buf.append(rb.getString("F1_ON") + ", ");
+                    buf.append(rb.getString("F1_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F1_OFF") + ", ");
+                    buf.append(rb.getString("F1_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x02) != 0) {
-                    buf.append(rb.getString("F2_ON") + ", ");
+                    buf.append(rb.getString("F2_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F2_OFF") + ", ");
+                    buf.append(rb.getString("F2_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x04) != 0) {
-                    buf.append(rb.getString("F3_ON") + ", ");
+                    buf.append(rb.getString("F3_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F3_OFF") + ", ");
+                    buf.append(rb.getString("F3_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F4_ON"));
@@ -423,21 +425,21 @@ public class NceMonBinary {
                 return buf.toString();
             }
             case (8): {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 if ((m.getElement(4) & 0x01) != 0) {
-                    buf.append(rb.getString("F5_ON") + ", ");
+                    buf.append(rb.getString("F5_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F5_OFF") + ", ");
+                    buf.append(rb.getString("F5_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x02) != 0) {
-                    buf.append(rb.getString("F6_ON") + ", ");
+                    buf.append(rb.getString("F6_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F6_OFF") + ", ");
+                    buf.append(rb.getString("F6_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x04) != 0) {
-                    buf.append(rb.getString("F7_ON") + ", ");
+                    buf.append(rb.getString("F7_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F7_OFF") + ", ");
+                    buf.append(rb.getString("F7_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F8_ON"));
@@ -447,21 +449,21 @@ public class NceMonBinary {
                 return buf.toString();
             }
             case (9): {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 if ((m.getElement(4) & 0x01) != 0) {
-                    buf.append(rb.getString("F9_ON") + ", ");
+                    buf.append(rb.getString("F9_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F9_OFF") + ", ");
+                    buf.append(rb.getString("F9_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x02) != 0) {
-                    buf.append(rb.getString("F10_ON") + ", ");
+                    buf.append(rb.getString("F10_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F10_OFF") + ", ");
+                    buf.append(rb.getString("F10_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x04) != 0) {
-                    buf.append(rb.getString("F11_ON") + ", ");
+                    buf.append(rb.getString("F11_ON")).append(", ");
                 } else {
-                    buf.append(rb.getString("F11_OFF") + ", ");
+                    buf.append(rb.getString("F11_OFF")).append(", ");
                 }
                 if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F12_ON"));
@@ -505,7 +507,7 @@ public class NceMonBinary {
                         case (REPLY_OK):
                             return rb.getString("NceReplyOK");
                         default:
-                            Log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
+                            log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
                             break;
                     }
                 }
@@ -522,13 +524,13 @@ public class NceMonBinary {
                         case (REPLY_OK):
                             return rb.getString("NceReplyOK");
                         default:
-                            Log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
+                            log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
                             break;
                     }
                 }
                 break;
             default:
-                Log.error("Unhandled reply type code: {}", replyType);
+                log.error("Unhandled reply type code: {}", replyType);
                 break;
         }
         return MessageFormat.format(rb.getString("NceReply"), new Object[]{r.toString()});

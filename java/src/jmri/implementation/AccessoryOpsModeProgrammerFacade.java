@@ -46,7 +46,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
      * Programmer facade for access to Accessory Decoder Ops Mode programming
      *
      * @param prog     The Ops Mode Programmer we are piggybacking on.
-     * @param addrType A string. "accessory" forces the current decoder address
+     * @param addrType A string. "accessory" or "output" forces the current decoder address
      *                 to be interpreted as a 14 bit accessory address.
      *                 "decoder" current decoder address to be interpreted as a
      *                 9 bit decoder address
@@ -104,7 +104,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     // members for handling the programmer interface
     int _val;           // remember the value being read/written for confirmative reply
     String _cv;         // remember the cv number being read/written
-    String _addrType; // remember the address type: "decoder" or "accessory"
+    String _addrType;  // remember the address type: ("decoder" or null) or ("accessory" or "output")
 
     // programming interface
     @Override

@@ -99,7 +99,7 @@ public class LayoutSlip extends LayoutTurnout {
         rotateCoords(rot);
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutSlip " + ident;
     }
@@ -166,9 +166,15 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException - if the connectionType is invalid
+     */
     @Override
-    public Object getConnection(int location) throws jmri.JmriException {
-        switch (location) {
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        switch (connectionType) {
             case SLIP_A:
                 return connectA;
             case SLIP_B:
@@ -178,17 +184,17 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
         }
-        log.error("Invalid Point Type " + location); //I18IN
+        log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
     @Override
-    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
         }
-        switch (location) {
+        switch (connectionType) {
             case SLIP_A:
                 connectA = o;
                 break;
@@ -202,8 +208,8 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
-                throw new jmri.JmriException("Invalid Point");
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 
@@ -386,6 +392,20 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
+    /**
+     * @return the bounds of this slip
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
+        return result;
+    }
+
     private void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
@@ -516,17 +536,16 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * return the connection type for a point
-     *
-     * @since 7.4.?
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
      */
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        // TODO: A faster way to check to see if p is in the rects for
-        // all these locations is to create a rect around p and see if
-        // those locations are in that rect instead of creating rects
-        // for all those locations… Just saying… ;-)
         if (!requireUnconnected) {
             // calculate radius of turnout control circle
             double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
@@ -563,42 +582,36 @@ public class LayoutSlip extends LayoutTurnout {
 
         // have we found anything yet?
         if (result == NONE) {
+            // rather than create rectangles for all the points below and
+            // see if the passed in point is in one of those rectangles
+            // we can create a rectangle for the passed in point and then
+            // test if any of the points below are in that rectangle instead.
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
-                Point2D pt = getCoordsA();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsA())) {
                     result = LayoutTrack.SLIP_A;
                 }
             }
 
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
-                Point2D pt = getCoordsB();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsB())) {
                     result = LayoutTrack.SLIP_B;
                 }
             }
 
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
-                Point2D pt = getCoordsC();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsC())) {
                     result = LayoutTrack.SLIP_C;
                 }
             }
 
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
-                Point2D pt = getCoordsD();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsD())) {
                     result = LayoutTrack.SLIP_D;
                 }
             }
@@ -722,13 +735,13 @@ public class LayoutSlip extends LayoutTurnout {
      * Display popup menu for information and editing
      */
     @Override
-    protected void showPopUp(MouseEvent e, boolean editable) {
+    protected void showPopUp(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        if (editable) {
+        if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
             switch (type) {
                 case SINGLE_SLIP: {

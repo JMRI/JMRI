@@ -37,10 +37,1267 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes">
       <capability>
         <name>Ops Mode Accessory Programming</name>
+        <parameter name="addrType">decoder</parameter> <!-- 9 bit addressing, "accessory" for 14-bit -->
       </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <!-- CV 1 and 17, 18, 29 are defined above -->
+      <variable item="Dummy 2" CV="2">
+        <decVal/>
+        <label>Dummy 2</label>
+        <label xml:lang="it">Fittizio 2</label>
+      </variable>
+      <variable item="Dummy 3" CV="3">
+        <decVal/>
+        <label>Dummy 3</label>
+        <label xml:lang="it">Fittizio 3</label>
+      </variable>
+      <variable item="Dummy 4" CV="4">
+        <decVal/>
+        <label>Dummy 4</label>
+        <label xml:lang="it">Fittizio 4</label>
+      </variable>
+      <variable item="Dummy 5" CV="5">
+        <decVal/>
+        <label>Dummy 5</label>
+        <label xml:lang="it">Fittizio 5</label>
+      </variable>
+      <variable item="Dummy 6" CV="6">
+        <decVal/>
+        <label>Dummy 6</label>
+        <label xml:lang="it">Fittizio 6</label>
+      </variable>
+      <variable item="Dummy 7" CV="7">
+        <decVal/>
+        <label>Dummy 7</label>
+        <label xml:lang="it">Fittizio 7</label>
+      </variable>
+      <variable item="Dummy 8" CV="8">
+        <decVal/>
+        <label>Dummy 8</label>
+        <label xml:lang="it">Fittizio 8</label>
+      </variable>
+      <variable item="Dummy 9" CV="9">
+        <decVal/>
+        <label>Dummy 9</label>
+        <label xml:lang="it">Fittizio 9</label>
+      </variable>
+      <variable item="Dummy 10" CV="10">
+        <decVal/>
+        <label>Dummy 10</label>
+        <label xml:lang="it">Fittizio 10</label>
+      </variable>
+      <variable item="Dummy 11" CV="11">
+        <decVal/>
+        <label>Dummy 11</label>
+        <label xml:lang="it">Fittizio 11</label>
+      </variable>
+      <variable item="Dummy 12" CV="12">
+        <decVal/>
+        <label>Dummy 12</label>
+        <label xml:lang="it">Fittizio 12</label>
+      </variable>
+      <variable item="Dummy 13" CV="13">
+        <decVal/>
+        <label>Dummy 13</label>
+        <label xml:lang="it">Fittizio 13</label>
+      </variable>
+      <variable item="Dummy 14" CV="14">
+        <decVal/>
+        <label>Dummy 14</label>
+        <label xml:lang="it">Fittizio 14</label>
+      </variable>
+      <variable item="Dummy 15" CV="15">
+        <decVal/>
+        <label>Dummy 15</label>
+        <label xml:lang="it">Fittizio 15</label>
+      </variable>
+      <variable item="Dummy 16" CV="16">
+        <decVal/>
+        <label>Dummy 16</label>
+        <label xml:lang="it">Fittizio 16</label>
+      </variable>
+      <variable item="Dummy 19" CV="19">
+        <decVal/>
+        <label>Dummy 19</label>
+        <label xml:lang="it">Fittizio 19</label>
+      </variable>
+      <variable item="Dummy 20" CV="20">
+        <decVal/>
+        <label>Dummy 20</label>
+        <label xml:lang="it">Fittizio 20</label>
+      </variable>
+      <variable item="Dummy 21" CV="21">
+        <decVal/>
+        <label>Dummy 21</label>
+        <label xml:lang="it">Fittizio 21</label>
+      </variable>
+      <variable item="Dummy 22" CV="22">
+        <decVal/>
+        <label>Dummy 22</label>
+        <label xml:lang="it">Fittizio 22</label>
+      </variable>
+      <variable item="Dummy 23" CV="23">
+        <decVal/>
+        <label>Dummy 23</label>
+        <label xml:lang="it">Fittizio 23</label>
+      </variable>
+      <variable item="Dummy 24" CV="24">
+        <decVal/>
+        <label>Dummy 24</label>
+        <label xml:lang="it">Fittizio 24</label>
+      </variable>
+      <variable item="Dummy 25" CV="25">
+        <decVal/>
+        <label>Dummy 25</label>
+        <label xml:lang="it">Fittizio 25</label>
+      </variable>
+      <variable item="Dummy 26" CV="26">
+        <decVal/>
+        <label>Dummy 26</label>
+        <label xml:lang="it">Fittizio 26</label>
+      </variable>
+      <variable item="Dummy 27" CV="27">
+        <decVal/>
+        <label>Dummy 27</label>
+        <label xml:lang="it">Fittizio 27</label>
+      </variable>
+      <variable item="Dummy 28" CV="28">
+        <decVal/>
+        <label>Dummy 28</label>
+        <label xml:lang="it">Fittizio 28</label>
+      </variable>
+      <variable item="Dummy 30" CV="30">
+        <decVal/>
+        <label>Dummy 30</label>
+        <label xml:lang="it">Fittizio 30</label>
+      </variable>
+      <variable item="Dummy 31" CV="31">
+        <decVal/>
+        <label>Dummy 31</label>
+        <label xml:lang="it">Fittizio 31</label>
+      </variable>
+      <variable item="Dummy 32" CV="32">
+        <decVal/>
+        <label>Dummy 32</label>
+        <label xml:lang="it">Fittizio 32</label>
+      </variable>
+      <variable item="Dummy 33" CV="33">
+        <decVal/>
+        <label>Dummy 33</label>
+        <label xml:lang="it">Fittizio 33</label>
+      </variable>
+      <variable item="Dummy 34" CV="34">
+        <decVal/>
+        <label>Dummy 34</label>
+        <label xml:lang="it">Fittizio 34</label>
+      </variable>
+      <variable item="Dummy 35" CV="35">
+        <decVal/>
+        <label>Dummy 35</label>
+        <label xml:lang="it">Fittizio 35</label>
+      </variable>
+      <variable item="Dummy 36" CV="36">
+        <decVal/>
+        <label>Dummy 36</label>
+        <label xml:lang="it">Fittizio 36</label>
+      </variable>
+      <variable item="Dummy 37" CV="37">
+        <decVal/>
+        <label>Dummy 37</label>
+        <label xml:lang="it">Fittizio 37</label>
+      </variable>
+      <variable item="Dummy 38" CV="38">
+        <decVal/>
+        <label>Dummy 38</label>
+        <label xml:lang="it">Fittizio 38</label>
+      </variable>
+      <variable item="Dummy 39" CV="39">
+        <decVal/>
+        <label>Dummy 39</label>
+        <label xml:lang="it">Fittizio 39</label>
+      </variable>
+      <variable item="Dummy 40" CV="40">
+        <decVal/>
+        <label>Dummy 40</label>
+        <label xml:lang="it">Fittizio 40</label>
+      </variable>
+      <variable item="Dummy 41" CV="41">
+        <decVal/>
+        <label>Dummy 41</label>
+        <label xml:lang="it">Fittizio 41</label>
+      </variable>
+      <variable item="Dummy 42" CV="42">
+        <decVal/>
+        <label>Dummy 42</label>
+        <label xml:lang="it">Fittizio 42</label>
+      </variable>
+      <variable item="Dummy 43" CV="43">
+        <decVal/>
+        <label>Dummy 43</label>
+        <label xml:lang="it">Fittizio 43</label>
+      </variable>
+      <variable item="Dummy 44" CV="44">
+        <decVal/>
+        <label>Dummy 44</label>
+        <label xml:lang="it">Fittizio 44</label>
+      </variable>
+      <variable item="Dummy 45" CV="45">
+        <decVal/>
+        <label>Dummy 45</label>
+        <label xml:lang="it">Fittizio 45</label>
+      </variable>
+      <variable item="Dummy 46" CV="46">
+        <decVal/>
+        <label>Dummy 46</label>
+        <label xml:lang="it">Fittizio 46</label>
+      </variable>
+      <variable item="Dummy 47" CV="47">
+        <decVal/>
+        <label>Dummy 47</label>
+        <label xml:lang="it">Fittizio 47</label>
+      </variable>
+      <variable item="Dummy 48" CV="48">
+        <decVal/>
+        <label>Dummy 48</label>
+        <label xml:lang="it">Fittizio 48</label>
+      </variable>
+      <variable item="Dummy 49" CV="49">
+        <decVal/>
+        <label>Dummy 49</label>
+        <label xml:lang="it">Fittizio 49</label>
+      </variable>
+      <variable item="Dummy 50" CV="50">
+        <decVal/>
+        <label>Dummy 50</label>
+        <label xml:lang="it">Fittizio 50</label>
+      </variable>
+      <variable item="Dummy 51" CV="51">
+        <decVal/>
+        <label>Dummy 51</label>
+        <label xml:lang="it">Fittizio 51</label>
+      </variable>
+      <variable item="Dummy 52" CV="52">
+        <decVal/>
+        <label>Dummy 52</label>
+        <label xml:lang="it">Fittizio 52</label>
+      </variable>
+      <variable item="Dummy 53" CV="53">
+        <decVal/>
+        <label>Dummy 53</label>
+        <label xml:lang="it">Fittizio 53</label>
+      </variable>
+      <variable item="Dummy 54" CV="54">
+        <decVal/>
+        <label>Dummy 54</label>
+        <label xml:lang="it">Fittizio 54</label>
+      </variable>
+      <variable item="Dummy 55" CV="55">
+        <decVal/>
+        <label>Dummy 55</label>
+        <label xml:lang="it">Fittizio 55</label>
+      </variable>
+      <variable item="Dummy 56" CV="56">
+        <decVal/>
+        <label>Dummy 56</label>
+        <label xml:lang="it">Fittizio 56</label>
+      </variable>
+      <variable item="Dummy 57" CV="57">
+        <decVal/>
+        <label>Dummy 57</label>
+        <label xml:lang="it">Fittizio 57</label>
+      </variable>
+      <variable item="Dummy 58" CV="58">
+        <decVal/>
+        <label>Dummy 58</label>
+        <label xml:lang="it">Fittizio 58</label>
+      </variable>
+      <variable item="Dummy 59" CV="59">
+        <decVal/>
+        <label>Dummy 59</label>
+        <label xml:lang="it">Fittizio 59</label>
+      </variable>
+      <variable item="Dummy 60" CV="60">
+        <decVal/>
+        <label>Dummy 60</label>
+        <label xml:lang="it">Fittizio 60</label>
+      </variable>
+      <variable item="Dummy 61" CV="61">
+        <decVal/>
+        <label>Dummy 61</label>
+        <label xml:lang="it">Fittizio 61</label>
+      </variable>
+      <variable item="Dummy 62" CV="62">
+        <decVal/>
+        <label>Dummy 62</label>
+        <label xml:lang="it">Fittizio 62</label>
+      </variable>
+      <variable item="Dummy 63" CV="63">
+        <decVal/>
+        <label>Dummy 63</label>
+        <label xml:lang="it">Fittizio 63</label>
+      </variable>
+      <variable item="Dummy 64" CV="64">
+        <decVal/>
+        <label>Dummy 64</label>
+        <label xml:lang="it">Fittizio 64</label>
+      </variable>
+      <variable item="Dummy 65" CV="65">
+        <decVal/>
+        <label>Dummy 65</label>
+        <label xml:lang="it">Fittizio 65</label>
+      </variable>
+      <variable item="Dummy 66" CV="66">
+        <decVal/>
+        <label>Dummy 66</label>
+        <label xml:lang="it">Fittizio 66</label>
+      </variable>
+      <variable item="Dummy 67" CV="67">
+        <decVal/>
+        <label>Dummy 67</label>
+        <label xml:lang="it">Fittizio 67</label>
+      </variable>
+      <variable item="Dummy 68" CV="68">
+        <decVal/>
+        <label>Dummy 68</label>
+        <label xml:lang="it">Fittizio 68</label>
+      </variable>
+      <variable item="Dummy 69" CV="69">
+        <decVal/>
+        <label>Dummy 69</label>
+        <label xml:lang="it">Fittizio 69</label>
+      </variable>
+      <variable item="Dummy 70" CV="70">
+        <decVal/>
+        <label>Dummy 70</label>
+        <label xml:lang="it">Fittizio 70</label>
+      </variable>
+      <variable item="Dummy 71" CV="71">
+        <decVal/>
+        <label>Dummy 71</label>
+        <label xml:lang="it">Fittizio 71</label>
+      </variable>
+      <variable item="Dummy 72" CV="72">
+        <decVal/>
+        <label>Dummy 72</label>
+        <label xml:lang="it">Fittizio 72</label>
+      </variable>
+      <variable item="Dummy 73" CV="73">
+        <decVal/>
+        <label>Dummy 73</label>
+        <label xml:lang="it">Fittizio 73</label>
+      </variable>
+      <variable item="Dummy 74" CV="74">
+        <decVal/>
+        <label>Dummy 74</label>
+        <label xml:lang="it">Fittizio 74</label>
+      </variable>
+      <variable item="Dummy 75" CV="75">
+        <decVal/>
+        <label>Dummy 75</label>
+        <label xml:lang="it">Fittizio 75</label>
+      </variable>
+      <variable item="Dummy 76" CV="76">
+        <decVal/>
+        <label>Dummy 76</label>
+        <label xml:lang="it">Fittizio 76</label>
+      </variable>
+      <variable item="Dummy 77" CV="77">
+        <decVal/>
+        <label>Dummy 77</label>
+        <label xml:lang="it">Fittizio 77</label>
+      </variable>
+      <variable item="Dummy 78" CV="78">
+        <decVal/>
+        <label>Dummy 78</label>
+        <label xml:lang="it">Fittizio 78</label>
+      </variable>
+      <variable item="Dummy 79" CV="79">
+        <decVal/>
+        <label>Dummy 79</label>
+        <label xml:lang="it">Fittizio 79</label>
+      </variable>
+      <variable item="Dummy 80" CV="80">
+        <decVal/>
+        <label>Dummy 80</label>
+        <label xml:lang="it">Fittizio 80</label>
+      </variable>
+      <variable item="Dummy 81" CV="81">
+        <decVal/>
+        <label>Dummy 81</label>
+        <label xml:lang="it">Fittizio 81</label>
+      </variable>
+      <variable item="Dummy 82" CV="82">
+        <decVal/>
+        <label>Dummy 82</label>
+        <label xml:lang="it">Fittizio 82</label>
+      </variable>
+      <variable item="Dummy 83" CV="83">
+        <decVal/>
+        <label>Dummy 83</label>
+        <label xml:lang="it">Fittizio 83</label>
+      </variable>
+      <variable item="Dummy 84" CV="84">
+        <decVal/>
+        <label>Dummy 84</label>
+        <label xml:lang="it">Fittizio 84</label>
+      </variable>
+      <variable item="Dummy 85" CV="85">
+        <decVal/>
+        <label>Dummy 85</label>
+        <label xml:lang="it">Fittizio 85</label>
+      </variable>
+      <variable item="Dummy 86" CV="86">
+        <decVal/>
+        <label>Dummy 86</label>
+        <label xml:lang="it">Fittizio 86</label>
+      </variable>
+      <variable item="Dummy 87" CV="87">
+        <decVal/>
+        <label>Dummy 87</label>
+        <label xml:lang="it">Fittizio 87</label>
+      </variable>
+      <variable item="Dummy 88" CV="88">
+        <decVal/>
+        <label>Dummy 88</label>
+        <label xml:lang="it">Fittizio 87</label>
+      </variable>
+      <variable item="Dummy 89" CV="89">
+        <decVal/>
+        <label>Dummy 89</label>
+        <label xml:lang="it">Fittizio 89</label>
+      </variable>
+      <variable item="Dummy 90" CV="90">
+        <decVal/>
+        <label>Dummy 90</label>
+        <label xml:lang="it">Fittizio 90</label>
+      </variable>
+      <variable item="Dummy 91" CV="91">
+        <decVal/>
+        <label>Dummy 91</label>
+        <label xml:lang="it">Fittizio 91</label>
+      </variable>
+      <variable item="Dummy 92" CV="92">
+        <decVal/>
+        <label>Dummy 92</label>
+        <label xml:lang="it">Fittizio 92</label>
+      </variable>
+      <variable item="Dummy 93" CV="93">
+        <decVal/>
+        <label>Dummy 93</label>
+        <label xml:lang="it">Fittizio 93</label>
+      </variable>
+      <variable item="Dummy 94" CV="94">
+        <decVal/>
+        <label>Dummy 94</label>
+        <label xml:lang="it">Fittizio 94</label>
+      </variable>
+      <variable item="Dummy 95" CV="95">
+        <decVal/>
+        <label>Dummy 95</label>
+        <label xml:lang="it">Fittizio 95</label>
+      </variable>
+      <variable item="Dummy 96" CV="96">
+        <decVal/>
+        <label>Dummy 96</label>
+        <label xml:lang="it">Fittizio 96</label>
+      </variable>
+      <variable item="Dummy 97" CV="97">
+        <decVal/>
+        <label>Dummy 97</label>
+        <label xml:lang="it">Fittizio 97</label>
+      </variable>
+      <variable item="Dummy 98" CV="98">
+        <decVal/>
+        <label>Dummy 98</label>
+        <label xml:lang="it">Fittizio 98</label>
+      </variable>
+      <variable item="Dummy 99" CV="99">
+        <decVal/>
+        <label>Dummy 99</label>
+        <label xml:lang="it">Fittizio 99</label>
+      </variable>
+      <variable item="Dummy 100" CV="100">
+        <decVal/>
+        <label>Dummy 100</label>
+        <label xml:lang="it">Fittizio 100</label>
+      </variable>
+      <variable item="Dummy 101" CV="101">
+        <decVal/>
+        <label>Dummy 101</label>
+        <label xml:lang="it">Fittizio 101</label>
+      </variable>
+      <variable item="Dummy 102" CV="102">
+        <decVal/>
+        <label>Dummy 102</label>
+        <label xml:lang="it">Fittizio 102</label>
+      </variable>
+      <variable item="Dummy 103" CV="103">
+        <decVal/>
+        <label>Dummy 103</label>
+        <label xml:lang="it">Fittizio 103</label>
+      </variable>
+      <variable item="Dummy 104" CV="104">
+        <decVal/>
+        <label>Dummy 104</label>
+        <label xml:lang="it">Fittizio 104</label>
+      </variable>
+      <variable item="Dummy 105" CV="105">
+        <decVal/>
+        <label>Dummy 105</label>
+        <label xml:lang="it">Fittizio 105</label>
+      </variable>
+      <variable item="Dummy 106" CV="106">
+        <decVal/>
+        <label>Dummy 106</label>
+        <label xml:lang="it">Fittizio 106</label>
+      </variable>
+      <variable item="Dummy 107" CV="107">
+        <decVal/>
+        <label>Dummy 107</label>
+        <label xml:lang="it">Fittizio 107</label>
+      </variable>
+      <variable item="Dummy 108" CV="108">
+        <decVal/>
+        <label>Dummy 108</label>
+        <label xml:lang="it">Fittizio 108</label>
+      </variable>
+      <variable item="Dummy 109" CV="109">
+        <decVal/>
+        <label>Dummy 109</label>
+        <label xml:lang="it">Fittizio 109</label>
+      </variable>
+      <variable item="Dummy 110" CV="110">
+        <decVal/>
+        <label>Dummy 110</label>
+        <label xml:lang="it">Fittizio 110</label>
+      </variable>
+      <variable item="Dummy 111" CV="111">
+        <decVal/>
+        <label>Dummy 111</label>
+        <label xml:lang="it">Fittizio 111</label>
+      </variable>
+      <variable item="Dummy 112" CV="112">
+        <decVal/>
+        <label>Dummy 112</label>
+        <label xml:lang="it">Fittizio 112</label>
+      </variable>
+      <variable item="Dummy 113" CV="113">
+        <decVal/>
+        <label>Dummy 113</label>
+        <label xml:lang="it">Fittizio 113</label>
+      </variable>
+      <variable item="Dummy 114" CV="114">
+        <decVal/>
+        <label>Dummy 114</label>
+        <label xml:lang="it">Fittizio 114</label>
+      </variable>
+      <variable item="Dummy 115" CV="115">
+        <decVal/>
+        <label>Dummy 115</label>
+        <label xml:lang="it">Fittizio 115</label>
+      </variable>
+      <variable item="Dummy 116" CV="116">
+        <decVal/>
+        <label>Dummy 116</label>
+        <label xml:lang="it">Fittizio 116</label>
+      </variable>
+      <variable item="Dummy 117" CV="117">
+        <decVal/>
+        <label>Dummy 117</label>
+        <label xml:lang="it">Fittizio 117</label>
+      </variable>
+      <variable item="Dummy 118" CV="118">
+        <decVal/>
+        <label>Dummy 118</label>
+        <label xml:lang="it">Fittizio 118</label>
+      </variable>
+      <variable item="Dummy 119" CV="119">
+        <decVal/>
+        <label>Dummy 119</label>
+        <label xml:lang="it">Fittizio 119</label>
+      </variable>
+      <variable item="Dummy 120" CV="120">
+        <decVal/>
+        <label>Dummy 120</label>
+        <label xml:lang="it">Fittizio 120</label>
+      </variable>
+      <variable item="Dummy 121" CV="121">
+        <decVal/>
+        <label>Dummy 121</label>
+        <label xml:lang="it">Fittizio 121</label>
+      </variable>
+      <variable item="Dummy 122" CV="122">
+        <decVal/>
+        <label>Dummy 122</label>
+        <label xml:lang="it">Fittizio 122</label>
+      </variable>
+      <variable item="Dummy 123" CV="123">
+        <decVal/>
+        <label>Dummy 123</label>
+        <label xml:lang="it">Fittizio 123</label>
+      </variable>
+      <variable item="Dummy 124" CV="124">
+        <decVal/>
+        <label>Dummy 124</label>
+        <label xml:lang="it">Fittizio 124</label>
+      </variable>
+      <variable item="Dummy 125" CV="125">
+        <decVal/>
+        <label>Dummy 125</label>
+        <label xml:lang="it">Fittizio 125</label>
+      </variable>
+      <variable item="Dummy 126" CV="126">
+        <decVal/>
+        <label>Dummy 126</label>
+        <label xml:lang="it">Fittizio 126</label>
+      </variable>
+      <variable item="Dummy 127" CV="127">
+        <decVal/>
+        <label>Dummy 127</label>
+        <label xml:lang="it">Fittizio 127</label>
+      </variable>
+      <variable item="Dummy 128" CV="128">
+        <decVal/>
+        <label>Dummy 128</label>
+        <label xml:lang="it">Fittizio 128</label>
+      </variable>
+      <variable item="Dummy 129" CV="129">
+        <decVal/>
+        <label>Dummy 129</label>
+        <label xml:lang="it">Fittizio 129</label>
+      </variable>
+      <variable item="Dummy 130" CV="130">
+        <decVal/>
+        <label>Dummy 130</label>
+        <label xml:lang="it">Fittizio 130</label>
+      </variable>
+      <variable item="Dummy 131" CV="131">
+        <decVal/>
+        <label>Dummy 131</label>
+        <label xml:lang="it">Fittizio 131</label>
+      </variable>
+      <variable item="Dummy 132" CV="132">
+        <decVal/>
+        <label>Dummy 132</label>
+        <label xml:lang="it">Fittizio 132</label>
+      </variable>
+      <variable item="Dummy 133" CV="133">
+        <decVal/>
+        <label>Dummy 133</label>
+        <label xml:lang="it">Fittizio 133</label>
+      </variable>
+      <variable item="Dummy 134" CV="134">
+        <decVal/>
+        <label>Dummy 134</label>
+        <label xml:lang="it">Fittizio 134</label>
+      </variable>
+      <variable item="Dummy 135" CV="135">
+        <decVal/>
+        <label>Dummy 135</label>
+        <label xml:lang="it">Fittizio 135</label>
+      </variable>
+      <variable item="Dummy 136" CV="136">
+        <decVal/>
+        <label>Dummy 136</label>
+        <label xml:lang="it">Fittizio 136</label>
+      </variable>
+      <variable item="Dummy 137" CV="137">
+        <decVal/>
+        <label>Dummy 137</label>
+        <label xml:lang="it">Fittizio 137</label>
+      </variable>
+      <variable item="Dummy 138" CV="138">
+        <decVal/>
+        <label>Dummy 138</label>
+        <label xml:lang="it">Fittizio 138</label>
+      </variable>
+      <variable item="Dummy 139" CV="139">
+        <decVal/>
+        <label>Dummy 139</label>
+        <label xml:lang="it">Fittizio 139</label>
+      </variable>
+      <variable item="Dummy 140" CV="140">
+        <decVal/>
+        <label>Dummy 140</label>
+        <label xml:lang="it">Fittizio 140</label>
+      </variable>
+      <variable item="Dummy 141" CV="141">
+        <decVal/>
+        <label>Dummy 141</label>
+        <label xml:lang="it">Fittizio 141</label>
+      </variable>
+      <variable item="Dummy 142" CV="142">
+        <decVal/>
+        <label>Dummy 142</label>
+        <label xml:lang="it">Fittizio 142</label>
+      </variable>
+      <variable item="Dummy 143" CV="143">
+        <decVal/>
+        <label>Dummy 143</label>
+        <label xml:lang="it">Fittizio 143</label>
+      </variable>
+      <variable item="Dummy 144" CV="144">
+        <decVal/>
+        <label>Dummy 144</label>
+        <label xml:lang="it">Fittizio 144</label>
+      </variable>
+      <variable item="Dummy 145" CV="145">
+        <decVal/>
+        <label>Dummy 145</label>
+        <label xml:lang="it">Fittizio 145</label>
+      </variable>
+      <variable item="Dummy 146" CV="146">
+        <decVal/>
+        <label>Dummy 146</label>
+        <label xml:lang="it">Fittizio 146</label>
+      </variable>
+      <variable item="Dummy 147" CV="147">
+        <decVal/>
+        <label>Dummy 147</label>
+        <label xml:lang="it">Fittizio 147</label>
+      </variable>
+      <variable item="Dummy 148" CV="148">
+        <decVal/>
+        <label>Dummy 148</label>
+        <label xml:lang="it">Fittizio 148</label>
+      </variable>
+      <variable item="Dummy 149" CV="149">
+        <decVal/>
+        <label>Dummy 149</label>
+        <label xml:lang="it">Fittizio 149</label>
+      </variable>
+      <variable item="Dummy 150" CV="150">
+        <decVal/>
+        <label>Dummy 150</label>
+        <label xml:lang="it">Fittizio 150</label>
+      </variable>
+      <variable item="Dummy 151" CV="151">
+        <decVal/>
+        <label>Dummy 151</label>
+        <label xml:lang="it">Fittizio 151</label>
+      </variable>
+      <variable item="Dummy 152" CV="152">
+        <decVal/>
+        <label>Dummy 152</label>
+        <label xml:lang="it">Fittizio 152</label>
+      </variable>
+      <variable item="Dummy 153" CV="153">
+        <decVal/>
+        <label>Dummy 153</label>
+        <label xml:lang="it">Fittizio 153</label>
+      </variable>
+      <variable item="Dummy 154" CV="154">
+        <decVal/>
+        <label>Dummy 154</label>
+        <label xml:lang="it">Fittizio 154</label>
+      </variable>
+      <variable item="Dummy 155" CV="155">
+        <decVal/>
+        <label>Dummy 155</label>
+        <label xml:lang="it">Fittizio 155</label>
+      </variable>
+      <variable item="Dummy 156" CV="156">
+        <decVal/>
+        <label>Dummy 156</label>
+        <label xml:lang="it">Fittizio 156</label>
+      </variable>
+      <variable item="Dummy 157" CV="157">
+        <decVal/>
+        <label>Dummy 157</label>
+        <label xml:lang="it">Fittizio 157</label>
+      </variable>
+      <variable item="Dummy 158" CV="158">
+        <decVal/>
+        <label>Dummy 158</label>
+        <label xml:lang="it">Fittizio 158</label>
+      </variable>
+      <variable item="Dummy 159" CV="159">
+        <decVal/>
+        <label>Dummy 159</label>
+        <label xml:lang="it">Fittizio 159</label>
+      </variable>
+      <variable item="Dummy 160" CV="160">
+        <decVal/>
+        <label>Dummy 160</label>
+        <label xml:lang="it">Fittizio 160</label>
+      </variable>
+      <variable item="Dummy 161" CV="161">
+        <decVal/>
+        <label>Dummy 161</label>
+        <label xml:lang="it">Fittizio 161</label>
+      </variable>
+      <variable item="Dummy 162" CV="162">
+        <decVal/>
+        <label>Dummy 162</label>
+        <label xml:lang="it">Fittizio 162</label>
+      </variable>
+      <variable item="Dummy 163" CV="163">
+        <decVal/>
+        <label>Dummy 163</label>
+        <label xml:lang="it">Fittizio 163</label>
+      </variable>
+      <variable item="Dummy 164" CV="164">
+        <decVal/>
+        <label>Dummy 164</label>
+        <label xml:lang="it">Fittizio 164</label>
+      </variable>
+      <variable item="Dummy 165" CV="165">
+        <decVal/>
+        <label>Dummy 165</label>
+        <label xml:lang="it">Fittizio 165</label>
+      </variable>
+      <variable item="Dummy 166" CV="166">
+        <decVal/>
+        <label>Dummy 166</label>
+        <label xml:lang="it">Fittizio 166</label>
+      </variable>
+      <variable item="Dummy 167" CV="167">
+        <decVal/>
+        <label>Dummy 167</label>
+        <label xml:lang="it">Fittizio 167</label>
+      </variable>
+      <variable item="Dummy 168" CV="168">
+        <decVal/>
+        <label>Dummy 168</label>
+        <label xml:lang="it">Fittizio 168</label>
+      </variable>
+      <variable item="Dummy 169" CV="169">
+        <decVal/>
+        <label>Dummy 169</label>
+        <label xml:lang="it">Fittizio 169</label>
+      </variable>
+      <variable item="Dummy 170" CV="170">
+        <decVal/>
+        <label>Dummy 170</label>
+        <label xml:lang="it">Fittizio 170</label>
+      </variable>
+      <variable item="Dummy 171" CV="171">
+        <decVal/>
+        <label>Dummy 171</label>
+        <label xml:lang="it">Fittizio 171</label>
+      </variable>
+      <variable item="Dummy 172" CV="172">
+        <decVal/>
+        <label>Dummy 172</label>
+        <label xml:lang="it">Fittizio 172</label>
+      </variable>
+      <variable item="Dummy 173" CV="173">
+        <decVal/>
+        <label>Dummy 173</label>
+        <label xml:lang="it">Fittizio 173</label>
+      </variable>
+      <variable item="Dummy 174" CV="174">
+        <decVal/>
+        <label>Dummy 174</label>
+        <label xml:lang="it">Fittizio 174</label>
+      </variable>
+      <variable item="Dummy 175" CV="175">
+        <decVal/>
+        <label>Dummy 175</label>
+        <label xml:lang="it">Fittizio 175</label>
+      </variable>
+      <variable item="Dummy 176" CV="176">
+        <decVal/>
+        <label>Dummy 176</label>
+        <label xml:lang="it">Fittizio 176</label>
+      </variable>
+      <variable item="Dummy 177" CV="177">
+        <decVal/>
+        <label>Dummy 177</label>
+        <label xml:lang="it">Fittizio 177</label>
+      </variable>
+      <variable item="Dummy 178" CV="178">
+        <decVal/>
+        <label>Dummy 178</label>
+        <label xml:lang="it">Fittizio 178</label>
+      </variable>
+      <variable item="Dummy 179" CV="179">
+        <decVal/>
+        <label>Dummy 179</label>
+        <label xml:lang="it">Fittizio 179</label>
+      </variable>
+      <variable item="Dummy 180" CV="180">
+        <decVal/>
+        <label>Dummy 180</label>
+        <label xml:lang="it">Fittizio 180</label>
+      </variable>
+      <variable item="Dummy 181" CV="181">
+        <decVal/>
+        <label>Dummy 181</label>
+        <label xml:lang="it">Fittizio 181</label>
+      </variable>
+      <variable item="Dummy 182" CV="182">
+        <decVal/>
+        <label>Dummy 182</label>
+        <label xml:lang="it">Fittizio 182</label>
+      </variable>
+      <variable item="Dummy 183" CV="183">
+        <decVal/>
+        <label>Dummy 183</label>
+        <label xml:lang="it">Fittizio 183</label>
+      </variable>
+      <variable item="Dummy 184" CV="184">
+        <decVal/>
+        <label>Dummy 184</label>
+        <label xml:lang="it">Fittizio 184</label>
+      </variable>
+      <variable item="Dummy 185" CV="185">
+        <decVal/>
+        <label>Dummy 185</label>
+        <label xml:lang="it">Fittizio 185</label>
+      </variable>
+      <variable item="Dummy 186" CV="186">
+        <decVal/>
+        <label>Dummy 186</label>
+        <label xml:lang="it">Fittizio 186</label>
+      </variable>
+      <variable item="Dummy 187" CV="187">
+        <decVal/>
+        <label>Dummy 187</label>
+        <label xml:lang="it">Fittizio 187</label>
+      </variable>
+      <variable item="Dummy 188" CV="188">
+        <decVal/>
+        <label>Dummy 188</label>
+        <label xml:lang="it">Fittizio 188</label>
+      </variable>
+      <variable item="Dummy 189" CV="189">
+        <decVal/>
+        <label>Dummy 189</label>
+        <label xml:lang="it">Fittizio 189</label>
+      </variable>
+      <variable item="Dummy 190" CV="190">
+        <decVal/>
+        <label>Dummy 190</label>
+        <label xml:lang="it">Fittizio 190</label>
+      </variable>
+      <variable item="Dummy 191" CV="191">
+        <decVal/>
+        <label>Dummy 191</label>
+        <label xml:lang="it">Fittizio 191</label>
+      </variable>
+      <variable item="Dummy 192" CV="192">
+        <decVal/>
+        <label>Dummy 192</label>
+        <label xml:lang="it">Fittizio 192</label>
+      </variable>
+      <variable item="Dummy 193" CV="193">
+        <decVal/>
+        <label>Dummy 193</label>
+        <label xml:lang="it">Fittizio 193</label>
+      </variable>
+      <variable item="Dummy 194" CV="194">
+        <decVal/>
+        <label>Dummy 194</label>
+        <label xml:lang="it">Fittizio 194</label>
+      </variable>
+      <variable item="Dummy 195" CV="195">
+        <decVal/>
+        <label>Dummy 195</label>
+        <label xml:lang="it">Fittizio 195</label>
+      </variable>
+      <variable item="Dummy 196" CV="196">
+        <decVal/>
+        <label>Dummy 196</label>
+        <label xml:lang="it">Fittizio 196</label>
+      </variable>
+      <variable item="Dummy 197" CV="197">
+        <decVal/>
+        <label>Dummy 197</label>
+        <label xml:lang="it">Fittizio 197</label>
+      </variable>
+      <variable item="Dummy 198" CV="198">
+        <decVal/>
+        <label>Dummy 198</label>
+        <label xml:lang="it">Fittizio 198</label>
+      </variable>
+      <variable item="Dummy 199" CV="199">
+        <decVal/>
+        <label>Dummy 199</label>
+        <label xml:lang="it">Fittizio 199</label>
+      </variable>
+      <variable item="Dummy 200" CV="200">
+        <decVal/>
+        <label>Dummy 200</label>
+        <label xml:lang="it">Fittizio 200</label>
+      </variable>
+      <variable item="Dummy 201" CV="201">
+        <decVal/>
+        <label>Dummy 201</label>
+        <label xml:lang="it">Fittizio 201</label>
+      </variable>
+      <variable item="Dummy 202" CV="202">
+        <decVal/>
+        <label>Dummy 202</label>
+        <label xml:lang="it">Fittizio 202</label>
+      </variable>
+      <variable item="Dummy 203" CV="203">
+        <decVal/>
+        <label>Dummy 203</label>
+        <label xml:lang="it">Fittizio 203</label>
+      </variable>
+      <variable item="Dummy 204" CV="204">
+        <decVal/>
+        <label>Dummy 204</label>
+        <label xml:lang="it">Fittizio 204</label>
+      </variable>
+      <variable item="Dummy 205" CV="205">
+        <decVal/>
+        <label>Dummy 205</label>
+        <label xml:lang="it">Fittizio 205</label>
+      </variable>
+      <variable item="Dummy 206" CV="206">
+        <decVal/>
+        <label>Dummy 206</label>
+        <label xml:lang="it">Fittizio 206</label>
+      </variable>
+      <variable item="Dummy 207" CV="207">
+        <decVal/>
+        <label>Dummy 207</label>
+        <label xml:lang="it">Fittizio 207</label>
+      </variable>
+      <variable item="Dummy 208" CV="208">
+        <decVal/>
+        <label>Dummy 208</label>
+        <label xml:lang="it">Fittizio 208</label>
+      </variable>
+      <variable item="Dummy 209" CV="209">
+        <decVal/>
+        <label>Dummy 209</label>
+        <label xml:lang="it">Fittizio 209</label>
+      </variable>
+      <variable item="Dummy 210" CV="210">
+        <decVal/>
+        <label>Dummy 210</label>
+        <label xml:lang="it">Fittizio 210</label>
+      </variable>
+      <variable item="Dummy 211" CV="211">
+        <decVal/>
+        <label>Dummy 211</label>
+        <label xml:lang="it">Fittizio 211</label>
+      </variable>
+      <variable item="Dummy 212" CV="212">
+        <decVal/>
+        <label>Dummy 212</label>
+        <label xml:lang="it">Fittizio 212</label>
+      </variable>
+      <variable item="Dummy 213" CV="213">
+        <decVal/>
+        <label>Dummy 213</label>
+        <label xml:lang="it">Fittizio 213</label>
+      </variable>
+      <variable item="Dummy 214" CV="214">
+        <decVal/>
+        <label>Dummy 214</label>
+        <label xml:lang="it">Fittizio 214</label>
+      </variable>
+      <variable item="Dummy 215" CV="215">
+        <decVal/>
+        <label>Dummy 215</label>
+        <label xml:lang="it">Fittizio 215</label>
+      </variable>
+      <variable item="Dummy 216" CV="216">
+        <decVal/>
+        <label>Dummy 216</label>
+        <label xml:lang="it">Fittizio 216</label>
+      </variable>
+      <variable item="Dummy 217" CV="217">
+        <decVal/>
+        <label>Dummy 217</label>
+        <label xml:lang="it">Fittizio 217</label>
+      </variable>
+      <variable item="Dummy 218" CV="218">
+        <decVal/>
+        <label>Dummy 218</label>
+        <label xml:lang="it">Fittizio 218</label>
+      </variable>
+      <variable item="Dummy 219" CV="219">
+        <decVal/>
+        <label>Dummy 219</label>
+        <label xml:lang="it">Fittizio 219</label>
+      </variable>
+      <variable item="Dummy 220" CV="220">
+        <decVal/>
+        <label>Dummy 220</label>
+        <label xml:lang="it">Fittizio 220</label>
+      </variable>
+      <variable item="Dummy 221" CV="221">
+        <decVal/>
+        <label>Dummy 221</label>
+        <label xml:lang="it">Fittizio 221</label>
+      </variable>
+      <variable item="Dummy 222" CV="222">
+        <decVal/>
+        <label>Dummy 222</label>
+        <label xml:lang="it">Fittizio 222</label>
+      </variable>
+      <variable item="Dummy 223" CV="223">
+        <decVal/>
+        <label>Dummy 223</label>
+        <label xml:lang="it">Fittizio 223</label>
+      </variable>
+      <variable item="Dummy 224" CV="224">
+        <decVal/>
+        <label>Dummy 224</label>
+        <label xml:lang="it">Fittizio 224</label>
+      </variable>
+      <variable item="Dummy 225" CV="225">
+        <decVal/>
+        <label>Dummy 225</label>
+        <label xml:lang="it">Fittizio 225</label>
+      </variable>
+      <variable item="Dummy 226" CV="226">
+        <decVal/>
+        <label>Dummy 226</label>
+        <label xml:lang="it">Fittizio 226</label>
+      </variable>
+      <variable item="Dummy 227" CV="227">
+        <decVal/>
+        <label>Dummy 227</label>
+        <label xml:lang="it">Fittizio 227</label>
+      </variable>
+      <variable item="Dummy 228" CV="228">
+        <decVal/>
+        <label>Dummy 228</label>
+        <label xml:lang="it">Fittizio 228</label>
+      </variable>
+      <variable item="Dummy 229" CV="229">
+        <decVal/>
+        <label>Dummy 229</label>
+        <label xml:lang="it">Fittizio 229</label>
+      </variable>
+      <variable item="Dummy 230" CV="230">
+        <decVal/>
+        <label>Dummy 230</label>
+        <label xml:lang="it">Fittizio 230</label>
+      </variable>
+      <variable item="Dummy 231" CV="231">
+        <decVal/>
+        <label>Dummy 231</label>
+        <label xml:lang="it">Fittizio 231</label>
+      </variable>
+      <variable item="Dummy 232" CV="232">
+        <decVal/>
+        <label>Dummy 232</label>
+        <label xml:lang="it">Fittizio 232</label>
+      </variable>
+      <variable item="Dummy 233" CV="233">
+        <decVal/>
+        <label>Dummy 233</label>
+        <label xml:lang="it">Fittizio 233</label>
+      </variable>
+      <variable item="Dummy 234" CV="234">
+        <decVal/>
+        <label>Dummy 234</label>
+        <label xml:lang="it">Fittizio 234</label>
+      </variable>
+      <variable item="Dummy 235" CV="235">
+        <decVal/>
+        <label>Dummy 235</label>
+        <label xml:lang="it">Fittizio 235</label>
+      </variable>
+      <variable item="Dummy 236" CV="236">
+        <decVal/>
+        <label>Dummy 236</label>
+        <label xml:lang="it">Fittizio 236</label>
+      </variable>
+      <variable item="Dummy 237" CV="237">
+        <decVal/>
+        <label>Dummy 237</label>
+        <label xml:lang="it">Fittizio 237</label>
+      </variable>
+      <variable item="Dummy 238" CV="238">
+        <decVal/>
+        <label>Dummy 238</label>
+        <label xml:lang="it">Fittizio 238</label>
+      </variable>
+      <variable item="Dummy 239" CV="239">
+        <decVal/>
+        <label>Dummy 239</label>
+        <label xml:lang="it">Fittizio 239</label>
+      </variable>
+      <variable item="Dummy 240" CV="240">
+        <decVal/>
+        <label>Dummy 240</label>
+        <label xml:lang="it">Fittizio 240</label>
+      </variable>
+      <variable item="Dummy 241" CV="241">
+        <decVal/>
+        <label>Dummy 241</label>
+        <label xml:lang="it">Fittizio 241</label>
+      </variable>
+      <variable item="Dummy 242" CV="242">
+        <decVal/>
+        <label>Dummy 242</label>
+        <label xml:lang="it">Fittizio 242</label>
+      </variable>
+      <variable item="Dummy 243" CV="243">
+        <decVal/>
+        <label>Dummy 243</label>
+        <label xml:lang="it">Fittizio 243</label>
+      </variable>
+      <variable item="Dummy 244" CV="244">
+        <decVal/>
+        <label>Dummy 244</label>
+        <label xml:lang="it">Fittizio 244</label>
+      </variable>
+      <variable item="Dummy 245" CV="245">
+        <decVal/>
+        <label>Dummy 245</label>
+        <label xml:lang="it">Fittizio 245</label>
+      </variable>
+      <variable item="Dummy 246" CV="246">
+        <decVal/>
+        <label>Dummy 246</label>
+        <label xml:lang="it">Fittizio 246</label>
+      </variable>
+      <variable item="Dummy 247" CV="247">
+        <decVal/>
+        <label>Dummy 247</label>
+        <label xml:lang="it">Fittizio 247</label>
+      </variable>
+      <variable item="Dummy 248" CV="248">
+        <decVal/>
+        <label>Dummy 248</label>
+        <label xml:lang="it">Fittizio 248</label>
+      </variable>
+      <variable item="Dummy 249" CV="249">
+        <decVal/>
+        <label>Dummy 249</label>
+        <label xml:lang="it">Fittizio 249</label>
+      </variable>
+      <variable item="Dummy 250" CV="250">
+        <decVal/>
+        <label>Dummy 250</label>
+        <label xml:lang="it">Fittizio 250</label>
+      </variable>
+      <variable item="Dummy 251" CV="251">
+        <decVal/>
+        <label>Dummy 251</label>
+        <label xml:lang="it">Fittizio 251</label>
+      </variable>
+      <variable item="Dummy 252" CV="252">
+        <decVal/>
+        <label>Dummy 252</label>
+        <label xml:lang="it">Fittizio 252</label>
+      </variable>
+      <variable item="Dummy 253" CV="253">
+        <decVal/>
+        <label>Dummy 253</label>
+        <label xml:lang="it">Fittizio 253</label>
+      </variable>
+      <variable item="Dummy 254" CV="254">
+        <decVal/>
+        <label>Dummy 254</label>
+        <label xml:lang="it">Fittizio 254</label>
+      </variable>
+      <variable item="Dummy 255" CV="255">
+        <decVal/>
+        <label>Dummy 255</label>
+        <label xml:lang="it">Fittizio 255</label>
+      </variable>
     </variables>
   </decoder>
 </decoder-config>
