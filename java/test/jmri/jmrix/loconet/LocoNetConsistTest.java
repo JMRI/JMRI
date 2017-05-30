@@ -22,6 +22,7 @@ public class LocoNetConsistTest {
     LocoNetInterfaceScaffold lnis;
     SlotManager slotmanager;
     LocoNetSystemConnectionMemo memo;
+    LnThrottleManager ltm;
 
     //utility function, handle slot messages required to suppress 
     // errors from the LnThrottleManager after constructor call.
@@ -215,7 +216,8 @@ public class LocoNetConsistTest {
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        memo.setThrottleManager(new LnThrottleManager(memo));
+        ltm = new LnThrottleManager(memo);
+        memo.setThrottleManager(ltm);
 
         try {
         // set slot 3 to address 3
@@ -239,6 +241,7 @@ public class LocoNetConsistTest {
    
     @After
     public void tearDown() {
+        ltm.dispose();
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
