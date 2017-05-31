@@ -1665,7 +1665,8 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 if (!car.getPickupScheduleId().equals(Car.NONE)) {
-                    if (car.getPickupScheduleId().equals(TrainManager.instance().getTrainScheduleActiveId())) {
+                    if (TrainManager.instance().getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
+                            car.getPickupScheduleId().equals(TrainManager.instance().getTrainScheduleActiveId())) {
                         car.setPickupScheduleId(Car.NONE);
                     } else {
                         TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(car.getPickupScheduleId());

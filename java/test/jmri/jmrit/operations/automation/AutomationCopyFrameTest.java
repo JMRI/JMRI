@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
+public class AutomationCopyFrameTest extends OperationsSwingTestCase {
     
     @Test
     public void testFrameCreation() {

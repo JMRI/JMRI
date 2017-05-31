@@ -76,7 +76,10 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         log.debug("Simulator Thread Started");
         for (;;) {
             XNetMessage m = readMessage();
-            message(m);
+            if(m != null) {
+               // don't forward a null message.
+               message(m);
+            }
         }
     }
 
