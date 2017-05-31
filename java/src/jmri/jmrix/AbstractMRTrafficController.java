@@ -735,6 +735,9 @@ abstract public class AbstractMRTrafficController {
             try {
                 handleOneIncomingReply();
                 errorCount = 0;
+            } catch (java.io.InterruptedIOException e) {
+                // related to InterruptedException, catch first
+                break;
             } catch (IOException e) {
                 rcvException = true;
                 reportReceiveLoopException(e);
@@ -748,13 +751,16 @@ abstract public class AbstractMRTrafficController {
                 }
             }
         }
-        ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-        if (!threadStopRequest) { // normal end
+        if (!threadStopRequest) { // if e.g. unexpected end
+            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
             log.error("Exit from rcv loop in {}", this.getClass().toString());
+            recovery(); // see if you can restart
         }
-        recovery();
     }
 
+    /**
+     * Invoked at abnormal end of receiveLoop
+     */
     protected final void recovery() {
         AbstractPortController adapter = controller;
         disconnectPort(controller);
@@ -871,7 +877,7 @@ abstract public class AbstractMRTrafficController {
      *
      */
     public void handleOneIncomingReply() throws IOException {
-            // we sit in this until the message is complete, relying on
+        // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
 
         // Create message off the right concrete class
@@ -883,6 +889,8 @@ abstract public class AbstractMRTrafficController {
         // message exists, now fill it
         loadChars(msg, istream);
 
+        if (threadStopRequest) return;
+        
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
@@ -901,6 +909,7 @@ abstract public class AbstractMRTrafficController {
             }
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            return;
         }
         log.debug("dispatch thread invoked");
 
@@ -1105,7 +1114,7 @@ abstract public class AbstractMRTrafficController {
     public void terminateThreads() {
         threadStopRequest = true;
         if (xmtThread != null) {
-            xmtThread.stop();
+            xmtThread.interrupt();
             try {
                 xmtThread.join();
             } catch (InterruptedException ie){
@@ -1114,14 +1123,13 @@ abstract public class AbstractMRTrafficController {
         }
         
         if (rcvThread != null) {
-            rcvThread.stop();
+            rcvThread.interrupt();
             try {
                 rcvThread.join();
             } catch (InterruptedException ie){
                 // interrupted durring cleanup.
             }
-        }
-        
+        }     
     }
     
     /**
