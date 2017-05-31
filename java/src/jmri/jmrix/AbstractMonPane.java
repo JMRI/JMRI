@@ -272,7 +272,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                         log.debug("Have to repeat attempt to set Always on Top");
                         timerCount++;
                         if (timerCount > 50) {
-                            log.debug("Set Always on Top failed");
+                            log.warn("Took too long to \"Set Always on Top\", failed");
                             timer.stop();
                         }
                     }      
