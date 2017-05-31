@@ -3442,7 +3442,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double zoomToFit() {
         double result = getZoom();
 
+        // calculate a union of the bounds of everything on the layout
         Rectangle2D bounds = new Rectangle2D.Double();
+
         for (PositionableLabel o : backgroundImage) {
             if (bounds.isEmpty()) {
                 bounds = o.getBounds();
@@ -3587,31 +3589,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        // expand by grid size
+        // put a grid size margin around it
         bounds = MathUtil.inset(bounds, -gridSize1st);
+
+        // don't let the orgin go negative
         bounds = new Rectangle2D.Double(
                 Math.max(bounds.getX(), 0), Math.max(bounds.getY(), 0),
                 bounds.getWidth(), bounds.getHeight());
 
+        // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
 
-        double scrollWidth = scrollPane.getWidth();
-        double scrollHeight = scrollPane.getHeight();
+        // calculate the horzontial and vertical scales
+        double scaleWidth = scrollPane.getWidth() / bounds.getWidth();
+        double scaleHeight = scrollPane.getHeight() / bounds.getHeight();
 
-        double scaleWidth = scrollWidth / bounds.getWidth();
-        double scaleHeight = scrollHeight / bounds.getHeight();
+        // use the smallest of the two as our new zoom
+        result = Math.min(scaleWidth, scaleHeight);
 
-        double newZoom = Math.min(scaleWidth, scaleHeight);
-
-        result = setZoom(newZoom);
+        // set the new zoom (return value may be different)
+        result = setZoom(result);
+        
+        // calculate new scroll bounds
         scrollBounds = MathUtil.scale(scrollBounds, result);
+
+        // don't let its orgin go negative
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
+
+        // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
         return result;
@@ -5790,6 +5801,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
                 if (snapToGridOnAdd) {
+                    // this snaps the current point to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
@@ -7693,6 +7705,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
                 //moving a point
                 if (snapToGridOnMove) {
+                    // this snaps newPos to the grid
                     newPos = MathUtil.granulize(newPos, gridSize1st);
                 }
 
