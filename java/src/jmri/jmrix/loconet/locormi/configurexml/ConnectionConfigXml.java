@@ -33,13 +33,13 @@ public class ConnectionConfigXml extends jmri.jmrix.loconet.loconetovertcp.confi
         super.load(shared, perNode);
         log.error("The LocoNet RMI connection is no longer supported.");
         log.error("This connection will be converted to a LocoNetOverTcp connection.");
-        log.error("See the JMRI 4.7.4 release notes for more information.");
+        log.error("See the JMRI 4.7.5 release notes for more information.");
         // avoid the class overhead of the standard Bundle construct
-        ResourceBundle bundle = ResourceBundle.getBundle("jmri.jmrix.loconet.locormi.configurexml.Bundle");
+        ResourceBundle bundle = ResourceBundle.getBundle("jmri.jmrix.loconet.locormi.Bundle");
         if (!GraphicsEnvironment.isHeadless()) {
             JOptionPane.showMessageDialog(null,
-                    bundle.getString("NoLocoRmiMessage"),
-                    bundle.getString("NoLocoRmiTitle"),
+                    bundle.getString("NoLocoRmiConnectionMessage"),
+                    bundle.getString("NoLocoRmiConnectionTitle"),
                     JOptionPane.ERROR_MESSAGE);
         }
         return false;
