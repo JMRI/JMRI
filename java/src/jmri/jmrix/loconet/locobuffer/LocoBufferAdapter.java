@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
+import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -36,10 +37,28 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Connection uses:", validOption1));
-        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
+        options.put(option2Name, new Option("Command station type:", getCommandStationListWithStandaloneLN(), false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }
-
+    
+    /**
+     * Create a list of possible command stations and append "Standalone LocoNet"
+     * 
+     * Note: This is not suitable for use by any class which extends this class if
+     * the hardware interface is part of a command station.
+     * 
+     * @return String[] containing the array of command stations, plus "Standalone 
+     *          LocoNet"
+     */
+    public String[] getCommandStationListWithStandaloneLN() {
+        String[] result = new String[commandStationNames.length + 1];
+        for (int i = 0 ; i < result.length; ++i) {
+            result[i] = commandStationNames[i];
+        }
+        result[commandStationNames.length] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
+        return result;
+    }
+    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
@@ -201,6 +220,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
+     * 
+     * @return an indication of whether the interface is accepting transmit messages.
      */
     @Override
     public boolean okToSend() {
@@ -263,6 +284,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     /**
      * Local method to do specific configuration, overridden in class
+     * @param activeSerialPort is the serial port to be configured
+     * @throws gnu.io.UnsupportedCommOperationException
      */
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
