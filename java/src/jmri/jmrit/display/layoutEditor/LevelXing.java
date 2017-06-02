@@ -1673,13 +1673,8 @@ public class LevelXing extends LayoutTrack {
     }   // drawHidden(Graphics2D g2)
 
     private void drawXingAC(Graphics2D g2) {
-        // set color - check for an AC block
-        LayoutBlock b = getLayoutBlockAC();
-        if (b != null) {
-            g2.setColor(b.getBlockColor());
-        } else {
-            g2.setColor(defaultTrackColor);
-        }
+        // set color for an AC block
+        setColorForTrackBlock(g2, getLayoutBlockAC());
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
         // drawHidden AC segment
@@ -1688,12 +1683,7 @@ public class LevelXing extends LayoutTrack {
 
     private void drawXingBD(Graphics2D g2) {
         // set color - check for an BD block
-        LayoutBlock b = getLayoutBlockBD();
-        if (b != null) {
-            g2.setColor(b.getBlockColor());
-        } else {
-            g2.setColor(defaultTrackColor);
-        }
+        setColorForTrackBlock(g2, getLayoutBlockBD());
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
         // drawHidden BD segment

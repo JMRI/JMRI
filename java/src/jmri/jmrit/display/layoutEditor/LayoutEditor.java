@@ -37,9 +37,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -293,7 +295,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean panelChanged = false;
 
     //grid size in pixels
-    private int gridSize = 10;
+    private int gridSize1st = 10;
+    // secondary grid
+    private int gridSize2nd = 10;
 
     //size of point boxes
     private static final double SIZE = 3.0;
@@ -2510,27 +2514,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //specify grid square size
         //
-        JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
+        JMenuItem gridSizeItem = new JMenuItem(rb.getString("SetGridSizes") + "...");
         optionMenu.add(gridSizeItem);
         gridSizeItem.addActionListener((ActionEvent event) -> {
-            //prompt for new size
-            String newSize = (String) JOptionPane.showInputDialog(getTargetFrame(),
-                    rb.getString("NewGridSize") + ":",
-                    rb.getString("EditGridsizeMessageTitle"),
-                    JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(gridSize));
-            if (newSize != null) {
-                int gSize = Integer.parseInt(newSize);
-                if (gSize != gridSize) {
-                    if ((gSize < 5) || (gSize > 100)) {
-                        JOptionPane.showMessageDialog(null, rb.getString("GridSizeInvalid"), rb.getString("CannotEditGridSize"),
-                                JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        setGridSize(gSize);
-                        setDirty(true);
-                        repaint();
-                    }
-                }
-            }
+            enterGridSizes();
         });
 
         //
@@ -3381,20 +3368,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     private void selectZoomMenuItem(double zoomFactor) {
-        //this will put zoomFactor on 25% increments
-        //(so it will more likely match one of these values)
-        int newZoomFactor = ((int) (zoomFactor * 4)) * 25;
-
-        zoom025Item.setSelected(newZoomFactor == 25);
-        zoom05Item.setSelected(newZoomFactor == 50);
-        zoom075Item.setSelected(newZoomFactor == 75);
+        int newZoomFactor = (int) (zoomFactor * 100);
         noZoomItem.setSelected(newZoomFactor == 100);
-        zoom15Item.setSelected(newZoomFactor == 150);
         zoom20Item.setSelected(newZoomFactor == 200);
         zoom30Item.setSelected(newZoomFactor == 300);
         zoom40Item.setSelected(newZoomFactor == 400);
         zoom50Item.setSelected(newZoomFactor == 500);
         zoom60Item.setSelected(newZoomFactor == 600);
+
+        //this will put zoomFactor on 50% increments
+        //(so it will more likely match one of these values)
+        newZoomFactor = ((int) (zoomFactor * 2)) * 50;
+        zoom05Item.setSelected(newZoomFactor == 50);
+        zoom15Item.setSelected(newZoomFactor == 150);
+
+        //this will put zoomFactor on 25% increments
+        //(so it will more likely match one of these values)
+        zoom025Item.setSelected(newZoomFactor == 25);
+        zoom075Item.setSelected(newZoomFactor == 75);
     }   //selectZoomMenuItem
 
     //
@@ -3451,7 +3442,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double zoomToFit() {
         double result = getZoom();
 
+        // calculate a union of the bounds of everything on the layout
         Rectangle2D bounds = new Rectangle2D.Double();
+
         for (PositionableLabel o : backgroundImage) {
             if (bounds.isEmpty()) {
                 bounds = o.getBounds();
@@ -3595,31 +3588,41 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 bounds = bounds.createUnion(o.getBounds());
             }
         }
-        // expand by grid size
-        bounds = MathUtil.inset(bounds, -getGridSize());
+
+        // put a grid size margin around it
+        bounds = MathUtil.inset(bounds, -gridSize1st);
+
+        // don't let the orgin go negative
         bounds = new Rectangle2D.Double(
                 Math.max(bounds.getX(), 0), Math.max(bounds.getY(), 0),
                 bounds.getWidth(), bounds.getHeight());
 
+        // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
 
-        double scrollWidth = scrollPane.getWidth();
-        double scrollHeight = scrollPane.getHeight();
+        // calculate the horzontial and vertical scales
+        double scaleWidth = scrollPane.getWidth() / bounds.getWidth();
+        double scaleHeight = scrollPane.getHeight() / bounds.getHeight();
 
-        double scaleWidth = scrollWidth / bounds.getWidth();
-        double scaleHeight = scrollHeight / bounds.getHeight();
+        // use the smallest of the two as our new zoom
+        result = Math.min(scaleWidth, scaleHeight);
 
-        double newZoom = Math.min(scaleWidth, scaleHeight);
-
-        result = setZoom(newZoom);
+        // set the new zoom (return value may be different)
+        result = setZoom(result);
+        
+        // calculate new scroll bounds
         scrollBounds = MathUtil.scale(scrollBounds, result);
+
+        // don't let its orgin go negative
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
+
+        // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
         return result;
@@ -3736,18 +3739,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         repaint();
     }   //removeMarkers
 
+    /*****************************************\
+    |*  Dialog box to enter new track widths *|
+    \*****************************************/
+
     //operational variables for enter track width pane
     private JmriJFrame enterTrackWidthFrame = null;
-    private boolean enterWidthOpen = false;
+    private boolean enterTrackWidthOpen = false;
     private boolean trackWidthChange = false;
-    private JTextField sideWidthField = new JTextField(6);
-    private JTextField mainlineWidthField = new JTextField(6);
+    private JTextField sideTrackWidthField = new JTextField(6);
+    private JTextField mainlineTrackWidthField = new JTextField(6);
     private JButton trackWidthDone;
     private JButton trackWidthCancel;
 
     //display dialog for entering track widths
     protected void enterTrackWidth() {
-        if (enterWidthOpen) {
+        if (enterTrackWidthOpen) {
             enterTrackWidthFrame.setVisible(true);
             return;
         }
@@ -3765,8 +3772,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel3.setLayout(new FlowLayout());
             JLabel mainlineWidthLabel = new JLabel(rb.getString("MainlineTrackWidth"));
             panel3.add(mainlineWidthLabel);
-            panel3.add(mainlineWidthField);
-            mainlineWidthField.setToolTipText(rb.getString("MainlineTrackWidthHint"));
+            panel3.add(mainlineTrackWidthField);
+            mainlineTrackWidthField.setToolTipText(rb.getString("MainlineTrackWidthHint"));
             theContentPane.add(panel3);
 
             //setup side track width
@@ -3774,8 +3781,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel2.setLayout(new FlowLayout());
             JLabel sideWidthLabel = new JLabel(rb.getString("SideTrackWidth"));
             panel2.add(sideWidthLabel);
-            panel2.add(sideWidthField);
-            sideWidthField.setToolTipText(rb.getString("SideTrackWidthHint"));
+            panel2.add(sideTrackWidthField);
+            sideTrackWidthField.setToolTipText(rb.getString("SideTrackWidthHint"));
             theContentPane.add(panel2);
 
             //set up Done and Cancel buttons
@@ -3804,8 +3811,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //Set up for Entry of Track Widths
-        mainlineWidthField.setText("" + getMainlineTrackWidth());
-        sideWidthField.setText("" + getSideTrackWidth());
+        mainlineTrackWidthField.setText("" + getMainlineTrackWidth());
+        sideTrackWidthField.setText("" + getSideTrackWidth());
         enterTrackWidthFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -3815,7 +3822,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterTrackWidthFrame.pack();
         enterTrackWidthFrame.setVisible(true);
         trackWidthChange = false;
-        enterWidthOpen = true;
+        enterTrackWidthOpen = true;
     }   //enterTrackWidth
 
     void trackWidthDonePressed(ActionEvent a) {
@@ -3823,7 +3830,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         float wid = 0.0F;
 
         //get side track width
-        newWidth = sideWidthField.getText().trim();
+        newWidth = sideTrackWidthField.getText().trim();
         try {
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
@@ -3850,7 +3857,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //get mainline track width
-        newWidth = mainlineWidthField.getText().trim();
+        newWidth = mainlineTrackWidthField.getText().trim();
         try {
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
@@ -3874,7 +3881,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             //success - hide dialog and repaint if needed
-            enterWidthOpen = false;
+            enterTrackWidthOpen = false;
             enterTrackWidthFrame.setVisible(false);
             enterTrackWidthFrame.dispose();
             enterTrackWidthFrame = null;
@@ -3887,7 +3894,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //trackWidthDonePressed
 
     void trackWidthCancelPressed(ActionEvent a) {
-        enterWidthOpen = false;
+        enterTrackWidthOpen = false;
         enterTrackWidthFrame.setVisible(false);
         enterTrackWidthFrame.dispose();
         enterTrackWidthFrame = null;
@@ -3897,6 +3904,176 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
         }
     }   //trackWidthCancelPressed
+
+    /***************************************\
+    |*  Dialog box to enter new grid sizes *|
+    \***************************************/
+
+    //operational variables for enter grid sizes pane
+    private JmriJFrame enterGridSizesFrame = null;
+    private boolean enterGridSizesOpen = false;
+    private boolean gridSizesChange = false;
+    private JTextField primaryGridSizeField = new JTextField(6);
+    private JTextField secondaryGridSizeField = new JTextField(6);
+    private JButton gridSizesDone;
+    private JButton gridSizesCancel;
+
+    //display dialog for entering grid sizes
+    protected void enterGridSizes() {
+        if (enterGridSizesOpen) {
+            enterGridSizesFrame.setVisible(true);
+            return;
+        }
+
+        //Initialize if needed
+        if (enterGridSizesFrame == null) {
+            enterGridSizesFrame = new JmriJFrame(rb.getString("SetGridSizes"));
+            enterGridSizesFrame.addHelpMenu("package.jmri.jmrit.display.EnterGridSizes", true);
+            enterGridSizesFrame.setLocation(70, 30);
+            Container theContentPane = enterGridSizesFrame.getContentPane();
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
+
+            //setup primary grid sizes
+            JPanel panel3 = new JPanel();
+            panel3.setLayout(new FlowLayout());
+            JLabel primaryGridSIzeLabel = new JLabel(rb.getString("PrimaryGridSize"));
+            panel3.add(primaryGridSIzeLabel);
+            panel3.add(primaryGridSizeField);
+            primaryGridSizeField.setToolTipText(rb.getString("PrimaryGridSizeHint"));
+            theContentPane.add(panel3);
+
+            //setup side track width
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+            JLabel secondaryGridSizeLabel = new JLabel(rb.getString("SecondaryGridSize"));
+            panel2.add(secondaryGridSizeLabel);
+            panel2.add(secondaryGridSizeField);
+            secondaryGridSizeField.setToolTipText(rb.getString("SecondaryGridSizeHint"));
+            theContentPane.add(panel2);
+
+            //set up Done and Cancel buttons
+            JPanel panel5 = new JPanel();
+            panel5.setLayout(new FlowLayout());
+            panel5.add(gridSizesDone = new JButton(Bundle.getMessage("ButtonDone")));
+            gridSizesDone.addActionListener((ActionEvent event) -> {
+                gridSizesDonePressed(event);
+            });
+            gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            //make this button the default button (return or enter activates)
+            //Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(gridSizesDone);
+                rootPane.setDefaultButton(gridSizesDone);
+            });
+
+            //Cancel
+            panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            gridSizesCancel.addActionListener((ActionEvent event) -> {
+                gridSizesCancelPressed(event);
+            });
+            gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            theContentPane.add(panel5);
+        }
+
+        //Set up for Entry of Track Widths
+        primaryGridSizeField.setText("" + gridSize1st);
+        secondaryGridSizeField.setText("" + gridSize2nd);
+        enterGridSizesFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                gridSizesCancelPressed(null);
+            }
+        });
+        enterGridSizesFrame.pack();
+        enterGridSizesFrame.setVisible(true);
+        gridSizesChange = false;
+        enterGridSizesOpen = true;
+    }   //enterGridSizes
+
+    void gridSizesDonePressed(ActionEvent a) {
+        String newGridSize = "";
+        float siz = 0.0F;
+
+        //get secondary grid size
+        newGridSize = secondaryGridSizeField.getText().trim();
+        try {
+            siz = Float.parseFloat(newGridSize);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame, rb.getString("EntryError") + ": "
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if ((siz < 5.0) || (siz > 100.0)) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame,
+                    java.text.MessageFormat.format(rb.getString("Error2a"),
+                            new Object[]{" " + siz + " "}),
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if (gridSize2nd != siz) {
+            gridSize2nd = (int) siz;
+            gridSizesChange = true;
+        }
+
+        //get mainline track width
+        newGridSize = primaryGridSizeField.getText().trim();
+        try {
+            siz = Float.parseFloat(newGridSize);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame, rb.getString("EntryError") + ": "
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        if ((siz < 5) || (siz > 100.0)) {
+            JOptionPane.showMessageDialog(enterGridSizesFrame,
+                    java.text.MessageFormat.format(rb.getString("Error2a"),
+                            new Object[]{" " + siz + " "}),
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (gridSize1st != siz) {
+                gridSize1st = (int) siz;
+                gridSizesChange = true;
+            }
+
+            //success - hide dialog and repaint if needed
+            enterGridSizesOpen = false;
+            enterGridSizesFrame.setVisible(false);
+            enterGridSizesFrame.dispose();
+            enterGridSizesFrame = null;
+
+            if (gridSizesChange) {
+                repaint();
+                setDirty(true);
+            }
+        }
+    }   //gridSizesDonePressed
+
+    void gridSizesCancelPressed(ActionEvent a) {
+        enterGridSizesOpen = false;
+        enterGridSizesFrame.setVisible(false);
+        enterGridSizesFrame.dispose();
+        enterGridSizesFrame = null;
+
+        if (gridSizesChange) {
+            repaint();
+            setDirty(true);
+        }
+    }   //gridSizesCancelPressed
+
+    /******************************************\
+    |*  Dialog box to enter new reporter info *|
+    \******************************************/
 
     //operational variables for enter reporter pane
     private JmriJFrame enterReporterFrame = null;
@@ -4080,6 +4257,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterReporterFrame = null;
         repaint();
     }   //reporterCancelPressed
+
+    /*************************************************************\
+    |*  Dialog box to enter scale / translate track diagram info *|
+    \*************************************************************/
 
     //operational variables for scale/translate track diagram pane
     private JmriJFrame scaleTrackDiagramFrame = null;
@@ -4360,6 +4541,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         return true;
     }   //scaleTrack
+
+    /********************************************\
+    |*  Dialog box to enter move selection info *|
+    \********************************************/
 
     //operational variables for move selection pane
     private JmriJFrame moveSelectionFrame = null;
@@ -5298,30 +5483,31 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         thisPanel.requestFocusInWindow();
     }   //mousePressed
 
-    // this is a method to iterate over a list of items
+    // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
-    private static boolean forEachItemInListDo(
-            List listOfObjects,
+    // all matching items are then added to the resulting ArrayList
+    private static List forEachItemInListOfListsDo(
+            List<List> listOfListsOfObjects,
             Predicate<Object> tester) {
-        boolean result = false;
-        for (Object object : listOfObjects) {
-            if (tester.test(object)) {
-                result = true;
-                break;
-            }
+        List result = new ArrayList();
+        for (List<Object> listOfObjects : listOfListsOfObjects) {
+            List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
+            result.addAll(l);
         }
         return result;
     }
 
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
-    private static boolean forEachItemInListOfListsDo(
+    // and return the first one that matches
+    private static Object findFirstMatchingItemInListOfLists(
             List<List> listOfListsOfObjects,
             Predicate<Object> tester) {
-        boolean result = false;
+        Object result = null;
         for (List listOfObjects : listOfListsOfObjects) {
-            result = forEachItemInListDo(listOfObjects, tester);
-            if (result) {
+            Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
+            if (opt.isPresent()) {
+                result = opt.get();
                 break;
             }
         }
@@ -5334,29 +5520,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         listOfLists.add(slipList);
         listOfLists.add(turntableList);
 
-        Boolean found = forEachItemInListOfListsDo(listOfLists,
+        Object obj = findFirstMatchingItemInListOfLists(listOfLists,
             (Object o) -> {
                 LayoutTrack layoutTrack = (LayoutTrack) o;
                 selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-                boolean result1 = (LayoutTrack.NONE != selectedPointType);
-                if (result1) {
-                    if (layoutTrack instanceof LayoutTurntable) {
-                        if (layoutTrack.isConnectionType(selectedPointType)) {
-                            try {
-                                selectedObject = layoutTrack.getConnection(selectedPointType);
-                            } catch (jmri.JmriException e) {
-                                // nothing to see here... move along...
-                            }
-                        } else {
-                            selectedPointType = LayoutTrack.NONE;
-                        }
-                    } else {
-                        selectedObject = layoutTrack;
-                    }
-                }
-                return result1;
+                return (LayoutTrack.NONE != selectedPointType);
             }
         );
+        if (null != obj) {
+            if (obj instanceof LayoutTurntable) {
+                LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
+                if (layoutTurntable.isConnectionType(selectedPointType)) {
+                    try {
+                        selectedObject = layoutTurntable.getConnection(selectedPointType);
+                    } catch (jmri.JmriException e) {
+                        // this should never happed because .isConnectionType will catch
+                        // invalid connection types before .getConnection is called
+                    }
+                } else {
+                    selectedPointType = LayoutTrack.NONE;
+                }
+            } else {
+                selectedObject = obj;
+            }
+        }
     }   // checkControls
 
     // optional parameter avoid
@@ -5381,21 +5568,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         listOfLists.add(turntableList);
         listOfLists.add(trackList);
 
-        result = forEachItemInListOfListsDo(listOfLists,
-                (Object o) -> {
-                    boolean result1 = false;
-                    LayoutTrack layoutTrack = (LayoutTrack) o;
-                    if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
-                        foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
-                        result1 = (LayoutTrack.NONE != foundPointType);
-                        if (result1) {
-                            foundObject = layoutTrack;
-                            foundLocation = layoutTrack.getCoordsForConnectionType(foundPointType);
-                            foundNeedsConnect = layoutTrack.isDisconnected(foundPointType);
-                        }
-                    }
-                    return result1;
-                });
+        foundPointType = LayoutTrack.NONE;
+        Object obj = findFirstMatchingItemInListOfLists(listOfLists,
+            (Object o) -> {
+                LayoutTrack layoutTrack = (LayoutTrack) o;
+                if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
+                    foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
+                }
+                return (LayoutTrack.NONE != foundPointType);
+            }
+        );
+        if (null != obj) {
+            LayoutTrack layoutTrack = (LayoutTrack) obj;
+            foundObject = layoutTrack;
+            foundLocation = layoutTrack.getCoordsForConnectionType(foundPointType);
+            foundNeedsConnect = layoutTrack.isDisconnected(foundPointType);
+            result = true;
+        }
         return result;
     }   //checkSelect
 
@@ -5612,7 +5801,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
                 if (snapToGridOnAdd) {
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize);
+                    // this snaps the current point to the grid
+                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                 }
@@ -7515,7 +7705,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
                 //moving a point
                 if (snapToGridOnMove) {
-                    newPos = MathUtil.granulize(newPos, gridSize);
+                    // this snaps newPos to the grid
+                    newPos = MathUtil.granulize(newPos, gridSize1st);
                 }
 
                 if ((_pointSelection != null) || (_turntableSelection != null) || (_xingSelection != null)
@@ -10042,27 +10233,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //getScroll
 
     public int setGridSize(int newSize) {
-        gridSize = newSize;
-
-        return gridSize;
+        gridSize1st = newSize;
+        return gridSize1st;
     }   //setGridSize
 
     public int getGridSize() {
-        int gs = gridSize;
+        return gridSize1st;
+    }   //getGridSize
 
-        return gs;
+    public int setGridSize2nd(int newSize) {
+        gridSize2nd = newSize;
+        return gridSize2nd;
+    }   //setGridSize
+
+    public int getGridSize2nd() {
+        return gridSize2nd;
     }   //getGridSize
 
     public int getMainlineTrackWidth() {
-        int wid = (int) mainlineTrackWidth;
-
-        return wid;
+        return (int) mainlineTrackWidth;
     }   //getMainlineTrackWidth
 
     public int getSideTrackWidth() {
-        int wid = (int) sideTrackWidth;
-
-        return wid;
+        return (int) sideTrackWidth;
     }   //getSideTrackWidth
 
     public double getXScale() {
@@ -10588,9 +10781,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     boolean main = true;
     float trackWidth = sideTrackWidth;
 
-    //had to make this public so the LayoutTrack classes could access it
+    //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
-    public float setTrackStrokeWidth(Graphics2D g2, boolean need) {
+    protected float setTrackStrokeWidth(Graphics2D g2, boolean need) {
         if (main != need) {
             main = need;
 
@@ -10601,7 +10794,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return trackWidth;
     }   //setTrackStrokeWidth
 
-    protected void drawTurnouts(Graphics2D g2) {
+    private void drawTurnouts(Graphics2D g2) {
         // loop over all turnouts
         for (LayoutTurnout t : turnoutList) {
             if (!t.isHidden() || isEditable()) {
@@ -10626,10 +10819,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawSlips
 
     private void drawTurnoutControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setColor(turnoutCircleColor);
         // loop over all turnouts
         for (LayoutTurnout t : turnoutList) {
-            g2.setColor(turnoutCircleColor);
-
             if (!(t.isHidden() && !isEditable())) {
                 t.drawControls(g2);
             }
@@ -10637,9 +10830,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawTurnoutControls
 
     private void drawSlipControls(Graphics2D g2) {
-        // loop over all slips
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
-
+        // loop over all slips
         for (LayoutSlip sl : slipList) {
             if (!(sl.isHidden() && !isEditable())) {
                 sl.drawControls(g2);
@@ -10688,18 +10881,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawHiddenTrackSegments(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        main = false;
-        g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
+        setTrackStrokeWidth(g2, false);
         for (TrackSegment ts : trackList) {
             if (ts.isHidden()) {
                 ts.drawHidden(g2);
-                setTrackStrokeWidth(g2, !main);
             }
         }
     }   //drawHiddenTrackSegments
 
     private void drawDashedTrackSegments(Graphics2D g2, boolean mainline) {
+        setTrackStrokeWidth(g2, mainline);
         for (TrackSegment ts : trackList) {
             ts.drawDashed(g2, mainline);
         }
@@ -10762,15 +10953,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawBlockContentsRects
 
     private void drawPanelGrid(Graphics2D g2) {
-        int wideMod = gridSize * 10;
-        int wideMin = gridSize / 2;
+        int wideMod = gridSize1st * gridSize2nd;
+        int wideMin = gridSize1st / 2;
 
         Dimension dim = getSize();
         double maxX = dim.width;
         double maxY = dim.height;
 
-        Point2D startPt = new Point2D.Double(0.0, gridSize);
-        Point2D stopPt = new Point2D.Double(maxX, gridSize);
+        Point2D startPt = new Point2D.Double(0.0, gridSize1st);
+        Point2D stopPt = new Point2D.Double(maxX, gridSize1st);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -10778,7 +10969,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(narrow);
 
         //draw horizontal lines
-        double pix = gridSize;
+        double pix = gridSize1st;
 
         while (pix < maxY) {
             startPt.setLocation(0.0, pix);
@@ -10791,11 +10982,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize;
+            pix += gridSize1st;
         }
 
         //draw vertical lines
-        pix = gridSize;
+        pix = gridSize1st;
 
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
@@ -10808,7 +10999,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize;
+            pix += gridSize1st;
         }
     }   //drawPanelGrid
 
@@ -10979,7 +11170,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public String toString() {
-        return getLayoutName();
+        return "LayoutEditor: " + getLayoutName();
     }
 
     @Override
