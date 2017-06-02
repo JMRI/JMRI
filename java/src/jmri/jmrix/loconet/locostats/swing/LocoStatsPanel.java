@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locostats.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
@@ -244,6 +245,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
      * @param o a LocoNetStatus object
      */
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "GUI elements are created such that cast to JmriJFrame this is accurate")
     public void notifyChangedInterfaceStatus(Object o) {
         log.debug("Update is being handled:" +o.toString());  // NOI18N
         if (!updateRequestPending) {
@@ -301,8 +303,8 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             pr2Panel.setVisible(false);
             ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
+            }
         }
-    }
 
     private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }
