@@ -154,7 +154,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             root = null;
         }
         if (root != null) {
-            log.info("Found Warrant preferences file: {}", _fileName);
+//            log.info("Found Warrant preferences file: {}", _fileName);
             loadLayoutParams(root.getChild(LAYOUT_PARAMS));
             if (!loadSpeedMap(root.getChild(SPEED_MAP_PARAMS))) {
                 loadSpeedMapFromOldXml();
@@ -281,7 +281,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             map.put(name, speed);
         }
-        this.setSpeedNames(map);
+        this.setSpeedNames(map);    // no firePropertyChange
 
         rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
@@ -294,7 +294,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String speed = list.get(i).getText();
             heads.put(name, speed);
         }
-        this.setAppearances(heads); // no firePropertyChang
+        this.setAppearances(heads); // no firePropertyChange
 
         // Now set SignalSpeedMap members.
         SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
