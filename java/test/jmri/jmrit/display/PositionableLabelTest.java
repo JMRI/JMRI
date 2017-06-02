@@ -240,6 +240,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             return;
         }
 
+        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
+            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            return;
+        }
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.

@@ -521,7 +521,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
