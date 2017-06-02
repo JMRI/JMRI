@@ -52,7 +52,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public String[] getCommandStationListWithStandaloneLN() {
         String[] result = new String[commandStationNames.length + 1];
-        for (int i = 0 ; i < result.length; ++i) {
+        for (int i = 0 ; i < result.length-1; ++i) {
             result[i] = commandStationNames[i];
         }
         result[commandStationNames.length] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
