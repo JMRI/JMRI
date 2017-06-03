@@ -25,7 +25,11 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Always use flow control, not considered a user-settable option
+     * Sets up the serial port characteristics.  Always uses flow control, which is
+     * not considered a user-settable option.  Sets the PR3 for the appropriate
+     * operating mode, based on the selected "command station type".
+     * 
+     * @param activeSerialPort - the port to be configured
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
@@ -127,6 +131,8 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     /**
      * Get an array of valid baud rates.
+     * 
+     * @return String[] containing the single valid baud rate, "57,600".
      */
     @Override
     public String[] validBaudRates() {
@@ -136,6 +142,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
+     * @return int[] containing the single valud baud rate, 57600.
      */
     @Override
     public int[] validBaudNumber() {
@@ -143,8 +150,14 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
+    
     /**
-     * The PR3 can be used in numerous modes, so handle that
+     * The PR3 can be used as a "Standalone Programmer", or with various LocoNet 
+     * command stations, or as an interface to a "Standalone LocoNet".  Provide those
+     * options.
+     * 
+     * @return an array of strings containing the various command station names and
+     *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length + 2];
