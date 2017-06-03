@@ -628,7 +628,6 @@
     </target>
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -686,17 +685,6 @@
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${test}"/>
         </antcall>
-    </target>
-
-
-    <target name="rmic"
-            description="build RMI stubs and compile">
-        <!-- Run rmic on specified classes -->
-        <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
-              base="${target}"
-              stubversion="compat">
-            <classpath refid="project.class.path"/>
-        </rmic>
     </target>
 
     <!-- end of program build targets -->
@@ -820,8 +808,6 @@
         <echo>Launch normally (no debugger support)</echo>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy"
-                         value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -854,8 +840,6 @@
         <property name="jdpa.suspend" value="y"/>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy"
-                         value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path"
@@ -985,8 +969,6 @@
             depends="debug, runtime-library-selection">
         <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy"
-                         value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -1037,7 +1019,6 @@
               dir="."
               fork="yes" >
             <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1060,7 +1041,6 @@
             dir="."
                 fork="yes" >
             <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1085,7 +1065,6 @@
           dir="."
           fork="yes" >
             <classpath refid="test.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1191,7 +1170,6 @@
           dir="."
           fork="yes" >
             <classpath refid="test.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1206,7 +1184,6 @@
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
         <jacoco:coverage destfile="jacoco.exec">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1271,7 +1248,6 @@
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1293,7 +1269,6 @@
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1319,7 +1294,6 @@
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1346,7 +1320,6 @@
           dir="."
           fork="yes" >
             <classpath refid="test.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1362,7 +1335,6 @@
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
 
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1462,7 +1434,7 @@
 
     <target name="jar"
             description="create working jar file with current contents"
-            depends="debug, rmic">
+            depends="debug">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
           <classpath refid="project.class.path" />
         </manifestclasspath>
@@ -1495,7 +1467,7 @@
 
     <target name="jar-resources"
             description="package all resources as a jar file"
-            depends="debug, rmic">
+            depends="debug">
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
              compress="true"
@@ -1824,11 +1796,11 @@
 
     <target name="dist"
             description="create a distribution jar file without tests"
-            depends="clean, init, debug, rmic, jar"/>
+            depends="clean, init, debug, jar"/>
 
     <target name="dist-debug"
             description="create a distribution jar file including tests"
-            depends="clean, init, debug, rmic, jar"/>
+            depends="clean, init, debug, jar"/>
 
     <taskdef name="findbugs"
              classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
@@ -1965,7 +1937,6 @@
             <path>
                 <pathelement path="${runtime.class.jars}"/>
             </path>
-            <fileset file="${libdir}/security.policy"/>
             <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib/windows"/>
@@ -2008,7 +1979,6 @@
             <path>
                 <pathelement path="${runtime.class.jars}"/>
             </path>
-            <fileset file="${libdir}/security.policy"/>
             <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
@@ -2081,7 +2051,6 @@
             <path>
                 <pathelement path="${runtime.class.jars}"/>
             </path>
-            <fileset file="${libdir}/security.policy"/>
             <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib/linux"/>

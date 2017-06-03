@@ -8,7 +8,7 @@ package jmri.jmrix.zimo;
  * the Mx1Listener interface can register here to receive incoming MX-1 messages
  * as events.
  * <P>
- * The jmri.jrmix.zimo.Mx1TrafficManager provides the first implementation of
+ * The jmri.jmrix.zimo.Mx1TrafficManager provides the first implementation of
  * this interface.
  * <P>
  * How do you locate an implemenation of this interface? That's an interesting

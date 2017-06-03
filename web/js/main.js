@@ -50,15 +50,15 @@ function getNetworkServices() {
         url: "/json/networkServices",
         data: {},
         success: function (data) {
-            // show all hidden when service is available elements 
+            // show all hidden when service is available elements
             $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
-            $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
+            $(".hidden-jmri_jmri-loconetovertcp").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-simple").addClass("show").removeClass("hidden");
             $(".hidden-jmri_srcp").addClass("show").removeClass("hidden");
             $(".hidden-jmri_withrottle").addClass("show").removeClass("hidden");
-            // hide all visible when service is available elements 
+            // hide all visible when service is available elements
             $(".visible-jmri_jmri-json").addClass("hidden").removeClass("show");
-            $(".visible-jmri_jmri-locormi").addClass("hidden").removeClass("show");
+            $(".visible-jmri_jmri-loconetovertcp").addClass("hidden").removeClass("show");
             $(".visible-jmri_jmri-simple").addClass("hidden").removeClass("show");
             $(".visible-jmri_srcp").addClass("hidden").removeClass("show");
             $(".visible-jmri_withrottle").addClass("hidden").removeClass("show");
@@ -293,7 +293,7 @@ $(document).ready(function () {
             nbJmri.getPower();
         },
     	hello: function(data) {
-    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
+    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket
         },
         rosterGroups: function (name, data) {
             getRosterGroups(); // refresh the roster groups in menu

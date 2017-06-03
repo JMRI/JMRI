@@ -139,9 +139,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Configure the common managers for Mx1 connections. This puts the common
-     * manager config in one place. This method is static so that it can be
-     * referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * manager config in one place.
      */
     public void configureManagers() {
 

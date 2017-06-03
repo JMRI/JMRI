@@ -307,8 +307,6 @@
                     <excludes>
                         <!-- ignore until #3340 is merged -->
                         <exclude>jmri.jmrix.nce.**.Nce*</exclude>
-                        <!-- ignore until #3492 is resolved -->
-                        <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
@@ -330,7 +328,7 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <argLine>@{argLine}</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <forkCount>1</forkCount>

@@ -89,7 +89,7 @@
 
         <li>Press the "Next" button if the local destination is
         acceptable to you.</li>
-        
+
         <li>The download will now happen. It might take a while.</li>
       </ol>
 
@@ -193,11 +193,10 @@
           <pre>
 -Xms10m
 -Xmx300m
--Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
 </pre>If you're using a 32 bit windows system add the library path:
           <pre>
--Djava.library.path=.;lib;lib/windows/x86 
+-Djava.library.path=.;lib;lib/windows/x86
 </pre>
 If you're using a 64 bit windows system add the library path:
           <pre>

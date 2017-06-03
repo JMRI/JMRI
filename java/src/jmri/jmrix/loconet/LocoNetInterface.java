@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  * the LocoNetListener interface can register here to receive incoming LocoNet
  * messages as events.
  * <P>
- * The jmri.jrmix.loconet.LnTrafficManager provides the first implementation of
+ * The jmri.jmrix.loconet.LnTrafficManager provides the first implementation of
  * this interface.
  * <P>
  * How do you locate an implemenation of this interface? That's an interesting

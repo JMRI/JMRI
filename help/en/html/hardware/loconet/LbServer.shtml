@@ -10,7 +10,7 @@
   via LbServer</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content=
-  "Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+  "Digitrax Chief DCS Command Station LocoNet LocoNetOverTCP Server LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,17 +28,18 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Hardware Support: Connecting Multiple Computers to
-      LocoNet&reg; via LbServer</h1>
+      LocoNet&reg; via LocoNetOverTCP Server</h1>
 
       <p>This page describes how to configure multiple JMRI nodes
       to connect as clients to a single <a href=
       "http://loconetovertcp.sourceforge.net">LocoNetOverTCP
       LbServer</a>, which in turn is connected to the layout.</p>
 
-      <p>This connection, called LocoNetOverTCP, uses a separate
-      non-Java server process, LbServer, that communicates using
-      plain ASCII String messages over TCP/IP sockets, allowing
-      non-Java nodes to also share the one LocoBuffer.</p>
+      <p>This connection, called LocoNetOverTCP, uses any server
+          process that communicates LocoNet messages using plain
+          ASCII String messages over TCP/IP sockets, allowing
+          both other JMRI and non-Java nodes to also share the one
+          LocoBuffer.</p>
 
       <h2>Setup for JMRI LocoNetOverTCP</h2>One computer runs the
       LbServer program that connects to the LocoBuffer and acts as
@@ -78,8 +79,8 @@
         remote computers.</li>
 
         <li>If the computers are all close to the LocoNet, e.g.
-        acting as local control panels, you don't really need
-        LocoNet Server to do this. You can instead connect each of
+        acting as local control panels, you don't really need a
+        LocoNetOverTCP Server to do this. You can instead connect each of
         the computers to the LocoNet via their own LocoBuffer or
         LocoBuffer-II (or MS-100, though this is not recommended)
         and have them individually take part in the LocoNet

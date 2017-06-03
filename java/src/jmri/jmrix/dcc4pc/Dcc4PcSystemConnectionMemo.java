@@ -105,9 +105,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Configure the common managers for Dcc4Pc connections. This puts the
-     * common manager config in one place. This method is static so that it can
-     * be referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * common manager config in one place.
      */
     public void configureManagers() {
 

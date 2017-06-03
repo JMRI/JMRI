@@ -184,16 +184,12 @@
       <p><img src="images/Main_Loconet15.png" alt="Edit soumd"
       height="93" width="248"></p>
 
-      <p><strong>Start LocoNet Server</strong></p>
-
-      <p>Starts the LocoNet server.</p>
-
       <p><strong>Start LocoNet over TCP Server</strong></p>
 
       <p>Opens the <strong>LocoNetOver Tcp Server</strong>
       dialog.</p>
 
-      <p><img src="images/Main_Loconet09.png" alt="LocoNet server"
+      <p><img src="images/Main_Loconet09.png" alt="LocoNetOverTCP server"
       border="4" height="120" width="361"></p>
 
       <p>.</p>

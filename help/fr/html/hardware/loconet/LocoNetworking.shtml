@@ -72,9 +72,6 @@
       externe qui sera plus simple</p>
 
       <ul>
-        <li><a href="LocoNetServer.shtml">Comment configurer le
-        client LocoNet/Serveur</a></li>
-
         <li><a href="LbServer.shtml">Comment mettre en place
         LocoNetOverTCP LbServer</a></li>
       </ul>

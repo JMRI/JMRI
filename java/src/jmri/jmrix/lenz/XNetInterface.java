@@ -8,7 +8,7 @@ package jmri.jmrix.lenz;
  * the XNetListener interface can register here to receive incoming XNet
  * messages as events.
  * <P>
- * The jmri.jrmix.lenz.XNetTrafficControler provides the first implementation of
+ * The jmri.jmrix.lenz.XNetTrafficControler provides the first implementation of
  * this interface.
  * <P>
  * How do you locate an implemenation of this interface? That's an interesting

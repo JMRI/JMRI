@@ -10,13 +10,13 @@ import org.junit.Test;
  *
  * Description: tests for the ConnectionConfigXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
+    public void testCtor() {
+        Assert.assertNotNull("ConnectionConfigXml constructor", new ConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -31,4 +31,3 @@ public class ConnectionConfigXmlTest {
     }
 
 }
-

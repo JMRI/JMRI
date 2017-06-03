@@ -1834,8 +1834,6 @@
 
 <mapID target="html.apps.DecoderPro.Roster" url="html/apps/DecoderPro/Roster.shtml"/>
 
-<mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml"/>
-
 <mapID target="package.jmri.jmrix.loconet.sdfeditor.EditorFrame" url="package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_XpressNet_LI101" url="manual/DecoderPro3/Main_XpressNet.shtml#LI101"/>

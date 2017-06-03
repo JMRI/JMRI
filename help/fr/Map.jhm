@@ -1500,8 +1500,6 @@
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_transits" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits"/>
 
-<mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml"/>
-
 <mapID target="html.tools.throttle.ThrottleChapter1" url="html/tools/throttle/ThrottleChapter1.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.sdfeditor.EditorFrame" url="package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml"/>
