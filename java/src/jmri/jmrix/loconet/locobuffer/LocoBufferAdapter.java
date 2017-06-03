@@ -265,6 +265,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     /**
      * Local method to do specific configuration, overridden in class
+     * @throws UnsupportedCommOperationException Usually if the hardware isn't present or capable
      */
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
