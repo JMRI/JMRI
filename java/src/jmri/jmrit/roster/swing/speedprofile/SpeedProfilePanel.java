@@ -673,7 +673,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 if (table !=null) {
                     table.dispose();
                 }
-                table = new SpeedProfileTable(re);
+                table = new SpeedProfileTable(re.getSpeedProfile(), re.getId());
                 table.setVisible(true);
                 return;
             }            

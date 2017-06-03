@@ -33,7 +33,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.jmrit.roster.Roster;
@@ -69,7 +68,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected RouteLocation _destination = new RouteLocation(Location.DEST);
     protected RouteLocation _via = new RouteLocation(Location.VIA);
     protected RouteLocation _avoid = new RouteLocation(Location.AVOID);
-    RouteLocation _focusedField;
+    protected RouteLocation _focusedField;
+
+    protected SpeedUtil _speedUtil;
 
     static int STRUT_SIZE = 10;
     private int _depth = 20;
@@ -82,8 +83,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private RouteFinder _routeFinder;
     private final JTextField _searchDepth = new JTextField(5);
 
-    private RosterEntry _train;
-    private String _trainId = null;
+//    private RosterEntry _train;
+//    private String _trainId = null;
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
@@ -98,6 +99,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected WarrantRoute() {
         super(false, true);
         _routeModel = new RouteTableModel();
+        _speedUtil = new SpeedUtil(null);
         getRoster();
         WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
@@ -220,84 +222,41 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        if (_train != null) {
-            RosterSpeedProfile speedProfile = _train.getSpeedProfile();
-            if (speedProfile != null) {
-                _spTable = new SpeedProfileTable(_train);
-                _spTable.setVisible(true);
-                return;
-            }            
+        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
+        if (speedProfile != null) {
+            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getTrainId());
+            _spTable.setVisible(true);
+            return;
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }
 
-    /**
-     * Set the roster entry, if it exists, or train id string if not. i.e. set
-     * enough info to get a dccLocoAddress
-     *
-     * @param name may be Rroster Id or address
-     * @return Error message, if any
-     */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        _train = Roster.getDefault().entryFromTitle(name);
-        if (_train == null) {
-            if (name == null || name.trim().length() == 0) {
-                _trainId = null;
-                setTrainName(null);
-                setAddress(null);
-                return Bundle.getMessage("NoLoco");
-            }
-            int index = name.indexOf('(');
-            String numId;
-            if (index >= 0) {
-                numId = name.substring(0, index);
-            } else {
-                Character ch = name.charAt(name.length() - 1);
-                if (!Character.isDigit(ch)) {
-                    numId = name.substring(0, name.length() - 1);
+        if (name == null) {
+            setTrainName(null);
+            _dccNumBox.setText(null);
+            _rosterBox.setSelectedIndex(0);            
+            return Bundle.getMessage("NoLoco");
+        }
+        _rosterBox.setSelectedIndex(0);
+        if (_speedUtil.setDccAddress(name)) {
+            _dccNumBox.setText(_speedUtil.getDccAddress().toString());
+            _rosterBox.setSelectedItem(name);
+            if (_trainNameBox.getText() == null) {
+                if (_speedUtil.getRosterEntry()!=null) {
+                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
                 } else {
-                    numId = name;
+                    setTrainName(_speedUtil.getDccAddress().toString()); 
                 }
             }
-            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
-            if (l.size() > 0) {
-                _train = l.get(0);
-            } else {
-                _train = null;
-                try {
-                    int num = Integer.parseInt(numId);
-                    boolean isLong = (name.charAt(0) == '0' || num > 255);  // leading zero means long
-                    _trainId = num + "(" + (isLong ? 'L' : 'S') + ")";
-                } catch (NumberFormatException e) {
-                    _trainId = null;
-                    return Bundle.getMessage("BadDccAddress", name);
-                }
-            }
-        }
-        if (_train != null) {
-            _trainId = _train.getId();
-            _rosterBox.setSelectedItem(_train.getId());
-            _dccNumBox.setText(_train.getDccLocoAddress().toString());
         } else {
-            _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-            _dccNumBox.setText(_trainId);
-        }
-        String n = _trainNameBox.getText();
-        if (n == null || n.length() == 0) {
-            if (_train != null) {
-                _trainNameBox.setText(_train.getRoadNumber());
-            } else {
-                _trainNameBox.setText(_trainId);
-            }
+            _dccNumBox.setText(null);
+            return Bundle.getMessage("NoLoco");            
         }
         return null;
-    }
-
-    protected RosterEntry getTrain() {
-        return _train;
     }
 
     protected void setTrainName(String name) {
@@ -323,46 +282,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return _dccNumBox.getText();
     }
 
-    protected String getTrainId() {
-        return _trainId;
-    }
-
-    protected DccLocoAddress getLocoAddress() {
-        if (_train != null) {
-            return _train.getDccLocoAddress();
-        }
-        String address = getAddress();
-        if (address == null) {
-            address = _trainId;
-        }
-        if (address != null) {
-            String numId;
-            int index = address.indexOf('(');
-            if (index >= 0) {
-                numId = address.substring(0, index);
-            } else {
-                numId = address;
-            }
-            boolean isLong = true;
-            if ((index + 1) < address.length()
-                    && (address.charAt(index + 1) == 'S' || address.charAt(index + 1) == 's')) {
-                isLong = false;
-            }
-            try {
-                int num = Integer.parseInt(numId);
-                return new DccLocoAddress(num, isLong);
-            } catch (NumberFormatException e) {
-                return null;
-            }
+    protected String checkLocoAddress() {
+        if (_speedUtil.getDccAddress() == null) {
+            return Bundle.getMessage("BadDccAddress", _dccNumBox.getText());
         }
         return null;
-    }
-
-    protected String checkLocoAddress() {
-        if (_train != null || _trainId != null) {
-            return null;
-        }
-        return setTrainInfo(_dccNumBox.getText());
     }
 
     /* ****************************** route info *******************/

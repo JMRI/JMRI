@@ -19,8 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 /**
@@ -35,18 +33,18 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
     float scale;
     JLabel description;
     String rosterId;
-    RosterEntry re;
+    RosterSpeedProfile speedProfile;
 
-    public SpeedProfileTable(RosterEntry rosterEntry) {
+    public SpeedProfileTable(RosterSpeedProfile sp, String id) {
         super(false, true);
-        re = rosterEntry;
-        rosterId = re.getId();
+        speedProfile = sp;
+        rosterId = id;
         setTitle(Bundle.getMessage("SpeedTable", rosterId));
         getContentPane().setLayout(new BorderLayout(15,15));
         
         interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
-        SpeedTableModel model = new SpeedTableModel(re.getSpeedProfile());
+        SpeedTableModel model = new SpeedTableModel(speedProfile);
         JTable table = new JTable(model);
         table.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent ke) {
@@ -140,10 +138,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                     Bundle.getMessage("DeleteRow", step), Bundle.getMessage("SpeedTable", rosterId),
                     JOptionPane.YES_NO_OPTION)) {
                 model.speedArray.remove(entry);
-                re.getSpeedProfile().deleteStep(entry.getKey());
+                speedProfile.deleteStep(entry.getKey());
                 model.fireTableDataChanged();
-                re.updateFile();
-                Roster.getDefault().writeRoster();
+//                re.updateFile();
+//                Roster.getDefault().writeRoster();
             }
         }
     }

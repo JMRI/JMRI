@@ -36,6 +36,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _waitForSensor = false; // wait for sensor event
     private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET = false; // Need to delay _runOnET from the block that set it
+    private boolean _isForward = true;
     private int _syncIdx;           // block order index of current command
     protected DccThrottle _throttle;
     private final Warrant _warrant;
@@ -47,8 +48,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _atHalt = false;
     private boolean _atClear = false;
     private SpeedUtil _speedUtil;
-//    SignalSpeedMap _speedMap;
-//    RosterSpeedProfile _speedProfile;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -60,14 +59,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _throttle = throttle;
         _syncIdx = -1;
         _waitForSensor = false;
-//        _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
-/*        jmri.jmrit.roster.RosterEntry ent = _speedUtil.getRosterEntry();
-        if (ent != null) {
-            _speedProfile = ent.getSpeedProfile();
-        }
-        if (_speedProfile == null) {
-            log.warn("RosterSpeedProfile not found. Using default ThrottleFactor " + _speedMap.getDefaultThrottleFactor());
-        }*/
     }
 
     int cmdBlockIdx = 0;
@@ -205,7 +196,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         if (!_halt && !_waitForClear) {
                             float speed = Float.parseFloat(ts.getValue());
                             _normalSpeed = speed;
-                            float speedMod = _speedUtil.modifySpeed(speed, _speedType);
+                            float speedMod = _speedUtil.modifySpeed(speed, _speedType, _isForward);
                             if (Math.abs(speed - speedMod) > .0001f) {
                                 _timeRatio = speed / speedMod;
                             } else {
@@ -219,8 +210,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     int step = Integer.parseInt(ts.getValue());
                     setSpeedStepMode(step);
                 } else if (command.equals("FORWARD")) {
-                    boolean isForward = Boolean.parseBoolean(ts.getValue());
-                    _throttle.setIsForward(isForward);
+                    _isForward = Boolean.parseBoolean(ts.getValue());
+                    _throttle.setIsForward(_isForward);
                 } else if (command.startsWith("F")) {
                     int cmdNum = Integer.parseInt(command.substring(1));
                     boolean isTrue = Boolean.parseBoolean(ts.getValue());
@@ -304,7 +295,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     protected void setRunOnET(Boolean set) {
         if (log.isDebugEnabled()) log.debug("setRunOnET {} command #{} warrant {}", set, _idxCurrentCommand, _warrant.getDisplayName());
-//        checkHalt();
         _setRunOnET = set;
         if (!set) {
             _runOnET = set;
@@ -313,6 +303,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     protected boolean getRunOnET() {
         return _setRunOnET;
+    }
+    protected boolean getIsForward() {
+        return _isForward;
     }
 
     /**
@@ -360,11 +353,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Modify a current or commanded throttle setting to a throttle setting constrained
-     * to a named speed restriction
-     * @param tSpeed throttle setting
-     * @param sType named speed restriction
-     * @return modified throttle setting
+     * do throttle setting
+     * @param s throttle setting
      */
 
     synchronized protected void setSpeed(float s) {
@@ -392,7 +382,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return false;
         }
         Float speed = _speedUtil.getSpeed();
-        if (Math.abs(speed - _speedUtil.modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
+        if (Math.abs(speed - _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward)) < 0.0001f) {
             // already at speed, no need to reset throttle
             _speedType = speedType;
             return false;
@@ -408,7 +398,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 return true;
             } else {
                 _speedType = speedType;
-                float speedMod = _speedUtil.modifySpeed(1.0f, _speedType);
+                float speedMod = _speedUtil.modifySpeed(1.0f, _speedType, _isForward);
                 if (Math.abs(1.0f - speedMod) > .0001f) {
                     _timeRatio = 1.0f / speedMod;
                 } else {
@@ -428,11 +418,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             setSpeed(0.0f);
             return;
         }
-        setSpeed(_speedUtil.modifySpeed(_normalSpeed, speedType));
+        setSpeed(_speedUtil.modifySpeed(_normalSpeed, speedType, _isForward));
     }
 
     protected float getExpectedSpeed(String speedType) {
-        return _speedUtil.modifySpeed(_normalSpeed, speedType);
+        return _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward);
     }
 
     /**
@@ -897,12 +887,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         public void run() {
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
-            float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType);   // requested endspeed
+            float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);   // requested endspeed
             float speed = _speedUtil.getSpeed();
             float incr = _speedUtil.getStepIncrement();
             int delay = _speedUtil.getStepDelay();
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
-                    _speedUtil.modifySpeed(_normalSpeed, _speedType), speed);
+                    _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward), speed);
             // endSpeed should not exceed scripted speed modified by _speedType
             float scriptSpeed = 0.0f;
             for (int idx = 0; idx < _idxCurrentCommand; idx++) {
@@ -912,7 +902,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             }
             // this assumes ramp will end waiting on the current command
-            endSpeed = Math.min(_speedUtil.modifySpeed(scriptSpeed, _speedType), endSpeed);
+            endSpeed = Math.min(_speedUtil.modifySpeed(scriptSpeed, _speedType, _isForward), endSpeed);
 
             synchronized (this) {
                 try {

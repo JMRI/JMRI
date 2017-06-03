@@ -74,9 +74,9 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         frame.setTrainInfo("99");
         JUnitUtil.waitFor(() -> {
-            return (frame.getLocoAddress()!=null);
+            return (frame._speedUtil.getDccAddress()!=null);
         }, "Found address");
-        jmri.DccLocoAddress address = frame.getLocoAddress();
+        jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=99", 99, address.getNumber());
 
         pressButton(frame, Bundle.getMessage("Start"));
@@ -101,9 +101,9 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // change address and run
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
-            return (frame.getLocoAddress()!=null);
+            return (frame._speedUtil.getDccAddress()!=null);
         }, "Found address");
-        address = frame.getLocoAddress();
+        address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=111", 111, address.getNumber());
         
         sensor.setState(Sensor.INACTIVE);

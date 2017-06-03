@@ -45,6 +45,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             implements java.beans.PropertyChangeListener {
 
     public static final String Stop = "Stop";   // NOI18N
+    
     public static final String EStop = "EStop";     // NOI18N
     public static final String Normal = "Normal";   // NOI18N
     public static final String Clear = "Clear";     // NOI18N
@@ -155,6 +156,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     
     public SpeedUtil getSpeedUtil() {
         return _speedUtil;
+    }
+    
+    public void setSpeedUtil(SpeedUtil su) {
+        _speedUtil = su;
     }
     
     /**
@@ -1960,11 +1965,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (speed<0.0001f) { // first block has 0.0 entrance speed
                 speed = blkSpeedInfo.getMaxSpeed();
             }
-            Engineer.RampData rampData = _speedUtil.rampLengthForSpeedChange(speed, _curSpeedType, speedType);
+            Engineer.RampData rampData = _speedUtil.rampLengthForSpeedChange(speed, _curSpeedType, speedType, _engineer.getIsForward());
             rampLen = rampData.getLength() + blkOrder.getEntranceSpace();
             if(log.isDebugEnabled()) log.debug("availDist= {}, at Block \"{}\" for ramp= {} to speed {} from {}. warrant {}", 
                     availDist, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), rampLen, 
-                    _speedUtil.modifySpeed(speed,speedType), speed, getDisplayName());
+                    _speedUtil.modifySpeed(speed, speedType, _engineer.getIsForward()), speed, getDisplayName());
         }
         if (idxBlockOrder > _idxCurrentOrder) {
             // sufficient ramp room was found before walking all the way back to current block
@@ -2028,7 +2033,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         float speed = blkSpeedInfo.getEntranceSpeed();  // unmodified recorded speed
-        float waitSpeed = _speedUtil.modifySpeed(speed, _curSpeedType); // speed while waiting to start ramp
+        boolean isForward = _engineer.getIsForward();
+        float waitSpeed = _speedUtil.modifySpeed(speed, _curSpeedType, isForward); // speed while waiting to start ramp
         long waitTime = 0;      // time to wait before starting ramp
         long speedTime = 0;     // time running at a given speed
         boolean hasSpeed = (speed>0.0001f);
@@ -2052,8 +2058,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             String cmd = ts.getCommand().toUpperCase();
             if (hasSpeed) {
                 speedTime = (long)(ts.getTime()*timeRatio);
-                float dist = _speedUtil.getDistanceTraveled(speed, _curSpeedType, speedTime);
-                Engineer.RampData rampData = _speedUtil.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType);
+                float dist = _speedUtil.getDistanceTraveled(speed, _curSpeedType, speedTime, isForward);
+                Engineer.RampData rampData = _speedUtil.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType, isForward);
                 rampLen = rampData.getLength() + distAdj;
                 if (rampLen > availDist) {
                     log.error("rampLen > availDist! availDist= {} rampLen= {} waitTime= {}", availDist, rampLen, waitTime);
@@ -2074,7 +2080,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 speed = Float.parseFloat(ts.getValue());
                 hasSpeed = (speed>0.0001f);
                 if (hasSpeed) {
-                    waitSpeed = _speedUtil.modifySpeed(speed, _curSpeedType);
+                    waitSpeed = _speedUtil.modifySpeed(speed, _curSpeedType, isForward);
                     if (Math.abs(speed - waitSpeed) > .0001f) {
                         timeRatio = speed / waitSpeed;
                     } else {

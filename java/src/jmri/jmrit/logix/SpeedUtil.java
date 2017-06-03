@@ -84,7 +84,12 @@ public class SpeedUtil implements ThrottleListener {
             if (index >= 0) {
                 numId = id.substring(0, index);
             } else {
-                numId = id;
+                Character ch = id.charAt(id.length() - 1);
+                if (!Character.isDigit(ch)) {
+                    numId = id.substring(0, id.length() - 1);
+                } else {
+                    numId = id;
+                }
             }
             try {
                 List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
@@ -120,6 +125,60 @@ public class SpeedUtil implements ThrottleListener {
         return true;
     }
 
+    protected float getStepIncrement() {
+        return _signalSpeedMap.getStepIncrement();
+    }
+    protected int getStepDelay() {
+        return _signalSpeedMap.getStepDelay();
+    }
+    
+    protected RosterSpeedProfile getSpeedProfile() {
+        if (_speedProfile == null) {
+            if (getRosterEntry() != null) {
+                makeSpeedTree();
+            }
+        }
+        return _speedProfile;
+    }
+
+    protected void makeSpeedTree() {
+        _speedProfile = new RosterSpeedProfile(null);
+//        _speedTree = new TreeMap<Integer, SpeedStep>();
+//        _speedProfile.setSpeed(0, 0.0f, 0.0f);
+
+        if (_rosterEntry!=null) {
+            RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
+            if (speedProfile!=null) { // make copy of tree
+    /*            TreeMap<Integer, SpeedStep> speedtree = _speedProfile.getProfileSpeeds();
+                Set<java.util.Map.Entry<Integer, SpeedStep>> entries = _speedProfile.getProfileSpeeds().entrySet();
+                java.util.Iterator<Map.Entry<Integer, SpeedStep>> iter = entries.iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<Integer, SpeedStep> entry = iter.next();
+                    SpeedStep ss = entry.getValue();
+                    _speedProfile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
+                }*/
+                
+                TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
+                speedtree.putAll(speedProfile.getProfileSpeeds());
+                _speedProfile.setProfileSpeeds(speedtree);
+ //           } else {
+ //               _speedProfile.setSpeed(0, 0.0f, 0.0f);
+            }
+//        } else {
+//            _speedProfile.setSpeed(0, 0.0f, 0.0f);            
+        }
+
+        _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
+                _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
+                _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
+    }
+
+    /************** start warrant run - end of create/edit/setup methods ******************/
+
+    /**
+     * @return error message if any
+     */
     protected String acquireThrottle() {
         if (_dccAddress == null)  {
             return Bundle.getMessage("NoAddress", _warrant.getDisplayName());
@@ -182,16 +241,11 @@ public class SpeedUtil implements ThrottleListener {
         releaseThrottle();
         if (updateSpeedProfile && _rosterEntry!=null && _speedProfile!=null) {
             _rosterEntry.setSpeedProfile(_speedProfile);
-            Roster.getDefault().writeRoster();
+//            Roster.getDefault().writeRoster();
         }
     }
 
-    protected float getStepIncrement() {
-        return _signalSpeedMap.getStepIncrement();
-    }
-    protected int getStepDelay() {
-        return _signalSpeedMap.getStepDelay();
-    }
+    /************* runtime speed needs - throttle, engineer acquired ***************/
     
     /**
      * Calculates the scale speed of the current throttle setting for display
@@ -201,7 +255,7 @@ public class SpeedUtil implements ThrottleListener {
 //    @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="speed type name in message is ok")
     public String getSpeedMessage(String speedType) {
         float curSpeed = _throttle.getSpeedSetting();
-        float speed = getTrackSpeed(curSpeed) * _signalSpeedMap.getLayoutScale();
+        float speed = getTrackSpeed(curSpeed, _throttle.getIsForward()) * _signalSpeedMap.getLayoutScale();
 
         String units;
         if (_signalSpeedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
@@ -212,39 +266,6 @@ public class SpeedUtil implements ThrottleListener {
             speed = speed * 2.2369363f;
         }
         return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
-    }
-
-
-    /************************ runtime speed needs ************************/
-    
-    protected void makeSpeedTree() {
-        _speedProfile = new RosterSpeedProfile(null);
-//        _speedTree = new TreeMap<Integer, SpeedStep>();
-//        _speedProfile.setSpeed(0, 0.0f, 0.0f);
-
-        if (_rosterEntry!=null) {
-            RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
-            if (speedProfile!=null) { // make copy of tree
-    /*            TreeMap<Integer, SpeedStep> speedtree = _speedProfile.getProfileSpeeds();
-                Set<java.util.Map.Entry<Integer, SpeedStep>> entries = _speedProfile.getProfileSpeeds().entrySet();
-                java.util.Iterator<Map.Entry<Integer, SpeedStep>> iter = entries.iterator();
-                while (iter.hasNext()) {
-                    Map.Entry<Integer, SpeedStep> entry = iter.next();
-                    SpeedStep ss = entry.getValue();
-                    _speedProfile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
-                }*/
-                
-                TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
-                speedtree.putAll(speedProfile.getProfileSpeeds());
-                _speedProfile.setProfileSpeeds(speedtree);
- //           } else {
- //               _speedProfile.setSpeed(0, 0.0f, 0.0f);
-            }
-//        } else {
-//            _speedProfile.setSpeed(0, 0.0f, 0.0f);            
-        }
-
-        _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
     // return a boolean so minSpeedType() can return a non-null String if possible
@@ -260,7 +281,7 @@ public class SpeedUtil implements ThrottleListener {
         return (s1 < s2);
     }
 
-    protected float modifySpeed(float tSpeed, String sType) {
+    protected float modifySpeed(float tSpeed, String sType, boolean isForward) {
 //        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
             return 0.0f;
@@ -288,7 +309,7 @@ public class SpeedUtil implements ThrottleListener {
             case SignalSpeedMap.SPEED_MPH:          // convert miles per hour to track speed
                 signalSpeed = signalSpeed / _signalSpeedMap.getLayoutScale();
                 signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph as mm/ms
-                float trackSpeed = getTrackSpeed(throttleSpeed);
+                float trackSpeed = getTrackSpeed(throttleSpeed, isForward);
                 if (signalSpeed < trackSpeed) {
                     throttleSpeed = getThrottleSetting(signalSpeed);
                 }
@@ -297,7 +318,7 @@ public class SpeedUtil implements ThrottleListener {
             case SignalSpeedMap.SPEED_KMPH:
                 signalSpeed = signalSpeed / _signalSpeedMap.getLayoutScale();
                 signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms for kmph
-                trackSpeed = getTrackSpeed(throttleSpeed);
+                trackSpeed = getTrackSpeed(throttleSpeed, isForward);
                 if (signalSpeed < trackSpeed) {
                     throttleSpeed = getThrottleSetting(signalSpeed);
                 }
@@ -312,14 +333,16 @@ public class SpeedUtil implements ThrottleListener {
     }
 
     // return millimeters per millisecond (= meters/sec)
-    private float getTrackSpeed(float throttleSetting) {
+    private float getTrackSpeed(float throttleSetting, boolean isForward) {
         // Note SpeedProfile uses milliseconds per second.
         float speed = _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward()) / 1000;
+        boolean byFactor = false;
         if (speed < 0.0f) {
             speed = throttleSetting *_signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR;
+            byFactor = true;
         }
-        if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, warrant {}",
-                    throttleSetting, speed, _warrant.getDisplayName());
+        if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by {}. warrant {}",
+                    throttleSetting, speed, (byFactor?"factor":"profile"), _warrant.getDisplayName());
         return speed;
     }
 
@@ -331,22 +354,22 @@ public class SpeedUtil implements ThrottleListener {
         return setting;
     }
 
-    protected float getDistanceTraveled(float speedSetting, String speedtype, long time) {
-        float throttleSetting = modifySpeed(speedSetting, speedtype);
-        return getTrackSpeed(throttleSetting) * time;
+    protected float getDistanceTraveled(float speedSetting, String speedtype, float time, boolean isForward) {
+        float throttleSetting = modifySpeed(speedSetting, speedtype, isForward);
+        return getTrackSpeed(throttleSetting, isForward) * time;
     }
 
-    protected long getTimeForDistance(float throttleSetting, float distance) {
-        float speed = getTrackSpeed(throttleSetting);
-        return (long) (distance/speed);
+    protected float getTimeForDistance(float throttleSetting, float distance, boolean isForward) {
+        float speed = getTrackSpeed(throttleSetting, isForward);
+        return (distance/speed);
     }
 
-    protected RampData rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType) {
+    protected RampData rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType, boolean isForward) {
         if (curSpeedType.equals(toSpeedType)) {
             return new RampData(0.0f, 0);
         }
-        float fromSpeed = modifySpeed(curSpeed, curSpeedType);
-        float toSpeed = modifySpeed(curSpeed, toSpeedType);
+        float fromSpeed = modifySpeed(curSpeed, curSpeedType, isForward);
+        float toSpeed = modifySpeed(curSpeed, toSpeedType, isForward);
         if (toSpeed > fromSpeed) {
             float tmp = fromSpeed;
             fromSpeed = toSpeed;
@@ -358,7 +381,7 @@ public class SpeedUtil implements ThrottleListener {
         float speed = fromSpeed;
         int steps = 0;
         while (speed >= toSpeed) {
-            float dist = getTrackSpeed(speed - delta / 2) * incr;
+            float dist = getTrackSpeed(speed - delta / 2, isForward) * incr;
             if (dist <= 0.0f) {
                 break;
             }
@@ -415,15 +438,10 @@ public class SpeedUtil implements ThrottleListener {
                         _numchanges, speed, aveSpeed, blkOrder.getBlock().getDisplayName());
             }
             if (length > 0.0f) {
-                if (speed <= 0.0f) {
-                    speed = length/_timeAtSpeed;
-                } else {
-                    speed = (speed + aveSpeed)/2;
-                }
                 if (isForward) {
-                    _speedProfile.setForwardSpeed(aveThrottle, speed);
+                    _speedProfile.setForwardSpeed(aveThrottle, aveSpeed);
                 } else {
-                    _speedProfile.setReverseSpeed(aveThrottle, speed);            
+                    _speedProfile.setReverseSpeed(aveThrottle, aveSpeed);            
                 }
             }
         }
@@ -440,7 +458,7 @@ public class SpeedUtil implements ThrottleListener {
         long elapsedTime = time - _changetime;
         if (throttleSetting > 0.0f) {
             _timeAtSpeed += elapsedTime;
-            _distanceTravelled += getTrackSpeed(throttleSetting) * elapsedTime;
+            _distanceTravelled += getTrackSpeed(throttleSetting, _throttle.getIsForward()) * elapsedTime;
             _settingsTravelled += throttleSetting * elapsedTime;
         }
         _numchanges++;

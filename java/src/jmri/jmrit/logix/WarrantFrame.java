@@ -160,7 +160,9 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setUpdateSpeedProfile(warrant.getUpdateSpeedProfile());
         setTrainName(warrant.getTrainName());
         _warrant.setTrainName(warrant.getTrainName());
-        String trainId = warrant.getSpeedUtil().getTrainId();
+        
+        SpeedUtil spU = warrant.getSpeedUtil();
+        String trainId = spU.getTrainId();
         setTrainInfo(trainId);
         _warrant.getSpeedUtil().setTrainId(trainId);
     }
@@ -987,7 +989,7 @@ public class WarrantFrame extends WarrantRoute {
         _startTime = System.currentTimeMillis();
         _warrant.addPropertyChangeListener(this);
 
-        msg = _warrant.setRunMode(Warrant.MODE_LEARN, getLocoAddress(), _learnThrottle,
+        msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
             stopRunTrain();
@@ -1021,7 +1023,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         _warrant.addPropertyChangeListener(this);
-        msg = _warrant.setRunMode(Warrant.MODE_RUN, getLocoAddress(), null,
+        msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
             stopRunTrain();
@@ -1344,7 +1346,7 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
-        _warrant.getSpeedUtil().setDccAddress(getTrainId());
+        _warrant.setSpeedUtil(_speedUtil);
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
@@ -1358,7 +1360,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setThrottleCommands(_throttleCommands);
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
-                _warrant.getDisplayName(), getTrainId(), getTrainName());
+                _warrant.getDisplayName(), _speedUtil.getTrainId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getDefault().getModel().fireTableDataChanged();
         return true;
