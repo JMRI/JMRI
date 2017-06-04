@@ -135,7 +135,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int TIGHT = 0x02;
     static final public int SEVERE = 0x04;
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
