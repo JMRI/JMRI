@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.9
+; - Remove outmoded lib\jna-4.2.2.jar and install jmri.conf
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.8
 ; - Remove outmoded jackson files
 ; -------------------------------------------------------------------------
@@ -446,6 +449,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
+    ; -- Delete old PJC file for JMRI 4.7.5
+    Delete "$OUTDIR\jna-4.2.2.jar"
+
     ; -- Delete old jackson jar files as of JMRI 4.7.1
     Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
     Delete "$OUTDIR\jackson-core-2.0.6.jar"
@@ -682,6 +688,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Library & Support Files now moved from here
     File /a "${SRCDIR}\*.jar"
     File /a "${SRCDIR}\COPYING"
+    File /a "${SRCDIR}\jmri.conf"
     File /a "${SRCDIR}\LaunchJMRI.exe"
     File /a "${SRCDIR}\*.bat"
     File /a "${SRCDIR}\default.lcf"

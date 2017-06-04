@@ -10,6 +10,7 @@ import static jmri.util.FileUtil.SETTINGS;
 
 import com.sun.jna.platform.win32.KnownFolders;
 import com.sun.jna.platform.win32.Shell32Util;
+import com.sun.jna.platform.win32.ShlObj;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -641,7 +642,12 @@ public class FileUtilSupport extends Bean {
                     }
                     break;
                 case SystemType.WINDOWS:
-                    cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
+                    try {
+                        cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
+                    } catch (UnsatisfiedLinkError er) {
+                        // Needed only on Windows XP
+                        cache = new File(new File(Shell32Util.getFolderPath(ShlObj.CSIDL_LOCAL_APPDATA), "JMRI/cache"), Version.getCanonicalVersion());
+                    }
                     break;
                 default:
                     // fallback
