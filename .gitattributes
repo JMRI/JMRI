@@ -62,6 +62,7 @@ TODO            text
 *.ear           binary
 *.gif           binary
 *.GIF           binary
+*.gz            binary
 *.ico           binary
 *.jar           binary
 *.jnilib        binary
