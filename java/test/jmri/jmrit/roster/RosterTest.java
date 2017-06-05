@@ -325,7 +325,7 @@ public class RosterTest {
         // since we created it when we referenced it, should be in InstanceManager
         Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
     }
-    
+
     @Test
     public void testProfileOnePointForward() {
         RosterEntry r = new RosterEntry();
@@ -337,7 +337,7 @@ public class RosterTest {
         Assert.assertEquals(125.0,rp.getForwardSpeed(0.25f),0.0);
         Assert.assertEquals(4.0,rp.getForwardSpeed(0.0078125f),0.0); //routine will use 8 (round( value * 1000))
     }
-     
+
     @Test
     public void testProfileTwoPointForward() {
         RosterEntry r = new RosterEntry();
@@ -361,7 +361,7 @@ public class RosterTest {
         Assert.assertEquals(1250.0,rp.getReverseSpeed(0.25f),0.0);
         Assert.assertEquals(40.0,rp.getReverseSpeed(0.0078125f),0.0);   //routine will use 8 (round( value * 1000))
     }
-     
+
     @Test
     public void testProfileTwoPointReverse() {
         RosterEntry r = new RosterEntry();
@@ -385,7 +385,7 @@ public class RosterTest {
         Assert.assertEquals(0.5,rp.getThrottleSetting(250,true),0.0);;
         Assert.assertEquals(0.25,rp.getThrottleSetting(125,true),0.0);;
     }
-    
+
    @Test
     public void testProfileTwoPointReverseGetThrottleSetting() {
         RosterEntry r = new RosterEntry();
@@ -396,7 +396,7 @@ public class RosterTest {
         Assert.assertEquals(0.5,rp.getThrottleSetting(2500,false),0.0);;
         Assert.assertEquals(0.25,rp.getThrottleSetting(1250,false),0.0);;
     }
-   
+
     public Roster createTestRoster() throws IOException, FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.

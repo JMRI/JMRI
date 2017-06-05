@@ -56,25 +56,25 @@ public class RosterSpeedProfile {
     public void clearCurrentProfile() {
         speeds = new TreeMap<Integer, SpeedStep>();
     }
-    
+
     public void deleteStep(Integer step) {
         speeds.remove(step);
     }
 
-        
+
     /* for speed conversions */
     static public final float MMStoMPH = 0.00223694f;
     static public final float MMStoKPH = 0.0036f;
-    
+
     /**
      * Returns the scale speed as a numeric. if warrent prefernces are not a speed value returned unchanged.
      * @param mms MilliMetres per second
-     * @return scale speed in units specified by Warrant Preferences. if warrent prefernces are not a speed 
+     * @return scale speed in units specified by Warrant Preferences. if warrent prefernces are not a speed
      */
     public float MMSToScaleSpeed(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
-     
+
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
                 return mms * scale * MMStoMPH;
@@ -88,7 +88,7 @@ public class RosterSpeedProfile {
                 return mms;
         }
     }
-    
+
     /**
      * Returns the scale speed format as a string with the units added given MilliMetres per Second.
      * If the warrant preference  is a percentage of normal or throttle will use metres per second.
@@ -116,7 +116,7 @@ public class RosterSpeedProfile {
         }
         return formattedWithUnits;
     }
-    
+
     /**
      * Returns the scale speed format as a string with the units added given a throttle setting. and direction
      * @param throttleSetting as percentage of 1.0
@@ -126,7 +126,7 @@ public class RosterSpeedProfile {
     public String convertThrottleSettingToScaleSpeedWithUnits(float throttleSetting, boolean isForward) {
         return convertMMSToScaleSpeedWithUnits(getSpeed(throttleSetting, isForward));
     }
-    
+
     /**
      * MilliMetres per Second given scale speed.
      * @param scaleSpeed in MPH or KPH
@@ -149,12 +149,12 @@ public class RosterSpeedProfile {
         }
         return mmsSpeed;
     }
-    
+
     /**
      * Converts from signal map speed to a throttle setting
-     * @param signalMapSpeed value from warrants preferences 
+     * @param signalMapSpeed value from warrants preferences
      * @param isForward direction of travel
-     * @return throttle setting 
+     * @return throttle setting
      */
     public float getThrottleSettingFromSignalMapSpeed(float signalMapSpeed, boolean isForward) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
@@ -218,7 +218,7 @@ public class RosterSpeedProfile {
         if (speeds.containsKey(iSpeedStep)) {
             float speed = speeds.get(iSpeedStep).getForwardSpeed();
             if (speed>0.0f) {
-                return speed;                
+                return speed;
             }
         }
         log.debug("no exact match forward for " + iSpeedStep);
@@ -226,7 +226,7 @@ public class RosterSpeedProfile {
         float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
-        
+
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
         while (entry != null && higher<=0.0f) {
             highStep = entry.getKey();
@@ -234,7 +234,7 @@ public class RosterSpeedProfile {
             entry = speeds.higherEntry(highStep);
         }
         boolean nothingHigher = (higher<=0.0f);
-        
+
         entry = speeds.lowerEntry(lowStep);
         while (entry != null && lower<=0.0f) {
             lowStep = entry.getKey();;
@@ -244,7 +244,7 @@ public class RosterSpeedProfile {
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
-                return -1.0f;       // no forward speeds at all                
+                return -1.0f;       // no forward speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -271,7 +271,7 @@ public class RosterSpeedProfile {
         if (speeds.containsKey(iSpeedStep)) {
             float speed = speeds.get(iSpeedStep).getReverseSpeed();
             if (speed>0.0f) {
-                return speed;                
+                return speed;
             }
         }
         log.debug("no exact match reverse for " + iSpeedStep);
@@ -279,7 +279,7 @@ public class RosterSpeedProfile {
         float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
-        
+
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
         while (entry != null && higher<=0.0f) {
             highStep = entry.getKey();
@@ -296,7 +296,7 @@ public class RosterSpeedProfile {
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
-                return -1.0f;       // no reverse speeds at all                
+                return -1.0f;       // no reverse speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -837,7 +837,7 @@ public class RosterSpeedProfile {
     public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
         return speeds;
     }
-    
+
     /**
      * Get the throttle setting to achieve a track speed
      * @param speed desired track speed in mms
@@ -845,8 +845,6 @@ public class RosterSpeedProfile {
      * @return throttle setting
      */
     public float getThrottleSetting(float speed, boolean isForward) {
-        int key = 0;
-        float slower = 0;
         int slowerKey = 0;
         float slowerValue = 0;
         float fasterKey = 0;
@@ -869,7 +867,7 @@ public class RosterSpeedProfile {
                     fasterKey = entry.getKey();
                     fasterValue = entry.getValue().getForwardSpeed();
                 }
-            }            
+            }
                      } else {
             fasterKey=entry.getKey();
             fasterValue = entry.getValue().getReverseSpeed();
@@ -881,7 +879,7 @@ public class RosterSpeedProfile {
                     fasterKey = entry.getKey();
                     fasterValue = entry.getValue().getReverseSpeed();
                              }
-            }            
+            }
         }
         if (entry == null) {
             // faster does not exists use slower...
@@ -892,10 +890,10 @@ public class RosterSpeedProfile {
                      }
         // we need to interpolate
         float ratio = (speed - slowerValue) / (fasterValue - slowerValue);
-        float setting = (slowerKey + ((fasterKey - slowerKey) * ratio))/1000.0f;  
+        float setting = (slowerKey + ((fasterKey - slowerKey) * ratio))/1000.0f;
         return setting;
     }
-        
+
     /**
      * Get track speed in millimeters per second from throttle setting
      * @param speedStep - throttle setting
@@ -910,13 +908,13 @@ public class RosterSpeedProfile {
         if (isForward) {
             speed = getForwardSpeed(speedStep);
         } else {
-            speed = getReverseSpeed(speedStep);            
+            speed = getReverseSpeed(speedStep);
         }
         if (speed<=0) {
             if (isForward) {
                 speed = getReverseSpeed(speedStep);
             } else {
-                speed = getForwardSpeed(speedStep);            
+                speed = getForwardSpeed(speedStep);
             }
         }
         return speed;
