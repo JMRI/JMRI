@@ -210,7 +210,7 @@ public class MemoryContents {
         hasData = false;
         curExtLinAddr = 0;
         curExtSegAddr = 0;
-        ArrayList<String> keyValComments = new ArrayList<String>(1);
+        keyValComments = new ArrayList<String>(1);
     }
 
     private boolean isPageInitialized(int page) {
@@ -395,6 +395,9 @@ public class MemoryContents {
         } catch (IOException ex) {
             throw new FileNotFoundException(ex.toString());
         }
+        
+        this.clear();   // Ensure that the information storage is clear of any 
+                        // previous contents
         currentPage = 0;
         loadOffsetFieldType = LoadOffsetFieldType.UNDEFINED;
         boolean foundDataRecords = false;
@@ -667,7 +670,7 @@ public class MemoryContents {
                     } else if (recordType == RECTYP_EOF_RECORD) {
                         if ((extractRecLen(line) != 0)
                                 || (extractLoadOffset(line) != 0)) {
-                            String message = "Illegal EOF record form in line "
+                            String message = "Illegal EOF record form in line " // NOI18N
                                     + lineNum;
                             log.error(message);
                             throw new MemoryFileRecordContentException(message);
@@ -1456,7 +1459,7 @@ public class MemoryContents {
      */
     @Override
     public String toString() {
-        StringBuffer retval = new StringBuffer("Pages occupied: ");
+        StringBuffer retval = new StringBuffer("Pages occupied: "); // NOI18N
         for (int page=0; page<PAGES; page++) {
             if (isPageInitialized(page)) {
                 retval.append(page);
@@ -1481,7 +1484,7 @@ public class MemoryContents {
         hasData = false;
         curExtLinAddr = 0;
         curExtSegAddr = 0;
-        ArrayList<String> keyValComments = new ArrayList<String>(1);
+        keyValComments = new ArrayList<String>(1);
         for (int i = 0 ; i < pageArray.length; ++i) {
             pageArray[i] = null;
         }
