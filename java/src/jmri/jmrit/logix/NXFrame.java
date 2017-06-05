@@ -52,7 +52,6 @@ public class NXFrame extends WarrantRoute {
     private float _intervalTime = 0.0f;     // milliseconds
     private float _throttleIncr = 0.0f;
     private float _throttleFactor = 0.0f;
-//    private static final float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
 
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _rampInterval = new JTextField(6);
@@ -374,10 +373,12 @@ public class NXFrame extends WarrantRoute {
         String s = ("" + Math.random()).substring(2);
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");
         warrant.setSpeedUtil(_speedUtil);
+        _speedUtil.setWarrant(warrant);
         warrant.setTrainName(name);
         warrant.setBlockOrders(orders);
+        _speedUtil.makeSpeedTree();
         int mode;
-        if (msg == null && !_runManual.isSelected()) {
+        if (!_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
             msg = getBoxData();
@@ -527,14 +528,15 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("badSpeed", speedErr, maxSpeed);
         }
         _maxThrottle = _maxSpeed;
-        if (_minSpeed > 0.5 || _minSpeed < 0.002 || _minSpeed >= _maxSpeed) {
+        // throttle increment between 1/2 full and 1 step of 128 step throttle.
+        if (_minSpeed > 0.5 || _minSpeed < 0.008 || _minSpeed >= _maxSpeed) {
             return Bundle.getMessage("badIncr", speedErr, minSpeed);
         }
         _throttleIncr = _minSpeed;
         try {
             text = _rampInterval.getText();
             _intervalTime = Float.parseFloat(text) * 1000;
-            if (_intervalTime > 10000 || _intervalTime < 300) {
+            if (_intervalTime > 10000 || _intervalTime < 210) {
                 return Bundle.getMessage("InvalidTime", text);
             }
         } catch (NumberFormatException nfe) {

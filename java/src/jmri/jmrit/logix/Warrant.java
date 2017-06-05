@@ -350,11 +350,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
-     * Get a copy of the throttle commands script
-     * @return copy
+     * @return throttle commands
      */
     public List<ThrottleSetting> getThrottleCommands() {
-        return  new ArrayList<ThrottleSetting>(_commands);
+        return  _commands;
     }
 
     public void setThrottleCommands(List<ThrottleSetting> list) {
@@ -1400,13 +1399,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _engineer.setWaitforClear(true);                       
                 return;                        
             }
-            
             // Since we are moving we assume it is our train entering the block
-            _idxLastOrder = _idxCurrentOrder;            
-           _idxCurrentOrder = activeIdx;
-           if (_runMode == MODE_RUN) {
-               _speedUtil.enteredBlock(getBlockOrderAt(activeIdx));               
-           }
+            // continue on.
         } else if (activeIdx > _idxCurrentOrder + 1) {
             if (_runMode == MODE_LEARN) {
                 log.error("Block \"{}\" became occupied before block \"{}\". ABORT recording.",
@@ -1443,15 +1437,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.debug("Train leaving UNDETECTED block \"{}\" now entering block\"{}\". warrant {}", 
                         prevBlock.getDisplayName(), block.getDisplayName(), getDisplayName());
             }
-//            firePropertyChange("blockChange", getBlockAt(activeIdx-1), prevBlock);
-            _idxLastOrder = _idxCurrentOrder;            
-            _idxCurrentOrder = activeIdx;
-
+            // Since we are moving we assume it is our train entering the block
+            // continue on.
         } else if (_idxCurrentOrder > activeIdx) {
             log.error("Mystifying ERROR goingActive: activeIdx = {},  _idxCurrentOrder = {}!",
                     activeIdx, _idxCurrentOrder);
             return;
         }
+        
+        if (_runMode == MODE_RUN) {
+            _speedUtil.enteredBlock(_idxLastOrder, activeIdx);               
+        }
+        _idxLastOrder = _idxCurrentOrder;            
+        _idxCurrentOrder = activeIdx;
+       
         if (_engineer != null) {
             _engineer.clearWaitForSync();
         }

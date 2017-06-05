@@ -16,6 +16,20 @@ import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * All speed related method transferred from Engineer and Warrant classes.
+ * Until June 2017, the problem of determining the actual track speed of a
+ * model train in millimeters per millisecond (same as meters/sec) from the
+ * throttle setting was usually done with an ad hoc "throttle factor".  When
+ * created, the RosterSpeedProfile provides this needed conversion but
+ * generally is not done by users for each of their locos.
+ * 
+ * Methods to dynamically determine a RosterSpeedProfile for each loco are 
+ * implemented in this class.
+ * 
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2017
+ *
+ */
 public class SpeedUtil implements ThrottleListener {
 
     private DccLocoAddress _dccAddress;
@@ -25,13 +39,17 @@ public class SpeedUtil implements ThrottleListener {
 
 //    private TreeMap<Integer, SpeedStep> _speedTree;
     private DccThrottle _throttle;
-    private RosterSpeedProfile _speedProfile;
-    private SignalSpeedMap _signalSpeedMap;
+    private RosterSpeedProfile _speedProfile; // temp copy of any existing Roster speeedProfile
+    private SignalSpeedMap _signalSpeedMap; 
 
     private static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
 
     public SpeedUtil(Warrant war) {
         _warrant = war;
+    }
+    
+    protected void setWarrant(Warrant w) {
+        _warrant = w;
     }
     
     public RosterEntry getRosterEntry() {
@@ -134,38 +152,22 @@ public class SpeedUtil implements ThrottleListener {
     
     protected RosterSpeedProfile getSpeedProfile() {
         if (_speedProfile == null) {
-            if (getRosterEntry() != null) {
-                makeSpeedTree();
-            }
+            makeSpeedTree();
         }
         return _speedProfile;
     }
 
     protected void makeSpeedTree() {
-        _speedProfile = new RosterSpeedProfile(null);
-//        _speedTree = new TreeMap<Integer, SpeedStep>();
-//        _speedProfile.setSpeed(0, 0.0f, 0.0f);
-
-        if (_rosterEntry!=null) {
-            RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
-            if (speedProfile!=null) { // make copy of tree
-    /*            TreeMap<Integer, SpeedStep> speedtree = _speedProfile.getProfileSpeeds();
-                Set<java.util.Map.Entry<Integer, SpeedStep>> entries = _speedProfile.getProfileSpeeds().entrySet();
-                java.util.Iterator<Map.Entry<Integer, SpeedStep>> iter = entries.iterator();
-                while (iter.hasNext()) {
-                    Map.Entry<Integer, SpeedStep> entry = iter.next();
-                    SpeedStep ss = entry.getValue();
-                    _speedProfile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
-                }*/
-                
-                TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
-                speedtree.putAll(speedProfile.getProfileSpeeds());
-                _speedProfile.setProfileSpeeds(speedtree);
- //           } else {
- //               _speedProfile.setSpeed(0, 0.0f, 0.0f);
+        if (_speedProfile == null) {
+            _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile
+            if (_rosterEntry!=null) {
+                RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
+                if (speedProfile!=null) { // make copy of tree
+                    TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
+                    speedtree.putAll(speedProfile.getProfileSpeeds());
+                    _speedProfile.setProfileSpeeds(speedtree);
+                }
             }
-//        } else {
-//            _speedProfile.setSpeed(0, 0.0f, 0.0f);            
         }
 
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
@@ -241,7 +243,8 @@ public class SpeedUtil implements ThrottleListener {
         releaseThrottle();
         if (updateSpeedProfile && _rosterEntry!=null && _speedProfile!=null) {
             _rosterEntry.setSpeedProfile(_speedProfile);
-//            Roster.getDefault().writeRoster();
+            Roster.getDefault().writeRoster();
+            if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster");
         }
     }
 
@@ -335,7 +338,7 @@ public class SpeedUtil implements ThrottleListener {
     // return millimeters per millisecond (= meters/sec)
     private float getTrackSpeed(float throttleSetting, boolean isForward) {
         // Note SpeedProfile uses milliseconds per second.
-        float speed = _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward()) / 1000;
+        float speed = _speedProfile.getSpeed(throttleSetting, isForward) / 1000;
         boolean byFactor = false;
         if (speed < 0.0f) {
             speed = throttleSetting *_signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR;
@@ -415,37 +418,50 @@ public class SpeedUtil implements ThrottleListener {
     float _settingsTravelled;
     long _changetime;
     int _numchanges;
-    BlockOrder _blkOrder;
-    
-    protected void enteredBlock(BlockOrder blkOrder) {
-        speedChange();
-        float aveSpeed = _distanceTravelled / _timeAtSpeed;
-        aveSpeed *= 1000;   // SpeedProfile is mm/sec
-        float aveThrottle = _settingsTravelled / _timeAtSpeed;
 
-        if (blkOrder != null) {
+    /**
+     * Just entered block at newIdx. Do that calculation of speed from lastIdx
+     * @param lastIdx BlockOrder index of where data collection started
+     * @param newIdx BlockOrder index of block just enter
+     */
+    protected void enteredBlock(int lastIdx, int newIdx) {
+        if (lastIdx > 0) {
+            speedChange();
+            float aveSpeed = _distanceTravelled / _timeAtSpeed;
+            aveSpeed *= 1000;   // SpeedProfile is mm/sec
+            float aveThrottle = _settingsTravelled / _timeAtSpeed;
+            
+            float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
-            float length = blkOrder.getPath().getLengthMm();
-            if (length <= 0) {
-                log.warn("Block {} does not have a length for path {}",
-                        blkOrder.getBlock().getDisplayName(), blkOrder.getPathName());
+            boolean lengthOK = true;
+            List<BlockOrder> orders = _warrant.getBlockOrders();
+            for (int i=lastIdx; i<newIdx; i++) {
+                BlockOrder blkOrder = orders.get(i);
+                float length = blkOrder.getPath().getLengthMm();
+                if (length <= 0) {
+                    log.warn("Block {} does not have a length for path {}",
+                            blkOrder.getBlock().getDisplayName(), blkOrder.getPathName());
+                    lengthOK = false;
+                }
+                totalLength += length;
             }
             float speed = _speedProfile.getSpeed(aveThrottle, isForward);
             if (log.isTraceEnabled()) {
-                log.trace("AveThrottle= {}, distance= {}, time = {}. Path length = {}",
-                        aveThrottle, _distanceTravelled, _timeAtSpeed, length);
-                log.trace("{} speed changes. Speeds: SpeedProfile= {}, aveSpeed= {}, block= {}",
-                        _numchanges, speed, aveSpeed, blkOrder.getBlock().getDisplayName());
+                log.trace("{} speed changes. AveThrottle= {}, distance= {}, time = {}. pathLength = {}",
+                        _numchanges, aveThrottle, _distanceTravelled, _timeAtSpeed, totalLength);
+                log.trace("Speeds: SpeedProfile= {}, aveSpeed= {}, over block {} to {}",
+                        speed, aveSpeed, orders.get(lastIdx).getBlock().getDisplayName(),
+                        orders.get(newIdx).getBlock().getDisplayName());
             }
-            if (length > 0.0f) {
+            if (lengthOK) {
                 if (isForward) {
                     _speedProfile.setForwardSpeed(aveThrottle, aveSpeed);
                 } else {
                     _speedProfile.setReverseSpeed(aveThrottle, aveSpeed);            
                 }
-            }
+            }            
         }
-        _blkOrder = blkOrder;
+ 
         _timeAtSpeed = 0;
         _distanceTravelled = 0.0f;
         _settingsTravelled = 0.0f;
