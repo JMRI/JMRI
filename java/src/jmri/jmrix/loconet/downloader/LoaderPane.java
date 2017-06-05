@@ -819,11 +819,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
+            doLongWait(location, 5);
             setAddr(location);
+            doLongWait(location, 2);
 
             do {
-                // wait for completion of last operation
-                doWait(location);
 
                 // send this data
                 sentmsgs++;
@@ -843,24 +843,29 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     updateGUI(100 * sentmsgs / totalmsgs);
                 }
 
+                // wait for completion of last operation
+                doWait(location);
+
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next < 0) {
                     break;   // no data left
                 }
                 next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
-                if (next != location) {
+                if ((next != location) || ((location & 0x3f) == 0x00)) {
                     // wait for completion
-                    doWait(next);
+                    doLongWait(next, 4);  // extra wait while device writes memory
                     // change to next location
                     setAddr(next);
+                    doLongWait(next, 2); // double wait after sending new address
+                    
                 }
                 location = next;
 
             } while (!isOperationAborted() && (location <= endaddr));
 
             // send end (after wait)
-            doWait(location);
+            doLongWait(location,4);
             sendOne(PXCT2ENDOPERATION, 0, 0, 0, 0, 0, 0, 0, 0);
 
             this.updateGUI(100); //draw bar to 100%
@@ -905,7 +910,30 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     } else {
                         tdelay = delayval + 4 + 14;
                     }                        
+                    // do the actual wait
+                    wait(tdelay);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
+        }
 
+        /**
+         * Wait the time appropriate for the address.
+         *
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
+         */
+        void doLongWait(int address, int multiplier) {
+            try {
+                synchronized (this) {
+                    // make sure enough time in EEPROM address space
+                    int tdelay;
+                    if (address >= eestartval) {
+                        tdelay = (delayval + 50 + 14) * multiplier;
+                    } else {
+                        tdelay = (delayval + 4 + 14) * multiplier;
+                    }                        
                     // do the actual wait
                     wait(tdelay);
                 }
@@ -935,7 +963,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         log.debug("updateGUI with " + value);
                     }
                     // update progress bar
-                    bar.setValue(100 * sentmsgs / totalmsgs);
+                    bar.setValue(value);
                 }
             });
         }
