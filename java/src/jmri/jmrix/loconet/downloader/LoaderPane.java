@@ -801,6 +801,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             totalmsgs = 0;
             sentmsgs = 0;
             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
+            log.info("delayVal = "+delayval);
             do {
                 location = location + 8;
                 totalmsgs++;
@@ -913,6 +914,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = delayval + 4 + 14;
                     }                        
                     // do the actual wait
+                    log.info("doWait "+tdelay);
                     wait(tdelay);
                 }
             } catch (InterruptedException e) {
@@ -934,9 +936,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     if (address >= eestartval) {
                         tdelay = (delayval + 50 + 14) * multiplier;
                     } else {
-                        tdelay = (delayval + 4 + 14) * multiplier;
+                        tdelay = (delayval) * multiplier;
                     }                        
                     // do the actual wait
+                    log.info("doLongWait "+tdelay);
                     wait(tdelay);
                 }
             } catch (InterruptedException e) {
