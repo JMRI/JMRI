@@ -135,7 +135,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2008
- * @author B. Milhaupt Copyright (C) 2014
+ * @author B. Milhaupt Copyright (C) 2014, 2017
  */
 public class MemoryContents {
 

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
- * @author B. Milhaupt Copyright (C) 2013, 2014
+ * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         implements ActionListener {
