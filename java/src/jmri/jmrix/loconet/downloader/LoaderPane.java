@@ -56,11 +56,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     /** This gets invoked early. We don't want it to do anything, so 
-     * ew just fail to pass it up. Instead, we wait for the later call of
+     * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
+
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents(){
     }
         
     @Override
@@ -71,6 +72,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * LnPanelInterface implementation creates standard form of title
+     * 
+     * @param menuTitle is a string containing the name of the tool
+     * @return a new string containing the connection's UserName plus the name 
+     *          of the tool
      */
     public String getTitle(String menuTitle) { return jmri.jmrix.loconet.swing.LnPanel.getTitleHelper(memo, menuTitle); }
 
@@ -451,10 +456,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 this.setOptionsRadiobuttons(text);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), 
+                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), // NOI18N
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
+                log.warn("Invalid dmf file 'Options' value {0}",text);
                 return;
             }
         }
@@ -498,14 +504,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Add filter(s) for possible types to the input file chooser.
+     * @param chooser - a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {
             javax.swing.filechooser.FileNameExtensionFilter filter
                     = new javax.swing.filechooser.FileNameExtensionFilter(
-                            Bundle.getMessage("FileFilterLabel",
-                                    "*.dfm, *.hex"), // NOI18N // NOI18N
-                            "dmf", "hex");   // NOI18N // NOI18N
+                            Bundle.getMessage("FileFilterLabel", // NOI18N
+                                    "*.dfm, *.hex"), // NOI18N
+                            "dmf", "hex");   // NOI18N
 
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
@@ -871,6 +878,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Send a command to resume at another address
+         * @param location to be written next
          */
         void setAddr(int location) {
             sendOne(PXCT2SENDADDRESS,
@@ -884,6 +892,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
          * Wait the specified time.
          *
          * 16*10/16.44 = 14 msec is the time it takes to send the message.
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
          */
         void doWait(int address) {
             try {
@@ -915,6 +925,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Update the GUI for progress
+         * @param value is the percentage of "doneness" to be displayed
          */
         void updateGUI(final int value) {
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
