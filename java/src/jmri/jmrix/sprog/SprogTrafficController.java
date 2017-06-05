@@ -129,6 +129,27 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
     }
 
+    protected synchronized void notifyReply(SprogReply r) {
+        for (SprogListener listener : this.getCopyOfListeners()) {
+            try {
+                //if is message don't send it back to the originator!
+                // skip forwarding to the last sender for now, we'll get them later
+                if (lastSender != listener) {
+                    listener.notifyReply(r);
+                }
+
+            } catch (Exception e) {
+                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+            }
+        }
+        // forward to the last listener who sent a message
+        // this is done _second_ so monitoring can have already stored the reply
+        // before a response is sent
+        if (lastSender != null) {
+            lastSender.notifyReply(r);
+        }
+    }
+
     protected synchronized void notifyReply(SprogReply r, SprogListener lastSender) {
         log.debug("notifyReply starts last sender: "+lastSender);
         for (SprogListener listener : this.getCopyOfListeners()) {
@@ -197,7 +218,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             log.debug("sendSprogMessage message: [" + m.toString(isSIIBootMode()) + "]");
         }
         // remember who sent this
-        log.debug("Updating last sender "+replyTo.toString());
+//        log.debug("Updating last sender "+replyTo.toString());
         lastSender = replyTo;
         // notify all _other_ listeners
         notifyMessage(m, replyTo);
