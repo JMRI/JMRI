@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LocoNetMessage implements Serializable {
+    // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
+    static final long serialVersionUID = -7904918731667071828L;
 
     /**
      * Create a new object, representing a specific-length message.

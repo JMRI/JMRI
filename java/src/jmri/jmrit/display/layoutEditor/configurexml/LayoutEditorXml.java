@@ -94,6 +94,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", "" + p.getBackgroundColor().getBlue());
         }
         panel.setAttribute("gridSize", "" + p.getGridSize());
+        panel.setAttribute("gridSize2nd", "" + p.getGridSize2nd());
+
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
@@ -436,6 +438,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             try {
                 iz = (Integer.parseInt(a.getValue()));
                 panel.setGridSize(iz);
+            } catch (Exception e) {
+                log.error("failed to convert to int - " + a.getValue());
+                result = false;
+            }
+        }
+
+        // second grid size parameter
+        iz = 10; // this value is never used but it's the default
+        a = shared.getAttribute("gridSize2nd");
+        if (a != null) {
+            try {
+                iz = (Integer.parseInt(a.getValue()));
+                panel.setGridSize2nd(iz);
             } catch (Exception e) {
                 log.error("failed to convert to int - " + a.getValue());
                 result = false;

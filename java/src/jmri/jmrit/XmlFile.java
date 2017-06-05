@@ -625,8 +625,7 @@ public abstract class XmlFile {
      */
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version " + jmri.Version.name()
-                + " on " + (new Date()).toString()
-                + " $Id$";
+                + " on " + (new Date()).toString();
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
