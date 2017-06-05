@@ -1136,6 +1136,8 @@
 
 <mapID target="manual.DecoderPro.Main_Menu_System" url="manual/DecoderPro/Main_Menu.shtml#System"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SortByTrack" url="package/jmri/jmrit/operations/Operations.shtml#SortByTrack"/>
+
 <mapID target="html.doc.Technical.XmlEditors" url="html/doc/Technical/XmlEditors.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_Clock" url="manual/DecoderPro3/Main_LocoNet.shtml#Clock"/>
