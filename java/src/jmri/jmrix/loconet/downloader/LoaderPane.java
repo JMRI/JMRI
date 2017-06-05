@@ -497,7 +497,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 this.disableDownloadVerifyButtons();
                 // clear out the firmware image to ensure that the user won't 
                 // write it to the device
-                inputContent = new MemoryContents(); 
+                inputContent.clear();
+                setDefaultFieldValues();
+                clearInputFileName();        
             }
         }
     }
