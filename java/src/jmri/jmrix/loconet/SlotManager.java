@@ -95,6 +95,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
+        if (packet == null) throw new IllegalArgumentException("Packet must be non-null");
         if (repeats > 7) {
             log.error("Too many repeats!"); // NOI18N
         }
