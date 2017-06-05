@@ -86,6 +86,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JTextField software = new JTextField();
     JTextField delay = new JTextField();
     JTextField eestart = new JTextField();
+    JTextField eraseBlockSize = new JTextField();
 
     JRadioButton checkhardwareno = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareExact"));
@@ -126,6 +127,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     private static final String MAX_EESTART_VALUE = "FFFFF8"; // NOI18N
     private static final String MIN_DELAY_VALUE = "5"; // NOI18N
     private static final String MAX_DELAY_VALUE = "500"; // NOI18N
+    private static final String MIN_VALUE_64 = "64"; // NOI18N
+    private static final String MAX_VALUE_128 = "128"; // NOI18N
 
     public LoaderPane() {
     }
@@ -381,6 +384,30 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             add(p);
         }
 
+        {
+            // create a panel for displaying/modifying the Erase Block Size
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(Bundle.getMessage("LabelEraseBlockSize")
+                    + " ")); //NOI18N
+            eraseBlockSize.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_64, MAX_VALUE_128));
+            p.add(eraseBlockSize);
+            eraseBlockSize.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (!intParameterIsValid(eraseBlockSize, 64, 128)) {
+                        status.setText(Bundle.getMessage("ErrorInvalidParameter"));
+                    }
+                    updateDownloadVerifyButtons();
+                }
+            });
+            add(p);
+        }
         add(new JSeparator());
 
     }
@@ -440,6 +467,32 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         text = inputContent.extractValueOfKey("EEPROM Start Address"); // NOI18N
         if (text != null) {
             eestart.setText(text);
+        }
+        
+        text = inputContent.extractValueOfKey("Erase Blk Size"); // NOI18N
+        if (text != null) {
+            eraseBlockSize.setText(text);
+            boolean interpretationProblem = false;
+            try {
+                int i = Integer.parseInt(text);
+                if ((i > 128) || (i < 64)) {
+                    interpretationProblem = true;
+                }
+            } catch (java.lang.NumberFormatException e) {
+                interpretationProblem = true;
+            }
+            
+            if (interpretationProblem == true) {
+                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                this.disableDownloadVerifyButtons();
+                // clear out the firmware image to ensure that the user won't 
+                // write it to the device
+                inputContent = new MemoryContents(); 
+            }
         }
     }
 
@@ -841,7 +894,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = delayval + 50 + 14;
                     } else {
                         tdelay = delayval + 4 + 14;
-                    }
+                    }                        
 
                     // do the actual wait
                     wait(tdelay);
@@ -889,7 +942,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         software.setText("1"); // NOI18N
         delay.setText("200"); // NOI18N
         eestart.setText("C00000"); // NOI18N
-
+        eraseBlockSize.setText("64"); // NOI18N
+        
         try {
             setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
         } catch (NumberFormatException ex) {
@@ -991,8 +1045,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
         }
         eestart.updateUI();
-
+        
         allIsOk &= temp;
+
+        temp = intParameterIsValid(eraseBlockSize, 64, 128);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Erase Block Sizez is not valid: " + eraseBlockSize.getText());
+        }
+        
         if (allIsOk == true) {
             log.debug("No problems found when checking parameter values.");
         }
