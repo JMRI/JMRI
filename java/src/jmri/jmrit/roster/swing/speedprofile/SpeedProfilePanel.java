@@ -23,7 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.Application;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -1177,7 +1176,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     private static class SpeedProfilerXml extends XmlFile {
 
         public static String getDefaultFileName() {
-            return getFileLocation() + getFileName();
+            return Roster.getDefault().getRosterLocation() + "roster" + File.separator +  getFileName();
         }
 
         public File getFile(boolean store) {
@@ -1191,7 +1190,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         private static String baseFileName = "SpeedProfiler.xml";
 
         public static String getFileName() {
-            return Application.getApplicationName() + baseFileName;
+            return baseFileName;
         }
 
         /**
