@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains a label to display scale speed if available
- * for forward, reverse and STOP.
- * TODO: fix speed increments (14, 28)
+ * for forward, reverse and STOP. TODO: fix speed increments (14, 28)
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
@@ -24,13 +24,14 @@ import org.slf4j.LoggerFactory;
  * @author Steve Gigiel Copyright (C) 2017
  */
 public class SpeedPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
+
     private DccThrottle throttle;
 
     private JPanel mainPanel;
 
     private JPanel speedDisplayPanel;
 
-    private JLabel scaleSpeedLabel  = new JLabel("", JLabel.CENTER);
+    private JLabel scaleSpeedLabel = new JLabel("", JLabel.CENTER);
 
     // tracks whether we are using speed profiles
     private boolean useSpeedProfile = false;
@@ -50,7 +51,9 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     /**
-     * Set the AddressPanel this throttle control is listening for new throttle event
+     * Set the AddressPanel this throttle control is listening for new throttle
+     * event
+     *
      * @param addressPanel - reference to the addresspanel
      */
     public void setAddressPanel(AddressPanel addressPanel) {
@@ -91,16 +94,16 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     /**
-     *  update the state of this panel if direction or speed change
+     * update the state of this panel if direction or speed change
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("SpeedSetting")) {
             currentThrottleVol = ((Float) e.getNewValue()).floatValue();
-            scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile,currentThrottleVol,currentIsForward));
+            scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
         } else if (e.getPropertyName().equals("IsForward")) {
             currentIsForward = (boolean) e.getNewValue();
-            scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile,currentThrottleVol,currentIsForward));
+            scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
         }
         if (log.isDebugEnabled()) {
             log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
@@ -110,18 +113,20 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     /**
      *
      * @param useSpeedProfile - are we using speed profile
-     * @param throttleVolume - throttle position (percent of 1)
-     * @param isForward - true if going forward.
+     * @param throttleVolume  - throttle position (percent of 1)
+     * @param isForward       - true if going forward.
      * @return a string for displaying speed if available
      */
     private String updateSpeedLabel(boolean useSpeedProfile, float throttleVolume, boolean isForward) {
-        if (useSpeedProfile) {
-            return(addressPanel.getRosterEntry().getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume,isForward));
+        RosterEntry re = addressPanel.getRosterEntry();
+        if (re != null && useSpeedProfile) {
+            return (re.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume, isForward));
         } else {
-            return(Bundle.getMessage("ThrottleSpeedPanelError"));
+            return (Bundle.getMessage("ThrottleSpeedPanelError"));
         }
 
     }
+
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
@@ -149,8 +154,10 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
         }
 
         useSpeedProfile = false;  //posit false
-        if (addressPanel.getRosterEntry().getSpeedProfile() != null
-                && addressPanel.getRosterEntry().getSpeedProfile().getProfileSize() > 0) {
+        RosterEntry re = addressPanel.getRosterEntry();
+        if (re != null
+                && re.getSpeedProfile() != null
+                && re.getSpeedProfile().getProfileSize() > 0) {
             useSpeedProfile = true;
         }
     }
@@ -170,9 +177,9 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
         }
         notifyAddressThrottleFound(throttle);
     }
+
     /**
-     * Collect the prefs of this object into XML Element
-     * Just Positional Data
+     * Collect the prefs of this object into XML Element Just Positional Data
      * <ul>
      * <li> Window prefs
      * </ul>
@@ -189,8 +196,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     /**
-     * Set the preferences based on the XML Element.
-     * Just positional data
+     * Set the preferences based on the XML Element. Just positional data
      * <ul>
      * <li> Window prefs
      * </ul>

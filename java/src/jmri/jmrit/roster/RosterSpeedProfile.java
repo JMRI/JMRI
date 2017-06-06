@@ -93,7 +93,7 @@ public class RosterSpeedProfile {
      * Returns the scale speed format as a string with the units added given MilliMetres per Second.
      * If the warrant preference  is a percentage of normal or throttle will use metres per second.
      * @param mms MilliMetres per second
-     * @return a string with scale speed & units
+     * @return a string with scale speed and units
      */
     public String convertMMSToScaleSpeedWithUnits(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
@@ -121,7 +121,7 @@ public class RosterSpeedProfile {
      * Returns the scale speed format as a string with the units added given a throttle setting. and direction
      * @param throttleSetting as percentage of 1.0
      * @param isForward true or false
-     * @return a string with scale speed & units
+     * @return a string with scale speed and units
      */
     public String convertThrottleSettingToScaleSpeedWithUnits(float throttleSetting, boolean isForward) {
         return convertMMSToScaleSpeedWithUnits(getSpeed(throttleSetting, isForward));
