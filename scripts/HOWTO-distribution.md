@@ -68,7 +68,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
   ./scripts/update-HOWTO.sh 4.7.5 4.7.6 4.7.7
 ```
-(and then manually update that line above to be last version, this version, next version)
+(and then manually update that line above to be last version release, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5)
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
@@ -539,6 +539,7 @@ If you don't, a bunch of Windows users are likely to whine
 
         The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
         <http://jmri.org/releasenotes/jmri4.7.5.shtml>
+
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
