@@ -662,11 +662,6 @@
             <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.bidib.jbidib</groupId>
-            <artifactId>jbidibc-rxtx-2.2</artifactId>
-            <version>1.6.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -702,11 +697,6 @@
             <version>5.0.2</version>
         </dependency>
         -->
-        <dependency>
-            <groupId>com.serialio</groupId>
-            <artifactId>serialio</artifactId>
-            <version>1.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>org.jogamp.jogl</groupId>
@@ -834,14 +824,14 @@
             <groupId>com.github.purejavacomm</groupId>
             <artifactId>purejavacomm</artifactId>
             <version>1.0.1.RELEASE</version>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito2</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>            
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.0.42-beta</version>
