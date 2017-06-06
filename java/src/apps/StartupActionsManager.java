@@ -14,6 +14,7 @@ import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.implementation.FileLocationsPreferences;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
@@ -139,6 +140,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         requires.add(RosterConfigManager.class);
         requires.add(ProgrammerConfigManager.class);
         requires.add(GuiLafPreferencesManager.class);
+        requires.add(WarrantPreferences.class);
         return requires;
     }
 

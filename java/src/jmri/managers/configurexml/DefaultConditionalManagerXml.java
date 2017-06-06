@@ -62,7 +62,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     log.error("Unable to save '{}' to the XML file", sname);
                     continue;
                 }
-                Element elem = new Element("conditional").setAttribute("systemName", sname);
+                Element elem = new Element("conditional");
+
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                elem.setAttribute("systemName", sname);
+                if (c.getUserName()!=null && !c.getUserName().equals("")) elem.setAttribute("userName", c.getUserName());
+
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts

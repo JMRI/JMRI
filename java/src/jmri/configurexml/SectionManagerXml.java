@@ -53,6 +53,11 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         Element elem = new Element("section");
                         elem.addContent(new Element("systemName").addContent(sname));
 
+                        // As a work-around for backward compatibility, store systemName and username as attribute.
+                        // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                        elem.setAttribute("systemName", sname);
+                        if (x.getUserName()!=null && !x.getUserName().equals("")) elem.setAttribute("userName", x.getUserName());
+                            
                         // store common part
                         storeCommon(x, elem);
                         String txt = "userdefined";
