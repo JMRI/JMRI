@@ -570,8 +570,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Internal routine to handle timer stop
-     * 
-     * @param delay timer delay
      */
     protected void stopTimer() {
         log.debug("Stop timer");
