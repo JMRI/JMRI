@@ -506,23 +506,11 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
 
-# RXTX options (only works in some versions)
-OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
-
-if [ -n "$JMRI_SERIAL_PORTS" ] ; then
-    JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
-fi
-
-if [ "$OS" = "macosx" ] ; then
-    ALTPORTS=
-else
-    # locate alternate serial ports
-    ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
-    if [ "${ALTPORTS}" ] ; then
-        ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
-    fi
-    [ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
+# handle ports in --settings argument or JMRI_SERIAL_PORTS environment variable
+# but not if already in OPTIONS
+ALTPORTS=
+if [[ -n "${JMRI_SERIAL_PORTS}" && ! ${OPTIONS} =~ "-Dpurejavacomm.portnamepattern=" ]] ; then
+    ALTPORTS="-Dpurejavacomm.portnamepattern=${JMRI_SERIAL_PORTS}"
 fi
 
 declare -a DOCK_OPTIONS
