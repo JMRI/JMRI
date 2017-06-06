@@ -56,6 +56,21 @@ public class NmraPacket {
     static final public int accIdAltHighLimit = 2048;
 
     /**
+     * Create a packet containing a decoder idle instruction.
+     *
+     * @return the packet as a byte array or null if the address is not valid
+     */
+    @CheckForNull
+    public static byte[] idlePacket() {
+        byte[] retVal;
+        retVal = new byte[3];
+        retVal[0] = (byte) (0xFF);  // address byte for decoder idle
+        retVal[1] = (byte) (0);     // decoder idle instruction
+        retVal[2] = (byte) (0xFF);  // checksum byte
+        return retVal;
+    }
+
+    /**
      * Create a packet containing a one-byte instruction.
      *
      * @param address  the address to send the instruction to
