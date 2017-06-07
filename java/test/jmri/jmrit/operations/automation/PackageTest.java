@@ -30,15 +30,17 @@ public class PackageTest extends TestCase {
         suite.addTest(AutomationItemTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableFrameGuiTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyFrameGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableModelTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));        
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationResetActionTest.class));
         return suite;
     }
 

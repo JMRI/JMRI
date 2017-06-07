@@ -2778,15 +2778,19 @@ public class LogixTableAction extends AbstractTableAction {
             sName = _curConditional.getSystemName();
         }
 
-        _showReminder = true;
-        _curConditional = null;
-        numConditionals--;
         String[] msgs = _curLogix.deleteConditional(sName);
         if (msgs != null) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Error11"), (Object[]) msgs),
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        _showReminder = true;
+        _curConditional = null;
+        numConditionals--;
+
+        // Use an empty TreeSet to remove this conditional from the where used, if any
+        updateWhereUsed(new TreeSet<String>(), sName);
 
         // complete deletion
         cancelConditionalPressed(null);

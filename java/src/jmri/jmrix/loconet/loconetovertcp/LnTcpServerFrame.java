@@ -85,6 +85,7 @@ public class LnTcpServerFrame extends JmriJFrame {
             }
         };
         server.addStateListener(listener);
+        this.updateServerStatus(server);
         super.pack();
     }
 
