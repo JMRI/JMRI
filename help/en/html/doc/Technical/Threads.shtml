@@ -89,7 +89,34 @@ mostly-likely-right one when coding.
       javax.swing.SwingUtilities.invokeAndWait(r); these should be
       migrated to the newer JMRI-specific methods as time is
       available to keep our code just a tiny bit cleaner and more
-      flexible.) <!--#include virtual="/Footer" --></p>
+      flexible.) 
+      
+<h2>Debugging</h2>
+
+<h3>Getting a thread-dump</h3>
+
+When debugging threading issues, it can be helpful to get a "thread dump".
+<ul>
+<li>To do this on Linux and macOS when running from a command line, type control-backspace
+<li>To do this on Linux and macOS when running detached, e.g. from startup icon, 
+    <ul>
+    <li>Get the process ID (PID) from e.g. ps or Activity Monitor (under application name, e.g. PanelPro)<br>
+<code>
+ps | grep java | grep apps | awk '{print $1}'<br>
+</code>
+    <li>and then send a QUIT signal to that process.  E.g., if it's 6190, <br>
+<code>
+kill -s QUIT 6190<br>
+</code>
+    or you can combine them:<br>
+<code>
+kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br>
+</code>
+    <li>Then look for the output in Console or ....
+    </ul>
+<li>If you're running under Netbeans or Eclipse, there are simple menu commands to do this.
+</ul>
+    <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
