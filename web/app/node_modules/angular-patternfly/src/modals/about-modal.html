@@ -1,23 +1,23 @@
 <script type="text/ng-template" id="about-modal-template.html">
   <div class="about-modal-pf">
     <div class="modal-header">
-      <button type="button" class="close" ng-click="close()" aria-hidden="true">
+      <button type="button" class="close" ng-click="$ctrl.close()" aria-hidden="true">
         <span class="pficon pficon-close"></span>
       </button>
     </div>
     <div class="modal-body">
-      <h1 ng-if="title">{{title}}</h1>
-      <div ng-if="productInfo && productInfo.length > 0" class="product-versions-pf">
+      <h1 ng-if="$ctrl.title">{{$ctrl.title}}</h1>
+      <div ng-if="$ctrl.productInfo && $ctrl.productInfo.length > 0" class="product-versions-pf">
         <ul class="list-unstyled">
-          <li ng-repeat="info in productInfo"><strong>{{info.name}}</strong> {{info.value}}</li>
+          <li ng-repeat="info in $ctrl.productInfo"><strong>{{info.name}}</strong> {{info.value}}</li>
         </ul>
       </div>
-      <div pf-about-modal-transclude="template" class="product-versions-pf"></div>
-      <div ng-if="additionalInfo" class="product-versions-pf">{{additionalInfo}}</div>
-      <div ng-if="copyright" class="trademark-pf">{{copyright}}</div>
+      <div pf-about-modal-transclude="$ctrl.template" class="product-versions-pf"></div>
+      <div ng-if="$ctrl.additionalInfo" class="product-versions-pf">{{$ctrl.additionalInfo}}</div>
+      <div ng-if="$ctrl.copyright" class="trademark-pf">{{$ctrl.copyright}}</div>
     </div>
     <div class="modal-footer">
-      <img ng-if="imgSrc" ng-src="{{imgSrc}}" alt="{{imgAlt}}"/>
+      <img ng-if="$ctrl.imgSrc" ng-src="{{$ctrl.imgSrc}}" alt="{{$ctrl.imgAlt}}"/>
     </div>
   </div>
 </script>

@@ -1,4 +1,4 @@
-describe('Directive: pfToastNotification', function () {
+describe('Component: pfToastNotification', function () {
 
   var $scope;
   var $compile;
@@ -90,11 +90,11 @@ describe('Directive: pfToastNotification', function () {
     $scope.data = {
       title: "Test Notification"
     };
-    var htmlTmp = '<div pf-toast-notification notification-type="{{type}}" header="{{header}}" message="{{message}}"' +
+    var htmlTmp = '<pf-toast-notification notification-type="{{type}}" header="{{header}}" message="{{message}}"' +
                   '    show-close="{{showClose}}" close-callback="closeCallback"' +
                   '    action-title="{{primaryAction}}" action-callback="handleAction"' +
                   '    menu-actions="menuActions" data="data">' +
-                  '    </div>';
+                  '    </pf-toast-notification>';
 
     compileHTML(htmlTmp, $scope);
   };

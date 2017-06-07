@@ -30,7 +30,7 @@
       return mergeDeep({}, angular.copy(source1), angular.copy(source2));
     },
 
-    colorPalette: $.pfPaletteColors
+    colorPalette: patternfly.pfPaletteColors
   });
 })();
 

@@ -1,8 +1,8 @@
 /**
  * @ngdoc directive
- * @name patternfly.card.directive:pfCard - Timeframe Filters
- * @restrict A
- * @element ANY
+ * @name patternfly.card.component:pfCard - Timeframe Filters
+ * @restrict E
+ *
  * @param {string} headTitle Title for the card
  * @param {string=} subTitle Sub-Title for the card
  * @param {boolean=} showTopBorder Show/Hide the blue top border. True shows top border, false (default) hides top border
@@ -27,7 +27,7 @@
  * <li>.callBackFn - user defined function to call when a filter is selected
  * </ul>
  * @description
- * Directive for easily displaying a card with html content
+ * Component for easily displaying a card with html content
  *
  * @example
  <example module="demo">
@@ -35,14 +35,14 @@
  <file name="index.html">
    <div ng-controller="ChartCtrl">
      <label class="label-title">Timeframe filter in header</label>
-       <div pf-card head-title="Card Title" sub-title="Card Subtitle" show-top-border="true" filter="filterConfigHeader" style="width: 50%">
+       <pf-card head-title="Card Title" sub-title="Card Subtitle" show-top-border="true" filter="filterConfigHeader" style="width: 50%">
          Card Contents
-       </div>
+       </pf-card>
      <label class="label-title">Footer with Link & Timeframe filter</label>
-     <div pf-card head-title="Card Title" sub-title="Card Subtitle" show-top-border="true"
+     <pf-card head-title="Card Title" sub-title="Card Subtitle" show-top-border="true"
           footer="footerConfig" filter="filterConfig" style="width: 50%">
         Card Contents
-     </div>
+     </pf-card>
    </div>
  </file>
  <file name="script.js">

@@ -1,0 +1,102 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/donut/examples/donut-chart.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/2e30ca8/src/charts/donut/examples/donut-chart.js#L94" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfDonutChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-component-page patternfly-charts-component-pfdonutchart-page"><p>Component for rendering a donut chart which shows the relationships of a set of values to a whole.  When using a
+Donut Chart to show the relationship of a set of values to a whole, there should be no more than six
+categories.</p>
+<p><br><br>
+See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;pf-donut-chart
+       config="{object}"
+       data="{object}"
+       chart-height="{number}"&gt;
+&lt;/pf-donut-chart&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-component-page patternfly-charts-component-pfdonutchart-page"><p>configuration properties for the donut chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.chartId        - the unique id of the donut chart
+<li>.centerLabelFn  - user defined function to customize the text of the center label (optional)
+<li>.onClickFn(d,i) - user defined function to handle when donut arc is clicked upon.
+</ul></div></td></tr><tr><td>data</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-component-page patternfly-charts-component-pfdonutchart-page"><p>an array of values for the donut chart.<br/></p>
+<ul style='list-style-type: none'>
+<li>.key           - string representing an arc within the donut chart
+<li>.value         - number representing the value of the arc
+</ul></div></td></tr><tr><td>chartHeight</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-component-page patternfly-charts-component-pfdonutchart-page"><p>height of the donut chart</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-component-page patternfly-charts-component-pfdonutchart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-13" source-edit-css="" source-edit-js="script.js-14" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-13" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-13">
+  <div ng-controller="ChartCtrl">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <label>Donut Chart</label>
+        </div>
+        <div class="col-md-6 text-center">
+          <label>Small Donut Chart</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <pf-donut-chart config="config" data="data"></pf-donut-chart>
+      </div>
+      <div class="col-md-6 text-center">
+        <pf-donut-chart config="custConfig" data="data" chart-height="chartHeight"></pf-donut-chart>
+      </div>
+    </div>
+   </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-14"></pre>
+<script type="text/ng-template" id="script.js-14">
+  angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope, $interval ) {
+    $scope.config = {
+      'chartId': 'chartOne',
+      'legend': {"show":true},
+      'colors' : {
+        'Cats': '#0088ce',     // blue
+        'Hamsters': '#3f9c35', // green
+        'Fish': '#ec7a08',     // orange
+        'Dogs': '#cc0000'      // red
+      },
+      donut: {
+        title: "Animals"
+      },
+      'onClickFn': function (d, i) {
+        alert("You clicked on donut arc: " + d.id);
+       }
+    };
+
+    $scope.custConfig = angular.copy($scope.config);
+    $scope.custConfig.chartId = 'chartTwo';
+    $scope.custConfig.legend.position = 'right';
+    $scope.custConfig.centerLabelFn = function () {
+      return "Pets";
+    };
+    $scope.chartHeight = 120;
+
+    $scope.data = [
+      ['Cats', 2],
+      ['Hamsters', 1],
+      ['Fish', 3],
+      ['Dogs', 2]
+    ];
+
+
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-13" ng-eval-javascript="script.js-14"></div>
+</div></div>
+</div>

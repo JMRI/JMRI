@@ -1,5 +1,5 @@
 <div ng-controller="DetailsGeneralController">
-   <div pf-wizard-substep step-title="General" next-enabled="detailsGeneralComplete" step-id="details-general" step-priority="0" on-show="onShow" review-template="{{reviewTemplate}}" show-review-details="true">
+   <pf-wizard-substep step-title="General" next-enabled="detailsGeneralComplete" step-id="details-general" step-priority="0" on-show="onShow" review-template="{{reviewTemplate}}" show-review-details="true">
      <form class="form-horizontal">
        <div pf-form-group pf-label="Name" required>
         <input id="new-name" name="name" ng-model="data.name" type="text" ng-change="updateName()" required/>
@@ -8,5 +8,5 @@
         <input id="new-description" name="description" ng-model="data.description" type="text" />
        </div>
      </form>
-  </div>
+  </pf-wizard-substep>
 </div>

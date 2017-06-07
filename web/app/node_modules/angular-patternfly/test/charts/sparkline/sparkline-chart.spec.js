@@ -1,4 +1,4 @@
-describe('Directive: pfSparklineChart', function() {
+describe('Component: pfSparklineChart', function() {
   var $scope, $compile, $timeout, element, isoloateScope;
 
   beforeEach(module(
@@ -35,13 +35,13 @@ describe('Directive: pfSparklineChart', function() {
   var compileChart = function (markup, scope) {
     element = $compile(angular.element(markup))(scope);
     scope.$apply();
-    isolateScope = element.isolateScope();
+    isolateScope = element.controller('pfSparklineChart');
 
     return element;
   };
 
   it("should not show axis by default", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>',$scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>',$scope);
 
     expect(isolateScope.sparklineChartId).toBe("testSparklineChartsparklineChart");
     expect(isolateScope.chartConfig.axis.x.show).toBe(false);
@@ -49,7 +49,7 @@ describe('Directive: pfSparklineChart', function() {
   });
 
   it("should allow attribute specifications to show x and y axis", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data" show-x-axis="true" show-y-axis="true"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data" show-x-axis="true" show-y-axis="true"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.sparklineChartId).toBe("testSparklineChartsparklineChart");
     expect(isolateScope.chartConfig.axis.x.show).toBe(true);
@@ -59,7 +59,7 @@ describe('Directive: pfSparklineChart', function() {
   it("should update when the show x and y axis attributes change", function() {
     $scope.showX = false;
     $scope.showY = false;
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data" show-x-axis="showX" show-y-axis="showY"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data" show-x-axis="showX" show-y-axis="showY"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.chartConfig.axis.x.show).toBe(false);
     expect(isolateScope.chartConfig.axis.y.show).toBe(false);
@@ -74,7 +74,7 @@ describe('Directive: pfSparklineChart', function() {
   });
 
   it("should allow attribute specification of chart height", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data" chart-height="120"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data" chart-height="120"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.sparklineChartId).toBe("testSparklineChartsparklineChart");
     expect(isolateScope.chartConfig.size.height).toBe(120);
@@ -82,7 +82,7 @@ describe('Directive: pfSparklineChart', function() {
 
   it("should update when the chart height attribute changes", function() {
     $scope.chartHeight = 120;
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data" chart-height="chartHeight"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data" chart-height="chartHeight"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.sparklineChartId).toBe("testSparklineChartsparklineChart");
     expect(isolateScope.chartConfig.size.height).toBe(120);
@@ -93,7 +93,7 @@ describe('Directive: pfSparklineChart', function() {
   });
 
   it("should setup C3 chart data correctly", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.config.data.x).toBe("dates");
     expect(isolateScope.config.data.columns.length).toBe(2);
@@ -102,7 +102,7 @@ describe('Directive: pfSparklineChart', function() {
   });
 
   it("should update C3 chart data when data changes", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.config.data.x).toBe("dates");
     expect(isolateScope.config.data.columns.length).toBe(2);
@@ -121,7 +121,7 @@ describe('Directive: pfSparklineChart', function() {
 
   it("should allow tooltip type specification", function() {
     $scope.config.tooltipType = "percentage"
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.config.tooltipType).toBe("percentage");
   });
@@ -135,7 +135,7 @@ describe('Directive: pfSparklineChart', function() {
     };
 
     $scope.config.tooltipFn = myTooltipFn;
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
     var dataPoint = [{value: 0, name: 'used'}, 0];
     isolateScope.sparklineTooltip(isolateScope).contents(dataPoint);
 
@@ -156,7 +156,7 @@ describe('Directive: pfSparklineChart', function() {
       total: 100
     };
 
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
 
     expect(isolateScope.config.data.x).toBe("dates");
     expect(isolateScope.config.data.columns.length).toBe(2);
@@ -165,7 +165,7 @@ describe('Directive: pfSparklineChart', function() {
   });
 
   it("should show empty chart when the dataAvailable is set to false", function() {
-    element = compileChart('<div pf-sparkline-chart config="config" chart-data="data"></div>', $scope);
+    element = compileChart('<pf-sparkline-chart config="config" chart-data="data"></pf-sparkline-chart>', $scope);
     var emptyChart = element.find('.empty-chart-content');
     expect(emptyChart.length).toBe(0);
 

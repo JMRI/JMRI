@@ -1,4 +1,4 @@
-describe('Directive: pfUtilizationTrendChart', function() {
+describe('Component: pfUtilizationTrendChart', function() {
   var $scope, $compile, $timeout, element, isolateScope;
 
   beforeEach(module(
@@ -48,38 +48,38 @@ describe('Directive: pfUtilizationTrendChart', function() {
   var compileChart = function (markup, scope) {
     element = $compile(angular.element(markup))(scope);
     scope.$apply();
-    isolateScope = element.isolateScope();
+    isolateScope = element.controller('pfUtilizationTrendChart');
 
     return element;
   };
 
   it("should show used for the center label by default", function() {
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart>',$scope);
 
     expect(isolateScope.centerLabel).toBe('used');
   });
 
   it("should show 'Available' for the current label by default", function() {
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart>',$scope);
 
     expect(isolateScope.currentText).toBe('Available');
     expect(isolateScope.currentValue).toBe(24);
   });
 
   it("should show the correct available value when only used and total are given", function() {
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart>',$scope);
 
     expect(isolateScope.chartData.available).toBe(24);
   });
 
   it("should show correct units", function() {
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart>',$scope);
     expect(isolateScope.config.units).toBe('GB');
   });
 
   it("should update the current and center labels when attribute changes", function() {
     $scope.cLabel = 'used';
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" center-label="cLabel" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" center-label="cLabel" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart',$scope);
 
     expect(isolateScope.centerLabel).toBe('used');
     expect(isolateScope.currentText).toBe('Available');
@@ -94,7 +94,7 @@ describe('Directive: pfUtilizationTrendChart', function() {
   });
 
   it("should show empty chart when the dataAvailable flag is set to false", function() {
-    element = compileChart('<div pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></div>',$scope);
+    element = compileChart('<pf-utilization-trend-chart config="config" chart-data="data" donut-config="donutConfig" sparkline-config="sparklineConfig"></pf-utilization-trend-chart>',$scope);
 
     var emptyChart = element.find('.empty-chart-content');
     expect(emptyChart.length).toBe(0);

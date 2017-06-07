@@ -1,4 +1,4 @@
-describe('Directive:  pfVerticalNavigation', function () {
+describe('Component:  pfVerticalNavigation', function () {
   var $scope;
   var $compile;
   var element;
@@ -207,14 +207,14 @@ describe('Directive:  pfVerticalNavigation', function () {
 
     var htmlTmp = '' +
       '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-      '  <div pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
+      '  <pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
       '       show-badges="true" pinnable-menus="true" update-active-items-on-click="true"' +
       '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-      '       ignore-mobile="true"' +
+      '       ignore-mobile="true">' +
       '    <div>' +
       '      <div class="test-included-content"></div>' +
       '    </div>' +
-      '  </div>' +
+      '  </pf-vertical-navigation>' +
       '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
       '  </div>' +
       ' </div>' +
@@ -298,14 +298,14 @@ describe('Directive:  pfVerticalNavigation', function () {
   it('should not show icons in hiddenIcons mode', function () {
     var htmlTmp = '' +
       '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-      '  <div pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
+      '  <pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
       '       show-badges="true" pinnable-menus="true" update-active-items-on-click="true"' +
       '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-      '       ignore-mobile="true" hidden-icons="true"' +
+      '       ignore-mobile="true" hidden-icons="true">' +
       '    <div>' +
       '      <div class="test-included-content"></div>' +
       '    </div>' +
-      '  </div>' +
+      '  </pf-vertical-navigation>' +
       '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
       '  </div>' +
       '</div>' +
@@ -348,14 +348,14 @@ describe('Directive:  pfVerticalNavigation', function () {
 
     var htmlTmp = '' +
       '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-      '  <div pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"' +
+      '  <pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"' +
       '       show-badges="true" pinnable-menus="true" update-active-items-on-click="true"' +
       '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-      '       ignore-mobile="true" hidden-icons="true"' +
+      '       ignore-mobile="true" hidden-icons="true">' +
       '    <div>' +
       '      <div class="test-included-content"></div>' +
       '    </div>' +
-      '  </div>' +
+      '  </pf-vertical-navigation>' +
       '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
       '  </div>' +
       '</div>' +
@@ -523,14 +523,14 @@ describe('Directive:  pfVerticalNavigation', function () {
   it('should not update active items when updateActiveItemsOnClick is not true', function () {
     var htmlTmp = '' +
       '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-      '  <div pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
+      '  <pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
       '       show-badges="true" pinnable-menus="true"' +
       '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-      '       ignore-mobile="true"' +
+      '       ignore-mobile="true">' +
       '    <div>' +
       '      <div class="test-included-content"></div>' +
       '    </div>' +
-      '  </div>' +
+      '  </pf-vertical-navigation>' +
       '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
       '  </div>' +
       ' </div>' +
@@ -667,14 +667,14 @@ describe('Directive:  pfVerticalNavigation', function () {
 
     var htmlTmp = '' +
     '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-    '  <div pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
+    '  <pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
     '       pinnable-menus="true" update-active-items-on-click="true"' +
     '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-    '       ignore-mobile="true" hidden-icons="true"' +
+    '       ignore-mobile="true" hidden-icons="true">' +
     '    <div>' +
     '      <div class="test-included-content"></div>' +
     '    </div>' +
-    '  </div>' +
+    '  </pf-vertical-navigation>' +
     '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
     '  </div>' +
     '</div>' +
@@ -693,7 +693,7 @@ describe('Directive:  pfVerticalNavigation', function () {
 
   it('should throw and error if uiSref is used when $state is undefined', function () {
     var wellDefinedItem = element.find('.nav-pf-vertical > .list-group > .list-group-item:nth-child(2) > a');
-    expect(function() { 
+    expect(function() {
       wellDefinedItem.click();
     }).toThrow(new Error("uiSref is defined on item, but no $state has been injected. Did you declare a dependency on \"ui.router\" module in your app?"));
   });
@@ -783,15 +783,15 @@ describe('Directive:  pfVerticalNavigation with ui.router', function () {
     };
 
     var htmlTmp = '' +
-      '<div id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
-      '  <div pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
+      '<pf-vertical-navigation id="verticalNavLayout" class="layout-pf layout-pf-fixed">' +
+      '  <pf-vertical-navigation items="navigationItems" brand-src="images/test.svg" brand-alt="ANGULAR PATTERNFLY"' +
       '       show-badges="true" pinnable-menus="true" update-active-items-on-click="true"' +
       '       navigate-callback="handleNavigateClick" item-click-callback="handleItemClick"' +
-      '       ignore-mobile="true"' +
+      '       ignore-mobile="true">' +
       '    <div>' +
       '      <div class="test-included-content"></div>' +
       '    </div>' +
-      '  </div>' +
+      '  </pf-vertical-navigation>' +
       '  <div id="contentContainer" class="container-pf-nav-pf-vertical">' +
       '  </div>' +
       ' </div>' +

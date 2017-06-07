@@ -3,29 +3,41 @@
     <div uib-dropdown class="input-group-btn">
       <button uib-dropdown-toggle type="button" class="btn btn-default filter-fields"
               uib-tooltip="Filter by" tooltip-placement="top" tooltip-append-to-body="true">
-        {{currentField.title}}
+        {{$ctrl.currentField.title}}
         <span class="caret"></span>
       </button>
       <ul uib-dropdown-menu>
-        <li ng-repeat="item in config.fields">
-          <a class="filter-field" role="menuitem" tabindex="-1" ng-click="selectField(item)">
+        <li ng-repeat="item in $ctrl.config.fields">
+          <a class="filter-field" role="menuitem" tabindex="-1" ng-click="$ctrl.selectField(item)">
             {{item.title}}
           </a>
         </li>
       </ul>
     </div>
-    <div ng-if="currentField.filterType !== 'select'">
-      <input class="form-control" type="{{currentField.filterType}}" ng-model="config.currentValue"
-             placeholder="{{currentField.placeholder}}"
-             ng-keypress="onValueKeyPress($event)"/>
+    <div ng-if="$ctrl.currentField.filterType !== 'select'">
+      <input class="form-control" type="{{$ctrl.currentField.filterType}}" ng-model="$ctrl.currentValue"
+             placeholder="{{$ctrl.currentField.placeholder}}"
+             ng-keypress="$ctrl.onValueKeyPress($event)"/>
     </div>
-    <div ng-if="currentField.filterType === 'select'">
-      <select pf-select class="form-control filter-select" id="currentValue"
-              ng-model="config.currentValue"
-              ng-options="filterValue for filterValue in currentField.filterValues"
-              ng-change="selectValue(config.currentValue)">
-      <option value="">{{currentField.placeholder}}</option>
-      </select>
+    <div ng-if="$ctrl.currentField.filterType === 'select'">
+      <div class="btn-group bootstrap-select form-control filter-select" uib-dropdown >
+        <button type="button" uib-dropdown-toggle class="btn btn-default dropdown-toggle">
+          <span class="filter-option pull-left">{{$ctrl.currentValue || $ctrl.currentField.placeholder}}</span>
+          <span class="caret"></span>
+        </button>
+        <ul uib-dropdown-menu class="dropdown-menu-right" role="menu">
+          <li ng-if="$ctrl.currentField.placeholder">
+            <a role="menuitem" tabindex="-1" ng-click="$ctrl.selectValue()">
+              {{$ctrl.currentField.placeholder}}
+            </a>
+          </li>
+          <li ng-repeat="filterValue in $ctrl.currentField.filterValues" ng-class="{'selected': filterValue === $ctrl.currentValue}">
+            <a role="menuitem" tabindex="-1" ng-click="$ctrl.selectValue(filterValue)">
+              {{filterValue}}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

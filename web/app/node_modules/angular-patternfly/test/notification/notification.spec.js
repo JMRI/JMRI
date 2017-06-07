@@ -19,42 +19,42 @@ describe('pf-notification', function () {
 
     it('should propagate to the $rootScope correctly', function () {
 
-      expect($scope.notifications.data.length).toBe(0);
+      expect(Notifications.data.length).toBe(0);
 
       Notifications.info('aloha');
 
-      expect($scope.notifications.data.length).toBe(1);
-      expect($scope.notifications.data[0].type).toBe('info');
-      expect($scope.notifications.data[0].message).toBe('aloha');
+      expect(Notifications.data.length).toBe(1);
+      expect(Notifications.data[0].type).toBe('info');
+      expect(Notifications.data[0].message).toBe('aloha');
 
       Notifications.warn('achtung');
 
-      expect($scope.notifications.data.length).toBe(2);
-      expect($scope.notifications.data[1].type).toBe('warning');
-      expect($scope.notifications.data[1].message).toBe('achtung');
+      expect(Notifications.data.length).toBe(2);
+      expect(Notifications.data[1].type).toBe('warning');
+      expect(Notifications.data[1].message).toBe('achtung');
 
       Notifications.success('allright');
 
-      expect($scope.notifications.data.length).toBe(3);
-      expect($scope.notifications.data[2].type).toBe('success');
-      expect($scope.notifications.data[2].message).toBe('allright');
+      expect(Notifications.data.length).toBe(3);
+      expect(Notifications.data[2].type).toBe('success');
+      expect(Notifications.data[2].message).toBe('allright');
 
       Notifications.error('noway');
 
-      expect($scope.notifications.data.length).toBe(4);
-      expect($scope.notifications.data[3].type).toBe('danger');
-      expect($scope.notifications.data[3].message).toBe('noway');
+      expect(Notifications.data.length).toBe(4);
+      expect(Notifications.data[3].type).toBe('danger');
+      expect(Notifications.data[3].message).toBe('noway');
 
       var httpResponse = {data:{message: 'http'}};
 
       Notifications.httpError('error', httpResponse);
 
-      expect($scope.notifications.data.length).toBe(5);
-      expect($scope.notifications.data[4].type).toBe('danger');
-      expect($scope.notifications.data[4].message).toBe('error (http)');
+      expect(Notifications.data.length).toBe(5);
+      expect(Notifications.data[4].type).toBe('danger');
+      expect(Notifications.data[4].message).toBe('error (http)');
 
       $timeout.flush();
-      expect($scope.notifications.data.length).toBe(2);
+      expect(Notifications.data.length).toBe(2);
     });
   });
 

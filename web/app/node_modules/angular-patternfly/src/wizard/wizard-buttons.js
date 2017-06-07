@@ -1,46 +1,48 @@
 (function () {
   'use strict';
-  function pfWizardButtonDirective (action) {
+  function pfWizardButtonComponent (action) {
     angular.module('patternfly.wizard')
-      .directive(action, function () {
-        return {
-          restrict: 'A',
-          scope: {
-            callback: "=?"
-          },
-          controller: function ($scope) {
-            var findWizard = function (scope) {
-              var wizard;
+      .component(action, {
+        bindings: {
+          callback: "=?"
+        },
+        controller: function ($element, $scope) {
+          var ctrl = this;
 
-              if (scope) {
-                if (angular.isDefined(scope.wizard)) {
-                  wizard = scope.wizard;
-                } else {
-                  wizard = findWizard(scope.$parent);
-                }
+          var findWizard = function (scope) {
+            var wizard;
+
+            if (scope) {
+              if (angular.isDefined(scope.wizard)) {
+                wizard = scope.wizard;
+              } else {
+                wizard = findWizard(scope.$parent);
               }
+            }
 
-              return wizard;
-            };
+            return wizard;
+          };
+
+          ctrl.$onInit = function () {
             $scope.wizard = findWizard($scope);
-          },
-          link: function ($scope, $element, $attrs) {
+          };
+
+          ctrl.$postLink = function () {
             $element.on("click", function (e) {
               e.preventDefault();
               $scope.$apply(function () {
                 // scope apply in button module
-                $scope.$eval($attrs[action]);
                 $scope.wizard[action.replace("pfWiz", "").toLowerCase()]($scope.callback);
               });
             });
-          }
-        };
+          };
+        }
       });
   }
 
-  pfWizardButtonDirective('pfWizNext');
-  pfWizardButtonDirective('pfWizPrevious');
-  pfWizardButtonDirective('pfWizFinish');
-  pfWizardButtonDirective('pfWizCancel');
-  pfWizardButtonDirective('pfWizReset');
+  pfWizardButtonComponent('pfWizNext');
+  pfWizardButtonComponent('pfWizPrevious');
+  pfWizardButtonComponent('pfWizFinish');
+  pfWizardButtonComponent('pfWizCancel');
+  pfWizardButtonComponent('pfWizReset');
 })();

@@ -1,4 +1,4 @@
-describe('Directive:  pfWizard', function () {
+describe('Component:  pfWizard', function () {
   var $scope,
       $rootScope,
       $compile,
@@ -105,8 +105,8 @@ describe('Directive:  pfWizard', function () {
     $scope.$digest();
 
     // there are two dependent timeouts in the wizard that need to be flushed
-//    $timeout.flush();
-//    $timeout.flush();
+    $timeout.flush();
+    $timeout.flush();
   };
 
   it('should dispatch the cancel event on the close button click', function () {
@@ -136,16 +136,12 @@ describe('Directive:  pfWizard', function () {
 
   it('should have disabled the next button', function () {
     setupWizard('test/wizard/wizard-container.html');
-    $timeout.flush();
-    $timeout.flush();
     var checkDisabled = element.find('.wizard-pf-next').attr('disabled');
     expect(checkDisabled).toBe('disabled');
   });
 
   it('should have enabled the next button after input and allowed navigation', function () {
     setupWizard('test/wizard/wizard-container.html');
-    $timeout.flush();
-    $timeout.flush();
     var nextButton = element.find('.wizard-pf-next');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
@@ -156,9 +152,7 @@ describe('Directive:  pfWizard', function () {
 
   it('should have allowed moving back to first page after input and allowed navigation', function () {
     setupWizard('test/wizard/wizard-container.html');
-    $timeout.flush();
-    $timeout.flush();
-     var nextButton = element.find('.wizard-pf-next');
+    var nextButton = element.find('.wizard-pf-next');
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
     eventFire(nextButton[0], 'click');
@@ -173,13 +167,15 @@ describe('Directive:  pfWizard', function () {
 
   it('should have allowed navigation to review page', function () {
     setupWizard('test/wizard/wizard-container.html');
-    var nextButton = element.find('.wizard-pf-next');
+
     var nameBox = element.find('#new-name');
     nameBox.val('test').triggerHandler('input');
     $scope.$digest();
 
     $scope.currentStep = 'Review';
     $scope.$digest();
+
+    // Two timeouts occur when navigating to a specified page (one to get the wizard setup, one to allow for the step.onShow function).
     $timeout.flush();
     $timeout.flush();
 
@@ -265,8 +261,6 @@ describe('Directive:  pfWizard', function () {
 
   it('should hide the back button when specified', function () {
     setupWizard('test/wizard/wizard-container-hide-back.html');
-    $timeout.flush();
-    $timeout.flush();
 
     var backButton = element.find('.wizard-pf-footer #backButton');
     expect(backButton.length).toBe(0);

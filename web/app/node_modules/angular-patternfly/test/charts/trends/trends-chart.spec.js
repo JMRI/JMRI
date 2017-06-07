@@ -35,7 +35,7 @@ describe('Directive: pfTrendsChart', function() {
       xData: dates
     };
 
-    element = compileChart('<div pf-trends-chart config="config" chart-data="data"></div>',$scope);
+    element = compileChart('<pf-trends-chart config="config" chart-data="data"></pf-trends-chart>',$scope);
   });
 
   var compileChart = function (markup, scope) {

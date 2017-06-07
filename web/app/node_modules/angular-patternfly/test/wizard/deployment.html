@@ -1,5 +1,5 @@
 <div ng-controller="DeploymentController">
-  <div pf-wizard-substep step-title="Deploy" step-id="review-progress" step-priority="1" next-enabled="true" prev-enabled="false" ok-to-nav-away="true" wz-disabled="false" on-show="onShow">
+  <pf-wizard-substep step-title="Deploy" step-id="review-progress" step-priority="1" next-enabled="true" prev-enabled="false" ok-to-nav-away="true" wz-disabled="false" on-show="onShow">
     <div class="wizard-pf-contents" ng-controller="DeploymentController">
       <div class="wizard-pf-process blank-slate-pf" ng-if="!deploymentComplete">
         <div class="spinner spinner-lg blank-slate-pf-icon"></div>
@@ -13,5 +13,5 @@
         <button type="button" class="btn btn-lg btn-primary">View Deployment</button>
       </div>
    </div>
- </div>
+ </pf-wizard-substep>
 </div>

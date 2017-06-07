@@ -5,4 +5,4 @@
  *   Card module for patternfly.
  *
  */
-angular.module('patternfly.card', []);
+angular.module('patternfly.card', ['ui.bootstrap']);

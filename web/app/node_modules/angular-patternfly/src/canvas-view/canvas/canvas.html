@@ -1,0 +1,282 @@
+<svg
+  class="canvas draggable-container"
+  xmlns="http://www.w3.org/2000/svg"
+  ng-mousedown="mouseDown($event)"
+  ng-mousemove="mouseMove($event)"
+  ng-class="{'read-only': readOnly, 'canvas-in-connection-mode': chart.inConnectingMode}"
+  ng-style="{'height': chart.zoom.getChartHeight() + 'px', 'width': chart.zoom.getChartWidth() + 'px', 'background-size': chart.zoom.getBackgroundSize() + 'px '+  chart.zoom.getBackgroundSize() + 'px'}"
+  mouse-capture>
+
+  <!-- Zoom -->
+  <g ng-attr-transform="scale({{zoomLevel()}})">
+
+  <!-- Connection Mode Notification -->
+  <g ng-if="chart.inConnectingMode">
+    <rect class="connecting-mode-rec" ry="1" rx="1" x="0" y="0" width="640" height="32"></rect>
+    <text class="connecting-mode-label" x="12" y="22" ng-if="availableConnections()">
+      Select a second item to complete the connection or click on the canvas to cancel
+    </text>
+    <text class="connecting-mode-label-warning" x="12" y="22" ng-if="!availableConnections()">
+      No available connections! Click on the canvas to cancel
+    </text>
+  </g>
+
+  <!-- Main Node Loop -->
+  <g
+    ng-repeat="node in chart.nodes"
+    ng-mousedown="nodeMouseDown($event, node)"
+    ng-mouseover="nodeMouseOver($event, node)"
+    ng-mouseleave="nodeMouseLeave($event, node)"
+    ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
+    >
+
+    <!-- Node -->
+    <rect
+      ng-class="{'invalid-node-rect': node.invalid(), 'selected-node-rect': node.selected(), 'mouseover-node-rect': node == mouseOverNode, 'node-rect': node != mouseOverNode}"
+      ry="0"
+      rx="0"
+      x="0"
+      y="0"
+      ng-attr-width="{{node.width()}}"
+      ng-attr-height="{{node.height()}}"
+      fill="{{node.backgroundColor()}}"
+      fill-opacity="1.0"
+      ></rect>
+
+    <!-- Node Title: no-wrap -->
+    <text ng-if="!foreignObjectSupported()"
+      class="node-header"
+      ng-class="{'invalid-node-header': node.invalid()}"
+      ng-attr-x="{{node.width()/2}}"
+      ng-attr-y="{{node.height() - 24}}"
+      text-anchor="middle"
+      alignment-baseline="middle"
+      >
+      {{node.name()}}
+    </text>
+
+    <!-- Node Title: text wrap -->
+    <foreignobject ng-if="foreignObjectSupported()"
+                   x="0"
+                   ng-attr-y="{{node.height() - 42}}"
+                   ng-attr-width="{{node.width()}}"
+                   ng-attr-height="{{node.height() - 42}}">
+      <body>
+        <div class="node-header"
+             ng-attr-width="{{node.width()}}"
+             ng-attr-height="{{node.height() - 42}}">
+          <p ng-class="{'invalid-node-header': node.invalid()}" ng-style="{width: node.width()}">{{node.name()}}</p>
+        </div>
+      </body>
+    </foreignobject>
+
+    <!-- Node Image -->
+    <image ng-if="node.image()"
+           class="node-center-img"
+           ng-class="{'invalid-node-img': node.invalid()}"
+           ng-href="{{node.image() | trustAsResourceUrl}}"
+           xlink:href=""
+           ng-attr-x="{{(node.width()/2) - 40}}"
+           ng-attr-y="{{20}}"
+           height="80px"
+           width="80px"></image>
+
+    <!-- Node Icon: icon class -->
+    <foreignobject ng-if="node.icon() && !node.image() && foreignObjectSupported()"
+                   ng-attr-x="{{(node.width()/2) - 44}}"
+                   ng-attr-y="{{(node.height()/2) - 54}}"
+                   ng-attr-height="{{node.height()}}px"
+                   ng-attr-width="{{node.width()}}px"
+                   class="node-center-img-icon"
+                   ng-class="{'invalid-node-header': node.invalid()}">
+        <body>
+           <i class="{{node.icon()}}" ng-style="{'font-size': node.fontSize() ? node.fontSize() : '76px'}"></i>
+        </body>
+    </foreignobject>
+
+    <!-- Node Icon: fontContent -->
+    <text ng-if="node.fontFamily() && !node.image()"
+          class="node-center-icon"
+          ng-class="{'invalid-node-header': node.invalid()}"
+          font-family="{{node.fontFamily()}}"
+          ng-attr-x="{{(node.width()/2) - 34 + ((node.bundle()) ? 4 : 0) }}"
+          ng-attr-y="{{90}}">
+      {{node.fontContent()}}
+    </text>
+
+    <!-- Sm. Top Left Bundle Icon -->
+    <text ng-if="node.bundle()"
+             class="bundle-icon"
+             x="6"
+             y="22"
+             font-family="PatternFlyIcons-webfont"
+             font-size="20">
+         {{'\ue918'}}
+    </text>
+
+    <!-- Bottom Node Toolbar -->
+    <g id="nodeToolBar" ng-if="node == mouseOverNode && !chart.inConnectingMode">
+      <g class="svg-triangle" >
+        <polyline points="4,152 14,140 24,152"></polyline>
+      </g>
+      <foreignobject ng-attr-x="{{node.x}}"
+                     ng-attr-y="{{node.height()+1}}"
+                     ng-mousedown="$event.stopPropagation()"
+                     height="100%"
+                     width="100%">
+        <body>
+          <node-toolbar node="node" node-actions="chart.nodeActions"></node-toolbar>
+        </body>
+      </foreignobject>
+    </g>
+
+    <!-- Connected Input Connectors -->
+
+    <g ng-if="!hideConnectors"
+      ng-repeat="connector in node.inputConnectors | filter: isConnectorConnected"
+      ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
+      ng-mouseover="connectorMouseOver($event, node, connector, $index, true)"
+      ng-mouseleave="connectorMouseLeave($event, node, connector, $index, true)"
+      class="connector input-connector"
+      >
+
+      <circle ng-if="!chart.inConnectingMode || isConnectedTo(connector, connectingModeSourceNode)"
+        ng-class="{'mouseover-connector-circle': connector == mouseOverConnector,
+                   'connector-circle': connector != mouseOverConnector}"
+        ng-attr-r="{{connectorSize}}"
+        ng-attr-cx="{{connector.x()}}"
+        ng-attr-cy="{{connector.y()}}"
+      ></circle>
+    </g>
+
+    <!-- Unconnected Input Connectors -->
+
+    <g ng-if="chart.inConnectingMode"
+       ng-repeat="connector in node.inputConnectors | filter: isConnectorUnconnectedAndValid"
+       ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
+       ng-mouseover="connectorMouseOver($event, node, connector, $index, true)"
+       ng-mouseleave="connectorMouseLeave($event, node, connector, $index, true)"
+       class="connector input-connector"
+    >
+
+      <text ng-if="connector.fontFamily()"
+            class="connector-icons"
+            font-family="{{connector.fontFamily()}}"
+            ng-attr-x="{{connector.x() - 28}}"
+            ng-attr-y="{{connector.y() + 7}}">
+        {{connector.fontContent()}}
+      </text>
+
+      <circle
+              ng-class="{'unconnected-circle': connector != mouseOverConnector,
+                         'mouseover-unconnected-circle': connector == mouseOverConnector}"
+              ng-attr-r="{{connectorSize}}"
+              ng-attr-cx="{{connector.x()}}"
+              ng-attr-cy="{{connector.y()}}"
+      ></circle>
+
+      <g ng-if="connector == mouseOverConnector">
+        <rect class="connector-tooltip"
+              ry="1"
+              rx="1"
+              ng-attr-x="{{connector.x() - 4}}"
+              ng-attr-y="{{connector.y() + 12}}"
+              ng-attr-width="{{80}}"
+              height="20"
+        ></rect>
+        <text
+              class="connector-tooltip-text"
+              ng-attr-x="{{connector.x() + 2}}"
+              ng-attr-y="{{connector.y() + 26}}"
+              text-anchor="start"
+              alignment-baseline="top"
+        >{{connector.name()}}</text>
+      </g>
+    </g>
+
+    <!-- Output Connector -->
+
+    <g ng-if="!hideConnectors"
+      ng-repeat="connector in node.outputConnectors"
+      ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
+      ng-mouseover="connectorMouseOver($event, node, connector, $index, false)"
+      ng-mouseleave="connectorMouseLeave($event, node, connector, $index, false)"
+      class="connector output-connector"
+      >
+      <circle ng-if="!chart.inConnectingMode || (connectingModeSourceNode === connector.parentNode())"
+        ng-class="{'connector-circle': connector != mouseOverConnector,
+                   'mouseover-connector-circle': connector == mouseOverConnector}"
+        ng-attr-r="{{connectorSize}}"
+        ng-attr-r="{{connectorSize}}"
+        ng-attr-cx="{{connector.x()}}"
+        ng-attr-cy="{{connector.y()}}"
+        ></circle>
+    </g>
+  </g> <!--  End Nodes Loop -->
+
+  <!-- Connections -->
+
+  <g ng-if="!hideConnectors"
+    ng-repeat="connection in chart.connections"
+    class="connection"
+    ng-mousedown="connectionMouseDown($event, connection)"
+    ng-mouseover="connectionMouseOver($event, connection)"
+    ng-mouseleave="connectionMouseLeave($event, connection)"
+    >
+      <g ng-if="!chart.inConnectingMode || connectingModeSourceNode === connection.source.parentNode()">
+        <path
+          ng-class="{'selected-connection-line': connection.selected(),
+                     'mouseover-connection-line': connection == mouseOverConnection,
+                     'connection-line': connection != mouseOverConnection}"
+          ng-attr-d="M {{connection.sourceCoordX()}}, {{connection.sourceCoordY()}}
+                     C {{connection.sourceTangentX()}}, {{connection.sourceTangentY()}}
+                       {{connection.destTangentX()}}, {{connection.destTangentY()}}
+                       {{connection.destCoordX()}}, {{connection.destCoordY()}}"
+          >
+        </path>
+
+        <text ng-if="connection == mouseOverConnection"
+          ng-class="{'selected-connection-name': connection.selected(),
+                     'mouseover-connection-name': connection == mouseOverConnection && !connection.selected(),
+                     'connection-name': connection != mouseOverConnection && !connection.selected()}"
+          ng-attr-x="{{connection.middleX()}}"
+          ng-attr-y="{{connection.middleY()}}"
+          text-anchor="middle"
+          alignment-baseline="middle"
+          >{{connection.name()}}
+        </text>
+
+        <circle
+            ng-class="{'selected-connection-endpoint': connection.selected(),
+                       'mouseover-connection-endpoint': connection == mouseOverConnection && !connection.selected(),
+                       'connection-endpoint': connection != mouseOverConnection && !connection.selected()}"
+            r="5"
+            ng-attr-cx="{{connection.sourceCoordX()}}"
+            ng-attr-cy="{{connection.sourceCoordY()}}"
+            >
+        </circle>
+
+        <circle
+            ng-class="{'selected-connection-endpoint': connection.selected(),
+                       'mouseover-connection-endpoint': connection == mouseOverConnection && !connection.selected(),
+                       'connection-endpoint': connection != mouseOverConnection && !connection.selected()}"
+            r="5"
+            ng-attr-cx="{{connection.destCoordX()}}"
+            ng-attr-cy="{{connection.destCoordY()}}"
+            >
+        </circle>
+
+      </g>
+  </g>
+
+  <rect
+      ng-if="dragSelecting"
+      class="drag-selection-rect"
+      ng-attr-x="{{dragSelectionRect.x}}"
+      ng-attr-y="{{dragSelectionRect.y}}"
+      ng-attr-width="{{dragSelectionRect.width}}"
+      ng-attr-height="{{dragSelectionRect.height}}"
+    >
+  </rect>
+ </g>
+</svg>

@@ -1,5 +1,5 @@
 
-describe('Directive: pfHeatmap', function() {
+describe('Component: pfHeatmap', function() {
   var $scope, $compile, element, block, tooltip, color;
 
   beforeEach(module(
@@ -34,19 +34,19 @@ describe('Directive: pfHeatmap', function() {
 
 
   it("should set the heatmap title", function() {
-    element = compileChart('<div pf-heatmap chart-title="title" data="data"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data"></pf-heatmap>',$scope);
 
     expect(angular.element(element).find('h3').html()).toBe('Utilization');
   });
 
   it("should generate 7 blocks", function() {
-    element = compileChart('<div pf-heatmap chart-title="title" data="data"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data"></pf-heatmap>',$scope);
 
     expect(angular.element(element).find('.heatmap-pf-svg').find('rect').length).toBe(7);
   });
 
   it("should set color and tooltip of the block based on defaults", function() {
-    element = compileChart('<div pf-heatmap chart-title="title" data="data"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data"></pf-heatmap>',$scope);
 
     block = angular.element(element).find('.heatmap-pf-svg').children().first();
     tooltip = block.attr('uib-tooltip-html');
@@ -63,7 +63,7 @@ describe('Directive: pfHeatmap', function() {
     $scope.thresholds = [0.6, 0.7, 0.8, 0.9];
     $scope.heatmapColorPattern = ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000', '#ff0000'];
 
-    element = compileChart('<div pf-heatmap chart-title="title" data="data" legend-labels="legendLabels" heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data" legend-labels="legendLabels" heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"></pf-heatmap>',$scope);
 
     block = angular.element(element).find('.heatmap-pf-svg').children().first();
 
@@ -78,7 +78,7 @@ describe('Directive: pfHeatmap', function() {
     $scope.thresholds = [0.6, 0.7, 0.8, 0.98];
     $scope.heatmapColorPattern = ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000', '#ff0000'];
 
-    element = compileChart('<div pf-heatmap chart-title="title" data="data" legend-labels="legendLabels" heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data" legend-labels="legendLabels" heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"></pf-heatmap>',$scope);
     block = angular.element(element).find('.heatmap-pf-svg').children().first();
     color = block.attr('style');
 
@@ -87,21 +87,21 @@ describe('Directive: pfHeatmap', function() {
   });
 
   it("should show a legend by default", function() {
-    element = compileChart('<div pf-heatmap chart-title="title" data="data"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data"></pf-heatmap>',$scope);
     var legend = element.find('.heatmap-pf-legend-container');
     expect(legend.length).toBe(1);
   });
 
   it("should not show a legend when set not to", function() {
     $scope.showLegend = false;
-    element = compileChart('<div pf-heatmap chart-title="title" data="data" show-legend="showLegend"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data" show-legend="showLegend"></pf-heatmap>',$scope);
     var legend = element.find('.heatmap-pf-legend-container');
     expect(legend.length).toBe(0);
   });
 
   it("should show empty chart when the chartDataAvailable flag is set to false", function() {
     $scope.chartDataAvailable = true;
-    element = compileChart('<div pf-heatmap chart-title="title" data="data" chart-data-available="chartDataAvailable" show-legend="showLegend"></div>',$scope);
+    element = compileChart('<pf-heatmap chart-title="title" data="data" chart-data-available="chartDataAvailable" show-legend="showLegend"></pf-heatmap>',$scope);
 
     var emptyChart = element.find('.empty-chart-content');
     expect(emptyChart.length).toBe(0);

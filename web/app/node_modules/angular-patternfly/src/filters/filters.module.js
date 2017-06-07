@@ -5,4 +5,4 @@
  *   Filters module for patternfly.
  *
  */
-angular.module('patternfly.filters', ['patternfly.select', 'ui.bootstrap']);
+angular.module('patternfly.filters', ['ui.bootstrap']);

@@ -1,0 +1,32 @@
+define(['./countBy', './each', './eachRight', './every', './filter', './find', './findLast', './flatMap', './flatMapDeep', './flatMapDepth', './forEach', './forEachRight', './groupBy', './includes', './invokeMap', './keyBy', './map', './orderBy', './partition', './reduce', './reduceRight', './reject', './sample', './sampleSize', './shuffle', './size', './some', './sortBy'], function(countBy, each, eachRight, every, filter, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEach, forEachRight, groupBy, includes, invokeMap, keyBy, map, orderBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, some, sortBy) {
+  return {
+    'countBy': countBy,
+    'each': each,
+    'eachRight': eachRight,
+    'every': every,
+    'filter': filter,
+    'find': find,
+    'findLast': findLast,
+    'flatMap': flatMap,
+    'flatMapDeep': flatMapDeep,
+    'flatMapDepth': flatMapDepth,
+    'forEach': forEach,
+    'forEachRight': forEachRight,
+    'groupBy': groupBy,
+    'includes': includes,
+    'invokeMap': invokeMap,
+    'keyBy': keyBy,
+    'map': map,
+    'orderBy': orderBy,
+    'partition': partition,
+    'reduce': reduce,
+    'reduceRight': reduceRight,
+    'reject': reject,
+    'sample': sample,
+    'sampleSize': sampleSize,
+    'shuffle': shuffle,
+    'size': size,
+    'some': some,
+    'sortBy': sortBy
+  };
+});

@@ -1,49 +1,48 @@
 <div>
-  <div class="modal-header" ng-if="!hideHeader">
-    <button type="button" class="close wizard-pf-dismiss" aria-label="Close" ng-click="onCancel()" ng-if="!embedInPage">
+  <div class="modal-header" ng-if="!$ctrl.hideHeader">
+    <button type="button" class="close wizard-pf-dismiss" aria-label="Close" ng-click="$ctrl.onCancel()" ng-if="!$ctrl.embedInPage">
       <span aria-hidden="true">&times;</span>
     </button>
-    <dt class="modal-title">{{title}}</dt>
+    <dt class="modal-title">{{$ctrl.title}}</dt>
   </div>
   <div class="modal-body wizard-pf-body clearfix">
     <!-- step area -->
-    <div class="wizard-pf-steps" ng-class="{'invisible': !wizardReady}">
-      <ul class="wizard-pf-steps-indicator" ng-if="!hideIndicators" ng-class="{'invisible': !wizardReady}">
-        <li class="wizard-pf-step" ng-class="{active: step.selected}" ng-repeat="step in getEnabledSteps()" data-tabgroup="{{$index }}">
-          <a ng-click="stepClick(step)" ng-class="{'disabled': !allowStepIndicatorClick(step)}">
+    <div class="wizard-pf-steps" ng-class="{'invisible': !$ctrl.wizardReady}">
+      <ul class="wizard-pf-steps-indicator" ng-if="!$ctrl.hideIndicators" ng-class="{'invisible': !$ctrl.wizardReady}">
+        <li class="wizard-pf-step" ng-class="{active: step.selected}" ng-repeat="step in $ctrl.getEnabledSteps()" data-tabgroup="{{$index }}">
+          <a ng-click="$ctrl.stepClick(step)" ng-class="{'disabled': !$ctrl.allowStepIndicatorClick(step)}">
             <span class="wizard-pf-step-number">{{$index + 1}}</span>
             <span class="wizard-pf-step-title">{{step.title}}</span>
           </a>
         </li>
       </ul>
     </div>
-
     <!-- loading wizard placeholder -->
-    <div ng-if="!wizardReady" class="wizard-pf-main" style="margin-left: 0px">
+    <div ng-if="!$ctrl.wizardReady" class="wizard-pf-main" style="margin-left: 0px">
       <div class="wizard-pf-loading blank-slate-pf">
         <div class="spinner spinner-lg blank-slate-pf-icon"></div>
-        <h3 class="blank-slate-pf-main-action">{{loadingWizardTitle}}</h3>
-        <p class="blank-slate-pf-secondary-action">{{loadingSecondaryInformation}}</p>
+        <h3 class="blank-slate-pf-main-action">{{$ctrl.loadingWizardTitle}}</h3>
+        <p class="blank-slate-pf-secondary-action">{{$ctrl.loadingSecondaryInformation}}</p>
       </div>
     </div>
     <div class="wizard-pf-position-override" ng-transclude ></div>
   </div>
-  <div class="modal-footer wizard-pf-footer wizard-pf-position-override" ng-class="{'wizard-pf-footer-inline': embedInPage}">
-    <button pf-wiz-cancel class="btn btn-default btn-cancel wizard-pf-cancel" ng-disabled="wizardDone" ng-click="onCancel()" ng-if="!embedInPage">{{cancelTitle}}</button>
-    <div ng-if="!hideBackButton" class="tooltip-wrapper" uib-tooltip="{{prevTooltip}}" tooltip-placement="left">
-      <button id="backButton" pf-wiz-previous class="btn btn-default" ng-disabled="!wizardReady || wizardDone || !prevEnabled || firstStep"
-              callback="backCallback">
+  <div class="modal-footer wizard-pf-footer wizard-pf-position-override" ng-class="{'wizard-pf-footer-inline': $ctrl.embedInPage}">
+    <pf-wiz-cancel class="btn btn-default btn-cancel wizard-pf-cancel" ng-disabled="$ctrl.wizardDone" ng-click="$ctrl.onCancel()" ng-if="!$ctrl.embedInPage">{{$ctrl.cancelTitle}}</pf-wiz-cancel>
+    <div ng-if="!$ctrl.hideBackButton" class="tooltip-wrapper" uib-tooltip="{{$ctrl.prevTooltip}}" tooltip-placement="left">
+      <pf-wiz-previous id="backButton" class="btn btn-default" ng-disabled="!$ctrl.wizardReady || $ctrl.wizardDone || !$ctrl.selectedStep.prevEnabled || $ctrl.firstStep"
+              callback="$ctrl.backCallback">
         <span class="i fa fa-angular-left"></span>
-        {{backTitle}}
-      </button>
+        {{$ctrl.backTitle}}
+      </pf-wiz-previous>
     </div>
-    <div class="tooltip-wrapper" uib-tooltip="{{nextTooltip}}" tooltip-placement="left">
-      <button id="nextButton" pf-wiz-next class="btn btn-primary wizard-pf-next" ng-disabled="!wizardReady || !nextEnabled"
-              callback="nextCallback">
-        {{nextTitle}}
+    <div class="tooltip-wrapper" uib-tooltip="{{$ctrl.nextTooltip}}" tooltip-placement="left">
+      <pf-wiz-next id="nextButton" class="btn btn-primary wizard-pf-next" ng-disabled="!$ctrl.wizardReady || !$ctrl.selectedStep.nextEnabled"
+              callback="$ctrl.nextCallback">
+        {{$ctrl.nextTitle}}
         <span class="i fa fa-angular-right"></span>
-      </button>
+      </pf-wiz-next>
     </div>
-    <button pf-wiz-cancel class="btn btn-default btn-cancel wizard-pf-cancel wizard-pf-cancel-inline" ng-disabled="wizardDone" ng-click="onCancel()" ng-if="embedInPage">{{cancelTitle}}</button>
+    <pf-wiz-cancel class="btn btn-default btn-cancel wizard-pf-cancel wizard-pf-cancel-inline" ng-disabled="$ctrl.wizardDone" ng-click="$ctrl.onCancel()" ng-if="$ctrl.embedInPage">{{$ctrl.cancelTitle}}</pf-wiz-cancel>
   </div>
 </div>

@@ -1,4 +1,4 @@
-describe('Directive:  pfNotificationDrawer', function () {
+describe('Component:  pfNotificationDrawer', function () {
   var $scope;
   var $compile;
   var element;
@@ -314,11 +314,11 @@ describe('Directive:  pfNotificationDrawer', function () {
       $scope.actionPerformed = action;
     };
 
-    var htmlTmp = '<div pf-notification-drawer drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
+    var htmlTmp = '<pf-notification-drawer drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
                   '     action-button-title="Mark All Read" action-button-callback="actionButtonCB" notification-groups="groups"' +
                   '     heading-include="test/notification/heading.html" subheading-include="test/notification/subheading.html" notification-body-include="test/notification/notification-body.html"' +
                   '     notification-footer-include="test/notification/notification-footer.html" custom-scope="customScope">' +
-                  '</div>';
+                  '</pf-notification-drawer>';
 
       compileHTML(htmlTmp, $scope);
   });
@@ -447,11 +447,11 @@ describe('Directive:  pfNotificationDrawer', function () {
     var expandToggle = element.find('.drawer-pf-toggle-expand');
     expect(expandToggle.length).toBe(0);
 
-    var htmlTmp = '<div pf-notification-drawer allow-expand="true" drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
+    var htmlTmp = '<pf-notification-drawer allow-expand="true" drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
       '     action-button-title="Mark All Read" action-button-callback="actionButtonCB" notification-groups="groups"' +
       '     heading-include="test/notification/heading.html" subheading-include="test/notification/subheading.html" notification-body-include="test/notification/notification-body.html"' +
       '     notification-footer-include="test/notification/notification-footer.html" custom-scope="customScope">' +
-      '</div>';
+      '</pf-notification-drawer>';
 
     compileHTML(htmlTmp, $scope);
 
@@ -463,11 +463,11 @@ describe('Directive:  pfNotificationDrawer', function () {
     var expandedDrawer = element.find('.drawer-pf.drawer-pf-expanded');
     expect(expandedDrawer.length).toBe(0);
 
-    var htmlTmp = '<div pf-notification-drawer allow-expand="true" drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
+    var htmlTmp = '<pf-notification-drawer allow-expand="true" drawer-hidden="hideDrawer" drawer-title="Notifications Drawer"  title-include="test/notification/title.html" ' +
       '     action-button-title="Mark All Read" action-button-callback="actionButtonCB" notification-groups="groups"' +
       '     heading-include="test/notification/heading.html" subheading-include="test/notification/subheading.html" notification-body-include="test/notification/notification-body.html"' +
       '     notification-footer-include="test/notification/notification-footer.html" custom-scope="customScope">' +
-      '</div>';
+      '</pf-notification-drawer>';
 
     compileHTML(htmlTmp, $scope);
 

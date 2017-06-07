@@ -1,118 +1,125 @@
-describe('pf-select', function () {
+describe('Component:  pfSelect', function () {
+  var $scope;
+  var $compile;
+  var element;
 
-  var $scope, $compile;
+  // load the controller's module
+  beforeEach(function () {
+    module('patternfly.select', 'select/select.html');
+  });
 
-  beforeEach(module('patternfly.select'));
-
-  beforeEach(inject(function (_$rootScope_, _$compile_, _$timeout_) {
-    $scope = _$rootScope_;
+  beforeEach(inject(function (_$compile_, _$rootScope_) {
     $compile = _$compile_;
-    $timeout = _$timeout_;
+    $scope = _$rootScope_;
   }));
 
-  describe('Page with pf-select directive', function () {
+  var compileHTML = function (markup, scope) {
+    element = angular.element(markup);
+    $compile(element)(scope);
 
-    var compileSelect = function (markup, scope) {
-      var el = $compile(markup)(scope);
-      scope.$digest();
-      return el;
+    scope.$digest();
+  };
+
+  beforeEach(function () {
+    $scope.items = [
+      {
+        id: 1,
+        title:  'A'
+      },
+      {
+        id: 2,
+        title:  'B'
+      },
+      {
+        id: 3,
+        title:  'C'
+      },
+      {
+        id: 4,
+        title:  'D'
+      }
+    ];
+
+    $scope.selected = $scope.items[1];
+
+    var htmlTmp = '<pf-select selected="selected" options="items" display-field="title"></pf-select>';
+
+    compileHTML(htmlTmp, $scope);
+  });
+
+  it('should have correct number of options', function () {
+    var menuItems = element.find('.dropdown-menu li');
+    expect(menuItems.length).toBe(4);
+  });
+
+  it('should have the correct item selected', function () {
+    var results = element.find('.dropdown-toggle');
+    expect(results.length).toBe(1);
+    expect(results.html().trim().slice(0, $scope.items[1].title.length)).toBe($scope.items[1].title);
+  });
+
+  it('should update the selected item when one is clicked', function () {
+    var menuItems = element.find('.dropdown-menu li > a');
+    expect(menuItems.length).toBe(4);
+
+    eventFire(menuItems[2], 'click');
+    $scope.$digest();
+
+    expect($scope.selected.id).toBe(3);
+    var results = element.find('.dropdown-toggle');
+    expect(results.length).toBe(1);
+    expect(results.html().trim().slice(0, $scope.items[1].title.length)).toBe($scope.items[2].title);
+  });
+
+  it('should add a default item when empty value is given', function () {
+    var htmlTmp = '<pf-select selected="selected" options="items" display-field="title" empty-value="nothing"></pf-select>';
+
+    compileHTML(htmlTmp, $scope);
+
+    var menuItems = element.find('.dropdown-menu li');
+    expect(menuItems.length).toBe(5);
+  });
+
+  it('should show the default when no selection is given', function () {
+
+    $scope.selected = null;
+    var htmlTmp = '<pf-select selected="selected" options="items" display-field="title" empty-value="nothing"></pf-select>';
+
+    compileHTML(htmlTmp, $scope);
+
+    var menuItems = element.find('.dropdown-menu li');
+    expect(menuItems.length).toBe(5);
+
+    var results = element.find('.dropdown-toggle');
+    expect(results.length).toBe(1);
+    expect(results.html().trim().slice(0, "nothing".length)).toBe("nothing");
+  });
+
+  it('should call the onSelect function on selection', function () {
+
+    var onSelectCalled = false;
+    var selectedItem = null;
+    $scope.onSelect = function(item) {
+      onSelectCalled = true;
+      selectedItem = item;
     };
 
-    it('should generate correct options from ng-options', function () {
+    $scope.selected = null;
+    var htmlTmp = '<pf-select selected="selected" options="items" display-field="title" empty-value="nothing" on-select="onSelect"></pf-select>';
 
-      $scope.options = ['a','b','c'];
-      $scope.modelValue = $scope.options[1];
+    compileHTML(htmlTmp, $scope);
 
-      var select = compileSelect('<select pf-select ng-model="modelValue" ng-options="o as o for o in options"></select>', $scope);
+    var menuItems = element.find('.dropdown-menu li > a');
+    expect(menuItems.length).toBe(5);
 
-      $timeout.flush();
+    expect(onSelectCalled).toBe(false);
+    expect(selectedItem).toBe(null);
 
-      expect(select.text()).toBe('abc');
-      expect(select).toEqualSelect(['a', ['b'], 'c']);
+    eventFire(menuItems[2], 'click');
+    $scope.$digest();
 
-      var bsSelect = angular.element(select).siblings('.dropdown-menu');
-      var bsSelItems = bsSelect.find('li');
-      expect(bsSelItems.length).toBe($scope.options.length);
-      expect(bsSelItems.text()).toBe('abc');
-
-      var bsSelected = bsSelect.find('li.selected');
-      expect(bsSelected.length).toBe(1);
-      expect(bsSelected.text()).toBe('b');
-    });
-
-    it('should respond to changes in ng-options', function () {
-
-      $scope.options = ['a','b','c'];
-      $scope.modelValue = $scope.options[0];
-      var select = compileSelect('<select pf-select ng-model="modelValue" ng-options="o as o for o in options"></select>', $scope);
-
-      expect(select.text()).toBe('abc');
-      expect(select).toEqualSelect([['a'], 'b', 'c']);
-
-      var bsSelect = angular.element(select).siblings('.dropdown-menu');
-      var bsSelItems = bsSelect.find('li');
-      expect(bsSelItems.length).toBe($scope.options.length);
-      expect(bsSelItems.text()).toBe('abc');
-
-      $scope.$apply(function() {
-        $scope.options.push('d');
-      });
-
-      $timeout.flush();
-
-      expect(select.text()).toBe('abcd');
-      expect(select).toEqualSelect([['a'], 'b', 'c', 'd']);
-
-      bsSelect = angular.element(select).siblings('.dropdown-menu');
-      bsSelItems = bsSelect.find('li');
-      expect(bsSelItems.length).toBe($scope.options.length);
-      expect(bsSelItems.text()).toBe('abcd');
-    });
-
-    it('should respond to ng-model changes', function () {
-
-      $scope.options = ['a','b','c'];
-      $scope.modelValue = $scope.options[0];
-      var select = compileSelect('<select pf-select ng-model="modelValue" ng-options="o as o for o in options"></select>', $scope);
-
-      expect(select.text()).toBe('abc');
-      expect(select).toEqualSelect([['a'], 'b', 'c']);
-
-      var bsSelect = angular.element(select).siblings('.dropdown-menu');
-      var bsSelItems = bsSelect.find('li');
-      expect(bsSelItems.length).toBe($scope.options.length);
-      expect(bsSelItems.text()).toBe('abc');
-
-      var bsSelected = bsSelect.find('li.selected');
-      expect(bsSelected.length).toBe(1);
-      expect(bsSelected.text()).toBe('a');
-
-      $scope.$apply(function() {
-        $scope.modelValue = $scope.options[1];
-      });
-
-      $timeout.flush();
-
-      expect(select.text()).toBe('abc');
-      expect(select).toEqualSelect(['a', ['b'], 'c']);
-
-      bsSelected = bsSelect.find('li.selected');
-      expect(bsSelected.length).toBe(1);
-      expect(bsSelected.text()).toBe('b');
-
-      $scope.$apply(function() {
-        $scope.modelValue = $scope.options[2];
-      });
-
-      $timeout.flush();
-
-      expect(select.text()).toBe('abc');
-      expect(select).toEqualSelect(['a', 'b', ['c']]);
-
-      bsSelected = bsSelect.find('li.selected');
-      expect(bsSelected.length).toBe(1);
-      expect(bsSelected.text()).toBe('c');
-    });
-
+    expect(onSelectCalled).toBe(true);
+    expect(selectedItem.id).toBe(2);
   });
+
 });

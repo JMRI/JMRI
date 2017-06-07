@@ -1,36 +1,36 @@
-<div class="toast-pf alert alert-{{notificationType}}" ng-class="{'alert-dismissable': showCloseButton}"
-     ng-mouseenter="handleEnter()" ng-mouseleave="handleLeave()">
-  <div uib-dropdown class="pull-right dropdown-kebab-pf" ng-if="menuActions && menuActions.length > 0">
+<div class="toast-pf alert alert-{{$ctrl.notificationType}}" ng-class="{'alert-dismissable': $ctrl.showCloseButton}"
+     ng-mouseenter="$ctrl.handleEnter()" ng-mouseleave="$ctrl.handleLeave()">
+  <div uib-dropdown class="pull-right dropdown-kebab-pf" ng-if="$ctrl.menuActions && $ctrl.menuActions.length > 0">
     <button uib-dropdown-toggle class="btn btn-link" type="button" id="dropdownKebabRight">
       <span class="fa fa-ellipsis-v"></span>
     </button>
     <ul uib-dropdown-menu class="dropdown-menu-right" aria-labelledby="dropdownKebabRight">
-      <li ng-repeat="menuAction in menuActions"
+      <li ng-repeat="menuAction in $ctrl.menuActions"
           role="{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}"
           ng-class="{'divider': menuAction.isSeparator === true, 'disabled': menuAction.isDisabled === true}">
         <a ng-if="menuAction.isSeparator !== true"
            class="secondary-action"
            title="{{menuAction.title}}"
-           ng-click="handleMenuAction(menuAction)">
+           ng-click="$ctrl.handleMenuAction(menuAction)">
           {{menuAction.name}}
         </a>
       </li>
     </ul>
   </div>
-  <button ng-if="showCloseButton" type="button" class="close" aria-hidden="true" ng-click="handleClose()">
+  <button ng-if="$ctrl.showCloseButton" type="button" class="close" aria-hidden="true" ng-click="$ctrl.handleClose()">
     <span class="pficon pficon-close"></span>
   </button>
-  <div class="pull-right toast-pf-action" ng-if="actionTitle">
-    <a ng-click="handleAction()">{{actionTitle}}</a>
+  <div class="pull-right toast-pf-action" ng-if="$ctrl.actionTitle">
+    <a ng-click="$ctrl.handleAction()">{{$ctrl.actionTitle}}</a>
   </div>
-  <span class="pficon pficon-ok" ng-if="notificationType === 'success'"></span>
-  <span class="pficon pficon-info" ng-if="notificationType === 'info'"></span>
-  <span class="pficon pficon-error-circle-o" ng-if="notificationType === 'danger'"></span>
-  <span class="pficon pficon-warning-triangle-o" ng-if="notificationType === 'warning'"></span>
-  <span ng-if="header">
-    <strong>{{header}}</strong> {{message}}
+  <span class="pficon pficon-ok" ng-if="$ctrl.notificationType === 'success'"></span>
+  <span class="pficon pficon-info" ng-if="$ctrl.notificationType === 'info'"></span>
+  <span class="pficon pficon-error-circle-o" ng-if="$ctrl.notificationType === 'danger'"></span>
+  <span class="pficon pficon-warning-triangle-o" ng-if="$ctrl.notificationType === 'warning'"></span>
+  <span ng-if="$ctrl.header">
+    <strong>{{$ctrl.header}}</strong> {{$ctrl.message}}
   </span>
-  <span ng-if="!header">
-    {{message}}
+  <span ng-if="!$ctrl.header">
+    {{$ctrl.message}}
   </span>
 </div>

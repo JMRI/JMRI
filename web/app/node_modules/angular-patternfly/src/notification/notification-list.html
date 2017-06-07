@@ -1,5 +1,5 @@
-<div data-ng-show="notifications.data.length > 0">
-  <div ng-repeat="notification in notifications.data">
+<div data-ng-show="$ctrl.notifications.data.length > 0">
+  <div ng-repeat="notification in $ctrl.notifications.data">
     <pf-inline-notification pf-notification-type="notification.type"
                      pf-notification-header="notification.header"
                      pf-notification-message="notification.message"

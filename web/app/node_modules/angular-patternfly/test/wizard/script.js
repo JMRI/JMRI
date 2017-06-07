@@ -25,7 +25,7 @@ angular.module('patternfly.wizard').controller('DetailsReviewController', ['$roo
       if (angular.isUndefined(next)) {
         $scope.data = {};
       } else {
-        $scope.data = next.wizardData;
+        $scope.data = next.$ctrl.wizardData;
       }
     }
   }

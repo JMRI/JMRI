@@ -23,7 +23,7 @@ describe('Directive: pfUtilizationBarChart', function() {
     $scope.title = 'CPU Usage';
     $scope.units = 'GB';
 
-    element = compileChart('<div pf-utilization-bar-chart chart-data=data chart-title=title units=units></div>', $scope);
+    element = compileChart('<pf-utilization-bar-chart chart-data=data chart-title=title units=units></pf-utilization-bar-chart>', $scope);
 
   });
 
@@ -51,7 +51,7 @@ describe('Directive: pfUtilizationBarChart', function() {
     expect(subTitle).toBe("8 of 10 GB Used");
 
     //test 'percent' used-label-format
-    element = compileChart("<div pf-utilization-bar-chart chart-data=data footer-label-format='percent' chart-title=title units=units></div>", $scope);
+    element = compileChart("<pf-utilization-bar-chart chart-data=data footer-label-format='percent' chart-title=title units=units></pf-utilization-bar-chart>", $scope);
     subTitle = angular.element(element).find('.progress-bar span').text();
     expect(subTitle).toBe("80% Used");
   });
@@ -63,7 +63,7 @@ describe('Directive: pfUtilizationBarChart', function() {
       'footerLabelWidth': '60px'
     };
 
-    element = compileChart("<div pf-utilization-bar-chart chart-data=data layout=layoutInline chart-title=title units=units></div>", $scope);
+    element = compileChart("<pf-utilization-bar-chart chart-data=data layout=layoutInline chart-title=title units=units></pf-utilization-bar-chart>", $scope);
     utilizationBar = angular.element(element).find('.progress-container');
     expect(utilizationBar.length).toBe(1);
 
@@ -74,12 +74,12 @@ describe('Directive: pfUtilizationBarChart', function() {
   });
 
   it("should set the error and warning thresholds", function() {
-    element = compileChart("<div pf-utilization-bar-chart chart-data=data threshold-error='85' threshold-warning='45' chart-title=title units=units></div>", $scope);
+    element = compileChart("<pf-utilization-bar-chart chart-data=data threshold-error='85' threshold-warning='45' chart-title=title units=units></pf-utilization-bar-chart>", $scope);
 
     utilizationBar = angular.element(element).find('.progress-bar-warning');
     expect(utilizationBar.length).toBe(1);
 
-    element = compileChart("<div pf-utilization-bar-chart chart-data=data threshold-error='45' threshold-warning='15' chart-title=title units=units></div>", $scope);
+    element = compileChart("<pf-utilization-bar-chart chart-data=data threshold-error='45' threshold-warning='15' chart-title=title units=units></pf-utilization-bar-chart>", $scope);
 
     utilizationBar = angular.element(element).find('.progress-bar-danger');
     expect(utilizationBar.length).toBe(1);
@@ -88,7 +88,7 @@ describe('Directive: pfUtilizationBarChart', function() {
   it("should use custom footer labels", function() {
     $scope.custfooter = '<strong>500 TB</strong> Total';
 
-    element = compileChart("<div pf-utilization-bar-chart chart-data=data threshold-error='85' threshold-warning='45' chart-title=title chart-footer=custfooter units=units></div>", $scope);
+    element = compileChart("<pf-utilization-bar-chart chart-data=data threshold-error='85' threshold-warning='45' chart-title=title chart-footer=custfooter units=units></pf-utilization-bar-chart>", $scope);
 
     subTitle = angular.element(element).find('.progress-bar span').html();
     expect(subTitle).toBe("<strong>500 TB</strong> Total");

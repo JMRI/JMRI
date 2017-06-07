@@ -1,4 +1,4 @@
-describe('Directive: pfToastNotificationList', function () {
+describe('Component: pfToastNotificationList', function () {
 
   var $scope;
   var $compile;
@@ -115,7 +115,7 @@ describe('Directive: pfToastNotificationList', function () {
       }
     ];
 
-    var htmlTmp = '<div pf-toast-notification-list notifications="notifications" show-close="false" close-callback="handleClose"></div>';
+    var htmlTmp = '<pf-toast-notification-list notifications="notifications" show-close="false" close-callback="handleClose"></pf-toast-notification-list>';
 
     compileHTML(htmlTmp, $scope);
   });
@@ -158,7 +158,7 @@ describe('Directive: pfToastNotificationList', function () {
     $scope.notifications.forEach(function(nextItem) {
       nextItem.menuActions = undefined;
     })
-    var htmlTmp = '<div pf-toast-notification-list notifications="notifications" show-close="false" close-callback="handleClose"></div>';
+    var htmlTmp = '<pf-toast-notification-list notifications="notifications" show-close="false" close-callback="handleClose"></pf-toast-notification-list>';
 
     compileHTML(htmlTmp, $scope);
 

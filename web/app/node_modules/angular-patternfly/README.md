@@ -21,18 +21,14 @@ You have to install required software before you're able to use grunt:
   Angular Patternfly stays up to date with the Node LTS [Release Schedule](https://github.com/nodejs/LTS#lts_schedule). If you're using Angular Patternfly downstream, we suggest the use of an actively supported version of Node/NPM, although prior versions of Node may work. 
 
 * Install npm - If npm is not already installed with Node.js, you have to install it manually. Find more information on [NPM](https://www.npmjs.org/)
-* Install Bower globally - Find more information on [Bower](http://bower.io/)
 
-        npm install -g bower
 * Install Grunt globally - Find more information on [Grunt](http://gruntjs.com/)
 
         npm install -g grunt-cli
+
 * Install npm dependencies with:
 
         npm install
-* Install bower dependencies with:
-
-        bower install
 
 You should have your environment ready now.
 
@@ -52,8 +48,8 @@ Note:
 
 1. Add Angular and Angular-PatternFly as dependencies for your project and you'll receive all the libraries you'll need:
 
-        $ bower install angular --save
-        $ bower install angular-patternfly --save
+        $ npm install angular --save
+        $ npm install angular-patternfly --save
 
 2. Add the core Patternfly CSS and script includes to your HTML file(s):
 
@@ -62,29 +58,29 @@ Note:
 3. Add the following CSS include to your HTML file(s):
 
         <!-- Angular-PatternFly Styles -->
-        <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.min.css" />
+        <link rel="stylesheet" href="node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css" />
 
 4. Add the following script includes to your HTML file(s), adjusting where necessary to pull in only what you need:
 
         <!-- Angular -->
-        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/angular/angular.min.js"></script>
 
         <!-- Angular-Bootstrap -->
-        <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 
         <!-- Angular-Sanitize -->
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 
         <!-- Angular-PatternFly  -->
-        <script src="bower_components/angular-patternfly/dist/angular-patternfly.min.js"></script>
+        <script src="node_modules/angular-patternfly/dist/angular-patternfly.min.js"></script>
 
         <!-- C3, D3 - Charting Libraries. Only required if you are using the 'patternfly.charts' module-->
-        <script src="bower_components/patternfly/components/c3/c3.min.js"></script>
-        <script src="bower_components/patternfly/components/d3/d3.min.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/patternfly/node_modules/c3/c3.min.js"></script>
+        <script src="node_modules/angular-patternfly/node_modules/patternfly/node_modules/d3/d3.min.js"></script>
 
 5. (optional) The 'patternfly.charts' module is not a dependency in the default angular 'patternfly' module.
-   In order to use patternfly charts you must add 'patternfly.charts' as a dependency in your application:
+   In order to use patternfly charts you must add it as a dependency in your application:
 
         my-app.module.js:
 
@@ -92,6 +88,61 @@ Note:
           'patternfly',
           'patternfly.charts'
         ]);
+
+6. (optional) The 'patternfly.table' module is not a dependency in the default angular 'patternfly' module.
+   In order to use pfTableView, you must add 'patternfly.table' as a dependency in your application:
+
+        my-app.module.js:
+
+        angular.module('myApp', [
+          'patternfly',
+          'patternfly.table'
+        ]);
+
+   Add the following CSS includes to your HTML file(s):
+
+        <!-- Place before any patternfly css -->
+        <link rel="stylesheet" href="node_modules/datatables.net-dt/css/jquery.dataTables.css" />
+
+   Add the following Javascript includes to your HTML file(s):
+
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
+        <script src="node_modules/datatables.net-select/js/dataTables.select.js"></script>
+        <script src="node_modules/angular-datatables/dist/angular-datatables.min.js"></script>
+        <script src="node_modules/angular-datatables/dist/plugins/select/angular-datatables.select.min.js"></script>
+
+7. (optional) The 'patternfly.canvas' module is not a dependency in the default angular 'patternfly' module.
+   In order to use pfCanvasEditor or pfCanvas, you must add 'patternfly.canvas' as a dependency in your application:
+
+        my-app.module.js:
+
+        angular.module('myApp', [
+          'patternfly',
+          'patternfly.canvas'
+        ]);
+
+   Add the following Javascript includes to your HTML file(s):
+
+        <!-- jquery before angular.js -->
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/components-jqueryui/jquery-ui.min.js"></script>
+
+        <script src="node_modules/angular/angular.js"></script>
+
+        <!-- angular-dragdrop after angular.js -->
+        <script src="node_modules/angular-dragdrop/src/angular-dragdrop.js"></script>
+
+   Also, the canvas background grid image is located in 'node_modules/angular-patternfly/dist/imgs/canvas-dot-grid.png'
+   please copy this image to your application's main images directory and reference it by overridding the '.canvas' css
+   class:
+
+         <style>
+             .canvas {
+                 background-image: url('/myapp/imgs/canvas-dot-grid.png');
+                 background-repeat: repeat;
+             }
+         </style>
 
 ### Using with Webpack
 
@@ -144,7 +195,7 @@ grunt ngdocs:view --port=8002
 
 ## Releasing
 
-Angular PatternFly is released through Bower. To release a new version version of Angular PatternFly, edit `bower.json` and `package.json` accordingly.
+Angular PatternFly is released through Bower and npm. To release a new version version of Angular PatternFly, edit `bower.json` and `package.json` accordingly.
 
 Update the version listed in `bower.json` by editing the file and changing the line:
 

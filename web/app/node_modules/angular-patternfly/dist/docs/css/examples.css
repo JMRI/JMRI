@@ -46,6 +46,7 @@ hr {
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  background-color: #fff;
 }
 
 .list-view-container {
@@ -129,6 +130,13 @@ hr {
 
 .dropdown-kebab-pf.red .btn-link {
   color: red;
+}
+
+.canvas-demo-container {
+  height: 600px;
+  margin-left: 15px;
+  overflow: auto;
+  width: 99%;
 }
 
 .example-wizard-sidebar {

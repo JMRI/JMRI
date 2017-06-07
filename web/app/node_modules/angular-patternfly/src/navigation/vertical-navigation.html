@@ -1,52 +1,52 @@
 <div>
   <nav class="navbar navbar-pf-vertical">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" ng-click="handleNavBarToggleClick()">
+      <button type="button" class="navbar-toggle" ng-click="$ctrl.handleNavBarToggleClick()">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <img class="navbar-brand-icon" ng-if="brandSrc" ng-src="{{brandSrc}}" alt="{{brandAlt}}"/>
-        <span class="navbar-brand-txt" ng-if="!brandSrc">{{brandAlt}}</span>
+        <img class="navbar-brand-icon" ng-if="$ctrl.brandSrc" ng-src="{{$ctrl.brandSrc}}" alt="{{$ctrl.brandAlt}}"/>
+        <span class="navbar-brand-txt" ng-if="!$ctrl.brandSrc">{{$ctrl.brandAlt}}</span>
       </span>
     </div>
     <nav class="collapse navbar-collapse" ng-transclude></nav>
     <div class="nav-pf-vertical"
-         ng-class="{'nav-pf-persistent-secondary': persistentSecondary,
-                    'nav-pf-vertical-collapsible-menus': pinnableMenus,
-                    'hidden-icons-pf': hiddenIcons,
-                    'nav-pf-vertical-with-badges': showBadges,
-                    'secondary-visible-pf': activeSecondary,
-                    'show-mobile-secondary': showMobileSecondary,
-                    'show-mobile-tertiary': showMobileTertiary,
-                    'hover-secondary-nav-pf': hoverSecondaryNav,
-                    'hover-tertiary-nav-pf': hoverTertiaryNav,
-                    'collapsed-secondary-nav-pf': collapsedSecondaryNav,
-                    'collapsed-tertiary-nav-pf': collapsedTertiaryNav,
-                    'hidden': inMobileState,
-                    'collapsed': navCollapsed,
-                    'force-hide-secondary-nav-pf': forceHidden,
-                    'show-mobile-nav': showMobileNav}">
+         ng-class="{'nav-pf-persistent-secondary': $ctrl.persistentSecondary,
+                    'nav-pf-vertical-collapsible-menus': $ctrl.pinnableMenus,
+                    'hidden-icons-pf': $ctrl.hiddenIcons,
+                    'nav-pf-vertical-with-badges': $ctrl.showBadges,
+                    'secondary-visible-pf': $ctrl.activeSecondary,
+                    'show-mobile-secondary': $ctrl.showMobileSecondary,
+                    'show-mobile-tertiary': $ctrl.showMobileTertiary,
+                    'hover-secondary-nav-pf': $ctrl.hoverSecondaryNav,
+                    'hover-tertiary-nav-pf': $ctrl.hoverTertiaryNav,
+                    'collapsed-secondary-nav-pf': $ctrl.collapsedSecondaryNav,
+                    'collapsed-tertiary-nav-pf': $ctrl.collapsedTertiaryNav,
+                    'hidden': $ctrl.inMobileState,
+                    'collapsed': $ctrl.navCollapsed,
+                    'force-hide-secondary-nav-pf': $ctrl.forceHidden,
+                    'show-mobile-nav': $ctrl.showMobileNav}">
       <ul class="list-group">
-        <li ng-repeat="item in items" class="list-group-item"
+        <li ng-repeat="item in $ctrl.items" class="list-group-item"
             ng-class="{'secondary-nav-item-pf': item.children && item.children.length > 0,
                        'active': item.isActive,
                        'is-hover': item.isHover,
-                       'mobile-nav-item-pf': item.isMobileItem && showMobileSecondary,
-                       'mobile-secondary-item-pf': item.isMobileItem && showMobileTertiary}"
-            ng-mouseenter="handlePrimaryHover(item)" ng-mouseleave="handlePrimaryUnHover(item)">
-          <a ng-click="handlePrimaryClick(item, $event)">
-            <span class="{{item.iconClass}}" ng-if="item.iconClass" ng-class="{hidden: hiddenIcons}"
+                       'mobile-nav-item-pf': item.isMobileItem && $ctrl.showMobileSecondary,
+                       'mobile-secondary-item-pf': item.isMobileItem && $ctrl.showMobileTertiary}"
+            ng-mouseenter="$ctrl.handlePrimaryHover(item)" ng-mouseleave="$ctrl.handlePrimaryUnHover(item)">
+          <a ng-click="$ctrl.handlePrimaryClick(item, $event)">
+            <span class="{{item.iconClass}}" ng-if="item.iconClass" ng-class="{hidden: $ctrl.hiddenIcons}"
               uib-tooltip="{{item.title}}"
               tooltip-append-to-body="true"
-              tooltip-enable="{{navCollapsed}}"
+              tooltip-enable="{{$ctrl.navCollapsed}}"
               tooltip-placement="bottom"
               tooltip-class="nav-pf-vertical-tooltip">
             </span>
             <span class="list-group-item-value">{{item.title}}</span>
-            <div ng-if="showBadges && item.badges" class="badge-container-pf">
+            <div ng-if="$ctrl.showBadges && item.badges" class="badge-container-pf">
               <div class="badge {{badge.badgeClass}}" ng-repeat="badge in item.badges"
                 uib-tooltip="{{badge.tooltip}}"
                 tooltip-append-to-body="true"
@@ -58,7 +58,7 @@
           </a>
           <div ng-if="item.children && item.children.length > 0" class="nav-pf-secondary-nav">
             <div class="nav-item-pf-header">
-              <a class="secondary-collapse-toggle-pf" ng-click="collapseSecondaryNav(item, $event)" ng-class="{'collapsed': item.secondaryCollapsed}"></a>
+              <a class="secondary-collapse-toggle-pf" ng-click="$ctrl.collapseSecondaryNav(item, $event)" ng-class="{'collapsed': item.secondaryCollapsed}"></a>
               <span>{{item.title}}</span>
             </div>
             <ul class="list-group">
@@ -67,8 +67,8 @@
                              'active': secondaryItem.isActive,
                              'is-hover': secondaryItem.isHover,
                              'mobile-nav-item-pf': secondaryItem.isMobileItem}"
-                  ng-mouseenter="handleSecondaryHover(secondaryItem)" ng-mouseleave="handleSecondaryUnHover(secondaryItem)">
-                <a ng-click="handleSecondaryClick(item, secondaryItem, $event)">
+                  ng-mouseenter="$ctrl.handleSecondaryHover(secondaryItem)" ng-mouseleave="$ctrl.handleSecondaryUnHover(secondaryItem)">
+                <a ng-click="$ctrl.handleSecondaryClick(item, secondaryItem, $event)">
                   <span class="list-group-item-value">{{secondaryItem.title}}</span>
                   <div ng-if="showBadges && secondaryItem.badges" class="badge-container-pf">
                     <div class="badge {{badge.badgeClass}}" ng-repeat="badge in secondaryItem.badges"
@@ -82,14 +82,14 @@
                 </a>
                 <div ng-if="secondaryItem.children && secondaryItem.children.length > 0" class="nav-pf-tertiary-nav">
                   <div class="nav-item-pf-header">
-                    <a class="tertiary-collapse-toggle-pf" ng-click="collapseTertiaryNav(secondaryItem, $event)" ng-class="{'collapsed': secondaryItem.tertiaryCollapsed}"></a>
+                    <a class="tertiary-collapse-toggle-pf" ng-click="$ctrl.collapseTertiaryNav(secondaryItem, $event)" ng-class="{'collapsed': secondaryItem.tertiaryCollapsed}"></a>
                     <span>{{secondaryItem.title}}</span>
                   </div>
                   <ul class="list-group">
                     <li ng-repeat="tertiaryItem in secondaryItem.children" class="list-group-item" ng-class="{'active': tertiaryItem.isActive}">
-                      <a ng-click="handleTertiaryClick(item, secondaryItem, tertiaryItem, $event)">
+                      <a ng-click="$ctrl.handleTertiaryClick(item, secondaryItem, tertiaryItem, $event)">
                         <span class="list-group-item-value">{{tertiaryItem.title}}</span>
-                        <div ng-if="showBadges && tertiaryItem.badges" class="badge-container-pf">
+                        <div ng-if="$ctrl.showBadges && tertiaryItem.badges" class="badge-container-pf">
                           <div class="badge {{badge.badgeClass}}" ng-repeat="badge in tertiaryItem.badges"
                             uib-tooltip="{{badge.tooltip}}"
                             tooltip-append-to-body="true"

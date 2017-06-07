@@ -1,7 +1,7 @@
-<div pf-wizard-step step-title="First Step" substeps="true" step-id="details" step-priority="0" show-review="true" show-review-details="true">
+<pf-wizard-step step-title="First Step" substeps="true" step-id="details" step-priority="0" show-review="true" show-review-details="true">
   <div ng-include="'test/wizard/detail-page.html'">
   </div>
-  <div pf-wizard-substep step-title="Details - Extra" next-enabled="true" step-id="details-extra" step-priority="1" show-review="true" show-review-details="true" review-template="test/wizard/review-second-template.html">
+  <pf-wizard-substep step-title="Details - Extra" next-enabled="true" step-id="details-extra" step-priority="1" show-review="true" show-review-details="true" review-template="test/wizard/review-second-template.html">
     <form class="form-horizontal">
       <div pf-form-group pf-label="Lorem" required>
         <input id="new-lorem" name="lorem" ng-model="data.lorem" type="text" required/>
@@ -10,9 +10,9 @@
         <input id="new-ipsum" name="ipsum" ng-model="data.ipsum" type="text" />
       </div>
     </form>
-  </div>
-</div>
-<div pf-wizard-step step-title="Second Step" substeps="false" step-id="configuration" step-priority="1" show-review="true" review-template="test/wizard/review-second-template.html" >
+  </pf-wizard-substep>
+</pf-wizard-step>
+<pf-wizard-step step-title="Second Step" substeps="false" step-id="configuration" step-priority="1" show-review="true" review-template="test/wizard/review-second-template.html" >
   <form class="form-horizontal">
     <div pf-form-group pf-label="Lorem">
       <input id="new-lorem" name="lorem" ng-model="data.lorem" type="text"/>
@@ -21,8 +21,8 @@
       <input id="new-ipsum" name="ipsum" ng-model="data.ipsum" type="text" />
     </div>
   </form>
-</div>
-<div pf-wizard-step step-title="Review" substeps="true" step-id="review" step-priority="2">
+</pf-wizard-step>
+<pf-wizard-step step-title="Review" substeps="true" step-id="review" step-priority="2">
   <div ng-include="'test/wizard/summary.html'"></div>
   <div ng-include="'test/wizard/deployment.html'"></div>
-</div>
+</pf-wizard-step>

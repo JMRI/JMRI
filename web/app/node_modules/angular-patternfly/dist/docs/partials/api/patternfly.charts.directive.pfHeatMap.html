@@ -1,30 +1,29 @@
-<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/heatmap/heatmap.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/0b9890c/src/charts/heatmap/heatmap.directive.js#L145" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfHeatMap</code>
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/heatmap/heatmap.component.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/2e30ca8/src/charts/heatmap/heatmap.component.js#L146" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfHeatMap</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
 </span>
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
-<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>Directive for rendering a heatmap chart.</p>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>Component for rendering a heatmap chart.</p>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-heat-map
-     data="{object}"
-     [chart-data-available="{boolean}"]
-     [height="{number}"]
-     [chart-title="{string}"]
-     [show-legend="{boolean}"]
-     [legend-labels="{array}"]
-     [max-block-size="{number}"]
-     [min-block-size="{number}"]
-     [block-padding="{number}"]
-     [thresholds="{array}"]
-     [heatmap-color-pattern="{array}"]
-     [click-action="{function}"]
-     [range-hover-size="{number}"]
-     [range-on-hover="{boolean}"]
-     [range-tooltips="{array}"]&gt;
-   ...
-&lt;/ANY&gt;</pre>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;pf-heat-map
+       data="{object}"
+       [chart-data-available="{boolean}"]
+       [height="{number}"]
+       [chart-title="{string}"]
+       [show-legend="{boolean}"]
+       [legend-labels="{array}"]
+       [max-block-size="{number}"]
+       [min-block-size="{number}"]
+       [block-padding="{number}"]
+       [thresholds="{array}"]
+       [heatmap-color-pattern="{array}"]
+       [click-action="{function}"]
+       [range-hover-size="{number}"]
+       [range-on-hover="{boolean}"]
+       [range-tooltips="{array}"]&gt;
+&lt;/pf-heat-map&gt;</pre>
 <h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>data for the chart:<br/></p>
 <ul style='list-style-type: none'>
 <li>.id            - the id of the measurement
@@ -47,25 +46,25 @@
 </div></td></tr></tbody></table></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><h4 id="example_source">Source</h4>
-<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-11" source-edit-css="" source-edit-js="script.js-12" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-17" source-edit-css="" source-edit-js="script.js-18" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-11" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-11">
+<pre class="prettyprint linenums" ng-set-text="index.html-17" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-17">
   <div ng-controller="ChartCtrl">
     <div class="row">
       <div class="col-md-5 example-heatmap-container">
-        <div pf-heatmap id="id" chart-title="title" data="data" chart-data-available="dataAvailable"
-             show-legend="showLegends"></div>
+        <pf-heatmap id="id" chart-title="title" data="data" chart-data-available="dataAvailable"
+             show-legend="showLegends"></pf-heatmap>
       </div>
       <div class="col-md-3 example-heatmap-container">
-        <div pf-heatmap id="id" chart-title="titleAlt" data="data" chart-data-available="dataAvailable"
+        <pf-heatmap id="id" chart-title="titleAlt" data="data" chart-data-available="dataAvailable"
              show-legend="showLegends" legend-labels="legendLabels"  max-block-size="20" block-padding="5"
              heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"
-             click-action="clickAction"></div>
+             click-action="clickAction"></pf-heatmap>
       </div>
       <div class="col-md-3 example-heatmap-container">
-        <div pf-heatmap id="id" chart-title="titleSmall" data="data" chart-data-available="dataAvailable"
-             show-legend="showLegends" max-block-size="15" range-tooltips="rangeTooltips"></div>
+        <pf-heatmap id="id" chart-title="titleSmall" data="data" chart-data-available="dataAvailable"
+             show-legend="showLegends" max-block-size="15" range-tooltips="rangeTooltips"></pf-heatmap>
         </div>
     </div>
     <div class="row">
@@ -92,8 +91,8 @@
 </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-12"></pre>
-<script type="text/ng-template" id="script.js-12">
+<pre class="prettyprint linenums" ng-set-text="script.js-18"></pre>
+<script type="text/ng-template" id="script.js-18">
   angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope) {
     $scope.data = [
     {'id': 9,'value': 0.96,'tooltip': 'Node 8 : My OpenShift Provider<br\>96% : 96 Used of 100 Total<br\>4 Available'},
@@ -167,6 +166,6 @@
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-11" ng-eval-javascript="script.js-12"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-17" ng-eval-javascript="script.js-18"></div>
 </div></div>
 </div>

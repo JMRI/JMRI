@@ -1,4 +1,4 @@
-(function (patternfly) {
+(function () {
   'use strict';
 
   var patternflyDefaults = patternfly.c3ChartDefaults();
@@ -20,4 +20,4 @@
     getDefaultSparklineConfig: patternflyDefaults.getDefaultSparklineConfig,
     getDefaultLineConfig: patternflyDefaults.getDefaultLineConfig
   });
-})(patternfly);
+})();

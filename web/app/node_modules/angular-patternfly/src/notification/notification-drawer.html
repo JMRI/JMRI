@@ -1,31 +1,31 @@
-<div class="drawer-pf" ng-class="{'hide': drawerHidden, 'drawer-pf-expanded': drawerExpanded}">
-  <div  ng-if="drawerTitle" class="drawer-pf-title">
-    <a ng-if="allowExpand" class="drawer-pf-toggle-expand" ng-click="toggleExpandDrawer()"></a>
-    <h3 class="text-center">{{drawerTitle}}</h3>
+<div class="drawer-pf" ng-class="{'hide': $ctrl.drawerHidden, 'drawer-pf-expanded': $ctrl.drawerExpanded}">
+  <div  ng-if="$ctrl.drawerTitle" class="drawer-pf-title">
+    <a ng-if="$ctrl.allowExpand" class="drawer-pf-toggle-expand" ng-click="$ctrl.toggleExpandDrawer()"></a>
+    <h3 class="text-center">{{$ctrl.drawerTitle}}</h3>
   </div>
-  <div ng-if="titleInclude" class="drawer-pf-title" ng-include src="titleInclude"></div>
+  <div ng-if="$ctrl.titleInclude" class="drawer-pf-title" ng-include src="$ctrl.titleInclude"></div>
   <div pf-fixed-accordion scroll-selector=".panel-body">
     <div class="panel-group">
-      <div class="panel panel-default" ng-repeat="notificationGroup in notificationGroups track by $index">
+      <div class="panel panel-default" ng-repeat="notificationGroup in $ctrl.notificationGroups track by $index">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a ng-click="toggleCollapse(notificationGroup)" ng-class="{collapsed: !notificationGroup.open}" ng-include src="headingInclude"></a>
+            <a ng-click="$ctrl.toggleCollapse(notificationGroup)" ng-class="{collapsed: !notificationGroup.open}" ng-include src="$ctrl.headingInclude"></a>
           </h4>
-          <span class="panel-counter" ng-include src="subheadingInclude"></span>
+          <span class="panel-counter" ng-include src="$ctrl.subheadingInclude"></span>
         </div>
         <div class="panel-collapse collapse" ng-class="{in: notificationGroup.open}">
           <div class="panel-body">
-            <div class="drawer-pf-notification" ng-class="{unread: notification.unread, 'expanded-notification': drawerExpanded}"
-                 ng-repeat="notification in notificationGroup.notifications" ng-include src="notificationBodyInclude">
+            <div class="drawer-pf-notification" ng-class="{unread: notification.unread, 'expanded-notification': $ctrl.drawerExpanded}"
+                 ng-repeat="notification in notificationGroup.notifications" ng-include src="$ctrl.notificationBodyInclude">
             </div>
             <div ng-if="notificationGroup.isLoading" class="drawer-pf-loading text-center">
               <span class="spinner spinner-xs spinner-inline"></span> Loading More
             </div>
           </div>
-          <div class="drawer-pf-action" ng-if="actionButtonTitle">
-            <a class="btn btn-link btn-block" ng-click="actionButtonCallback(notificationGroup)">{{actionButtonTitle}}</a>
+          <div class="drawer-pf-action" ng-if="$ctrl.actionButtonTitle">
+            <a class="btn btn-link btn-block" ng-click="$ctrl.actionButtonCallback(notificationGroup)">{{$ctrl.actionButtonTitle}}</a>
           </div>
-          <div ng-if="notificationFooterInclude" ng-include src="notificationFooterInclude">
+          <div ng-if="$ctrl.notificationFooterInclude" ng-include src="$ctrl.notificationFooterInclude">
           </div>
         </div>
       </div>

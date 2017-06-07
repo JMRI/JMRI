@@ -17,7 +17,7 @@ before_install:
 install: true
 
 script:
-  - ./node_modules/patternfly-eng-release/scripts/_build.sh -a
+  - sh -x ./node_modules/patternfly-eng-release/scripts/_build.sh -a
 
 after_success:
   - ./scripts/publish-ghpages.sh -t docs

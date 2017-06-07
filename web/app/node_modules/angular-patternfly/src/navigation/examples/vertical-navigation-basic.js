@@ -1,9 +1,10 @@
 /**
  * @ngdoc directive
- * @name patternfly.navigation.directive:pfVerticalNavigation - Basic
+ * @name patternfly.navigation.component:pfVerticalNavigation - Basic
+ * @restrict E
  *
  * @description
- *   Directive for vertical navigation. This sets up the nav bar header with the collapse button (hamburger) and the
+ *   Component for vertical navigation. This sets up the nav bar header with the collapse button (hamburger) and the
  *   application brand image (or text) as well as the vertical navigation bar containing the navigation items. This
  *   directive supports primary, secondary, and tertiary navigation with options to allow pinning of the secondary and
  *   tertiary navigation menus as well as the option for persistent secondary menus.
@@ -43,18 +44,18 @@
  * @example
  <example module="patternfly.navigation" deps="patternfly.utils, patternfly.filters, patternfly.sort, patternfly.views">
   <file name="index.html">
-  <div>
-    <button class="btn btn-primary" id="showVerticalNav" onclick="showVerticalNav">Show Vertical Navigation</button>
+  <div ng-controller="showDemoController">
+    <button class="btn btn-primary" id="showVerticalNav" ng-click="showVerticalNav()">Show Vertical Navigation</button>
     <label class="example-info-text">This will display the vertical nav bar and some mock content over the content of this page.</label>
     <label class="example-info-text">Exit the demo to return back to this page.</label>
   </div>
   <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout hidden" ng-controller="vertNavController">
-    <div pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"
+    <pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"
          show-badges="true" pinnable-menus="true" update-active-items-on-click="true"
          navigate-callback="handleNavigateClick">
       <div>
         <ul class="nav navbar-nav">
-        <li><button id="hideVerticalNav" class="hide-vertical-nav">Exit Vertical Navigation Demo</button></li>
+          <li><button id="hideVerticalNav" ng-click="hideVerticalNav()" class="hide-vertical-nav">Exit Vertical Navigation Demo</button></li>
         </ul>
         <ul class="nav navbar-nav navbar-right navbar-iconic">
           <li class="dropdown">
@@ -81,11 +82,20 @@
           </li>
         </ul>
       </div>
-    </div>
+    </pf-vertical-navigation>
     <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
-      <div id="includedContent"></div>
-      </div>
+      <div id="includedContent" ng-include="'add_content.html'"></div>
     </div>
+  </div>
+  </file>
+  <file name="demo.js">
+  angular.module('patternfly.navigation').controller('showDemoController', ['$scope',
+   function ($scope) {
+     $scope.showVerticalNav = function () {
+       angular.element(document.querySelector("#verticalNavLayout")).removeClass("hidden");
+     };
+   }
+  ]);
   </file>
   <file name="script.js">
   angular.module('patternfly.navigation').controller('vertNavController', ['$scope',
@@ -311,257 +321,246 @@
            title: "Exit Demo"
         }
       ];
+      $scope.hideVerticalNav = function () {
+        angular.element(document.querySelector("#verticalNavLayout")).addClass("hidden");
+      };
       $scope.handleNavigateClick = function (item) {
         if (item.title === "Exit Demo") {
-          angular.element(document.querySelector("#verticalNavLayout")).addClass("hidden");
+          $scope.hideVerticalNav();
         }
       };
     }
   ]);
   </file>
-  <file name="add_content.js">
-    $(document).ready(function() {
-      $("#includedContent")[0].innerHTML = '\
-      <div class="row row-cards-pf"> \
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
-            <h2 class="card-pf-title" style="height: 17px;">\
-            <span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">0</span> Ipsum\
-            </h2>\
-            <div class="card-pf-body" style="height: 50px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
-            <h2 class="card-pf-title" style="height: 17px;">\
-              <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">20</span> Amet</a>\
-            </h2>\
-            <div class="card-pf-body" style="height: 50px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>\
-                <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-warning-triangle-o"></span>1</a></span>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-            <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
-              <h2 class="card-pf-title" style="height: 17px;">\
-                <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">9</span> Adipiscing</a>\
-              </h2>\
-              <div class="card-pf-body" style="height: 50px;">\
-                <p class="card-pf-aggregate-status-notifications">\
-                  <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>\
-                </p>\
-              </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
-            <h2 class="card-pf-title" style="height: 17px;">\
-              <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">12</span> Lorem</a>\
-            </h2>\
-            <div class="card-pf-body" style="height: 50px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-      </div>\
-      <div class="row row-cards-pf">\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
-            <h2 class="card-pf-title" style="height: 42px;">\
-              <span class="fa fa-rebel"></span>\
-              <span class="card-pf-aggregate-status-count">0</span> Ipsum\
-            </h2>\
-            <div class="card-pf-body" style="height: 24px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
-            <h2 class="card-pf-title" style="height: 42px;">\
-              <a href="#">\
-                <span class="fa fa-paper-plane"></span>\
-                <span class="card-pf-aggregate-status-count">20</span> Amet\
-              </a>\
-            </h2>\
-            <div class="card-pf-body" style="height: 24px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
-            <h2 class="card-pf-title" style="height: 42px;">\
-              <a href="#">\
-                <span class="pficon pficon-cluster"></span>\
-                <span class="card-pf-aggregate-status-count">9</span> Adipiscing\
-              </a>\
-            </h2>\
-            <div class="card-pf-body" style="height: 24px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6 col-md-3">\
-          <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
-            <h2 class="card-pf-title" style="height: 42px;">\
-              <a href="#">\
-                <span class="pficon pficon-image"></span>\
-                <span class="card-pf-aggregate-status-count">12</span> Lorem\
-              </a>\
-            </h2>\
-            <div class="card-pf-body" style="height: 24px;">\
-              <p class="card-pf-aggregate-status-notifications">\
-                <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>\
-              </p>\
-            </div>\
-          </div>\
-        </div>\
-      </div>\
-      <div class="row row-cards-pf">\
-        <div class="col-xs-12 col-sm-6">\
-          <div class="card-pf" style="height: 360px;">\
-            <div class="card-pf-heading">\
-              <h2 class="card-pf-title" style="height: 17px;">\
-                Top Utilized\
-              </h2>\
-            </div>\
-            <div class="card-pf-body" style="height: 280px;">\
-              <div class="progress-description">\
-                Ipsum\
-              </div>\
-              <div class="progress progress-label-top-right">\
-                <div class="progress-bar progress-bar-danger" role="progressbar"style="width: 95%;" data-toggle="tooltip" title="95% Used">\
-                  <span><strong>190.0 of 200.0 GB</strong> Used</span>\
-                </div>\
-                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 5%;" data-toggle="tooltip" title="5% Available">\
-                  <span class="sr-only">5% Available</span>\
-                </div>\
-              </div>\
-              <div class="progress-description">\
-                Amet\
-              </div>\
-              <div class="progress progress-label-top-right">\
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Used">\
-                  <span><strong>100.0 of 200.0 GB</strong> Used</span>\
-                </div>\
-                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Available">\
-                  <span class="sr-only">50% Available</span>\
-                </div>\
-              </div>\
-              <div class="progress-description">\
-                Adipiscing\
-              </div>\
-              <div class="progress progress-label-top-right">\
-                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 70%;" data-toggle="tooltip" title="70% Used">\
-                  <span><strong>140.0 of 200.0 GB</strong> Used</span>\
-                </div>\
-                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 30%;" data-toggle="tooltip" title="30% Available">\
-                  <span class="sr-only">30% Available</span>\
-                </div>\
-              </div>\
-              <div class="progress-description">\
-                Lorem\
-              </div>\
-              <div class="progress progress-label-top-right">\
-                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 76.5%;" data-toggle="tooltip" title="76.5% Used">\
-                  <span><strong>153.0 of 200.0 GB</strong> Used</span>\
-                </div>\
-                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 23.5%;" data-toggle="tooltip" title="23.5% Available">\
-                  <span class="sr-only">23.5% Available</span>\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-xs-12 col-sm-6">\
-          <div class="card-pf" style="height: 360px;">\
-            <div class="card-pf-heading">\
-              <h2 class="card-pf-title" style="height: 17px;">\
-                Quotas\
-              </h2>\
-            </div>\
-            <div class="card-pf-body" style="height: 280px;">\
-              <div class="progress-container progress-description-left progress-label-right">\
-                <div class="progress-description">\
-                  Ipsum\
-                </div>\
-                <div class="progress">\
-                  <div class="progress-bar" role="progressbar" style="width: 25%;" data-toggle="tooltip" title="25% Used">\
-                    <span><strong>115 of 460</strong> MHz</span>\
-                  </div>\
-                  <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 75%;" data-toggle="tooltip" title="75% Available">\
-                    <span class="sr-only">75% Available</span>\
-                  </div>\
-                </div>\
-              </div>\
-              <div class="progress-container progress-description-left progress-label-right">\
-                <div class="progress-description">\
-                  Amet\
-                </div>\
-                <div class="progress">\
-                  <div class="progress-bar" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Used">\
-                    <span><strong>8 of 16</strong> GB</span>\
-                  </div>\
-                  <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Available">\
-                    <span class="sr-only">50% Available</span>\
-                  </div>\
-                </div>\
-              </div>\
-              <div class="progress-container progress-description-left progress-label-right">\
-                <div class="progress-description">\
-                  Adipiscing\
-                </div>\
-                <div class="progress">\
-                  <div class="progress-bar" role="progressbar" style="width: 62.5%;" data-toggle="tooltip" title="62.5% Used">\
-                    <span><strong>5 of 8</strong> Total</span>\
-                  </div>\
-                  <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 37.5%;" data-toggle="tooltip" title="37.5% Available">\
-                    <span class="sr-only">37.5% Available</span>\
-                  </div>\
-                </div>\
-              </div>\
-              <div class="progress-container progress-description-left progress-label-right">\
-                <div class="progress-description">\
-                  Lorem\
-                </div>\
-                <div class="progress">\
-                  <div class="progress-bar" role="progressbar" style="width: 100%;" data-toggle="tooltip" title="100% Used">\
-                    <span><strong>2 of 2</strong> Total</span>\
-                  </div>\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-        </div>\
-      </div>\
-      ';
-    });
-  </file>
-  <file name="hide-show.js">
-    $(document).ready(function() {
-      $(document).on('click', '#showVerticalNav', function() {
-        $(document.getElementById("verticalNavLayout")).removeClass("hidden");
-      });
-      $(document).on('click', '#hideVerticalNav', function() {
-        $(document.getElementById("verticalNavLayout")).addClass("hidden");
-      });
-    });
-  </file>
+  <file name="add_content.html">
+    <div class="row row-cards-pf">
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">
+          <h2 class="card-pf-title" style="height: 17px;">
+            <span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">0</span> Ipsum
+          </h2>
+          <div class="card-pf-body" style="height: 50px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">
+          <h2 class="card-pf-title" style="height: 17px;">
+            <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">20</span> Amet</a>
+          </h2>
+          <div class="card-pf-body" style="height: 50px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-warning-triangle-o"></span>1</a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">
+          <h2 class="card-pf-title" style="height: 17px;">
+            <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">9</span> Adipiscing</a>
+          </h2>
+          <div class="card-pf-body" style="height: 50px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">
+          <h2 class="card-pf-title" style="height: 17px;">
+            <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">12</span> Lorem</a>
+          </h2>
+          <div class="card-pf-body" style="height: 50px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cards-pf">
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">
+          <h2 class="card-pf-title" style="height: 42px;">
+            <span class="fa fa-rebel"></span>
+            <span class="card-pf-aggregate-status-count">0</span> Ipsum
+          </h2>
+          <div class="card-pf-body" style="height: 24px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">
+          <h2 class="card-pf-title" style="height: 42px;">
+            <a href="#">
+              <span class="fa fa-paper-plane"></span>
+              <span class="card-pf-aggregate-status-count">20</span> Amet
+            </a>
+          </h2>
+          <div class="card-pf-body" style="height: 24px;">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">
+          <h2 class="card-pf-title" style="height: 42px;">
+            <a href="#">
+              <span class="pficon pficon-cluster"></span>
+              <span class="card-pf-aggregate-status-count">9</span> Adipiscing
+            </a>
+          </h2>
+        <div class="card-pf-body" style="height: 24px;">
+          <p class="card-pf-aggregate-status-notifications">
+            <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">
+        <h2 class="card-pf-title" style="height: 42px;">
+          <a href="#">
+            <span class="pficon pficon-image"></span>
+            <span class="card-pf-aggregate-status-count">12</span> Lorem
+          </a>
+        </h2>
+        <div class="card-pf-body" style="height: 24px;">
+          <p class="card-pf-aggregate-status-notifications">
+            <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row row-cards-pf">
+    <div class="col-xs-12 col-sm-6">
+      <div class="card-pf" style="height: 360px;">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title" style="height: 17px;">
+            Top Utilized
+          </h2>
+        </div>
+        <div class="card-pf-body" style="height: 280px;">
+          <div class="progress-description">
+            Ipsum
+          </div>
+          <div class="progress progress-label-top-right">
+            <div class="progress-bar progress-bar-danger" role="progressbar"style="width: 95%;" data-toggle="tooltip" title="95% Used">
+              <span><strong>190.0 of 200.0 GB</strong> Used</span>
+            </div>
+            <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 5%;" data-toggle="tooltip" title="5% Available">
+              <span class="sr-only">5% Available</span>
+            </div>
+          </div>
+          <div class="progress-description">
+            Amet
+          </div>
+          <div class="progress progress-label-top-right">
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Used">
+              <span><strong>100.0 of 200.0 GB</strong> Used</span>
+            </div>
+            <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Available">
+              <span class="sr-only">50% Available</span>
+            </div>
+          </div>
+          <div class="progress-description">
+            Adipiscing
+          </div>
+          <div class="progress progress-label-top-right">
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 70%;" data-toggle="tooltip" title="70% Used">
+              <span><strong>140.0 of 200.0 GB</strong> Used</span>
+            </div>
+            <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 30%;" data-toggle="tooltip" title="30% Available">
+              <span class="sr-only">30% Available</span>
+            </div>
+          </div>
+          <div class="progress-description">
+            Lorem
+          </div>
+          <div class="progress progress-label-top-right">
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 76.5%;" data-toggle="tooltip" title="76.5% Used">
+              <span><strong>153.0 of 200.0 GB</strong> Used</span>
+            </div>
+            <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 23.5%;" data-toggle="tooltip" title="23.5% Available">
+              <span class="sr-only">23.5% Available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="card-pf" style="height: 360px;">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title" style="height: 17px;">
+            Quotas
+          </h2>
+        </div>
+        <div class="card-pf-body" style="height: 280px;">
+          <div class="progress-container progress-description-left progress-label-right">
+            <div class="progress-description">
+              Ipsum
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 25%;" data-toggle="tooltip" title="25% Used">
+                <span><strong>115 of 460</strong> MHz</span>
+              </div>
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 75%;" data-toggle="tooltip" title="75% Available">
+                <span class="sr-only">75% Available</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-container progress-description-left progress-label-right">
+            <div class="progress-description">
+              Amet
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Used">
+                <span><strong>8 of 16</strong> GB</span>
+              </div>
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Available">
+                <span class="sr-only">50% Available</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-container progress-description-left progress-label-right">
+          <div class="progress-description">
+            Adipiscing
+          </div>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 62.5%;" data-toggle="tooltip" title="62.5% Used">
+              <span><strong>5 of 8</strong> Total</span>
+            </div>
+            <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 37.5%;" data-toggle="tooltip" title="37.5% Available">
+              <span class="sr-only">37.5% Available</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-container progress-description-left progress-label-right">
+          <div class="progress-description">
+          Lorem
+          </div>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 100%;" data-toggle="tooltip" title="100% Used">
+              <span><strong>2 of 2</strong> Total</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+ </file>
 </example>
 */

@@ -1,21 +1,21 @@
 <div>
-  <div class="applauncher-pf dropdown dropdown-kebab-pf" ng-class="{'applauncher-pf-block-list': !isList()}"
+  <div class="applauncher-pf dropdown dropdown-kebab-pf" ng-class="{'applauncher-pf-block-list': !$ctrl.isList}"
        uib-dropdown
        uib-keyboard-nav="true">
-    <a id="domain-switcher-{{$id}}" class="dropdown-toggle drawer-pf-trigger-icon" uib-dropdown-toggle ng-class="{'disabled': isDisabled() || !items().length}" href>
+    <a id="domain-switcher-{{$ctrl.$id}}" class="dropdown-toggle drawer-pf-trigger-icon" uib-dropdown-toggle ng-class="{'disabled': $ctrl.isDisabled || !$ctrl.items.length}" href>
       <i class="fa fa-th applauncher-pf-icon" aria-hidden="true"></i>
       <span class="applauncher-pf-title">
-        {{label || 'Application Launcher'}}
+        {{$ctrl.label || 'Application Launcher'}}
         <span class="caret" aria-hidden="true"></span>
       </span>
     </a>
     <ul class="dropdown-menu dropdown-menu-right"
         uib-dropdown-menu
         role="menu"
-        aria-labelledby="domain-switcher-{{$id}}">
-      <li class="applauncher-pf-item" role="menuitem" ng-repeat="item in items()">
+        aria-labelledby="domain-switcher-{{$ctrl.$id}}">
+      <li class="applauncher-pf-item" role="menuitem" ng-repeat="item in $ctrl.items">
         <a class="applauncher-pf-link" ng-href="{{item.href}}" target="{{item.target || '_blank'}}" title="{{item.tooltip}}">
-          <i class="applauncher-pf-link-icon pficon" ng-class="item.iconClass" ng-if="!hiddenIcons()" aria-hidden="true"></i>
+          <i class="applauncher-pf-link-icon pficon" ng-class="item.iconClass" ng-if="!$ctrl.hiddenIcons" aria-hidden="true"></i>
           <span class="applauncher-pf-link-title">{{item.title}}</span>
         </a>
       </li>

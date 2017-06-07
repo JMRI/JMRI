@@ -6,13 +6,13 @@
     <li ng-repeat="action in notification.actions"
         role="{{action.isSeparator === true ? 'separator' : 'menuitem'}}"
         ng-class="{'divider': action.isSeparator === true, 'disabled': action.isDisabled === true}">
-      <a ng-if="action.isSeparator !== true" class="secondary-action" title="{{action.title}}" ng-click="customScope.handleAction(notification, action)">
+      <a ng-if="action.isSeparator !== true" class="secondary-action" title="{{action.title}}" ng-click="$ctrl.customScope.handleAction(notification, action)">
         {{action.name}}
       </a>
     </li>
   </ul>
 </div>
-<span ng-if="notification.status" class="{{'pull-left ' + customScope.getNotficationStatusIconClass(notification)}}"></span>
+<span ng-if="notification.status" class="{{'pull-left ' + $ctrl.customScope.getNotficationStatusIconClass(notification)}}"></span>
 <span class="drawer-pf-notification-message">{{notification.message}}</span>
 <div class="drawer-pf-notification-info">
   <span class="date">{{notification.timeStamp | date:'MM/dd/yyyy'}}</span>

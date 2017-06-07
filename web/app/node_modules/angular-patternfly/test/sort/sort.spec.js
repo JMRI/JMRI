@@ -2,7 +2,6 @@ describe('Directive:  pfSort', function () {
   var $scope;
   var $compile;
   var element;
-  var isolateScope;
 
   // load the controller's module
   beforeEach(function () {
@@ -19,7 +18,6 @@ describe('Directive:  pfSort', function () {
     $compile(element)(scope);
 
     scope.$digest();
-    isolateScope = element.isolateScope();
   };
 
   beforeEach(function () {
@@ -43,7 +41,7 @@ describe('Directive:  pfSort', function () {
       ]
     };
 
-    var htmlTmp = '<div pf-sort config="sortConfig"></div>';
+    var htmlTmp = '<pf-sort config="sortConfig"></pf-sort>';
 
     compileHTML(htmlTmp, $scope);
   });
@@ -166,21 +164,49 @@ describe('Directive:  pfSort', function () {
     $scope.sortConfig.currentField = $scope.sortConfig.fields[0];
     $scope.sortConfig.isAscending = true;
     $scope.$digest();
-    expect(isolateScope.getSortIconClass()).toBe('fa fa-sort-alpha-asc');
+    var alphaSortAsc = element.find('.fa.fa-sort-alpha-asc');
+    var alphaSortDesc = element.find('.fa.fa-sort-alpha-desc');
+    var numericSortAsc = element.find('.fa.fa-sort-numeric-asc');
+    var numericSortDesc = element.find('.fa.fa-sort-numeric-desc');
+    expect(alphaSortAsc.length).toBe(1);
+    expect(alphaSortDesc.length).toBe(0);
+    expect(numericSortAsc.length).toBe(0);
+    expect(numericSortDesc.length).toBe(0);
 
     $scope.sortConfig.currentField = $scope.sortConfig.fields[0];
     $scope.sortConfig.isAscending = false;
     $scope.$digest();
-    expect(isolateScope.getSortIconClass()).toBe('fa fa-sort-alpha-desc');
+    alphaSortAsc = element.find('.fa.fa-sort-alpha-asc');
+    alphaSortDesc = element.find('.fa.fa-sort-alpha-desc');
+    numericSortAsc = element.find('.fa.fa-sort-numeric-asc');
+    numericSortDesc = element.find('.fa.fa-sort-numeric-desc');
+    expect(alphaSortAsc.length).toBe(0);
+    expect(alphaSortDesc.length).toBe(1);
+    expect(numericSortAsc.length).toBe(0);
+    expect(numericSortDesc.length).toBe(0);
 
     $scope.sortConfig.currentField = $scope.sortConfig.fields[1];
     $scope.sortConfig.isAscending = true;
     $scope.$digest();
-    expect(isolateScope.getSortIconClass()).toBe('fa fa-sort-numeric-asc');
+    alphaSortAsc = element.find('.fa.fa-sort-alpha-asc');
+    alphaSortDesc = element.find('.fa.fa-sort-alpha-desc');
+    numericSortAsc = element.find('.fa.fa-sort-numeric-asc');
+    numericSortDesc = element.find('.fa.fa-sort-numeric-desc');
+    expect(alphaSortAsc.length).toBe(0);
+    expect(alphaSortDesc.length).toBe(0);
+    expect(numericSortAsc.length).toBe(1);
+    expect(numericSortDesc.length).toBe(0);
 
     $scope.sortConfig.currentField = $scope.sortConfig.fields[1];
     $scope.sortConfig.isAscending = false;
     $scope.$digest();
-    expect(isolateScope.getSortIconClass()).toBe('fa fa-sort-numeric-desc');
+    alphaSortAsc = element.find('.fa.fa-sort-alpha-asc');
+    alphaSortDesc = element.find('.fa.fa-sort-alpha-desc');
+    numericSortAsc = element.find('.fa.fa-sort-numeric-asc');
+    numericSortDesc = element.find('.fa.fa-sort-numeric-desc');
+    expect(alphaSortAsc.length).toBe(0);
+    expect(alphaSortDesc.length).toBe(0);
+    expect(numericSortAsc.length).toBe(0);
+    expect(numericSortDesc.length).toBe(1);
   });
 })

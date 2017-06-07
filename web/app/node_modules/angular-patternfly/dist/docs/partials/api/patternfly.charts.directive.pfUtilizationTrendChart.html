@@ -1,10 +1,10 @@
-<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/utilization-trend/utilization-trend-chart-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/0b9890c/src/charts/utilization-trend/utilization-trend-chart-directive.js#L184" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfUtilizationTrendChart</code>
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/utilization-trend/utilization-trend-chart-component.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/2e30ca8/src/charts/utilization-trend/utilization-trend-chart-component.js#L185" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfUtilizationTrendChart</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
 </span>
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
-<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>Directive for rendering a utilization trend chart. The utilization trend chart combines overall
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>Component for rendering a utilization trend chart. The utilization trend chart combines overall
 data with a pfDonutPctChart and a pfSparklineChart. Add the options for the pfDonutChart via
 the donutConfig parameter. Add the options for the pfSparklineChart via the sparklineConfig
 parameter.
@@ -12,17 +12,16 @@ parameter.
 See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.</p>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-utilization-trend-chart
-     config="{object}"
-     donut-config="{object}"
-     sparkline-config="{object}"
-     chart-data="{object}"
-     [donut-center-label="{string}"]
-     [sparkline-chart-height="{int}"]
-     [show-sparkline-x-axis="{boolean}"]
-     [show-sparkline-y-axis="{boolean}"]&gt;
-   ...
-&lt;/ANY&gt;</pre>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;pf-utilization-trend-chart
+       config="{object}"
+       donut-config="{object}"
+       sparkline-config="{object}"
+       chart-data="{object}"
+       [donut-center-label="{string}"]
+       [sparkline-chart-height="{int}"]
+       [show-sparkline-x-axis="{boolean}"]
+       [show-sparkline-y-axis="{boolean}"]&gt;
+&lt;/pf-utilization-trend-chart&gt;</pre>
 <h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>configuration settings for the utilization trend chart:<br/></p>
 <ul style='list-style-type: none'>
 <li>.title        - title of the Utilization chart
@@ -49,19 +48,19 @@ See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> 
 </div></td></tr></tbody></table></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><h4 id="example_source">Source</h4>
-<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-21" source-edit-css="" source-edit-js="script.js-22" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-29" source-edit-css="" source-edit-js="script.js-30" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-21" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-21">
+<pre class="prettyprint linenums" ng-set-text="index.html-29" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-29">
   <div ng-controller="ChartCtrl" class="row" style="display:inline-block; width: 100%;">
     <div class="col-md-12">
-      <div pf-utilization-trend-chart config="config"
+      <pf-utilization-trend-chart config="config"
            chart-data="data" center-label="centerLabel"
            donut-config="donutConfig" sparkline-config="sparklineConfig"
            sparkline-chart-height="custChartHeight"
            show-sparkline-x-axis="custShowXAxis"
            show-sparkline-y-axis="custShowYAxis">
-      </div>
+      </pf-utilization-trend-chart>
     </div>
     <hr class="col-md-12">
     <div class="col-md-12">
@@ -144,8 +143,8 @@ See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> 
 </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-22"></pre>
-<script type="text/ng-template" id="script.js-22">
+<pre class="prettyprint linenums" ng-set-text="script.js-30"></pre>
+<script type="text/ng-template" id="script.js-30">
 angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope ) {
   $scope.config = {
     title: 'Memory',
@@ -193,6 +192,6 @@ angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope 
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-21" ng-eval-javascript="script.js-22"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-29" ng-eval-javascript="script.js-30"></div>
 </div></div>
 </div>

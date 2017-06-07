@@ -2,11 +2,10 @@ describe('Directive:  pfFilter', function () {
   var $scope;
   var $compile;
   var element;
-  var isoScope;
 
   // load the controller's module
   beforeEach(function () {
-    module('patternfly.filters', 'patternfly.select', 'filters/filter.html', 'filters/filter-fields.html', 'filters/filter-results.html');
+    module('patternfly.filters', 'filters/filter.html', 'filters/filter-fields.html', 'filters/filter-results.html');
   });
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {
@@ -19,8 +18,6 @@ describe('Directive:  pfFilter', function () {
     var el = $compile(element)(scope);
 
     scope.$digest();
-
-    isoScope = el.isolateScope();
   };
 
   beforeEach(function () {
@@ -50,7 +47,7 @@ describe('Directive:  pfFilter', function () {
       appliedFilters: []
     };
 
-    var htmlTmp = '<div pf-filter config="filterConfig"></div>';
+    var htmlTmp = '<pf-filter config="filterConfig"></pf-filter>';
 
     compileHTML(htmlTmp, $scope);
   });
@@ -94,62 +91,17 @@ describe('Directive:  pfFilter', function () {
   });
 
   it ('should add a dropdown select when a select type is chosen', function() {
-    var pfSelects = element.find('.filter-select');
+    var filterSelect = element.find('.filter-select');
     var fields = element.find('.filter-field');
 
-    expect(pfSelects.length).toBe(0);
+    expect(filterSelect.length).toBe(0);
     eventFire(fields[2], 'click');
     $scope.$digest();
-    pfSelects = element.find('.filter-select');
-    expect(pfSelects.length).toBe(2); // 2 because it is a directive
+    filterSelect = element.find('.filter-select');
+    expect(filterSelect.length).toBe(1);
 
-    var items = pfSelects.find('li');
+    var items = filterSelect.find('li');
     expect(items.length).toBe($scope.filterConfig.fields[2].filterValues.length + 1); // +1 for the null value
-  });
-
-  it ('should enforce single selection for select dropdowns, accumative for others', function() {
-    $scope.filterConfig.appliedFilters = [
-      {
-        id: 'birthMonth',
-        title: 'Birth Month',
-        type: 'select',
-        value: 'February'
-      }
-    ];
-
-    var newFilter = {
-      id: 'birthMonth',
-      title: 'Birth Month',
-      filterType: 'select'
-    };
-
-    isoScope.addFilter(newFilter, "April");
-
-    expect($scope.filterConfig.appliedFilters.length).toBe(1);
-    expect($scope.filterConfig.appliedFilters[0].value).toBe("April");
-
-    //Accumative for other types
-
-    $scope.filterConfig.appliedFilters = [
-      {
-        id: 'address',
-        title: 'Address',
-        type: 'text',
-        value: 'New York'
-      }
-    ];
-
-    newFilter = {
-      id: 'address',
-      title: 'Address',
-      filterType: 'text'
-    };
-
-    isoScope.addFilter(newFilter, 'Paris');
-
-    expect($scope.filterConfig.appliedFilters.length).toBe(2);
-    expect($scope.filterConfig.appliedFilters[0].value).toBe("New York");
-    expect($scope.filterConfig.appliedFilters[1].value).toBe("Paris");
   });
 
   it ('should clear a filter when the close button is clicked', function () {

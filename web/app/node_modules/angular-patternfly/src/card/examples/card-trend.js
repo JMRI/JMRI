@@ -1,8 +1,8 @@
 /**
  * @ngdoc directive
- * @name patternfly.card.directive:pfCard - Trends
- * @restrict A
- * @element ANY
+ * @name patternfly.card.component:pfCard - Trends
+ * @restrict E
+ *
  * @param {string} headTitle Title for the card
  * @param {string=} subTitle Sub-Title for the card
  * @param {boolean=} showTopBorder Show/Hide the blue top border. True shows top border, false (default) hides top border
@@ -27,7 +27,7 @@
  * <li>.callBackFn - user defined function to call when a filter is selected
  * </ul>
  * @description
- * Directive for easily displaying a card with html content
+ * Component for easily displaying a card with html content
  *
  * @example
  <example module="demo">
@@ -35,16 +35,16 @@
  <file name="index.html">
    <div ng-controller="ChartCtrl">
      <label class="label-title">Card With Single Trend</label>
-     <div pf-card head-title="Cluster Utilization" show-top-border="true" footer="footerConfig" filter="filterConfig" style="width: 50%">
-       <div pf-trends-chart config="configSingle" chart-data="dataSingle"></div>
-     </div>
+     <pf-card head-title="Cluster Utilization" show-top-border="true" footer="footerConfig" filter="filterConfig" style="width: 50%">
+       <pf-trends-chart config="configSingle" chart-data="dataSingle"></pf-trends-chart>
+     </pf-card>
      <label class="label-title">Card with Multiple Trends</label>
-     <div pf-card head-title="Performance" sub-title="Last 30 Days" show-top-border="false"
+     <pf-card head-title="Performance" sub-title="Last 30 Days" show-top-border="false"
           show-titles-separator="false" style="width: 65%" footer="actionBarConfig">
-       <div pf-trends-chart config="configVirtual" chart-data="dataVirtual"></div>
-       <div pf-trends-chart config="configPhysical" chart-data="dataPhysical"></div>
-       <div pf-trends-chart config="configMemory" chart-data="dataMemory"></div>
-     </div>
+       <pf-trends-chart config="configVirtual" chart-data="dataVirtual"></pf-trends-chart>
+       <pf-trends-chart config="configPhysical" chart-data="dataPhysical"></pf-trends-chart>
+       <pf-trends-chart config="configMemory" chart-data="dataMemory"></pf-trends-chart>
+     </pf-card>
     </div>
    </div>
  </file>

@@ -1,14 +1,14 @@
-<div class="alert alert-{{pfNotificationType}}"
-     ng-class="{'alert-dismissable': pfNotificationPersistent === true}">
-  <button ng-show="pfNotificationPersistent"
-          ng-click="$parent.notifications.remove($index)"
+<div class="alert alert-{{$ctrl.pfNotificationType}}"
+     ng-class="{'alert-dismissable': $ctrl.pfNotificationPersistent === true}">
+  <button ng-show="$ctrl.pfNotificationPersistent"
+          ng-click="$ctrl.pfNotificationRemove()"
           type="button" class="close" data-dismiss="alert" aria-hidden="true">
     <span class="pficon pficon-close"></span>
   </button>
-  <span class="pficon pficon-ok" ng-show="pfNotificationType === 'success'"></span>
-  <span class="pficon pficon-info" ng-show="pfNotificationType === 'info'"></span>
-  <span class="pficon pficon-error-circle-o" ng-show="pfNotificationType === 'danger'"></span>
-  <span class="pficon pficon-warning-triangle-o" ng-show="pfNotificationType === 'warning'"></span>
+  <span class="pficon pficon-ok" ng-show="$ctrl.pfNotificationType === 'success'"></span>
+  <span class="pficon pficon-info" ng-show="$ctrl.pfNotificationType === 'info'"></span>
+  <span class="pficon pficon-error-circle-o" ng-show="$ctrl.pfNotificationType === 'danger'"></span>
+  <span class="pficon pficon-warning-triangle-o" ng-show="$ctrl.pfNotificationType === 'warning'"></span>
 
-  <strong>{{pfNotificationHeader}}</strong> {{pfNotificationMessage}}
+  <strong>{{$ctrl.pfNotificationHeader}}</strong> {{$ctrl.pfNotificationMessage}}
 </div>

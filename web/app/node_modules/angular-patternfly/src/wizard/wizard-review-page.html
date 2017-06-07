@@ -1,15 +1,15 @@
 <div class="wizard-pf-review-page">
   <div class="wizard-pf-review-steps">
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="reviewStep in reviewSteps track by $index">
-        <a class="apf-form-collapse" ng-class="{'collapsed': !reviewStep.showReviewDetails}" ng-click="toggleShowReviewDetails(reviewStep)">
+      <li class="list-group-item" ng-repeat="reviewStep in $ctrl.reviewSteps track by $index">
+        <a class="apf-form-collapse" ng-class="{'collapsed': !reviewStep.showReviewDetails}" ng-click="$ctrl.toggleShowReviewDetails(reviewStep)">
           {{reviewStep.stepTitle}}
         </a>
         <div class="wizard-pf-review-substeps" ng-class="{'collapse': !reviewStep.showReviewDetails}">
           <ul class="list-group" ng-if="reviewStep.substeps" >
             <li class="list-group-item" ng-repeat="substep in reviewStep.getReviewSteps()">
-              <a class="apf-form-collapse" ng-class="{'collapsed': !substep.showReviewDetails}" ng-click="toggleShowReviewDetails(substep)">
-                <span class="wizard-pf-substep-number">{{getSubStepNumber(reviewStep, substep)}}</span>
+              <a class="apf-form-collapse" ng-class="{'collapsed': !substep.showReviewDetails}" ng-click="$ctrl.toggleShowReviewDetails(substep)">
+                <span class="wizard-pf-substep-number">{{$ctrl.getSubStepNumber(reviewStep, substep)}}</span>
                 <span class="wizard-pf-substep-title">{{substep.stepTitle}}</span>
               </a>
               <div class="wizard-pf-review-content" ng-class="{'collapse': !substep.showReviewDetails}">

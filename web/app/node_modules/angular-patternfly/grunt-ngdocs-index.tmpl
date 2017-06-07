@@ -238,7 +238,7 @@
 
         <div id="loading" ng-show="loading">Loading...</div>
 
-        <div class="home" ng-show="breadcrumb[breadcrumb.length-1].name === 'API Documentation'">
+        <div class="home" ng-show="(breadcrumb[breadcrumb.length-1].name === 'API Documentation') || (partialTitle.indexOf('Page Not Found') !== -1)">
           <h1>Welcome to Angular PatternFly!<h1>
           <img src="img/patternfly-orb.svg" alt="PatternFly logo" />
           <h3>Angular PatternFly contains custom AngularJS directives which utilize the PatternFly Refererence Implementation.<br/>PatternFly is a community of designers and developers collaborating to build a UI framework for enterprise web applications.</h3>

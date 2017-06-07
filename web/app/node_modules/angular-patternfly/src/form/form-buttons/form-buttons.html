@@ -1,21 +1,21 @@
 <div class="form-group">
-  <div class="{{ pfButtonContainerClass }}">
+  <div class="{{$ctrl.pfButtonContainerClass}}">
     <div class="control-group buttons">
       <button class="btn btn-default"
               type="button"
-              ng-click="pfHandleCancel()"
-              ng-disabled="pfWorking"
+              ng-click="$ctrl.pfHandleCancel()"
+              ng-disabled="$ctrl.pfWorking"
               translate>
         Cancel
       </button>
 
       <button class="btn btn-primary"
-              ng-click="pfHandleSave(); pfWorking = true"
-              ng-disabled="isInvalid() || pfWorking">
+              ng-click="$ctrl.pfHandleSave(); $ctrl.pfWorking = true"
+              ng-disabled="$ctrl.isInvalid() || $ctrl.pfWorking">
 
-        <i class="icon-spinner icon-spin" ng-show="pfWorking"></i>
-        <span ng-show="pfWorking" translate>Saving...</span>
-        <span ng-hide="pfWorking" translate>Save</span>
+        <i class="icon-spinner icon-spin" ng-show="$ctrl.pfWorking"></i>
+        <span ng-show="$ctrl.pfWorking" translate>Saving...</span>
+        <span ng-hide="$ctrl.pfWorking" translate>Save</span>
       </button>
     </div>
   </div>

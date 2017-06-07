@@ -5,4 +5,4 @@
  *   Notification module for patternfly.
  *
  */
-angular.module('patternfly.notification', ['patternfly.utils']);
+angular.module('patternfly.notification', ['patternfly.utils', 'ui.bootstrap']);

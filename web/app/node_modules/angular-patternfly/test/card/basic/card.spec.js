@@ -1,4 +1,4 @@
-describe('Directive: pfCard', function() {
+describe('Component: pfCard', function() {
   var $scope, $compile, element, headTitle, subTitle, cardClass, innerContent, isoScope;
 
   beforeEach(module(
@@ -12,18 +12,18 @@ describe('Directive: pfCard', function() {
     $scope = _$rootScope_;
   }));
 
-  describe('Page with pf-card directive', function () {
+  describe('Page with pf-card component', function () {
 
     var compileCard = function (markup, scope) {
       var el = $compile(markup)(scope);
       scope.$digest();
-      isoScope = el.isolateScope();
+      isoScope = el.controller("pf-card");
       return el;
     };
 
     it("should set the headTitle and subTitle and inner content", function() {
 
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title"><span>Inner content goes here</span></div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title"><span>Inner content goes here</span></pf-card>', $scope);
 
       headTitle = angular.element(element).find('.card-pf-title').html();
       expect(headTitle).toBe("My card title");
@@ -42,7 +42,7 @@ describe('Directive: pfCard', function() {
 
     it("should show the top border", function() {
 
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title" show-top-border="true">Inner content goes here</div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title" show-top-border="true">Inner content goes here</pf-card>', $scope);
 
       // showTopBorder set to true, results in having the .card-pf-accented class
       cardClass = angular.element(element).find('.card-pf').hasClass('card-pf-accented');
@@ -63,21 +63,21 @@ describe('Directive: pfCard', function() {
     it("should show and hide the bottom border", function() {
 
       // by default, bottom border should be shown
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</pf-card>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
       expect(cardClass.length).toBe(1);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
       expect(cardClass.length).toBe(0);
 
       // setting to false should hide the bottom border
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="false">Inner content goes here</div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="false">Inner content goes here</pf-card>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
       expect(cardClass.length).toBe(0);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
       expect(cardClass.length).toBe(1);
 
       // setting to true should show the bottom border
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="true">Inner content goes here</div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title" show-titles-separator="true">Inner content goes here</pf-card>', $scope);
       cardClass = angular.element(element).find('.card-pf-heading');
       expect(cardClass.length).toBe(1);
       cardClass = angular.element(element).find('.card-pf-heading-no-bottom');
@@ -88,7 +88,7 @@ describe('Directive: pfCard', function() {
     it("should hide the action bar footer by default", function() {
 
       // by default, if footer not defined, footer should not be shown
-      element = compileCard('<div pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</div>', $scope);
+      element = compileCard('<pf-card head-title="My card title" sub-title="My card subtitle title">Inner content goes here</pf-card>', $scope);
       cardClass = angular.element(element).find('.card-pf-footer');
       expect(cardClass.length).toBe(0);
     });
@@ -102,7 +102,7 @@ describe('Directive: pfCard', function() {
         'text'      : 'Add New Cluster'
       };
 
-      element = compileCard('<div pf-card head-title="title" footer="actionBarConfig">Inner content</div>', $scope);
+      element = compileCard('<pf-card head-title="title" footer="actionBarConfig">Inner content</pf-card>', $scope);
       cardClass = angular.element(element).find('a');
       expect(cardClass.attr('href')).toBe('#addCluster');
       var spans = cardClass.find('span');
@@ -119,7 +119,7 @@ describe('Directive: pfCard', function() {
         }
       };
 
-      element = compileCard('<div pf-card head-title="title" footer="actionBarConfig">Inner content</div>', $scope);
+      element = compileCard('<pf-card head-title="title" footer="actionBarConfig">Inner content</pf-card>', $scope);
       cardClass = angular.element(element).find('a');
       expect(cardClass.attr('href')).toBeUndefined();
 
@@ -143,7 +143,7 @@ describe('Directive: pfCard', function() {
         'text'      : 'Add New Cluster'
       };
 
-      element = compileCard('<div pf-card head-title="title" footer="actionBarConfig">Inner content</div>', $scope);
+      element = compileCard('<pf-card head-title="title" footer="actionBarConfig">Inner content</pf-card>', $scope);
       cardClass = angular.element(element).find('.card-pf-footer').find('button');
       expect(cardClass.length).toBe(0);
     });
@@ -160,7 +160,7 @@ describe('Directive: pfCard', function() {
         'defaultFilter' : 2
       };
 
-      element = compileCard('<div pf-card head-title="title" footer="{}" filter="filterConfig">Inner content</div>', $scope);
+      element = compileCard('<pf-card head-title="title" footer="{}" filter="filterConfig">Inner content</pf-card>', $scope);
 
       // should find 3 filters
       cardClass = angular.element(element).find('.card-pf-footer').find('a');
@@ -192,7 +192,7 @@ describe('Directive: pfCard', function() {
         'position' : 'header'
       };
 
-      element = compileCard('<div pf-card head-title="title" footer="{}" filter="filterConfig">Inner content</div>', $scope);
+      element = compileCard('<pf-card pf-card head-title="title" footer="{}" filter="filterConfig">Inner content</pf-card>', $scope);
 
       // should NOT find any filters in the footer
       cardClass = angular.element(element).find('.card-pf-footer').find('a');
@@ -217,7 +217,7 @@ describe('Directive: pfCard', function() {
 
     it("should not show the header if no title or filter specified", function() {
 
-      element = compileCard('<div pf-card>Inner content</div>', $scope);
+      element = compileCard('<pf-card>Inner content</pf-card>', $scope);
 
       // should NOT find any header artifacts
       cardClass = angular.element(element).find('.card-pf-heading');
