@@ -42,7 +42,7 @@ public class SpeedUtil implements ThrottleListener {
     private RosterSpeedProfile _speedProfile; // temp copy of any existing Roster speeedProfile
     private SignalSpeedMap _signalSpeedMap; 
 
-    private static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
+    public static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
 
     public SpeedUtil(Warrant war) {
         _warrant = war;
@@ -427,9 +427,6 @@ public class SpeedUtil implements ThrottleListener {
     protected void enteredBlock(int lastIdx, int newIdx) {
         if (lastIdx > 0) {
             speedChange();
-            float aveSpeed = _distanceTravelled / _timeAtSpeed;
-            aveSpeed *= 1000;   // SpeedProfile is mm/sec
-            float aveThrottle = _settingsTravelled / _timeAtSpeed;
             
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
@@ -445,12 +442,20 @@ public class SpeedUtil implements ThrottleListener {
                 }
                 totalLength += length;
             }
-            float speed = _speedProfile.getSpeed(aveThrottle, isForward);
+            
+            float aveSpeed = totalLength / _timeAtSpeed;
+            aveSpeed *= 1000;   // SpeedProfile is mm/sec
+            float aveThrottle = _settingsTravelled / _timeAtSpeed;
+            // throttle setting should be a step increment
+            float incr = _throttle.getSpeedIncrement();
+            aveThrottle = incr * Math.round(aveThrottle/incr);
+            float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);
+            
             if (log.isTraceEnabled()) {
                 log.trace("{} speed changes. AveThrottle= {}, distance= {}, time = {}. pathLength = {}",
                         _numchanges, aveThrottle, _distanceTravelled, _timeAtSpeed, totalLength);
                 log.trace("Speeds: SpeedProfile= {}, aveSpeed= {}, over block {} to {}",
-                        speed, aveSpeed, orders.get(lastIdx).getBlock().getDisplayName(),
+                        spSpeed, aveSpeed, orders.get(lastIdx).getBlock().getDisplayName(),
                         orders.get(newIdx).getBlock().getDisplayName());
             }
             if (lengthOK) {
@@ -470,7 +475,8 @@ public class SpeedUtil implements ThrottleListener {
     
     protected void speedChange() {
         long time = System.currentTimeMillis();
-        float throttleSetting = getSpeed();
+        float incr = _throttle.getSpeedIncrement();
+        float throttleSetting = incr * Math.round(getSpeed()/incr);
         long elapsedTime = time - _changetime;
         if (throttleSetting > 0.0f) {
             _timeAtSpeed += elapsedTime;
@@ -479,6 +485,10 @@ public class SpeedUtil implements ThrottleListener {
         }
         _numchanges++;
         _changetime = time;
+    }
+    
+    protected float getDistanceTravelled() {
+        return _distanceTravelled;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SpeedUtil.class);

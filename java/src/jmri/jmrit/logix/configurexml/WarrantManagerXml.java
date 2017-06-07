@@ -113,7 +113,6 @@ public class WarrantManagerXml //extends XmlFile
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
         elem.setAttribute("shareRoute", warrant.getShareRoute()?"true":"false");
         elem.setAttribute("noRamp", warrant.getNoRamp()?"true":"false");
-        elem.setAttribute("updateSpeedProfile", warrant.getUpdateSpeedProfile()?"true":"false");
 
         str = warrant.getTrainName();
         if (str==null) str = "";
@@ -311,9 +310,6 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("noRamp") != null) {
             warrant.setNoRamp(elem.getAttribute("noRamp").getValue().equals("true"));
-        }
-        if (elem.getAttribute("updateSpeedProfile") != null) {
-            warrant.setUpdateSpeedProfile(elem.getAttribute("updateSpeedProfile").getValue().equals("true"));
         }
         if (elem.getAttribute("trainName") != null) {
             warrant.setTrainName(elem.getAttribute("trainName").getValue());

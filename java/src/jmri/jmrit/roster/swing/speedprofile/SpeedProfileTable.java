@@ -30,10 +30,12 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
 
     java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
     int interp;
-    float scale;
+    float loScale;
     JLabel description;
     String rosterId;
     RosterSpeedProfile speedProfile;
+    // divided by layout scale, gives a rough conversion for throttle setting to track speed
+    static float SCALE = jmri.jmrit.logix.SpeedUtil.SCALE_FACTOR;
 
     public SpeedProfileTable(RosterSpeedProfile sp, String id) {
         super(false, true);
@@ -43,7 +45,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         getContentPane().setLayout(new BorderLayout(15,15));
         
         interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
-        scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+        loScale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         SpeedTableModel model = new SpeedTableModel(speedProfile);
         JTable table = new JTable(model);
         table.addKeyListener(new KeyListener() {
@@ -266,30 +268,32 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                     float speed = entry.getValue().getForwardSpeed();
                     switch(interp) {
                         case SignalSpeedMap.SPEED_MPH:
-                            speed = speed*scale*3.6f*0.621371f/1000;
+                            speed = speed*loScale*3.6f*0.621371f/1000;
                             break;
                         case SignalSpeedMap.SPEED_KMPH:
-                            speed = speed*scale*3.6f/1000;
+                            speed = speed*loScale*3.6f/1000;
                             break;
                         default:
                     }
                     return threeDigit.format(speed);
                 case FORWARD_FACTOR_COL:
-                    return threeDigit.format(entry.getValue().getForwardSpeed()/entry.getKey());
+                    return threeDigit.format(
+                            entry.getValue().getForwardSpeed() * SCALE / (loScale * entry.getKey()));
                 case REVERSE_SPEED_COL:
                     speed = entry.getValue().getReverseSpeed();
                     switch(interp) {
                         case SignalSpeedMap.SPEED_MPH:
-                            speed = speed*scale*3.6f*0.621371f/1000;
+                            speed = speed*loScale*3.6f*0.621371f/1000;
                             break;
                         case SignalSpeedMap.SPEED_KMPH:
-                            speed = speed*scale*3.6f/1000;
+                            speed = speed*loScale*3.6f/1000;
                             break;
                         default:
                     }
                     return threeDigit.format(speed);
                 case REVERSE_FACTOR_COL:
-                    return threeDigit.format(entry.getValue().getReverseSpeed()/entry.getKey());
+                    return threeDigit.format(
+                            entry.getValue().getReverseSpeed() * SCALE / (loScale * entry.getKey()));
                 default:
                     // fall out
                     break;

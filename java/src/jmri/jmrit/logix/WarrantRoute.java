@@ -89,7 +89,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
-    private JRadioButton _updateProfile = new JRadioButton(Bundle.getMessage("UpdateProfile"));
     private SpeedProfileTable _spTable = null;
 
 
@@ -135,13 +134,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _searchDepth.setText(Integer.toString(_depth));
     }
     
-    public boolean getUpateSpeedProfile() {
-        return _updateProfile.isSelected();
-    }
-    public void setUpateSpeedProfile(boolean set) {
-        _updateProfile.setSelected(set);
-    }
-
     public JPanel searchDepthPanel(boolean vertical) {
         _searchDepth.setText(Integer.toString(_depth));
         JPanel p = new JPanel();
@@ -174,8 +166,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
         p.add(_viewProfile);
-        p.add(_updateProfile);
-        _updateProfile.setToolTipText(Bundle.getMessage("toolTipUpdateProfile"));
         panel.add(p);
         if (comp != null) {
             panel.add(comp);
@@ -663,6 +653,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            _focusedField = this;
+        }
+        @Override
+        public void mousePressed(MouseEvent e) {
             _focusedField = this;
         }
     }       // end RouteLocation

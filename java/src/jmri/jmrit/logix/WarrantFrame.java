@@ -156,8 +156,6 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
         _warrant.setRunBlind(warrant.getRunBlind());
-        setUpateSpeedProfile(warrant.getUpdateSpeedProfile());
-        _warrant.setUpdateSpeedProfile(warrant.getUpdateSpeedProfile());
         setTrainName(warrant.getTrainName());
         _warrant.setTrainName(warrant.getTrainName());
         
@@ -1351,7 +1349,6 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
-        _warrant.setUpdateSpeedProfile(getUpateSpeedProfile());
         _warrant.setUserName(_userNameBox.getText());
 
         _warrant.setViaOrder(getViaBlockOrder());

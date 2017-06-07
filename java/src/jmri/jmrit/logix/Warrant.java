@@ -60,7 +60,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private boolean _runBlind;      // Unable to use block detection, must run on et only
     private boolean _partialAllocate;// only allocate one block at a time for sharing route.
     private boolean _noRamp;        // do not ramp speed changes. make immediate speed change when entering approach block.
-    private boolean _updateSpeedProfile;
 
     // transient members
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
@@ -130,7 +129,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _orders = new ArrayList<BlockOrder>();
         _runBlind = false;
         _speedUtil = new SpeedUtil(this);
-        _updateSpeedProfile = true;
     }
 
     @Override
@@ -160,6 +158,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     
     public void setSpeedUtil(SpeedUtil su) {
         _speedUtil = su;
+        _speedUtil.setWarrant(this);
     }
     
     /**
@@ -370,18 +369,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void setShareRoute(boolean set) {
         _partialAllocate = set;
     }
-    public void setUpdateSpeedProfile(boolean set) {
-        _updateSpeedProfile = set;
-    }
     
     public boolean getNoRamp() {
         return _noRamp;
     }
     public boolean getShareRoute() {
         return _partialAllocate;
-    }
-    public boolean getUpdateSpeedProfile() {
-        return _updateSpeedProfile;
     }
 
     public String getTrainName() {
@@ -633,7 +626,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             _engineer = null;
         }
-        _speedUtil.stopRun(_updateSpeedProfile && !abort);
+        _speedUtil.stopRun(!abort);
         deAllocate();
         int oldMode = _runMode;
         _runMode = MODE_NONE;
@@ -1875,10 +1868,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_speedUtil.secondGreaterThanFirst(currentType, _curSpeedType)) {
                 if (currentType.equals(Stop) || currentType.equals(EStop)) {
                     _engineer.setSpeedToType(currentType);
-                    log.error("Train missed Stop signal in block \"{}\". warrant= {}", curBlock.getDisplayName(), getDisplayName());
+                    log.info("Train missed Stop signal in block \"{}\". warrant= {}", curBlock.getDisplayName(), getDisplayName());
                     return true;    // don't do anything else until stopping condition cleared
                 } else {
-                    log.warn("Train {} moved past required speed of \"{}\" at speed \"{}\" in block \"{}\"! Set speed to {}. warrant= {}",
+                    log.info("Train {} moved past required speed of \"{}\" at speed \"{}\" in block \"{}\"! Set speed to {}. warrant= {}",
                             getTrainName(), currentType, _curSpeedType, curBlock.getDisplayName(), currentType, getDisplayName());
                     float current = _speedUtil.getSpeed();
                     if (current < _engineer.getExpectedSpeed(currentType)) {
@@ -1950,11 +1943,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             idxBlockOrder--;    // start at block before the block with slower speed type 
             blkOrder = getBlockOrderAt(idxBlockOrder);
             if (idxBlockOrder==_idxCurrentOrder) {
-                if (position==MID) {
-                    availDist += blkOrder.getPath().getLengthMm()/2;                                   
-                } else if (position==BEG) {
-                    availDist += blkOrder.getPath().getLengthMm();                
-                }   // position==END, hardly any track available
+                availDist += blkOrder.getPath().getLengthMm() - _speedUtil.getDistanceTravelled();
             } else {
                 availDist += blkOrder.getPath().getLengthMm();                
             }
