@@ -207,9 +207,9 @@
 
       <h4>JMRI during and after 2016</h4>The 4.1.* series of test
       releases in Fall 2015 started the requirement for Java 8,
-      also known as Java 1.8. 
+      also known as Java 1.8.
       This has continued through the following release series.
-      The December 2017 release, notionally JMRI 4.10 will 
+      The December 2017 release, notionally JMRI 4.10 will
       remain with Java 8, but may involve other updates.
 
       <ul>
@@ -244,8 +244,8 @@
         libraries), Log4J (our original solution) and SLF4J (the
         most recent addition). It's likely that we'll eventually
         simplify that.</li>
-        
-        <li>JMRI 4.7.5 migrated from RXTX to Pure Java Comm (PJC);
+
+        <li>JMRI 4.7.5 migrated from RXTX to PureJavaComm (PJC);
         there may be follow-on work from that.</li>
       </ul>
 
@@ -260,13 +260,13 @@
       "JVMCapabilities.shtml">migration to Java 1.8</a>.
 
       <h3 id="junit4" name="junit4">From JUnit 3 to JUnit 4</h3>
-      JMRI's 
+      JMRI's
       <a href="ContinuousIntegration.shtml">continuous integration</a>
-      test suites and infrastructure are migrating from 
-      JUnit 3 to JUnit 4.  For more information, see the 
-      section on  
+      test suites and infrastructure are migrating from
+      JUnit 3 to JUnit 4.  For more information, see the
+      section on
       <a href="JUnit.shtml#junit4">our JUnit page</a>.
-      
+
       <h3 id="jdom2" name="jdom2">From JDOM 1 to JDOM 2</h3>JMRI
       3.11 moved from JDOM version 1 to JDOM version 2. This
       involved a new jdom-2.0.5.jar file (in place of the earlier
