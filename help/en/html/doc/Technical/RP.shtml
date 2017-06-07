@@ -44,17 +44,12 @@
         that's documented on <a href="Swing.shtml">another
         page</a>.</li>
 
-        <li>JMRI uses the RXTX libraries to support serial
-        communications on Macintosh, Linux and Windows. On Windows
-        only, the Serialio package from <a href=
-        "http://Serialio.com">Serialio.com</a> is also used to be
-        able to use the MS100 baud rate. To do this, the
-        jmri.jmrix.loconet.ms100.MS100Adapter class was converted
-        to use Java reflection to decide which whether the Serialio
-        package is available; on other systems, it uses RXTX. Note
-        that our license for Serialio limits it to this use only;
-        we are not permitted to distribute the libraries for other
-        purposes.</li>
+        <li>JMRI uses the
+        <a href="http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
+        to support serial
+        communications on Macintosh, Linux and Windows.
+        Before JMRI 4.7.5, we used the RXTX and
+        SerialIO libraries for this, but these were then removed.</li>
 
         <li>Take a few moments to learn about the the different
         types of <a href=
