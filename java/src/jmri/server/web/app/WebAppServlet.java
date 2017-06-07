@@ -113,7 +113,7 @@ public class WebAppServlet extends HttpServlet {
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode about = mapper.createObjectNode();
-        about.put("additionalInfo", "TRADEMARKS AND LICENSE GO HERE"); // NOI18N
+        about.put("additionalInfo", Bundle.getMessage(request.getLocale(), "AdditionalInfo", Application.getApplicationName())); // NOI18N
         about.put("copyright", Version.getCopyright()); // NOI18N
         about.put("title", WebServerPreferences.getDefault().getRailRoadName()); // NOI18N
         about.put("imgAlt", Application.getApplicationName()); // NOI18N

@@ -1,0 +1,14 @@
+{
+  "HELP": {
+    "HELP": "Hilfe",
+    "ABOUT": "Über"
+  },
+  "NAVIGATION": {
+    "PANELS": "Gleisbilder",
+    "ROSTER": "Roster",
+    "LAYOUT": "Anlageelemente"
+  },
+  "USER": {
+    "USER": "Nutzer"
+  }
+}
