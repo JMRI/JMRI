@@ -44,11 +44,11 @@
         that's documented on <a href="Swing.shtml">another
         page</a>.</li>
 
-        <li>JMRI uses the 
-        <a href="http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PJC libraries</a>
+        <li>JMRI uses the
+        <a href="http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
         to support serial
-        communications on Macintosh, Linux and Windows. 
-        Before JMRI 4.7.5, we used the RXTX and 
+        communications on Macintosh, Linux and Windows.
+        Before JMRI 4.7.5, we used the RXTX and
         SerialIO libraries for this, but these were then removed.</li>
 
         <li>Take a few moments to learn about the the different
