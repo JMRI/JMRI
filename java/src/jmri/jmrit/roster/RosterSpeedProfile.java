@@ -172,11 +172,11 @@ public class RosterSpeedProfile {
         }
         boolean nothingHigher = (higher<=0.0f);
         
-        entry = speeds.higherEntry(lowStep);
+        entry = speeds.lowerEntry(lowStep);
         while (entry != null && lower<=0.0f) {
             lowStep = entry.getKey();
             lower = entry.getValue().getReverseSpeed();
-            entry = speeds.higherEntry(highStep);
+            entry = speeds.lowerEntry(highStep);
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
