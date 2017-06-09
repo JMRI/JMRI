@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.4ish+heap+20170525T0953Z+R506cab5 on Thu May 25 19:53:15 AEST 2017 $Id$-->
-  <decoderIndex version="814">
+  <!--Written by JMRI version 4.7.5ish+jake+20170605T1914Z+Rfad9d20f38 on Mon Jun 05 12:14:17 PDT 2017-->
+  <decoderIndex version="816">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6907,8 +6907,8 @@
           <output name="8" label="Output H" />
         </model>
         <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
-          <!--productID=57379 should match Version=E023Hex    
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+          <!--productID=57379 should match Version=E023Hex
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
 			-->
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -19398,7 +19398,7 @@
           <functionlabel num="6" lockable="true">Smoke</functionlabel>
           <functionlabel num="7" lockable="true">Dimmer</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <!-- regular Soundtraxx functions, not used for Bachmann  
+          <!-- regular Soundtraxx functions, not used for Bachmann
         <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
         <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
         <functionlabel num="9" lockable="true">Water Stop</functionlabel>

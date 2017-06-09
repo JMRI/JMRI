@@ -476,7 +476,7 @@
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <link>http://users.frii.com/jarvi/rxtx/doc/</link>
+                        <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
                         <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
@@ -662,11 +662,6 @@
             <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.bidib.jbidib</groupId>
-            <artifactId>jbidibc-rxtx-2.2</artifactId>
-            <version>1.6.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -702,11 +697,6 @@
             <version>5.0.2</version>
         </dependency>
         -->
-        <dependency>
-            <groupId>com.serialio</groupId>
-            <artifactId>serialio</artifactId>
-            <version>1.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>org.jogamp.jogl</groupId>
@@ -829,6 +819,11 @@
             <artifactId>powermock-module-junit4</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.purejavacomm</groupId>
+            <artifactId>purejavacomm</artifactId>
+            <version>1.0.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>

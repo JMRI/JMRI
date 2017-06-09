@@ -31,13 +31,7 @@ public class SprogSlotMonAction extends AbstractAction {
            _memo.configureCommandStation();
         }
 
-        SprogSlotMonFrame f = _memo.getCommandStation().getSprogSlotMonFrame();
-        if( f == null ) { 
-            // there isn't an SprogSlotMonFrame associated with
-            // the command staiton for this connection, so create
-            // a new SprogSlotMonFrame
-            f = new SprogSlotMonFrame(_memo);
-        }
+        SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
         f.setVisible(true);
     }
 }
