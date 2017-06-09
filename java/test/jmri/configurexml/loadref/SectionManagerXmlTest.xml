@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>7</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -298,55 +298,55 @@
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
-    <block>
+    <block systemName="IB1">
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
     </block>
-    <block>
+    <block systemName="IB10">
       <systemName>IB10</systemName>
       <userName>blocksouthwest</userName>
     </block>
-    <block>
+    <block systemName="IB11">
       <systemName>IB11</systemName>
       <userName>blockwest</userName>
     </block>
-    <block>
+    <block systemName="IB12">
       <systemName>IB12</systemName>
       <userName>blockwestsiding</userName>
     </block>
-    <block>
+    <block systemName="IB2">
       <systemName>IB2</systemName>
       <userName>blocknorth</userName>
     </block>
-    <block>
+    <block systemName="IB3">
       <systemName>IB3</systemName>
       <userName>blocknorthsiding</userName>
     </block>
-    <block>
+    <block systemName="IB4">
       <systemName>IB4</systemName>
       <userName>blocknortheast</userName>
     </block>
-    <block>
+    <block systemName="IB5">
       <systemName>IB5</systemName>
       <userName>blockeast</userName>
     </block>
-    <block>
+    <block systemName="IB6">
       <systemName>IB6</systemName>
       <userName>blockeastsiding</userName>
     </block>
-    <block>
+    <block systemName="IB7">
       <systemName>IB7</systemName>
       <userName>blocksoutheast</userName>
     </block>
-    <block>
+    <block systemName="IB8">
       <systemName>IB8</systemName>
       <userName>blocksouth</userName>
     </block>
-    <block>
+    <block systemName="IB9">
       <systemName>IB9</systemName>
       <userName>blocksouthsiding</userName>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB1" length="0.0" curve="0">
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
       <permissive>no</permissive>
@@ -372,7 +372,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB10" length="0.0" curve="0">
       <systemName>IB10</systemName>
       <userName>blocksouthwest</userName>
       <permissive>no</permissive>
@@ -398,7 +398,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB11" length="0.0" curve="0">
       <systemName>IB11</systemName>
       <userName>blockwest</userName>
       <permissive>no</permissive>
@@ -414,7 +414,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB12" length="0.0" curve="0">
       <systemName>IB12</systemName>
       <userName>blockwestsiding</userName>
       <permissive>no</permissive>
@@ -430,7 +430,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB2" length="0.0" curve="0">
       <systemName>IB2</systemName>
       <userName>blocknorth</userName>
       <permissive>no</permissive>
@@ -446,7 +446,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB3" length="0.0" curve="0">
       <systemName>IB3</systemName>
       <userName>blocknorthsiding</userName>
       <permissive>no</permissive>
@@ -462,7 +462,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB4" length="0.0" curve="0">
       <systemName>IB4</systemName>
       <userName>blocknortheast</userName>
       <permissive>no</permissive>
@@ -488,7 +488,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB5" length="0.0" curve="0">
       <systemName>IB5</systemName>
       <userName>blockeast</userName>
       <permissive>no</permissive>
@@ -504,7 +504,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB6" length="0.0" curve="0">
       <systemName>IB6</systemName>
       <userName>blockeastsiding</userName>
       <permissive>no</permissive>
@@ -520,7 +520,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB7" length="0.0" curve="0">
       <systemName>IB7</systemName>
       <userName>blocksoutheast</userName>
       <permissive>no</permissive>
@@ -546,7 +546,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB8" length="0.0" curve="0">
       <systemName>IB8</systemName>
       <userName>blocksouth</userName>
       <permissive>no</permissive>
@@ -562,7 +562,7 @@
         </beansetting>
       </path>
     </block>
-    <block length="0.0" curve="0">
+    <block systemName="IB9" length="0.0" curve="0">
       <systemName>IB9</systemName>
       <userName>blocksouthsiding</userName>
       <permissive>no</permissive>
@@ -581,7 +581,7 @@
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <sections class="jmri.configurexml.SectionManagerXml">
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
+    <section systemName="IY:AUTO:0001" userName="NorthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
       <systemName>IY:AUTO:0001</systemName>
       <userName>NorthWest</userName>
       <blockentry sName="IB1" order="0" />
@@ -590,21 +590,21 @@
       <entrypoint fromblock="IB2" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB3" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2">
+    <section systemName="IY:AUTO:0002" userName="North" creationtype="userdefined" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2">
       <systemName>IY:AUTO:0002</systemName>
       <userName>North</userName>
       <blockentry sName="IB2" order="0" />
       <entrypoint fromblock="IB1" toblock="IB2" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB2" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3">
+    <section systemName="IY:AUTO:0003" userName="NorthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3">
       <systemName>IY:AUTO:0003</systemName>
       <userName>NorthSiding</userName>
       <blockentry sName="IB3" order="0" />
       <entrypoint fromblock="IB1" toblock="IB3" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB3" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4">
+    <section systemName="IY:AUTO:0004" userName="NorthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4">
       <systemName>IY:AUTO:0004</systemName>
       <userName>NorthEast</userName>
       <blockentry sName="IB4" order="0" />
@@ -613,21 +613,21 @@
       <entrypoint fromblock="IB5" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB6" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5">
+    <section systemName="IY:AUTO:0005" userName="East" creationtype="userdefined" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5">
       <systemName>IY:AUTO:0005</systemName>
       <userName>East</userName>
       <blockentry sName="IB5" order="0" />
       <entrypoint fromblock="IB4" toblock="IB5" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB5" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6">
+    <section systemName="IY:AUTO:0006" userName="EastSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6">
       <systemName>IY:AUTO:0006</systemName>
       <userName>EastSiding</userName>
       <blockentry sName="IB6" order="0" />
       <entrypoint fromblock="IB4" toblock="IB6" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB6" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7">
+    <section systemName="IY:AUTO:0007" userName="SouthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7">
       <systemName>IY:AUTO:0007</systemName>
       <userName>SouthEast</userName>
       <blockentry sName="IB7" order="0" />
@@ -636,21 +636,21 @@
       <entrypoint fromblock="IB8" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB9" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8">
+    <section systemName="IY:AUTO:0008" userName="South" creationtype="userdefined" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8">
       <systemName>IY:AUTO:0008</systemName>
       <userName>South</userName>
       <blockentry sName="IB8" order="0" />
       <entrypoint fromblock="IB7" toblock="IB8" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB8" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9">
+    <section systemName="IY:AUTO:0009" userName="SouthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9">
       <systemName>IY:AUTO:0009</systemName>
       <userName>SouthSiding</userName>
       <blockentry sName="IB9" order="0" />
       <entrypoint fromblock="IB7" toblock="IB9" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB9" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10">
+    <section systemName="IY:AUTO:0010" userName="SouthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10">
       <systemName>IY:AUTO:0010</systemName>
       <userName>SouthWest</userName>
       <blockentry sName="IB10" order="0" />
@@ -659,14 +659,14 @@
       <entrypoint fromblock="IB11" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB12" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11">
+    <section systemName="IY:AUTO:0011" userName="West" creationtype="userdefined" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11">
       <systemName>IY:AUTO:0011</systemName>
       <userName>West</userName>
       <blockentry sName="IB11" order="0" />
       <entrypoint fromblock="IB10" toblock="IB11" direction="4" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB1" toblock="IB11" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section creationtype="userdefined" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12">
+    <section systemName="IY:AUTO:0012" userName="WestSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12">
       <systemName>IY:AUTO:0012</systemName>
       <userName>WestSiding</userName>
       <blockentry sName="IB12" order="0" />
@@ -675,7 +675,7 @@
     </section>
   </sections>
   <transits class="jmri.configurexml.TransitManagerXml">
-    <transit>
+    <transit systemName="IZ:AUTO:0001" userName="gocw1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>gocw1</userName>
       <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" />
@@ -688,14 +688,14 @@
       <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" />
     </transit>
-    <transit>
+    <transit systemName="IZ:AUTO:0002" userName="gocw2">
       <systemName>IZ:AUTO:0002</systemName>
       <userName>gocw2</userName>
       <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" />
     </transit>
-    <transit>
+    <transit systemName="IZ:AUTO:0003" userName="goccw1">
       <systemName>IZ:AUTO:0003</systemName>
       <userName>goccw1</userName>
       <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" />
@@ -708,7 +708,7 @@
       <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" />
       <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" />
     </transit>
-    <transit>
+    <transit systemName="IZ:AUTO:0004" userName="goccw2">
       <systemName>IZ:AUTO:0004</systemName>
       <userName>goccw2</userName>
       <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" />
@@ -721,5 +721,5 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:25:15 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <!--Written by JMRI version 4.7.4ish+jake+20170508T0636Z+R31e3f566ff on Sun May 07 23:36:39 PDT 2017 $Id$-->
+  <!--Written by JMRI version 4.7.5ish+jake+20170604T1810Z+Rcabd84d212 on Sun Jun 04 11:16:16 PDT 2017-->
 </layout-config>

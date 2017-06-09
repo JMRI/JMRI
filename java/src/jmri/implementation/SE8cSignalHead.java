@@ -171,9 +171,6 @@ public class SE8cSignalHead extends DefaultSignalHead {
         // ensure default appearance
         mAppearance = DARK;  // start turned off
         updateOutput();
-
-        // Add listeners to track other changes on LocoNet
-        addListeners();
     }
 
     @Override
@@ -246,45 +243,6 @@ public class SE8cSignalHead extends DefaultSignalHead {
     boolean isTurnoutUsed(Turnout t) {
         return (getLow() != null && t.equals(getLow().getBean()))
                 || (getHigh() != null && t.equals(getHigh().getBean()));
-    }
-
-    void addListeners() {
-        lowTurnout.getBean().addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {
-            // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
-            if (e.getPropertyName().equals("KnownState")) {
-                if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
-                    setLocalAppearance(GREEN);
-                } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != RED) {
-                    setLocalAppearance(RED);
-                }
-            }
-        });
-        highTurnout.getBean().addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {
-            // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
-            if (e.getPropertyName().equals("KnownState")) {
-                if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
-                    setLocalAppearance(DARK);
-                } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
-                    setLocalAppearance(YELLOW);
-                }
-            }
-        });
-    }
-
-    /**
-     * Local method for when external (turnout) input sets the appearance. Does
-     * everything setAppearance does <em>except</em> drive the outputs to avoid
-     * a LocoNet loop.
-     *
-     * @param newAppearance the new appearance
-     */
-    void setLocalAppearance(int newAppearance) {
-        int oldAppearance = mAppearance; // store the current appearance
-        mAppearance = newAppearance;
-        appearanceSetsFlashTimer(newAppearance);
-
-        // notify listeners, if any
-        firePropertyChange("Appearance", oldAppearance, newAppearance);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
