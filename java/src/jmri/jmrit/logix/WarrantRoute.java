@@ -78,13 +78,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     static String PAD = "               ";
     private JDialog _pickRouteDialog;
     private final RouteTableModel _routeModel;
-    private ArrayList<BlockOrder> _orders = new ArrayList<>();
+    protected ArrayList<BlockOrder> _orders = new ArrayList<>();
     private JFrame _debugFrame;
     private RouteFinder _routeFinder;
     private final JTextField _searchDepth = new JTextField(5);
+    JButton _calculateButton = new JButton(Bundle.getMessage("Calculate"));
 
-//    private RosterEntry _train;
-//    private String _trainId = null;
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
@@ -141,6 +140,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.add(makeTextBoxPanel(vertical, _searchDepth, "SearchDepth", "ToolTipSearchDepth"));
         _searchDepth.setColumns(5);
         p.add(Box.createHorizontalGlue());
+        return p;
+    }
+
+    public JPanel calculatePanel(boolean vertical) {
+        _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
+        _calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculate();
+            }
+        });
+        JPanel p = new JPanel();
+//        p.add(Box.createHorizontalGlue());
+        p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
+//        p.add(Box.createHorizontalGlue());
         return p;
     }
 
@@ -279,6 +293,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return null;
     }
 
+    private void calculate() {
+        String msg = findRoute();
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     /* ****************************** route info *******************/
     /**
      * Does the action on each of the 4 RouteLocation panels
@@ -326,9 +348,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
     }
 
-    protected JPanel makeBlockPanels() {
+    protected JPanel makeBlockPanels(boolean add) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         JPanel oPanel = _origin.makePanel("OriginBlock", "OriginToolTip", "PathName", "ExitPortalName", this);
         panel.add(oPanel);
@@ -337,10 +359,29 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(oPanel);
 
         oPanel = _via.makePanel("ViaBlock", "ViaToolTip", "PathName", null, this);
-        panel.add(oPanel);
 
-        oPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
-        panel.add(oPanel);
+        JPanel aPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
+
+        if (add) {
+            JPanel pLeft = new JPanel();
+            pLeft.setLayout(new BoxLayout(pLeft, BoxLayout.PAGE_AXIS));
+            pLeft.add(oPanel);
+            pLeft.add(aPanel);
+            
+            JPanel pRight = new JPanel();
+            pRight.setLayout(new BoxLayout(pRight, BoxLayout.PAGE_AXIS));
+            pRight.add(searchDepthPanel(true));
+            pRight.add(calculatePanel(true));
+            
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+            p.add(pLeft);
+            p.add(pRight);
+            panel.add(p);
+        } else {
+            panel.add(oPanel);
+            panel.add(aPanel);
+        }
         return panel;
     }
 
@@ -397,12 +438,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     javax.swing.border.TitledBorder.CENTER,
                     javax.swing.border.TitledBorder.TOP));
             JPanel hPanel = new JPanel();
-            hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.X_AXIS));
+            hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.LINE_AXIS));
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             hPanel.add(makeBlockBox(tooltip));
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel pPanel = new JPanel();
-            pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
+            pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.LINE_AXIS));
             pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));
             pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 

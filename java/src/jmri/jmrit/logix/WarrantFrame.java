@@ -72,7 +72,6 @@ public class WarrantFrame extends WarrantRoute {
 
     JTextField _sysNameBox;
     JTextField _userNameBox;
-    JButton _calculateButton;
     JButton _stopButton;
 
     JTabbedPane _tabbedPane;
@@ -231,7 +230,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel topLeft = new JPanel();
         topLeft.setLayout(new BoxLayout(topLeft, BoxLayout.PAGE_AXIS));
 
-        topLeft.add(makeBlockPanels());
+        topLeft.add(makeBlockPanels(false));
 
         topLeft.add(Box.createVerticalStrut(2 * STRUT_SIZE));
         tab1.add(topLeft);
@@ -243,25 +242,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
-        _calculateButton = new JButton(Bundle.getMessage("Calculate"));
-        _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
-        _calculateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                calculate();
-            }
-        });
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("CalculateRoute")));
-        p.add(pp);
-        pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(_calculateButton);
-        p.add(pp);
-        panel.add(p);
+        panel.add(calculatePanel(true));
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
 
         _stopButton = new JButton(Bundle.getMessage("Stop"));
@@ -279,7 +260,7 @@ public class WarrantFrame extends WarrantRoute {
         }
         panel.add(searchDepthPanel(true));
 
-        p = new JPanel();
+        JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         p.add(makeTextBoxPanel(true, _searchStatus, "SearchRoute", null));
         _searchStatus.setEditable(false);
@@ -289,7 +270,7 @@ public class WarrantFrame extends WarrantRoute {
         _searchStatus.setBackground(Color.white);
         _searchStatus.setEditable(false);
         p = new JPanel();
-        pp = new JPanel();
+        JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(_stopButton);
         p.add(pp, BorderLayout.SOUTH);
@@ -308,15 +289,6 @@ public class WarrantFrame extends WarrantRoute {
         tab1.add(topRight);
         tab1.add(Box.createHorizontalStrut(STRUT_SIZE));
         return tab1;
-    }
-
-    private void calculate() {
-        clearCommands();
-        String msg = findRoute();
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        }
     }
 
     private JPanel makeSetPowerTabPanel() {
@@ -903,6 +875,7 @@ public class WarrantFrame extends WarrantRoute {
 
     @Override
     public void selectedRoute(ArrayList<BlockOrder> orders) {
+        clearCommands();
         _tabbedPane.setSelectedIndex(1);
     }
 

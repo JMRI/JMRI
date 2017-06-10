@@ -279,16 +279,17 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         NXFrame nxFrame = NXFrame.getDefault();
-        if (nxFrame.isVisible()) {
+        if (nxFrame.isVisible() && nxFrame.isRouteSeaching()) {
             nxFrame.mouseClickedOnBlock(block);
             return;
         }
 
-        if (_trackerTable != null && TrackerTableAction.mouseClickedOnBlock(block)) {
-            return;
-        }
         if (_openFrame != null) {
             _openFrame.mouseClickedOnBlock(block);
+            return;
+        }
+
+        if (_trackerTable != null && TrackerTableAction.mouseClickedOnBlock(block)) {
         }
     }
 

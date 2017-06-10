@@ -95,6 +95,12 @@ public class SpeedUtil implements ThrottleListener {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
+        if (id == null) {
+            _rosterEntry = null;
+            _rosterId = null;
+            _dccAddress = null;           
+           return false;
+        }
         _rosterEntry = Roster.getDefault().entryFromTitle(id);
         if (_rosterEntry == null) {
             int index = id.indexOf('(');
@@ -336,7 +342,7 @@ public class SpeedUtil implements ThrottleListener {
     }
 
     // return millimeters per millisecond (= meters/sec)
-    private float getTrackSpeed(float throttleSetting, boolean isForward) {
+    protected float getTrackSpeed(float throttleSetting, boolean isForward) {
         // Note SpeedProfile uses milliseconds per second.
         float speed = _speedProfile.getSpeed(throttleSetting, isForward) / 1000;
         boolean byFactor = false;
