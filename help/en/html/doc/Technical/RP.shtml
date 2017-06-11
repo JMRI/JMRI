@@ -125,7 +125,6 @@
 &lt;property name="deprecation" value="on" /&gt;
 </code>
 </pre>
-
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
 
@@ -137,13 +136,15 @@
       here</a>. We use them this way:</p>
       <pre>
 <code>
-* @deprecated 2.7.8
-
-@Deprecated // 2.7.8
+* @deprecated 2.7.8<br>
+<br>
+@Deprecated // 2.7.8<br>
 </code>
 </pre>where the line contains the version in which the deprecation
 is applied. That lets you easily know how long ago it was
-deprecated. <!--#include virtual="/Footer" -->
+deprecated. 
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
