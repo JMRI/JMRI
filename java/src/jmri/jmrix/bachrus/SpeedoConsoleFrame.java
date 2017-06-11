@@ -24,6 +24,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -69,6 +70,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     // member declarations
     protected JLabel scaleLabel = new JLabel();
+    protected JLabel customScaleLabel = new JLabel();
+    protected JTextField customScaleField = new JTextField(3);
+    protected int customScale = 148;
     protected JTextField speedTextField = new JTextField(12);
 
     protected ButtonGroup modeGroup = new ButtonGroup();
@@ -125,9 +129,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         rb.getString("ScaleS"),
         rb.getString("Scale048"),
         rb.getString("Scale045"),
-        rb.getString("Scale043")/*,
-     rb.getString("ScaleOther")*/
-
+        rb.getString("Scale043"),
+        rb.getString("ScaleOther")
     };
 
     protected float[] scales = new float[]{
@@ -143,9 +146,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         64,
         48,
         45,
-        43/*,
-     -1*/
-
+        43,
+        -1
     };
 
     protected static final int defaultScale = 8;
@@ -305,7 +307,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JComboBox<String> cb = (JComboBox<String>) e.getSource();
                 selectedScale = scales[cb.getSelectedIndex()];
-                // *** check if -1 and enable text entry box
+                if (selectedScale == -1) {
+                    customScaleField.setEnabled(true);
+                } else {
+                    customScaleField.setEnabled(false);
+                }
             }
         });
 
@@ -318,8 +324,31 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         scalePanel.add(scaleLabel);
         scalePanel.add(scaleList);
         scalePanel.add(readerLabel);
+        
+        // Custom Scale panel to hold the custome scale selection
+        JPanel customScalePanel = new JPanel();
+        customScalePanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), rb.getString("CustomScale")));
+        customScalePanel.setLayout(new FlowLayout());
+
+        customScaleLabel.setText("1: ");
+        customScaleLabel.setVisible(true);
+        customScaleField.setVisible(true);
+        customScaleField.setEnabled(false);
+        
+        // Let user press return to enter custom scale
+        customScaleField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                getCustomScale();
+            }
+        });
+
+        customScalePanel.add(customScaleLabel);
+        customScalePanel.add(customScaleField);
 
         basicPane.add(scalePanel);
+        basicPane.add(customScalePanel);
 
         // Mode panel for selection of profile mode
         JPanel modePanel = new JPanel();
@@ -584,6 +613,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         startProfileButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
+                getCustomScale();
                 startProfile();
             }
         });
@@ -676,16 +706,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         /*
          * Create the tabbed pane and add the panes
          */
-//        JTabbedPane tabbedPane = new JTabbedPane();
         JPanel tabbedPane = new JPanel();
         tabbedPane.setLayout(new BoxLayout(tabbedPane, BoxLayout.X_AXIS));
         // make basic panel
-//        tabbedPane.addTab(rb.getString("Setup"), null, basicPane, "Basic Speedo Operation");
         tabbedPane.add(basicPane);
 
         if (((dccServices & THROTTLE) == THROTTLE)
                 || ((dccServices & COMMAND) == COMMAND)) {
-//            tabbedPane.addTab(rb.getString("Profile"), null, profilePane, "Profile Loco");
             tabbedPane.add(profilePane);
         }
 
@@ -715,6 +742,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedoDialDisplay.scaleFace();
     }
 
+    /**
+     * Validate the users custom scale entry
+     */
+    protected void getCustomScale() {
+        if (selectedScale == -1) {
+            try {
+                customScale = Integer.parseUnsignedInt(customScaleField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid Custom Scale Entered\n"
+                        + "Please enter a positive integer",
+                        "Custom Scale", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
     /**
      * Handle changing/setting the address
      */
@@ -820,7 +862,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             startFastDisplayTimer();
             timerRunning = true;
         } else {
-            // subsequnet replies restart it
+            // subsequent replies restart it
             replyTimer.restart();
         }
     }
@@ -829,11 +871,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Calculate the scale speed in KPH
      */
     protected void calcSpeed() {
+        float thisScale = (selectedScale == -1) ? customScale : selectedScale;
         if (series > 0) {
             // Scale the data and calculate kph
             try {
                 freq = 1500000 / count;
-                sampleSpeed = (freq / 24) * circ * selectedScale * 3600 / 1000000 * speedTestScaleFactor;
+                sampleSpeed = (freq / 24) * circ * thisScale * 3600 / 1000000 * speedTestScaleFactor;
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating sampleSpeed " + ae);
             }
@@ -1162,8 +1205,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 profileStep += 1;
                 // adjust delay as we get faster and averaging is quicker
                 profileTimer.setDelay(7000 - range * 1000);
-                //profileTimer.setDelay(20000);
-                //log.info("Step " + profileStep + " Set speed: "+profileSpeed);
             }
         } else {
             log.error("Unexpected profile timeout");
