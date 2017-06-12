@@ -296,10 +296,10 @@
 		</model>
       <model model="BLI Track Inspection Sedan" numOuts="0" numFns="0">
 		</model>
-	  <model model="BLI Plymouth Switcher" numOuts="2" numFns="5" />
+	  <model model="BLI Plymouth Switcher" numOuts="2" numFns="6">
 		  <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
 		  <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
-	  </model>		
+	    </model>		
 	  <model model="FDT Trackmobile" numOuts="0" numFns="0">
 		</model>
     </family>
