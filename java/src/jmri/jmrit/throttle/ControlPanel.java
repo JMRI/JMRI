@@ -774,6 +774,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         ButtonGroup directionButtons = new ButtonGroup();
         directionButtons.add(forwardButton);
         directionButtons.add(reverseButton);
+        forwardButton.setFocusable(false);
+        reverseButton.setFocusable(false);
         constraints.fill = GridBagConstraints.NONE;
 
         constraints.gridy = 1;

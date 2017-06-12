@@ -40,15 +40,15 @@ public class AllTest extends TestCase {
     public static Test suite() {
         // all tests from here down in heirarchy
         TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
-        // all tests from other classes
-        for (int i=0; i<2; i++) {
+/*        for (int i=0; i<2; i++) {
             suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.logix.WarrantTest.class));
             suite.addTest(jmri.jmrit.logix.NXFrameTest.suite()); //formerly NXWarrantTest        
             suite.addTest(jmri.jmrit.logix.LearnWarrantTest.suite());
             suite.addTest(jmri.jmrit.logix.PackageTest.suite());
-        }
-//        suite.addTest(jmri.PackageTest.suite());
-//        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
+        }*/
+        // all tests from other classes
+        suite.addTest(jmri.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
         // at the end, we check for Log4J messages again
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
         return suite;
