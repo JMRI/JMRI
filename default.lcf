@@ -93,11 +93,6 @@ log4j.category.javax.jmdns=OFF
 
 # Examples of changing priority of specific categories (classes, packages):
 #
- log4j.category.jmri.jmrit.logix.Engineer=DEBUG
- log4j.category.jmri.jmrit.logix.SpeedUtil=TRACE
- log4j.category.jmri.jmrit.logix.Warrant=DEBUG
- log4j.category.jmri.jmrit.logix.WarrantFrame=DEBUG
-#
 # log4j.category.jmri=DEBUG
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
 # log4j.category.jmri.jmrit.display=DEBUG
