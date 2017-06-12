@@ -38,7 +38,7 @@
   <!-- Version 10 - added N12K0a and N12K0b plus a few comments/tooltips -->
   <!-- Version 12 - high Ver ID 38, BLI Plymouth switcher -->  
   <decoder>
-    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
+    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>
@@ -296,7 +296,11 @@
 		</model>
       <model model="BLI Track Inspection Sedan" numOuts="0" numFns="0">
 		</model>
-      <model model="FDT Trackmobile" numOuts="0" numFns="0">
+	  <model model="BLI Plymouth Switcher" numOuts="2" numFns="5" />
+		  <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+		  <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+	  </model>		
+	  <model model="FDT Trackmobile" numOuts="0" numFns="0">
 		</model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
