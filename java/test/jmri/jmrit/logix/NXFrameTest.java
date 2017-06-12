@@ -31,9 +31,7 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -41,6 +39,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         }
         NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
+        nxFrame.dispose();
     }
 
     public void testRoutePanel() throws Exception {

@@ -111,6 +111,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
+        flushAWT();
 
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -120,7 +121,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         sensor = runtimes(route);
 
-        JUnitUtil.waitFor(() -> {
+        jmri.util.JUnitUtil.waitFor(() -> {
             return (warrant.getThrottle()==null);
         }, "Wait for run to end");
         String msg = w.getRunModeMessage();
