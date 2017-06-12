@@ -21,6 +21,7 @@ public class ControlPanelTest {
         LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "ControlPanelTestWarrant")));
         ControlPanel t = new ControlPanel(f);
         Assert.assertNotNull("exists",t);
+        t.dispose();
         f.dispose();
     }
 

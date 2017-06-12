@@ -1474,6 +1474,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _protectSignal = null;
                 _idxProtectSignal = -1;
             }
+            if (_runMode == MODE_MANUAL) { // no script, so terminate warrant run
+                stopWarrant(false);
+            }
         }
         if (log.isDebugEnabled()) {
             log.debug("end of goingActive. leaving \"{}\" entered \"{}\". warrant {}",

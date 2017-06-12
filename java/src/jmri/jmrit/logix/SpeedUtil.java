@@ -95,7 +95,7 @@ public class SpeedUtil implements ThrottleListener {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
-        if (id == null) {
+        if (id == null || id.trim().length()==0) {
             _rosterEntry = null;
             _rosterId = null;
             _dccAddress = null;           

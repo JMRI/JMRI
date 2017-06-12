@@ -550,7 +550,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
-        fireTableRowsUpdated(row, row);                    
+        if (row < getRowCount()) {
+            fireTableRowsUpdated(row, row);                    
+        }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"),

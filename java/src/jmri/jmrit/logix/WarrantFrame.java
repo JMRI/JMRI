@@ -138,7 +138,7 @@ public class WarrantFrame extends WarrantRoute {
         for (int i = 0; i < list.size(); i++) {
             orders.add(new BlockOrder(list.get(i)));
         }
-        setOrders(orders);      // makes copy
+        setOrders(orders);
 
         List<ThrottleSetting> tList = warrant.getThrottleCommands();
         if (warrant instanceof SCWarrant) {
@@ -178,7 +178,8 @@ public class WarrantFrame extends WarrantRoute {
         contentPane.add(_tabbedPane, BorderLayout.CENTER);
 
         contentPane.add(makeEditableButtonPanel(), BorderLayout.SOUTH);
-        if (getOrders().size() > 0) {
+        List<BlockOrder> orders = getOrders();
+        if (orders != null && orders.size() > 1) {
             _tabbedPane.setSelectedIndex(1);
         }
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -330,8 +331,8 @@ public class WarrantFrame extends WarrantRoute {
     private String  getIdleMessage() {
         switch (_warrant.getRunMode()) {
             case Warrant.MODE_NONE:
-                if (getOrders().size() == 0) {
-                    return Bundle.getMessage("BlankWarrant");
+                if (getOrders()==null || getOrders().size() == 0) {
+                    return Bundle.getMessage("noBlockOrders");
                 } else if (getAddress() == null || getAddress().length() == 0) {
                     return Bundle.getMessage("NoLoco");
                 }
@@ -890,7 +891,7 @@ public class WarrantFrame extends WarrantRoute {
             return msg;
         }
         List<BlockOrder> orders = getOrders();
-        if (orders.size() == 0) {
+        if (orders==null || orders.size() < 2) {
             msg = Bundle.getMessage("NoRouteSet", _origin.getBlockName(), _destination.getBlockName());
             return msg;
         }
@@ -1039,7 +1040,7 @@ public class WarrantFrame extends WarrantRoute {
 
         if (_warrant.getRunMode() == Warrant.MODE_LEARN) {
             List<BlockOrder> orders = getOrders();
-            if (orders.size()>0) {
+            if (orders!=null && orders.size()>1) {
                 BlockOrder bo = _warrant.getCurrentBlockOrder();
                 if (bo!=null) {
                     OBlock lastBlock = orders.get(orders.size() - 1).getBlock();
@@ -1277,8 +1278,9 @@ public class WarrantFrame extends WarrantRoute {
         }
         msg = checkLocoAddress();
         if (msg==null && !_isSCWarrant.isSelected()) {
-            if (_throttleCommands.size() <= getOrders().size() ||
-                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
+            List<BlockOrder> orders = getOrders();  // valid orders
+            if (_throttleCommands.size() <= orders.size() ||
+                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(orders.get(orders.size()-1).getBlock().getDisplayName())) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {

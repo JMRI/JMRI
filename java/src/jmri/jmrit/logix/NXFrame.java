@@ -66,7 +66,6 @@ public class NXFrame extends WarrantRoute {
 
     static private JPanel _routePanel;
     private JPanel _autoRunPanel;
-//    private JPanel _manualPanel;
     private JPanel _switchPanel;
     private JPanel _trainPanel;
 
@@ -127,19 +126,13 @@ public class NXFrame extends WarrantRoute {
         _routePanel.add(Box.createVerticalGlue());
         _routePanel.add(makeBlockPanels(true));
  
-/*        _maxSpeedBox.addActionListener((ActionEvent e) -> {
-            getBoxData();
-        });*/
         _forward.setSelected(true);
         _stageEStop.setSelected(false);
         _haltStartBox.setSelected(false);
         _runAuto.setSelected(true);
 
         _autoRunPanel = makeAutoRunPanel();
-//        _manualPanel = makeTrainIdPanel(null);
         _switchPanel = makeSwitchPanel();
-//        initPanels();
-
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -177,7 +170,9 @@ public class NXFrame extends WarrantRoute {
         });
         _runManual.addActionListener((ActionEvent event) -> {
             setPanel(_trainPanel);
-//            setPanel(_manualPanel);
+            _stageEStop.setSelected(false);
+            _shareRouteBox.setSelected(false);
+            _haltStartBox.setSelected(false);
         });
         JPanel pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
@@ -189,7 +184,16 @@ public class NXFrame extends WarrantRoute {
         
         JPanel p = new JPanel();
         p.add(Box.createGlue());
-        JButton button = new JButton(Bundle.getMessage("ButtonRunNX"));
+        JButton button = new JButton(Bundle.getMessage("ButtonRoute"));
+        button.addActionListener((ActionEvent e) -> {
+            JPanel con = (JPanel)getContentPane().getComponent(0);
+            con.removeAll();
+            con.add(_routePanel);
+            pack();
+        });
+        p.add(button);
+        p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
+        button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener((ActionEvent e) -> {
             makeAndRunWarrant();
         });
@@ -232,10 +236,12 @@ public class NXFrame extends WarrantRoute {
             }
             if (_originUnits.getText().equals("In")) {
                 _originUnits.setText("Cm");
-                _originDist.setText(Float.toString(num * 2.54f));
+                num = Math.round(num * 254f);
+                _originDist.setText(Float.toString(num / 100));
             } else {
+                num = Math.round(num * 100f / 2.54f);
                 _originUnits.setText("In");
-                _originDist.setText(Float.toString(num / 2.54f));
+                _originDist.setText(Float.toString(num / 100));
             }
         });
         _destUnits.setActionCommand("In");
@@ -319,14 +325,18 @@ public class NXFrame extends WarrantRoute {
         _startDist = _orders.get(0).getBlock().getLengthMm() / 2;
         _stopDist = _orders.get(_orders.size()-1).getBlock().getLengthMm() / 2;
         if (_originUnits.getText().equals("In")) {
-            _originDist.setText(Float.toString(_startDist / 25.4f));
+            float num = Math.round(_startDist * 100 / 25.4f);
+            _originDist.setText(Float.toString(num / 100f));
         } else {
-            _originDist.setText(Float.toString(_startDist / 10f));
+            float num = Math.round(_startDist * 100);
+            _originDist.setText(Float.toString(_startDist / 1000f));
         }
         if (_destUnits.getText().equals("In")) {
-            _destDist.setText(Float.toString(_stopDist / 25.4f));
+            float num = Math.round(_stopDist * 100 / 25.4f);
+            _destDist.setText(Float.toString(num / 100f));
         } else {
-            _destDist.setText(Float.toString(_stopDist / 10f));
+            float num = Math.round(_stopDist * 100);
+            _destDist.setText(Float.toString(num / 1000f));
         }
     }
 
@@ -368,9 +378,10 @@ public class NXFrame extends WarrantRoute {
         if (log.isDebugEnabled()) {
             log.debug("NXFrame selectedRoute()");
         }
-        String msg = null;
-        String name = getTrainName();
-        msg = checkLocoAddress();
+        String msg = getBoxData();
+        if (msg == null) {
+            msg = checkLocoAddress();
+        }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -380,17 +391,14 @@ public class NXFrame extends WarrantRoute {
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");
         warrant.setSpeedUtil(_speedUtil);
         _speedUtil.setWarrant(warrant);
-        warrant.setTrainName(name);
+        warrant.setTrainName(getTrainName());
         warrant.setBlockOrders(_orders);
         _speedUtil.makeSpeedTree();
         int mode;
         if (!_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
-            msg = getBoxData();
-            if (msg == null) {
-                msg = makeCommands(warrant);
-            }
+            msg = makeCommands(warrant);
         } else {
             mode = Warrant.MODE_MANUAL;
         }
@@ -476,6 +484,7 @@ public class NXFrame extends WarrantRoute {
     // for testing
     protected void setMaxSpeed(float s) {
         _maxThrottle = s;
+        _maxSpeedBox.setText(Float.toString(s));
     }
     
     private String getBoxData() {
@@ -486,6 +495,10 @@ public class NXFrame extends WarrantRoute {
         try {
             text = _maxSpeedBox.getText();
             maxSpeed = Float.parseFloat(text);
+        } catch (NumberFormatException nfe) {
+            return Bundle.getMessage("badSpeed", text);
+        }
+        try {
             text = _originDist.getText();
             oDist = Float.parseFloat(text);
             text = _destDist.getText();
@@ -499,16 +512,14 @@ public class NXFrame extends WarrantRoute {
             if (oDist > 0 && oDist < len) {
                 _startDist = oDist * 25.4f;
             } else {
-                return Bundle.getMessage("BadLengthIn",
-                        bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist);            
+                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
             float len = bo.getPath().getLengthCm();
             if (oDist > 0 && oDist < len) {
                 _startDist = oDist * 10f;
             } else {
-                return Bundle.getMessage("BadLengthCm",
-                        bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist);            
+                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }
         }
         bo = _orders.get(_orders.size()-1);
@@ -517,25 +528,37 @@ public class NXFrame extends WarrantRoute {
             if (dDist > 0 && dDist < len) {
                 _stopDist = dDist * 25.4f;
             } else {
-                return Bundle.getMessage("BadLengthIn",
-                        bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist);            
+                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
             }
         } else {
             float len = bo.getPath().getLengthCm();
             if (dDist > 0 && dDist < len) {
                 _stopDist = dDist * 10f;
             } else {
-                return Bundle.getMessage("BadLengthCm",
-                        bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist);            
+                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
             }
         }
         
-        if (maxSpeed >= 1.0 || maxSpeed < 0.01 || _throttleIncr >= maxSpeed) {
+        if (maxSpeed >= 1.0 || maxSpeed < 0.008) {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
+        setAddress();
         return null;
     }
+    private String lengthError(String pathName, String blockName, float pathLen, float dist, boolean isInches) {
+        if (pathLen <= 0) {
+            return Bundle.getMessage("zeroPathLength", pathName, blockName);
+        } else if (dist <= 0) {
+            return Bundle.getMessage("MustBeFloat", dist);  // positive message                                    
+        } else {
+            if (isInches) {
+                return Bundle.getMessage("BadLengthIn", pathName, blockName, pathLen, dist);                                        
+            } else {
+                return Bundle.getMessage("BadLengthCm", pathName, blockName, pathLen, dist);                                        
+            }
+        }
+     }
 
     /*
      * Return length of warrant route in mm.  Assume start and end is in the middle of first
@@ -544,25 +567,15 @@ public class NXFrame extends WarrantRoute {
     private String getTotalLength() {
         _totalLen = 0.0f;
         List<BlockOrder> orders = getOrders();
-        BlockOrder bo = orders.get(0);
-        float len = bo.getPath().getLengthMm();
-        if (len <= 0) {
-           return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
-        }
         _totalLen = _startDist;
         for (int i = 1; i < orders.size() - 1; i++) {
-            bo = orders.get(i);
-            len = bo.getPath().getLengthMm();
+            BlockOrder bo = orders.get(i);
+            float len = bo.getPath().getLengthMm();
             if (len <= 0) {
                 return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
             }
             _totalLen += len;
         }
-        bo = orders.get(orders.size() - 1);
-        len = bo.getPath().getLengthMm();
-        if (len <= 0) {
-            return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
-         }
         _totalLen += _stopDist;
         return null;
     }
@@ -637,8 +650,7 @@ public class NXFrame extends WarrantRoute {
             log.debug("Route length= {}, rampLength= {}", _totalLen, rampLength);
         }
 
-        float blockLen = bo.getPath().getLengthMm();    // length of path in current block
-        blockLen /= 2;
+        float blockLen = _startDist;    // length of path in current block
 
         // start train
         float speedTime = 0;    // ms time to complete speed step from last block
@@ -773,10 +785,12 @@ public class NXFrame extends WarrantRoute {
             }
 
             do {
-                float nextSpeed = Math.max(curSpeed - _throttleIncr, 0);
-                float dist = _speedUtil.getDistanceTraveled((curSpeed + nextSpeed / 2), Warrant.Normal, _intervalTime, isForward);
+                float dist = _speedUtil.getDistanceTraveled((curSpeed - _throttleIncr / 2), Warrant.Normal, _intervalTime, isForward);
                 curDistance += dist;
-                curSpeed = nextSpeed;
+                curSpeed -= _throttleIncr;
+                if (curSpeed <.002) {   // fraction less than 1/4 step
+                    curSpeed = 0.0f;
+                }
                 remRamp -= dist;
                 w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", Float.toString(curSpeed), blockName));
                 if (log.isDebugEnabled()) {
@@ -799,9 +813,10 @@ public class NXFrame extends WarrantRoute {
                 }
                 bo = orders.get(nextIdx++);
                 blockName = bo.getBlock().getDisplayName();
-                blockLen = bo.getPath().getLengthMm();
                 if (nextIdx == orders.size()) {
-                    blockLen /= 2;
+                    blockLen = _stopDist;
+                } else {
+                    blockLen = bo.getPath().getLengthMm();                    
                 }
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName));
                 if (log.isDebugEnabled()) {
