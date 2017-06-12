@@ -7,7 +7,7 @@
 5 = help menu contents (in comments)
 6 = personal menu contents (in comments)
 -->
-<html>
+<html class="layout-pf layout-pf-fixed transitions">
     <head>
         <title>%1$s</title>
         <meta charset="UTF-8">
@@ -25,7 +25,7 @@
             <pf-vertical-navigation items="navigationItems" brand-alt="%1$s"
                  show-badges="true" persistent-secondary="true" pinnable-menus="true"
                  navigate-callback="handleNavigateClick">
-                <div>
+                <div class="ng-scope">
                     <ul class="nav navbar-nav navbar-right navbar-iconic">
                         <li class="dropdown">
                         </li>
@@ -59,8 +59,7 @@
                     </ul>
                 </div>
             </pf-vertical-navigation>
-            <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
-                <div ng-view id="includedContent"></div>
+            <div ng-view id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-persistent-secondary">
             </div>
             <pf-about-modal is-open="isAboutModalOpen" on-close="onAboutModalClose()"
                  additional-info="additionalInfo" product-info="productInfo"
