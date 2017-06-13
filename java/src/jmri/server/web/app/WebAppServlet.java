@@ -30,7 +30,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
-import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +96,7 @@ public class WebAppServlet extends HttpServlet {
             // 6 = personal menu contents (in comments)
             FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL("web/app/app/index.html")),
-                    ServletUtil.getInstance().getRailroadName(false), // railroad name
+                    ServletUtil.getDefault().getRailroadName(false), // railroad name
                     String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
                     String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
                     "<!-- -->", // body content (divs)
@@ -115,7 +114,7 @@ public class WebAppServlet extends HttpServlet {
         ObjectNode about = mapper.createObjectNode();
         about.put("additionalInfo", Bundle.getMessage(request.getLocale(), "AdditionalInfo", Application.getApplicationName())); // NOI18N
         about.put("copyright", Version.getCopyright()); // NOI18N
-        about.put("title", WebServerPreferences.getDefault().getRailRoadName()); // NOI18N
+        about.put("title", ServletUtil.getDefault().getRailroadName(false)); // NOI18N
         about.put("imgAlt", Application.getApplicationName()); // NOI18N
         // assuming Application.getLogo() is relative to program:
         about.put("imgSrc", "/" + Application.getLogo()); // NOI18N
