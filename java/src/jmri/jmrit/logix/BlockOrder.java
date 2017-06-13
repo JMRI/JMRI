@@ -180,15 +180,7 @@ public class BlockOrder {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("BlockOrder: Block \"");
-        sb.append( _block.getDisplayName());
-        sb.append("\" has Path \"");
-        sb.append("\" has Path \"");
-        sb.append("\" with Portals entry= \"");
-        sb.append(_entryName);
-        sb.append("\" and exit= \"");
-        sb.append(_exitName);
-        sb.append("\"");
-        return sb.toString();
+        return Bundle.getMessage("BlockOrderString",
+                _block.getDisplayName(), _entryName, _pathName, _exitName);
     }
 }
