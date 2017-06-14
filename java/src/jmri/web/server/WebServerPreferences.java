@@ -74,7 +74,7 @@ public class WebServerPreferences extends PreferencesBean {
      */
     @Deprecated
     public static final String Simple = SIMPLE;
-    public static final String RAILROAD_NAME = "railRoadName"; // NOI18N
+    public static final String RAILROAD_NAME = "railroadName"; // NOI18N
     /**
      * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
      */
@@ -263,7 +263,7 @@ public class WebServerPreferences extends PreferencesBean {
         if (getPort() != prefs.getPort()) {
             return true;
         }
-        return !getRailRoadName().equals(prefs.getRailRoadName());
+        return !getRailroadName().equals(prefs.getRailroadName());
     }
 
     public void apply(WebServerPreferences prefs) {
@@ -274,7 +274,7 @@ public class WebServerPreferences extends PreferencesBean {
         this.setReadonlyPower(prefs.isReadonlyPower());
         setDisallowedFrames(prefs.getDisallowedFrames());
         setPort(prefs.getPort());
-        setRailRoadName(prefs.getRailRoadName());
+        setRailroadName(prefs.getRailroadName());
     }
 
     public final void openFile(String fileName) throws FileNotFoundException {
@@ -460,13 +460,13 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @param railRoadName the railroadName to set
+     * @param railroadName the railroadName to set
      * @deprecated since 4.9.1; use {@link #setRailroadName(java.lang.String)}
      * instead
      */
     @Deprecated
-    public void setRailRoadName(String railRoadName) {
-        this.setRailroadName(railRoadName);
+    public void setRailRoadName(String railroadName) {
+        this.setRailroadName(railroadName);
     }
 
     /**

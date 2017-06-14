@@ -158,7 +158,8 @@ public class WebAppServlet extends HttpServlet {
                     manager.getAngularDependencies(profile, request.getLocale()),
                     manager.getAngularRoutes(profile, request.getLocale()),
                     String.format("\n    $scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())), // NOI18N
-                    manager.getAngularSources(profile, request.getLocale())
+                    manager.getAngularSources(profile, request.getLocale()),
+                    ServletUtil.getDefault().getRailroadName(false)
             ));
         }
         response.getWriter().print(FileUtil.readFile(script));

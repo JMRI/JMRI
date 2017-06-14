@@ -1,9 +1,9 @@
 /**
  * Create a WebSocket for handling a JMRI JSON service.
- * 
+ *
  * TODO:
  * automatic handling of disconnects and reconnects
- * 
+ *
  * @argument {angularService} $websocket angular-websocket service
  * @argument {angularService} $log AngularJS logging service
  * @type AngularJS Service Factory
@@ -39,7 +39,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
   var sendList = function sendList(type) {
     var m = {type: 'list', list: type, method: 'get'};
     $log.debug('Listing ' + type + '...');
-    socket.send(m);  
+    socket.send(m);
   };
   var sendState = function sendState(type, name, state) {
     sendPost(type, {name: name, state: state});
@@ -60,7 +60,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
     /**
      * Register a listener with the passed in array of functions that will be
      * called; each bound function will be called if its name matches the type
-     * property of the message with the JSON message contents. 
+     * property of the message with the JSON message contents.
      * @param {type} bindings array of overridden functions
      * @returns {undefined} the new listener
      */
@@ -134,6 +134,9 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
           data.state = name;
       }
       sendPost("power", data);
+    },
+    getRailroad: function() {
+      sendGet("railroad", {});
     },
     getRosterGroup: function(id) {
       sendGet("rosterGroup", {name: id});
@@ -282,7 +285,7 @@ function JsonSocket(service, bindings) {
     },
     power: function(data, method) {
     },
-    railroad: function(name) {
+    railroad: function(data, method) {
     },
     reporter: function(data, method) {
     },

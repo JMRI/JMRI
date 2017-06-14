@@ -22,7 +22,7 @@
                  notifications="toastNotifications"
                  close-callback="tnCloseCallback"
                  update-viewing="updateToastNotificationViewing"></pf-toast-notification-list>
-            <pf-vertical-navigation items="navigationItems" brand-alt="%1$s"
+            <pf-vertical-navigation items="navigationItems" brand-alt="{{railroad}}"
                  show-badges="true" persistent-secondary="true" pinnable-menus="true"
                  navigate-callback="handleNavigateClick">
                 <div class="ng-scope">
@@ -59,7 +59,7 @@
                     </ul>
                 </div>
             </pf-vertical-navigation>
-            <div ng-view id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-persistent-secondary">
+            <div ng-view id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-vertical-with-badges nav-pf-persistent-secondary">
             </div>
             <pf-about-modal is-open="isAboutModalOpen" on-close="onAboutModalClose()"
                  additional-info="additionalInfo" product-info="productInfo"
