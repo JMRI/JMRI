@@ -321,6 +321,9 @@ public class ProfileManagerDialog extends JDialog {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a profile is not selected or autostarted")
     private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (countDown != -1) {
+            // prevent an attempt to reclose this window from blocking application exit
+            countDown = -1;
+            // exit with an error code to indicate abnormal exit
             System.exit(255);
         }
     }//GEN-LAST:event_formWindowClosing

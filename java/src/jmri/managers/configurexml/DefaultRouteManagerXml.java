@@ -60,6 +60,10 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 Element elem = new Element("route");
                 elem.addContent(new Element("systemName").addContent(sname));
 
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                if (r.getUserName()!=null && !r.getUserName().equals("")) elem.setAttribute("userName", r.getUserName());
+
                 // store common parts
                 storeCommon(r, elem);
 
