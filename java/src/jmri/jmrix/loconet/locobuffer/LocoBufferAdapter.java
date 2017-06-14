@@ -1,21 +1,26 @@
 package jmri.jmrix.loconet.locobuffer;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.TooManyListenersException;
 import java.util.Vector;
+import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
@@ -36,10 +41,28 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Connection uses:", validOption1));
-        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
+        options.put(option2Name, new Option("Command station type:", getCommandStationListWithStandaloneLN(), false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }
-
+    
+    /**
+     * Create a list of possible command stations and append "Standalone LocoNet"
+     * 
+     * Note: This is not suitable for use by any class which extends this class if
+     * the hardware interface is part of a command station.
+     * 
+     * @return String[] containing the array of command stations, plus "Standalone 
+     *          LocoNet"
+     */
+    public String[] getCommandStationListWithStandaloneLN() {
+        String[] result = new String[commandStationNames.length + 1];
+        for (int i = 0 ; i < result.length-1; ++i) {
+            result[i] = commandStationNames[i];
+        }
+        result[commandStationNames.length] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
+        return result;
+    }
+    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
@@ -75,11 +98,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             // try to set it for LocoNet via LocoBuffer
             try {
                 setSerialPort(activeSerialPort);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + // NOI18N
-                        e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + // NOI18N
-                        e.getMessage();
+            } catch (UnsupportedCommOperationException e) {
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
             }
 
             // set timeout
@@ -186,9 +207,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port {} trace follows:", portName, ex); // NOI18N
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
@@ -201,6 +222,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
+     * 
+     * @return an indication of whether the interface is accepting transmit messages.
      */
     @Override
     public boolean okToSend() {
@@ -263,8 +286,10 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     /**
      * Local method to do specific configuration, overridden in class
+     * @param activeSerialPort is the serial port to be configured
+     * @throws UnsupportedCommOperationException Usually if the hardware isn't present or capable
      */
-    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,

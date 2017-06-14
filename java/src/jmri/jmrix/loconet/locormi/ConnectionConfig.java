@@ -82,7 +82,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        log.error("Unexpected call to setInstance", new Exception());
+        log.warn("Unexpected call to setInstance, multi-replica capability not yet present");
     }
 
     String manufacturerName = jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;

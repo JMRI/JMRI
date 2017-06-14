@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.9
+; - Remove outmoded lib\jna-4.2.2.jar and install jmri.conf
+; - Remove RXTX and SerialIO files as now replaced by purejavacomm
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.8
 ; - Remove outmoded jackson files
 ; -------------------------------------------------------------------------
@@ -276,7 +280,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.7"                    ; Installer version
+!define INST_VER  "0.1.22.8"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -445,6 +449,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
+
+    ; -- Delete old PJC file for JMRI 4.7.5
+    Delete "$OUTDIR\jna-4.2.2.jar"
 
     ; -- Delete old jackson jar files as of JMRI 4.7.1
     Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
@@ -620,6 +627,12 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Delete old JOAL .dll files
     Delete "$OUTDIR\lib\x86\joal_native.dll"
 
+    ; -- Delete RXTX/SerialIO files
+    Delete "$OUTDIR\lib\Serialio.jar"
+    Delete "$OUTDIR\lib\RXTXcomm.jar"
+    Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
+    Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
+
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
     Delete "$OUTDIR\uninstal.log" ; from InstallerVise installer
@@ -682,6 +695,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Library & Support Files now moved from here
     File /a "${SRCDIR}\*.jar"
     File /a "${SRCDIR}\COPYING"
+    File /a "${SRCDIR}\jmri.conf"
     File /a "${SRCDIR}\LaunchJMRI.exe"
     File /a "${SRCDIR}\*.bat"
     File /a "${SRCDIR}\default.lcf"

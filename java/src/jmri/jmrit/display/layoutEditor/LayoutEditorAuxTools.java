@@ -683,7 +683,25 @@ public class LayoutEditorAuxTools {
                 }
             }
         }
-        cList.add(c);
+        
+        // Check for duplicate connectivity
+        // This occurs for the first layout editor panel when there are multiple panels
+        // connected by edge connectors.
+        boolean noDuplicate = true;
+        String connString = c.toString();
+        if (connString != null && connString.length() > 0) {
+            for (int j = 0; j < cList.size(); j++) {
+                if (connString.equals(cList.get(j).toString())) {
+                    noDuplicate = false;
+                }
+            }
+        }
+        
+        if (noDuplicate) {
+            cList.add(c);
+        } else {
+            log.debug("checkConnectivity: Duplicate connection: '{}'", c);
+        }
     }
 
     // compute direction of vector from p1 to p2
