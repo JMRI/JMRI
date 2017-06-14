@@ -259,10 +259,10 @@
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
-    
+
     <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
     <property name="purejavacomm.loglevel" value="0"/>
-    
+
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
@@ -1606,7 +1606,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
@@ -1673,7 +1673,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
@@ -1754,7 +1754,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.5"/>
@@ -2061,7 +2061,6 @@
         <!-- do these first, so we can then make everything in the new directory executable -->
         <copy todir="${dist.linux}/JMRI">
             <fileset dir="${dist.scripts}"/>
-            <fileset file="${scriptdir}/RXTXuninstall.sh"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.linux}/JMRI"/>
@@ -2101,7 +2100,6 @@
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/InstallTest"/>
-                <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
             </tarfileset>
             <tarfileset  dir="${dist.linux}" filemode="755">
@@ -2109,7 +2107,6 @@
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
                 <include name="JMRI/InstallTest"/>
-                <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
             </tarfileset>
         </tar>

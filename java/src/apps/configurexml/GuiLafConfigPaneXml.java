@@ -93,7 +93,11 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute varAttr = shared.getAttribute("LocaleVariant");
         if (countryAttr != null && langAttr != null && varAttr != null) {
             Locale locale = new Locale(langAttr.getValue(), countryAttr.getValue(), varAttr.getValue());
+            
             Locale.setDefault(locale);
+            javax.swing.JComponent.setDefaultLocale(locale);
+            javax.swing.JOptionPane.setDefaultLocale(locale);
+            
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale);
         }
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");

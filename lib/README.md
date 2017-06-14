@@ -8,7 +8,7 @@ Generally, we use subdirectories to hold the Git-resident versions of
 OS-specific code for Windows (.dll files) and Linux (.so files) so that we can
 separate various builds.
 
-For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit and
+For example, the intelbth.dll comes in separate versions for 32-bit and
 64-bit Windows, but the files have the same name.  We store them in separate
 subdirectories under windows/, and let the installer sort them out.
 
@@ -18,13 +18,19 @@ macOS binaries are treated slightly differently, see the README file there.
 
 #### Updates
 
-If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
+If you make a change in this directory (add/change/remove a file), please make
+corresponding changes in the control files that are used for various JMRI
+development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
-Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
+Note that Windows installers don't necessarily remove existing library versions.
+(See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
+on this)  Until that's changed, if you remove a library from here that really
+needs to _not_ be in user installs, you need to add an explicit delete to the
+scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
 If the specific library being added or updated is not published to
 [Maven Central](http://maven.org) by the upstream provider, run the following
@@ -87,11 +93,11 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar
-- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
+- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
 - version 1.1
 - from <jdom.org>
 
-##### jdom-2.0.5.jar               
+##### jdom-2.0.5.jar
 - version 2.0.5
 - from <jdom.org>
 
@@ -287,7 +293,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ## Older, no longer present:
 
-##### crimson.jar             
+##### crimson.jar
 - version 1.1.3
 - from <http://xml.apache.org/crimson/>
 - No longer used as of JMRI 2.7.6
