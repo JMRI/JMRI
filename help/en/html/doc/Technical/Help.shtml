@@ -27,11 +27,13 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of JavaHelp</h1>This page talks about technical
+      <h1>JMRI: Use of JavaHelp</h1>
+      
+      This page talks about technical
       aspects of how JMRI provides help information using <a href=
       "https://javahelp.java.net">JavaHelp</a> and <a href=
-      "http://jhelpdev.sourceforge.net/">JHelpDev</a>.
-
+      "http://jhelpdev.sourceforge.net/">JHelpDev</a>.      
+      
       <h2>Organization of the help files</h2>The help files are
       located in the "help" directory within the JMRI distribution
       directory.
@@ -65,7 +67,8 @@
         al manuals reformatted for use in the help system. (Older
         ones are stored in the <a href="WebSite.shtml">main web
         site</a>)</li>
-      </ul>In the long run, we want only two branches to this
+      </ul>
+      In the long run, we want only two branches to this
       structure: the "package" part of the tree for help
       information that is specific to a particular piece of code,
       and another part of the tree for more general information.
@@ -77,10 +80,23 @@
       links to connect them as needed. <a name="limitations" id=
       "limitations"></a>
 
-      <h3>Limitations of JavaHelp HTML</h3>JavaHelp displays "plain
+      <p>All the page formatting on JMRI help and other web
+      pages is done through included CSS files, originally created by
+      John Plocher. These are included from "/css" via 
+      Server-Side Includes (SSI).  The main file is at
+      <a href="http://jmri.org/css/default.css">/css/default.css</a>
+      and works with a few other files in that same directory.
+      Because JavaHelp ignores SSI, the CSS formatting
+      is ignored when JavaHelp is displaying the pages within the JMRI itself.
+      In that case, JavaHelp provides the formatting.
+
+      <h3>Limitations of JavaHelp HTML</h3>
+      JavaHelp displays "plain
       old HTML 4.0", without providing some of the syntactic sugar
-      provided by many browsers to allow poor HTML to render. In
-      particular, there are a couple things to watch for.
+      provided by many browsers to allow poor HTML to render. 
+      Do not include any particular formatting options, specifically
+      including embedded CSS commands. 
+      There are a couple of specific things to watch for:
 
       <ul>
         <li>Anchor tags need a specific format. Specifically, they
