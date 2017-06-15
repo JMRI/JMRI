@@ -49,12 +49,6 @@ People building releases for distribution need permission to directly operate wi
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
-!!!!!!!!!!          NOTE FOR NEXT TIME           !!!!!!!!!!!
-!!!   GitHub changed "+" to "." in the filename          !!!
-!!!   See below, and decide how to address this in the   !!!
-!!!   build process; maybe change scripts to make "."?   !!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 ================================================================================
 ## Notification
 
@@ -383,12 +377,7 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
 
 This puts the right tag on the branch, then removes the branch.  
 
-*****
-***** Note before next build:  Drag and drop from macOS changed the "+" in the
-***** filenames to "." on the GitHub web site.  Decide what you want to do
-***** about that. If you decide to stay with the ".", change the testrelease script
-***** to generate the right text.
-*****
+Note on file names:  Our filenames are generated with proper [semantic versioning](http://semver.org) in which the `.R202c9ee` indicates build meta-data, specifically the hash for the tag point.  But the GitHub binary-file release system changes the '+' to a '.', so our scripts below do that too.  A request for support was filed with GitHub on this in early June 2017.
 
 Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
@@ -405,10 +394,10 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
 - Fill out form:
 
-   - "tag version field" gets vN.N.N (e.g. leading lower-case "v")
-   - @ branch: select the release-n.n.n release branch
+   - "tag version field" gets v4.7.5 (e.g. leading lower-case "v")
+   - @ branch: select the release-4.7.5 release branch
 ```
-"Release title" field gets "Test/Prod Release N.N.N"
+"Release title" field gets "Test/Prod Release 4.7.5"
 ```
    - Description content (the testrelease script above proposed this!):
 ```    
@@ -418,12 +407,12 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.7.5+R202c9ee.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5+R202c9ee.dmg) | c4ca7d32789de60a1764cc0c50cf2b73e2357ecd8e407a79b2c2291934.7.68f
-[JMRI.4.7.5+R202c9ee.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5+R202c9ee.exe) | 4fe5b78e96444939bf9933ad2c0d486a36ec40a472b2dcf1de30c8ffe6edb03b
-[JMRI.4.7.5+R202c9ee.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5+R202c9ee.tgz) | 87a1cf58c3c39a47cdc22a29ce24469051ee4ae559b804df66dbbe274e520e47
+[JMRI.4.7.5.R202c9ee.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5.R202c9ee.dmg) | c4ca7d32789de60a1764cc0c50cf2b73e2357ecd8e407a79b2c2291934.7.68f
+[JMRI.4.7.5.R202c9ee.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5.R202c9ee.exe) | 4fe5b78e96444939bf9933ad2c0d486a36ec40a472b2dcf1de30c8ffe6edb03b
+[JMRI.4.7.5.R202c9ee.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.5/JMRI.4.7.5.R202c9ee.tgz) | 87a1cf58c3c39a47cdc22a29ce24469051ee4ae559b804df66dbbe274e520e47
 ```
 
-- Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
+- Attach files by selecting them or dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
 curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
@@ -439,9 +428,9 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5-Rd144052.dmg 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5-Rd144052.exe 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5-Rd144052.tgz 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5+Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5+Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.5 -n "JMRI.4.7.5+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.5+Rd144052.tgz 
 ```
     
 - Click "Publish Release"
@@ -525,20 +514,22 @@ If you don't, a bunch of Windows users are likely to whine
 
     Content:
     
-        Test version 4.7.5 of JMRI/DecoderPro is available for download.
+Test version 4.7.5 of JMRI/DecoderPro is available for download.
 
-        This is the next in a series of test releases that will culminate in a production release, hopefully in June 2017.
+This is the next in a series of test releases that will culminate in a production release, hopefully in June 2017.
 
-        There have been a lot of updates in this version, so it should be considered experimental.
+There have been a lot of updates in this version, so it should be considered experimental.
 
-        For more information on the issues, new features and bug fixes in 4.7.5 please see the release note:
-        <http://jmri.org/releasenotes/jmri4.7.5.shtml>
+If you use JMRI on Linux or Mac and are updating from an earlier version, there’s a necessary migration step. (Not needed on Windows) Please see the release note for details: <http://jmri.org/releasenotes/jmri4.7.5.shtml#migration>
 
-        Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
-        <http://jmri.org/Copyright.html>
+For more information on the issues, new features and bug fixes in 4.7.5 please see the release note:
+<http://jmri.org/releasenotes/jmri4.7.5.shtml>
 
-        The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
-        <http://jmri.org/releasenotes/jmri4.7.5.shtml>
+Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
+<http://jmri.org/Copyright.html>
+
+The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
+<http://jmri.org/releasenotes/jmri4.7.5.shtml>
 
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
