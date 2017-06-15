@@ -233,7 +233,7 @@ public class ProfileManager extends Bean {
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
         FileInputStream is = null;
-        if (this.configFile.exists()) {
+        if (this.configFile.exists() && this.configFile.length() != 0) {
             try {
                 is = new FileInputStream(this.getConfigFile());
                 p.loadFromXML(is);
