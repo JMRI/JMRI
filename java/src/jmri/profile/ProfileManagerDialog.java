@@ -279,15 +279,19 @@ public class ProfileManagerDialog extends JDialog {
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {
+        ProfileManager manager = ProfileManager.getDefault();
         if (ProfileManager.getStartingProfile() == null
                 || (System.getProperty(ProfileManager.SYSTEM_PROPERTY) == null
-                && !ProfileManager.getDefault().isAutoStartActiveProfile())) {
+                && !manager.isAutoStartActiveProfile())) {
+            Profile last = manager.getActiveProfile();
             ProfileManagerDialog pmd = new ProfileManagerDialog(f, true);
             pmd.setLocationRelativeTo(f);
             pmd.setVisible(true);
-            ProfileManager.getDefault().saveActiveProfile();
+            if (last == null || !last.equals(manager.getActiveProfile())) {
+                manager.saveActiveProfile();
+            }
         }
-        return ProfileManager.getDefault().getActiveProfile();
+        return manager.getActiveProfile();
     }
 
     private void profileNameChanged(Profile p) {
