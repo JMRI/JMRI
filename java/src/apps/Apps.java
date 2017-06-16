@@ -133,29 +133,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Prepare font lists
         prepareFontLists();
 
-        // install shutdown manager
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
-
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(jmri.ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
-                        catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
-
         // Get configuration profile
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
@@ -207,6 +184,29 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
 
+        // install shutdown manager
+        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
+
+        // add the default shutdown task to save blocks
+        // as a special case, register a ShutDownTask to write out blocks
+        InstanceManager.getDefault(ShutDownManager.class).
+                register(new AbstractShutDownTask("Writing Blocks") {
+                    @Override
+                    public boolean execute() {
+                        // Save block values prior to exit, if necessary
+                        log.debug("Start writing block info");
+                        try {
+                            new BlockValueFile().writeBlockValues();
+                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
+                        catch (IOException ioe) {
+                            log.error("Exception writing blocks: {}", ioe);
+                        }
+
+                        // continue shutdown
+                        return true;
+                    }
+                });
+
         // Install configuration manager and Swing error handler
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
@@ -233,7 +233,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         File sharedConfig = null;
         // decide whether name is absolute or relative
         if (!new File(configFilename).isAbsolute()) {
-            // must be relative, but we want it to 
+            // must be relative, but we want it to
             // be relative to the preferences directory
             singleConfig = new File(FileUtil.getUserFilesPath() + configFilename);
         } else {
@@ -246,7 +246,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 sharedConfig = null;
             }
         } catch (FileNotFoundException ex) {
-            // ignore - sharedConfig will remain null in this case 
+            // ignore - sharedConfig will remain null in this case
         }
         // load config file if it exists
         if (sharedConfig != null) {
@@ -737,7 +737,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // tell help to use default browser for external types
         SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-        // use as main help menu 
+        // use as main help menu
         menuBar.add(helpMenu);
     }
 
@@ -960,7 +960,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     // TODO: Remove the "static" nature of much of the initialization someday.
     //       It exits to allow splash() to be called first-thing in main(), see
-    //       apps.DecoderPro.DecoderPro.main(...) 
+    //       apps.DecoderPro.DecoderPro.main(...)
     //       Or maybe, just not worry about this here, in the older base class,
     //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
     static boolean debugFired = false;  // true if we've seen F8 during startup
@@ -1161,7 +1161,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
-    // The following MUST be protected for 3rd party applications 
+    // The following MUST be protected for 3rd party applications
     // (such as CATS) which are derived from this class.
     @SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
