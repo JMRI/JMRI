@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Application Preferences</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Application Preferences</h1>
+      
+      This page discusses the how the main 
+      <a href="AppStructure.shtml">JMRI applications</a>
+      store and retrieve their preferences.
+      <p>
+      
+      For the structure of the JMRI library itself, see the
+      <a href="IntroStructure.shtml">Introduction to JMRI Library Structure page</a>.
+      For information the structure of the main JMRI applications, 
+      see the <a href="AppStructure.shtml">JMRI Application Structure</a> page.
+      For information on how JMRI initializes its connections to the layout,  
+      see the <a href="SystemStructure.shtml">JMRI External System Connection Structure</a> page.
+      
+      <p>
+      Key items:
+      <ul>
+      <li>jmri.UserPreferencesManager
+      <li>jmri/managers/JmriUserPreferencesManager
+
+      <li>jmri.spi.PreferencesManager
+
+      <li>jmri/profile/ProfilePreferencesPanel.form
+      <li>jmri/profile/ProfilePreferencesPanel
+
+      <li>apps/gui3/TabbedPreferences
+      <li>apps/gui3/TabbedPreferencesAction
+      <li>apps/gui3/TabbedPreferencesFrame
+      <li>gui3/TabbedPreferencesProfileAction
+
+      <li>META-INF/services/jmri.spi.PreferencesManager
+      <li>META-INF/services/jmri.swing.PreferencesPanel
+
+      </ul>
+
+Concepts:
+    The profile
+    The host ID
+
+How the preferences are stored:
+    Multiple search directories are stored in ...
+    Within each of those...
+    
+     
+<!-- this is really just a stub of a page so far. -->
+
+
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
