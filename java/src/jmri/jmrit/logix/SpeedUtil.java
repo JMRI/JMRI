@@ -36,6 +36,8 @@ public class SpeedUtil implements ThrottleListener {
     private String _rosterId;        // Roster title for train
     private RosterEntry _rosterEntry;
     private Warrant _warrant;
+    private String warrantName;     // For debug code to avoid threading issues 
+    private List<BlockOrder> _orders;
 
 //    private TreeMap<Integer, SpeedStep> _speedTree;
     private DccThrottle _throttle;
@@ -44,12 +46,20 @@ public class SpeedUtil implements ThrottleListener {
 
     public static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
 
-    public SpeedUtil(Warrant war) {
+    protected SpeedUtil(Warrant war) {
         _warrant = war;
+        if (war !=null) {
+            warrantName = war.getDisplayName();
+            _orders = war.getBlockOrders();
+        }
     }
     
     protected void setWarrant(Warrant w) {
         _warrant = w;
+        if (w !=null) {
+            warrantName = w.getDisplayName();
+            _orders = w.getBlockOrders();
+        }
     }
     
     public RosterEntry getRosterEntry() {
@@ -141,11 +151,12 @@ public class SpeedUtil implements ThrottleListener {
             } catch (NumberFormatException e) {
                 _dccAddress = null;
                 return false;
-            }            
+            }
         } else {
             _rosterId = id;
             _dccAddress = _rosterEntry.getDccLocoAddress();           
         }
+        if (log.isDebugEnabled()) log.debug("_rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
     }
 
@@ -189,18 +200,18 @@ public class SpeedUtil implements ThrottleListener {
      */
     protected String acquireThrottle() {
         if (_dccAddress == null)  {
-            return Bundle.getMessage("NoAddress", _warrant.getDisplayName());
+            return Bundle.getMessage("NoAddress", warrantName);
         }
         jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         if (tm==null) {
-            return Bundle.getMessage("noThrottle", _warrant.getDisplayName());
+            return Bundle.getMessage("noThrottle", warrantName);
         } else {
             if (!tm.requestThrottle(_dccAddress.getNumber(), _dccAddress.isLongAddress(), this)) {
                 return Bundle.getMessage("trainInUse", _dccAddress.getNumber());
             }           
         }
         if(log.isDebugEnabled()) log.debug("Throttle at {} requested for warrant {}",
-                _dccAddress.toString(), _warrant.getDisplayName());          
+                _dccAddress.toString(), warrantName);          
         return null;
     }
 
@@ -209,13 +220,13 @@ public class SpeedUtil implements ThrottleListener {
         if (throttle == null) {
             ThreadingUtil.runOnLayout(() -> {
                 _warrant.abortWarrant("notifyThrottleFound: null throttle(?)!");
-                _warrant.fireRunStatus("throttleFail", null, Bundle.getMessage("noThrottle", _warrant.getDisplayName()));
+                _warrant.fireRunStatus("throttleFail", null, Bundle.getMessage("noThrottle", warrantName));
             });
             return;
         }
         if (log.isDebugEnabled()) {
             log.debug("notifyThrottleFound for address= {}, class= {}, warrant {}", 
-                    throttle.getLocoAddress().toString(), throttle.getClass().getName(), _warrant.getDisplayName());
+                    throttle.getLocoAddress().toString(), throttle.getClass().getName(), warrantName);
         }
 
         _throttle = throttle;
@@ -231,7 +242,7 @@ public class SpeedUtil implements ThrottleListener {
             if (tm != null) {
                 tm.releaseThrottle(_throttle, this);
             } else {
-                log.error(Bundle.getMessage("noThrottle", _warrant.getDisplayName()));
+                log.error(Bundle.getMessage("noThrottle", warrantName));
             }
             _throttle = null;
         }
@@ -240,7 +251,7 @@ public class SpeedUtil implements ThrottleListener {
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         ThreadingUtil.runOnLayout(() -> {
-            _warrant.abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+_warrant.getDisplayName())));
+            _warrant.abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+warrantName)));
             _warrant.fireRunStatus("throttleFail", null, reason);
         });
     }
@@ -250,7 +261,7 @@ public class SpeedUtil implements ThrottleListener {
         if (updateSpeedProfile && _rosterEntry!=null && _speedProfile!=null) {
             _rosterEntry.setSpeedProfile(_speedProfile);
             Roster.getDefault().writeRoster();
-            if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster");
+            if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster. id= {}", _rosterId);
         }
     }
 
@@ -351,7 +362,7 @@ public class SpeedUtil implements ThrottleListener {
             byFactor = true;
         }
         if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by {}. warrant {}",
-                    throttleSetting, speed, (byFactor?"factor":"profile"), _warrant.getDisplayName());
+                    throttleSetting, speed, (byFactor?"factor":"profile"), warrantName);
         return speed;
     }
 
@@ -419,34 +430,36 @@ public class SpeedUtil implements ThrottleListener {
 
     /*************** dynamic calibration ***********************/
 
-    long _timeAtSpeed;
-    float _distanceTravelled;
-    float _settingsTravelled;
+    long _timeAtSpeed = 0;
+    float _distanceTravelled = 0;
+    float _settingsTravelled = 0;
     long _changetime;
-    int _numchanges;
+    int _numchanges = 0;
+    boolean _distanceValid;
 
     /**
      * Just entered block at newIdx. Do that calculation of speed from lastIdx
      * @param lastIdx BlockOrder index of where data collection started
-     * @param newIdx BlockOrder index of block just enter
+     * @param newIdx BlockOrder index of block just entered
      */
     protected void enteredBlock(int lastIdx, int newIdx) {
-        if (lastIdx > 0) {
+        if (lastIdx > 0) {   // Distance traveled in 1st block unknown
             speedChange();
             
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
             boolean lengthOK = true;
-            List<BlockOrder> orders = _warrant.getBlockOrders();
-            for (int i=lastIdx; i<newIdx; i++) {
-                BlockOrder blkOrder = orders.get(i);
-                float length = blkOrder.getPath().getLengthMm();
-                if (length <= 0) {
-                    log.warn("Block {} does not have a length for path {}",
-                            blkOrder.getBlock().getDisplayName(), blkOrder.getPathName());
-                    lengthOK = false;
-                }
-                totalLength += length;
+            if (newIdx > 1) {
+                for (int i=lastIdx; i<newIdx; i++) {
+                    BlockOrder blkOrder = _orders.get(i);
+                    float length = blkOrder.getPath().getLengthMm();
+                    if (length <= 0) {
+                        log.warn("Block {} does not have a length for path {}",
+                                blkOrder.getBlock().getDisplayName(), blkOrder.getPathName());
+                        lengthOK = false;
+                    }
+                    totalLength += length;
+                }                
             }
             
             float aveSpeed = totalLength / _timeAtSpeed;
@@ -455,14 +468,14 @@ public class SpeedUtil implements ThrottleListener {
             // throttle setting should be a step increment
             float incr = _throttle.getSpeedIncrement();
             aveThrottle = incr * Math.round(aveThrottle/incr);
-            float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);
             
-            if (log.isTraceEnabled()) {
-                log.trace("{} speed changes. AveThrottle= {}, distance= {}, time = {}. pathLength = {}",
+            if (log.isDebugEnabled()) {
+                float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);
+                log.debug("{} speed changes. AveThrottle= {}, distance= {}, time = {}. pathLength = {}",
                         _numchanges, aveThrottle, _distanceTravelled, _timeAtSpeed, totalLength);
-                log.trace("Speeds: SpeedProfile= {}, aveSpeed= {}, over block {} to {}",
-                        spSpeed, aveSpeed, orders.get(lastIdx).getBlock().getDisplayName(),
-                        orders.get(newIdx).getBlock().getDisplayName());
+                log.debug("Speeds: SpeedProfile= {}, aveSpeed= {}, over block {} to {}",
+                        spSpeed, aveSpeed, _orders.get(lastIdx).getBlock().getDisplayName(),
+                        _orders.get(newIdx).getBlock().getDisplayName());
             }
             if (lengthOK) {
                 if (isForward) {
@@ -477,8 +490,12 @@ public class SpeedUtil implements ThrottleListener {
         _distanceTravelled = 0.0f;
         _settingsTravelled = 0.0f;
         _numchanges = 0;
+        _distanceValid = true;
     }
-    
+
+    /*
+     * 
+     */
     protected void speedChange() {
         long time = System.currentTimeMillis();
         float incr = _throttle.getSpeedIncrement();
@@ -486,7 +503,12 @@ public class SpeedUtil implements ThrottleListener {
         long elapsedTime = time - _changetime;
         if (throttleSetting > 0.0f) {
             _timeAtSpeed += elapsedTime;
-            _distanceTravelled += getTrackSpeed(throttleSetting, _throttle.getIsForward()) * elapsedTime;
+            float speed = _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward());
+            if (speed > 0.0f) {
+                _distanceTravelled += elapsedTime * speed / 1000;
+            } else {
+                _distanceValid = false;
+            }
             _settingsTravelled += throttleSetting * elapsedTime;
         }
         _numchanges++;
@@ -494,7 +516,11 @@ public class SpeedUtil implements ThrottleListener {
     }
     
     protected float getDistanceTravelled() {
-        return _distanceTravelled;
+        if (_distanceValid) {
+            return _distanceTravelled;            
+        } else {
+            return -1;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SpeedUtil.class);

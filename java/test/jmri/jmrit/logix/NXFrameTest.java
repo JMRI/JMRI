@@ -49,6 +49,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
 
+        nxFrame.setVisible(true);
         pressButton(nxFrame, Bundle.getMessage("Calculate"));
         confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SetEndPoint", Bundle.getMessage("OriginBlock")), "OK");
 
@@ -70,6 +71,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
 
         NXFrame nxFrame = NXFrame.getDefault();
+        nxFrame.setVisible(true);
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
         pressButton(nxFrame, Bundle.getMessage("Calculate"));

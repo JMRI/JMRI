@@ -145,7 +145,8 @@ public class NXFrame extends WarrantRoute {
                 closeFrame();
             }
         });
-        setVisible(true);
+        setAlwaysOnTop(true);
+        setVisible(false);
         pack();
     }
 
@@ -329,7 +330,7 @@ public class NXFrame extends WarrantRoute {
             _originDist.setText(Float.toString(num / 100f));
         } else {
             float num = Math.round(_startDist * 100);
-            _originDist.setText(Float.toString(_startDist / 1000f));
+            _originDist.setText(Float.toString(num / 1000f));
         }
         if (_destUnits.getText().equals("In")) {
             float num = Math.round(_stopDist * 100 / 25.4f);
@@ -338,6 +339,7 @@ public class NXFrame extends WarrantRoute {
             float num = Math.round(_stopDist * 100);
             _destDist.setText(Float.toString(num / 1000f));
         }
+        _autoRunPanel.repaint();
     }
 
     private void makeMenus() {
@@ -389,10 +391,10 @@ public class NXFrame extends WarrantRoute {
         }
         String s = ("" + Math.random()).substring(2);
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");
+        warrant.setBlockOrders(_orders);
         warrant.setSpeedUtil(_speedUtil);
         _speedUtil.setWarrant(warrant);
         warrant.setTrainName(getTrainName());
-        warrant.setBlockOrders(_orders);
         _speedUtil.makeSpeedTree();
         int mode;
         if (!_runManual.isSelected()) {
@@ -543,6 +545,7 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
+        if (log.isDebugEnabled()) log.debug("_startDist= {}, _stopDist= {}, _maxThrottle= {}", _startDist, _stopDist, _maxThrottle);
         setAddress();
         return null;
     }
@@ -681,11 +684,8 @@ public class NXFrame extends WarrantRoute {
                     remRamp -= dist;
                     w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", Float.toString(curSpeed), blockName));
                     if (log.isDebugEnabled()) {
-                        log.debug(" dist= " + dist);
-                    }
-                    if (log.isDebugEnabled()) {
                         log.debug("Ramp Up in block \"" + blockName + "\" to speed " + curSpeed + " in "
-                                + (int) speedTime + "ms to reach curDistance= " + curDistance + " with remRamp= " + remRamp);
+                                + (int) speedTime + "ms to distance= " + curDistance + ", remRamp= " + remRamp);
                     }
                     speedTime = _intervalTime;
                 } else {

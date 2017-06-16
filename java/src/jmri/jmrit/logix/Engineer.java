@@ -360,7 +360,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     synchronized protected void setSpeed(float s) {
         if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
-        _speedUtil.speedChange();
+        _speedUtil.speedChange();   // call before changing throttle setting
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
         ThreadingUtil.runOnLayoutEventually(() -> {
