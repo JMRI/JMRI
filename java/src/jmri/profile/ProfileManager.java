@@ -24,6 +24,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXParseException;
 
 /**
  * Manage JMRI configuration profiles.
@@ -233,10 +234,23 @@ public class ProfileManager extends Bean {
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
         FileInputStream is = null;
-        if (this.configFile.exists()) {
+        if (this.configFile.exists() && this.configFile.length() != 0) {
             try {
                 is = new FileInputStream(this.getConfigFile());
-                p.loadFromXML(is);
+                try {
+                    p.loadFromXML(is);
+                } catch (IOException ex) {
+                    if (is != null) {
+                        is.close();
+                    }
+                    if (ex.getCause().getClass().equals(SAXParseException.class)) {
+                        // try loading the profile as a standard properties file
+                        is = new FileInputStream(this.getConfigFile());
+                        p.load(is);
+                    } else {
+                        throw ex;
+                    }
+                }
                 is.close();
             } catch (IOException ex) {
                 if (is != null) {
