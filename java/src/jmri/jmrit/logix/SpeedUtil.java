@@ -62,6 +62,12 @@ public class SpeedUtil implements ThrottleListener {
         }
     }
     
+    protected void setOrders(List<BlockOrder> o) {
+        if (o !=null) {
+            _orders = o;
+        }
+    }
+    
     public RosterEntry getRosterEntry() {
         if (_rosterEntry == null) {
             _rosterEntry = Roster.getDefault().entryFromTitle(_rosterId);

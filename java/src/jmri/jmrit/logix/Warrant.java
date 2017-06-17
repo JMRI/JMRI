@@ -903,6 +903,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _totalAllocated = false;
         if (orders != null) {
             _orders = orders;
+            _speedUtil.setOrders(orders);
         }
         _allocated = false;
         String msg = checkInService();
