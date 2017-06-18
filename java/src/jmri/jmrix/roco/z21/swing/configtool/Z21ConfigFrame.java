@@ -247,15 +247,15 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
           case 0x001A:
              // the hardware version is a 32 bit integer stored in little 
              // endian format starting with the 1st databyte (element 4).
-             int hwversion = zr.getElement(4) + (zr.getElement(5) << 8) +
-                         (zr.getElement(6) << 16) + (zr.getElement(7) << 24);
+             int hwversion = zr.getElementBCD(4) + (zr.getElementBCD(5) << 8) +
+                         (zr.getElementBCD(6) << 16 ) + (zr.getElementBCD(7) << 24 );
              cs.setHardwareVersion(hwversion);
              // the software version is a 32 bit integer stored in little 
              // endian format and written in BCD, starting after the hardware
              // version (element 8).  The least significant byte is to be 
              // treated as a decimal. 
-             float swversion = zr.getElementBCD(8)/100+
-                               zr.getElementBCD(9)+
+             float swversion = (zr.getElementBCD(8)/100.0f)+
+                               (zr.getElementBCD(9))+
                                (zr.getElementBCD(10)*100)+
                                (zr.getElementBCD(11))*10000;
              cs.setSoftwareVersion(swversion);
@@ -291,13 +291,13 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
 
     // read the versions displayed from the command station representation
     private void updateVersionInformation(){
-         hardwareVersionTextField.setText("" + cs.getHardwareVersion());
-         softwareVersionTextField.setText("" + cs.getHardwareVersion());
+         hardwareVersionTextField.setText("0x" + java.lang.Integer.toHexString(cs.getHardwareVersion()));
+         softwareVersionTextField.setText("" + cs.getSoftwareVersion());
     }
 
     // read the serial number from the command station representation
     private void updateSerialNumber(){
-         serialNumTextField.setText("" + cs.getHardwareVersion());
+         serialNumTextField.setText("" + cs.getSerialNumber());
     }
 
     // read the flags displayed from the command station representation
