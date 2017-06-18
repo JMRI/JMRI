@@ -76,7 +76,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         
         getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
         getSystemInfoButton.setToolTipText(Bundle.getMessage("GetSystemInfoButtonToolTip"));
-        closeButton = new JToggleButton("CloseButtonLabel");
+        closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
         closeButton.setToolTipText(Bundle.getMessage("CloseButtonToolTip"));
         buttonPanel.add(getSystemInfoButton);
         buttonPanel.add(closeButton);
@@ -182,7 +182,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
          LocoNetOccupancyMessagesCheckBox.setToolTipText(Bundle.getMessage("LocoNetOccupancyMessagesFlagToolTip"));
          panel.add(LocoNetOccupancyMessagesCheckBox);
 
-         setSystemInfoButton = new JToggleButton("SetSystemInfoButtonLabel");
+         setSystemInfoButton = new JToggleButton(Bundle.getMessage("SetSystemInfoButtonLabel"));
          setSystemInfoButton.setToolTipText(Bundle.getMessage("SetSystemInfoButtonToolTip"));
         
          // Add Get SystemInfo button handler
