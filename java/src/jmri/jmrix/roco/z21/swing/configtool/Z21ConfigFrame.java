@@ -243,7 +243,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
              cs.setSerialNumber(serialNo);
              updateSerialNumber();
              break;
-          // handle repleis with the hardware and software version.
+          // handle replies with the hardware and software version.
           case 0x001A:
              // the hardware version is a 32 bit integer stored in little 
              // endian format starting with the 1st databyte (element 4).
