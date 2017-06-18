@@ -247,8 +247,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
           case 0x001A:
              // the hardware version is a 32 bit integer stored in little 
              // endian format starting with the 1st databyte (element 4).
-             int hwversion = zr.getElementBCD(4) + (zr.getElementBCD(5) << 8) +
-                         (zr.getElementBCD(6) << 16 ) + (zr.getElementBCD(7) << 24 );
+             int hwversion = zr.getElement(4) + (zr.getElement(5) << 8) +
+                         (zr.getElement(6) << 16 ) + (zr.getElement(7) << 24 );
              cs.setHardwareVersion(hwversion);
              // the software version is a 32 bit integer stored in little 
              // endian format and written in BCD, starting after the hardware

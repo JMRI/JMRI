@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
+import java.lang.StringBuilder;
 
 /**
  * class for replies in the z21/Z21 protocol.
@@ -81,7 +82,29 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public String toMonitorString() {
+        StringBuilder sb;
         switch(getOpCode()){
+           case 0x0010:
+               sb = new StringBuilder();
+               int serialNo = getElement(4) + (getElement(5) << 8) +
+                     (getElement(6) << 16) + (getElement(7) << 24);
+               sb.append("Z21 Serial Number Reply.  Serial Number: ");
+               sb.append(serialNo);
+               return sb.toString(); 
+           case 0x001A:
+               sb = new StringBuilder();
+               int hwversion = getElement(4) + (getElement(5) << 8) +
+                         (getElement(6) << 16 ) + (getElement(7) << 24 );
+               float swversion = (getElementBCD(8)/100.0f)+
+                               (getElementBCD(9))+
+                               (getElementBCD(10)*100)+
+                               (getElementBCD(11))*10000;
+               sb.append("Z21 Version Reply.  Hardware Version: ");
+               sb.append("0x");
+               sb.append(java.lang.Integer.toHexString(hwversion));
+               sb.append(" Software Version: ");
+               sb.append(swversion);
+               return sb.toString(); 
            case 0x0040:
                return "XPressNet Tunnel Reply: " + getXNetReply().toMonitorString();
            default:
