@@ -879,19 +879,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     // the train's route shown as locations with checkboxes
     private void updateLocationCheckboxes() {
+        updateRouteStatus();
         locationCheckBoxes.clear();
         locationPanelCheckBoxes.removeAll();
         int y = 0; // vertical position in panel
         Route route = null;
-        textRouteStatus.setText(NONE); // clear out previous status
         if (_train != null) {
             route = _train.getRoute();
         }
         if (route != null) {
-            if (!route.getStatus().equals(Route.OKAY)) {
-                textRouteStatus.setText(route.getStatus());
-                textRouteStatus.setForeground(Color.RED);
-            }
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
             for (int i = 0; i < routeList.size(); i++) {
                 RouteLocation rl = routeList.get(i);
@@ -928,6 +924,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         locationPanelCheckBoxes.revalidate();
     }
+    
+    private void updateRouteStatus() {
+        Route route = null;
+        textRouteStatus.setText(NONE); // clear out previous status
+        if (_train != null) {
+            route = _train.getRoute();
+        }
+        if (route != null) {
+            if (!route.getStatus().equals(Route.OKAY)) {
+                textRouteStatus.setText(route.getStatus());
+                textRouteStatus.setForeground(Color.RED);
+            }
+        }
+    }
 
     RouteEditFrame ref;
 
@@ -943,13 +953,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         ref = new RouteEditFrame();
         setChildFrame(ref);
+        Route route = null;
         Object selected = routeBox.getSelectedItem();
         if (selected != null) {
-            Route route = (Route) selected;
-            ref.initComponents(route);
-        } else {
-            ref.initComponents(null, _train);
+            route = (Route) selected;
         }
+        ref.initComponents(route, _train);
     }
 
     private void updateDepartureTime() {
@@ -1078,6 +1087,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             enableButtons(_train != null);
+            updateRouteStatus();
         }
         if (e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY)) {

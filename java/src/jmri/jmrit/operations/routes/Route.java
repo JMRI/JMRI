@@ -42,6 +42,7 @@ public class Route implements java.beans.PropertyChangeListener {
     public static final String DISPOSE = "routeDispose"; // NOI18N
 
     public static final String OKAY = Bundle.getMessage("ButtonOK");
+    public static final String TRAIN_BUILT = Bundle.getMessage("TrainBuilt");
     public static final String ORPHAN = Bundle.getMessage("Orphan");
     public static final String ERROR = Bundle.getMessage("ErrorTitle");
 
@@ -361,6 +362,12 @@ public class Route implements java.beans.PropertyChangeListener {
         for (RouteLocation rl : routeList) {
             if (rl.getName().equals(RouteLocation.DELETED)) {
                 return ERROR;
+            }
+        }
+        // check to see if this route is used by a train that is built
+        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+            if (train.getRoute() == this && train.isBuilt()) {
+                return TRAIN_BUILT;
             }
         }
         // check to see if this route is used by a train
