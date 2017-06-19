@@ -224,7 +224,7 @@ public class SpeedUtil implements ThrottleListener {
     @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
-            ThreadingUtil.runOnLayout(() -> {
+            ThreadingUtil.runOnLayoutEventually(() -> {
                 _warrant.abortWarrant("notifyThrottleFound: null throttle(?)!");
                 _warrant.fireRunStatus("throttleFail", null, Bundle.getMessage("noThrottle", warrantName));
             });
@@ -236,7 +236,7 @@ public class SpeedUtil implements ThrottleListener {
         }
 
         _throttle = throttle;
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutEventually(() -> {
             _warrant.startupWarrant();
             _warrant.runWarrant(throttle);
         });
@@ -256,7 +256,7 @@ public class SpeedUtil implements ThrottleListener {
 
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutEventually(() -> {
             _warrant.abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+warrantName)));
             _warrant.fireRunStatus("throttleFail", null, reason);
         });

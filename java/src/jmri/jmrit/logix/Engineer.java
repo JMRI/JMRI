@@ -75,8 +75,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ThrottleSetting ts = _commands.get(_idxCurrentCommand);
             _runOnET = _setRunOnET;     // OK to set here
             long time = ts.getTime();
-            if (_speedUtil.getSpeed() > 0.0f) {
-                time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+            synchronized (this) {
+                if (_speedUtil.getSpeed() > 0.0f) {
+                    time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+                }                
             }
             String command = ts.getCommand().toUpperCase();
             if (log.isDebugEnabled()) log.debug("Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}. Warrant {}",
@@ -204,7 +206,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             }
                             setSpeed(speedMod);
                         }
-                      _lock.unlock();
+                        _lock.unlock();
                     }
                 } else if (command.equals("SPEEDSTEP")) {
                     int step = Integer.parseInt(ts.getValue());
@@ -240,6 +242,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("Cmd #{}: {} et={} warrant {}", _idxCurrentCommand, ts.toString(), et, _warrant.getDisplayName());
             } catch (NumberFormatException nfe) {
                 log.error("Command failed! {} {}", ts.toString(), nfe.toString());
+                _lock.unlock();
             }
         }
         // shut down
@@ -363,8 +366,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _speedUtil.speedChange();   // call before changing throttle setting
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
+        String type = _speedType; // hope this saves findbug synch warning
         ThreadingUtil.runOnLayoutEventually(() -> {
-            _warrant.fireRunStatus("SpeedChange", null, _speedType);
+            _warrant.fireRunStatus("SpeedChange", null, type);
         });
         if (log.isDebugEnabled()) log.debug("Speed Set to {}, _speedType={},  _waitForClear= {} _waitForSync= {}, _halt= {}, warrant {}",
                 speed, _speedType,  _waitForClear, _waitForSync, _halt, _warrant.getDisplayName());
@@ -922,6 +926,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             } catch (InterruptedException ie) {
                                 log.error("ThrottleRamp interrupted " + ie);
                                 stop = true;
+                                _lock.unlock();
                             }
                             if (stop) {
                                 break;
@@ -939,6 +944,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             } catch (InterruptedException ie) {
                                 log.error("ThrottleRamp interrupted " + ie);
                                 stop = true;
+                                _lock.unlock();
                             }
                             if (stop) {
                                 break;
@@ -948,16 +954,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     
                 } finally {
                     if (!endSpeedType.equals(Warrant.Stop) &&
-                            !endSpeedType.equals(Warrant.EStop) /*&& speed > 0.0001f */) {
-                        synchronized (this) {
-                            // speed restored, clear any stop waits
-                            if (_waitForClear) {
-                                setWaitforClear(false);
-                            }
-                            if (_halt) {
-                                setHalt(false);
-                            }
-                        }
+                            !endSpeedType.equals(Warrant.EStop)) {
+                        // speed restored, clear any stop waits
+                        // If flags already off, OK to repeat setting  (saves findbug synch warning) 
+                        setWaitforClear(false);
+                        setHalt(false);
                      }
                     if (stop) {
                         log.info("ThrottleRamp stopped before completion");

@@ -64,7 +64,7 @@ public class NXFrame extends WarrantRoute {
     private JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     private JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
 
-    static private JPanel _routePanel;
+    private JPanel _routePanel = new JPanel();
     private JPanel _autoRunPanel;
     private JPanel _switchPanel;
     private JPanel _trainPanel;
@@ -96,9 +96,7 @@ public class NXFrame extends WarrantRoute {
             instance.updatePreferences();
             instance.setTrainInfo(null);
             instance.clearRoute();
-            JPanel con = (JPanel)instance.getContentPane().getComponent(0);
-            con.removeAll();
-            con.add(_routePanel);
+            instance.setRoutePanel();
             instance.pack();
         }
         return instance;
@@ -160,6 +158,12 @@ public class NXFrame extends WarrantRoute {
         con.add(p);
         con.add(_switchPanel);
         pack();
+    }
+    
+    private void setRoutePanel() {
+        JPanel con = (JPanel)getContentPane().getComponent(0);
+        con.removeAll();
+        con.add(_routePanel);        
     }
 
     private JPanel makeSwitchPanel() {
