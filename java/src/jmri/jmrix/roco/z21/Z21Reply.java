@@ -82,31 +82,21 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public String toMonitorString() {
-        StringBuilder sb;
         switch(getOpCode()){
            case 0x0010:
-               sb = new StringBuilder();
                int serialNo = getElement(4) + (getElement(5) << 8) +
                      (getElement(6) << 16) + (getElement(7) << 24);
-               sb.append("Z21 Serial Number Reply.  Serial Number: ");
-               sb.append(serialNo);
-               return sb.toString(); 
+               return Bundle.getMessage("Z21ReplyStringSerialNo",serialNo);
            case 0x001A:
-               sb = new StringBuilder();
                int hwversion = getElement(4) + (getElement(5) << 8) +
                          (getElement(6) << 16 ) + (getElement(7) << 24 );
                float swversion = (getElementBCD(8)/100.0f)+
                                (getElementBCD(9))+
                                (getElementBCD(10)*100)+
                                (getElementBCD(11))*10000;
-               sb.append("Z21 Version Reply.  Hardware Version: ");
-               sb.append("0x");
-               sb.append(java.lang.Integer.toHexString(hwversion));
-               sb.append(" Software Version: ");
-               sb.append(swversion);
-               return sb.toString(); 
+               return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion),swversion);
            case 0x0040:
-               return "XPressNet Tunnel Reply: " + getXNetReply().toMonitorString();
+               return Bundle.getMessage("Z21XPressNetTunnelReply",getXNetReply().toMonitorString());
            default:
         }
 
@@ -121,9 +111,18 @@ public class Z21Reply extends AbstractMRReply {
     jmri.jmrix.lenz.XNetReply getXNetReply() {
         jmri.jmrix.lenz.XNetReply xnr = null;
         if (isXPressNetTunnelMessage()) {
+            int i = 4;
             xnr = new jmri.jmrix.lenz.XNetReply();
-            for (int i = 4; i < getLength(); i++) {
+            for (; i < getLength(); i++) {
                 xnr.setElement(i - 4, getElement(i));
+            }
+            if(( xnr.getElement(0) & 0x0F ) > ( xnr.getNumDataElements()+2) ){
+               // there is at least one message from the Z21 that can be sent 
+               // with fewer bytes than the XPressNet payload indicates it 
+               // should have.  Pad those messages with 0x00 bytes.
+               for(i=i-4;i<((xnr.getElement(0)&0x0F)+2);i++){
+                  xnr.setElement(i,0x00);
+               }
             }
         }
         return xnr;
