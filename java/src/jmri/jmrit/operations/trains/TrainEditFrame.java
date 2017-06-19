@@ -943,11 +943,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void editAddRoute() {
         log.debug("Edit/add route");
-        // warn user if train is built that they shouldn't edit the train's route
-        if (_train != null && _train.isBuilt()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("BuiltTrain"),
-                    JOptionPane.WARNING_MESSAGE);
-        }
         if (ref != null) {
             ref.dispose();
         }
@@ -957,6 +952,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         Object selected = routeBox.getSelectedItem();
         if (selected != null) {
             route = (Route) selected;
+        }
+        // warn user if train is built that they shouldn't edit the train's route
+        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("BuiltTrain"),
+                    JOptionPane.WARNING_MESSAGE);
         }
         ref.initComponents(route, _train);
     }
@@ -1085,7 +1085,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (e.getPropertyName().equals(Train.TRAIN_ROUTE_CHANGED_PROPERTY) && _train != null) {
             routeBox.setSelectedItem(_train.getRoute());
         }
-        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
             enableButtons(_train != null);
             updateRouteStatus();
         }

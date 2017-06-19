@@ -201,10 +201,10 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
         Route route = sysList.get(row);
         if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
+            // warn user
             log.debug("Can not edit a route that has a built train");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("TrainBuilt"),
                     JOptionPane.WARNING_MESSAGE);
-            return;
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
