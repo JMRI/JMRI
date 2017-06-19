@@ -118,7 +118,7 @@
                   <xs:attribute name="runBlind" type="xs:string"></xs:attribute>
                   <xs:attribute name="shareRoute" type="trueFalseType"></xs:attribute>
                   <xs:attribute name="noRamp" type="trueFalseType"></xs:attribute>
-                </xs:complexType>
+                 </xs:complexType>
               </xs:element>
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType" use="required"></xs:attribute> <!--one of the few last types storing names as attributes up to 4.6-->

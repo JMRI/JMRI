@@ -1,11 +1,14 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Application;
 import jmri.IdTag;
 import jmri.IdTagManager;
@@ -15,11 +18,6 @@ import jmri.Reporter;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -68,23 +66,24 @@ public class DefaultIdTagManager extends AbstractManager
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
-            InstanceManager.getDefault(jmri.ShutDownManager.class).
-                    register(new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                        @Override
-                        public boolean execute() {
-                            // Save IdTag details prior to exit, if necessary
-                            log.debug("Start writing IdTag details...");
-                            try {
-                                ((DefaultIdTagManager) InstanceManager.getDefault(IdTagManager.class)).writeIdTagDetails();
-                                //new jmri.managers.DefaultIdTagManager().writeIdTagDetails();
-                            } catch (java.io.IOException ioe) {
-                                log.error("Exception writing IdTags: " + ioe);
-                            }
-
-                            // continue shutdown
-                            return true;
+            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
+                sdm.register(new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+                    @Override
+                    public boolean execute() {
+                        // Save IdTag details prior to exit, if necessary
+                        log.debug("Start writing IdTag details...");
+                        try {
+                            ((DefaultIdTagManager) InstanceManager.getDefault(IdTagManager.class)).writeIdTagDetails();
+                            //new jmri.managers.DefaultIdTagManager().writeIdTagDetails();
+                        } catch (java.io.IOException ioe) {
+                            log.error("Exception writing IdTags: " + ioe);
                         }
-                    });
+
+                        // continue shutdown
+                        return true;
+                    }
+                });
+            });
             initialised = true;
         }
     }
@@ -175,7 +174,7 @@ public class DefaultIdTagManager extends AbstractManager
         return new DefaultIdTag(systemName, userName);
     }
 
-    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification = "defensive programming check of @Nonnull argument")
     private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "

@@ -2,10 +2,15 @@ package jmri.jmrix.cmri.serial;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import jmri.InstanceManager;
+import jmri.Light;
+import jmri.Sensor;
+import jmri.Turnout;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
+
 
     public SerialTrafficController() {
         super();
@@ -188,34 +194,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
-    }
-
-    static volatile protected SerialTrafficController self = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, converted to JMRI multi-system support structure
      */
     @Override
     @Deprecated
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
-        self = this;
+        log.debug("deprecated setInstance should not have been called");
     }
 
     @Override

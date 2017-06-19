@@ -28,7 +28,7 @@ public class WebServerManager {
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
-        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
+        if (!InstanceManager.getOptionalDefault(WebServerPreferences.class).isPresent()) {
             File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
             File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
@@ -43,17 +43,13 @@ public class WebServerManager {
     }
 
     public static WebServerManager getInstance() {
-        if (InstanceManager.getNullableDefault(WebServerManager.class) == null) {
-            InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
-        }
-        return InstanceManager.getDefault(WebServerManager.class);
+        return InstanceManager.getOptionalDefault(WebServerManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
+        });
     }
 
     public WebServerPreferences getPreferences() {
-        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
-            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
-        }
-        return InstanceManager.getDefault(WebServerPreferences.class);
+        return WebServerPreferences.getDefault();
     }
 
     public static WebServerPreferences getWebServerPreferences() {
@@ -61,10 +57,7 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (InstanceManager.getNullableDefault(WebServer.class) == null) {
-            InstanceManager.setDefault(WebServer.class, new WebServer());
-        }
-        return InstanceManager.getDefault(WebServer.class);
+        return WebServer.getDefault();
     }
 
     public static WebServer getWebServer() {

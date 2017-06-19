@@ -163,11 +163,10 @@
       <a href="images/GitDtRepoSettingsMenu.png"><img src=
       "images/GitDtRepoSettingsMenu.png" alt=
       "Repository menu in GitHub Desktop" height="175" width=
-      "275"></a></p>
-
-      <p>You can also navigate there directly using your file
-      system.<br>
-      Inside, you'll find directories called <tt>xml</tt>,
+      "275"></a>
+      <br>You can also navigate there directly using your file
+      system.</p>
+      <p>Inside, you'll find directories called <tt>xml</tt>,
       <tt>resources</tt>, <tt>jython</tt>, <tt>help</tt>,
       <tt>lib</tt>, <tt>java</tt> and others.</p>
 

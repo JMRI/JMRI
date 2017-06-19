@@ -166,7 +166,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         }
 
         if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
+            int now = ((Integer) e.getNewValue());
             displayState(now);
         }
     }
@@ -184,9 +184,9 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         return name;
     }
 
-    /**
-     * ****** popup AbstractAction.actionPerformed method overrides ********
-     */
+    //
+    // ****** popup AbstractAction.actionPerformed method overrides ********
+    //
     @Override
     protected void rotateOrthogonal() {
         off.setRotation(on.getRotation() + 1, this);
@@ -226,11 +226,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateLight();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            updateLight();
         };
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(light);
@@ -248,14 +245,16 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         invalidate();
     }
 
-    /**
-     * *********** end popup action methods ***************
-     */
+    //
+    // *********** end popup action methods ***************
+    //
     /**
      * Drive the current state of the display from the state of the light.
+     *
+     * @param state the new state
      */
     void displayState(int state) {
-        log.debug(getNameString() + " displayState " + state);
+        log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         switch (state) {
             case Light.OFF:
@@ -283,15 +282,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
                 }
                 break;
         }
-
-        return;
     }
 
     /**
-     * Change the light when the icon is clicked
+     * Change the light when the icon is clicked.
      *
+     * @param e the mouse click
      */
-    // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

@@ -22,21 +22,19 @@
     <div id="mainContent">
       <h1>Adding/Editing Logix Conditionals</h1>
 
-      <p>The Edit Conditional window is where logical expressions
+      <p>The Edit Conditional pane is where logical expressions
       are set up and where actions are specified. The Edit
-      Conditional window is displayed when a Conditional is
+      Conditional pane is displayed when a Conditional is
       created, or when the <strong>Edit</strong> button of a Conditional is
       pressed in the <a href="LogixAddEdit.shtml">Edit Logix
-      window</a>. The Edit Conditional window displays the system
-      name and user name of the Conditional at the top. The system
+      pane</a>. The Edit Conditional pane at the top displays the
+      system name and user name of the Conditional. The system
       name is automatically set by the program and cannot be
       changed. The user name may be edited by entering/modifying
       the text in the User Name field. The user name may not be the
       same as the user name of another Conditional in this Logix,
       but may be the same as the user name of a Conditional in a
-      different Logix.  The one exception is that a Conditional
-      that is going to be referenced from another Logix, the user
-      name, if any, must be unique among all Conditionals</p>
+      different Logix.</p>
 
       <p>Next are two sections--one for the setup of a logical
       expression and one for set up of actions. Conditionals are
@@ -45,7 +43,7 @@
       <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
       
       <p>A Conditional has two distinct parts: its "logical
-      expression" and its "action". The window has separate
+      expression" and its "action". The pane has separate
       sections for the set up of each.</p>
 
       <h2>Logical Expression</h2>
@@ -120,10 +118,10 @@
 
       <p>Press the <strong>Add State Variable</strong> to add a state
       variable (a row in the state variable table). This brings up
-      a window with a choice box for the user to select a state
+      a pane with a choice box for the user to select a state
       variable type. Available state variables are documented
-      <a href="#variable">below</a>. When a type is chosen the
-      Edit Variable window displays a text field for the name of
+      <a href="#variable">below</a>. When a type is chosen, the
+      Edit Variable pane displays a text field for the name of
       the entity to be used for the state variable. When a name
       (either system name or user name) is entered, it must
       correspond to an existing entity (sensor, turnout, light,
@@ -133,6 +131,17 @@
       will depend on the conditional name selection method setting.
       See <a href="LogixTable.shtml#selectMethod">
       Conditional Name Selection Method</a>.</p>
+      
+      <p>For Conditional Variables, the text input field is replaced
+      by two drop down combo boxes.  The first box is used to
+      select the Logix, the second box is used to select a
+      Conditional that belongs to the selected Logix.
+      <span class="since">since 4.7.4</span>
+      <a href="images/SelectConditionalReference.png">
+      <img src="images/SelectConditionalReference.png"
+      alt="Logix/Conditional Combo Boxes" height="148" width="558">
+      </a>
+      </p>
       
       <p>After the name is entered, select the required state from the
       <strong>Variable State</strong> drop down box.  Depending on the selected
@@ -148,7 +157,7 @@
       again. <em>Please remember after editing the system name and
       data items to click a different cell in the table before
       clicking <strong>Check State Variables</strong> (or <strong>Update
-      Conditional</strong> at the bottom of the window) so that the
+      Conditional</strong> at the bottom of the pane) so that the
       program is notified that you have finished your entry.
       Otherwise your entry may not take effect, and an error may be
       reported unnecessarily.</em></p>
@@ -156,8 +165,8 @@
       <h2>Action</h2>
       <p>The action section contains a table of actions, with two
       buttons below.  The action list shows a description of each
-      action.  The <strong>Edit</strong> is used to change an action. The
-      <strong>Delete</strong> button is used to delete an action.
+      action.  The <strong>Edit</strong> button is used to change an action.
+      The <strong>Delete</strong> button is used to delete an action.
 
       <p>Actions are evaluated in the order listed. To change that
       order, click the "Reorder" button on the "Edit Conditional"
@@ -167,8 +176,8 @@
       <h3>Adding a New Action</h3>
 
       <p>To add a new action, press the "Add Action" button. A new
-      "Edit Action" window will appear. Select an action type in
-      the type box, and data items needed to completely specify the
+      "Edit Action" pane will appear. Select an action type in
+      the type box. The data items needed to completely specify the
       action will appear to the right of the type box. If you don't
       know what needs to be entered in a data field, hover your
       cursor over it, and a hint message will appear. When a name
@@ -178,7 +187,7 @@
       Table when entering sensor names, or the Turnout Table to see
       available turnouts, etc., may be useful. Available action
       types are described in detail <a href=
-      "#action">below</a>.  The actual method for entering names
+      "#action">below</a>. The actual method for entering names
       will depend on the conditional name selection method setting.
       See <a href="LogixTable.shtml#selectMethod">
       Conditional Name Selection Method</a></p>
@@ -332,16 +341,10 @@
 
             <li>Conditional<ul>
               <li><strong>Conditional True</strong>: Evaluates to true if the state
-              of the specified Conditional is true. Note that because
-              Conditional user names may be duplicated across different
-              Logix, a System Name must be used to specify a Conditional
-              belonging to a different Logix.</li>
+              of the specified Conditional is true.</li>
 
               <li><strong>Conditional False</strong>: Evaluates to true if the
-              state of the specified Conditional is false. Note that
-              because Conditional user names may be duplicated across
-              different Logix, a System Name must be used to specify a
-              Conditional belonging to a different Logix.</li>
+              state of the specified Conditional is false.</li>
             </ul></li>
 
             <li>Warrant<ul>

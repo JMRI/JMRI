@@ -55,10 +55,11 @@ public class PortalManager extends AbstractManager
     }
 
     /**
-     * Method to create a new Portal if it does not exist Returns null if a
-     * Portal with the same systemName or userName already exists, or if there
-     * is trouble creating a new Portal. Generate a systemName if called with
-     * sName==null
+     * Method to create a new Portal. Returns null if a
+     * Portal with the same systemName or userName already exists. 
+     *
+     * Generate a systemName if called with sName == null and 
+     * non null userName.
      */
     public Portal createNewPortal(String sName, String userName) {
         // Check that Portal does not already exist
@@ -132,7 +133,7 @@ public class PortalManager extends AbstractManager
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        Portal portal = getByUserName(name);
+        Portal portal = getPortal(name);
         if (portal == null) {
             portal = createNewPortal(null, name);
         }
@@ -142,15 +143,6 @@ public class PortalManager extends AbstractManager
     @Override
     protected void registerSelf() {
         // Override, don't register, OBlockManager does store and load of Portals
-    }
-
-    static PortalManager _instance = null;
-
-    static public PortalManager instance() {
-        if (_instance == null) {
-            _instance = new PortalManager();
-        }
-        return (_instance);
     }
 
     @Override

@@ -23,6 +23,7 @@ public class ChangeTrackTypeActionTest {
         TrackEditFrame tf = new TrackEditFrame();
         ChangeTrackTypeAction t = new ChangeTrackTypeAction(tf);
         Assert.assertNotNull("exists",t);
+        tf.dispose();
     }
 
     // The minimal setup for log4J

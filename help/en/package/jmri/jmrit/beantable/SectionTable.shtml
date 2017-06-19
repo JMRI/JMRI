@@ -60,7 +60,7 @@
       <h2>Using the Section Table</h2>
 
       <p>All the Sections that JMRI knows about can be viewed using
-      the <b>Sections Table</b>. Sections can either be created
+      the <b>Section Table</b>. Sections can either be created
       manually within the Section Table pane, or they can be
       created automatically if you also plan to use Signal Mast
       Logic <a href="#SignalMast">(see below)</a>.</p>
@@ -69,8 +69,10 @@
       <b>Tables</b> submenu of the <b>Tools</b> menu of the main
       JMRI program window.</p>
 
-      <h3>Section Table Columns</h3>There are eight columns in the
-      Section Table:
+      <h3>Section Table Columns</h3>
+      You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to
+      a column title. There are eight columns in the Section Table:
 
       <ul>
         <li><b>System Name</b> - The system name is assigned to the

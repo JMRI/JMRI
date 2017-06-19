@@ -33,6 +33,6 @@ public class VirtualSignalHeadTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadTest.class.getName());
 
 }

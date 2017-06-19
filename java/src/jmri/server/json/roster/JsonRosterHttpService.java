@@ -86,7 +86,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:
@@ -99,7 +99,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
     }
 
-    public JsonNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) {
+    public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
             group = null;
@@ -203,7 +203,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         return root;
     }
 
-    public JsonNode getRosterGroups(Locale locale) throws JsonException {
+    public ArrayNode getRosterGroups(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
         for (String name : Roster.getDefault().getRosterGroupList()) {
@@ -213,12 +213,12 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     public JsonNode getRosterGroup(Locale locale, String name) throws JsonException {
-        int size = Roster.getDefault().getEntriesInGroup(name).size();
-        if (size != 0 || name == null || name.isEmpty() || name.equals(Roster.ALLENTRIES)) {
+        if (name.equals(Roster.ALLENTRIES) || Roster.getDefault().getRosterGroupList().contains(name)) {
+            int size = Roster.getDefault().getEntriesInGroup(name).size();
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, JsonRoster.ROSTER_GROUP);
             ObjectNode data = root.putObject(DATA);
-            data.put(NAME, (name == null || name.isEmpty()) ? Roster.AllEntries(locale) : name);
+            data.put(NAME, name.isEmpty() ? Roster.AllEntries(locale) : name);
             data.put(LENGTH, size);
             return root;
         } else {

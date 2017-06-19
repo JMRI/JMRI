@@ -43,25 +43,25 @@ public class SerialLightManager extends AbstractLightManager {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = SerialAddress.getNodeAddressFromSystemName(systemName);
+        nAddress = _memo.getNodeAddressFromSystemName(systemName);
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = SerialAddress.getBitFromSystemName(systemName);
+        int bitNum = _memo.getBitFromSystemName(systemName);
         if (bitNum == 0) {
             return (null);
         }
         String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
+        conflict = _memo.isOutputBitFree(nAddress, bitNum);
         if (!conflict.equals("")) {
             log.error("Assignment conflict with " + conflict + ".  Light not created.");
             notifyLightCreationError(conflict, bitNum);
             return (null);
         }
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
+        if (_memo.validSystemNameFormat(systemName, 'L')) {
             lgt = new SerialLight(systemName, userName,_memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L',_memo.getTrafficController())) {
+            if (!_memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -87,7 +87,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L'));
+        return _memo.validSystemNameFormat(systemName, 'L');
     }
 
     /**
@@ -97,7 +97,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L',_memo.getTrafficController()));
+        return _memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController());
     }
 
     /**
@@ -108,7 +108,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return _memo.normalizeSystemName(systemName);
     }
 
     /**
@@ -119,16 +119,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName));
-    }
-
-    /**
-     * Allow access to SerialLightManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-        return null;
+        return _memo.convertSystemNameToAlternate(systemName);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());

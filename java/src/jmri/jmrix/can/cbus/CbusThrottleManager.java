@@ -170,6 +170,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     case CbusConstants.ERR_SESSION_CANCELLED:
                         errStr = "Throttle session cancelled for loco ";
                         break;
+                    default:
+                        log.warn("Unhandled error code: {}", errCode);
+                        break;
                 }
 
                 log.debug("Throttle manager received ERR " + errStr);

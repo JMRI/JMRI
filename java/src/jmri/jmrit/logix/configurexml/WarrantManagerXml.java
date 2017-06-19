@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.SCWarrant;
+import jmri.jmrit.logix.SpeedUtil;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -49,7 +50,7 @@ public class WarrantManagerXml //extends XmlFile
             Warrant warrant = manager.getBySystemName(sname);
             String uname = warrant.getUserName();
             if (log.isDebugEnabled())
-                log.debug("Warrant: sysName= "+sname+", userName= "+uname);
+                log.debug("Warrant: sysName= {}, userName= {}", sname, uname);
             Element elem = new Element("warrant");
             elem.setAttribute("systemName", sname);
             if (uname==null) uname = "";
@@ -99,11 +100,12 @@ public class WarrantManagerXml //extends XmlFile
 
     static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
-        String str = warrant.getTrainId();
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
+        String str = speedUtil.getTrainId();
         if (str==null) str = "";
         elem.setAttribute("trainId", str);
 
-        DccLocoAddress addr = warrant.getDccAddress();
+        DccLocoAddress addr = speedUtil.getDccAddress();
         if (addr != null) {
             elem.setAttribute("dccAddress", ""+addr.getNumber());
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
@@ -163,8 +165,11 @@ public class WarrantManagerXml //extends XmlFile
         if (str==null) str = "";
         elem.setAttribute("value", str);
 
-        str = command.getBlockName();
-        if (str==null) str = "";
+        str = command.getBeanSystemName();
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no bean name! {}", command);
+        }
         elem.setAttribute("block", str);
 
         return elem;
@@ -180,11 +185,11 @@ public class WarrantManagerXml //extends XmlFile
         }
         
         List<Element> warrantList = shared.getChildren("warrant");
-        if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
+        if (log.isDebugEnabled()) log.debug("Found {} Warrant objects", warrantList.size());
         for (int i=0; i<warrantList.size(); i++) {
             Element elem = warrantList.get(i);
             if (elem.getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+elem+" "+elem.getAttributes());
+                log.warn("unexpected null for systemName in elem {}", elem);
                 break;
             }
             String sysName = null;
@@ -196,13 +201,13 @@ public class WarrantManagerXml //extends XmlFile
                 userName = elem.getAttribute("userName").getValue();
             
             boolean SCWa = true;
-            log.debug("loading warrant "+sysName);
+            log.debug("loading warrant {}", sysName);
             Attribute wType = elem.getAttribute("wtype");
             if (wType == null) {
-                log.debug("wtype is null for "+sysName);
+                log.debug("wtype is null for {}", sysName);
                 SCWa = false;
             } else if (!wType.getValue().equals("SC")) {
-                log.debug("wtype is "+wType.getValue()+" for "+sysName);
+                log.debug("wtype is {} for {}", wType.getValue(), sysName);
                 SCWa = false;
             }
             
@@ -218,7 +223,7 @@ public class WarrantManagerXml //extends XmlFile
 
             Warrant warrant = manager.createNewWarrant(sysName, userName, SCWa, timeToPlatform);
             if (warrant==null) {
-                log.info("Warrant \""+sysName+"("+userName+")\" previously loaded. This version not loaded.");
+                log.info("Warrant \"{}\" (userName={}) previously loaded. This version not loaded.", sysName, userName);
                 continue;
             }
             if (SCWa) {
@@ -283,18 +288,19 @@ public class WarrantManagerXml //extends XmlFile
     }
 
     static void loadTrain(Element elem, Warrant warrant) {
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
-            warrant.setTrainId(elem.getAttribute("trainId").getValue());
+            speedUtil.setTrainId(elem.getAttribute("trainId").getValue());
         }
         if (elem.getAttribute("dccAddress") != null) {
             int address = 0;
             try {
                address = elem.getAttribute("dccAddress").getIntValue();
             } catch (org.jdom2.DataConversionException dce) {
-                log.error(dce.toString()+ " for dccAddress in Warrant "+warrant.getDisplayName());
+                log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
             }
             String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
-            warrant.setDccAddress(addr);
+            speedUtil.setDccAddress(addr);
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
@@ -314,17 +320,17 @@ public class WarrantManagerXml //extends XmlFile
 
         OBlock block = null;
         List<Element> blocks = elem.getChildren("block");
-        if (blocks.size()>1) log.error("More than one block present: "+blocks.size());
+        if (blocks.size()>1) log.error("More than one block present: {}", blocks.size());
         if (blocks.size()>0) {
             // sensor
             String name = blocks.get(0).getAttribute("systemName").getValue();
             try {
                 block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
             } catch (IllegalArgumentException ex) {
-                log.error("Unknown Block \""+name+"\" is null in BlockOrder.");
+                log.error("Unknown Block \"{}\" is null in BlockOrder.", name);
                 return null;
             }
-            if (log.isDebugEnabled()) log.debug("Load Block "+name+".");
+            if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
         } else {
             log.error("Null BlockOrder element");
             return null;
@@ -356,7 +362,7 @@ public class WarrantManagerXml //extends XmlFile
         Attribute attr = elem.getAttribute("command");
         String command = null;
         if (attr != null)
-            command =attr.getValue();
+            command = attr.getValue();
 
         attr = elem.getAttribute("value");
         String value = null;
@@ -367,7 +373,7 @@ public class WarrantManagerXml //extends XmlFile
         String block = null;
         if (attr != null)
             block =attr.getValue();
-
+        
         return new ThrottleSetting(time, command, value, block);
     }
     

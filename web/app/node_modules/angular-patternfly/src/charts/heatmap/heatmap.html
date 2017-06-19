@@ -1,0 +1,9 @@
+<div class="heatmap-pf-container">
+  <h3>{{chartTitle}}</h3>
+  <div class="heatmap-container" ng-style="containerStyles">
+    <svg class="heatmap-pf-svg"></svg>
+  </div>
+  <div pf-empty-chart ng-if="chartDataAvailable === false" chart-height="height"></div>
+  <div ng-if="!loadingDone" class="spinner spinner-lg loading"></div>
+  <div ng-if="showLegend" pf-heatmap-legend legend="legendLabels" legend-colors="heatmapColorPattern"></div>
+</div>

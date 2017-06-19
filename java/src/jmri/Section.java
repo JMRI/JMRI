@@ -98,8 +98,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008,2010
  */
-public class Section extends AbstractNamedBean
-        implements java.io.Serializable {
+public class Section extends AbstractNamedBean {
 
     /**
      * The value of {@link #getState()} if section state is unknown.

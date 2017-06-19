@@ -11,12 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
-    }
+    public SerialTrafficControlScaffold() { }
 
     // override some SerialTrafficController methods for test purposes
     @Override

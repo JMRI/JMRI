@@ -8,7 +8,7 @@ Generally, we use subdirectories to hold the Git-resident versions of
 OS-specific code for Windows (.dll files) and Linux (.so files) so that we can
 separate various builds.
 
-For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit and
+For example, the intelbth.dll comes in separate versions for 32-bit and
 64-bit Windows, but the files have the same name.  We store them in separate
 subdirectories under windows/, and let the installer sort them out.
 
@@ -18,13 +18,19 @@ macOS binaries are treated slightly differently, see the README file there.
 
 #### Updates
 
-If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
+If you make a change in this directory (add/change/remove a file), please make
+corresponding changes in the control files that are used for various JMRI
+development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
-Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
+Note that Windows installers don't necessarily remove existing library versions.
+(See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
+on this)  Until that's changed, if you remove a library from here that really
+needs to _not_ be in user installs, you need to add an explicit delete to the
+scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
 If the specific library being added or updated is not published to
 [Maven Central](http://maven.org) by the upstream provider, run the following
@@ -43,9 +49,6 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ##### vecmath-1.5.2.jar
 - from Java3D 1.5.2
 - from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
-
-##### Serialio.jar
-- from <http://serialio.com>
 
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
@@ -69,21 +72,18 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.12 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.12/openlcb-0.7.12.jar or the maven central repository.
+- 0.7.14 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.14/openlcb-0.7.14.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### javax.comm.properties
-- left over from javax.comm version 2.0 (minor version unknown) from Sun
+##### purejavacomm-1.0.1.jar
+- version 1.0.1
+- from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 
-##### RXTXcomm.jar, librxtxSerial.jnilib
-- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
-- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
-- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-- For MacOS X:
-    macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
-    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
+##### jna-4.2.2.jar
+- version 4.2.2
+- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
 
 ##### security.policy
 - (JMRI file)
@@ -93,11 +93,11 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar
-- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
+- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
 - version 1.1
 - from <jdom.org>
 
-##### jdom-2.0.5.jar               
+##### jdom-2.0.5.jar
 - version 2.0.5
 - from <jdom.org>
 
@@ -226,9 +226,13 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
 - used in ant warnings target
 
-##### WinRegistry4-4.jar
-- Version 4.4
-- https://sourceforge.net/projects/java-registry/
+##### jna-4.4.0.jar
+- Java Native Access library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
+
+##### jna-platform-4.4.0.jar
+- Java Native Access platform-specific utilities library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
 ##### xAPlib.jar
 - xAP automation protocol support
@@ -289,7 +293,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ## Older, no longer present:
 
-##### crimson.jar             
+##### crimson.jar
 - version 1.1.3
 - from <http://xml.apache.org/crimson/>
 - No longer used as of JMRI 2.7.6
@@ -304,3 +308,16 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### servlet.jar:
 - jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
+
+##### RXTXcomm.jar, librxtxSerial.jnilib
+- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
+- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
+- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
+- For MacOS X:
+    macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
+    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
+- No longer used as of JMRI 4.7.X
+
+##### Serialio.jar
+- from <http://serialio.com>
+- No longer uses as of JMRI 4.7.X

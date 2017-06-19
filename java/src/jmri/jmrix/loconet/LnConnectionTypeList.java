@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
+ * Returns a list of valid LocoNet Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

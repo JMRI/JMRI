@@ -238,6 +238,9 @@ public class RailComTableAction extends AbstractTableAction {
                         return t.getRoutingNo();
                     case DELETECOL:  //
                         return Bundle.getMessage("ButtonDelete");
+                    default:
+                        // fall through
+                        break;
                 }
                 return null;
             }

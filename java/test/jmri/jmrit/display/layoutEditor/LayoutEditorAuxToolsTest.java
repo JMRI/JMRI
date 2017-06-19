@@ -11,15 +11,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of LayoutEditorAuxTools
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorAuxToolsTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditorAuxTools t = new LayoutEditorAuxTools(new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        LayoutEditorAuxTools t = new LayoutEditorAuxTools(e);
         Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // from here down is testing infrastructure

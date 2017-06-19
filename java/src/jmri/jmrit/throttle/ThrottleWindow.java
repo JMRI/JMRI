@@ -47,6 +47,7 @@ public class ThrottleWindow extends JmriJFrame {
     private JCheckBoxMenuItem viewControlPanel;
     private JCheckBoxMenuItem viewFunctionPanel;
     private JCheckBoxMenuItem viewAddressPanel;
+    private JCheckBoxMenuItem viewSpeedPanel;
     private JMenuItem viewAllButtons;
     private JMenuItem fileMenuSave;
     private JMenuItem editMenuExportRoster;
@@ -138,10 +139,12 @@ public class ThrottleWindow extends JmriJFrame {
         viewAddressPanel.setEnabled(isEditMode);
         viewControlPanel.setEnabled(isEditMode);
         viewFunctionPanel.setEnabled(isEditMode);
+        viewSpeedPanel.setEnabled(isEditMode);
         if (isEditMode) {
             viewAddressPanel.setSelected(getCurrentThrottleFrame().getAddressPanel().isVisible());
             viewControlPanel.setSelected(getCurrentThrottleFrame().getControlPanel().isVisible());
             viewFunctionPanel.setSelected(getCurrentThrottleFrame().getFunctionPanel().isVisible());
+            viewSpeedPanel.setSelected(getCurrentThrottleFrame().getSpeedPanel().isVisible());
         }
         fileMenuSave.setEnabled(getCurrentThrottleFrame().getLastUsedSaveFile() != null || getCurrentThrottleFrame().getRosterEntry() != null);
         editMenuExportRoster.setEnabled(getCurrentThrottleFrame().getRosterEntry() != null);
@@ -395,6 +398,15 @@ public class ThrottleWindow extends JmriJFrame {
                 getCurrentThrottleFrame().getFunctionPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
+        viewSpeedPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewSpeedPanel"));
+        viewSpeedPanel.setSelected(false);
+        viewSpeedPanel.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getCurrentThrottleFrame().getSpeedPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
 
         viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
@@ -429,6 +441,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewMenu.add(viewAddressPanel);
         viewMenu.add(viewControlPanel);
         viewMenu.add(viewFunctionPanel);
+        viewMenu.add(viewSpeedPanel);
         viewMenu.addSeparator();
         viewMenu.add(viewAllButtons);
         viewMenu.add(makeAllComponentsInBounds);
@@ -544,6 +557,10 @@ public class ThrottleWindow extends JmriJFrame {
 
     public JCheckBoxMenuItem getViewAddressPanel() {
         return viewAddressPanel;
+    }
+
+    public JCheckBoxMenuItem getViewSpeedPanel() {
+        return viewSpeedPanel;
     }
 
     public ThrottleFrame getCurrentThrottleFrame() {

@@ -75,6 +75,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void initComponents(Route route, Train train) {
         _train = train; // assign route to this train
+        if (_train != null) {
+            _train.addPropertyChangeListener(this);
+        }
         initComponents(route);
     }
 
@@ -97,7 +100,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             routeName = _route.getName();
             routeNameTextField.setText(routeName);
             commentTextField.setText(_route.getComment());
-            enableButtons(true);
+            enableButtons(_train == null || !_train.isBuilt()); // do not allow user to modify a built train
+            addRouteButton.setEnabled(false); // override and disable
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
             enableButtons(false);
@@ -321,7 +325,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         Route route = routeManager.newRoute(routeNameTextField.getText());
         routeModel.initTable(this, routeTable, route);
         _route = route;
-        // enable checkboxes
         enableButtons(true);
         // assign route to a train?
         if (_train != null) {
@@ -392,6 +395,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(routeTable);
         });
+        if (_train != null) {
+            _train.removePropertyChangeListener(this);
+        }
         routeModel.dispose();
         super.dispose();
     }
@@ -420,6 +426,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateComboBoxes();
+        }
+        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+            enableButtons(!_train.isBuilt()); // do not allow user to modify a built train
+            addRouteButton.setEnabled(false); // override and disable
         }
     }
 

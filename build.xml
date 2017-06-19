@@ -158,8 +158,7 @@
          packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/RXTXcomm.jar"/>
-        <pathelement location="${libdir}/Serialio.jar"/>
+        <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
         <pathelement location="${libdir}/ch.ntb.usb.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -179,7 +178,8 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
+        <pathelement location="${libdir}/jna-4.4.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.8.5.jar"/>
@@ -259,6 +259,9 @@
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
+
+    <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
+    <property name="purejavacomm.loglevel" value="0"/>
 
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
@@ -352,7 +355,6 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
-
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
@@ -372,6 +374,17 @@
             </not>
           </condition>
         </fail>
+        <!-- create a URL-encoded version -->
+        <loadresource property="release.version-encoded-string">
+          <propertyresource name="release.version-string"/>
+          <filterchain>
+            <tokenfilter>
+              <filetokenizer/>
+              <replaceregex flags="g" pattern="\+" replace="%2B" />
+            </tokenfilter>
+          </filterchain>
+        </loadresource>
+        <echo message="${release.version-encoded-string}" />
     </target>
 
     <target name="realclean"
@@ -537,6 +550,7 @@
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
                 <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+                <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
         </sequential>
     </macrodef>
@@ -578,7 +592,6 @@
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
         </javac>
     </target>
-
 
     <!-- Note if modifying the debug target, please be sure to up date the -->
     <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
@@ -820,6 +833,7 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
             <!-- <jvmarg value="-verbose"/> -->
@@ -851,6 +865,7 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
 
             <jvmarg value="-Xdebug"/>
             <jvmarg value="-Xrunjdwp:transport=dt_socket,server=${jdpa.server},suspend=${jdpa.suspend},address=${jpda.address}"/>
@@ -1231,7 +1246,7 @@
           <html destdir="${coveragetarget}" />
        </jacoco:report>
     </target>
-    
+
     <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
@@ -1247,7 +1262,7 @@
           </structure>
 
           <check>
-              <rule> 
+              <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
@@ -1367,7 +1382,7 @@
                 <formatter type="xml"/>
             </test>
         </junit>
-        
+
         </jacoco:coverage>
     </target>
 
@@ -1405,7 +1420,7 @@
           </structure>
 
           <check>
-              <rule> 
+              <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
@@ -1431,7 +1446,7 @@
           </structure>
 
           <check>
-              <rule> 
+              <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
@@ -1491,7 +1506,7 @@
              index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
           <manifest>
             <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
@@ -1560,7 +1575,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2750"/><!-- change from default 100 warnings -->
+            <arg value="2350"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1591,7 +1606,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
@@ -1627,7 +1642,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2750"/><!-- change from default 100 warnings -->
+            <arg value="2350"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1658,14 +1673,14 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
+            <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
-            <link href="http://http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
+            <link href="http://static.javadoc.io/org.openlcb/openlcb/0.7.11"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
@@ -1739,7 +1754,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.5"/>
@@ -1873,10 +1888,10 @@
             <compilerarg value="-implicit:class"/>
         </javac>
     </presetdef>
-    
+
     <target name="ci-checker-framework"
                 description="Check java/src tree for null pointer dereferences; only compiles non-compiles classes, so do 'clean' first to do all"
-                depends="init, copyfiles, compile-generated-source"> 
+                depends="init, copyfiles, compile-generated-source">
           <!-- use jsr308.javac instead of javac -->
           <jsr308.javac
                srcdir="${source}"
@@ -1891,18 +1906,18 @@
             <compilerarg line="-proc:only"/> <!-- just check, don't generate .class files -->
             <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/> <!-- don't check uses of library methods: -->
             <compilerarg line="-Xmaxerrs 5000"/>
-            
+
             <!-- select the check to run -->
             <compilerarg line="-processor NullnessChecker"/>
             <!-- compilerarg line="-processor org.checkerframework.checker.lock.LockChecker"/-->
             <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
-            
+
             <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
           </jsr308.javac>
     </target>
 
 <!--  End for checker framework -->
-    
+
 <!-- targets to support the creation & packaging of the distributions -->
 
   <!-- This depends list assumes that one can create each of these packages on the current host.
@@ -1938,13 +1953,16 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.windows}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -1977,7 +1995,7 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
@@ -1985,6 +2003,9 @@
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -2027,11 +2048,11 @@
               failonerror="true">
             <arg value="-t 1200"/>
             <arg value="-O signing-wget.log"/>
-            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-string}+unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
     </target>
-            
+
     <target name="package-linux"
             description="create a Linux release package"
             depends="get-version-string, jar, startup-scripts-linux">
@@ -2040,7 +2061,6 @@
         <!-- do these first, so we can then make everything in the new directory executable -->
         <copy todir="${dist.linux}/JMRI">
             <fileset dir="${dist.scripts}"/>
-            <fileset file="${scriptdir}/RXTXuninstall.sh"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.linux}/JMRI"/>
@@ -2050,11 +2070,14 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">
@@ -2077,7 +2100,6 @@
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/InstallTest"/>
-                <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
             </tarfileset>
             <tarfileset  dir="${dist.linux}" filemode="755">
@@ -2085,7 +2107,6 @@
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
                 <include name="JMRI/InstallTest"/>
-                <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
             </tarfileset>
         </tar>
@@ -2253,7 +2274,7 @@
         </parallel>
     </target>
 
-	
+
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />

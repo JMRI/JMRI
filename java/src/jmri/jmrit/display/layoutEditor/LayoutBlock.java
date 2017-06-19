@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
@@ -199,7 +200,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
-    // this should only be used for debugging…
+    // this should only be used for debugging...
     public String toString() {
         return "LayoutBlock " + getDisplayName();
     }
@@ -901,9 +902,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void blockEditDonePressed(ActionEvent a) {
         boolean needsRedraw = false;
         //check if Sensor changed
-        if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
+        String newName = NamedBean.normalizeUserName(sensorNameField.getText());
+        if (!(getOccupancySensorName()).equals(newName)) {
             //sensor has changed
-            String newName = sensorNameField.getText().trim();
             if (newName.length() == 0) {
                 setOccupancySensorName(newName);
                 sensorNameField.setText("");
@@ -975,9 +976,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         //check if Memory changed
-        if (!memoryName.equals(memoryNameField.getText().trim())) {
+
+        newName = NamedBean.normalizeUserName(memoryNameField.getText());
+        if (!memoryName.equals(newName)) {
             //memory has changed
-            String newName = memoryNameField.getText().trim();
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
             if (getMemory() == null) {
                 //invalid memory entered
@@ -1120,9 +1122,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         needsRedraw = true;
                     }
                     //check if Memory changed
-                    if (!memoryName.equals(memoryNameField.getText().trim())) {
+                    String newName = NamedBean.normalizeUserName(memoryNameField.getText());
+                    if (!memoryName.equals(newName)) {
                         //memory has changed
-                        String newName = memoryNameField.getText().trim();
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
                         if (getMemory() == null) {
                             //invalid memory entered
@@ -1606,7 +1608,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (newPacketFlow != TXONLY) {
                 Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
                 //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " valid routes returned as " + neighRoute);
-                //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " " + neighRoute);
                 if (neighRoute == null) {
                     log.info("Null route so will bomb out");
                     return false;
@@ -2803,6 +2804,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             case NONE: {
                 return "None routing updates will be passed";
             }
+            default:
+                log.warn("Unhandled packet flow value: {}", value);
+                break;
         }
         return "Unknown";
     }
@@ -3132,7 +3136,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        
+
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
@@ -3204,22 +3208,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
 
             if (rtr.size() == 0) {
-                log.info("From {}, no routes returned for getRouteByNeighbour({})",
+                log.debug("From {}, no routes returned for getRouteByNeighbour({})",
                         this.getDisplayName(),
                         nxtBlock.getDisplayName());
-
                 return null;
             }
 
             for (Routes rt : rtr) {
-                log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
-                        + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
-                        + " required dest " + dstBlock.getDisplayName());
                 if (rt.getDestBlock() == dstBlock) {
-                    log.trace("   From " + this.getDisplayName() + " matched");
+                    log.debug("From " + this.getDisplayName() + ", found dest " + dstBlock.getDisplayName() + ".");
                     return rt;
                 }
             }
+            log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
         } else {
             log.warn("getValidRoute({}, {}",
                 (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",

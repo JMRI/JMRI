@@ -43,7 +43,8 @@ import org.junit.runners.Suite;
    SprogCSThrottleTest.class,
    SprogConstantsTest.class,
    SprogReplyTest.class,
-   jmri.jmrix.sprog.update.PackageTest.class
+   jmri.jmrix.sprog.update.PackageTest.class,
+   SprogSlotTest.class
 })
 public class PackageTest {
 }

@@ -189,9 +189,11 @@ public class JsonUtil {
             data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
             data.put(JSON.DESCRIPTION, train.getDescription());
             data.put(COMMENT, train.getComment());
-            data.put(ROUTE, train.getRoute().getName());
-            data.put(JSON.ROUTE_ID, train.getRoute().getId());
-            data.put(JsonOperations.LOCATIONS, this.getRouteLocationsForTrain(locale, train));
+            if (train.getRoute() != null) {
+                data.put(ROUTE, train.getRoute().getName());
+                data.put(JSON.ROUTE_ID, train.getRoute().getId());
+                data.put(JsonOperations.LOCATIONS, this.getRouteLocationsForTrain(locale, train));
+            }
             data.put(JSON.ENGINES, this.getEnginesForTrain(locale, train));
             data.put(JsonOperations.CARS, this.getCarsForTrain(locale, train));
             if (train.getTrainDepartsName() != null) {
@@ -219,7 +221,7 @@ public class JsonUtil {
         return root;
     }
 
-    public JsonNode getTrains(Locale locale) throws JsonException {
+    public ArrayNode getTrains(Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (Train train : TrainManager.instance().getTrainsByNameList()) {
             root.add(getTrain(locale, train.getId()));

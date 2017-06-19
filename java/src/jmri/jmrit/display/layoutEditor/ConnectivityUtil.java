@@ -656,6 +656,9 @@ public class ConnectivityUtil {
                                 tr = null;
                             }
                             break;
+                        default:
+                            log.warn("Unhandled crossover type: {}", cType);
+                            break;
                     }
                 } else if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
                         || (tType == LayoutTurnout.WYE_TURNOUT)) {
@@ -2350,7 +2353,7 @@ public class ConnectivityUtil {
         Object curObj = ob;
 
         if (logInfoFor_trackSegmentLeadsTo) {
-            log.info("•trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
@@ -2561,7 +2564,7 @@ public class ConnectivityUtil {
                             }
                         } else {
                             if (conType == LayoutTrack.TURNOUT_A) {
-                                // if the connect B or C are in the next block…
+                                // if the connect B or C are in the next block...
                                 if ((((TrackSegment) lt.getConnectB()).getLayoutBlock() == nlb)
                                         || (((TrackSegment) lt.getConnectC()).getLayoutBlock() == nlb)) {
                                     return true;    //(yes!) done!

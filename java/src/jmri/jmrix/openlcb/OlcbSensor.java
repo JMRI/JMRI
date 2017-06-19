@@ -1,14 +1,19 @@
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
+
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -26,6 +31,8 @@ public class OlcbSensor extends AbstractSensor {
 
     VersionedValueListener<Boolean> sensorListener;
     BitProducerConsumer pc;
+    EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
+    EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
 
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
@@ -51,8 +58,7 @@ public class OlcbSensor extends AbstractSensor {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(), new
-                        EventID("00.00.00.00.00.00.00.00"), false);
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, false);
                 timer = new Timer(true);
                 sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
                     @Override
@@ -79,6 +85,39 @@ public class OlcbSensor extends AbstractSensor {
             default:
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
+        }
+        activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
+        if (addrInactive != null) {
+            inactiveEventTableEntryHolder = iface.getEventTable().addEvent(addrInactive.toEventID(), getEventName(false));
+        }
+    }
+
+    /**
+     * Computes the display name of a given event to be entered into the Event Table.
+     * @param isActive true for sensor active, false for inactive.
+     * @return user-visible string to represent this event.
+     */
+    private String getEventName(boolean isActive) {
+        String name = mUserName;
+        if (name == null) name = mSystemName;
+        String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
+        return Bundle.getMessage(msgName, name);
+    }
+
+    /**
+     * Updates event table entries when the user name changes.
+     * @param s new user name
+     * @throws NamedBean.BadUserNameException see {@link NamedBean}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
+        super.setUserName(s);
+        if (activeEventTableEntryHolder != null) {
+            activeEventTableEntryHolder.getEntry().updateDescription(getEventName(true));
+        }
+        if (inactiveEventTableEntryHolder != null) {
+            inactiveEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
         }
     }
 

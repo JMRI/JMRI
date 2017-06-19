@@ -25,6 +25,7 @@ public class SystemInfoFrameTest {
 
         SystemInfoFrame f = new SystemInfoFrame(memo);
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J

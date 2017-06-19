@@ -49,7 +49,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public void setSort(int sort) {
         _sort = sort;
         updateList();
-        fireTableStructureChanged();
+        //fireTableStructureChanged();
         initTable();
         if (_table.getRowSorter() != null) {
             _table.getRowSorter().setSortKeys(null);
@@ -141,6 +141,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return Bundle.getMessage("Name");
             case DESCRIPTIONCOLUMN:
                 return Bundle.getMessage("Description");
+            default:
+                // fall out
+                break;
         }
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {
@@ -158,6 +161,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return String.class;
             case DESCRIPTIONCOLUMN:
                 return String.class;
+            default:
+                // fall out
+                break;
         }
         if (col >= getFixedColumn() && col < getColumnCount()) {
             return Boolean.class;
@@ -197,6 +203,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return train.getIconName();
             case DESCRIPTIONCOLUMN:
                 return train.getDescription();
+            default:
+                // fall out
+                break;
         }
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {
@@ -237,7 +246,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             // update property change
             removePropertyChangeTrainSchedules();
             addPropertyChangeTrainSchedules();
-            fireTableStructureChanged();
+            //fireTableStructureChanged();
             initTable();
         } else if (e.getPropertyName().equals(TrainSchedule.SCHEDULE_CHANGED_PROPERTY)) {
             fireTableDataChanged();

@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.roco.z21.swing.Bundle {
 
-    private final static String name = "jmri.jmrix.roco.z21.swing.configtool.Z21ConfigBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrix.roco.z21.swing.configtool.Z21ConfigBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "LocoNetOverTcp LbServer";
+        return Bundle.getMessage("ConnectionTitle");
     }
 
     public boolean isOptList1Advanced() {

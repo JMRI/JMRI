@@ -50,9 +50,12 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("logix system name is " + sname);
                 Logix x = tm.getBySystemName(sname);
                 boolean enabled = x.getEnabled();
-                Element elem = new Element("logix")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("logix");
                 elem.addContent(new Element("systemName").addContent(sname));
+
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                if (x.getUserName()!=null && !x.getUserName().equals("")) elem.setAttribute("userName", x.getUserName());
 
                 // store common part
                 storeCommon(x, elem);
@@ -136,12 +139,9 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 break;
             }
 
-            String userName = null;
-            //boolean enabled = true;
+            String userName = getUserName(logixList.get(i));
+
             String yesno = "";
-            if (logixList.get(i).getAttribute("userName") != null) {
-                userName = logixList.get(i).getAttribute("userName").getValue();
-            }
             if (logixList.get(i).getAttribute("enabled") != null) {
                 yesno = logixList.get(i).getAttribute("enabled").getValue();
             }
@@ -149,6 +149,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("create logix: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
+            
             Logix x = tm.createNewLogix(sysName, userName);
             if (x != null) {
                 // load common part

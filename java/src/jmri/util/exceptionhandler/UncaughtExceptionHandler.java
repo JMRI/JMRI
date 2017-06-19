@@ -1,7 +1,9 @@
 package jmri.util.exceptionhandler;
 
+import java.awt.GraphicsEnvironment;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,16 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         }
 
         log.error("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler", e);
+
+        if (e instanceof Error) {
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("UnrecoverableErrorMessage", generateStackTrace(e)),
+                        Bundle.getMessage("UnrecoverableErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            System.exit(126);
+        }
     }
 
     static protected String generateStackTrace(Throwable e) {

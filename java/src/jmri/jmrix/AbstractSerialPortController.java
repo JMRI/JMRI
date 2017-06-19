@@ -1,10 +1,12 @@
 package jmri.jmrix;
 
-import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -25,10 +27,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-busy case
+     * Standard error handling for port-busy case.
+     * @param p the exception being handled, if additional information from it is desired
+     * @param portName name of the port being accessed
+     * @param log where to log a status message
+     * @return Localized message, in case separate presentation to user is desired
      */
     @Override
-    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
+    public String handlePortBusy(PortInUseException p, String portName, Logger log) {
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -39,7 +45,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Standard error handling for port-not-found case
      */
-    public String handlePortNotFound(gnu.io.NoSuchPortException p, String portName, Logger log) {
+    public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port " + portName + " not found");
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -54,6 +60,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     @Override
     public void setPort(String port) {
+        log.debug("Setting port to "+port);
         mPort = port;
     }
     protected String mPort = null;
@@ -107,10 +114,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Convert a baud rate string to a number.
+     * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
      *
      * Uses the validBaudNumber and validBaudRates methods to do this.
      *
+     * @param currentBaudRate a rate from validBaudRates
      * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {

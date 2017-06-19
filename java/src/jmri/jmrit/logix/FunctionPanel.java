@@ -195,6 +195,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28(isSet);
                 break;
+            default:
         }
     }
 
@@ -304,6 +305,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28Momentary(!isLockable);
                 break;
+            default:
         }
     }
 

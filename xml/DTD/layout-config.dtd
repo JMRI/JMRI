@@ -19,7 +19,7 @@
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 			preferences | turnouts | sensors | lights | blocks | signals | routes |
-			securityelements | aspectgenerator | 
+			securityelements | aspectgenerator |
 			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | blocks | reporters |
 			memories | memorys | timebase |
@@ -40,17 +40,17 @@
 <!ELEMENT node (parameter*)>
   <!ATTLIST node name CDATA #REQUIRED>
 
-<!ELEMENT parameter (#PCDATA)>  <!-- Character content is parameter value -->
+<!ELEMENT parameter (#PCDATA)>	<!-- Character content is parameter value -->
   <!ATTLIST parameter name CDATA #REQUIRED>
 
-  
+
 <!--  Gui section identifies GUI info, e.g. look&feel info-->
 <!ELEMENT gui EMPTY>
   <!ATTLIST gui class CDATA #REQUIRED>
   <!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
-  <!ATTLIST gui LocaleLanguage CDATA #IMPLIED>  <!-- default means use system default -->
-  <!ATTLIST gui LocaleCountry CDATA #IMPLIED>  <!-- default means use system default -->
-  <!ATTLIST gui LocaleVariant CDATA #IMPLIED>  <!-- default means use system default -->
+  <!ATTLIST gui LocaleLanguage CDATA #IMPLIED>	<!-- default means use system default -->
+  <!ATTLIST gui LocaleCountry CDATA #IMPLIED>   <!-- default means use system default -->
+  <!ATTLIST gui LocaleVariant CDATA #IMPLIED>   <!-- default means use system default -->
 
 <!--  Application section identifies programmer options -->
 <!ELEMENT programmer EMPTY>
@@ -77,75 +77,75 @@
   <!ATTLIST sensors class		CDATA #REQUIRED>
 
   <!ELEMENT sensor EMPTY >
-    <!ATTLIST sensor systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST sensor userName		CDATA #IMPLIED>
+	<!ATTLIST sensor systemName CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST sensor userName	CDATA #IMPLIED>
     <!ATTLIST sensor inverted		(true | false ) "false">
 
 <!ELEMENT turnouts (operations?, turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
 
   <!ELEMENT operations (operation*) >
-    <!ATTLIST operations automate	CDATA #REQUIRED> 
+	<!ATTLIST operations automate	CDATA #REQUIRED>
 
 	  <!ELEMENT operation EMPTY >
-	    <!ATTLIST operation name	CDATA #REQUIRED>  
-	    <!ATTLIST operation class		CDATA #REQUIRED>
-	    <!ATTLIST operation interval		CDATA #IMPLIED>
-	    <!ATTLIST operation maxtries		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter1		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter2		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter3		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter4		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter5		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter6		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter7		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter8		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter9		CDATA #IMPLIED>
-	    <!ATTLIST operation parameter10		CDATA #IMPLIED>
-	
+		<!ATTLIST operation name			CDATA #REQUIRED>
+		<!ATTLIST operation class			CDATA #REQUIRED>
+		<!ATTLIST operation interval		CDATA #IMPLIED>
+		<!ATTLIST operation maxtries		CDATA #IMPLIED>
+		<!ATTLIST operation parameter1		CDATA #IMPLIED>
+		<!ATTLIST operation parameter2		CDATA #IMPLIED>
+		<!ATTLIST operation parameter3		CDATA #IMPLIED>
+		<!ATTLIST operation parameter4		CDATA #IMPLIED>
+		<!ATTLIST operation parameter5		CDATA #IMPLIED>
+		<!ATTLIST operation parameter6		CDATA #IMPLIED>
+		<!ATTLIST operation parameter7		CDATA #IMPLIED>
+		<!ATTLIST operation parameter8		CDATA #IMPLIED>
+		<!ATTLIST operation parameter9		CDATA #IMPLIED>
+		<!ATTLIST operation parameter10		CDATA #IMPLIED>
+
   <!ELEMENT turnout (operation?) >
-    <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST turnout userName		CDATA #IMPLIED>
-    <!ATTLIST turnout feedback		CDATA #IMPLIED>
-    <!ATTLIST turnout sensor1		CDATA #IMPLIED>
-    <!ATTLIST turnout sensor2		CDATA #IMPLIED>
-    <!ATTLIST turnout numBits		CDATA #IMPLIED>
-    <!ATTLIST turnout controlType	CDATA #IMPLIED>
-    <!ATTLIST turnout automate		CDATA #IMPLIED>
+	<!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST turnout userName		CDATA #IMPLIED>
+	<!ATTLIST turnout feedback		CDATA #IMPLIED>
+	<!ATTLIST turnout sensor1		CDATA #IMPLIED>
+	<!ATTLIST turnout sensor2		CDATA #IMPLIED>
+	<!ATTLIST turnout numBits		CDATA #IMPLIED>
+	<!ATTLIST turnout controlType	CDATA #IMPLIED>
+	<!ATTLIST turnout automate		CDATA #IMPLIED>
     <!ATTLIST turnout inverted		(true | false ) "false">
     <!ATTLIST turnout locked		(true | false ) "false">
-    <!ATTLIST turnout lockMode		CDATA #IMPLIED>
-    <!ATTLIST turnout decoder		CDATA #IMPLIED>
+	<!ATTLIST turnout lockMode		CDATA #IMPLIED>
+	<!ATTLIST turnout decoder		CDATA #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
 
   <!ELEMENT light EMPTY >
-    <!ATTLIST light systemName		CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST light userName		CDATA #IMPLIED>
-    <!ATTLIST light controlType		CDATA #REQUIRED>
-    <!ATTLIST light controlSensor	CDATA #IMPLIED>
-    <!ATTLIST light sensorSense		CDATA #IMPLIED>
-    <!ATTLIST light fastClockOnHour	CDATA #IMPLIED>
-    <!ATTLIST light fastClockOnMin	CDATA #IMPLIED>
-    <!ATTLIST light fastClockOffHour	CDATA #IMPLIED>
-    <!ATTLIST light fastClockOffMin	CDATA #IMPLIED>
-    <!ATTLIST light controlTurnout	CDATA #IMPLIED>
-    <!ATTLIST light turnoutState	CDATA #IMPLIED>
-    <!ATTLIST light timedControlSensor	CDATA #IMPLIED>
-    <!ATTLIST light duration		CDATA #IMPLIED>
-    <!ATTLIST light minIntensity		CDATA #IMPLIED>
-    <!ATTLIST light maxIntensity		CDATA #IMPLIED>
-    <!ATTLIST light transitionTime		CDATA #IMPLIED>
+	<!ATTLIST light systemName			CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST light userName			CDATA #IMPLIED>
+	<!ATTLIST light controlType			CDATA #REQUIRED>
+	<!ATTLIST light controlSensor		CDATA #IMPLIED>
+	<!ATTLIST light sensorSense			CDATA #IMPLIED>
+	<!ATTLIST light fastClockOnHour		CDATA #IMPLIED>
+	<!ATTLIST light fastClockOnMin		CDATA #IMPLIED>
+	<!ATTLIST light fastClockOffHour	CDATA #IMPLIED>
+	<!ATTLIST light fastClockOffMin		CDATA #IMPLIED>
+	<!ATTLIST light controlTurnout		CDATA #IMPLIED>
+	<!ATTLIST light turnoutState		CDATA #IMPLIED>
+	<!ATTLIST light timedControlSensor	CDATA #IMPLIED>
+	<!ATTLIST light duration			CDATA #IMPLIED>
+	<!ATTLIST light minIntensity		CDATA #IMPLIED>
+	<!ATTLIST light maxIntensity		CDATA #IMPLIED>
+	<!ATTLIST light transitionTime		CDATA #IMPLIED>
 
 <!ELEMENT reporters (reporter*)>
   <!ATTLIST reporters class		CDATA #REQUIRED>
 
   <!ELEMENT reporter EMPTY >
-    <!ATTLIST reporter systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST reporter userName		CDATA #IMPLIED>
+	<!ATTLIST reporter systemName	CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST reporter userName		CDATA #IMPLIED>
 
-<!ELEMENT memorys (memory*)>  
+<!ELEMENT memorys (memory*)>
   <!ATTLIST memorys class		CDATA #IMPLIED>
 <!-- now replaced by memories element, here to allow validate of old files -->
 
@@ -153,384 +153,384 @@
   <!ATTLIST memories class		CDATA #REQUIRED>
 
   <!ELEMENT memory EMPTY >
-    <!ATTLIST memory systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST memory userName		CDATA #IMPLIED>
+	<!ATTLIST memory systemName CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST memory userName	CDATA #IMPLIED>
 
 <!ELEMENT timebase EMPTY>
-  <!ATTLIST timebase class		CDATA #REQUIRED>
-  <!ATTLIST timebase time		CDATA #IMPLIED>
-  <!ATTLIST timebase run		CDATA #IMPLIED>
-  <!ATTLIST timebase rate		CDATA #IMPLIED>
-  <!ATTLIST timebase master		CDATA #IMPLIED>
-  <!ATTLIST timebase mastername		CDATA #IMPLIED>
-  <!ATTLIST timebase sync		CDATA #IMPLIED>
-  <!ATTLIST timebase correct		CDATA #IMPLIED>
-  <!ATTLIST timebase display		CDATA #IMPLIED>
-  <!ATTLIST timebase startstopped	CDATA #IMPLIED>  
-  <!ATTLIST timebase startsettime	CDATA #IMPLIED>
+  <!ATTLIST timebase class				CDATA #REQUIRED>
+  <!ATTLIST timebase time				CDATA #IMPLIED>
+  <!ATTLIST timebase run				CDATA #IMPLIED>
+  <!ATTLIST timebase rate				CDATA #IMPLIED>
+  <!ATTLIST timebase master				CDATA #IMPLIED>
+  <!ATTLIST timebase mastername			CDATA #IMPLIED>
+  <!ATTLIST timebase sync				CDATA #IMPLIED>
+  <!ATTLIST timebase correct			CDATA #IMPLIED>
+  <!ATTLIST timebase display			CDATA #IMPLIED>
+  <!ATTLIST timebase startstopped		CDATA #IMPLIED>
+  <!ATTLIST timebase startsettime		CDATA #IMPLIED>
   <!ATTLIST timebase startclockoption	CDATA #IMPLIED>
 
 <!ELEMENT signalheads (signalhead*)>
   <!ATTLIST signalheads class		CDATA #REQUIRED>
 
-  <!ELEMENT signalhead (turnout*) >     <!-- different actual types carry different contents -->
-  	<!ATTLIST signalhead class	CDATA #REQUIRED>
-    <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
-    <!ATTLIST signalhead userName	CDATA #IMPLIED>
+  <!ELEMENT signalhead (turnout*) >		<!-- different actual types carry different contents -->
+	<!ATTLIST signalhead class		CDATA #REQUIRED>
+	<!ATTLIST signalhead systemName CDATA #REQUIRED>
+	<!ATTLIST signalhead userName	CDATA #IMPLIED>
 
 <!ELEMENT routes (route*)>
   <!ATTLIST routes class		CDATA #REQUIRED>
 
   <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile*, routeScriptFile*, turnoutsAlignedSensor*) >
-    <!ATTLIST route systemName		CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST route userName		CDATA #IMPLIED>
-    <!ATTLIST route controlTurnout	CDATA #IMPLIED>
-    <!ATTLIST route controlTurnoutState	CDATA #IMPLIED>
-    <!ATTLIST route controlLockTurnout	CDATA #IMPLIED>
-    <!ATTLIST route controlLockTurnoutState	CDATA #IMPLIED>
-    <!ATTLIST route addedDelay          CDATA #IMPLIED>
+	<!ATTLIST route systemName				CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST route userName				CDATA #IMPLIED>
+	<!ATTLIST route controlTurnout			CDATA #IMPLIED>
+	<!ATTLIST route controlTurnoutState		CDATA #IMPLIED>
+	<!ATTLIST route controlLockTurnout		CDATA #IMPLIED>
+	<!ATTLIST route controlLockTurnoutState CDATA #IMPLIED>
+	<!ATTLIST route addedDelay				CDATA #IMPLIED>
 
    <!-- the following routeTurnout element is only for backward compatibility -->
    <!ELEMENT routeTurnout EMPTY >
-    <!ATTLIST routeTurnout systemName	CDATA #REQUIRED>  <!-- defines route turnout -->
-    <!ATTLIST routeTurnout state	CDATA #REQUIRED>  <!-- defines turnout set state-->
+	<!ATTLIST routeTurnout systemName	CDATA #REQUIRED>  <!-- defines route turnout -->
+	<!ATTLIST routeTurnout state		CDATA #REQUIRED>  <!-- defines turnout set state-->
 
    <!ELEMENT routeOutputTurnout EMPTY >
-    <!ATTLIST routeOutputTurnout systemName	CDATA #REQUIRED>  <!-- defines output turnout -->
-    <!ATTLIST routeOutputTurnout state	CDATA #REQUIRED>  <!-- defines output turnout set state-->
+	<!ATTLIST routeOutputTurnout systemName CDATA #REQUIRED>  <!-- defines output turnout -->
+	<!ATTLIST routeOutputTurnout state		CDATA #REQUIRED>  <!-- defines output turnout set state-->
 
    <!ELEMENT routeOutputSensor EMPTY >
-    <!ATTLIST routeOutputSensor systemName	CDATA #REQUIRED>  <!-- defines output sensor -->
-    <!ATTLIST routeOutputSensor state	CDATA #REQUIRED>  <!-- defines output sensor set state-->
+	<!ATTLIST routeOutputSensor systemName	CDATA #REQUIRED>  <!-- defines output sensor -->
+	<!ATTLIST routeOutputSensor state		CDATA #REQUIRED>  <!-- defines output sensor set state-->
 
    <!ELEMENT routeSensor EMPTY >
-    <!ATTLIST routeSensor systemName	CDATA #REQUIRED>  <!-- defines control sensor -->
+	<!ATTLIST routeSensor systemName	CDATA #REQUIRED>  <!-- defines control sensor -->
     <!ATTLIST routeSensor mode (onActive | onInactive | vetoActive | vetoInactive ) "onActive" >  <!-- defines control sensor -->
-    
+
    <!ELEMENT routeSoundFile EMPTY>
-    <!ATTLIST routeSoundFile name	CDATA #REQUIRED>  <!-- defines filename-->
-   
+	<!ATTLIST routeSoundFile name	CDATA #REQUIRED>  <!-- defines filename-->
+
    <!ELEMENT routeScriptFile EMPTY>
-    <!ATTLIST routeScriptFile name	CDATA #REQUIRED>  <!-- defines filename-->
+	<!ATTLIST routeScriptFile name	CDATA #REQUIRED>  <!-- defines filename-->
 
    <!ELEMENT turnoutsAlignedSensor EMPTY>
-    <!ATTLIST turnoutsAlignedSensor name	CDATA #REQUIRED>  <!-- defines sensor name -->
+	<!ATTLIST turnoutsAlignedSensor name	CDATA #REQUIRED>  <!-- defines sensor name -->
 
 <!ELEMENT conditionals (conditional*)>
   <!ATTLIST conditionals class		CDATA #REQUIRED>
 
   <!ELEMENT conditional (conditionalStateVariable*,conditionalAction*) >
-    <!ATTLIST conditional systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST conditional userName	CDATA #IMPLIED>
+	<!ATTLIST conditional systemName	CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST conditional userName		CDATA #IMPLIED>
 
-    <!ELEMENT conditionalStateVariable EMPTY >
-     <!ATTLIST conditionalStateVariable operator	CDATA #REQUIRED>  
-     <!ATTLIST conditionalStateVariable type	CDATA #REQUIRED>  
-     <!ATTLIST conditionalStateVariable systemName	CDATA #REQUIRED>  
-     <!ATTLIST conditionalStateVariable dataString	CDATA #REQUIRED> 
-     <!ATTLIST conditionalStateVariable num1	CDATA #REQUIRED> 
-     <!ATTLIST conditionalStateVariable num2	CDATA #REQUIRED> 
-     <!ATTLIST conditionalStateVariable triggersCalc	CDATA #REQUIRED> 
+	<!ELEMENT conditionalStateVariable EMPTY >
+	 <!ATTLIST conditionalStateVariable operator		CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable type			CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable systemName		CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable dataString		CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable num1			CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable num2			CDATA #REQUIRED>
+	 <!ATTLIST conditionalStateVariable triggersCalc	CDATA #REQUIRED>
 
-    <!ELEMENT conditionalAction EMPTY >
-     <!ATTLIST conditionalAction option	CDATA #REQUIRED>  
-     <!ATTLIST conditionalAction delay	CDATA #REQUIRED>    
-     <!ATTLIST conditionalAction type	CDATA #REQUIRED>    
-     <!ATTLIST conditionalAction systemName	CDATA #REQUIRED>    
-     <!ATTLIST conditionalAction data	CDATA #REQUIRED>     
-     <!ATTLIST conditionalAction string	CDATA #REQUIRED>     
+	<!ELEMENT conditionalAction EMPTY >
+	 <!ATTLIST conditionalAction option		CDATA #REQUIRED>
+	 <!ATTLIST conditionalAction delay		CDATA #REQUIRED>
+	 <!ATTLIST conditionalAction type		CDATA #REQUIRED>
+	 <!ATTLIST conditionalAction systemName CDATA #REQUIRED>
+	 <!ATTLIST conditionalAction data		CDATA #REQUIRED>
+	 <!ATTLIST conditionalAction string		CDATA #REQUIRED>
 
 <!ELEMENT logixs (logix*)>
   <!ATTLIST logixs class		CDATA #REQUIRED>
 
   <!ELEMENT logix (logixConditional*) >
-    <!ATTLIST logix systemName		CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST logix userName		CDATA #IMPLIED>
-    <!ATTLIST logix enabled			CDATA #IMPLIED>
+	<!ATTLIST logix systemName		CDATA #REQUIRED>  <!-- defines system type -->
+	<!ATTLIST logix userName		CDATA #IMPLIED>
+	<!ATTLIST logix enabled			CDATA #IMPLIED>
 
-    <!ELEMENT logixConditional EMPTY >
-    <!ATTLIST logixConditional systemName	CDATA #REQUIRED>  <!-- defines conditional -->
-    <!ATTLIST logixConditional order	CDATA #REQUIRED>  <!-- defines conditional order-->
+	<!ELEMENT logixConditional EMPTY >
+	<!ATTLIST logixConditional systemName	CDATA #REQUIRED>  <!-- defines conditional -->
+	<!ATTLIST logixConditional order		CDATA #REQUIRED>  <!-- defines conditional order-->
 
 <!ELEMENT layoutblocks (layoutblock*)>
   <!ATTLIST layoutblocks class		CDATA #REQUIRED>
 
   <!ELEMENT layoutblock EMPTY >
-    <!ATTLIST layoutblock systemName	CDATA #REQUIRED>  
-    <!ATTLIST layoutblock userName	CDATA #REQUIRED>
-    <!ATTLIST layoutblock trackcolor	 CDATA #REQUIRED>
-    <!ATTLIST layoutblock occupiedcolor  CDATA #REQUIRED>
-    <!ATTLIST layoutblock occupancysensor CDATA #IMPLIED>
-    <!ATTLIST layoutblock occupiedsense   CDATA #REQUIRED>
-    <!ATTLIST layoutblock memory	  CDATA #IMPLIED>
-   
+	<!ATTLIST layoutblock systemName		CDATA #REQUIRED>
+	<!ATTLIST layoutblock userName			CDATA #REQUIRED>
+	<!ATTLIST layoutblock trackcolor		CDATA #REQUIRED>
+	<!ATTLIST layoutblock occupiedcolor		CDATA #REQUIRED>
+	<!ATTLIST layoutblock occupancysensor	CDATA #IMPLIED>
+	<!ATTLIST layoutblock occupiedsense		CDATA #REQUIRED>
+	<!ATTLIST layoutblock memory			CDATA #IMPLIED>
+
 <!ELEMENT securityelements (securityelement*)>
   <!ATTLIST securityelements class		CDATA #REQUIRED>
 
   <!ELEMENT securityelement EMPTY >
-    <!ATTLIST securityelement number	CDATA #REQUIRED>  <!-- defines system type? -->
+	<!ATTLIST securityelement number	CDATA #REQUIRED>  <!-- defines system type? -->
 
 	<!-- "mode" is now obsolete, and rewritten files will not use it. It -->
 	<!-- has been replaced by the onReservation and makeReservation attributes -->
-	<!--    "head" is makeReservation "A" and onReservation "stopOpposite" -->
-	<!--    "APB" is onReservation "stopOpposite" -->
-	<!--    "ABS" is the defaults -->
-    <!ATTLIST securityelement mode       (none | ABS|APB|head) "none" >  
-    	<!-- "head" - APB headblock -->
-    <!ATTLIST securityelement onAXReservation		(none|stopOpposite|stopUnreserved) "none" >
-    <!ATTLIST securityelement onXAReservation		(none|stopOpposite|stopUnreserved) "none" >
-    <!ATTLIST securityelement makeReservation	(none|A|AB|AC|ABC|B|BC|C) "none" >
+	<!--	"head" is makeReservation "A" and onReservation "stopOpposite" -->
+	<!--	"APB" is onReservation "stopOpposite" -->
+	<!--	"ABS" is the defaults -->
+	<!ATTLIST securityelement mode		 (none | ABS|APB|head) "none" >
+		<!-- "head" - APB headblock -->
+	<!ATTLIST securityelement onAXReservation	(none|stopOpposite|stopUnreserved) "none" >
+	<!ATTLIST securityelement onXAReservation	(none|stopOpposite|stopUnreserved) "none" >
+	<!ATTLIST securityelement makeReservation	(none|A|AB|AC|ABC|B|BC|C) "none" >
 
     <!ATTLIST securityelement calculates		(yes | no ) "yes" >
-    
-        <!-- attachXleg is coded 0 for none, 1 for A, 2 for B, 4 for C -->
-    <!ATTLIST securityelement attachAnum		CDATA #IMPLIED>
-    <!ATTLIST securityelement attachAleg		CDATA #IMPLIED>
-    <!ATTLIST securityelement attachBnum		CDATA #IMPLIED>
-    <!ATTLIST securityelement attachBleg		CDATA #IMPLIED>
-    <!ATTLIST securityelement attachCnum		CDATA #IMPLIED>
-    <!ATTLIST securityelement attachCleg		CDATA #IMPLIED>
-    
-    <!ATTLIST securityelement dsSensor			CDATA #IMPLIED>
-    <!ATTLIST securityelement turnout			CDATA #IMPLIED>
-    <!ATTLIST securityelement auxInput			CDATA #IMPLIED>
-    
-    <!ATTLIST securityelement maxSpeedAC		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxSpeedCA		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxSpeedAB		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxSpeedBA		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxBrakingAC		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxBrakingCA		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxBrakingAB		CDATA #IMPLIED>
-    <!ATTLIST securityelement maxBrakingBA		CDATA #IMPLIED>
+
+	<!-- attachXleg is coded 0 for none, 1 for A, 2 for B, 4 for C -->
+	<!ATTLIST securityelement attachAnum		CDATA #IMPLIED>
+	<!ATTLIST securityelement attachAleg		CDATA #IMPLIED>
+	<!ATTLIST securityelement attachBnum		CDATA #IMPLIED>
+	<!ATTLIST securityelement attachBleg		CDATA #IMPLIED>
+	<!ATTLIST securityelement attachCnum		CDATA #IMPLIED>
+	<!ATTLIST securityelement attachCleg		CDATA #IMPLIED>
+
+	<!ATTLIST securityelement dsSensor			CDATA #IMPLIED>
+	<!ATTLIST securityelement turnout			CDATA #IMPLIED>
+	<!ATTLIST securityelement auxInput			CDATA #IMPLIED>
+
+	<!ATTLIST securityelement maxSpeedAC		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxSpeedCA		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxSpeedAB		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxSpeedBA		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxBrakingAC		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxBrakingCA		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxBrakingAB		CDATA #IMPLIED>
+	<!ATTLIST securityelement maxBrakingBA		CDATA #IMPLIED>
 
   <!ELEMENT aspectgenerator (aspectgeneratorhead*) >
-    <!ATTLIST aspectgenerator number	CDATA #REQUIRED>  <!-- defines system type? -->
+	<!ATTLIST aspectgenerator number	CDATA #REQUIRED>  <!-- defines system type? -->
 
-  	<!ELEMENT aspectgeneratorhead (aspectgeneratoraspect*) >
+	<!ELEMENT aspectgeneratorhead (aspectgeneratoraspect*) >
 
 	  <!ELEMENT aspectgeneratoraspect EMPTY >
-      <!ATTLIST aspectgeneratoraspect color	CDATA #REQUIRED>
-      <!ATTLIST aspectgeneratoraspect limit	CDATA #REQUIRED>
+	  <!ATTLIST aspectgeneratoraspect color CDATA #REQUIRED>
+	  <!ATTLIST aspectgeneratoraspect limit CDATA #REQUIRED>
 
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
 						securityelementicon | signalheadicon |
 						reportericon | memoryicon | multisensoricon |
-					    fastclock)* >
-  <!ATTLIST paneleditor class		CDATA #REQUIRED>
-  <!ATTLIST paneleditor name		CDATA #IMPLIED>
-  <!ATTLIST paneleditor x			CDATA #REQUIRED>
-  <!ATTLIST paneleditor y			CDATA #REQUIRED>
-  <!ATTLIST paneleditor height		CDATA #REQUIRED>
-  <!ATTLIST paneleditor width		CDATA #REQUIRED>
-  <!ATTLIST paneleditor editable	(yes|no) "yes" >
+						fastclock)* >
+  <!ATTLIST paneleditor class			CDATA #REQUIRED>
+  <!ATTLIST paneleditor name			CDATA #IMPLIED>
+  <!ATTLIST paneleditor x				CDATA #REQUIRED>
+  <!ATTLIST paneleditor y				CDATA #REQUIRED>
+  <!ATTLIST paneleditor height			CDATA #REQUIRED>
+  <!ATTLIST paneleditor width			CDATA #REQUIRED>
+  <!ATTLIST paneleditor editable		(yes|no) "yes" >
   <!ATTLIST paneleditor positionable	(yes|no) "yes" >
-  <!ATTLIST paneleditor controlling	(yes|no) "yes" >
-  <!ATTLIST paneleditor hide		(yes|no) "no" >
-  <!ATTLIST paneleditor showcoordinates		(yes|no) "no" >
-  <!ATTLIST paneleditor panelmenu	(yes|no) "yes" >  <!-- menu present on panel window -->
+  <!ATTLIST paneleditor controlling		(yes|no) "yes" >
+  <!ATTLIST paneleditor hide			(yes|no) "no" >
+  <!ATTLIST paneleditor showcoordinates (yes|no) "no" >
+  <!ATTLIST paneleditor panelmenu		(yes|no) "yes" >  <!-- menu present on panel window -->
 
   <!ELEMENT positionablelabel EMPTY>
-    <!ATTLIST positionablelabel class	CDATA #REQUIRED>
-    <!ATTLIST positionablelabel x		CDATA #REQUIRED>
-    <!ATTLIST positionablelabel y		CDATA #REQUIRED>
-    <!ATTLIST positionablelabel height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST positionablelabel width	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST positionablelabel rotate  CDATA #IMPLIED>
-    <!ATTLIST positionablelabel text	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel icon	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel level	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel size	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel style	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel red  	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel green	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel blue	CDATA #IMPLIED>
-    <!ATTLIST positionablelabel forcecontroloff	(true|false) "false">
-    <!ATTLIST positionablelabel fixed	(true|false) "false">
-    <!ATTLIST positionablelabel showtooltip	(true|false) "true">
-    
+	<!ATTLIST positionablelabel class			CDATA #REQUIRED>
+	<!ATTLIST positionablelabel x				CDATA #REQUIRED>
+	<!ATTLIST positionablelabel y				CDATA #REQUIRED>
+	<!ATTLIST positionablelabel height			CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST positionablelabel width			CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST positionablelabel rotate			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel text			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel icon			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel level			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel size			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel style			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel red				CDATA #IMPLIED>
+	<!ATTLIST positionablelabel green			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel blue			CDATA #IMPLIED>
+	<!ATTLIST positionablelabel forcecontroloff (true|false) "false">
+	<!ATTLIST positionablelabel fixed			(true|false) "false">
+	<!ATTLIST positionablelabel showtooltip		(true|false) "true">
+
 
   <!ELEMENT sensoricon EMPTY>
-    <!ATTLIST sensoricon class		CDATA #REQUIRED>
-    <!ATTLIST sensoricon x			CDATA #REQUIRED>
-    <!ATTLIST sensoricon y			CDATA #REQUIRED>
-    <!ATTLIST sensoricon level	CDATA #IMPLIED>
-    <!ATTLIST sensoricon height		CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST sensoricon width		CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST sensoricon rotate  	CDATA #IMPLIED>
-    <!ATTLIST sensoricon active		CDATA #IMPLIED>
-    <!ATTLIST sensoricon inactive	CDATA #IMPLIED>
-    <!ATTLIST sensoricon unknown	CDATA #IMPLIED>
-    <!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
-    <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
-    <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
-    <!ATTLIST sensoricon momentary	(true|false) "false">
+	<!ATTLIST sensoricon class				CDATA #REQUIRED>
+	<!ATTLIST sensoricon x					CDATA #REQUIRED>
+	<!ATTLIST sensoricon y					CDATA #REQUIRED>
+	<!ATTLIST sensoricon level				CDATA #IMPLIED>
+	<!ATTLIST sensoricon height				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST sensoricon width				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST sensoricon rotate				CDATA #IMPLIED>
+	<!ATTLIST sensoricon active				CDATA #IMPLIED>
+	<!ATTLIST sensoricon inactive			CDATA #IMPLIED>
+	<!ATTLIST sensoricon unknown			CDATA #IMPLIED>
+	<!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
+	<!ATTLIST sensoricon sensor				CDATA #IMPLIED>
+	<!ATTLIST sensoricon forcecontroloff	(true|false) "false">
+	<!ATTLIST sensoricon momentary			(true|false) "false">
 
   <!ELEMENT reportericon EMPTY>
-    <!ATTLIST reportericon class	CDATA #REQUIRED>
-    <!ATTLIST reportericon x		CDATA #REQUIRED>
-    <!ATTLIST reportericon y		CDATA #REQUIRED>
-    <!ATTLIST reportericon level	CDATA #IMPLIED>
-    <!ATTLIST reportericon height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST reportericon width	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST reportericon rotate  	CDATA #IMPLIED>
-    <!ATTLIST reportericon reporter	CDATA #IMPLIED>
-    <!ATTLIST reportericon forcecontroloff	(true|false) "false">
+	<!ATTLIST reportericon class			CDATA #REQUIRED>
+	<!ATTLIST reportericon x				CDATA #REQUIRED>
+	<!ATTLIST reportericon y				CDATA #REQUIRED>
+	<!ATTLIST reportericon level			CDATA #IMPLIED>
+	<!ATTLIST reportericon height			CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST reportericon width			CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST reportericon rotate			CDATA #IMPLIED>
+	<!ATTLIST reportericon reporter			CDATA #IMPLIED>
+	<!ATTLIST reportericon forcecontroloff	(true|false) "false">
 
   <!ELEMENT memoryicon (memorystate)*>
-    <!ATTLIST memoryicon class	CDATA #REQUIRED>
-    <!ATTLIST memoryicon x		CDATA #REQUIRED>
-    <!ATTLIST memoryicon y		CDATA #REQUIRED>
-    <!ATTLIST memoryicon level	CDATA #IMPLIED>
-    <!ATTLIST memoryicon size	CDATA #IMPLIED>
-    <!ATTLIST memoryicon style	CDATA #IMPLIED>
-    <!ATTLIST memoryicon red  	CDATA #IMPLIED>
-    <!ATTLIST memoryicon green	CDATA #IMPLIED>
-    <!ATTLIST memoryicon blue	CDATA #IMPLIED>
-    <!ATTLIST memoryicon height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST memoryicon width	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST memoryicon rotate  	CDATA #IMPLIED>
-    <!ATTLIST memoryicon memory	CDATA #IMPLIED>
-    <!ATTLIST memoryicon defaulticon CDATA #IMPLIED>
+	<!ATTLIST memoryicon class				CDATA #REQUIRED>
+	<!ATTLIST memoryicon x					CDATA #REQUIRED>
+	<!ATTLIST memoryicon y					CDATA #REQUIRED>
+	<!ATTLIST memoryicon level				CDATA #IMPLIED>
+	<!ATTLIST memoryicon size				CDATA #IMPLIED>
+	<!ATTLIST memoryicon style				CDATA #IMPLIED>
+	<!ATTLIST memoryicon red				CDATA #IMPLIED>
+	<!ATTLIST memoryicon green				CDATA #IMPLIED>
+	<!ATTLIST memoryicon blue				CDATA #IMPLIED>
+	<!ATTLIST memoryicon height				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST memoryicon width				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST memoryicon rotate				CDATA #IMPLIED>
+	<!ATTLIST memoryicon memory				CDATA #IMPLIED>
+	<!ATTLIST memoryicon defaulticon		CDATA #IMPLIED>
     <!ATTLIST memoryicon selectable ( yes | no ) "no" >
-    <!ATTLIST memoryicon forcecontroloff	(true|false) "false">
-        
+	<!ATTLIST memoryicon forcecontroloff	(true|false) "false">
+
   <!ELEMENT memorystate EMPTY>
-    <!ATTLIST memorystate value	CDATA #REQUIRED>
-    <!ATTLIST memorystate icon	CDATA #REQUIRED>
+	<!ATTLIST memorystate value CDATA #REQUIRED>
+	<!ATTLIST memorystate icon	CDATA #REQUIRED>
 
   <!ELEMENT fastclock EMPTY>
-    <!ATTLIST fastclock class CDATA #REQUIRED>
-    <!ATTLIST fastclock x     CDATA #REQUIRED>
-    <!ATTLIST fastclock y     CDATA #REQUIRED>
+	<!ATTLIST fastclock class CDATA #REQUIRED>
+	<!ATTLIST fastclock x	  CDATA #REQUIRED>
+	<!ATTLIST fastclock y	  CDATA #REQUIRED>
 
   <!ELEMENT multisensoricon (multisensoriconentry)*>
-    <!ATTLIST multisensoricon class CDATA #REQUIRED>
-    <!ATTLIST multisensoricon x     CDATA #REQUIRED>
-    <!ATTLIST multisensoricon y     CDATA #REQUIRED>
-    <!ATTLIST multisensoricon level	CDATA #IMPLIED>
-    <!ATTLIST multisensoricon active		CDATA #IMPLIED>
-    <!ATTLIST multisensoricon inactive	CDATA #IMPLIED>
-    <!ATTLIST multisensoricon unknown	CDATA #IMPLIED>
-    <!ATTLIST multisensoricon inconsistent		CDATA #IMPLIED>
-    <!ATTLIST multisensoricon updown		CDATA #IMPLIED>
-    <!ATTLIST multisensoricon rotate		CDATA #IMPLIED>
-    <!ATTLIST multisensoricon forcecontroloff	(true|false) "false">
+	<!ATTLIST multisensoricon class				CDATA #REQUIRED>
+	<!ATTLIST multisensoricon x					CDATA #REQUIRED>
+	<!ATTLIST multisensoricon y					CDATA #REQUIRED>
+	<!ATTLIST multisensoricon level				CDATA #IMPLIED>
+	<!ATTLIST multisensoricon active			CDATA #IMPLIED>
+	<!ATTLIST multisensoricon inactive			CDATA #IMPLIED>
+	<!ATTLIST multisensoricon unknown			CDATA #IMPLIED>
+	<!ATTLIST multisensoricon inconsistent		CDATA #IMPLIED>
+	<!ATTLIST multisensoricon updown			CDATA #IMPLIED>
+	<!ATTLIST multisensoricon rotate			CDATA #IMPLIED>
+	<!ATTLIST multisensoricon forcecontroloff	(true|false) "false">
 
   <!ELEMENT multisensoriconentry EMPTY>
-    <!ATTLIST multisensoriconentry sensor	CDATA #REQUIRED>
-    <!ATTLIST multisensoriconentry icon	CDATA #REQUIRED>
+	<!ATTLIST multisensoriconentry sensor	CDATA #REQUIRED>
+	<!ATTLIST multisensoriconentry icon		CDATA #REQUIRED>
 
   <!ELEMENT signalheadicon EMPTY>
-    <!ATTLIST signalheadicon class	CDATA #REQUIRED>
-    <!ATTLIST signalheadicon x			CDATA #REQUIRED>
-    <!ATTLIST signalheadicon y			CDATA #REQUIRED>
-    <!ATTLIST signalheadicon level	CDATA #IMPLIED>
-    <!ATTLIST signalheadicon height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST signalheadicon width	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST signalheadicon rotate  	CDATA #IMPLIED>
-    <!ATTLIST signalheadicon held        CDATA #IMPLIED>
-    <!ATTLIST signalheadicon dark        CDATA #IMPLIED>
-    <!ATTLIST signalheadicon red         CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashred    CDATA #IMPLIED>
-    <!ATTLIST signalheadicon yellow      CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashyellow CDATA #IMPLIED>
-    <!ATTLIST signalheadicon green       CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashgreen  CDATA #IMPLIED>
-    <!ATTLIST signalheadicon signalhead  CDATA #IMPLIED>
-    <!ATTLIST signalheadicon forcecontroloff	(true|false) "false">
-    <!ATTLIST signalheadicon clickmode	 CDATA #IMPLIED>
-    <!ATTLIST signalheadicon heldicon    CDATA #IMPLIED>
-    <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
+	<!ATTLIST signalheadicon class				CDATA #REQUIRED>
+	<!ATTLIST signalheadicon x					CDATA #REQUIRED>
+	<!ATTLIST signalheadicon y					CDATA #REQUIRED>
+	<!ATTLIST signalheadicon level				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon height				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST signalheadicon width				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST signalheadicon rotate				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon held				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon dark				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon red				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon flashred			CDATA #IMPLIED>
+	<!ATTLIST signalheadicon yellow				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon flashyellow		CDATA #IMPLIED>
+	<!ATTLIST signalheadicon green				CDATA #IMPLIED>
+	<!ATTLIST signalheadicon flashgreen			CDATA #IMPLIED>
+	<!ATTLIST signalheadicon signalhead			CDATA #IMPLIED>
+	<!ATTLIST signalheadicon forcecontroloff	(true|false) "false">
+	<!ATTLIST signalheadicon clickmode			CDATA #IMPLIED>
+	<!ATTLIST signalheadicon heldicon			CDATA #IMPLIED>
+	<!ATTLIST signalheadicon litmode			CDATA #IMPLIED>
 
-    <!-- the next two (aspectgenerator and head) are obsolete, and -->
-    <!-- are only retained until JMRI 2 so that old files can be read -->
-    <!ATTLIST signalheadicon aspectgenerator		CDATA #IMPLIED>
-    <!ATTLIST signalheadicon head		CDATA #IMPLIED>
+	<!-- the next two (aspectgenerator and head) are obsolete, and -->
+	<!-- are only retained until JMRI 2 so that old files can be read -->
+	<!ATTLIST signalheadicon aspectgenerator	CDATA #IMPLIED>
+	<!ATTLIST signalheadicon head				CDATA #IMPLIED>
 
   <!ELEMENT turnouticon EMPTY>
-    <!ATTLIST turnouticon class		CDATA #REQUIRED>
-    <!ATTLIST turnouticon x			CDATA #REQUIRED>
-    <!ATTLIST turnouticon y			CDATA #REQUIRED>
-    <!ATTLIST turnouticon level	CDATA #IMPLIED>
-    <!ATTLIST turnouticon height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST turnouticon width		CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST turnouticon rotate  	CDATA #IMPLIED>
-    <!ATTLIST turnouticon closed	CDATA #IMPLIED>
-    <!ATTLIST turnouticon thrown	CDATA #IMPLIED>
-    <!ATTLIST turnouticon unknown	CDATA #IMPLIED>
-    <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
-    <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
-    <!ATTLIST turnouticon forcecontroloff	(true|false) "false">
-    <!ATTLIST turnouticon tristate	(true|false) "false">
+	<!ATTLIST turnouticon class				CDATA #REQUIRED>
+	<!ATTLIST turnouticon x					CDATA #REQUIRED>
+	<!ATTLIST turnouticon y					CDATA #REQUIRED>
+	<!ATTLIST turnouticon level				CDATA #IMPLIED>
+	<!ATTLIST turnouticon height			CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST turnouticon width				CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST turnouticon rotate			CDATA #IMPLIED>
+	<!ATTLIST turnouticon closed			CDATA #IMPLIED>
+	<!ATTLIST turnouticon thrown			CDATA #IMPLIED>
+	<!ATTLIST turnouticon unknown			CDATA #IMPLIED>
+	<!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
+	<!ATTLIST turnouticon turnout			CDATA #IMPLIED>
+	<!ATTLIST turnouticon forcecontroloff	(true|false) "false">
+	<!ATTLIST turnouticon tristate			(true|false) "false">
 
   <!ELEMENT securityelementicon EMPTY>
-    <!ATTLIST securityelementicon class		CDATA #REQUIRED>
-    <!ATTLIST securityelementicon AX        (rightbound|leftbound) "rightbound">
-    <!ATTLIST securityelementicon number	CDATA #REQUIRED>
-    <!ATTLIST securityelementicon x			CDATA #REQUIRED>
-    <!ATTLIST securityelementicon y			CDATA #REQUIRED>
-    <!ATTLIST securityelementicon height	CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST securityelementicon width		CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST securityelementicon class		CDATA #REQUIRED>
+	<!ATTLIST securityelementicon AX		(rightbound|leftbound) "rightbound">
+	<!ATTLIST securityelementicon number	CDATA #REQUIRED>
+	<!ATTLIST securityelementicon x			CDATA #REQUIRED>
+	<!ATTLIST securityelementicon y			CDATA #REQUIRED>
+	<!ATTLIST securityelementicon height	CDATA #IMPLIED> <!-- deprecated -->
+	<!ATTLIST securityelementicon width		CDATA #IMPLIED> <!-- deprecated -->
 
 <!ELEMENT blocks (block*) >
   <!ATTLIST blocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
 <!ELEMENT block (sensor*) >
-  <!ATTLIST block signal 			  CDATA #REQUIRED >
-  <!ATTLIST block mode				  CDATA #IMPLIED>
-  <!ATTLIST block approachsensor1     CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor       CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor1      CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor1alt   CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor2      CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor2alt   CDATA #IMPLIED>
-  <!ATTLIST block watchedturnout      CDATA #IMPLIED>
-  <!ATTLIST block watchedsignal1      CDATA #IMPLIED>
-  <!ATTLIST block watchedsignal1alt   CDATA #IMPLIED>
-  <!ATTLIST block watchedsignal2      CDATA #IMPLIED>
-  <!ATTLIST block watchedsignal2alt   CDATA #IMPLIED>
-  <!ATTLIST block useflashyellow    (true|false) "false" >
-  <!ATTLIST block limitspeed1       (true|false) "false" >
-  <!ATTLIST block limitspeed2       (true|false) "false" >
-  <!ATTLIST block distantsignal     (true|false) "false" >
+  <!ATTLIST block signal			CDATA #REQUIRED >
+  <!ATTLIST block mode				CDATA #IMPLIED>
+  <!ATTLIST block approachsensor1	CDATA #IMPLIED>
+  <!ATTLIST block watchedsensor		CDATA #IMPLIED>
+  <!ATTLIST block watchedsensor1	CDATA #IMPLIED>
+  <!ATTLIST block watchedsensor1alt CDATA #IMPLIED>
+  <!ATTLIST block watchedsensor2	CDATA #IMPLIED>
+  <!ATTLIST block watchedsensor2alt CDATA #IMPLIED>
+  <!ATTLIST block watchedturnout	CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal1	CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal1alt CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal2	CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal2alt CDATA #IMPLIED>
+  <!ATTLIST block useflashyellow	(true|false) "false" >
+  <!ATTLIST block limitspeed1		(true|false) "false" >
+  <!ATTLIST block limitspeed2		(true|false) "false" >
+  <!ATTLIST block distantsignal		(true|false) "false" >
 
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
 			tracksegment | fastclock)* >
-  <!ATTLIST LayoutEditor class			CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor name			CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor x				CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor y				CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor panelheight	CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor panelwidth		CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor windowheight	CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor windowwidth	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor class				CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor name				CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor x					CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor y					CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor panelheight		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor panelwidth			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor windowheight		CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor windowwidth		CDATA #REQUIRED>
   <!-- the next two lines, height and width are obsolete and are kept only -->
   <!-- for compatibility with previous versions (2.2 and previous) -->
-  <!ATTLIST LayoutEditor height			CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor width			CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor mainlinetrackwidth	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor height				CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor width				CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor mainlinetrackwidth CDATA #REQUIRED>
   <!ATTLIST LayoutEditor sidetrackwidth		CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor xscale			CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor yscale			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xscale				CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor yscale				CDATA #IMPLIED>
   <!ATTLIST LayoutEditor defaulttrackcolor	CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor turnoutbx		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor turnoutcx		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor turnoutwid		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor xoverlong		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor xoverhwid		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor xovershort		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor positionable	(yes|no) "yes" >
-  <!ATTLIST LayoutEditor controlling	(yes|no) "yes" >
-  <!ATTLIST LayoutEditor animating		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor showhelpbar	(yes|no) "yes" >
-  <!ATTLIST LayoutEditor drawgrid		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor snaponadd		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor snaponmove		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor antialiasing	(yes|no) "yes" >
+  <!ATTLIST LayoutEditor turnoutbx			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor turnoutcx			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor turnoutwid			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xoverlong			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xoverhwid			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xovershort			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor editable			(yes|no) "yes" >
+  <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor animating			(yes|no) "yes" >
+  <!ATTLIST LayoutEditor showhelpbar		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor drawgrid			(yes|no) "yes" >
+  <!ATTLIST LayoutEditor snaponadd			(yes|no) "yes" >
+  <!ATTLIST LayoutEditor snaponmove			(yes|no) "yes" >
+  <!ATTLIST LayoutEditor antialiasing		(yes|no) "yes" >
 
 <!-- memoryicon defined above already -->
 <!-- memorystate defined above already -->
@@ -539,88 +539,88 @@
 <!-- signalheadicon defined above already -->
 
   <!ELEMENT positionablepoint EMPTY>
-    <!ATTLIST positionablepoint class    CDATA #REQUIRED>
-    <!ATTLIST positionablepoint ident    CDATA #REQUIRED>
-    <!ATTLIST positionablepoint type     CDATA #REQUIRED>
-    <!ATTLIST positionablepoint x	 CDATA #REQUIRED>
-    <!ATTLIST positionablepoint y	 CDATA #REQUIRED>
-    <!ATTLIST positionablepoint connect1name CDATA #IMPLIED>
-    <!ATTLIST positionablepoint connect2name CDATA #IMPLIED>
-    <!ATTLIST positionablepoint eastboundsignal CDATA #IMPLIED>
-    <!ATTLIST positionablepoint westboundsignal CDATA #IMPLIED>
+	<!ATTLIST positionablepoint class			CDATA #REQUIRED>
+	<!ATTLIST positionablepoint ident			CDATA #REQUIRED>
+	<!ATTLIST positionablepoint type			CDATA #REQUIRED>
+	<!ATTLIST positionablepoint x				CDATA #REQUIRED>
+	<!ATTLIST positionablepoint y				CDATA #REQUIRED>
+	<!ATTLIST positionablepoint connect1name	CDATA #IMPLIED>
+	<!ATTLIST positionablepoint connect2name	CDATA #IMPLIED>
+	<!ATTLIST positionablepoint eastboundsignal CDATA #IMPLIED>
+	<!ATTLIST positionablepoint westboundsignal CDATA #IMPLIED>
 
   <!ELEMENT tracksegment EMPTY>
-    <!ATTLIST tracksegment class        CDATA #REQUIRED>
-    <!ATTLIST tracksegment ident        CDATA #REQUIRED>
-    <!ATTLIST tracksegment blockname    CDATA #IMPLIED>
-    <!ATTLIST tracksegment connect1name CDATA #REQUIRED>
-    <!ATTLIST tracksegment type1        CDATA #REQUIRED>
-    <!ATTLIST tracksegment connect2name CDATA #REQUIRED>
-    <!ATTLIST tracksegment type2        CDATA #REQUIRED>
-    <!ATTLIST tracksegment dashed	(yes|no) "yes">
-    <!ATTLIST tracksegment mainline	(yes|no) "yes">
-    <!ATTLIST tracksegment hidden	(yes|no) "yes">
+	<!ATTLIST tracksegment class		CDATA #REQUIRED>
+	<!ATTLIST tracksegment ident		CDATA #REQUIRED>
+	<!ATTLIST tracksegment blockname	CDATA #IMPLIED>
+	<!ATTLIST tracksegment connect1name CDATA #REQUIRED>
+	<!ATTLIST tracksegment type1		CDATA #REQUIRED>
+	<!ATTLIST tracksegment connect2name CDATA #REQUIRED>
+	<!ATTLIST tracksegment type2		CDATA #REQUIRED>
+	<!ATTLIST tracksegment dashed		(yes|no) "yes">
+	<!ATTLIST tracksegment mainline		(yes|no) "yes">
+	<!ATTLIST tracksegment hidden		(yes|no) "yes">
 
   <!ELEMENT layoutturnout EMPTY>
-    <!ATTLIST layoutturnout class        CDATA #REQUIRED>
-    <!ATTLIST layoutturnout ident        CDATA #REQUIRED>
-    <!ATTLIST layoutturnout turnoutname  CDATA #IMPLIED>
-    <!ATTLIST layoutturnout blockname    CDATA #IMPLIED>
-    <!ATTLIST layoutturnout blockbname   CDATA #IMPLIED>
-    <!ATTLIST layoutturnout blockcname   CDATA #IMPLIED>
-    <!ATTLIST layoutturnout blockdname   CDATA #IMPLIED>
-    <!ATTLIST layoutturnout type         CDATA #REQUIRED>
-    <!ATTLIST layoutturnout connectaname CDATA #IMPLIED>
-    <!ATTLIST layoutturnout connectbname CDATA #IMPLIED>
-    <!ATTLIST layoutturnout connectcname CDATA #IMPLIED>
-    <!ATTLIST layoutturnout connectdname CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signala1name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signala2name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signalb1name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signalb2name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signalc1name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signalc2name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signald1name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout signald2name CDATA #IMPLIED>
-    <!ATTLIST layoutturnout continuing   CDATA #REQUIRED>
-    <!ATTLIST layoutturnout disabled	 (yes|no) "yes">
-    <!ATTLIST layoutturnout xb		 CDATA #REQUIRED>
-    <!ATTLIST layoutturnout yb           CDATA #REQUIRED>
-    <!ATTLIST layoutturnout xc		 CDATA #REQUIRED>
-    <!ATTLIST layoutturnout yc           CDATA #REQUIRED>
-    <!ATTLIST layoutturnout xcen	 CDATA #REQUIRED>
-    <!ATTLIST layoutturnout ycen         CDATA #REQUIRED>
+	<!ATTLIST layoutturnout class				CDATA #REQUIRED>
+	<!ATTLIST layoutturnout ident				CDATA #REQUIRED>
+	<!ATTLIST layoutturnout turnoutname			CDATA #IMPLIED>
+	<!ATTLIST layoutturnout blockname			CDATA #IMPLIED>
+	<!ATTLIST layoutturnout blockbname			CDATA #IMPLIED>
+	<!ATTLIST layoutturnout blockcname			CDATA #IMPLIED>
+	<!ATTLIST layoutturnout blockdname			CDATA #IMPLIED>
+	<!ATTLIST layoutturnout type				CDATA #REQUIRED>
+	<!ATTLIST layoutturnout connectaname		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout connectbname		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout connectcname		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout connectdname		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signala1name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signala2name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signalb1name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signalb2name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signalc1name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signalc2name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signald1name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout signald2name		CDATA #IMPLIED>
+	<!ATTLIST layoutturnout continuing			CDATA #REQUIRED>
+	<!ATTLIST layoutturnout disabled			(yes|no) "yes">
+	<!ATTLIST layoutturnout xb					CDATA #REQUIRED>
+	<!ATTLIST layoutturnout yb					CDATA #REQUIRED>
+	<!ATTLIST layoutturnout xc					CDATA #REQUIRED>
+	<!ATTLIST layoutturnout yc					CDATA #REQUIRED>
+	<!ATTLIST layoutturnout xcen				CDATA #REQUIRED>
+	<!ATTLIST layoutturnout ycen				CDATA #REQUIRED>
 
   <!ELEMENT levelxing EMPTY>
-    <!ATTLIST levelxing class        CDATA #REQUIRED>
-    <!ATTLIST levelxing ident        CDATA #REQUIRED>
-    <!ATTLIST levelxing bloxknameac  CDATA #IMPLIED>
-    <!ATTLIST levelxing blocknamebd  CDATA #IMPLIED>
-    <!ATTLIST levelxing signalaname  CDATA #IMPLIED>
-    <!ATTLIST levelxing signalbname  CDATA #IMPLIED>
-    <!ATTLIST levelxing signalcname  CDATA #IMPLIED>
-    <!ATTLIST levelxing signaldname  CDATA #IMPLIED>
-    <!ATTLIST levelxing connectaname CDATA #IMPLIED>
-    <!ATTLIST levelxing connectbname CDATA #IMPLIED>
-    <!ATTLIST levelxing connectcname CDATA #IMPLIED>
-    <!ATTLIST levelxing connectdname CDATA #IMPLIED>
-    <!ATTLIST levelxing xa			 CDATA #REQUIRED>
-    <!ATTLIST levelxing ya           CDATA #REQUIRED>
-    <!ATTLIST levelxing xb			 CDATA #REQUIRED>
-    <!ATTLIST levelxing yb           CDATA #REQUIRED>
-    <!ATTLIST levelxing xcen		 CDATA #REQUIRED>
-    <!ATTLIST levelxing ycen         CDATA #REQUIRED>
+	<!ATTLIST levelxing class		 CDATA #REQUIRED>
+	<!ATTLIST levelxing ident		 CDATA #REQUIRED>
+	<!ATTLIST levelxing bloxknameac	 CDATA #IMPLIED>
+	<!ATTLIST levelxing blocknamebd	 CDATA #IMPLIED>
+	<!ATTLIST levelxing signalaname	 CDATA #IMPLIED>
+	<!ATTLIST levelxing signalbname	 CDATA #IMPLIED>
+	<!ATTLIST levelxing signalcname	 CDATA #IMPLIED>
+	<!ATTLIST levelxing signaldname	 CDATA #IMPLIED>
+	<!ATTLIST levelxing connectaname CDATA #IMPLIED>
+	<!ATTLIST levelxing connectbname CDATA #IMPLIED>
+	<!ATTLIST levelxing connectcname CDATA #IMPLIED>
+	<!ATTLIST levelxing connectdname CDATA #IMPLIED>
+	<!ATTLIST levelxing xa			 CDATA #REQUIRED>
+	<!ATTLIST levelxing ya			 CDATA #REQUIRED>
+	<!ATTLIST levelxing xb			 CDATA #REQUIRED>
+	<!ATTLIST levelxing yb			 CDATA #REQUIRED>
+	<!ATTLIST levelxing xcen		 CDATA #REQUIRED>
+	<!ATTLIST levelxing ycen		 CDATA #REQUIRED>
 
   <!ELEMENT layoutturntable (raytrack*)>
-    <!ATTLIST layoutturntable class        CDATA #REQUIRED>
-    <!ATTLIST layoutturntable ident        CDATA #REQUIRED>
-    <!ATTLIST layoutturntable radius CDATA #REQUIRED>
-    <!ATTLIST layoutturntable xcen   CDATA #REQUIRED>
-    <!ATTLIST layoutturntable ycen   CDATA #REQUIRED>
+	<!ATTLIST layoutturntable class		CDATA #REQUIRED>
+	<!ATTLIST layoutturntable ident		CDATA #REQUIRED>
+	<!ATTLIST layoutturntable radius	CDATA #REQUIRED>
+	<!ATTLIST layoutturntable xcen		CDATA #REQUIRED>
+	<!ATTLIST layoutturntable ycen		CDATA #REQUIRED>
   <!ELEMENT rayTrack EMPTY>
-    <!ATTLIST raytrack connectname  CDATA #IMPLIED>
-    <!ATTLIST raytrack angle        CDATA #IMPLIED>
-    <!ATTLIST raytrack index        CDATA #IMPLIED>
-    
+	<!ATTLIST raytrack connectname		CDATA #IMPLIED>
+	<!ATTLIST raytrack angle			CDATA #IMPLIED>
+	<!ATTLIST raytrack index			CDATA #IMPLIED>
+
 
 <!ELEMENT signals EMPTY >

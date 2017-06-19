@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks
@@ -59,6 +61,9 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
                 return Bundle.getMessage("BlockName");
             case PORTAL_NAME_COLUMN:
                 return Bundle.getMessage("PortalName");
+            default:
+                log.warn("Unhandled column name: {}", col);
+                break;
         }
         return "";
     }
@@ -128,4 +133,6 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
             fireTableDataChanged();
         }
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

@@ -36,7 +36,7 @@ jmri.jmrix.secsi.SerialConnectionTypeList
 jmri.jmrix.loconet.uhlenbrock.UhlenbrockConnectionTypeList
 jmri.jmrix.wangrow.WangrowConnectionTypeList
 jmri.jmrix.zimo.Mx1ConnectionTypeList
-jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList
+jmri.jmrix.ztc.ZTCConnectionTypeList
 jmri.jmrix.OtherConnectionTypeList
 jmri.jmrix.jmriclient.JMRIClientConnectionTypeList
 jmri.jmrix.internal.InternalConnectionTypeList

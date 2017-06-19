@@ -33,11 +33,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrit.roster.swing.speedprofile.SpeedProfileTable;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +70,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected RouteLocation _destination = new RouteLocation(Location.DEST);
     protected RouteLocation _via = new RouteLocation(Location.VIA);
     protected RouteLocation _avoid = new RouteLocation(Location.AVOID);
-    RouteLocation _focusedField;
+    protected RouteLocation _focusedField;
+
+    protected SpeedUtil _speedUtil;
 
     static int STRUT_SIZE = 10;
     private int _depth = 20;
@@ -75,16 +80,19 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     static String PAD = "               ";
     private JDialog _pickRouteDialog;
     private final RouteTableModel _routeModel;
-    private ArrayList<BlockOrder> _orders = new ArrayList<>();
+    protected ArrayList<BlockOrder> _orders;
     private JFrame _debugFrame;
     private RouteFinder _routeFinder;
     private final JTextField _searchDepth = new JTextField(5);
+    JButton _calculateButton = new JButton(Bundle.getMessage("Calculate"));
 
-    private RosterEntry _train;
-    private String _trainId = null;
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
+    private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
+    private SpeedProfileTable _spTable = null;
+    private JmriJFrame _pickListFrame;
+
 
     /**
      * Only subclasses can create this
@@ -92,11 +100,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected WarrantRoute() {
         super(false, true);
         _routeModel = new RouteTableModel();
+        _speedUtil = new SpeedUtil(null);
         getRoster();
         WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
                 case WarrantPreferences.SEARCH_DEPTH:
                     this.setDepth((int) evt.getNewValue());
+                    break;
                 default:
                     // do nothing
             }
@@ -125,7 +135,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _depth = d;
         _searchDepth.setText(Integer.toString(_depth));
     }
-
+    
     public JPanel searchDepthPanel(boolean vertical) {
         _searchDepth.setText(Integer.toString(_depth));
         JPanel p = new JPanel();
@@ -135,6 +145,42 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.add(Box.createHorizontalGlue());
         return p;
     }
+
+    public JPanel calculatePanel(boolean vertical) {
+        _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
+        _calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculate();
+            }
+        });
+        JPanel p = new JPanel();
+//        p.add(Box.createHorizontalGlue());
+        p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
+//        p.add(Box.createHorizontalGlue());
+        return p;
+    }
+    public JPanel makePickListPanel() {
+        JButton button = new JButton(Bundle.getMessage("MenuBlockPicker"));
+        button.setMaximumSize(_calculateButton.getPreferredSize());
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (_pickListFrame !=null) {
+                    _pickListFrame.dispose();
+                }
+                _pickListFrame = new JmriJFrame();
+                PickListModel model = PickListModel.oBlockPickModelInstance();
+                _pickListFrame.add(new JScrollPane(model.makePickTable()));
+                _pickListFrame.pack();
+                _pickListFrame.setVisible(true);
+            }
+        });
+        JPanel p = new JPanel();
+        p.add(button);
+        return p;
+    }
+
 
     /* ************************* Train ID info: Loco Address, etc **********************/
     /**
@@ -155,6 +201,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
         panel.add(Box.createVerticalStrut(2));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(_viewProfile);
+        panel.add(p);
         if (comp != null) {
             panel.add(comp);
         }
@@ -190,75 +240,51 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 setTrainInfo(selection);
             }
         });
+        
+        _viewProfile.addActionListener((ActionEvent e) -> {
+            showProfile();
+        });
     }
 
-    /**
-     * Set the roster entry, if it exists, or train id string if not. i.e. set
-     * enough info to get a dccLocoAddress
-     *
-     * @param name may be Rroster Id or address
-     * @return Error message, if any
-     */
+    private void showProfile() {
+        if (_spTable != null) {
+            _spTable.dispose();
+        }
+        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
+        if (speedProfile != null) {
+            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getTrainId());
+            _spTable.setVisible(true);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
+    }
+
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        _train = Roster.getDefault().entryFromTitle(name);
-        if (_train == null) {
-            if (name == null || name.trim().length() == 0) {
-                _trainId = null;
-                setTrainName(null);
-                setAddress(null);
-                return Bundle.getMessage("NoLoco");
-            }
-            int index = name.indexOf('(');
-            String numId;
-            if (index >= 0) {
-                numId = name.substring(0, index);
-            } else {
-                Character ch = name.charAt(name.length() - 1);
-                if (!Character.isDigit(ch)) {
-                    numId = name.substring(0, name.length() - 1);
+        if (name == null) {
+            setTrainName(null);
+            _dccNumBox.setText(null);
+            _rosterBox.setSelectedIndex(0);            
+            return Bundle.getMessage("NoLoco");
+        }
+        _rosterBox.setSelectedIndex(0);
+        if (_speedUtil.setDccAddress(name)) {
+            _dccNumBox.setText(_speedUtil.getDccAddress().toString());
+            _rosterBox.setSelectedItem(name);
+            if (_trainNameBox.getText() == null) {
+                if (_speedUtil.getRosterEntry()!=null) {
+                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
                 } else {
-                    numId = name;
+                    setTrainName(_speedUtil.getDccAddress().toString()); 
                 }
             }
-            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
-            if (l.size() > 0) {
-                _train = l.get(0);
-            } else {
-                _train = null;
-                try {
-                    int num = Integer.parseInt(numId);
-                    boolean isLong = (name.charAt(0) == '0' || num > 255);  // leading zero means long
-                    _trainId = num + "(" + (isLong ? 'L' : 'S') + ")";
-                } catch (NumberFormatException e) {
-                    _trainId = null;
-                    return Bundle.getMessage("BadDccAddress", name);
-                }
-            }
-        }
-        if (_train != null) {
-            _trainId = _train.getId();
-            _rosterBox.setSelectedItem(_train.getId());
-            _dccNumBox.setText(_train.getDccLocoAddress().toString());
         } else {
-            _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-            _dccNumBox.setText(_trainId);
-        }
-        String n = _trainNameBox.getText();
-        if (n == null || n.length() == 0) {
-            if (_train != null) {
-                _trainNameBox.setText(_train.getRoadNumber());
-            } else {
-                _trainNameBox.setText(_trainId);
-            }
+            _dccNumBox.setText(null);
+            return Bundle.getMessage("NoLoco");            
         }
         return null;
-    }
-
-    protected RosterEntry getTrain() {
-        return _train;
     }
 
     protected void setTrainName(String name) {
@@ -272,54 +298,28 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         return trainName;
     }
-
-    protected void setAddress(String address) {
-        _dccNumBox.setText(address);
-        if (address == null) {
-            _rosterBox.setSelectedIndex(0);
-        }
+    
+    protected void setAddress() {
+        _speedUtil.setDccAddress(_dccNumBox.getText());
     }
 
     protected String getAddress() {
         return _dccNumBox.getText();
     }
 
-    protected String getTrainId() {
-        return _trainId;
-    }
-
-    protected DccLocoAddress getLocoAddress() {
-        if (_train != null) {
-            return _train.getDccLocoAddress();
-        }
-        if (_trainId != null) {
-            String numId;
-            int index = _trainId.indexOf('(');
-            if (index >= 0) {
-                numId = _trainId.substring(0, index);
-            } else {
-                numId = _trainId;
-            }
-            boolean isLong = true;
-            if ((index + 1) < _trainId.length()
-                    && (_trainId.charAt(index + 1) == 'S' || _trainId.charAt(index + 1) == 's')) {
-                isLong = false;
-            }
-            try {
-                int num = Integer.parseInt(numId);
-                return new DccLocoAddress(num, isLong);
-            } catch (NumberFormatException e) {
-                return null;
-            }
+    protected String checkLocoAddress() {
+        if (_speedUtil.getDccAddress() == null) {
+            return Bundle.getMessage("BadDccAddress", _dccNumBox.getText());
         }
         return null;
     }
 
-    protected String checkLocoAddress() {
-        if (_train != null || _trainId != null) {
-            return null;
+    private void calculate() {
+        String msg = findRoute();
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
         }
-        return setTrainInfo(_dccNumBox.getText());
     }
 
     /* ****************************** route info *******************/
@@ -369,9 +369,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
     }
 
-    protected JPanel makeBlockPanels() {
+    protected JPanel makeBlockPanels(boolean add) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         JPanel oPanel = _origin.makePanel("OriginBlock", "OriginToolTip", "PathName", "ExitPortalName", this);
         panel.add(oPanel);
@@ -380,13 +380,33 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(oPanel);
 
         oPanel = _via.makePanel("ViaBlock", "ViaToolTip", "PathName", null, this);
-        panel.add(oPanel);
 
-        oPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
-        panel.add(oPanel);
+        JPanel aPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
+
+        if (add) {
+            JPanel pLeft = new JPanel();
+            pLeft.setLayout(new BoxLayout(pLeft, BoxLayout.PAGE_AXIS));
+            pLeft.add(oPanel);
+            pLeft.add(aPanel);
+            
+            JPanel pRight = new JPanel();
+            pRight.setLayout(new BoxLayout(pRight, BoxLayout.PAGE_AXIS));
+            pRight.add(searchDepthPanel(true));
+            pRight.add(makePickListPanel());
+            pRight.add(calculatePanel(true));
+            
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+            p.add(pLeft);
+            p.add(pRight);
+            panel.add(p);
+        } else {
+            panel.add(oPanel);
+            panel.add(aPanel);
+        }
         return panel;
     }
-
+    
     private JPanel makeLabelCombo(String title, JComboBox<String> box, String tooltip) {
 
         JPanel p = new JPanel();
@@ -440,12 +460,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     javax.swing.border.TitledBorder.CENTER,
                     javax.swing.border.TitledBorder.TOP));
             JPanel hPanel = new JPanel();
-            hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.X_AXIS));
+            hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.LINE_AXIS));
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             hPanel.add(makeBlockBox(tooltip));
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel pPanel = new JPanel();
-            pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
+            pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.LINE_AXIS));
             pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));
             pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -688,11 +708,18 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 case AVOID:
                     _focusedField = _origin;
                     break;
+                default:
+                    log.warn("Unhandled next location code: {}", location);
+                    break;
             }
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            _focusedField = this;
+        }
+        @Override
+        public void mousePressed(MouseEvent e) {
             _focusedField = this;
         }
     }       // end RouteLocation
@@ -802,6 +829,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /* *********************************** Route Selection **************************************/
     public void setOrders(List<BlockOrder> oList) {
+        if (_orders==null) {
+            _orders = new ArrayList<>();
+        }
         for (int i = 0; i < oList.size(); i++) {
             BlockOrder bo = new BlockOrder(oList.get(i));
             _orders.add(bo);
@@ -977,7 +1007,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      */
     protected void showRoute(DefaultMutableTreeNode destNode, DefaultTreeModel tree) {
         TreeNode[] nodes = tree.getPathToRoot(destNode);
-        _orders.clear();
+        _orders = new ArrayList<>();
         for (TreeNode node : nodes) {
             _orders.add((BlockOrder) ((DefaultMutableTreeNode) node).getUserObject());
         }
@@ -1057,6 +1087,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             _pickRouteDialog.dispose();
             _pickRouteDialog = null;
         }
+        if (_spTable != null) {
+            _spTable.dispose();
+            _spTable = null;
+        }
+        if (_pickListFrame != null) {
+            _pickListFrame.dispose();
+            _pickListFrame = null;
+        }
     }
 
     private void clearFields() {
@@ -1067,7 +1105,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
 
     protected String routeIsValid() {
-        if (_orders.isEmpty()) {
+        if (_orders == null || _orders.isEmpty()) {
             return Bundle.getMessage("noBlockOrders");
         }
         BlockOrder blockOrder = _orders.get(0);
@@ -1135,6 +1173,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
         @Override
         public int getRowCount() {
+            if (_orders==null) {
+                return 0;
+            }
             return _orders.size();
         }
 
@@ -1149,6 +1190,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     return Bundle.getMessage("PathCol");
                 case DEST_PORTAL_COL:
                     return Bundle.getMessage("DestPortalCol");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1170,7 +1214,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         @Override
         public Object getValueAt(int row, int col) {
             // some error checking
-            if (row >= _orders.size()) {
+            if (_orders==null || row >= _orders.size()) {
                 return "";
             }
             BlockOrder bo = _orders.get(row);
@@ -1191,12 +1235,18 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         return "";
                     }
                     return bo.getExitName();
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
 
         @Override
         public void setValueAt(Object value, int row, int col) {
+            if (_orders==null) {
+                return;
+            }
             BlockOrder bo = _orders.get(row);
             switch (col) {
                 case BLOCK_COLUMN:

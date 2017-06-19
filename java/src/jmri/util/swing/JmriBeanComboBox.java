@@ -246,7 +246,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
-            result = (null != result) ? result.trim() : "";
+            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
 
             b = getNamedBean();
         } else {
@@ -270,7 +270,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
-            result = (null != result) ? result.trim() : "";
+            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
 
             b = getNamedBean();
         } else {
@@ -440,7 +440,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         jmri.Manager uDaManager = getManager();
 
         String comboBoxText = getEditor().getItem().toString();
-        comboBoxText = (null != comboBoxText) ? comboBoxText.trim() : "";
+        comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
 
         //try user name
         result = uDaManager.getBeanByUserName(comboBoxText);
@@ -464,8 +464,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
 
-            if (found) {    //if we found it there then…
-                //walk the namedBeanList…
+            if (found) {    //if we found it there then...
+                //walk the namedBeanList...
                 List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
 
                 for (NamedBean namedBean : namedBeanList) {

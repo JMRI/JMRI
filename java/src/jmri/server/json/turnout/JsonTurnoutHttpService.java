@@ -102,7 +102,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
             root.add(this.doGet(TURNOUT, name, locale));

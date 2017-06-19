@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -19,7 +20,7 @@ import junit.framework.TestSuite;
  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    PanelEditor panel = null;
 
     public void testShowText() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -152,7 +153,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+            panel = new PanelEditor("Test SignalMastIcon Panel");
         }
     }
 
@@ -160,11 +161,12 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     protected void tearDown() {
         // now close panel window
         if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            panel.dispose();
         }
         apps.tests.Log4JFixture.tearDown();
     }

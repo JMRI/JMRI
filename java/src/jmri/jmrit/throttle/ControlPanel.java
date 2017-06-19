@@ -348,7 +348,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void setSpeedController(int displaySlider) {
         _displaySlider = displaySlider;
         switch (displaySlider) {
-            case STEPDISPLAY: {
+            case STEPDISPLAY:
                 if (speedSpinner != null) {
                     sliderPanel.setVisible(false);
                     speedSlider.setEnabled(false);
@@ -361,8 +361,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     return;
                 }
                 break;
-            }
-            case SLIDERDISPLAYCONTINUOUS: {
+            case SLIDERDISPLAYCONTINUOUS:
                 if (speedSliderContinuous != null) {
                     sliderPanel.setVisible(false);
                     speedSlider.setEnabled(false);
@@ -375,7 +374,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     return;
                 }
                 break;
-            }
+            default:
+                log.warn("Unhandled slider type: {}", displaySlider);
+                break;
         }
         sliderPanel.setVisible(true);
         speedSlider.setEnabled(speedControllerEnable);
@@ -773,6 +774,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         ButtonGroup directionButtons = new ButtonGroup();
         directionButtons.add(forwardButton);
         directionButtons.add(reverseButton);
+        forwardButton.setFocusable(false);
+        reverseButton.setFocusable(false);
         constraints.fill = GridBagConstraints.NONE;
 
         constraints.gridy = 1;
