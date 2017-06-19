@@ -724,7 +724,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     final Roster _roster = Roster.getDefault();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute(p.getRosterAttribute());
-                    re.writeFile(null, null, null);
+                    re.writeFile(null, null);
                     Roster.getDefault().writeRoster();
                     if (p.getRemoveLocoFromJMRI() == EcosPreferences.YES) {
                         _roster.removeEntry(re);

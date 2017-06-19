@@ -39,7 +39,7 @@ class LocoFile extends XmlFile {
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
      */
-    public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel, String family) {
+    public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
         CvValue cvObject;
         // get the CVs and load
         String rosterName = loco.getAttributeValue("id");
@@ -89,73 +89,6 @@ class LocoFile extends XmlFile {
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
-            }
-
-            if (log.isDebugEnabled()) {
-                log.debug("Found " + values.getChildren("indexedCVvalue").size() + " indexedCVvalues");
-            }
-            for (Element element : values.getChildren("indexedCVvalue")) {
-                if (element.getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("unexpected null in name " + element + " " + element.getAttributes());
-                    }
-                    break;
-                }
-                if (element.getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("unexpected null in value " + element + " " + element.getAttributes());
-                    }
-                    break;
-                }
-
-                String name = element.getAttribute("name").getValue();
-                String piCv = element.getAttribute("piCv").getValue();
-                int piVal = Integer.valueOf(element.getAttribute("piVal").getValue()).intValue();
-
-                int siVal = Integer.valueOf(element.getAttribute("siVal").getValue()).intValue();
-                String iCv = element.getAttribute("iCv").getValue();
-                String value = element.getAttribute("value").getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("iCV named " + name + " has value: " + value);
-                }
-
-                // Hack to fix ESU LokSound V4.0 existing decoder file Indexed CV names
-                if (family.equals("ESU LokPilot V4.0") || family.equals("ESU LokSound Select") || family.equals("ESU LokSound V4.0")) {
-                    if (piCv.equals("32")) {
-                        piCv = "31";
-
-                        siVal = piVal;
-                        piVal = 16;
-                    }
-                    name = iCv + "." + piVal + "." + siVal;
-                }
-
-                // cvObject = (iCvModel.allIndxCvVector().elementAt(i));
-                cvObject = iCvModel.getMatchingIndexedCV(name);
-                if (log.isDebugEnabled()) {
-                    log.debug("Matched name " + name + " with iCV " + cvObject);
-                }
-
-                if (cvObject == null) {
-                    log.info("Indexed CV " + name + " was in loco file, but not as iCv in definition; migrated it; while reading ID=\"{}\"", rosterName);
-                    // check the two possible orders
-                    cvObject = cvModel.allCvMap().get(name);
-                    if (cvObject == null) {
-                        cvObject = cvModel.allCvMap().get(piVal + "." + siVal + "." + iCv);
-                    }
-                    if (cvObject == null) {
-                        log.warn("     Didn't find a match during migration of ID=\"{}\", failed", rosterName);
-                        continue;
-                    }
-                }
-
-                cvObject.setValue(Integer.valueOf(value).intValue());
-                if (cvObject.getInfoOnly()) {
-                    cvObject.setState(CvValue.READ);
-                } else {
-                    cvObject.setState(CvValue.FROMFILE);
-                }
-
             }
         } else {
             log.error("no values element found in config file; CVs not configured for ID=\"{}\"", rosterName);
@@ -259,11 +192,10 @@ class LocoFile extends XmlFile {
      * @param file          Destination file. This file is overwritten if it
      *                      exists.
      * @param cvModel       provides the CV numbers and contents
-     * @param iCvModel      provides the Indexed CV numbers and contents
      * @param variableModel provides the variable names and contents
      * @param r             RosterEntry providing name, etc, information
      */
-    public void writeFile(File file, CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel, RosterEntry r) {
+    public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
         if (log.isDebugEnabled()) {
             log.debug("writeFile to " + file.getAbsolutePath() + " " + file.getName());
         }
@@ -314,21 +246,6 @@ class LocoFile extends XmlFile {
                     values.addContent(new Element("CVvalue")
                             .setAttribute("name", cvModel.getName(i))
                             .setAttribute("value", cvModel.getValString(i))
-                    );
-                }
-            }
-
-            // add the Indexed CV values to the
-            if (iCvModel != null) {
-                for (int i = 0; i < iCvModel.getRowCount(); i++) {
-                    values.addContent(new Element("indexedCVvalue")
-                            .setAttribute("name", iCvModel.getName(i))
-                            .setAttribute("piCv", "" + (iCvModel.getCvByRow(i)).piCv())
-                            .setAttribute("piVal", "" + (iCvModel.getCvByRow(i)).piVal())
-                            .setAttribute("siCv", "" + (iCvModel.getCvByRow(i)).siCv())
-                            .setAttribute("siVal", "" + (iCvModel.getCvByRow(i)).siVal())
-                            .setAttribute("iCv", "" + (iCvModel.getCvByRow(i)).iCv())
-                            .setAttribute("value", iCvModel.getValString(i))
                     );
                 }
             }
