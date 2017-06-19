@@ -39,6 +39,7 @@ public class Route implements java.beans.PropertyChangeListener {
     public static final int SOUTH = 8;
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange"; // NOI18N
+    public static final String ROUTE_STATUS_CHANGED_PROPERTY = "routeStatusChange"; // NOI18N
     public static final String DISPOSE = "routeDispose"; // NOI18N
 
     public static final String OKAY = Bundle.getMessage("ButtonOK");
@@ -89,6 +90,7 @@ public class Route implements java.beans.PropertyChangeListener {
     }
 
     public void dispose() {
+        removeTrainListeners();
         setDirtyAndFirePropertyChange(DISPOSE, null, DISPOSE);
     }
 
@@ -350,11 +352,13 @@ public class Route implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Gets the status of the route: OKAY ORPHAN ERROR
+     * Gets the status of the route: OKAY ORPHAN ERROR TRAIN_BUILT
      *
      * @return string with status of route.
      */
     public String getStatus() {
+        removeTrainListeners();
+        addTrainListeners(); // and add them right back in
         List<RouteLocation> routeList = getLocationsByIdList();
         if (routeList.size() == 0) {
             return ERROR;
@@ -377,6 +381,20 @@ public class Route implements java.beans.PropertyChangeListener {
             }
         }
         return ORPHAN;
+    }
+    
+    private void addTrainListeners() {
+        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+            if (train.getRoute() == this) {
+                train.addPropertyChangeListener(this);
+            }
+        }
+    }
+    
+    private void removeTrainListeners() {
+        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+            train.removePropertyChangeListener(this);
+        }
     }
 
     /**
@@ -482,6 +500,9 @@ public class Route implements java.beans.PropertyChangeListener {
                 e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, "RouteLocation"); // NOI18N
+        }
+        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+            pcs.firePropertyChange(ROUTE_STATUS_CHANGED_PROPERTY, true, false);
         }
     }
 

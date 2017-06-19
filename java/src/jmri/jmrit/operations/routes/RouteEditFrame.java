@@ -75,9 +75,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void initComponents(Route route, Train train) {
         _train = train; // assign route to this train
-        if (_train != null) {
-            _train.addPropertyChangeListener(this);
-        }
         initComponents(route);
     }
 
@@ -97,10 +94,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         routeModel.initTable(this, routeTable, _route);
 
         if (_route != null) {
-            routeName = _route.getName();
-            routeNameTextField.setText(routeName);
+            _route.addPropertyChangeListener(this);
+            routeNameTextField.setText(_route.getName());
             commentTextField.setText(_route.getComment());
-            enableButtons(_train == null || !_train.isBuilt()); // do not allow user to modify a built train
+            enableButtons(!route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
             addRouteButton.setEnabled(false); // override and disable
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
@@ -330,6 +327,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (_train != null) {
             _train.setRoute(route);
         }
+        if (_route != null) {
+            _route.addPropertyChangeListener(this);
+        }
         saveRoute();
     }
 
@@ -395,8 +395,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(routeTable);
         });
-        if (_train != null) {
-            _train.removePropertyChangeListener(this);
+        if (_route != null) {
+            _route.removePropertyChangeListener(this);
         }
         routeModel.dispose();
         super.dispose();
@@ -427,8 +427,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateComboBoxes();
         }
-        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
-            enableButtons(!_train.isBuilt()); // do not allow user to modify a built train
+        if (e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
+            enableButtons(!_route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
             addRouteButton.setEnabled(false); // override and disable
         }
     }
