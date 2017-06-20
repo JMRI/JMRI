@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
+import java.util.HashMap;
 import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+    
+    private HashMap<String, RosterSpeedProfile> _profiles = new HashMap<String, RosterSpeedProfile>();
 
     public WarrantManager() {
         super();

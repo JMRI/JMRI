@@ -34,6 +34,7 @@ public class SpeedUtil implements ThrottleListener {
 
     private DccLocoAddress _dccAddress;
     private String _rosterId;        // Roster title for train
+    private boolean _newRosterId;
     private RosterEntry _rosterEntry;
     private Warrant _warrant;
     private String warrantName;     // For debug code to avoid threading issues 
@@ -80,6 +81,9 @@ public class SpeedUtil implements ThrottleListener {
     }
 
     public void setTrainId(String id) {
+        if (_rosterId != null && !_rosterId.equals(id)) {
+            _newRosterId = true;            
+        }
         _rosterId = id;
     }
     
@@ -113,7 +117,7 @@ public class SpeedUtil implements ThrottleListener {
     public boolean setDccAddress(String id) {
         if (id == null || id.trim().length()==0) {
             _rosterEntry = null;
-            _rosterId = null;
+            setTrainId(null);   // set _rosterId
             _dccAddress = null;           
            return false;
         }
@@ -138,7 +142,7 @@ public class SpeedUtil implements ThrottleListener {
                     if (_rosterId == null) {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _trainId.
-                        _rosterId = _rosterEntry.getId();
+                        setTrainId(_rosterEntry.getId());
                     }
                     _dccAddress = _rosterEntry.getDccLocoAddress();           
                 } else {
@@ -151,7 +155,7 @@ public class SpeedUtil implements ThrottleListener {
                     int num = Integer.parseInt(numId);
                     _dccAddress = new DccLocoAddress(num, isLong);
                     if (_rosterId == null) {
-                        _rosterId = _dccAddress.toString();                        
+                        setTrainId(_dccAddress.toString());                        
                     }
                }
             } catch (NumberFormatException e) {
@@ -159,7 +163,7 @@ public class SpeedUtil implements ThrottleListener {
                 return false;
             }
         } else {
-            _rosterId = id;
+            setTrainId(id);
             _dccAddress = _rosterEntry.getDccLocoAddress();           
         }
         if (log.isDebugEnabled()) log.debug("_rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
@@ -174,24 +178,23 @@ public class SpeedUtil implements ThrottleListener {
     }
     
     protected RosterSpeedProfile getSpeedProfile() {
-        if (_speedProfile == null) {
+        if (_speedProfile == null || _newRosterId) {
             makeSpeedTree();
         }
         return _speedProfile;
     }
 
     protected void makeSpeedTree() {
-        if (_speedProfile == null) {
-            _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile
-            if (_rosterEntry!=null) {
-                RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
-                if (speedProfile!=null) { // make copy of tree
-                    TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
-                    speedtree.putAll(speedProfile.getProfileSpeeds());
-                    _speedProfile.setProfileSpeeds(speedtree);
-                }
+        _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile
+        if (_rosterEntry!=null) {
+            RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
+            if (speedProfile!=null) { // make copy of tree
+                TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
+                speedtree.putAll(speedProfile.getProfileSpeeds());
+                _speedProfile.setProfileSpeeds(speedtree);
             }
         }
+        _newRosterId = false;
 
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
