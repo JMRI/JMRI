@@ -3688,6 +3688,8 @@ public class TrainBuilder extends TrainCommon {
      * Checks all of the cars on an interchange track and returns the oldest
      * (FIFO) or newest (LIFO) car residing on that track. Note high priority
      * cars will be serviced first, then low.
+     * 
+     * Also see checkCarOrder(Car car).
      *
      * @param car the car being pulled from the interchange track
      * @return The FIFO car at this interchange
@@ -3696,6 +3698,8 @@ public class TrainBuilder extends TrainCommon {
         if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
             return car;
         }
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
+                new Object[]{car.toString(), car.getTrack().getTrackType(), car.getTrackName(), car.getTrack().getServiceOrder()}));
         log.debug(
                 "Get {} car ({}) from {} ({}), last moved date: {}", // NOI18N
                 car.getTrack().getServiceOrder(), car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
