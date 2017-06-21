@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>9</minor>
+    <test>1</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>Sec1 TO 1 Left</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+      <userName>Sec1 Track Between</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS11</systemName>
+      <userName>Sec1 Sig 2 Center</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>Sec1 TO 1 Right</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>Sec1 Code</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>Sec1 Sig 2 Left</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>Sec1 Sig 2 Right</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>Sec1 MC</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+      <userName>Sec1 Track OS</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+      <userName>Sec1 Track Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9</systemName>
+      <userName>Sec1 Track Siding</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <userName>Sec1 TO 1 Left</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+      <userName>Sec1 Track Outside</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
+      <userName>Sec 1 Layout TO</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>Sec1 TO 1 Right</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+      <userName>Sec1 Code</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+      <userName>Sec1 Sign 2 Left</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <userName>Sec1 Sign 2 Center</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+      <userName>Sec1 Sign 2 Right</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+      <userName>Sec1 Track OS</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+      <userName>Sec1 Track Main</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+      <userName>Sec1 Track Siding</userName>
+    </turnout>
+  </turnouts>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="478" y="135" height="434" width="788" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
+    <positionablelabel x="91" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Layout Image" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="95" y="175" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Train Board" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="383" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="CTC Panel" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <turnouticon turnout="Sec1 Code" x="407" y="314" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Code (IT3)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 TO 1 Left" x="367" y="39" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 TO 1 Left (IT1)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 TO 1 Right" x="436" y="39" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 TO 1 Right (IT2)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Track OS" x="118" y="247" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Track OS (IT7)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Track Outside" x="72" y="249" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Track Outside (IT10)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Track Main" x="163" y="248" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Track Main (IT8)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Track Siding" x="162" y="210" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Track Siding (IT9)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Sign 2 Center" x="406" y="121" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Sign 2 Center (IT5)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Sign 2 Left" x="363" y="131" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Sign 2 Left (IT4)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec1 Sign 2 Right" x="449" y="126" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec1 Sign 2 Right (IT6)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sec 1 Layout TO" x="107" y="52" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Sec 1 Layout TO (IT11)</tooltip>
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-upper-right-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="Sec1 Code" x="412" y="285" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Code (IS3)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 MC" x="410" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 MC (IS6)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Sig 2 Left" x="368" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Sig 2 Left (IS4)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Sig 2 Right" x="443" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Sig 2 Right (IS5)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Sig 2 Left" x="372" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Sig 2 Left (IS4)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Sig 2 Right" x="454" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Sig 2 Right (IS5)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Track Between" x="77" y="76" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Track Between (IS10)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Track OS" x="119" y="89" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Track OS (IS7)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Track Siding" x="162" y="52" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Track Siding (IS9)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Track Main" x="162" y="76" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Track Main (IS8)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sec1 Sig 2 Center" x="413" y="156" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Sec1 Sig 2 Center (IS11)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+  </paneleditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Jun 20 17:18:20 PDT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Jun 20 17:18:22 PDT 2017</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Tue Jun 20 14:22:30 PDT 2017</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Jun 20 14:30:38 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Jun 20 17:29:07 PDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.9.1ish+jake+20170621T0016Z+R8e4a803f1a on Tue Jun 20 17:29:07 PDT 2017-->
+</layout-config>
