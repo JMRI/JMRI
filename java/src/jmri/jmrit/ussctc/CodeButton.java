@@ -7,7 +7,6 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
-@net.jcip.annotations.Immutable
 public class CodeButton {
 
     /**
@@ -18,25 +17,44 @@ public class CodeButton {
     /**
      * Create and configure 
      *
-     * @param layoutSensor  Name for Sensor that shows button press
+     * @param buttonSensor  Name for Sensor that shows button press
      * @param panelIndicator  Name of Turnout that lights panel indicator
-     * @param code Common CodeLine instance for this panel
      */
-    public CodeButton(String layoutSensor, String panelIndicator, CodeLine code) {
+    public CodeButton(String buttonSensor, String panelIndicator) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         
-        hLayoutSensor = hm.getNamedBeanHandle(layoutSensor, sm.provideSensor(layoutSensor));
+        hButtonSensor = hm.getNamedBeanHandle(buttonSensor, sm.provideSensor(buttonSensor));
         hPanelIndicator = hm.getNamedBeanHandle(panelIndicator, tm.provideTurnout(panelIndicator));
-        
-        this.code = code;
+                
+        sm.provideSensor(buttonSensor).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutSensorChanged(e);});
     }
 
-    CodeLine code;
+    /**
+     * Configure the CodeLine connection for this CodeButton
+     * @param code Common CodeLine instance for this panel
+     * @return This CodeButton object to permit call linking
+     */
+    public CodeButton setColumn(Column column) {
+        this.column = column;
+        return this;
+    }
     
-    NamedBeanHandle<Sensor> hLayoutSensor;
+    Column column;
+    
+    NamedBeanHandle<Sensor> hButtonSensor;
     NamedBeanHandle<Turnout> hPanelIndicator;
+    
+    void layoutSensorChanged(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("KnownState") && e.getNewValue().equals(Sensor.ACTIVE) && !e.getOldValue().equals(Sensor.ACTIVE))
+            codeButtonPressed();
+    }
+    
+    void codeButtonPressed() {
+        log.debug("Code button {} pressed", column.name);
+        column.requestSendCode();
+    }
     
     void codeSendStart() {
     }

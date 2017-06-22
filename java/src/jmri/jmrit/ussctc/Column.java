@@ -24,29 +24,28 @@ public class Column {
      * @param output3TO  Turnout name for 3rd channel of code information
      * @param output4TO  Turnout name for 4th channel of code information
      */
-    public Column(String startTO, String output1TO, String output2TO, String output3TO, String output4TO) {
-        NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-        
-        hStartTO = hm.getNamedBeanHandle(startTO, tm.provideTurnout(startTO));
-
-        hOutput1TO = hm.getNamedBeanHandle(output1TO, tm.provideTurnout(output1TO));
-        hOutput2TO = hm.getNamedBeanHandle(output2TO, tm.provideTurnout(output2TO));
-        hOutput3TO = hm.getNamedBeanHandle(output3TO, tm.provideTurnout(output3TO));
-        hOutput4TO = hm.getNamedBeanHandle(output4TO, tm.provideTurnout(output4TO));
+    public Column(String name, CodeLine line, CodeButton button, TurnoutSection turnout) {
+        this.name = name;
+        this.line = line;
+        this.button = button;
+        this.turnout = turnout;
     }
 
-    NamedBeanHandle<Turnout> hStartTO;
-
-    NamedBeanHandle<Turnout> hOutput1TO;
-    NamedBeanHandle<Turnout> hOutput2TO;
-    NamedBeanHandle<Turnout> hOutput3TO;
-    NamedBeanHandle<Turnout> hOutput4TO;
+    String name;
+    CodeLine line;
+    CodeButton button;
+    TurnoutSection turnout;
     
-    void codeSendStart() {
+    void requestSendCode() {
+        turnout.codeSendStart();
+        
+        if (!turnout.codeSendOK()) return;
+        
+        line.requestSendCode();
     }
 
     void codeSendComplete () {
+        button.codeSendComplete();
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Column.class.getName());

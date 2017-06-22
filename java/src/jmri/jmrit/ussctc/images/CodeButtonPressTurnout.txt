@@ -17,11 +17,16 @@ activate TurnoutSection
 TurnoutSection ->o Layout : TO Indicators\nOFF
 deactivate TurnoutSection
 
-note over Column: Combine codeSendStart()\nand codeSendOK()?
+note over Column: Combine codeSendStart()\nand codeSendOK()?\nSeparation needed for multiple\nsections? Not really....
 Column -> TurnoutSection : codeSendOK()
 activate TurnoutSection
+TurnoutSection -> Locking : opOK()
+activate Locking
+note over Locking : Checks multiple modes, OK
+deactivate Locking
 deactivate TurnoutSection
 
+note over Column : If Locking not OK,\nends here
 Column -> CodeLine : requestSendCode()
 activate CodeLine
 
@@ -30,13 +35,13 @@ deactivate CodeLine
 deactivate Column
 deactivate CodeButton
 
-...
+note over Layout : hardware or software\n          delay
 
 Layout o-> CodeLine: Code sequence\nCOMPLETE
 activate CodeLine
-CodeLine -> Column : sendComplete()
+CodeLine -> Column : codeSendComplete()
 activate Column
-CodeLine -> CodeButton : sendComplete()
+Column -> CodeButton : codeSendComplete()
 activate CodeButton
 CodeButton ->o Layout : Code Indicator\nOFF
 deactivate CodeButton

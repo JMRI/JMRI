@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-
+import java.util.*;
 /**
  * Drive the code line communications on a USS CTC panel
  *
@@ -43,10 +43,17 @@ public class CodeLine {
     NamedBeanHandle<Turnout> hOutput3TO;
     NamedBeanHandle<Turnout> hOutput4TO;
     
-    void codeSendStart() {
-    }
-
-    void codeSendComplete () {
+    static int DELAY = 500; // mSec
+    
+    void requestSendCode() {
+        log.debug("Test hardware to start sending code");
+        hStartTO.getBean().setCommandedState(Turnout.THROWN);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                hStartTO.getBean().setCommandedState(Turnout.CLOSED);
+            }
+        }, DELAY);
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());

@@ -29,10 +29,21 @@ public class PackageDemo {
         JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
 
+        // load file that defines various NamedBeans and pops a demo panel
         try {
-            InstanceManager.getDefault(jmri.ConfigureManager.class)
+            InstanceManager.getDefault(ConfigureManager.class)
                     .load(new java.io.File("java/test/jmri/jmrit/ussctc/PackageDemo.xml"));
+            InstanceManager.getDefault(LogixManager.class).activateAllLogixs();
         } catch (Exception e) { System.err.println(e); }
+        
+        // create and wire USS CTC objects
+        CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
+        TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R");
+        Column col = new Column("1", line, button, turnout);
+        button.setColumn(col);
+        
+        // user interacts here
         
         // wait for Swing to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 
