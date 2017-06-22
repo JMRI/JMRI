@@ -36,6 +36,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(OsIndicatorFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(OsIndicatorPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
+        
+        // new classes last
+        suite.addTest(new JUnit4TestAdapter(StationTest.class));
+        
         return suite;
     }
 
