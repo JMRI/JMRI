@@ -4075,7 +4075,7 @@ public class TrainBuilder extends TrainCommon {
             }
             if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchingLocation"),
-                        new Object[]{rld.getName(),}));
+                        new Object[]{rld.getName(), rld.getId()}));
             } else {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildRouteNoDropLocation"),
                         new Object[]{_train.getRoute().getName(), rld.getId(), rld.getName()}));
