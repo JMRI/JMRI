@@ -109,6 +109,8 @@ function parse_args() {
             # ignore and do not pass the settingsdir argument
             --settingsdir) shift ;;
             --settingsdir=*) ;;
+            # ignore and do not pass a ProcessSerialNumber argument (from the open command on macOS)
+            -psn_*) ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
