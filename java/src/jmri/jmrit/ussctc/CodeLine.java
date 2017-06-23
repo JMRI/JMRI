@@ -3,7 +3,11 @@ package jmri.jmrit.ussctc;
 import jmri.*;
 import java.util.*;
 /**
- * Drive the code line communications on a USS CTC panel
+ * Drive the code line communications on a USS CTC panel.
+ * <p>
+ * Primary interactions are with a group of {@link Station} objects
+ * that make up the panel.  Can also work with external 
+ * hardware via Turnout/Sensor interfaces.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */

@@ -3,7 +3,10 @@ package jmri.jmrit.ussctc;
 import jmri.*;
 
 /**
- * Drive the interactions of a code button and code light on the panel
+ * Drive the interactions of a code button and code light on the panel.
+ *<p>
+ * Primary interactions are with the common {@link CodeLine} and
+ * specific {@link Station} object.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
@@ -33,7 +36,7 @@ public class CodeButton {
 
     /**
      * Configure the Station connection for this CodeButton
-     * @param code A Station instance for this panel
+     * @param station A Station instance for this panel
      * @return This CodeButton object to permit call linking
      */
     public CodeButton addStation(Station station) {

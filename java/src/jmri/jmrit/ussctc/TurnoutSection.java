@@ -4,9 +4,19 @@ import jmri.*;
 import java.util.*;
 
 /**
- * Drive a single Turnout section on a USS CTC panel
+ * Drive a single Turnout section on a USS CTC panel.
+ * Implements {@link Section} for both the field and CTC machine parts.
  *
+ * <a href="doc-files/TurnoutSection-StateDiagram.png"><img src="doc-files/TurnoutSection-StateDiagram" alt="UML State diagram" height="50%" width="50%"></a>
  * @author Bob Jacobsen Copyright (C) 2007, 2017
+ * TODO: Update state diagram
+ */
+/*
+ * @startuml jmri/jmrit/ussctc/doc-files/TurnoutSection-StateDiagram.png
+ * [*] --> ShowingNormal : CLOSED at startup
+ * [*] --> ShowingRevered: THROWN at startup
+ * }
+ @end
  */
 public class TurnoutSection implements Section {
 
@@ -23,7 +33,7 @@ public class TurnoutSection implements Section {
      * @param reversedIndicator Turnout name for reversed (right) indicator light on panel
      * @param normalInput Sensor name for normal (left) side of switch on panel
      * @param reversedInput Sensor name for reversed (right) side of switch on panel
-     * @param code common CodeLine for this machine panel
+     * @param codeline common CodeLine for this machine panel
      */
     public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, CodeLine codeline) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -58,6 +68,7 @@ public class TurnoutSection implements Section {
         tm.provideTurnout(layoutTO).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
     }
 
+    // TODO - make sure state is properly implemented throughout for locking. Are these the right DARK states?
     enum State {
         SHOWING_NORMAL,
         SHOWING_REVERSED,
