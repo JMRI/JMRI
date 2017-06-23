@@ -23,6 +23,8 @@ public class StationTest {
         s.add(new Section(){
             public Station.Value  codeSendStart() { countCodeSend++; return Station.Value.Double00; }
             public void codeValueDelivered(Station.Value value) { }
+            public Station.Value indicationStart() { return Station.Value.Double00; }
+            public void indicationComplete(Station.Value value) {}
         });
         
         countCodeSend = 0;
@@ -41,6 +43,8 @@ public class StationTest {
                 Assert.assertEquals("deliver 10", Station.Value.Double10, value);
                 countCodeSend = 0;
             }
+            public Station.Value indicationStart() { return Station.Value.Double00; }
+            public void indicationComplete(Station.Value value) {}
         });
         s.add(new Section(){
             public Station.Value  codeSendStart() { countCodeSend2++; return Station.Value.Double01; }
@@ -48,6 +52,8 @@ public class StationTest {
                 Assert.assertEquals("deliver 01", Station.Value.Double01, value);
                 countCodeSend2 = 0;
             }
+            public Station.Value indicationStart() { return Station.Value.Double00; }
+            public void indicationComplete(Station.Value value) {}
         });
         
         countCodeSend = 0;
