@@ -428,11 +428,6 @@
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
-   <tocitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
-
-   <tocitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-   <tocitem text="Code Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
 
    <tocitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
 
