@@ -32,16 +32,16 @@ public class CodeButton {
     }
 
     /**
-     * Configure the CodeLine connection for this CodeButton
-     * @param code Common CodeLine instance for this panel
+     * Configure the Station connection for this CodeButton
+     * @param code A Station instance for this panel
      * @return This CodeButton object to permit call linking
      */
-    public CodeButton setColumn(Column column) {
-        this.column = column;
+    public CodeButton addStation(Station station) {
+        this.station = station;
         return this;
     }
     
-    Column column;
+    Station station;
     
     NamedBeanHandle<Sensor> hButtonSensor;
     NamedBeanHandle<Turnout> hPanelIndicator;
@@ -52,14 +52,23 @@ public class CodeButton {
     }
     
     void codeButtonPressed() {
-        log.debug("Code button {} pressed", column.name);
-        column.requestSendCode();
+        log.debug("Code button pressed");
+        hPanelIndicator.getBean().setCommandedState(Turnout.THROWN);
+        station.codeSendRequest();
     }
     
-    void codeSendStart() {
+    /**
+     * Code sequence done, turn off code light
+     */
+    void codeValueDelivered() {
+        hPanelIndicator.getBean().setCommandedState(Turnout.CLOSED);
     }
-
-    void codeSendComplete () {
+    
+    /**
+     * Indication sequence starting, turn on code light
+     */
+    void indicationStart() {
+        hPanelIndicator.getBean().setCommandedState(Turnout.THROWN);
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());

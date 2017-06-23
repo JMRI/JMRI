@@ -43,17 +43,61 @@ public class CodeLine {
     NamedBeanHandle<Turnout> hOutput3TO;
     NamedBeanHandle<Turnout> hOutput4TO;
     
-    static int DELAY = 500; // mSec
+    public static int START_PULSE_LENGTH = 500; // mSec
+    public static int CODE_SEND_DELAY = 10000; // mSec
     
-    void requestSendCode() {
-        log.debug("Test hardware to start sending code");
+    void requestSendCode(Station station) {
+        final Station s = station;
+        log.debug("Tell hardware to start sending code");
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer().schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() { // turn that off
             @Override
             public void run() {
                 hStartTO.getBean().setCommandedState(Turnout.CLOSED);
             }
-        }, DELAY);
+        }, START_PULSE_LENGTH);
+        
+        
+        // now, for testing purposes, we wait time for sequence complete
+        new Timer().schedule(new TimerTask() { // turn that off
+            @Override
+            public void run() {
+                jmri.util.ThreadingUtil.runOnGUI( ()->{
+                    s.codeValueDelivered();
+                } );
+            }
+        }, CODE_SEND_DELAY);
+    }
+    
+    /**
+     * Request processing of an indication from the field
+     */
+    void requestIndicationStart(Station station) {
+        final Station s = station;
+        log.debug("CodeLine requestIndicationStart");
+
+        // light code light
+        station.indicationStart();
+    
+        log.debug("Tell hardware to start sending indication");
+        hStartTO.getBean().setCommandedState(Turnout.THROWN);
+        new Timer().schedule(new TimerTask() { // turn that off
+            @Override
+            public void run() {
+                hStartTO.getBean().setCommandedState(Turnout.CLOSED);
+            }
+        }, START_PULSE_LENGTH);
+        
+        
+        // now, for testing purposes, we wait time for sequence complete
+        new Timer().schedule(new TimerTask() { // turn that off
+            @Override
+            public void run() {
+                jmri.util.ThreadingUtil.runOnGUI( ()->{
+                    s.indicationComplete();
+                } );
+            }
+        }, CODE_SEND_DELAY);
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());

@@ -38,7 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
         
         // new classes last
-        suite.addTest(new JUnit4TestAdapter(StationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.StationTest.class));
         
         return suite;
     }

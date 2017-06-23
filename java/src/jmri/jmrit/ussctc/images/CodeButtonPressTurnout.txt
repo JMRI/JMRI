@@ -1,8 +1,8 @@
 @startuml
 participant Layout
 participant CodeButton
-participant Column
 participant CodeLine
+participant Station
 participant TurnoutSection
 participant Locking
 
@@ -10,15 +10,14 @@ Layout o-> CodeButton: Button Pressed\nSensor ACTIVE
 activate CodeButton
 CodeButton ->o Layout : Code Indicator\nON
 
-CodeButton -> Column : requestSendCode()
-activate Column
-Column -> TurnoutSection : codeSendStart()
+CodeButton -> Station : codeSendRequest()
+activate Station
+Station -> TurnoutSection : codeSendStart()
 activate TurnoutSection
 TurnoutSection ->o Layout : TO Indicators\nOFF
 deactivate TurnoutSection
 
-note over Column: Combine codeSendStart()\nand codeSendOK()?\nSeparation needed for multiple\nsections? Not really....
-Column -> TurnoutSection : codeSendOK()
+Station -> TurnoutSection : codeSendOK()
 activate TurnoutSection
 TurnoutSection -> Locking : opOK()
 activate Locking
@@ -26,33 +25,47 @@ note over Locking : Checks multiple modes, OK
 deactivate Locking
 deactivate TurnoutSection
 
-note over Column : If Locking not OK,\nends here
-Column -> CodeLine : requestSendCode()
+note over Station : If Locking not OK,\nend here by telling\nCodeButton it's over
+Station -> CodeLine : requestSendCode()
 activate CodeLine
-
+note over CodeLine : Might be delay here\nif already running
 CodeLine ->o Layout : Code sequence\nSTART
 deactivate CodeLine
-deactivate Column
+deactivate Station
 deactivate CodeButton
 
 note over Layout : hardware or software\n          delay
 
 Layout o-> CodeLine: Code sequence\nCOMPLETE
 activate CodeLine
-CodeLine -> Column : codeSendComplete()
-activate Column
-Column -> CodeButton : codeSendComplete()
+CodeLine -> Station : codeValueDelivered()
+activate Station
+Station -> CodeButton : codeSendComplete()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nOFF
+deactivate CodeButton
+Station -> TurnoutSection : codeValueDelivered()
+activate TurnoutSection
+TurnoutSection ->o Layout : Set Turnout
+deactivate TurnoutSection
+Station -> CodeButton : codeSendComplete()
 activate CodeButton
 CodeButton ->o Layout : Code Indicator\nOFF
 deactivate CodeButton
 deactivate CodeLine
-deactivate Column
+deactivate Station
 
-note over Column: Wait for remote\noperation to complete.\nMaybe in CodeLine?
+note over Station: Wait for remote\noperation to complete\ne.g. turnout to move\nMaybe in CodeLine?
 
-Layout -> Column : timeout
-activate Column
-Column -> CodeLine : indicationStart()
+note over Station: From here down, this is a receipt of a indication from the remote station - same as other diagram
+
+Layout -> Station : timeout
+activate Station
+Station -> TurnoutSection : indicationStart()
+activate TurnoutSection
+note over TurnoutSection : Query layout turnout
+deactivate TurnoutSection
+Station -> CodeLine : requestIndicationStart()
 activate CodeLine
 CodeLine -> CodeButton : indicationStart()
 activate CodeButton
@@ -60,7 +73,7 @@ CodeButton ->o Layout : Code Indicator\nON
 deactivate CodeButton
 CodeLine ->o Layout : Indication sequence\nSTART
 deactivate CodeLine
-deactivate Column
+deactivate Station
 
 ...
 
@@ -70,9 +83,9 @@ CodeLine -> CodeButton : indicationComplete()
 activate CodeButton
 CodeButton ->o Layout : Code Indicator\nOFF
 deactivate CodeButton
-CodeLine -> Column : indicationComplete()
+CodeLine -> Station : indicationComplete()
 
-Column -> TurnoutSection : indicationComplete()
+Station -> TurnoutSection : indicationComplete()
 activate TurnoutSection
 TurnoutSection ->o Layout : TO Indicators\nSET
 deactivate TurnoutSection

@@ -25,7 +25,7 @@ public class PackageDemo {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initMemoryManager();
+        JUnitUtil.initMemoryManager();  
         JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
 
@@ -39,9 +39,12 @@ public class PackageDemo {
         // create and wire USS CTC objects
         CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
-        TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R");
-        Column col = new Column("1", line, button, turnout);
-        button.setColumn(col);
+        TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", line);
+        
+        Station station = new Station(line, button);
+        station.add(turnout);
+        button.addStation(station);
+        turnout.addStation(station);
         
         // user interacts here
         
