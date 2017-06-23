@@ -16,7 +16,7 @@ public class NamedIconTest {
 
     @Test
     public void testCTor() {
-        NamedIcon t = new NamedIcon("resources:logo.gif","logo");
+        NamedIcon t = new NamedIcon("program:resources/logo.gif","logo");
         Assert.assertNotNull("exists",t);
     }
 
