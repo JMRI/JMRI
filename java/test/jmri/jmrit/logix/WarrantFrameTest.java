@@ -1,14 +1,13 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -19,7 +18,7 @@ public class WarrantFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantFrame t = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
+        WarrantFrame t = new WarrantFrame(new Warrant("IW0", "WarrantFrameTestWarrant"));
         Assert.assertNotNull("exists",t);
     }
 

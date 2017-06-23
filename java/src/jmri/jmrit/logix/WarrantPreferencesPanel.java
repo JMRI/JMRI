@@ -718,7 +718,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     try {
                         float f = Float.parseFloat((String) value);
                         if (f < 0) {
-                            msg = Bundle.getMessage("InvalidNumber", (String) value);
+                            msg = Bundle.getMessage("MustBeFloat", (String) value);
                         } else {
                             data.setValue(f);
                         }
