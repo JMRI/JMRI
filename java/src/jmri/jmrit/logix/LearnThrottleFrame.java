@@ -235,7 +235,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     @Override
     public void dispose() {
         if (_throttle!=null) {
-            _warrantFrame.getWarrant().getSpeedUtil().releaseThrottle();            
+            _warrantFrame.getWarrant().releaseThrottle(_throttle);            
         }
         if (powerMgr != null) {
             powerMgr.removePropertyChangeListener(this);

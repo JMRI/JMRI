@@ -44,7 +44,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private Sensor _waitSensor;
     private int _sensorWaitState;
     private ThrottleRamp _ramp;
-    final ReentrantLock _lock = new ReentrantLock(true);
+    final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
     private boolean _atHalt = false;
     private boolean _atClear = false;
     private SpeedUtil _speedUtil;
@@ -194,8 +194,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             try {
                 if (command.equals("SPEED")) {
                     synchronized (this) {
-                      _lock.lock();
                         if (!_halt && !_waitForClear) {
+                            _lock.lock();
                             float speed = Float.parseFloat(ts.getValue());
                             _normalSpeed = speed;
                             float speedMod = _speedUtil.modifySpeed(speed, _speedType, _isForward);
@@ -205,8 +205,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 _timeRatio = 1.0f;
                             }
                             setSpeed(speedMod);
+                            _lock.unlock();
                         }
-                        _lock.unlock();
                     }
                 } else if (command.equals("SPEEDSTEP")) {
                     int step = Integer.parseInt(ts.getValue());
@@ -242,7 +242,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("Cmd #{}: {} et={} warrant {}", _idxCurrentCommand, ts.toString(), et, _warrant.getDisplayName());
             } catch (NumberFormatException nfe) {
                 log.error("Command failed! {} {}", ts.toString(), nfe.toString());
-                _lock.unlock();
             }
         }
         // shut down
@@ -359,8 +358,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * do throttle setting
      * @param s throttle setting
      */
-
-    synchronized protected void setSpeed(float s) {
+     protected void setSpeed(float s) {
         if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
         _speedUtil.speedChange();   // call before changing throttle setting
@@ -394,13 +392,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         cancelRamp();
 
-        synchronized (this) {
-            if (speedType.equals(Warrant.EStop)) {
-                setSpeed(-0.1f);        // always do immediate EStop
-                return false;
-            } else if (speedType.equals(Warrant.Stop)) {
-                return true;
-            } else {
+        if (speedType.equals(Warrant.EStop)) {
+            setSpeed(-0.1f);        // always do immediate EStop
+            return false;
+        } else if (speedType.equals(Warrant.Stop)) {
+            return true;
+        } else {
+            synchronized (this) {
                 _speedType = speedType;
                 float speedMod = _speedUtil.modifySpeed(1.0f, _speedType, _isForward);
                 if (Math.abs(1.0f - speedMod) > .0001f) {
@@ -506,28 +504,21 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Flag from user to end run
+     * End running warrant.
      */
-    public void abort() {
-        _abort = true;
+    public void stopRun() {
         cancelRamp();
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
-        if (_throttle != null) {
+        if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
             for (int i = 0; i < 10; i++) {
                 setFunction(i, false);
             }
-            try {
-                InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _speedUtil);
-            } catch (Exception e) {
-                // null pointer catch and maybe other such.
-                log.warn("Throttle release and cancel threw: " + e);
-            }
+            _warrant.releaseThrottle(_throttle);
         }
-        if (log.isDebugEnabled()) log.debug("Abort called. Engineer shut down. warrant {}", _warrant.getDisplayName());
     }
 
     private void setFunction(int cmdNum, boolean isSet) {
@@ -893,6 +884,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
             float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);   // requested endspeed
             float speed = _speedUtil.getSpeed();
+            if (speed < 0.0f) {
+                speed = 0.0f;
+            }
             float incr = _speedUtil.getStepIncrement();
             int delay = _speedUtil.getStepDelay();
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
@@ -924,9 +918,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             try {
                                 wait(delay);
                             } catch (InterruptedException ie) {
-                                log.error("ThrottleRamp interrupted " + ie);
-                                stop = true;
                                 _lock.unlock();
+                                stop = true;
                             }
                             if (stop) {
                                 break;
@@ -942,9 +935,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             try {
                                 wait(delay);
                             } catch (InterruptedException ie) {
-                                log.error("ThrottleRamp interrupted " + ie);
-                                stop = true;
                                 _lock.unlock();
+                                stop = true;
                             }
                             if (stop) {
                                 break;
@@ -953,6 +945,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     }
                     
                 } finally {
+                    _lock.unlock();
                     if (!endSpeedType.equals(Warrant.Stop) &&
                             !endSpeedType.equals(Warrant.EStop)) {
                         // speed restored, clear any stop waits
@@ -963,7 +956,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     if (stop) {
                         log.info("ThrottleRamp stopped before completion");
                     }
-                    _lock.unlock();
                 }
             }
             ThreadingUtil.runOnLayoutEventually(() -> {

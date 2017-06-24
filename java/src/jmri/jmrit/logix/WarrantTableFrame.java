@@ -125,7 +125,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     private WarrantTableFrame() {
-        super(false, true);
+        super(true, true);
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
         _model.init();

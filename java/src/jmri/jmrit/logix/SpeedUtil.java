@@ -5,14 +5,12 @@ import java.util.TreeMap;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.ThrottleListener;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.Engineer.RampData;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
-import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +28,12 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009, 2010, 2017
  *
  */
-public class SpeedUtil implements ThrottleListener {
+public class SpeedUtil {
 
     private DccLocoAddress _dccAddress;
     private String _rosterId;        // Roster title for train
     private boolean _newRosterId;
     private RosterEntry _rosterEntry;
-    private Warrant _warrant;
-    private String warrantName;     // For debug code to avoid threading issues 
     private List<BlockOrder> _orders;
 
 //    private TreeMap<Integer, SpeedStep> _speedTree;
@@ -48,17 +44,13 @@ public class SpeedUtil implements ThrottleListener {
     public static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil(Warrant war) {
-        _warrant = war;
         if (war !=null) {
-            warrantName = war.getDisplayName();
             _orders = war.getBlockOrders();
         }
     }
     
     protected void setWarrant(Warrant w) {
-        _warrant = w;
         if (w !=null) {
-            warrantName = w.getDisplayName();
             _orders = w.getBlockOrders();
         }
     }
@@ -135,28 +127,25 @@ public class SpeedUtil implements ThrottleListener {
                     numId = id;
                 }
             }
+            int num = Integer.parseInt(numId);
             try {
                 List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
                 if (l.size() > 0) {
                     _rosterEntry = l.get(0);
-                    if (_rosterId == null) {
+                    if (num != 0) {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _trainId.
                         setTrainId(_rosterEntry.getId());
                     }
                     _dccAddress = _rosterEntry.getDccLocoAddress();           
                 } else {
-                    _rosterEntry = null;
                     boolean isLong = true;
                     if ((index + 1) < id.length()
                             && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
                         isLong = false;
                     }
-                    int num = Integer.parseInt(numId);
                     _dccAddress = new DccLocoAddress(num, isLong);
-                    if (_rosterId == null) {
-                        setTrainId(_dccAddress.toString());                        
-                    }
+                    setTrainId(_dccAddress.toString()); // not a rosterId, but does identify the  DccLocoAddress                       
                }
             } catch (NumberFormatException e) {
                 _dccAddress = null;
@@ -166,7 +155,7 @@ public class SpeedUtil implements ThrottleListener {
             setTrainId(id);
             _dccAddress = _rosterEntry.getDccLocoAddress();           
         }
-        if (log.isDebugEnabled()) log.debug("_rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
+        if (log.isDebugEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
     }
 
@@ -185,13 +174,17 @@ public class SpeedUtil implements ThrottleListener {
     }
 
     protected void makeSpeedTree() {
-        _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile
-        if (_rosterEntry!=null) {
-            RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
-            if (speedProfile!=null) { // make copy of tree
-                TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
-                speedtree.putAll(speedProfile.getProfileSpeeds());
-                _speedProfile.setProfileSpeeds(speedtree);
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        _speedProfile = manager.getSpeedProfile(_rosterId);
+        if (_speedProfile == null) {
+            _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile            
+            if (_rosterEntry!=null) {
+                RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
+                if (speedProfile!=null) { // make copy of tree
+                    TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
+                    speedtree.putAll(speedProfile.getProfileSpeeds());
+                    _speedProfile.setProfileSpeeds(speedtree);
+                }
             }
         }
         _newRosterId = false;
@@ -202,80 +195,21 @@ public class SpeedUtil implements ThrottleListener {
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
     }
 
-    /************** start warrant run - end of create/edit/setup methods ******************/
-
-    /**
-     * @return error message if any
-     */
-    protected String acquireThrottle() {
-        if (_dccAddress == null)  {
-            return Bundle.getMessage("NoAddress", warrantName);
-        }
-        jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
-        if (tm==null) {
-            return Bundle.getMessage("noThrottle", warrantName);
-        } else {
-            if (!tm.requestThrottle(_dccAddress.getNumber(), _dccAddress.isLongAddress(), this)) {
-                return Bundle.getMessage("trainInUse", _dccAddress.getNumber());
-            }           
-        }
-        if(log.isDebugEnabled()) log.debug("Throttle at {} requested for warrant {}",
-                _dccAddress.toString(), warrantName);          
-        return null;
-    }
-
-    @Override
-    public void notifyThrottleFound(DccThrottle throttle) {
-        if (throttle == null) {
-            ThreadingUtil.runOnLayoutEventually(() -> {
-                _warrant.abortWarrant("notifyThrottleFound: null throttle(?)!");
-                _warrant.fireRunStatus("throttleFail", null, Bundle.getMessage("noThrottle", warrantName));
-            });
-            return;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("notifyThrottleFound for address= {}, class= {}, warrant {}", 
-                    throttle.getLocoAddress().toString(), throttle.getClass().getName(), warrantName);
-        }
-
-        _throttle = throttle;
-        ThreadingUtil.runOnLayoutEventually(() -> {
-            _warrant.startupWarrant();
-            _warrant.runWarrant(throttle);
-        });
-    }   //end notifyThrottleFound
-
-    protected void releaseThrottle() {
-        if (_throttle != null) {
-            jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
-            if (tm != null) {
-                tm.releaseThrottle(_throttle, this);
-            } else {
-                log.error(Bundle.getMessage("noThrottle", warrantName));
-            }
-            _throttle = null;
-        }
-    }
-
-    @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        ThreadingUtil.runOnLayoutEventually(() -> {
-            _warrant.abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+warrantName)));
-            _warrant.fireRunStatus("throttleFail", null, reason);
-        });
-    }
-    
     protected void stopRun(boolean updateSpeedProfile) {
-        releaseThrottle();
-        if (updateSpeedProfile && _rosterEntry!=null && _speedProfile!=null) {
-            _rosterEntry.setSpeedProfile(_speedProfile);
-            Roster.getDefault().writeRoster();
-            if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster. id= {}", _rosterId);
+        if (updateSpeedProfile && _speedProfile!=null) {
+            WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+            manager.setSpeedProfile(_rosterId, _speedProfile);
         }
     }
 
     /************* runtime speed needs - throttle, engineer acquired ***************/
-    
+
+    /**
+     * @param throttle set DccThrottle
+     */
+    protected void setThrottle( DccThrottle throttle) {
+        _throttle = throttle;
+    }
     /**
      * Calculates the scale speed of the current throttle setting for display
      * @param speedType name of current speed
@@ -370,8 +304,8 @@ public class SpeedUtil implements ThrottleListener {
             speed = throttleSetting *_signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR;
             byFactor = true;
         }
-        if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by {}. warrant {}",
-                    throttleSetting, speed, (byFactor?"factor":"profile"), warrantName);
+        if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by {}. train= {}",
+                    throttleSetting, speed, (byFactor?"factor":"profile"), _rosterId);
         return speed;
     }
 
@@ -428,12 +362,8 @@ public class SpeedUtil implements ThrottleListener {
         return new RampData(rampLength, rampTime);   // add 1cm for safety (all scales)
     }
     
-    synchronized protected float getSpeed() {
+    protected float getSpeed() {
         float speed = _throttle.getSpeedSetting();
-        if (speed < 0.0) {
-            speed = 0.0f;
-            _throttle.setSpeedSetting(speed);
-        }
         return speed;
     }
 
@@ -457,7 +387,7 @@ public class SpeedUtil implements ThrottleListener {
             
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
-            boolean lengthOK = true;
+            boolean mergeOK = true;
             if (newIdx > 1) {
                 for (int i=lastIdx; i<newIdx; i++) {
                     BlockOrder blkOrder = _orders.get(i);
@@ -465,7 +395,7 @@ public class SpeedUtil implements ThrottleListener {
                     if (length <= 0) {
                         log.warn("Block {} does not have a length for path {}",
                                 blkOrder.getBlock().getDisplayName(), blkOrder.getPathName());
-                        lengthOK = false;
+                        mergeOK = false;
                     }
                     totalLength += length;
                 }                
@@ -478,15 +408,18 @@ public class SpeedUtil implements ThrottleListener {
             float incr = _throttle.getSpeedIncrement();
             aveThrottle = incr * Math.round(aveThrottle/incr);
             
+            float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);
             if (log.isDebugEnabled()) {
-                float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);
                 log.debug("{} speed changes. AveThrottle= {}, distance= {}, time = {}. pathLength = {}",
                         _numchanges, aveThrottle, _distanceTravelled, _timeAtSpeed, totalLength);
                 log.debug("Speeds: SpeedProfile= {}, aveSpeed= {}, over block {} to {}",
                         spSpeed, aveSpeed, _orders.get(lastIdx).getBlock().getDisplayName(),
                         _orders.get(newIdx).getBlock().getDisplayName());
             }
-            if (lengthOK) {
+            if (spSpeed > 0.0f) {   // perhaps spSpeed should be weighted.  but how much?
+                aveSpeed = (aveSpeed + spSpeed) / 2;
+            }
+            if (mergeOK) {
                 if (isForward) {
                     _speedProfile.setForwardSpeed(aveThrottle, aveSpeed);
                 } else {

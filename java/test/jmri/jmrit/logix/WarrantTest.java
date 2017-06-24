@@ -260,6 +260,7 @@ public class WarrantTest {
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initShutDownManager();
 //        JUnitUtil.initWarrantManager();
     }
 

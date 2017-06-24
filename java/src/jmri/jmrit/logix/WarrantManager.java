@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.util.HashMap;
 import jmri.InstanceManager;
+import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
     
-    private HashMap<String, RosterSpeedProfile> _profiles = new HashMap<String, RosterSpeedProfile>();
+    private HashMap<String, RosterSpeedProfile> _profiles;
 
     public WarrantManager() {
         super();
@@ -170,7 +171,33 @@ public class WarrantManager extends AbstractManager
 
     @Override
     public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameWarrant");
+        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    }
+    
+    protected void setSpeedProfile(String id, RosterSpeedProfile sp) {
+        if (_profiles == null) {
+            _profiles = new HashMap<String, RosterSpeedProfile>();
+            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+            } else {
+                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
+            }
+        }
+        if (id != null && sp != null) {
+            _profiles.put(id, sp);
+        }
+    }
+    
+    protected RosterSpeedProfile getSpeedProfile(String id) {
+        if (_profiles == null) {
+            return null;
+        }
+        return _profiles.get(id);
+    }
+    
+    protected HashMap<String, RosterSpeedProfile> getProfiles() {
+        return _profiles;
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
