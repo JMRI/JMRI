@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -197,6 +198,13 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         log.debug("Edit route");
         if (ref != null) {
             ref.dispose();
+        }
+        Route route = sysList.get(row);
+        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
+            // warn user
+            log.debug("Can not edit a route that has a built train");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("TrainBuilt"),
+                    JOptionPane.WARNING_MESSAGE);
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
