@@ -5,7 +5,6 @@
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/tmp"/>
 	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
-	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
@@ -76,5 +75,15 @@
         <classpathentry kind="lib" path="lib/purejavacomm-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jemmy-2.2.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/xbee-java-library-1.2.0.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-arm.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86_64.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-osx-x86.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-osx-x86_64.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-windows-x86.jar"/>
+        <classpathentry kind="lib" path="lib/libusb4java-1.2.0-windows-x86_64.jar"/>
+        <classpathentry kind="lib" path="lib/usb-api-1.0.2.jar"/>
+        <classpathentry kind="lib" path="lib/usb4java-1.2.0.jar"/>
+        <classpathentry kind="lib" path="lib/usb4java-javax-1.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
