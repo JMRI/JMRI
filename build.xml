@@ -534,12 +534,14 @@
 
     <macrodef name="java-compile">
         <attribute name="javac.source"/>
+        <attribute name="javac.includes" default=""/>
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
         <sequential>
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <javac compiler="modern"
+                   includes="@{javac.includes}"
                    srcdir="@{javac.source}"
                    destdir="@{javac.target}"
                    source="${source_version}"
