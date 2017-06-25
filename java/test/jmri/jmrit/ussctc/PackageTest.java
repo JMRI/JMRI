@@ -42,6 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeLineTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeButtonTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.SignalHeadSectionTest.class));
         
         return suite;
     }
