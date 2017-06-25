@@ -7,7 +7,7 @@ import java.util.*;
  * Drive a single Turnout section on a USS CTC panel.
  * Implements {@link Section} for both the field and CTC machine parts.
  *
- * <a href="doc-files/TurnoutSection-StateDiagram.png"><img src="doc-files/TurnoutSection-StateDiagram" alt="UML State diagram" height="50%" width="50%"></a>
+ * <a href="doc-files/TurnoutSection-StateDiagram.png"><img src="doc-files/TurnoutSection-StateDiagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  * TODO: Update state diagram
  */
@@ -26,7 +26,9 @@ public class TurnoutSection implements Section {
     TurnoutSection() {}
     
     /**
-     * Create and configure 
+     * Create and configure.
+     *
+     * Accepts user or system names.
      *
      * @param layoutTO  Name for turnout on railroad
      * @param normalIndicator  Turnout name for normal (left) indicator light on panel
@@ -149,7 +151,7 @@ public class TurnoutSection implements Section {
         } else log.debug("Layout turnout not set for {} is {}", value, hLayoutTO.getBean().getCommandedState());
         
         // start the timer for the turnout to move
-        new Timer().schedule(new TimerTask() { // turn that off
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 jmri.util.ThreadingUtil.runOnGUI( ()->{
@@ -162,7 +164,7 @@ public class TurnoutSection implements Section {
     }
 
     /**
-     * Just sets the code lamp active. Rest of action is on indicationComplete
+     * Provide state that's returned from field to machine via indication.
      */
     public Station.Value indicationStart() {
         if (hLayoutTO.getBean().getKnownState() == Turnout.CLOSED) {
@@ -174,7 +176,7 @@ public class TurnoutSection implements Section {
     }
 
     /**
-     * Provide value to the field unit
+     * Process values received from the field unit.
      */
     public void indicationComplete(Station.Value value) {
         log.debug("Indication sets from {}", value, new Exception("traceback"));
