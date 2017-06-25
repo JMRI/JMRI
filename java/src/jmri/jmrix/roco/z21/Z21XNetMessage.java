@@ -107,8 +107,11 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         // refer to section 5.1 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(4);
         msg.setElement(0,Z21Constants.LAN_X_GET_TURNOUT_INFO);
-        msg.setElement(1,(address &0xff00)>>8);
-        msg.setElement(2,(address & 0x00ff));
+        // compared to Lenz devices, the addresses on the Z21 is one below 
+        // the numerical value.  We will correct it here so higher level 
+        // code doesn't see the difference.
+        msg.setElement(1,((address-1) &0xff00)>>8);
+        msg.setElement(2,((address-1) & 0x00ff));
         msg.setParity();
         return(msg);
     }
@@ -127,8 +130,11 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         // refer to section 5.2 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0,Z21Constants.LAN_X_SET_TURNOUT);
-        msg.setElement(1,(address &0xff00)>>8);
-        msg.setElement(2,(address & 0x00ff));
+        // compared to Lenz devices, the addresses on the Z21 is one below 
+        // the numerical value.  We will correct it here so higher level 
+        // code doesn't see the difference.
+        msg.setElement(1,((address-1) &0xff00)>>8);
+        msg.setElement(2,((address-1) & 0x00ff));
         int element3=0x80;
         if(active) {
            element3 |=  0x08;
