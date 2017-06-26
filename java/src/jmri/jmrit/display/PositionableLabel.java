@@ -996,6 +996,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             Graphics2D gr = (Graphics2D) g.create();
 
             // set antialiasing hint for macOS and Windows
+            // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
             if (SystemType.isMacOSX() || SystemType.isWindows()) {
                 gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             }
