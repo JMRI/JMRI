@@ -435,8 +435,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
-                OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
-                OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
+            OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
+            OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
         _oBlockTable.setDragEnabled(true);
 
         // Use XTableColumnModel so we can control which columns are visible
@@ -530,7 +530,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);
-        
+
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -563,7 +563,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalTable = new JTable(_blockPortalXRefModel);
         _blockPortalTable.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _blockPortalTable.setDragEnabled(true);
-        
+
         _blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         _blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
         for (int i = 0; i < _blockPortalXRefModel.getColumnCount(); i++) {
@@ -599,7 +599,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL}));
         _signalTable.setDragEnabled(true);
-        
+
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -664,9 +664,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathModel.init();
         JTable blockPathTable = new JTable(blockPathModel);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
-                BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
+            BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
-        
+
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));

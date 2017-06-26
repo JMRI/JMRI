@@ -112,8 +112,8 @@ public class ProfileManagerDialog extends JDialog {
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
             }
-            public void windowClosing(WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -138,6 +138,7 @@ public class ProfileManagerDialog extends JDialog {
         jScrollPane1.setViewportView(profiles);
         profiles.ensureIndexIsVisible(profiles.getSelectedIndex());
         profiles.getAccessibleContext().setAccessibleName(Bundle.getMessage("ProfileManagerDialog.profiles.AccessibleContext.accessibleName")); // NOI18N
+        profiles.getAccessibleContext().setAccessibleDescription(Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText")); // NOI18N
 
         btnSelect.setText(Bundle.getMessage("ProfileManagerDialog.btnSelect.text")); // NOI18N
         btnSelect.addActionListener(new ActionListener() {
@@ -278,15 +279,19 @@ public class ProfileManagerDialog extends JDialog {
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {
+        ProfileManager manager = ProfileManager.getDefault();
         if (ProfileManager.getStartingProfile() == null
                 || (System.getProperty(ProfileManager.SYSTEM_PROPERTY) == null
-                && !ProfileManager.getDefault().isAutoStartActiveProfile())) {
+                && !manager.isAutoStartActiveProfile())) {
+            Profile last = manager.getActiveProfile();
             ProfileManagerDialog pmd = new ProfileManagerDialog(f, true);
             pmd.setLocationRelativeTo(f);
             pmd.setVisible(true);
-            ProfileManager.getDefault().saveActiveProfile();
+            if (last == null || !last.equals(manager.getActiveProfile())) {
+                manager.saveActiveProfile();
+            }
         }
-        return ProfileManager.getDefault().getActiveProfile();
+        return manager.getActiveProfile();
     }
 
     private void profileNameChanged(Profile p) {
@@ -319,11 +324,14 @@ public class ProfileManagerDialog extends JDialog {
     }//GEN-LAST:event_profilesKeyPressed
 
     @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a profile is not selected or autostarted")
-    private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void formWindowClosed(WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (countDown != -1) {
+            // prevent an attempt to reclose this window from blocking application exit
+            countDown = -1;
+            // exit with an error code to indicate abnormal exit
             System.exit(255);
         }
-    }//GEN-LAST:event_formWindowClosing
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnCreate;

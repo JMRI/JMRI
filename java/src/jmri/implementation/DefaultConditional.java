@@ -1075,11 +1075,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
-                            if (!w.setTrainId(getActionString(action))) {
-                                String s = "Unable to find train Id " + getActionString(action) + " in Roster  - " + action.getDeviceName();
-                                log.info(s);
-                                errorList.add(s); // could be serious - display error to UI
-                            }
+                            w.getSpeedUtil().setTrainId(getActionString(action));
                             actionCount++;
                         }
                         break;
@@ -1130,7 +1126,7 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
                             if (!w.controlRunTrain(action.getActionData())) {
-                                log.info("Train " + w.getTrainId() + " not running  - " + devName);
+                                log.info("Train " + w.getSpeedUtil().getTrainId() + " not running  - " + devName);
                             }
                             actionCount++;
                         }

@@ -59,6 +59,18 @@ public class Z21XNetSimulatorAdapterTest {
         Assert.assertEquals("CS Emergeny Stop Specific Loco (XNetV1,V2)",new XNetReply("01 04 05"),a.generateReply(new XNetMessage("91 02 93")));
     }
 
+    @Test
+    public void testGenerateTurnoutClosedReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("TurnoutOperationResponse",new XNetReply("43 00 14 01 56"),a.generateReply(new XNetMessage("53 00 14 88 CE")));
+    }
+
+    @Test
+    public void testGenerateTurnoutThrownReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("TurnoutOperationResponse",new XNetReply("43 00 14 02 55"),a.generateReply(new XNetMessage("53 00 14 89 CE")));
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
