@@ -1,5 +1,6 @@
 package jmri.jmrit.ussctc;
 
+import java.util.*;
 import jmri.*;
 import jmri.util.*;
 import org.junit.Assert;
@@ -36,15 +37,39 @@ public class PackageDemo {
             InstanceManager.getDefault(LogixManager.class).activateAllLogixs();
         } catch (Exception e) { System.err.println(e); }
         
+        // turn signals on for display
+        SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
+        shm.getSignalHead("2R Upper").setAppearance(SignalHead.GREEN);
+        shm.getSignalHead("2R Lower").setAppearance(SignalHead.GREEN);
+        shm.getSignalHead("2L Main").setAppearance(SignalHead.GREEN);
+        shm.getSignalHead("2L Siding").setAppearance(SignalHead.GREEN);
+        
         // create and wire USS CTC objects
         CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
         TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", line);
+        SignalHeadSection signals = new SignalHeadSection(
+                        Arrays.asList(new String[]{"2R Upper","2R Lower"}), Arrays.asList(new String[]{"2L Main", "2L Siding"}),
+                        "Sec1 Sign 2 Left", "Sec1 Sign 2 Center", "Sec1 Sign 2 Right", 
+                        "Sec1 Sig 2 Left", "Sec1 Sig 2 Right",
+                        line);
         
         Station station = new Station(line, button);
         station.add(turnout);
+        station.add(signals);
+
         button.addStation(station);
         turnout.addStation(station);
+        signals.addStation(station);
+        
+        // slow down delayed turnouts
+        jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 10000;
+        
+        // show times
+        log.debug("Code line start pulse: {}", CodeLine.START_PULSE_LENGTH);
+        log.debug("Code line send duration: {}", CodeLine.CODE_SEND_DELAY);
+        log.debug("Turnout motion delay: {}", jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL);
+        log.debug("Signal setting pause: {}", SignalHeadSection.MOVEMENT_DELAY);
         
         // user interacts here
         
@@ -59,4 +84,5 @@ public class PackageDemo {
             });
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class.getName());
 }
