@@ -32,14 +32,12 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "a 10 1 0",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "a 10 1 1",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Test
