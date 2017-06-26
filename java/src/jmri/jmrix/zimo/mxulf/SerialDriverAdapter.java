@@ -21,8 +21,8 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
+ * Provide access to Zimo's MX-1 on an attached serial comm port. Normally
+ * controlled by the zimo.mxulf.mxulfFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  *
@@ -230,7 +230,10 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        communicate
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
