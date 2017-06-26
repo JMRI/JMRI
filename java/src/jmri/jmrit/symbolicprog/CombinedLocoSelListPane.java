@@ -87,12 +87,12 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
                     // decoder selected - reset and disable loco selection
                     locoBox.setSelectedIndex(0);
                     go2.setEnabled(true);
-                    go2.setToolTipText("Click to open the programmer");
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                     updateMfgListToSelectedDecoder();
                 } else {
                     // decoder not selected - require one
                     go2.setEnabled(false);
-                    go2.setToolTipText("Select a locomotive or decoder to enable");
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         };

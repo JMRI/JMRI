@@ -58,7 +58,12 @@ public class DefaultShutDownManager implements ShutDownManager {
         this.shutdownHook = new Thread(() -> {
             DefaultShutDownManager.this.shutdown(0, false);
         });
-        Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+        try {
+            Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+        } catch (IllegalStateException ex) {
+            // this is thrown only if System.exit() has already been called,
+            // so ignore
+        }
     }
 
     @Override

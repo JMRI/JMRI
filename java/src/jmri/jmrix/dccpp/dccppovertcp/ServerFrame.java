@@ -142,7 +142,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         startButton.setEnabled(!server.isEnabled());
         stopButton.setEnabled(server.isEnabled());
         saveButton.setEnabled(server.isSettingChanged());
-        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled"));
+        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled")); // TODO I18N, also below
     }
 
     private void updateClientStatus() {

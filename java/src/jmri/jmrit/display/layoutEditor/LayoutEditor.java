@@ -863,7 +863,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (highlightSelectedBlockFlag) {
                 highlightBlockInComboBox(blockIDComboBox);
             }
-            String newName = blockIDComboBox.getUserName();
+            String newName = blockIDComboBox.getDisplayName();
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
 
             if (b != null) {
@@ -4231,7 +4231,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 return;
             }
 
-            if (!rName.equals(reporter.getUserName())) {
+            if (!rName.equals(reporter.getDisplayName())) {
                 rName = rName.toUpperCase();
             }
         } else {
@@ -8231,7 +8231,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
 
         //check on layout block
-        String newName = blockIDComboBox.getUserName();
+        String newName = blockIDComboBox.getDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8239,7 +8239,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             auxTools.setBlockConnectivityChanged();
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
+            String sensorName = blockSensorComboBox.getDisplayName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8274,7 +8274,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = blockIDComboBox.getUserName();
+        String newName = blockIDComboBox.getDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8282,7 +8282,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setLayoutBlockBD(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
+            String sensorName = blockSensorComboBox.getDisplayName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8333,14 +8333,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = blockIDComboBox.getUserName();
+        String newName = blockIDComboBox.getDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
+            String sensorName = blockSensorComboBox.getDisplayName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8420,14 +8420,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = blockIDComboBox.getUserName();
+        String newName = blockIDComboBox.getDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
+            String sensorName = blockSensorComboBox.getDisplayName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -9630,7 +9630,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String newName = sensorComboBox.getUserName();
+        String newName = sensorComboBox.getDisplayName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
@@ -9680,7 +9680,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         //check for valid signal head entry
-        String newName = signalHeadComboBox.getUserName();
+        String newName = signalHeadComboBox.getDisplayName();
         SignalHead mHead = null;
 
         if (!newName.equals("")) {
@@ -9779,7 +9779,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         //check for valid signal head entry
-        String newName = signalMastComboBox.getUserName();
+        String newName = signalMastComboBox.getDisplayName();
         SignalMast mMast = null;
 
         if (!newName.equals("")) {
@@ -9892,7 +9892,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = textMemoryComboBox.getUserName();
+        String memoryName = textMemoryComboBox.getDisplayName();
 
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
@@ -9905,7 +9905,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Memory xMemory = l.getMemory();
 
         if (xMemory != null) {
-            String uname = xMemory.getUserName();
+            String uname = xMemory.getDisplayName();
 
             if ((uname == null) || (!(uname.equals(memoryName)))) {
                 //put the system name in the memory field
@@ -9921,7 +9921,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //addMemory
 
     void addBlockContents() {
-        String newName = blockContentsComboBox.getUserName();
+        String newName = blockContentsComboBox.getDisplayName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
@@ -9934,7 +9934,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         jmri.Block xMemory = l.getBlock();
 
         if (xMemory != null) {
-            String uname = xMemory.getUserName();
+            String uname = xMemory.getDisplayName();
 
             if ((uname == null) || (!(uname.equals(newName)))) {
                 //put the system name in the memory field

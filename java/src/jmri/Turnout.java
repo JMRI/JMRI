@@ -137,6 +137,12 @@ public interface Turnout extends NamedBean {
     public static final int SIGNAL = 64;
 
     /**
+     * Constant representing "automatic delayed feedback" . This is DIRECT feedback
+     * with a fixed delay before the feedback (known state) takes effect.
+     */
+    public static final int DELAYED = 128;
+
+    /**
      * Constant representing turnout lockout cab commands
      */
     public static final int CABLOCKOUT = 1;
