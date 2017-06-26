@@ -111,9 +111,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
              switch(l.getElement(3)){
                 case 0x03: newKnownState(INCONSISTENT);
                            break;
-                case 0x02: newKnownState(THROWN);
+                case 0x02: newKnownState(_inverted?CLOSED:THROWN);
                            break;
-                case 0x01: newKnownState(CLOSED);
+                case 0x01: newKnownState(_inverted?THROWN:CLOSED);
                            break;
                 case 0x00:
                 default:
