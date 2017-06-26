@@ -11,7 +11,6 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-  <!-- $Id$ -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the variables that -->
   <!-- register-mode decoders have. -->
