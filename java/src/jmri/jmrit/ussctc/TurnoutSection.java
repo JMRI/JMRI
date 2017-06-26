@@ -133,8 +133,6 @@ public class TurnoutSection implements Section {
         return CODE_NEITHER;
     }
 
-    public static int MOVEMENT_DELAY = 5000;
-    
     /**
      * Notification that code has been sent. Sets the turnout on the layout.
      */
@@ -148,19 +146,9 @@ public class TurnoutSection implements Section {
         } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
             hLayoutTO.getBean().setCommandedState(Turnout.THROWN);
             log.debug("Layout turnout set THROWN");
-        } else log.debug("Layout turnout not set for {} is {}", value, hLayoutTO.getBean().getCommandedState());
+        } else log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
         
-        // start the timer for the turnout to move
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                jmri.util.ThreadingUtil.runOnGUI( ()->{
-                    log.debug("end of movement delay");
-                    station.requestIndicationStart();
-                } );
-            }
-        }, MOVEMENT_DELAY);
-        
+        // indication will come back when turnout feedback (defined elsewhere) triggers        
     }
 
     /**
@@ -179,7 +167,7 @@ public class TurnoutSection implements Section {
      * Process values received from the field unit.
      */
     public void indicationComplete(Station.Value value) {
-        log.debug("Indication sets from {}", value, new Exception("traceback"));
+        log.debug("Indication sets from {}", value);
         if (value == CODE_CLOSED) {
             hNormalIndicator.getBean().setCommandedState(Turnout.THROWN);
             hReversedIndicator.getBean().setCommandedState(Turnout.CLOSED);
@@ -196,8 +184,10 @@ public class TurnoutSection implements Section {
     } 
 
     void layoutTurnoutChanged(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState") && !e.getNewValue().equals(e.getOldValue()) )
+        if (e.getPropertyName().equals("KnownState") && !e.getNewValue().equals(e.getOldValue()) ) {
+            log.debug("Turnout changed from {} to {}, so requestIndicationStart", e.getOldValue(), e.getNewValue());
             station.requestIndicationStart();
+        }
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class.getName());

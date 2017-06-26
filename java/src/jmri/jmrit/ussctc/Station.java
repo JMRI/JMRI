@@ -49,6 +49,7 @@ public class Station {
      * Usually comes from a {@link CodeButton}
      */
     public void codeSendRequest() {
+        log.debug("Station - start codeSendRequest");
         sentValues = new ArrayList<>();
         sections.forEach((section) -> {
             // accumulate send values, which also sets indicators
@@ -58,11 +59,12 @@ public class Station {
         // TODO: check for locks on each section
         
         codeline.requestSendCode(this);
+        log.debug("Station - end codeSendRequest");
         
     }
 
     public void codeSendComplete() {
-        log.debug("code sending complete, notify");
+        log.debug("Station - start codeSendComplete");
         
         // notify
         sections.forEach((section) -> {
@@ -70,12 +72,14 @@ public class Station {
             sentValues.add(section.codeSendStart());
         } );
         
+        log.debug("Station - end codeSendComplete");
     }
     
     /**
      * Tell the sections that code information has arrived in the field
      */
     public void codeValueDelivered() {
+        log.debug("Station - start codeValueDelivered");
         // clear the code light
         button.codeValueDelivered();
         
@@ -83,11 +87,14 @@ public class Station {
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).codeValueDelivered(sentValues.get(i));
         }
+        log.debug("Station - end codeValueDelivered");
     }   
 
 
     public void requestIndicationStart() {
+        log.debug("Station - start requestIndicationStart");
         codeline.requestIndicationStart(this);
+        log.debug("Station - end requestIndicationStart");
     }
 
     /**
@@ -95,7 +102,7 @@ public class Station {
      *  Rest of action is on indicationComplete
      */
     public void indicationStart() {
-        log.debug("Station indicationStart");
+        log.debug("Station - start indicationStart");
         
         button.indicationStart();
 
@@ -104,6 +111,7 @@ public class Station {
             // accumulate send values, which also sets indicators
             indicationValues.add(section.indicationStart());
         } );
+        log.debug("Station - end indicationStart");
     }
 
     /**
@@ -111,14 +119,15 @@ public class Station {
      *  Rest of action is on indicationComplete
      */
     public void indicationComplete() {
-        log.debug("Station indicationComplete");
+        log.debug("Station - start indicationComplete");
         // clear the code light
-        button.codeValueDelivered();
+        button.indicationComplete();
         
         // tell each section
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).indicationComplete(indicationValues.get(i));
         }
+        log.debug("Station - end indicationComplete");
     }
 
     ArrayList<Section> sections = new ArrayList<>();

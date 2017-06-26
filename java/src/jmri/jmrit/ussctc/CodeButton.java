@@ -56,6 +56,7 @@ public class CodeButton {
     
     void codeButtonPressed() {
         log.debug("Code button pressed");
+        log.debug("Code light on - codeButtonPressed");
         hPanelIndicator.getBean().setCommandedState(Turnout.THROWN);
         station.codeSendRequest();
     }
@@ -64,6 +65,7 @@ public class CodeButton {
      * Code sequence done, turn off code light
      */
     void codeValueDelivered() {
+        log.debug("Code light off - codeValueDelivered");
         hPanelIndicator.getBean().setCommandedState(Turnout.CLOSED);
     }
     
@@ -71,8 +73,18 @@ public class CodeButton {
      * Indication sequence starting, turn on code light
      */
     void indicationStart() {
+        log.debug("Code light on - indicationStart");
         hPanelIndicator.getBean().setCommandedState(Turnout.THROWN);
     }
+
+    /**
+     * Indication sequence done, turn off code light
+     */
+    void indicationComplete() {
+        log.debug("Code light off - indicationComplete");
+        hPanelIndicator.getBean().setCommandedState(Turnout.CLOSED);
+    }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());
 }

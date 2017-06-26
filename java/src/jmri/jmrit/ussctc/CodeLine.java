@@ -48,11 +48,11 @@ public class CodeLine {
     NamedBeanHandle<Turnout> hOutput4TO;
     
     public static int START_PULSE_LENGTH = 500; // mSec
-    public static int CODE_SEND_DELAY = 10000; // mSec
+    public static int CODE_SEND_DELAY = 2500; // mSec
     
     void requestSendCode(Station station) {
         final Station s = station;
-        log.debug("Tell hardware to start sending code");
+        log.debug("CodeLine requestSendCode - Tell hardware to start sending code");
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
@@ -78,7 +78,7 @@ public class CodeLine {
      */
     void requestIndicationStart(Station station) {
         final Station s = station;
-        log.debug("CodeLine requestIndicationStart");
+        log.debug("CodeLine requestIndicationStart - process indication from field");
 
         // light code light
         station.indicationStart();

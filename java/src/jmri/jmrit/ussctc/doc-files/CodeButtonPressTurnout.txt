@@ -57,7 +57,7 @@ deactivate Station
 
 note over Station: Wait for remote\noperation to complete\ne.g. turnout to move\nMaybe in CodeLine?
 
-note over Station: From here down, this is a receipt of a indication from the remote station - same as other diagram
+note over Station: From here down, this is a receipt of a indication from the remote station - same as other diagram - make sure consistent!
 
 Layout -> Station : timeout
 activate Station

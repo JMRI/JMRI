@@ -44,6 +44,7 @@ public class SignalHeadSection implements Section {
         
         hRightHeads = new ArrayList<>();
         for (String s : rightHeads) hRightHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
+
         hLeftHeads = new ArrayList<>();
         for (String s : leftHeads) hLeftHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
         
@@ -57,11 +58,23 @@ public class SignalHeadSection implements Section {
         this.codeline = codeline;
         
         // initialize lamps to follow layout state to all off - you don't know anything
-        //tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
-        //tm.provideTurnout(stopIndicator).setCommandedState(Turnout.CLOSED);
-        //tm.provideTurnout(rightIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(rightIndicator).setCommandedState(Turnout.CLOSED);
+        // hold everything
+        setListHeldState(hRightHeads, true);
+        setListHeldState(hLeftHeads, true);
         
-        // TODO - add a listener for changes?  See layoutTurnoutChanged at end
+        // add listeners
+        for (String s : leftHeads) 
+            shm.getSignalHead(s).addPropertyChangeListener(
+                (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
+            );
+        for (String s : rightHeads) 
+            shm.getSignalHead(s).addPropertyChangeListener(
+                (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
+            );
+
     }
 
     CodeLine codeline;
@@ -85,28 +98,29 @@ public class SignalHeadSection implements Section {
     private final Station.Value CODE_RIGHT = Station.Value.Triple001;
     private final Station.Value CODE_OFF = Station.Value.Triple000;
     
-    // States to track changes
-    enum State {
-        REQUEST_LEFT,
-        REQUEST_STOP,
-        REQUEST_RIGHT
+    // States to track changes at the Code Machine end
+    enum Machine {
+        SET_LEFT,
+        SET_STOP,
+        SET_RIGHT
     }
-    State state;
+    Machine machine;
 
     /**
      * Start of sending code operation:
      * <ul>
-     * <li>Set indicators
+     * <li>Set indicators off if a change has been requested
      * <li>Provide values to send over line
      * </ul>
-     * @return code line value to transmit
+     * @return code line value to transmit from machine to field
      */
     @Override
     public Station.Value codeSendStart() {
         // Set the indicators based on current and requested state
-        if (   ( state==State.REQUEST_LEFT && hLeftInput.getBean().getKnownState()==Sensor.ACTIVE)
-            || ( state==State.REQUEST_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) ) {
-            log.debug("No signal change requested");
+        if (   ( machine==Machine.SET_LEFT && hLeftInput.getBean().getKnownState()==Sensor.ACTIVE)
+            || ( machine==Machine.SET_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) 
+            || ( machine==Machine.SET_STOP && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE && hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE)) {
+            log.debug("No signal change required, states aligned");
         } else {
             log.debug("Signal change requested");
             // have to turn off
@@ -116,88 +130,124 @@ public class SignalHeadSection implements Section {
         }
         
         // return the settings to send
+        Station.Value retval;
         if (hLeftInput.getBean().getKnownState()==Sensor.ACTIVE) {
-            state = State.REQUEST_LEFT;
-            return CODE_LEFT;
+            machine = Machine.SET_LEFT;
+            retval = CODE_LEFT;
         } else if (hRightInput.getBean().getKnownState()==Sensor.ACTIVE) {
-            state = State.REQUEST_RIGHT;
-            return CODE_RIGHT;
+            machine = Machine.SET_RIGHT;
+            retval = CODE_RIGHT;
         } else {
-            state = State.REQUEST_STOP;
-            return CODE_STOP;
+            machine = Machine.SET_STOP;
+            retval = CODE_STOP;
         }
+        log.debug("codeSendStart returns {}", retval);
+        return retval;
     }
 
     public static int MOVEMENT_DELAY = 5000;
     
     /**
-     * Notification that code has been sent. Sets the signals on the layout.
+     * Code arrives in field. Sets the signals on the layout.
      */
     public void codeValueDelivered(Station.Value value) {
+        log.debug("codeValueDelivered sets value {}", value);
         // @TODO add lock checking here; this is part of vital logic implementation
         
-        // read and set signals
+        // Set signals. While doing that, remember command as indication, so that the
+        // following signal change won't drive an _immediate_ indication cycle.
+        // Also, always go via stop...
+        Station.Value  currentIndication = getCurrentIndication();
         if (value == CODE_LEFT) {
-            log.debug("Layout signals set LEFT");
+            lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            log.debug("Layout signals set LEFT");
+            lastIndication = CODE_LEFT;
             setListHeldState(hLeftHeads, false);
         } else if (value == CODE_RIGHT) {
+            lastIndication = CODE_STOP;
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            lastIndication = CODE_RIGHT;
             log.debug("Layout signals set RIGHT");
             setListHeldState(hRightHeads, false);
-            setListHeldState(hLeftHeads, true);
         } else {
+            lastIndication = CODE_STOP;
             log.debug("Layout signals set STOP");
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
         }
         
         // start the timer for the signals to change
-        new Timer().schedule(new TimerTask() { // turn that off
-            @Override
-            public void run() {
-                jmri.util.ThreadingUtil.runOnGUI( ()->{
-                    log.debug("end of movement delay");
-                    station.requestIndicationStart();
-                } );
-            }
-        }, MOVEMENT_DELAY);
-        
+        if (currentIndication != lastIndication) {
+            log.debug("codeValueDelivered started timer for return indication");
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    jmri.util.ThreadingUtil.runOnGUI( ()->{
+                        log.debug("end of movement delay from codeValueDelivered");
+                        station.requestIndicationStart();
+                    } );
+                }
+            }, MOVEMENT_DELAY);
+        }
     }
 
     protected void setListHeldState(ArrayList<NamedBeanHandle<SignalHead>> list, boolean state) {
-        for (NamedBeanHandle<SignalHead> handle : list)
+        for (NamedBeanHandle<SignalHead> handle : list) {
             handle.getBean().setHeld(state);
+        }
     }
+    
     
     /**
      * Provide state that's returned from field to machine via indication.
      */
     public Station.Value indicationStart() {
+        Station.Value retval = getCurrentIndication();
+        log.debug("indicationStart with {}; last indication was {}", retval, lastIndication);
+        lastIndication = retval;
+        return retval;
+    }
+    
+    /**
+     * Work out current indication from layout status
+     */
+    public Station.Value getCurrentIndication() {     
         boolean leftStopped = true;
         for (NamedBeanHandle<SignalHead> handle : hLeftHeads)
-            if (handle.getBean().getAppearance()!=SignalHead.RED) leftStopped = false;
+            if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) leftStopped = false;
 
         boolean rightStopped = true;
         for (NamedBeanHandle<SignalHead> handle : hRightHeads)
-            if (handle.getBean().getAppearance()!=SignalHead.RED) rightStopped = false;
+            if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) rightStopped = false;
 
-        log.debug("found leftStopped {}, rightStopped {}", leftStopped, rightStopped);
+        log.debug("    found leftStopped {}, rightStopped {}", leftStopped, rightStopped);
         if (!leftStopped && !rightStopped) log.error("Found both left and right not at stop");
 
         
-        if (!leftStopped) {
-            return CODE_LEFT;
-        } else if (!rightStopped) {
-            return CODE_RIGHT;
+        Station.Value retval;
+        
+        if (leftStopped && rightStopped) {
+            retval = CODE_STOP;
+        } else if (!rightStopped && leftStopped) {
+            retval = CODE_RIGHT;
+        } else if (!leftStopped && rightStopped) {
+            retval = CODE_LEFT;
         } else 
-            return CODE_STOP;
+            retval = CODE_OFF;
+            
+        return retval;
     }
 
+    Station.Value lastIndication = CODE_OFF;
+    
     /**
      * Process values received from the field unit.
      */
     public void indicationComplete(Station.Value value) {
-        log.debug("Indication sets from {}", value, new Exception("traceback"));
+        log.debug("indicationComplete sets from {} in state {}", value, machine);
         if (value == CODE_LEFT) {
             hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
@@ -218,9 +268,13 @@ public class SignalHeadSection implements Section {
         }
     } 
 
-    void layoutTurnoutChanged(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState") && !e.getNewValue().equals(e.getOldValue()) )
+    void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
+        if (getCurrentIndication() != lastIndication) {
+            log.debug("  SignalHead change resulted in changed Indication, driving update");
             station.requestIndicationStart();
+        } else {
+            log.debug("  SignalHead change without change in Indication");
+        }
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class.getName());
