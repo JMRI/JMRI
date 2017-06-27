@@ -207,6 +207,17 @@ public class SignalHeadSection implements Section {
     public Station.Value indicationStart() {
         Station.Value retval = getCurrentIndication();
         log.debug("indicationStart with {}; last indication was {}", retval, lastIndication);
+        
+        // TODO: anti-fleeting done always
+        if (retval == CODE_STOP && lastIndication != CODE_STOP) {
+            for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
+                if (!handle.getBean().getHeld()) handle.getBean().setHeld(true);
+            }
+            for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
+                if (!handle.getBean().getHeld()) handle.getBean().setHeld(true);
+            }
+        }
+        
         lastIndication = retval;
         return retval;
     }
@@ -216,13 +227,14 @@ public class SignalHeadSection implements Section {
      */
     public Station.Value getCurrentIndication() {     
         boolean leftStopped = true;
-        for (NamedBeanHandle<SignalHead> handle : hLeftHeads)
+        for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
             if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) leftStopped = false;
-
+        }
         boolean rightStopped = true;
-        for (NamedBeanHandle<SignalHead> handle : hRightHeads)
+        for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
+            log.debug("    checking {} {}", handle.getBean().getHeld(), handle.getBean().getAppearance());
             if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) rightStopped = false;
-
+        }
         log.debug("    found leftStopped {}, rightStopped {}", leftStopped, rightStopped);
         if (!leftStopped && !rightStopped) log.error("Found both left and right not at stop");
 
