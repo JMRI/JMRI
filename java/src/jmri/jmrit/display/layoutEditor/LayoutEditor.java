@@ -464,7 +464,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public ArrayList<SensorIcon> sensorImage = new ArrayList<SensorIcon>();                     //sensor images
     public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<SignalHeadIcon>();         //signal head images
     public ArrayList<LocoIcon> markerImage = new ArrayList<LocoIcon>();                         //marker images
-    public ArrayList<PositionableLabel> labelImage = new ArrayList<PositionableLabel>();        //layout positionable label images
+    public ArrayList<PositionableLabel> labelImage = new ArrayList<PositionableLabel>();        //positionable label images
     public ArrayList<AnalogClock2Display> clocks = new ArrayList<AnalogClock2Display>();        //fast clocks
     public ArrayList<MultiSensorIcon> multiSensors = new ArrayList<MultiSensorIcon>();          //multi-sensor images
 
