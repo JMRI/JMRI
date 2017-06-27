@@ -7,7 +7,7 @@
 
 import jarray
 import jmri
-import gnu.io
+import purejavacomm
 
 class SerialPortThrottle(SerialPortDevice) :
     
