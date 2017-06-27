@@ -38,6 +38,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
         
         // new classes last
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CombinedLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.OccupancyLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.StationTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeLineTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeButtonTest.class));
