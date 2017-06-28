@@ -2,6 +2,8 @@ package jmri.implementation;
 
 import java.util.Arrays;
 import javax.annotation.CheckReturnValue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -115,12 +117,33 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
+            } else if (_activeFeedbackType == DELAYED) {
+                if (timer == null) {
+                    timer = new Timer("DELAYED turnout feedback", true);
+                }
+                if (lastTimerTask != null) lastTimerTask.cancel();  // in case any running
+                newKnownState(INCONSISTENT);
+                lastTimerTask = new TimerTask() {
+                        public void run () { newKnownState(s); }
+                    };
+                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );          
             }
         } else {
             myOperator.start();
         }
     }
 
+    /** 
+     * Defines duration of delay for DELAYED feedback mode.
+     *<p>
+     * Defined as "public non-final"
+     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
+     */
+    public static int DELAYED_FEEDBACK_INTERVAL = 4000;
+    
+    static Timer timer = null;
+    TimerTask lastTimerTask = null;
+    
     @Override
     public int getCommandedState() {
         return _commandedState;
@@ -224,11 +247,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     protected String[] _validFeedbackNames = {"DIRECT", "ONESENSOR",
-        "TWOSENSOR"};
+        "TWOSENSOR", "DELAYED"};
 
-    protected int[] _validFeedbackModes = {DIRECT, ONESENSOR, TWOSENSOR};
+    protected int[] _validFeedbackModes = {DIRECT, ONESENSOR, TWOSENSOR, DELAYED};
 
-    protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR;
+    protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR | DELAYED;
 
     protected int _activeFeedbackType = DIRECT;
 

@@ -25,14 +25,12 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "xT 5,r,1",
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "xT 5,g,1",
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
 
