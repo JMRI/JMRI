@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.PackageTest.class
+   jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.PackageTest.class,
+   GridConnectDoubledMessageTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.can2usbino package.

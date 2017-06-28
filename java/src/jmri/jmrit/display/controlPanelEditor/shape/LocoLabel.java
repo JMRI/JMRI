@@ -3,22 +3,16 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.logix.OBlock;
 
 
     public class LocoLabel extends PositionableRoundRect {
 
-        private static final long serialVersionUID = -5874790860514345475L;
         OBlock _block;
 
         public LocoLabel(Editor editor) {
             super(editor);
-        }
-
-        public LocoLabel(Editor editor, Shape shape) {
-            super(editor, shape);
         }
 
         public void setBlock(OBlock b) {
@@ -51,5 +45,10 @@ import jmri.jmrit.logix.OBlock;
             int vOffset = Math.max((maxHeight() - textHeight) / 2, 0) + getFontMetrics(font).getAscent();
             g2d.setColor(_block.getMarkerForeground());
             g2d.drawString(trainName, hOffset, vOffset);
+        }
+
+        @Override
+        public boolean storeItem() {
+            return false;
         }
     }

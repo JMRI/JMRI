@@ -1,7 +1,7 @@
 package jmri.jmrit.dispatcher;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -39,20 +39,19 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2010-2011
+ * @author Dave Duchamp Copyright (C) 2010-2011
  */
 public class AutoTrainAction {
 
     /**
-     * Main constructor method
+     * Create an AutoTrainAction.
+     *
+     * @param aat the associated train
      */
     public AutoTrainAction(AutoActiveTrain aat) {
         _autoActiveTrain = aat;
         _activeTrain = aat.getActiveTrain();
     }
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // operational instance variables
     private AutoActiveTrain _autoActiveTrain = null;
@@ -60,7 +59,7 @@ public class AutoTrainAction {
     private ArrayList<TransitSection> _activeTransitSectionList = new ArrayList<TransitSection>();
     private ArrayList<TransitSectionAction> _activeActionList = new ArrayList<TransitSectionAction>();
 
-    // this method is called when an AutoActiveTrain enters a Section	
+    // this method is called when an AutoActiveTrain enters a Section 
     protected synchronized void addTransitSection(TransitSection ts) {
         _activeTransitSectionList.add(ts);
         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
@@ -152,12 +151,13 @@ public class AutoTrainAction {
         java.beans.PropertyChangeListener sensorListener = null;
         s.addPropertyChangeListener(sensorListener
                 = new java.beans.PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (e.getPropertyName().equals("KnownState")) {
-                            handleSensorChange(sensorName);
-                        }
-                    }
-                });
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("KnownState")) {
+                    handleSensorChange(sensorName);
+                }
+            }
+        });
         tsa.setSensorListener(sensorListener);
         return true;
     }
@@ -284,17 +284,18 @@ public class AutoTrainAction {
         // set up listener
         s.addPropertyChangeListener(_doneSensorListener
                 = new java.beans.PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (e.getPropertyName().equals("KnownState")) {
-                            int state = _doneSensor.getKnownState();
-                            if (state == Sensor.ACTIVE) {
-                                if (_activeTrain.getStatus() == ActiveTrain.WORKING) {
-                                    _activeTrain.setStatus(ActiveTrain.READY);
-                                }
-                            }
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("KnownState")) {
+                    int state = _doneSensor.getKnownState();
+                    if (state == Sensor.ACTIVE) {
+                        if (_activeTrain.getStatus() == ActiveTrain.WORKING) {
+                            _activeTrain.setStatus(ActiveTrain.READY);
                         }
                     }
-                });
+                }
+            }
+        });
     }
 
     protected synchronized void cancelDoneSensor() {
@@ -310,7 +311,7 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
             justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
@@ -421,7 +422,7 @@ public class AutoTrainAction {
             case TransitSectionAction.LOCOFUNCTION:
                 // execute the specified decoder function
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    log.debug("{}: setting function {} to {}", _activeTrain.getTrainName(), 
+                    log.debug("{}: setting function {} to {}", _activeTrain.getTrainName(),
                             tsa.getDataWhat1(), tsa.getStringWhat());
                     int fun = tsa.getDataWhat1();
                     if (tsa.getStringWhat().equals("On")) {
@@ -493,7 +494,7 @@ public class AutoTrainAction {
                     }
                 } else {
                     log.debug("{}: setting signalMast '{}' to HELD", _activeTrain.getTrainName(), sName);
-                    sm.setHeld(true);                    
+                    sm.setHeld(true);
                 }
                 break;
             case TransitSectionAction.RELEASESIGNAL:
@@ -512,7 +513,7 @@ public class AutoTrainAction {
                     }
                 } else {
                     log.debug("{}: setting signalMast '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
-                    sm.setHeld(false);                    
+                    sm.setHeld(false);
                 }
                 break;
             default:
@@ -521,17 +522,17 @@ public class AutoTrainAction {
         }
     }
 
+    /**
+     * A runnable that implements delayed execution of a TransitSectionAction.
+     */
     class TSActionDelay implements Runnable {
 
-        /**
-         * A runnable that implements delayed execution of a
-         * TransitSectionAction
-         */
         public TSActionDelay(TransitSectionAction tsa, int delay) {
             _tsa = tsa;
             _delay = delay;
         }
 
+        @Override
         public void run() {
             try {
                 Thread.sleep(_delay);
@@ -547,12 +548,15 @@ public class AutoTrainAction {
     class HornExecution implements Runnable {
 
         /**
-         * A runnable to implement horn execution
+         * Create a HornExecution.
+         *
+         * @param tsa the associated action
          */
         public HornExecution(TransitSectionAction tsa) {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             _autoActiveTrain.incrementHornExecution();
             if (_tsa.getWhatCode() == TransitSectionAction.SOUNDHORN) {
@@ -611,17 +615,18 @@ public class AutoTrainAction {
         private TransitSectionAction _tsa = null;
     }
 
+    /**
+     * A runnable to monitor whether the autoActiveTrain is moving or stopped.
+     * Note: If train stops to do work with a manual throttle, this thread will
+     * continue to wait until auto operation is resumed.
+     */
     class MonitorTrain implements Runnable {
 
-        /**
-         * A runnable to monitor whether the autoActiveTrain is moving or
-         * stopped Note: If train stops to do work with a manual throttle, this
-         * thread will continue to wait until auto operation is resumed.
-         */
         public MonitorTrain(TransitSectionAction tsa) {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             if (_tsa != null) {
                 boolean waitingOnTrain = true;
@@ -637,7 +642,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 } else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
                     if ((_autoActiveTrain.getAutoEngineer() != null)
@@ -654,7 +659,7 @@ public class AutoTrainAction {
                                 }
                             }
                         } catch (InterruptedException e) {
-                            // interrupting will cause termination without executing the action						
+                            // interrupting will cause termination without executing the action      
                         }
                     }
                     // train is stopped, wait for it to start 
@@ -669,7 +674,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 }
             }
@@ -678,17 +683,16 @@ public class AutoTrainAction {
         private TransitSectionAction _tsa = null;
     }
 
+    /**
+     * A runnable to monitor the autoActiveTrain speed.
+     */
     class MonitorTrainSpeed implements Runnable {
 
-        /**
-         * A runnable to monitor whether the autoActiveTrain is moving or
-         * stopped Note: If train stops to do work with a manual throttle, this
-         * thread will continue to wait until auto operation is resumed.
-         */
         public MonitorTrainSpeed(TransitSectionAction tsa) {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             while ((_autoActiveTrain.getAutoEngineer() != null)
                     && (!_autoActiveTrain.getAutoEngineer().isAtSpeed())) {

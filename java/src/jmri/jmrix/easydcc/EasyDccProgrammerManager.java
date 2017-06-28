@@ -10,9 +10,8 @@ import jmri.managers.DefaultProgrammerManager;
  * systems
  *
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2002
+  */
 public class EasyDccProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
@@ -27,18 +26,21 @@ public class EasyDccProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new EasyDccOpsModeProgrammer(pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
 
-/* @(#)EasyDccProgrammerManager.java */
+

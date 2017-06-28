@@ -19,14 +19,15 @@ import org.jdom2.Element;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
+    @Override
     protected void getInstance() {
         adapter = new NetworkDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

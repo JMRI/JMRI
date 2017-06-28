@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2002-2004
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  *
  * Based on XNetThrottleManager by Paul Bender
  */
@@ -40,6 +39,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * throttle listeners know about it.
      *
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
         if (log.isDebugEnabled()) {
@@ -48,11 +48,11 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
-	    if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
-		// TODO: Eventually add something more robust here.
-		log.error("No Register available for Throttle. Address = {}", address);
-		return;
-	    }
+     if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
+  // TODO: Eventually add something more robust here.
+  log.error("No Register available for Throttle. Address = {}", address);
+  return;
+     }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
@@ -63,6 +63,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * DCC++ based systems DO NOT use the Dispatch Function
      * (do they?)
      */
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -71,6 +72,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * DCC++ based systems can have multiple throttles for the same 
      * device
      */
+    @Override
     protected boolean singleUse() {
         return false;
     }
@@ -79,6 +81,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * Address 128 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -87,6 +90,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * Address 127 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -94,6 +98,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     /**
      * There are no ambiguous addresses on this system.
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -111,16 +116,18 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * possible modes specifed by the DccThrottle interface XPressNet supports
      * 14,27,28 and 128 speed step modes
      */
+    @Override
     public int supportedSpeedModes() {
         return (jmri.DccThrottle.SpeedStepMode128); }
 
     // Handle incoming messages for throttles.
+    @Override
     public void message(DCCppReply r) {
-	// Guts of how a throttle handles replies...
-	//
-	// What should this be??
-	// For now, drop the message.
-	/*
+ // Guts of how a throttle handles replies...
+ //
+ // What should this be??
+ // For now, drop the message.
+ /*
         // We want to check to see if a throttle has taken over an address
         if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
             if (r.getElement(1) == DCCppConstants.LOCO_NOT_AVAILABLE) {
@@ -133,24 +140,28 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
                 }
             }
         }
-	*/
+ */
 
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
     }
 
+    @Override
     public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-	    tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
+     tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             DCCppThrottle lnt = (DCCppThrottle) t;
             lnt.throttleDispose();
             return true;

@@ -1,4 +1,3 @@
-// MarklinConnectionTypeList.java
 package jmri.jmrix.marklin;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.marklin;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
 public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

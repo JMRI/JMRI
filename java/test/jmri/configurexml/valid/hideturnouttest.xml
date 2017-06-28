@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="0" height="960" width="1900" windowheight="1022" windowwidth="1918" panelheight="960" panelwidth="1900" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutturnout ident="TO1" type="1" hidden="yes" continuing="2" disabled="no" disableWhenOccupied="no" xcen="521.0" ycen="220.0" xa="501.0" ya="220.0" xb="541.0" yb="220.0" xc="541.0" yc="230.0" xd="501.0" yd="220.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Feb 05 07:29:59 GMT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Feb 05 07:31:11 GMT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.7.1ish-201702040943-jenkins-R3bbaa7f on Sun Feb 05 07:31:11 GMT 2017 $Id$-->
+</layout-config>

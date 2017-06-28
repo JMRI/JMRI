@@ -12,7 +12,6 @@ import junit.framework.TestCase;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Id$
  */
 public class LnPacketizerTest extends TestCase {
 
@@ -24,10 +23,12 @@ public class LnPacketizerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

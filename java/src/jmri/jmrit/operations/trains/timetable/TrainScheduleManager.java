@@ -36,20 +36,21 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static TrainScheduleManager _instance = null;
     private int _id = 0;
 
     public static synchronized TrainScheduleManager instance() {
-        if (_instance == null) {
+        TrainScheduleManager instance = jmri.InstanceManager.getNullableDefault(TrainScheduleManager.class);;
+        if (instance == null) {
             log.debug("TrainScheduleManager creating instance");
             // create and load
-            _instance = new TrainScheduleManager();
+            instance = new TrainScheduleManager();
+            jmri.InstanceManager.setDefault(TrainScheduleManager.class,instance);
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainScheduleManager returns instance " + _instance);
+            log.debug("TrainScheduleManager returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {
@@ -67,6 +68,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The schedule string name to search for. 
      * @return requested TrainSchedule object or null if none exists
      */
     public TrainSchedule getScheduleByName(String name) {
@@ -88,6 +90,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     * @param name The string name of the schedule.
      *
      *
      * @return new TrainSchedule or existing TrainSchedule
@@ -107,6 +110,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to add.
      */
     public void register(TrainSchedule schedule) {
         Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
@@ -121,6 +125,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to delete.
      */
     public void deregister(TrainSchedule schedule) {
         if (schedule == null) {
@@ -223,8 +228,12 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * Update a JComboBox with the latest schedules.
      *
      * @param box the JComboBox needing an update.
+     * @throws IllegalArgumentException if box is null
      */
     public void updateComboBox(JComboBox<TrainSchedule> box) {
+        if(box==null) {
+           throw new IllegalArgumentException("Attempt to update non-existant comboBox");
+        }
         box.removeAllItems();
         for (TrainSchedule sch : getSchedulesByNameList()) {
             box.addItem(sch);
@@ -251,6 +260,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     * @param root The common Element for operations-trains.dtd.
      *
      */
     public void store(Element root) {
@@ -311,4 +321,4 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)TrainScheduleManager.java */
+

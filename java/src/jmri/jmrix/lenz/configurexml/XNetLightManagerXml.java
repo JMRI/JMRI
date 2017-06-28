@@ -1,4 +1,3 @@
-// XNetLightManagerXml.java
 package jmri.jmrix.lenz.configurexml;
 
 import org.jdom2.Element;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision$
  */
 public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -20,10 +18,12 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.lenz.configurexml.XNetLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -1,4 +1,3 @@
-// CarLoadEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2011
- * @version $Revision$
  */
 final class CarLoadAttributeAction extends AbstractAction {
 

@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.bluetooth.configurexml.PackageTest.class
+   jmri.jmrix.loconet.bluetooth.configurexml.PackageTest.class,
+   LocoNetBluetoothAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.bluetooth package.

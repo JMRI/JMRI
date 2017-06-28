@@ -27,6 +27,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -42,12 +54,16 @@
   <variable CV="2" item="Vstart" default="0" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Start Volts (0-255)</label>
+    <comment>Range 0-255</comment>
     <label xml:lang="it">Tensione di partenza (0-255)</label>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="fr">V démarr. (0-255)</label>
     <label xml:lang="de">Anfahrspannung</label>
-    <comment>Range 0-255</comment>
-    <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="ca">Voltatge d'arrencada</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
+    <label xml:lang="cs">Rozjezdové napětí</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
   </variable>
   <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
     <decVal min="0" max="255"/>
@@ -57,6 +73,10 @@
     <comment>Sets the maximum voltage at full throttle</comment>
     <comment xml:lang="it">Stabilisce la tensione alla velocità massima</comment>
     <comment xml:lang="de">Legt die Höchstgeschwindigkeit fest</comment>
+    <label xml:lang="cs">Maximální napětí</label>
+    <comment xml:lang="cs">Meze 0-255. Nastavení maximálního napětí při plně otevřeném ovladači</comment>
+    <label xml:lang="ca">Voltatge màxim</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -66,5 +86,9 @@
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Střední napětí</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Voltatge mitjà</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
 </variables>

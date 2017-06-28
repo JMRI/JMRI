@@ -1,4 +1,3 @@
-// DefaultBackup.java
 package jmri.jmrit.operations.setup;
 
 

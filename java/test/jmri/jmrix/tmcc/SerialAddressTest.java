@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialAddress utility class.
  *
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     public void testValidateSystemNameFormat() {
@@ -161,10 +160,12 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

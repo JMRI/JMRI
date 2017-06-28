@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -16,15 +15,12 @@ import jmri.SensorManager;
  * made to TrainInfoFile.java and dispatcher-traininfo.DTD as well as this
  * module.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class TrainInfo {
 
     public TrainInfo() {
     }
-
-    private static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // instance variables for both manual and automatic operation
     private String transitName = "";
@@ -39,6 +35,7 @@ public class TrainInfo {
     private int priority = 5;
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
+    private boolean allocateAllTheWay = false;
     private boolean reverseAtEnd = false;
     private int delayedStart = ActiveTrain.NODELAY;
     private int delayedRestart = ActiveTrain.NODELAY;
@@ -54,16 +51,15 @@ public class TrainInfo {
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
     private float maxSpeed = 0.6f;
-    private String rampRate = rb.getString("RAMP_NONE");
+    private String rampRate = Bundle.getMessage("RAMP_NONE");
     private boolean resistanceWheels = true;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 200.0f;
 
-    // temporary instance variables
-    /**
-     * Access methods for manual and automatic instance variables
-     */
+    //
+    // Access methods for manual and automatic instance variables
+    //
     protected void setTransitName(String s) {
         transitName = s;
     }
@@ -168,6 +164,14 @@ public class TrainInfo {
         return resetWhenDone;
     }
 
+    protected void setAllocateAllTheWay(boolean b) {
+        allocateAllTheWay = b;
+    }
+
+    protected boolean getAllocateAllTheWay() {
+        return allocateAllTheWay;
+    }
+
     protected void setReverseAtEnd(boolean b) {
         reverseAtEnd = b;
     }
@@ -179,9 +183,11 @@ public class TrainInfo {
     protected void setDelayedStart(int ds) {
         delayedStart = ds;
     }
+
     /**
-     * delayed start code for this train 
-     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY 
+     * delayed start code for this train
+     *
+     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY
      */
     protected int getDelayedStart() {
         return delayedStart;
@@ -212,7 +218,8 @@ public class TrainInfo {
     }
 
     /**
-     * retrieve the startup delay sensor using the delay sensor name 
+     * retrieve the startup delay sensor using the delay sensor name
+     *
      * @return delay sensor, or null if delay sensor name not set
      */
     protected Sensor getDelaySensor() {
@@ -229,12 +236,15 @@ public class TrainInfo {
     protected String getTrainType() {
         return trainType;
     }
+
     protected void setDelayedRestart(int ds) {
         delayedRestart = ds;
     }
+
     /**
-     * return restart code for this train, only used for continuous running 
-     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY 
+     * return restart code for this train, only used for continuous running
+     *
+     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY
      */
     protected int getDelayedRestart() {
         return delayedRestart;
@@ -247,8 +257,10 @@ public class TrainInfo {
     protected String getRestartSensorName() {
         return restartSensorName;
     }
+
     /**
-     * retrieve the restart sensor using the restart sensor name 
+     * retrieve the restart sensor using the restart sensor name
+     *
      * @return restart sensor, or null if the restart sensor name not set
      */
     protected Sensor getRestartSensor() {
@@ -260,6 +272,7 @@ public class TrainInfo {
 
     /**
      * number of minutes to delay between restarting for continuous runs
+     *
      * @param s number of minutes to delay
      */
     protected void setRestartDelayMin(int s) {
@@ -278,9 +291,9 @@ public class TrainInfo {
         this.loadAtStartup = loadAtStartup;
     }
 
-    /**
-     * Access methods for automatic operation instance variables
-     */
+    //
+    // Access methods for automatic operation instance variables
+    //
     protected void setSpeedFactor(Float f) {
         speedFactor = f;
     }
@@ -337,5 +350,3 @@ public class TrainInfo {
         return maxTrainLength;
     }
 }
-
-/* @(#)TrainInfo.java */

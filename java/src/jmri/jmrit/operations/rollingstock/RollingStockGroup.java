@@ -1,4 +1,3 @@
-// RollingStockGroup.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * A group of rolling stock that is managed as one unit.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2013
- * @version $Revision$
  */
 public class RollingStockGroup {
 

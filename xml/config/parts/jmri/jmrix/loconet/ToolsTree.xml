@@ -15,21 +15,37 @@
   <node><name>Monitor &amp; Control</name>
     <node><name>Monitor LocoNet
      <name xml:lang="it">Monitor LocoNet</name>
+     <name xml:lang="cs">LocoNet monitor</name>
+     <name xml:lang="ca">Monitor LocoNet</name>
+     <name xml:lang="de">LocoNet überwachen</name>
+     <name xml:lang="nl">Bekijk LocoNet</name>
     </name>
         <panel>jmri.jmrix.loconet.locomon.LocoMonPane</panel>
     </node>
     <node><name>Monitor Slots
      <name xml:lang="it">Monitor Slots</name>
+     <name xml:lang="cs">Monitor slotů</name>
+     <name xml:lang="ca">Monitor de Slots</name>
+     <name xml:lang="de">Plätze (Slots) überwachen</name>
+     <name xml:lang="nl">Bekijk Slots</name>
     </name>
         <panel>jmri.jmrix.loconet.slotmon.SlotMonPane</panel>
     </node>
     <node><name>Monitor Clock
      <name xml:lang="it">Monitor Orologio</name>
+     <name xml:lang="cs">Monitor hodin</name>
+     <name xml:lang="ca">Monitor de Rellotge</name>
+     <name xml:lang="de">Zeit überwachen</name>
+     <name xml:lang="nl">Bekijk Tijd</name>
     </name>
         <panel>jmri.jmrix.loconet.clockmon.ClockMonPane</panel>
     </node>
     <node><name>Interface Status
      <name xml:lang="it">Stato Interfaccia</name>
+     <name xml:lang="cs">Stav rozhraní</name>
+     <name xml:lang="ca">Estat de la Interfície</name>
+     <name xml:lang="de">Interface Zustand</name>
+     <name xml:lang="nl">Interface Status</name>
     </name>
         <panel>jmri.jmrix.loconet.locostats.LocoStatsPanel</panel>
     </node>
@@ -37,9 +53,17 @@
 
   <node><name>Tools
    <name xml:lang="it">Strumenti</name>
+   <name xml:lang="cs">Nástroje</name>
+   <name xml:lang="ca">Eines</name>
+   <name xml:lang="de">Werkzeuge</name>
+   <name xml:lang="nl">Gereedschap</name>
   </name>
     <node><name>Throttle Messaging
      <name xml:lang="it">Messaggi Palmare</name>
+     <name xml:lang="cs">Zprávy ovladače</name>
+     <name xml:lang="ca">Missatges de regulador</name>
+     <name xml:lang="de">Regler-berichte</name>
+     <name xml:lang="nl">Rijregelaar-berichten</name>
     </name>
         <panel>jmri.jmrix.loconet.throttlemsg.MessagePanel</panel>
     </node>
@@ -48,31 +72,55 @@
   <node><name>Configuration</name>
     <node><name>Set LocoNet ID
      <name xml:lang="it">Imposta ID Loconet</name>
+     <name xml:lang="cs">Nastavit Loconet ID</name>
+     <name xml:lang="ca">Configura ID LocoNet</name>
+     <name xml:lang="de">LocoNet ID Eingeben</name>
+     <name xml:lang="nl">Stel LocoNet ID in</name>
     </name>
         <panel>jmri.jmrix.loconet.locoid.LocoIdPanel</panel>
     </node>
     <node><name>Configure Command Station
      <name xml:lang="it">Configura Centrale</name>
+     <name xml:lang="cs">Konfigurace příkazové stanice</name>
+     <name xml:lang="ca">Configura la Central</name>
+     <name xml:lang="de">Zentrale konfigurieren</name>
+     <name xml:lang="nl">Centrale configureren</name>
     </name>
         <panel>jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane</panel>
     </node>
     <node><name>Configure BDL16/BDL168
      <name xml:lang="it">Configura BDL16/BDL168</name>
+     <name xml:lang="cs">Konfigurace BDL16/BDL168</name>
+     <name xml:lang="ca">Configura BDL16/BDL168</name>
+     <name xml:lang="de">Konfiguriere BDL16/BDL168</name>
+     <name xml:lang="nl">Configureer BDL16/BDL168</name>
     </name>
         <panel>jmri.jmrix.loconet.bdl16.BDL16Panel</panel>
     </node>
     <node><name>Configure DS64
      <name xml:lang="it">Configura DS64</name>
+     <name xml:lang="cs">Konfigurace DS64</name>
+     <name xml:lang="ca">Configura DS64</name>
+     <name xml:lang="de">Konfiguriere DS64</name>
+     <name xml:lang="de">Configureer DS64</name>
     </name>
         <panel>jmri.jmrix.loconet.ds64.DS64Panel</panel>
     </node>
     <node><name>Configure PM4/PM42
      <name xml:lang="it">Configura PM4/PM42</name>
+     <name xml:lang="cs">Konfigurace PM4/PM42</name>
+     <name xml:lang="ca">Configura PM4/PM42</name>
+     <name xml:lang="de">Konfigiere PM4/PM42</name>
+     <name xml:lang="nl">Configureer PM4/PM42</name>
     </name>
         <panel>jmri.jmrix.loconet.pm4.PM4Panel</panel>
     </node>
     <node><name>Configure SE8c
      <name xml:lang="it">Configura SE8c</name>
+     <name xml:lang="cs">Konfigurace SE8c</name>
+     <name xml:lang="ca">Configura SE8c</name>
+     <name xml:lang="de">Konfiguriere SE8c</name>
+     <name xml:lang="nl">Konfigureer SE8c</name>
     </name>
         <panel>jmri.jmrix.loconet.se8.SE8Panel</panel>
     </node>
@@ -81,11 +129,19 @@
   <node><name>Tools</name>
     <node><name>Send Throttle Message
      <name xml:lang="it">Invia Messaggio Palmare</name>
+     <name xml:lang="cs">Odeslat zprávu ovladače</name>
+     <name xml:lang="ca">Envia Missatge de Regulador</name>
+     <name xml:lang="de">Sende Fahrregler-bericht</name>
+     <name xml:lang="nl">Verstuur Rijregelaar-bericht</name>
     </name>
         <panel>jmri.jmrix.loconet.swing.throttlemsg.MessagePanel</panel>
     </node>
     <node><name>Send LocoNet Message
      <name xml:lang="it">Invia Messaggio Loconet</name>
+     <name xml:lang="cs">Odeslat zprávu Loconet</name>
+     <name xml:lang="ca">Envia Missatge LocoNet</name>
+     <name xml:lang="de">Sende LocoNet-bericht</name>
+     <name xml:lang="nl">Verstuur LocoNet-bericht</name>
     </name>
         <panel>jmri.jmrix.loconet.locogen.LocoGenPanel</panel>
     </node>

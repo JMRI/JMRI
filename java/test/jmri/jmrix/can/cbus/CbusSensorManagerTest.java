@@ -4,9 +4,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +15,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2008
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private CanSystemConnectionMemo memo = null;
 
@@ -28,11 +25,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     }
 
     @Test
+    @Override
     public void testCreate() {
         Assert.assertNotNull("creaesSensor",l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
     @Test
+    @Override
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest1());
@@ -42,10 +41,25 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     }
 
     @Test
+    @Override
     public void testUpperLower() {
         Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
+    }
+
+    @Override
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("MSX0A;+N15E" + getNumToTest1());
+        Sensor t2 = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
     }
 
     // The minimal setup for log4J

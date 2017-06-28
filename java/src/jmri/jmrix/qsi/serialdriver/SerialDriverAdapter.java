@@ -1,16 +1,19 @@
 package jmri.jmrix.qsi.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
@@ -33,6 +36,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -47,7 +51,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             // try to set it for comunication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -84,9 +88,9 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (UnsupportedCommOperationException | IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -110,6 +114,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      * set up all of the other objects to operate with an QSI command station
      * connected to this port
      */
+    @Override
     public void configure() {
 
         this.getSystemConnectionMemo().setQsiTrafficController(new QsiTrafficController());
@@ -129,6 +134,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     private Thread sinkThread;
 
     // base class methods for the QsiPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -137,6 +143,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -149,6 +156,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -156,6 +164,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 bps"};
     }

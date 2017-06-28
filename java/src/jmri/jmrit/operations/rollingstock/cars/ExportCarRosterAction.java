@@ -1,4 +1,3 @@
-// ExportCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -8,7 +7,6 @@ import javax.swing.AbstractAction;
  * Starts the ImportCars thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ExportCarRosterAction extends AbstractAction {
 

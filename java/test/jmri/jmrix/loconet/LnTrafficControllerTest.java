@@ -14,8 +14,6 @@ import junit.framework.TestSuite;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java 27828 2014-12-11 22:46:11Z
- * jacobsen $
  */
 public class LnTrafficControllerTest extends TestCase {
 
@@ -40,10 +38,12 @@ public class LnTrafficControllerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

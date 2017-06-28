@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
+import java.lang.StringBuilder;
 
 /**
  * class for replies in the z21/Z21 protocol.
@@ -36,6 +37,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     // keep track of length
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (char) v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -52,12 +54,14 @@ public class Z21Reply extends AbstractMRReply {
         return Integer.decode(Integer.toHexString(getElement(n)));
     }
 
+    @Override
     public void setOpCode(int i) {
         _dataChars[2] = (char) (i & 0x00ff);
         _dataChars[3] = (char) ((i & 0xff00) >> 8);
         _nDataChars = Math.max(_nDataChars, 4);  //smallest reply is of length 4.
     }
 
+    @Override
     public int getOpCode() {
         return (0xff&_dataChars[2]) + ((0xff&_dataChars[3]) << 8);
     }
@@ -72,11 +76,30 @@ public class Z21Reply extends AbstractMRReply {
         return (0xff & _dataChars[0] ) + ((0xff & _dataChars[1]) << 8);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         return 0;
     }
 
     public String toMonitorString() {
+        switch(getOpCode()){
+           case 0x0010:
+               int serialNo = getElement(4) + (getElement(5) << 8) +
+                     (getElement(6) << 16) + (getElement(7) << 24);
+               return Bundle.getMessage("Z21ReplyStringSerialNo",serialNo);
+           case 0x001A:
+               int hwversion = getElement(4) + (getElement(5) << 8) +
+                         (getElement(6) << 16 ) + (getElement(7) << 24 );
+               float swversion = (getElementBCD(8)/100.0f)+
+                               (getElementBCD(9))+
+                               (getElementBCD(10)*100)+
+                               (getElementBCD(11))*10000;
+               return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion),swversion);
+           case 0x0040:
+               return Bundle.getMessage("Z21XPressNetTunnelReply",getXNetReply().toMonitorString());
+           default:
+        }
+
         return toString();
     }
 
@@ -88,9 +111,18 @@ public class Z21Reply extends AbstractMRReply {
     jmri.jmrix.lenz.XNetReply getXNetReply() {
         jmri.jmrix.lenz.XNetReply xnr = null;
         if (isXPressNetTunnelMessage()) {
+            int i = 4;
             xnr = new jmri.jmrix.lenz.XNetReply();
-            for (int i = 4; i < getLength(); i++) {
+            for (; i < getLength(); i++) {
                 xnr.setElement(i - 4, getElement(i));
+            }
+            if(( xnr.getElement(0) & 0x0F ) > ( xnr.getNumDataElements()+2) ){
+               // there is at least one message from the Z21 that can be sent 
+               // with fewer bytes than the XPressNet payload indicates it 
+               // should have.  Pad those messages with 0x00 bytes.
+               for(i=i-4;i<((xnr.getElement(0)&0x0F)+2);i++){
+                  xnr.setElement(i,0x00);
+               }
             }
         }
         return xnr;

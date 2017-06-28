@@ -1,7 +1,7 @@
 package jmri.util.swing;
 
 /**
- * Settings for e.g. workarounds, etc.
+ * Settings for workarounds in Swing API.
  * <p>
  * By convention, "false" is the default, usual behavior for these.
  * <dl>

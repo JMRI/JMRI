@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public LocoNetSystemConnectionMemo(LnTrafficController lt,
             SlotManager sm) {
-        super("L", "LocoNet");
+        super("L", "LocoNet"); // NOI18N
         this.lt = lt;
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
@@ -28,17 +28,17 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
 
-        // create and register the LnComponentFactory
+        // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet");
+        super("L", "LocoNet"); // NOI18N
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
 
-        // create and register the LnComponentFactory
+        // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
     }
@@ -370,10 +370,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return consistManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
     }
 
+    @Override
     public void dispose() {
         lt = null;
         sm = null;

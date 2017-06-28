@@ -14,12 +14,13 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public abstract class AbstractLightManager extends AbstractManager
-        implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
+        implements LightManager, java.beans.PropertyChangeListener {
 
     public AbstractLightManager() {
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.LIGHTS;
     }
@@ -27,6 +28,7 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * Returns the second letter in the system name for a Light
      */
+    @Override
     public char typeLetter() {
         return 'L';
     }
@@ -39,6 +41,7 @@ public abstract class AbstractLightManager extends AbstractManager
      *
      * @return Never null unless valid systemName cannot be found
      */
+    @Override
     public Light provideLight(String name) {
         Light t = getLight(name);
         if (t != null) {
@@ -59,6 +62,7 @@ public abstract class AbstractLightManager extends AbstractManager
      *
      * @return null if no match found
      */
+    @Override
     public Light getLight(String name) {
         Light t = getByUserName(name);
         if (t != null) {
@@ -71,6 +75,7 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * Locate a Light by its system name
      */
+    @Override
     public Light getBySystemName(String name) {
         return (Light) _tsys.get(name);
     }
@@ -78,6 +83,7 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * Locate a Light by its user name
      */
+    @Override
     public Light getByUserName(String key) {
         return (Light) _tuser.get(key);
     }
@@ -106,6 +112,7 @@ public abstract class AbstractLightManager extends AbstractManager
      *
      * @return requested Light object (never null)
      */
+    @Override
     public Light newLight(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("newLight:"
@@ -165,6 +172,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * activateLight method in AbstractLight.java determines what needs to be
      * done for each Light.
      */
+    @Override
     public void activateAllLights() {
         // Set up an iterator over all Lights contained in this manager
         java.util.Iterator<String> iter
@@ -195,6 +203,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * system-specific Light Manager should override this routine and supply a
      * normalized system name.
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return systemName;
     }
@@ -208,6 +217,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * If a system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.
      */
+    @Override
     public String convertSystemNameToAlternate(String systemName) {
         return "";
     }
@@ -217,6 +227,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * Note: LightManagers for Systems that can support variable Lights should
      * override this method and return 'true'.
      */
+    @Override
     public boolean supportsVariableLights(String systemName) {
         return false;
     }
@@ -227,10 +238,12 @@ public abstract class AbstractLightManager extends AbstractManager
      * range box in the add Light window
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }

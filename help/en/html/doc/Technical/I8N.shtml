@@ -85,6 +85,12 @@ By convention, resource names for GUI elements start with one of
     </ol>
 Other resources are named so as not to conflict with these.
 
+<p>Many standard names for buttons, objects, colors etc. are grouped in one place, from which
+they are available in all tools, tables and JMRI apps. The highest level Bundle is called
+    <em>NamedBeanBundle</em>, located in the jmri package. A next level is inside the jmri.jmrit (Tools) directory,
+where the Bundle.properties bundle contains keys common for all tools, such as the names of colors and
+other Tools interface strings.</p>
+
 <h2>Adapting to a new language</h2>
 The primary steps to adapt JMRI to a new language are:
     <ol>
@@ -118,15 +124,22 @@ You can also check the official
 <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">list of countries/regions</a>
 (optional second part of the suffix).
 <p>
-You then edit the language-specific files to enter text in  your own language. 
+You then edit the language-specific files to enter text in your own language.
 <p>
 The lines in the file that contain things like <code>$Release: $;</code>
 are a vestige of older version control systems; they can be ignored or deleted.
 <p>
 There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
-of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
-<code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
+of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
+
+<a name="commonkeys"><p>
+You are advised to start a new language translation by completing the highest level bundles, starting with the
+<em>NamedBeanBundle</em> in the src/jmri directory end working your way down the folder hierarchy, of course following your personal
+interest in certain modules. By following this order, you will see your initial work all the way down inside the user interface for tools such as
+Panels, Operations and Signals.<br>
+Thanks to the hierarchy of bundle properties files, we maintain consistency across the user interface of the different parts. If you come across a spot
+where your language just doesn't work, please leave a note with the developers so we can help you by adding a specific key, or even splitting the tree.</p>
 
 <h3>Translating XML Files</h3>
 <p>The <code>xml/config/parts/jmri/</code> folder contains additional text strings to translate for programmers etc. Just as in <a href="#xml">decoder
@@ -170,7 +183,7 @@ Please see the
 for more info on how to include those characters in your .properties files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
 <p>An example is the 
-<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a> 
 file, which contains diacritical letters for the Czech translation. 
 <p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
 by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
@@ -288,11 +301,21 @@ than providing multiple lines in the code itself.
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
 English, as should messages sent to the logging system. Keys for 
-the translation bundles are another example. 
+the translation bundles should also stay in English. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
 <pre style="font-family: monospace;">
-  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+           Sensor thisSensorVariableNameIsInEnglish;
+
+           String message = "THAT_ONE_MESSAGE";  // NOI18N
+           JLabel jl1 = new JLabel(Bundle.getMessage(message));
+
+           JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
+
+           log.debug("The process failed account of user error"); // NOI18N
+
+           // This comment is in English and need not be annotated w.r.t. internationalization
+
 </pre>
 
 <h3>Adding a new Bundle</h3>

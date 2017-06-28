@@ -1,6 +1,8 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,11 +43,11 @@ import org.slf4j.LoggerFactory;
  * </dl>
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class AppsBase {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT", justification = "not a library pattern")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT", justification = "not a library pattern")
     private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
@@ -56,6 +58,10 @@ public abstract class AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Initialize logging
+     * <li> Set application name
+     * </ul>
      *
      * @param applicationName The application name as presented to the user
      */
@@ -65,7 +71,7 @@ public abstract class AppsBase {
         try {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
-            log.error("Unable to set application name");
+            log.error("Unable to set application name: " + ex.getCause());
         }
 
         log.info(Log4JUtil.startupInfo(applicationName));
@@ -80,7 +86,7 @@ public abstract class AppsBase {
      * @param configFileDef   default config filename
      * @param args            arguments passed to application at launch
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
+    @SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public AppsBase(String applicationName, String configFileDef, String[] args) {
 
@@ -112,9 +118,10 @@ public abstract class AppsBase {
          * work in the background if the file doesn't exist then we do not
          * initialize it
          */
-        if (preferenceFileExists && Boolean.getBoolean("java.awt.headless")) {
+        if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
@@ -132,6 +139,7 @@ public abstract class AppsBase {
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         JmriScriptEngineManager.getDefault().initializeAllEngines();
@@ -177,7 +185,7 @@ public abstract class AppsBase {
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
@@ -238,6 +246,21 @@ public abstract class AppsBase {
 
     }
 
+    /**
+     * Invoked to load the preferences information, and in the process
+     * configure the system.
+     * The high-level steps are:
+     *<ul>
+     *  <li>Locate the preferences file based through
+     *      {@link FileUtil#getFile(String)}
+     *  <li>See if the preferences file exists, and handle it if it doesn't
+     *  <li>Obtain a {@link jmri.ConfigureManager} from the {@link jmri.InstanceManager}
+     *  <li>Ask that ConfigureManager to load the file, in the process loading information into existing and new managers.
+     *  <li>Do any deferred loads that are needed
+     *  <li>If needed, migrate older formats
+     *</ul>
+     * (There's additional handling for shared configurations)
+     */
     protected void setAndLoadPreferenceFile() {
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         final File file;
@@ -343,6 +366,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
 
+                    @Override
                     public boolean execute() {
                         // Save block values prior to exit, if necessary
                         log.debug("Start writing block info");
@@ -360,8 +384,8 @@ public abstract class AppsBase {
     }
 
     /**
-     * Final actions before releasing control of app to user, invoked explicitly
-     * after object has been constructed, e.g. in main().
+     * Final actions before releasing control of the application to the user,
+     * invoked explicitly after object has been constructed in main().
      */
     protected void start() {
         log.debug("main initialization done");

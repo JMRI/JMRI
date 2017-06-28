@@ -11,17 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
+    public AddNewBeanPanel(JTextField sys, JTextField userName, JSpinner endRange, JCheckBox addRange, JCheckBox autoSystem,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -56,6 +57,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         c.gridx = 2;
         c.gridy = 1;
         p.add(sys, c);
+        sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "Y"));
         c.gridx = 3;
         p.add(finishLabel, c);
         c.gridx = 4;
@@ -82,12 +84,14 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }
                 });
 
         sysName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
                     ok.setEnabled(true);
@@ -100,6 +104,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         autoSystem.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         autoSystemName();
                     }
@@ -139,7 +144,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
-    JTextField _endRange;
+    JSpinner _endRange;
     JCheckBox _range;
     JCheckBox _autoSys;
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));

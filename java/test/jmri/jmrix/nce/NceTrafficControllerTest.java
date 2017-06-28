@@ -4,10 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,25 +17,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
  */
-public class NceTrafficControllerTest extends TestCase {
+public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    public void testCreate() {
-        NceTrafficController m = new NceTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
-    /**
-     * Test disabled until threading can be resolved
-     */
-    public void xtestSendAscii() throws Exception {
+    @Test
+    @Ignore("Test disabled until threading can be resolved")
+    public void testSendAscii() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -58,18 +56,20 @@ public class NceTrafficControllerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
 
-    /**
-     * Test disabled until threading can be resolved
-     */
-    public void xtestSendBinary() throws Exception {
+    @Test
+    @Ignore("Test disabled until threading can be resolved")
+    public void testSendBinary() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -92,18 +92,20 @@ public class NceTrafficControllerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
 
-    /**
-     * Test disabled until threading can be resolved
-     */
-    public void xtestMonitor() throws Exception {
+    @Test
+    @Ignore("Test disabled until threading can be resolved")
+    public void testMonitor() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -133,18 +135,20 @@ public class NceTrafficControllerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
 
-    /**
-     * Test disabled until threading can be resolved
-     */
+    @Test
+    @Ignore("Test disabled until threading can be resolved")
     public void xtestRcvReply() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -208,10 +212,12 @@ public class NceTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(NceMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(NceReply r) {
             rcvdReply = r;
         }
@@ -222,17 +228,21 @@ public class NceTrafficControllerTest extends TestCase {
     // internal class to simulate a NcePortController
     class NcePortControllerScaffold extends NcePortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -249,16 +259,19 @@ public class NceTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -269,22 +282,20 @@ public class NceTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public NceTrafficControllerTest(String s) {
-        super(s);
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        tc  = new NceTrafficController();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    @After
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceTrafficControllerTest.class);
-        return suite;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
 

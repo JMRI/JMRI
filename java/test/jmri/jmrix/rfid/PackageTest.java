@@ -1,52 +1,44 @@
 package jmri.jmrix.rfid;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+     RfidStreamPortControllerTest.class,
+     RfidSystemConnectionMemoTest.class,
+     RfidSensorTest.class,
+     RfidReporterTest.class,
+     jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocolTest.class,
+     jmri.jmrix.rfid.protocol.em18.Em18RfidProtocolTest.class,
+     jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocolTest.class,
+     jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocolTest.class,
+     jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocolTest.class,
+     jmri.jmrix.rfid.serialdriver.PackageTest.class,
+     jmri.jmrix.rfid.networkdriver.PackageTest.class,
+     jmri.jmrix.rfid.configurexml.PackageTest.class,
+     jmri.jmrix.rfid.generic.PackageTest.class,
+     jmri.jmrix.rfid.merg.PackageTest.class,
+     RfidConnectionTypeListTest.class,
+     RfidMessageTest.class,
+     RfidReplyTest.class,
+     RfidTrafficControllerTest.class,
+     RfidReporterManagerTest.class,
+     RfidSensorManagerTest.class,
+     TimeoutRfidSensorTest.class,
+     TimeoutRfidReporterTest.class,
+     jmri.jmrix.rfid.swing.PackageTest.class,
+     RfidNetworkPortControllerTest.class,
+     RfidPortControllerTest.class
+})
 
 /**
  * tests for the jmri.jmrix.rfid package
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016	
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // a dummy test to avoid JUnit warning
-    public void testDemo() {
-        assertTrue(true);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.rfid.PackageTest");
-
-        suite.addTest(jmri.jmrix.rfid.RfidStreamPortControllerTest.suite());
-        suite.addTest(jmri.jmrix.rfid.RfidSystemConnectionMemoTest.suite());
-        suite.addTest(jmri.jmrix.rfid.RfidSensorTest.suite());
-        suite.addTest(jmri.jmrix.rfid.RfidReporterTest.suite());
-        suite.addTest(jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocolTest.suite());
-        suite.addTest(jmri.jmrix.rfid.protocol.em18.Em18RfidProtocolTest.suite());
-        suite.addTest(jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocolTest.suite());
-        suite.addTest(jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocolTest.suite());
-        suite.addTest(jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocolTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.serialdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.networkdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.configurexml.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.generic.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.merg.PackageTest.class));
-        return suite;
-    }
 
 }

@@ -1,6 +1,6 @@
-// RollingStockSetFrame.java
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place RollingStock on the layout
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -53,7 +52,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     JLabel textType = new JLabel();
 
     // major buttons
-    protected JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    protected JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
@@ -259,8 +258,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         textType.setText(_rs.getTypeName());
         locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
         outOfServiceCheckBox.setSelected(_rs.isOutOfService());
-        updateComboBoxes();		// load the location, destination, and final destination combo boxes
-        updateTrainComboBox();	// load the train combo box
+        updateComboBoxes();  // load the location, destination, and final destination combo boxes
+        updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
         if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
@@ -306,7 +305,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rl;
     RouteLocation rd;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(RollingStock rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
@@ -457,7 +456,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         || rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
                     String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                             (Track) trackLocationBox.getSelectedItem());
-                    rs.setSavedRouteId(RollingStock.NONE); // clear last route id
+                    rs.setLastRouteId(RollingStock.NONE); // clear last route id
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set rs's location because of {}", status);
                         JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(

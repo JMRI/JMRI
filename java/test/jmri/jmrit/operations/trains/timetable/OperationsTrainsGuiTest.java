@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -9,10 +10,11 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -21,7 +23,9 @@ import junit.framework.TestSuite;
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testTrainsScheduleTableFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         f.setVisible(true);
 
@@ -29,14 +33,17 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testTrainsScheduleEditFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
+        TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("frame exists", f);
+        f.setVisible(true);
 
         f.addTextBox.setText("A New Day");
         enterClickAndLeave(f.addButton);
 
-        TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("Train schedule manager exists", tsm);
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
@@ -51,14 +58,10 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
-    private void enterClickAndLeave(Component comp) {
-        getHelper().enterClickAndLeave(new MouseEventData(this, comp));
-        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
-    }
-
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadTrains();
@@ -108,24 +111,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         RouteManager.instance().newRoute("Test Route E");
     }
 
-    public OperationsTrainsGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsTrainsGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsTrainsGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

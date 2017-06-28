@@ -1,8 +1,10 @@
 package apps.gui;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -11,6 +13,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -24,12 +27,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
+    /**
+     * Display state in bean tables as icon.
+     */
+    public static final String GRAPHICTABLESTATE = "graphicTableState";
+    public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     /**
      * Smallest font size a user can set the font size to other than zero
@@ -45,20 +53,27 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @see apps.GuiLafConfigPane#MAX_DISPLAYED_FONT_SIZE
      */
     public static final int MAX_FONT_SIZE = 36;
+    public static final String PROP_DIRTY = "dirty";
+    public static final String PROP_RESTARTREQUIRED = "restartRequired";
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
     private int fontSize = 0;
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
+    private boolean graphicTableState = false;
+    private boolean verticalToolBar = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
+    private boolean dirty = false;
+    private boolean restartRequired = false;
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
      * be per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
@@ -73,18 +88,25 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 this.setFontSize(this.getDefaultFontSize());
             }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
+            this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
+            
             Locale.setDefault(this.getLocale());
+            javax.swing.JComponent.setDefaultLocale(this.getLocale());
+            javax.swing.JOptionPane.setDefaultLocale(this.getLocale());
+           
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
+            this.setDirty(false);
+            this.setRestartRequired(false);
             this.initialized = true;
         }
     }
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -112,12 +134,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
+        preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences.", ex);
         }
+        this.setDirty(false);
     }
 
     /**
@@ -133,6 +157,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setLocale(Locale locale) {
         Locale oldLocale = this.locale;
         this.locale = locale;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(LOCALE, oldLocale, locale);
     }
 
@@ -154,6 +180,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (this.fontSize != oldFontSize) {
             firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
+        this.setDirty(true);
+        this.setRestartRequired(true);
     }
 
     /**
@@ -182,7 +210,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 return;
             }
         }
-        defaultFontSize = 11;	// couldn't find the default return a reasonable font size
+        defaultFontSize = 11;   // couldn't find the default return a reasonable font size
     }
 
     /**
@@ -190,7 +218,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // the unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts
         if (log.isTraceEnabled()) {
             log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -215,6 +243,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setToolTipDismissDelay(int time) {
         this.toolTipDismissDelay = time;
         ToolTipManager.sharedInstance().setDismissDelay(time);
+        this.setDirty(true);
     }
 
     /**
@@ -238,7 +267,27 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setNonStandardMouseEvent(boolean nonStandardMouseEvent) {
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+    }
+
+    /**
+     * @return the graphicTableState
+     */
+    public boolean isGraphicTableState() {
+        return graphicTableState;
+    }
+
+    /**
+     * @param graphicTableState the graphicTableState to set
+     */
+    public void setGraphicTableState(boolean graphicTableState) {
+        boolean oldGraphicTableState = this.graphicTableState;
+        this.graphicTableState = graphicTableState;
+        this.setDirty(true);
+        this.setRestartRequired(true);
+        firePropertyChange(GRAPHICTABLESTATE, oldGraphicTableState, graphicTableState);
     }
 
     /**
@@ -254,6 +303,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
         this.lookAndFeel = lookAndFeel;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
     }
 
@@ -293,7 +344,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * for each.
      */
     private void applyFontSize() {
-        if (log.isDebugEnabled()) logAllFonts();
+        if (log.isTraceEnabled()) {
+            logAllFonts();
+        }
         if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
             Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -304,7 +357,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
-            if (log.isDebugEnabled()) logAllFonts();
+            if (log.isTraceEnabled()) {
+                logAllFonts();
+            }
         }
     }
 
@@ -316,5 +371,60 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     private int getCalcFontSize(int oldSize) {
         return oldSize + (this.getFontSize() - this.getDefaultFontSize());
+    }
+
+    /**
+     * Check if preferences need to be saved.
+     *
+     * @return true if preferences need to be saved
+     */
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     * Set dirty state.
+     *
+     * @param dirty true if preferences need to be saved
+     */
+    private void setDirty(boolean dirty) {
+        boolean oldDirty = this.dirty;
+        this.dirty = dirty;
+        if (oldDirty != dirty) {
+            propertyChangeSupport.firePropertyChange(PROP_DIRTY, oldDirty, dirty);
+        }
+    }
+
+    /**
+     * Check if application needs to restart to apply preferences.
+     *
+     * @return true if preferences are only applied on application start
+     */
+    public boolean isRestartRequired() {
+        return restartRequired;
+    }
+
+    /**
+     * Set restart required state.
+     *
+     * @param restartRequired true if application needs to restart to apply
+     *                        preferences
+     */
+    private void setRestartRequired(boolean restartRequired) {
+        boolean oldRestartRequired = this.restartRequired;
+        this.restartRequired = restartRequired;
+        if (oldRestartRequired != restartRequired) {
+            propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
+        }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 }

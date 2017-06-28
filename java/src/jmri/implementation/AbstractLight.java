@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
 import jmri.Light;
 
@@ -35,12 +37,12 @@ import jmri.Light;
  * stores both CurrentIntensity and TargetIntensity in a single location,
  * forcing them to be the same
  *
- * @author	Dave Duchamp Copyright (C) 2004, 2010
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2010
+ * @author Ken Cameron Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public abstract class AbstractLight extends AbstractNamedBean
-        implements Light, java.io.Serializable {
+        implements Light {
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -70,6 +72,21 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected boolean mEnabled = true;
     protected double mCurrentIntensity = 0.0;
     protected int mState = OFF;
+
+    @Override
+    @CheckReturnValue
+    public String describeState(int state) {
+        switch (state) {
+            case ON: return Bundle.getMessage("LightStateOn");
+            case OFF: return Bundle.getMessage("LightStateOff");
+            case INTERMEDIATE: return Bundle.getMessage("LightStateIntermediate");
+            case TRANSITIONINGTOFULLON: return Bundle.getMessage("LightStateTransitioningToFullOn");
+            case TRANSITIONINGHIGHER: return Bundle.getMessage("LightStateTransitioningHigher");
+            case TRANSITIONINGLOWER: return Bundle.getMessage("LightStateTransitioningLower");
+            case TRANSITIONINGTOFULLOFF: return Bundle.getMessage("LightStateTransitioningToFullOff");
+            default: return super.describeState(state);
+        }
+    }
 
     /**
      * Get enabled status
@@ -233,7 +250,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the minIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     public void setMaxIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
@@ -278,7 +295,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the maxIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     public void setMinIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
@@ -406,7 +423,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * change anything in the hardware
      * @param intensity intensity value
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;

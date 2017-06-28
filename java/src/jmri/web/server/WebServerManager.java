@@ -1,5 +1,6 @@
 package jmri.web.server;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import jmri.InstanceManager;
@@ -27,7 +28,7 @@ public class WebServerManager {
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
-        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
+        if (!InstanceManager.getOptionalDefault(WebServerPreferences.class).isPresent()) {
             File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
             File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
@@ -42,17 +43,13 @@ public class WebServerManager {
     }
 
     public static WebServerManager getInstance() {
-        if (InstanceManager.getNullableDefault(WebServerManager.class) == null) {
-            InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
-        }
-        return InstanceManager.getDefault(WebServerManager.class);
+        return InstanceManager.getOptionalDefault(WebServerManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
+        });
     }
 
     public WebServerPreferences getPreferences() {
-        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
-            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
-        }
-        return InstanceManager.getDefault(WebServerPreferences.class);
+        return WebServerPreferences.getDefault();
     }
 
     public static WebServerPreferences getWebServerPreferences() {
@@ -60,42 +57,39 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (InstanceManager.getNullableDefault(WebServer.class) == null) {
-            InstanceManager.setDefault(WebServer.class, new WebServer());
-        }
-        return InstanceManager.getDefault(WebServer.class);
+        return WebServer.getDefault();
     }
 
     public static WebServer getWebServer() {
         return getInstance().getServer();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
+    @SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
         XmlFile xmlFile = new XmlFile() {
         };
         try {
             Element MSRoot = xmlFile.rootFromFile(MSFile);
-            Element WSRoot = new Element(WebServerPreferences.WebServerPreferences);
+            Element WSRoot = new Element(WebServerPreferences.WEB_SERVER_PREFERENCES);
             Element MSPrefs = MSRoot.getChild("MiniServerPreferences"); // NOI18N
             for (Object pref : MSPrefs.getChildren()) {
                 WSRoot.addContent((Element) pref);
             }
             for (Attribute attr : MSPrefs.getAttributes()) {
                 if (attr.getName().equals("getDisallowedFrames")) { // NOI18N
-                    Element DF = new Element(WebServerPreferences.DisallowedFrames);
+                    Element DF = new Element(WebServerPreferences.DISALLOWED_FRAMES);
                     String[] frames = attr.getValue().split("\\n"); // NOI18N
                     for (String frame : frames) {
-                        DF.addContent(new Element(WebServerPreferences.Frame).addContent(frame));
+                        DF.addContent(new Element(WebServerPreferences.FRAME).addContent(frame));
                     }
                     WSRoot.addContent(DF);
                 } else if (attr.getName().equals("getPort")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.Port, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.PORT, attr.getValue());
                 } else if (attr.getName().equals("getClickDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.ClickDelay, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.CLICK_DELAY, attr.getValue());
                 } else if (attr.getName().equals("getRefreshDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.RefreshDelay, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.REFRESH_DELAY, attr.getValue());
                 } else {
                     // double cast because clone() is Protected on Object
                     WSRoot.setAttribute(attr.clone());
@@ -119,9 +113,7 @@ public class WebServerManager {
 
             xmlFile.writeXML(WSFile, WSDoc);
 
-        } catch (IOException ex) {
-            log.error("Error converting miniServer preferences to Web Server preferences.", ex);
-        } catch (JDOMException ex) {
+        } catch (IOException | JDOMException ex) {
             log.error("Error converting miniServer preferences to Web Server preferences.", ex);
         }
     }

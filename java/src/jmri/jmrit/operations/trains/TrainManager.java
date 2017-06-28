@@ -70,24 +70,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public TrainManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static TrainManager _instance = null;
     private int _id = 0; // train ids
 
     public static synchronized TrainManager instance() {
-        if (_instance == null) {
+        TrainManager instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
+        if (instance == null) {
             log.debug("TrainManager creating instance");
             // create and load
-            _instance = new TrainManager();
+            instance = new TrainManager();
+            jmri.InstanceManager.setDefault(TrainManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManager returns instance " + _instance);
+            log.debug("TrainManager returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**
@@ -271,18 +269,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;
-        _instance = null; // we need to reset the instance for testing purposes
     }
 
     // stores known Train instances by id
     private Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();
 
     /**
+     * @param name The train's name.
      * @return requested Train object or null if none exists
      */
     public Train getTrainByName(String name) {
@@ -312,6 +308,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
+     * @param name The train's name.
      *
      *
      * @return new train or existing train
@@ -331,6 +328,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param train The Train to be added.
      */
     public void register(Train train) {
         Integer oldSize = Integer.valueOf(_trainHashTable.size());
@@ -347,6 +345,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param train The Train to delete.
      */
     public void deregister(Train train) {
         if (train == null) {
@@ -410,6 +409,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param car The car looking for a train.
+     * @param buildReport The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -419,7 +420,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param car The car looking for a train.
      * @param excludeTrain The only train not to try.
+     * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -860,6 +863,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Sets the switch list status for all built trains. Used for switch lists
      * in consolidated mode.
+     * @param status Train.PRINTED, Train.UNKNOWN
      */
     public void setTrainsSwitchListStatus(String status) {
         for (Train train : getTrainsByTimeList()) {
@@ -1038,6 +1042,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     * @param root common Element for operations-trains.dtd.
      *
      */
     public void store(Element root) {
@@ -1134,4 +1139,4 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)TrainManager.java */
+

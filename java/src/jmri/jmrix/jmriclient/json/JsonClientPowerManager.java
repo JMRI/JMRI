@@ -93,6 +93,9 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
             case JSON.UNKNOWN:
                 this.power = PowerManager.UNKNOWN;
                 break;
+            default:
+                log.warn("Unhandled state: {}", state);
+                break;
         }
         this.firePropertyChange(PowerManager.POWER, null, null);
     }

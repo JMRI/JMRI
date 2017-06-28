@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Note that this format is somewhat different from the PR1WIN format, and it's
  * not clear they will interoperate.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2014
+ * @author Bob Jacobsen Copyright (C) 2003, 2014
  */
 public class Pr1ExportAction extends AbstractAction {
 
@@ -44,6 +44,7 @@ public class Pr1ExportAction extends AbstractAction {
      */
     CvTableModel mModel;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (fileChooser == null) {

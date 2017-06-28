@@ -1,4 +1,3 @@
-// ChangeDeparturesTimeFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 17977 $
  */
 public class ChangeDepartureTimesFrame extends OperationsFrame {
 

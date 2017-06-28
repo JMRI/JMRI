@@ -1,4 +1,3 @@
-// ManifestTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
@@ -15,7 +14,7 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
@@ -25,7 +24,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(rb.getString("Reset"));
 
     // text fields

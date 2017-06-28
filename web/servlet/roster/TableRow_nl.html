@@ -1,0 +1,50 @@
+<!-- roster attributes
+Id: %1$s
+RoadName: %2$s
+RoadNumber: %3%s
+Mfg: %4$s
+Model: %5$s
+Owner: %6%s
+DccAddress: %7$s
+DecoderModel: %8$s
+DecoderFamily: %9$s
+DecoderComment: %10%s
+Comment: %11%s
+URL: %12%s
+MaxSpeedPCT: %13%s
+FileName: %14$s
+URL encoded ID: %15$s
+-->
+<tr class="roster-entry" data-id="%15$s" data-address="%7$s">
+    <td class="roster-entry-id">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> %1$s <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <!-- <li class="dropdown-header">Throttles</li> -->
+                <li class="webThrottle-menu-item"><a href="/web/webThrottle.html?loconame=%15$s" target="%7$s">WebRijregelaar</a></li>
+                <li class="divider"></li>
+                <li class="entry-url-menu-item"><a href="%12$s">Webkoppeling</a></li>
+                <li class="divider"></li>
+                <!-- Disable until single entry handler is created
+                <li class="entry-menu-item"><a href="/roster/entry/%15$s">Roster Entry</a></li>
+                -->
+                <li class="entry-file-menu-item"><a href="/roster/entry/%15$s/file">Lokparkdatei</a><li>
+                <li class="throttle-file-menu-item"><a href="/roster/entry/%15$s/throttle">Fahrreglerdatei</a><li>
+            </ul>
+        </div>
+    </td>
+    <td class="roster-entry-icon"><img class="img-rounded" style="max-width: 140px; max-height: 140px;" src="/roster/entry/%15$s/icon" onError="hideImage(this);"></td>
+    <td class="roster-entry-image"><a href="/roster/entry/%15$s/image"><img class="img-rounded" style="max-width: 140px; max-height: 140px;" src="/roster/entry/%15$s/image" onError="hideImage(this);"></a></td>
+    <td class="roster-entry-road-name">%2$s</td>
+    <td class="roster-entry-road-number">%3$s</td>
+    <td class="roster-entry-mfg">%4$s</td>
+    <td class="roster-entry-model">%5$s</td>
+    <td class="roster-entry-owner">%6$s</td>
+    <td class="roster-entry-dcc-address">%7$s</td>
+    <td class="roster-entry-max-speed">%13$s%%</td>
+    <td class="roster-entry-decoder-model">%8$s</td>
+    <td class="roster-entry-decoder-family">%9$s</td>
+    <td class="roster-entry-decoder-comment">%10$s</td>
+    <td class="roster-entry-comment">%11$s</td>
+</tr>

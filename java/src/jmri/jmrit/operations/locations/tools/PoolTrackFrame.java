@@ -61,7 +61,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // pool status
     JPanel poolStatus = new JPanel();
@@ -245,7 +245,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
             if (_pool != null) {
                 _pool.addPropertyChangeListener(this);
             }
-            _track.setPool(_pool);	// this causes a property change to this frame
+            _track.setPool(_pool); // this causes a property change to this frame
 
             // save location file
             OperationsXml.save();

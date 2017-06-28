@@ -1,9 +1,11 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -20,8 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of variables in symbolic programmer. Also
- * responsible for loading from the XML file...
+ * Table data model for display of variables in symbolic programmer.
+ * Also responsible for loading from the XML file.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -41,34 +43,39 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private JLabel _status = null;
 
     /**
-     * Defines the columns; values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State"
+     * Define the columns; values understood are: "Name", "Value", "Range",
+     * "Read", "Write", "Comment", "CV", "Mask", "State".
+     * For each, a property key in SymbolicProgBundle by the same name allows i18n
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
         _status = status;
         _cvModel = cvModel;
         _indxCvModel = iCvModel;
-        headers = h;
+        headers = Arrays.copyOf(h, h.length);
     }
 
     // basic methods for AbstractTableModel implementation
+
+    @Override
     public int getRowCount() {
         return rowVector.size();
     }
 
+    @Override
     public int getColumnCount() {
         return headers.length;
     }
 
+    @Override
     public String getColumnName(int col) {
         if (log.isDebugEnabled()) {
             log.debug("getColumnName " + col);
         }
-        return headers[col];
+        return Bundle.getMessage(headers[col]); // I18N
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         // if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
         if (headers[col].equals("Value")) {
@@ -82,6 +89,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("isCellEditable " + col);
@@ -142,10 +150,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v.getNewRep(format);
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
         if (row >= rowVector.size()) {
-            log.debug("row greater than row vector");
+            log.debug("row index greater than row vector size");
             return "Error";
         }
         VariableValue v = rowVector.elementAt(row);
@@ -155,19 +164,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         if (headers[col].equals("Value")) {
             return v.getCommonRep();
-        } else if (headers[col].equals("Read")) {
+        } else if (headers[col].equals("Read")) { // NOI18N
             return _readButtons.elementAt(row);
-        } else if (headers[col].equals("Write")) {
+        } else if (headers[col].equals("Write")) { // NOI18N
             return _writeButtons.elementAt(row);
-        } else if (headers[col].equals("CV")) {
+        } else if (headers[col].equals("CV")) { // NOI18N
             return "" + v.getCvNum();
-        } else if (headers[col].equals("Name")) {
+        } else if (headers[col].equals("Name")) { // NOI18N
             return "" + v.label();
-        } else if (headers[col].equals("Comment")) {
+        } else if (headers[col].equals("Comment")) { // NOI18N
             return v.getComment();
-        } else if (headers[col].equals("Mask")) {
+        } else if (headers[col].equals("Mask")) { // NOI18N
             return v.getMask();
-        } else if (headers[col].equals("State")) {
+        } else if (headers[col].equals("State")) { // NOI18N
             int state = v.getState();
             switch (state) {
                 case CvValue.UNKNOWN:
@@ -190,6 +199,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("setvalueAt " + row + " " + col + " " + value);
@@ -208,7 +218,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
-        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
             log.debug("Starting to setRow \"" + name + "\"");
         }
@@ -261,9 +271,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             }
         }
 
-        JButton bw = new JButton("Write");
+        JButton bw = new JButton(Bundle.getMessage("ButtonWrite"));
         _writeButtons.addElement(bw);
-        JButton br = new JButton("Read");
+        JButton br = new JButton(Bundle.getMessage("ButtonRead"));
         _readButtons.addElement(br);
         setButtonsReadWrite(readOnly, infoOnly, writeOnly, bw, br, row);
 
@@ -331,10 +341,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 v.addPropertyChangeListener(qc);
             }
@@ -401,7 +413,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public int setIndxRow(int row, Element e, String productID, String modelID, String familyID) {
 
         // get the values for the VariableValue ctor
-        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
             log.debug("Starting to setIndexedRow \"" + name + "\" row " + row);
         }
@@ -836,7 +848,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+    @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
             justification = "null mask parameter to ConstantValue constructor expected.")
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
@@ -932,6 +944,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.addPropertyChangeListener(this);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("action performed,  command: " + e.getActionCommand());
@@ -971,6 +984,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.writeAll();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("prop changed " + e.getPropertyName()

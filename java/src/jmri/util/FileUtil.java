@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Set;
 import java.util.jar.JarFile;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -46,32 +48,15 @@ public final class FileUtil {
      */
     static public final String SCRIPTS = "scripts:"; // NOI18N
     /**
-     * Replaced with {@link #PROGRAM}.
-     *
-     * @see #PROGRAM
-     * @deprecated since 2.13.1
-     */
-    @Deprecated
-    static public final String RESOURCE = "resource:"; // NOI18N
-    /**
-     * Replaced with {@link #PREFERENCES}.
-     *
-     * @see #PREFERENCES
-     * @deprecated since 2.13.1
-     */
-    @Deprecated
-    static public final String FILE = "file:"; // NOI18N
-    /**
      * The portable file path component separator.
      */
     static public final char SEPARATOR = '/'; // NOI18N
 
     /**
-     * The types of locations to use when falling back on default locations in {@link #findURL(java.lang.String, java.lang.String...)
-     * }.
+     * The types of locations to use when falling back on default locations in
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      */
     static public enum Location {
-
         INSTALLED, USER, ALL, NONE
     }
 
@@ -134,10 +119,57 @@ public final class FileUtil {
     }
 
     /**
+     * Find all files matching the given name under the given root directory
+     * within both the user and installed file locations.
+     *
+     * @param name the name of the file to find
+     * @param root the relative path to a directory in either or both of the
+     *             user or installed file locations; use a single period
+     *             character to refer to the root of the user or installed file
+     *             locations
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; or
+     *                                  if the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..)
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
+        return FileUtilSupport.getDefault().findFiles(name, root);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within the specified location.
+     *
+     * @param name     the name of the file to find
+     * @param root     the relative path to a directory in either or both of the
+     *                 user or installed file locations; use a single period
+     *                 character to refer to the root of the location
+     * @param location the location to search within
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; if
+     *                                  the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..); or if the location is
+     *                                  {@link Location#NONE}
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
+        return FileUtilSupport.getDefault().findFiles(name, root, location);
+    }
+
+    /**
      * Get the resource file corresponding to a name. There are five cases:
      * <ul>
-     * <li>Starts with "resource:", treat the rest as a pathname relative to the
-     * program directory (deprecated; see "program:" below)</li>
      * <li>Starts with "program:", treat the rest as a relative pathname below
      * the program directory</li>
      * <li>Starts with "preference:", treat the rest as a relative path below
@@ -146,9 +178,6 @@ public final class FileUtil {
      * JMRI system preferences directory</li>
      * <li>Starts with "home:", treat the rest as a relative path below the
      * user.home directory</li>
-     * <li>Starts with "file:", treat the rest as a relative path below the
-     * resource directory in the preferences directory (deprecated; see
-     * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
      * profile directory as specified in the
      * active{@link jmri.profile.Profile}</li>
@@ -159,9 +188,8 @@ public final class FileUtil {
      * </ul>
      * In any case, absolute pathnames will work.
      *
-     * @param pName The name string, possibly starting with file:, home:,
-     *              profile:, program:, preference:, scripts:, settings, or
-     *              resource:
+     * @param pName The name string, possibly starting with home:, profile:,
+     *              program:, preference:, scripts:, or settings:
      * @return Absolute file name to use, or null. This will include
      *         system-specific file separators.
      * @since 2.7.2
@@ -268,9 +296,6 @@ public final class FileUtil {
     /**
      * Test if the given filename is a portable filename.
      *
-     * Note that this method may return a false positive if the filename is a
-     * file: URL.
-     *
      * @param filename the name to test
      * @return true if filename is portable
      */
@@ -352,7 +377,10 @@ public final class FileUtil {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */
@@ -537,25 +565,33 @@ public final class FileUtil {
      * {@link java.net.URI} for that file.
      * <p>
      * Search order is:
-     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * <ol>
+     * <li>For any provided searchPaths, iterate over the searchPaths by
      * prepending each searchPath to the path and following the following search
-     * order:
-     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * order:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
+     * the JMRI distribution directory)</li>
+     * <li>As a File in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
-     * in the four locations listed without prepending any path</li></ol>
+     * in the four locations listed without prepending any path</li>
+     * <li>As a File with an absolute path</li>
+     * </ol>
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
-     * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link #PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link #PROFILE} directory</li></ol>
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
@@ -687,7 +723,8 @@ public final class FileUtil {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     static public JarFile jmriJarFile() {
         return FileUtilSupport.getDefault().getJmriJarFile();
@@ -830,11 +867,11 @@ public final class FileUtil {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws java.io.IOException if a backup cannot be created
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.Transform class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class TransformTest extends TestCase {
 
     public void testBasic() {
@@ -33,10 +32,12 @@ public class TransformTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

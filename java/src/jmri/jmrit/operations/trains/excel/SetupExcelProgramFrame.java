@@ -1,4 +1,3 @@
-// SetupExcelProgramFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Dimension;
@@ -20,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of the file name and setup of an Excel program.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 22249 $
+ * 
  */
 public class SetupExcelProgramFrame extends OperationsFrame {
 
@@ -34,7 +33,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
     JButton testButton = new JButton(Bundle.getMessage("Test"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // directory
     JPanel pDirectoryName = new JPanel();
@@ -83,6 +82,8 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     /**
      * Opens a dialog window in either the csvManifest or csvSwitchLists
      * directory
+     * @param directoryName The string name of the directory
+     * @return The File selected.
      *
      */
     protected File selectFile(String directoryName) {

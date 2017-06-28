@@ -15,14 +15,13 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.vsdecoder.swing.VSDPreferencesAction;
@@ -32,8 +31,6 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
-
-    private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
 
     VSDecoderPane decpane;
 
@@ -61,12 +58,13 @@ class VSDecoderFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(vsdBundle.getString("VSDecoderFileMenu"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile")));
-        fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile")));
-        fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
-        fileMenu.add(new VSDPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
+        fileMenu.addSeparator();
+        fileMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
         fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -81,6 +79,7 @@ class VSDecoderFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // Call the superclass function
         super.windowClosing(e);

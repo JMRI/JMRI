@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.grapevine;
 
 import jmri.JmriException;
@@ -12,19 +11,20 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "GTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "G";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
@@ -67,6 +67,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return false;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = prefix + "T" + curAddress;
 
@@ -104,6 +105,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that returns the next valid free turnout hardware address
      */
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
 
         String tmpSName = "";
@@ -148,4 +150,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

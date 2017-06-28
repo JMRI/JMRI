@@ -19,12 +19,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.web.servlet.Bundle {
 
-    private final static String name = "jmri.web.servlet.operations.Bundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.web.servlet.operations.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

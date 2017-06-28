@@ -1,4 +1,3 @@
-// ResetCarMovesAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Component;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * database.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ResetCarMovesAction extends AbstractAction {
 

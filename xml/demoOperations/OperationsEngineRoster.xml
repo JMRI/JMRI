@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-engines.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-engines.dtd">
 <operations-config>
-  <!--Written by JMRI version 20150330-1700-Daniel Boudreau on Mon Apr 27 16:27:23 EDT 2015 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 $Id$-->
   <models>
     <model name="Allegheny" />
     <model name="E8" />
@@ -78,24 +78,24 @@
     <consist name="nce_127" />
   </newConsists>
   <engines>
-    <engine id="Chesapeake &amp; Ohio1633" roadName="C&amp;O" roadNumber="1633" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" date="" selected="false" owner="AT" model="Allegheny" hp="8000" />
-    <engine id="Chesapeake &amp; Ohio1641" roadName="C&amp;O" roadNumber="1641" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" date="" selected="false" owner="AT" model="Allegheny" hp="8000" />
-    <engine id="SP1017" roadName="SP" roadNumber="1017" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" selected="false" model="SW1200" hp="1200" />
-    <engine id="SP1019" roadName="SP" roadNumber="1019" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" selected="false" model="SW1200" hp="1200" />
-    <engine id="SP3023" roadName="SP" roadNumber="3023" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" date="" selected="false" owner="AT" model="TRAINMASTER" hp="2400" consist="nce_106" />
-    <engine id="SP3029" roadName="SP" roadNumber="3029" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" date="" selected="false" model="TRAINMASTER" hp="2400" consist="nce_106" leadConsist="true" consistNum="106" />
-    <engine id="SP4802" roadName="SP" roadNumber="4802" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="50" date="3/8/2015 11:36 " selected="false" model="TRAINMASTER" hp="2400" consist="nce_118" />
-    <engine id="SP4805" roadName="SP" roadNumber="4805" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="50" date="3/8/2015 11:36 " selected="false" model="TRAINMASTER" hp="2400" consist="nce_118" leadConsist="true" consistNum="118" />
-    <engine id="SP5010" roadName="SP" roadNumber="5010" type="Diesel" length="56" weightTons="130" locationId="84" secLocationId="84s17" lastRouteId="17" moves="23" date="" selected="false" model="GP30" hp="2250" />
-    <engine id="SP5151" roadName="SP" roadNumber="5151" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" selected="false" model="RS18" hp="1800" consist="nce_127" />
-    <engine id="SP5160" roadName="SP" roadNumber="5160" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" selected="false" model="RS18" hp="1800" consist="nce_127" leadConsist="true" consistNum="127" />
-    <engine id="SP5162" roadName="SP" roadNumber="5162" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="22" date="3/8/2015 11:42 " selected="false" model="RS18" hp="1800" consist="RS18s" leadConsist="true" />
-    <engine id="SP5166" roadName="SP" roadNumber="5166" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="22" date="3/8/2015 11:42 " selected="false" model="RS18" hp="1800" consist="RS18s" />
-    <engine id="SP5294" roadName="SP" roadNumber="5294" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" date="" selected="false" model="RSD4" hp="1600" consist="nce_115" leadConsist="true" consistNum="115" />
-    <engine id="SP5307" roadName="SP" roadNumber="5307" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" date="" selected="false" model="RSD4" hp="1600" consist="nce_115" />
-    <engine id="SSW4501" roadName="SSW" roadNumber="4501" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s2" lastRouteId="15" moves="8" date="4/27/2015 16:26 " selected="false" lastLocationId="91" model="GP35" hp="2500" consist="SSW 1" leadConsist="true" />
-    <engine id="SSW4503" roadName="SSW" roadNumber="4503" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s2" lastRouteId="15" moves="8" date="4/27/2015 16:26 " selected="false" lastLocationId="91" model="GP35" hp="2500" consist="SSW 1" />
-    <engine id="SSW4545" roadName="SSW" roadNumber="4545" type="Diesel" length="56" weightTons="130" locationId="96" secLocationId="96s3" lastRouteId="19" moves="20" date="3/8/2015 11:42 " selected="false" lastLocationId="92" model="GP35" hp="2500" consist="SSW 2" leadConsist="true" />
-    <engine id="SSW4546" roadName="SSW" roadNumber="4546" type="Diesel" length="56" weightTons="130" locationId="96" secLocationId="96s3" lastRouteId="19" moves="20" date="3/8/2015 11:42 " selected="false" lastLocationId="92" model="GP35" hp="2500" consist="SSW 2" />
+    <engine id="Chesapeake &amp; Ohio1633" roadName="C&amp;O" roadNumber="1633" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" date="" selected="false" owner="AT" model="Allegheny" hp="8000" bUnit="false" />
+    <engine id="Chesapeake &amp; Ohio1641" roadName="C&amp;O" roadNumber="1641" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" date="" selected="false" owner="AT" model="Allegheny" hp="8000" bUnit="false" />
+    <engine id="SP1017" roadName="SP" roadNumber="1017" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" selected="false" model="SW1200" hp="1200" bUnit="false" />
+    <engine id="SP1019" roadName="SP" roadNumber="1019" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" selected="false" model="SW1200" hp="1200" bUnit="false" />
+    <engine id="SP3023" roadName="SP" roadNumber="3023" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" date="" selected="false" owner="AT" model="TRAINMASTER" hp="2400" bUnit="false" consist="nce_106" />
+    <engine id="SP3029" roadName="SP" roadNumber="3029" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" date="" selected="false" model="TRAINMASTER" hp="2400" bUnit="false" consist="nce_106" leadConsist="true" consistNum="106" />
+    <engine id="SP4802" roadName="SP" roadNumber="4802" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="50" date="03/08/2015 11:36:00" selected="false" model="TRAINMASTER" hp="2400" bUnit="false" consist="nce_118" />
+    <engine id="SP4805" roadName="SP" roadNumber="4805" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="50" date="03/08/2015 11:36:00" selected="false" model="TRAINMASTER" hp="2400" bUnit="false" consist="nce_118" leadConsist="true" consistNum="118" />
+    <engine id="SP5010" roadName="SP" roadNumber="5010" type="Diesel" length="56" weightTons="130" locationId="84" secLocationId="84s17" lastRouteId="17" moves="23" date="" selected="false" model="GP30" hp="2250" bUnit="false" />
+    <engine id="SP5151" roadName="SP" roadNumber="5151" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" selected="false" model="RS18" hp="1800" bUnit="false" consist="nce_127" />
+    <engine id="SP5160" roadName="SP" roadNumber="5160" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" selected="false" model="RS18" hp="1800" bUnit="false" consist="nce_127" leadConsist="true" consistNum="127" />
+    <engine id="SP5162" roadName="SP" roadNumber="5162" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="22" date="03/08/2015 11:42:00" selected="false" model="RS18" hp="1800" bUnit="false" consist="RS18s" leadConsist="true" />
+    <engine id="SP5166" roadName="SP" roadNumber="5166" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="22" date="03/08/2015 11:42:00" selected="false" model="RS18" hp="1800" bUnit="false" consist="RS18s" />
+    <engine id="SP5294" roadName="SP" roadNumber="5294" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="30" date="12/26/2016 10:47:32" selected="false" model="RSD4" hp="1600" bUnit="false" consist="nce_115" leadConsist="true" consistNum="115" />
+    <engine id="SP5307" roadName="SP" roadNumber="5307" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="30" date="12/26/2016 10:47:32" selected="false" model="RSD4" hp="1600" bUnit="false" consist="nce_115" />
+    <engine id="SSW4501" roadName="SSW" roadNumber="4501" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s2" lastRouteId="15" moves="8" date="04/27/2015 16:26:00" selected="false" lastLocationId="91" model="GP35" hp="2500" bUnit="false" consist="SSW 1" leadConsist="true" />
+    <engine id="SSW4503" roadName="SSW" roadNumber="4503" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s2" lastRouteId="15" moves="8" date="04/27/2015 16:26:00" selected="false" lastLocationId="91" model="GP35" hp="2500" bUnit="false" consist="SSW 1" />
+    <engine id="SSW4545" roadName="SSW" roadNumber="4545" type="Diesel" length="56" weightTons="130" locationId="96" secLocationId="96s3" lastRouteId="19" moves="20" date="03/08/2015 11:42:00" selected="false" lastLocationId="92" model="GP35" hp="2500" bUnit="false" consist="SSW 2" leadConsist="true" />
+    <engine id="SSW4546" roadName="SSW" roadNumber="4546" type="Diesel" length="56" weightTons="130" locationId="96" secLocationId="96s3" lastRouteId="19" moves="20" date="03/08/2015 11:42:00" selected="false" lastLocationId="92" model="GP35" hp="2500" bUnit="false" consist="SSW 2" />
   </engines>
 </operations-config>

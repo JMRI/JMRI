@@ -90,7 +90,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         // save the address and speed information for
                         // the simulator's RailCom values.
@@ -118,7 +125,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
                         if(locoCount<19) // 19 is the limit, set by the protocol.
@@ -139,7 +153,15 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
+                        reply.setParity();         // set the parity correctly.
                         reply.setParity();         // set the parity correctly.
                         locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
                         if(locoCount<19) // 19 is the limit, set by the protocol.
@@ -160,7 +182,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP1:
@@ -205,9 +234,15 @@ public class Z21XNetSimulatorAdapter {
                         break;
                 }
                 break;
-            case XNetConstants.EMERGENCY_STOP:
+            case XNetConstants.ALL_ESTOP:
                 log.debug("Emergency Stop Received");
                 reply = emergencyStopReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP:
+                reply = okReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
+                reply = okReply();
                 break;
            case XNetConstants.ACC_OPER_REQ:
                 log.debug("Accessory Operations Request Received");
@@ -241,7 +276,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC:
@@ -346,7 +388,7 @@ public class Z21XNetSimulatorAdapter {
     private XNetReply emergencyStopReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
-        r.setElement(1, XNetConstants.BC_EVERYTHING_OFF);
+        r.setElement(1, XNetConstants.BC_EVERYTHING_STOP);
         r.setElement(2, 0x00); // set the parity byte to 0
         r.setParity();
         return r;

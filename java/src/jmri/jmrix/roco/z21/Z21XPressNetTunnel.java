@@ -54,6 +54,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // start a thread to read from the input pipe.
         sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21XPressNetTunnel sourceThread");
         sourceThread.start();
 
         // Then use those pipes as the input and output pipes for
@@ -67,6 +68,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         xsc.configure();
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
@@ -74,7 +76,10 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         log.debug("Simulator Thread Started");
         for (;;) {
             XNetMessage m = readMessage();
-            message(m);
+            if(m != null) {
+               // don't forward a null message.
+               message(m);
+            }
         }
     }
 
@@ -125,7 +130,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
@@ -150,6 +155,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @param msg The received z21 message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void reply(Z21Reply msg) {
         // This funcction forwards the payload of an XPressNet message 
         // tunneled in a z21 message and forwards it to the XPressNet
@@ -176,6 +182,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @param msg The received z21 message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void message(Z21Message msg) {
         // this function does nothing.
     }
@@ -188,6 +195,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void message(XNetReply msg) {
         // we don't do anything with replies.
     }
@@ -200,6 +208,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void message(XNetMessage msg) {
         // when an XPressNet message shows up here, package it in a Z21Message
         Z21Message message = new Z21Message(msg);
@@ -213,6 +222,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * Member function invoked by an XNetInterface implementation to notify a
      * sender that an outgoing message timed out and was dropped from the queue.
      */
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         // we don't do anything with timeouts.
     }
@@ -234,6 +244,20 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // register a connection config object for this stream port.
         //jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
+        //jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
+    }
+
+
+    public void dispose(){
+       if(xsc != null){
+          xsc.dispose();
+       }
+       sourceThread.stop();
+       try {
+          sourceThread.join();
+       } catch (InterruptedException ie){
+          // interrupted durring cleanup.
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());

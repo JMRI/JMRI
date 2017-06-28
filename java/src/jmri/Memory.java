@@ -14,7 +14,7 @@ package jmri;
  * Each Memory object has a two names. The "user" name is entirely free form,
  * and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
- * control system (e.g. LocoNet, NCE, etc) and address within that system.
+ * control system (for example LocoNet or NCE) and address within that system.
  * <BR>
  * <hr>
  * This file is part of JMRI.
@@ -28,7 +28,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.implementation.AbstractMemory
  * @see jmri.MemoryManager
  * @see jmri.InstanceManager
@@ -37,12 +37,16 @@ public interface Memory extends NamedBean {
 
     /**
      * Get the stored value. The type of this depends on what was stored...
+     *
+     * @return the stored value
      */
     public Object getValue();
 
     /**
      * Set the value. Any type of Object can be stored, but various utilities
      * use the toString method of the stored Object.
+     *
+     * @param value the value to store
      */
     public void setValue(Object value);
 

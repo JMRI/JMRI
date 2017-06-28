@@ -1,4 +1,3 @@
-// EliteXNetTurnoutManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.Turnout;
@@ -10,9 +9,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
- */
+ * @author Paul Bender Copyright (C) 2008
+  */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
@@ -22,6 +20,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // XNet-specific methods
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new EliteXNetTurnout(prefix, addr, tc);
@@ -30,6 +29,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // listen for turnouts, creating them as needed
+    @Override
     public void message(jmri.jmrix.lenz.XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -86,4 +86,4 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
 }
 
-/* @(#)EliteXNetTurnoutManager.java */
+

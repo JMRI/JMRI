@@ -1,4 +1,3 @@
-// TrainsScriptAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -11,7 +10,6 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class TrainsScriptAction extends AbstractAction {
 
@@ -38,4 +36,4 @@ public class TrainsScriptAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainScriptAction.java */
+

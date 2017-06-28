@@ -1,4 +1,3 @@
-// LnConnectionTypeList.java
 package jmri.jmrix.loconet.Intellibox;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.loconet.Intellibox;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

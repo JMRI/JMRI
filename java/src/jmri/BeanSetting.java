@@ -1,17 +1,17 @@
 package jmri;
 
-
 /**
- * Represent a Named Bean (e.g.&nbsp;Turnout) and specific setting for it. These
- * can be used e.g. to represent part of a particular path through a layout, or
- * a condition that has to be true as part of something.
+ * Represent a NamedBean (such as a Turnout) and specific desired setting for
+ * it. These can be used to represent the setting a NamedBean has as part of a
+ * particular path through a layout, or a condition that has to be true as part
+ * of something.
  * <p>
  * Objects of this class are immutable, in that once created the selected bean
  * and required setting cannot be changed. However, the value of the
  * <code><a href="#check()">check</a></code> method does change, because it's a
  * function of the current bean setting(s).
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting {
@@ -35,7 +35,9 @@ public class BeanSetting {
     }
 
     /**
-     * Convenience method; check if the Bean currently has the desired setting
+     * Convenience method; check if the Bean currently has the desired setting.
+     *
+     * @return true if bean has expected setting; false otherwise
      */
     public boolean check() {
         if (_namedBean == null) {
@@ -79,12 +81,20 @@ public class BeanSetting {
         if (!(getClass() == obj.getClass())) {
             return false;
         } else {
-            BeanSetting p = (BeanSetting)obj;
-            if (p._setting != this._setting) return false;
+            BeanSetting p = (BeanSetting) obj;
+            if (p._setting != this._setting) {
+                return false;
+            }
 
-            if (p._namedBean == null &&  this._namedBean != null) return false;
-            if (p._namedBean != null &&  this._namedBean == null) return false;
-            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+            if (p._namedBean == null && this._namedBean != null) {
+                return false;
+            }
+            if (p._namedBean != null && this._namedBean == null) {
+                return false;
+            }
+            if (p._namedBean != null && this._namedBean != null && !p._namedBean.equals(this._namedBean)) {
+                return false;
+            }
 
         }
         return true;
@@ -92,8 +102,10 @@ public class BeanSetting {
 
     @Override
     public int hashCode() {
-        int hash = _setting*1000;
-        if (_namedBean != null) hash += _namedBean.hashCode();
+        int hash = _setting * 1000;
+        if (_namedBean != null) {
+            hash += _namedBean.hashCode();
+        }
         return hash;
     }
 }

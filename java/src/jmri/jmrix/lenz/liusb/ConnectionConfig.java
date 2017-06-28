@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusb;
 
 import jmri.util.SystemType;
@@ -9,8 +8,7 @@ import jmri.util.SystemType;
  * This uses the {@link LIUSBAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version	$Revision$
- *
+  *
  * @see LIUSBAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
@@ -30,6 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB";
     }
@@ -42,6 +41,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBAdapter();

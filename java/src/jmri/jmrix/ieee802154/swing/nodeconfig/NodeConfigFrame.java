@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154.swing.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -17,9 +16,9 @@ import org.slf4j.LoggerFactory;
  * Frame for user configuration of IEEE 802.15.4 nodes. 
  * Derived from node configuration for c/mri nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2013
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -57,6 +56,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param tc connector for node
      */
     public NodeConfigFrame(IEEE802154TrafficController tc) {
         super();
@@ -67,6 +67,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("WindowTitle"));
         Container contentPane = getContentPane();
@@ -161,6 +162,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -171,6 +173,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -181,6 +184,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 deleteButtonActionPerformed();
             }
@@ -191,6 +195,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doneButtonActionPerformed();
             }
@@ -201,6 +206,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateButtonActionPerformed();
             }
@@ -212,6 +218,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -385,6 +392,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to close the window when the close box is clicked
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
         super.windowClosing(e);
@@ -446,6 +454,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Check for consistency errors by node type Returns 'true' if successful,
      * 'false' if an error was detected. If an error is detected, a suitable
      * error message is placed in the Notes area
+     * @return always true
      */
     protected boolean checkConsistency() {
         return true;

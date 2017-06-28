@@ -96,6 +96,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         waitingForIplReply = false;
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
@@ -103,28 +104,29 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 int newvalue = 0;
                 if (numUr92 > 0) {
                     newvalue = numUr92;
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
                     InvalidateDataAndQueryDuplexInfo();
                 } else {
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
-                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoUR92Found");
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
+                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoUR92Found"); // NOI18N
                 }
             }
         });
         swingTmrDuplexInfoQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.DPLX_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrDuplexInfoQuery.stop();
                 waitingForIplReply = false;
                 if (gotQueryReply == true) {
                     // do not want to erase any status message other than the "Processing" message.
-                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR, "", " ");
+                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR, "", " "); // NOI18N
                     gotQueryReply = false;
                 } else {
-                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoQueryResponse");
+                    thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoQueryResponse"); // NOI18N
                     numUr92 = 0;
                     int oldvalue = 9999;
                     int newvalue = 0;
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
                 }
             }
         });
@@ -158,7 +160,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         if (sGroupName.length() == 0) {
             return false;
         }
-        return sGroupName.matches("^.{8}$");
+        return sGroupName.matches("^.{8}$"); // NOI18N
     }
 
     /**
@@ -180,8 +182,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             return false;
         }
         // Return whether or not the password matches
-        return (limitPasswordToNumericCharacters && sGroupPassword.matches("^[0-9][0-9][0-9][0-9]$"))
-                || sGroupPassword.matches("^[0-9A-C][0-9A-C][0-9A-C][0-9A-C]$");
+        return (limitPasswordToNumericCharacters && sGroupPassword.matches("^[0-9][0-9][0-9][0-9]$")) // NOI18N
+                || sGroupPassword.matches("^[0-9A-C][0-9A-C][0-9A-C][0-9A-C]$"); // NOI18N
     }
 
     /**
@@ -254,7 +256,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         int i;
 
         if (validateGroupName(sGroupName) == false) {
-            throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Name - must be exactly 8 characters");
+            throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Name - must be exactly 8 characters"); // NOI18N
         }
 
         // format packet
@@ -319,7 +321,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         int i;
 
         if (validateGroupChannel(iChannelNumber) == false) {
-            throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Channel - must be between 11 and 26, inclusive");
+            throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Channel - must be between 11 and 26, inclusive"); // NOI18N
         }
 
         // format packet
@@ -344,25 +346,26 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * Create a LocoNet packet to set the Duplex group password.
      * <p>
      * If s provides anything other than a 4 character length group password
-     * which uses only valid group ID characters (0-9, A-C, a-c), a bogus
+     * which uses only valid group ID characters (0-9, A-C), a bogus
      * LocoNet message is returned.
      * <p>
      * @param sGroupPassword The desired group password as a string
      * @return The packet which writes the Group Password to the UR92 device(s)
+     * @throws jmri.jmrix.loconet.LocoNetException in case of invalid sGrooupPassword
      */
     public static final LocoNetMessage createSetUr92GroupPasswordPacket(String sGroupPassword) throws jmri.jmrix.loconet.LocoNetException {
 
-        int gr_p1 = sGroupPassword.charAt(0);
-        int gr_p2 = sGroupPassword.charAt(1);
-        int gr_p3 = sGroupPassword.charAt(2);
-        int gr_p4 = sGroupPassword.charAt(3);
+        int gr_p1 = sGroupPassword.toUpperCase().charAt(0);
+        int gr_p2 = sGroupPassword.toUpperCase().charAt(1);
+        int gr_p3 = sGroupPassword.toUpperCase().charAt(2);
+        int gr_p4 = sGroupPassword.toUpperCase().charAt(3);
         int i;
 
         if (validateGroupPassword(sGroupPassword) == false) {
             if (getLimitPasswordToNumericOnly() == true) {
-                throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 digit number between 0000 and 9999, inclusive");
+                throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 digit number between 0000 and 9999, inclusive"); // NOI18N
             } else {
-                throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 character value using only digits, 'A', 'B', and/or 'C'");
+                throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 character value using only digits, 'A', 'B', and/or 'C'"); // NOI18N
             }
         }
 
@@ -425,7 +428,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             /* in case param s encodes something other than a valid Duplex
              * ID number, throw an exception.
              */
-            throw new jmri.jmrix.loconet.LocoNetException("Illegal Duplex Group ID number");
+            throw new jmri.jmrix.loconet.LocoNetException("Illegal Duplex Group ID number"); // NOI18N
         }
     }
 
@@ -692,6 +695,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         if (handleMessageIplResult(m)) {
@@ -932,7 +936,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                         LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
         int oldvalue = 9999;
         int newvalue = 0;
-        thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
+        thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
         invalidateDuplexGroupIdentityInfo();
         if (swingTmrIplQuery != null) {
             if (swingTmrIplQuery.isRunning()) {
@@ -1024,7 +1028,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         m.setElement(i++, dupName.charAt(5) & 0x7f);
         m.setElement(i++, dupName.charAt(6) & 0x7f);
         m.setElement(i++, dupName.charAt(7) & 0x7f);
-        dupPass += "0000";
+        dupPass += "0000"; // NOI18N
         dupPass = dupPass.substring(0, 4);
         int gr_p1 = dupPass.charAt(0);
         int gr_p2 = dupPass.charAt(1);
@@ -1088,7 +1092,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         m.setElement(i++, LnConstants.RE_DPLX_GP_PW_TYPE);   // Group Password Operation
         m.setElement(i++, LnConstants.RE_DPLX_OP_TYPE_REPORT);   // Report Operation
 
-        dupPass += "0000";
+        dupPass += "0000"; // NOI18N
 
         m.setElement(i++,
                 ((dupPass.charAt(0) & 0x80) == 0x80 ? 8 : 0)
@@ -1132,24 +1136,24 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // Property Change keys relating to GUI status line
-    public final static String DPLX_PC_STAT_LN_UPDATE = "DPLXPCK_STAT_LN_UPDATE";
-    public final static String DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR = "DPLXPCK_STAT_LN_ON_OVER_UPDATE";
+    public final static String DPLX_PC_STAT_LN_UPDATE = "DPLXPCK_STAT_LN_UPDATE"; // NOI18N
+    public final static String DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR = "DPLXPCK_STAT_LN_ON_OVER_UPDATE"; // NOI18N
 
     // Property Change keys relating to validity of identity info
-    public final static String DPLX_PC_NAME_VALIDITY = "DPLXPCK_NAME_VALID";
-    public final static String DPLX_PC_CHANNEL_VALIDITY = "DPLXPCK_CH_VALID";
-    public final static String DPLX_PC_PASSWORD_VALIDITY = "DPLXPCK_PW_VALID";
-    public final static String DPLX_PC_ID_VALIDITY = "DPLXPCK_ID_VALID";
+    public final static String DPLX_PC_NAME_VALIDITY = "DPLXPCK_NAME_VALID"; // NOI18N
+    public final static String DPLX_PC_CHANNEL_VALIDITY = "DPLXPCK_CH_VALID"; // NOI18N
+    public final static String DPLX_PC_PASSWORD_VALIDITY = "DPLXPCK_PW_VALID"; // NOI18N
+    public final static String DPLX_PC_ID_VALIDITY = "DPLXPCK_ID_VALID"; // NOI18N
 
     // Property Change keys relating to identity info value changes
-    public final static String DPLX_PC_NAME_UPDATE = "DPLXPCK_NAME_UPDATE";
-    public final static String DPLX_PC_CHANNEL_UPDATE = "DPLXPCK_CH_UPDATE";
-    public final static String DPLX_PC_PASSWORD_UPDATE = "DPLXPCK_PW_UPDATE";
-    public final static String DPLX_PC_ID_UPDATE = "DPLXPCK_ID_UPDATE";
+    public final static String DPLX_PC_NAME_UPDATE = "DPLXPCK_NAME_UPDATE"; // NOI18N
+    public final static String DPLX_PC_CHANNEL_UPDATE = "DPLXPCK_CH_UPDATE"; // NOI18N
+    public final static String DPLX_PC_PASSWORD_UPDATE = "DPLXPCK_PW_UPDATE"; // NOI18N
+    public final static String DPLX_PC_ID_UPDATE = "DPLXPCK_ID_UPDATE"; // NOI18N
 
     // Property Change keys relating to Duplex Group Identity LocoNet messages
-    public final static String DPLX_PC_RCD_DPLX_IDENTITY_QUERY = "DPLXPCK_IDENTITY_QUERY";
-    public final static String DPLX_PC_RCD_DPLX_IDENTITY_REPORT = "DPLXPCK_IDENTITY_REPORT";
+    public final static String DPLX_PC_RCD_DPLX_IDENTITY_QUERY = "DPLXPCK_IDENTITY_QUERY"; // NOI18N
+    public final static String DPLX_PC_RCD_DPLX_IDENTITY_REPORT = "DPLXPCK_IDENTITY_REPORT"; // NOI18N
 
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller

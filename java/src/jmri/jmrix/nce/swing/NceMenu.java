@@ -8,14 +8,16 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Create a "Systems" menu containing the JMRI NCE-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
- * @author	kcameron	Copyright 2010, 2013
+ * @author Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
+ * @author kcameron Copyright 2010, 2013
  */
 public class NceMenu extends JMenu {
 
     /**
      * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
      * actions. Actions will open new windows.
+     *
+     * @param memo the system connection memo to associate menu items with
      */
     // Need to Sort out the NCE server menu items;
     public NceMenu(NceSystemConnectionMemo memo) {
@@ -48,7 +50,7 @@ public class NceMenu extends JMenu {
         }
 
         // do we have a NceTrafficController?
-        setEnabled(memo.getNceTrafficController() != null);	// disable menu, no connection, no tools!
+        setEnabled(memo.getNceTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }

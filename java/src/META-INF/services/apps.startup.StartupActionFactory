@@ -3,3 +3,5 @@
 apps.RestartStartupActionFactory
 jmri.jmrit.XmlFileValidateStartupActionFactory
 jmri.jmrit.roster.swing.RosterFrameStartupActionFactory
+jmri.jmrit.vsdecoder.VSDecoderCreationStartupActionFactory
+jmri.jmrix.loconet.loconetovertcp.LnTcpStartupActionFactory

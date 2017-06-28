@@ -21,7 +21,7 @@ import jmri.NamedBeanHandle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
 public class JmriSimplePropertyListener implements PropertyChangeListener {
@@ -102,6 +102,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
      * Conditional.calculates its state and trigger its actions if its state has
      * changed.
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         //log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
         //    ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+

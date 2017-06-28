@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -11,7 +10,7 @@ import org.junit.Test;
  *
  * Description: tests for the LayoutSlipXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author   George Warner  Copyright (C) 2017
  */
 public class LayoutSlipXmlTest {
 
@@ -32,4 +31,3 @@ public class LayoutSlipXmlTest {
     }
 
 }
-

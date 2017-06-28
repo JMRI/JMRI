@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -22,14 +22,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
        _memo = memo;
     }
 
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
-        sName = SerialAddress.normalizeSystemName(systemName);
+        sName = _memo.normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -40,7 +42,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return t;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = _memo.convertSystemNameToAlternate(sName);
         t = getBySystemName(altName);
         if (t != null) {
             return t;
@@ -48,16 +50,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // check if the addressed output bit is available
         int nAddress = -1;
-        nAddress = SerialAddress.getNodeAddressFromSystemName(sName);
+        nAddress = _memo.getNodeAddressFromSystemName(sName);
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = SerialAddress.getBitFromSystemName(sName);
+        int bitNum = _memo.getBitFromSystemName(sName);
         if (bitNum == 0) {
             return (null);
         }
         String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
+        conflict = _memo.isOutputBitFree(nAddress, bitNum);
         if ((!conflict.equals("")) && (!conflict.equals(sName))) {
             log.error(sName + " assignment conflict with " + conflict + ".");
             notifyTurnoutCreationError(conflict, bitNum);
@@ -68,7 +70,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         t = new SerialTurnout(sName, userName,_memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
+        if (!_memo.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
         }
@@ -99,6 +101,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * other turnout control options, such as pulsed control of turnout
      * machines.
      */
+    @Override
     public int askNumControlBits(String systemName) {
 
         // ask user how many bits should control the turnout - 1 or 2
@@ -114,17 +117,17 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if (iNum == 2) {
             // check if the second output bit is available
             int nAddress = -1;
-            nAddress = SerialAddress.getNodeAddressFromSystemName(systemName);
+            nAddress = _memo.getNodeAddressFromSystemName(systemName);
             if (nAddress == -1) {
                 return (0);
             }
-            int bitNum = SerialAddress.getBitFromSystemName(systemName);
+            int bitNum = _memo.getBitFromSystemName(systemName);
             if (bitNum == 0) {
                 return (0);
             }
             bitNum = bitNum + 1;
             String conflict = "";
-            conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
+            conflict = _memo.isOutputBitFree(nAddress, bitNum);
             if (!conflict.equals("")) {
                 log.error("Assignment conflict with " + conflict + ". Turnout not created.");
                 notifySecondBitConflict(conflict, bitNum);
@@ -145,6 +148,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * for 'pulsed' control, where n specifies the duration of the pulse
      * (normally in seconds).
      */
+    @Override
     public int askControlType(String systemName) {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
         //   'pulsed' output (some turnout controllers).
@@ -200,27 +204,23 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
-    /**
-     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
     //Turnout format is more than a simple format.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public boolean isNumControlBitsSupported(String systemName) {
         return true;
     }
 
+    @Override
     public boolean isControlTypeSupported(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         int seperator = 0;
         String tmpSName;
@@ -230,7 +230,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             seperator = curAddress.indexOf(":");
             nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
             bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
-            tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+            tmpSName = _memo.makeSystemName("T", nAddress, bitNum);
         } else if (curAddress.contains("B") || (curAddress.contains("b"))) {
             curAddress = curAddress.toUpperCase();
             try {
@@ -242,8 +242,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix + typeLetter() + curAddress;
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = _memo.getBitFromSystemName(tmpSName);
+            nAddress = _memo.getNodeAddressFromSystemName(tmpSName);
         } else {
             try {
                 //We do this to simply check that the value passed is a number!
@@ -252,8 +252,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix + "T" + curAddress;
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = _memo.getBitFromSystemName(tmpSName);
+            nAddress = _memo.getNodeAddressFromSystemName(tmpSName);
         }
         return (tmpSName);
     }
@@ -264,6 +264,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that returns the next valid free turnout hardware address
      */
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         try {
@@ -288,13 +289,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         bitNum = bitNum + t.getNumberOutputBits();
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-        tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        tmpSName = _memo.makeSystemName("T", nAddress, bitNum);
         t = getBySystemName(tmpSName);
         if (t != null) {
             for (int x = 1; x < 10; x++) {
                 bitNum = bitNum + t.getNumberOutputBits();
                 //System.out.println("This should increment " + bitNum);
-                tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+                tmpSName = _memo.makeSystemName("T", nAddress, bitNum);
                 t = getBySystemName(tmpSName);
                 if (t == null) {
                     int seperator = tmpSName.lastIndexOf("T") + 1;
@@ -314,4 +315,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

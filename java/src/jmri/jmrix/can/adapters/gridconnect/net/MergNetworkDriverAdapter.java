@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 
@@ -7,8 +6,8 @@ package jmri.jmrix.can.adapters.gridconnect.net;
  * <P>
  * This connects via a telnet connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision: 21889 $
+ * @author Bob Jacobsen Copyright (C) 2010
+ * 
  */
 public class MergNetworkDriverAdapter extends NetworkDriverAdapter {
 

@@ -1,6 +1,6 @@
-// CbusConsolePane.java
 package jmri.jmrix.can.cbus.swing.console;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,15 +46,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Cbus Console
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7992772438444957125L;
     // member declarations
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
@@ -948,7 +943,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         return new String(linesBuffer[CBUS]);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
     PrintStream logStream = null;
 
     // to get a time string
@@ -1077,11 +1072,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7861976003921031471L;
 
         public Default() {
             super("CBUS Console",

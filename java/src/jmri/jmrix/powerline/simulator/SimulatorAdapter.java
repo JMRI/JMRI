@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This is based on the NCE simulator.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SimulatorAdapter extends SerialPortController implements
@@ -40,6 +40,7 @@ public class SimulatorAdapter extends SerialPortController implements
         super(new SpecificSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -59,6 +60,7 @@ public class SimulatorAdapter extends SerialPortController implements
      * set up all of the other objects to simulate operation with an command
      * station.
      */
+    @Override
     public void configure() {
         SpecificTrafficController tc = new SpecificTrafficController(this.getSystemConnectionMemo());
 
@@ -79,6 +81,7 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -86,6 +89,7 @@ public class SimulatorAdapter extends SerialPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -93,6 +97,7 @@ public class SimulatorAdapter extends SerialPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -100,15 +105,18 @@ public class SimulatorAdapter extends SerialPortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // Simulator thread just reports start and ends
         if (log.isInfoEnabled()) {

@@ -1,4 +1,3 @@
-// ResetAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -17,7 +16,6 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class ResetAction extends AbstractAction {
 
@@ -69,4 +67,4 @@ public class ResetAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
 }
 
-/* @(#)ResetAction.java */
+

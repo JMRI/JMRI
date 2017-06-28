@@ -1,6 +1,6 @@
-// YardmasterByTrackPanel.java
 package jmri.jmrit.operations.locations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
@@ -180,7 +180,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();

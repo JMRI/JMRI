@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.swing.EditableList class.
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version	$Revision$
- */
+  */
 public class EditableListTest extends TestCase {
 
     public void testCtor() {

@@ -57,14 +57,12 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private int _sort = SORTBYNAME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableDataChanged();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeSchedules();
         removePropertyChangeTracks();
@@ -107,12 +105,12 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(MODE_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
-        
+
         frame.loadTableDetails(table);
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -139,9 +137,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             case MODE_COLUMN:
                 return Bundle.getMessage("ScheduleMode");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -155,11 +153,11 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             case SCHEDULE_STATUS_COLUMN:
             case STATUS_COLUMN:
             case MODE_COLUMN:
-            	return String.class;
+                return String.class;
             case SPUR_COLUMN:
-            	return JComboBox.class;
+                return JComboBox.class;
             case SPUR_NUMBER_COLUMN:
-                return Integer.class;  
+                return Integer.class;
             case EDIT_COLUMN:
             case DELETE_COLUMN:
                 return JButton.class;
@@ -181,7 +179,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -206,16 +204,16 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             case MODE_COLUMN:
                 return getSpurMode(row);
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editSchedule(row);
@@ -244,7 +242,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             log.debug("Need location track pair");
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
                     new Object[]{sch.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
-                            new Object[]{Bundle.getMessage("Edit")}), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{Bundle.getMessage("ButtonEdit")}),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         // use invokeLater so new window appears on top
@@ -260,7 +259,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         log.debug("Delete schedule");
         Schedule s = sysList.get(row);
         if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
-                new Object[]{s.getName()}), Bundle.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                new Object[]{s.getName()}), Bundle.getMessage("DeleteSchedule?"),
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             scheduleManager.deregister(s);
             OperationsXml.save();
         }
@@ -297,7 +297,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
             String status = ltp.getTrack().checkScheduleValid();
             if (!status.equals(Track.SCHEDULE_OKAY)) {
-                return Bundle.getMessage("Error");
+                return Bundle.getMessage("ErrorTitle");
             }
         }
         return Bundle.getMessage("ButtonOK");
@@ -331,7 +331,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         if (!status.equals(Track.SCHEDULE_OKAY)) {
             return status;
         }
-        return Bundle.getMessage("Okay");
+        return Bundle.getMessage("ButtonOK");
     }
 
     private String getSpurMode(int row) {
@@ -378,7 +378,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     // check for change in number of schedules, or a change in a schedule
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

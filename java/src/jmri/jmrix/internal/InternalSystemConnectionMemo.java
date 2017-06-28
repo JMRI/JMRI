@@ -19,7 +19,7 @@ import jmri.InstanceManager;
  * </ul>
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2016
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
@@ -123,6 +123,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return programManager;
     }
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -201,11 +202,13 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return null; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions to add at start up
         return null;
     }
 
+    @Override
     public void dispose() {
         if (sensorManager != null) {
             sensorManager.dispose();

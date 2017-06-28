@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * connection on the Hornby Elite
  *
  * @author Paul Bender (C) 2008-2009
- * @version $Revision$
  */
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
@@ -43,6 +42,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Send the XpressNet message to set the Momentary state of locomotive
      * functions F0, F1, F2, F3, F4
      */
+    @Override
     protected void sendMomentaryFunctionGroup1() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -54,6 +54,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Send the XpressNet message to set the momentary state of functions F5,
      * F6, F7, F8
      */
+    @Override
     protected void sendMomentaryFunctionGroup2() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -65,6 +66,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Send the XpressNet message to set the momentary state of functions F9,
      * F10, F11, F12
      */
+    @Override
     protected void sendMomentaryFunctionGroup3() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -76,6 +78,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Send the XpressNet message to set the momentary state of functions F13,
      * F14, F15, F16, F17, F18, F19, F20
      */
+    @Override
     protected void sendMomentaryFunctionGroup4() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -87,6 +90,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Send the XpressNet message to set the momentary state of functions F21,
      * F22, F23, F24, F25, F26, F27, F28
      */
+    @Override
     protected void sendMomentaryFunctionGroup5() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -96,6 +100,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     // sendFunctionStatusInformation sends a request to get the status
     // of functions from the command station
+    @Override
     synchronized protected void sendFunctionStatusInformationRequest() {
         if (log.isDebugEnabled()) {
             log.debug("Momentary function request not supported by Elite.");
@@ -104,6 +109,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     // Handle incoming messages for This throttle
+    @Override
     public void message(XNetReply l) {
         // First, we want to see if this throttle is waiting for a message
         //or not.
@@ -163,9 +169,11 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * Since the Elite send status messages when the throttle changes,
      * override the startStatusTimer/stopStatustimer method to do nothing. 
      */
+    @Override
     protected void startStatusTimer() {
     }
 
+    @Override
     protected void stopStatusTimer() {
     }
 

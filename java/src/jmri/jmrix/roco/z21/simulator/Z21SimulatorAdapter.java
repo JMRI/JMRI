@@ -57,6 +57,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         this.getSystemConnectionMemo().setTrafficController(packets);
 
         sourceThread = new Thread(this);
+        sourceThread.setName("Z21SimulatorAdapter sourceThread");
         sourceThread.start();
 
         this.getSystemConnectionMemo().configureManagers();
@@ -70,6 +71,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
        super.connect();
     }
 
+    @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,
         // and then goes into an infinite loop.

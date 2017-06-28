@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientReplyTest extends TestCase {
 
@@ -38,10 +37,12 @@ public class JMRIClientReplyTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

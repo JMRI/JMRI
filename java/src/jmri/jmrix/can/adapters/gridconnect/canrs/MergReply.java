@@ -21,8 +21,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class MergReply extends GridConnectReply {
 
     public MergReply() {
@@ -38,6 +37,7 @@ public class MergReply extends GridConnectReply {
      *
      * @return the CAN header as an int
      */
+    @Override
     public int getHeader() {
         int val = super.getHeader();
         // Adjust standard header from MERG adapter received as 11 bits left

@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainSchedule {
     
-    public String NONE = "";
+    public static final String NONE = "";
+    public static final String ANY = "ANY"; // allow cars to be picked up any day of the week NOI18N
 
     public static final String NAME_CHANGED_PROPERTY = "trainScheduleName"; // NOI18N
     public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged"; // NOI18N
@@ -107,7 +108,7 @@ public class TrainSchedule {
             for (String id : trainIds) {
                 _trainIds.add(id);
             }
-//				log.debug("Train schedule " + getName() + " trainIds: " + ids);
+//    log.debug("Train schedule " + getName() + " trainIds: " + ids);
         }
     }
 

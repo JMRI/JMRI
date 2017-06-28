@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -45,25 +44,25 @@ public class XBeeTurnoutTest {
 
     @Test
     public void testCtor16BitHexNodeAddress() {
-        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("ABCT0002:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
-
+    
     @Test
     public void testCtor16BitHexNodeAddress2pin() {
-        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("ABCT0002:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
     public void testCtor16BitHexStringNodeAddress() {
-        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("ABCT00 02:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
     public void testCtor16BitHexStringNodeAddress2pin() {
-        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("ABCT00 02:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 

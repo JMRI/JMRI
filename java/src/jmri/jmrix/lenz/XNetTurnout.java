@@ -1,5 +1,12 @@
+package jmri.jmrix.lenz;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.implementation.AbstractTurnout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Description:	extend jmri.AbstractTurnout for XNet layouts
+ * Description: extend jmri.AbstractTurnout for XNet layouts
  * <P>
  * Turnout opperation on XPressNet based systems goes through the following
  * sequence:
@@ -94,21 +101,11 @@
  * NOTE: For LZ100 and LZV100 command stations prior to version 3.2, it may be
  * necessary to poll for the feedback response data.
  * </P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  */
-package jmri.jmrix.lenz;
-
-import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7143747084589933154L;
     /* State information */
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
@@ -120,9 +117,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mThrown = jmri.Turnout.THROWN;
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected String _prefix = "X"; // default to "X"
@@ -190,6 +187,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // Set the Commanded State.   This method overides setCommandedState in
     // the Abstract Turnout class.
+    @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
             log.debug("set commanded state for turnout " + getSystemName() + " to " + s);
@@ -210,6 +208,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     // Handle a request to change state by sending an XPressNet command
+    @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         if (s != _mClosed && s != _mThrown) {
             log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
@@ -236,6 +235,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" + mNumber);
@@ -261,6 +261,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
+    @Override
     synchronized public void setInverted(boolean inverted) {
         if (log.isDebugEnabled()) {
             log.debug("Inverting Turnout State for turnout xt" + mNumber);
@@ -276,6 +277,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         super.setInverted(inverted);
     }
 
+    @Override
     public boolean canInvert() {
         return true;
     }
@@ -298,6 +300,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /*
      *  Handle an incoming message from the XPressNet
      */
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -339,10 +342,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     synchronized public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -647,6 +652,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             t = turnout;
         }
 
+        @Override
         public void run() {
             // We need to tell the turnout to shut off the output.
             if (log.isDebugEnabled()) {
@@ -788,6 +794,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         return (false);
     }
 
+    @Override
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
         super.dispose();
@@ -809,6 +816,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
          * If we're using DIRECT mode, all of this is handled from the
          * XPressNet Messages
          */
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {
             if (log.isDebugEnabled()) {
                 log.debug("propertyChange called");
@@ -860,6 +868,3 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
 
 }
-
-
-/* @(#)XNetTurnout.java */

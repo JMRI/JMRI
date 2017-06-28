@@ -49,7 +49,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
                     data.put(JSON.STATE, JSON.UNKNOWN);
                     break;
                 default:
-                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type));
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
             }
         }
         return root;
@@ -103,7 +103,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(SensorManager.class).getSystemNameList()) {
             root.add(this.doGet(SENSOR, name, locale));

@@ -50,6 +50,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     /**
      * Send an ops-mode write request to the DC++.
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
@@ -60,8 +61,26 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         value = val;
         progState = DCCppProgrammer.REQUESTSENT;
         restartTimer(msg.getTimeout());
+        /* Issue #2423 (GitHub) -- DCC++ base station does not respond to Ops Mode
+         * writes, so waiting for a response just means JMRI times out after a long delay.
+        /* Proposed Fix: Don't go to REQUESTSENT state... just stay in NOTPROGRAMMING
+         * Risk... the state change introduces a 250ms delay to keep the UI from sending
+         * write commands too frequently... so we'd have to do that here too.
+        */
+        // Before we set the programmer state to not programming, 
+        // delay for a short time to give the decoder a chance to 
+        // process the request.
+        try {
+            this.wait(250);
+        } catch (java.lang.InterruptedException ie) {
+            log.debug("Interupted Durring Delay");
+        }
+        progState = DCCppProgrammer.NOTPROGRAMMING;
+        stopTimer();
+        progListener.programmingOpReply(value, jmri.ProgListener.OK);
     }
 
+    @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         //tc.sendDCCppMessage(msg, this);
@@ -86,7 +105,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
-	ret.add(DefaultProgrammerManager.OPSBITMODE);
+ ret.add(DefaultProgrammerManager.OPSBITMODE);
         return ret;
     }
 
@@ -105,14 +124,15 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     // We have no way of determining if the required external 
     // hardware is present, so we return true for all command 
     // stations on which the Operations Mode Programmer is enabled.
+    @Override
     synchronized public void message(DCCppReply l) {
-	progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);	    
+ progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);     
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
-	    
+     
             if (l.isProgramReply()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
@@ -126,35 +146,41 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 stopTimer();
                 progListener.programmingOpReply(value, jmri.ProgListener.OK);
             } else {
-		// This is a message we can (and/or should) ignore.
-		return;
+  // This is a message we can (and/or should) ignore.
+  return;
             }
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return true;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public synchronized void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();

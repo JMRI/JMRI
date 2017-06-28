@@ -1,4 +1,3 @@
-// SprogSlot.java
 package jmri.jmrix.sprog;
 
 import java.util.Arrays;
@@ -20,8 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  * @author	Andrew Berridge 2010
- * @version	$Revision$
- */
+  */
 public class SprogSlot {
 
     private boolean speedPacket = false;
@@ -94,11 +92,7 @@ public class SprogSlot {
     public void set(int address, byte[] payload, int repeat) {
         addr = address;
 
-        // Arrays.copyOf(payload, payload.length), a Java 1.6 construct
-        this.payload = new byte[payload.length];
-        for (int i = 0; i < payload.length; i++) {
-            this.payload[i] = payload[i];
-        }
+        Arrays.copyOf(payload, payload.length);
 
         this.setRepeat(repeat);
         status = SprogConstants.SLOT_IN_USE;
@@ -465,4 +459,4 @@ public class SprogSlot {
 }
 
 
-/* @(#)SprogSlot.java */
+

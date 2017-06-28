@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the LoaderPane class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class LoaderPaneTest extends TestCase {
 
     public void testCreate() {

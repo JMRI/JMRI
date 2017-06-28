@@ -1,5 +1,10 @@
 package jmri.web.servlet.panel;
 
+import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
+import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.awt.Container;
@@ -9,25 +14,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.server.json.JSON;
 import jmri.jmrit.display.Editor;
+import jmri.server.json.JSON;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-
-import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.UTF8;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
-
-import jmri.server.json.util.JsonUtilHttpService;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -41,16 +39,16 @@ import org.slf4j.LoggerFactory;
 abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
-    private static final long serialVersionUID = 3134679703461026038L;
     private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class.getName());
 
     abstract protected String getPanelType();
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        this.mapper = new ObjectMapper();
-        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    public void init() throws ServletException {
+        if (!this.getServletContext().getContextPath().equals("/web/showPanel.html")) {
+            this.mapper = new ObjectMapper();
+            this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        }
     }
 
     /**
@@ -71,9 +69,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * <dt>png</dt>
      * <dd>A PNG image of the panel.</dd>
      * <dt>json</dt>
-     * <dd>A JSON document of the panel (currently imcomplete).</dd>
+     * <dd>A JSON document of the panel (currently incomplete).</dd>
      * <dt>xml</dt>
-     * <dd>A XML document of the panel ready to render within a browser.</dd>
+     * <dd>An XML document of the panel ready to render within a browser.</dd>
      * </dl>
      * If {@code format} is not specified, it is treated as {@code html}. All
      * other formats not listed are treated as {@code xml}.
@@ -84,17 +82,21 @@ abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
+        if (request.getRequestURI().equals("/web/showPanel.html")) { // NOI18N
+            response.sendRedirect("/panel/"); // NOI18N
+            return;
+        }
         if (request.getParameter(JSON.NAME) != null) {
             String panelName = StringUtil.unescapeString(request.getParameter(JSON.NAME));
             if (getEditor(panelName) != null) {
-                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName));
+                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName)); // NOI18N
             } else {
-                response.sendRedirect("/panel/");
+                response.sendRedirect("/panel/"); // NOI18N
             }
-        } else if (request.getRequestURI().endsWith("/")) {
+        } else if (request.getRequestURI().endsWith("/")) { // NOI18N
             listPanels(request, response);
         } else {
-            String[] path = request.getRequestURI().split("/");
+            String[] path = request.getRequestURI().split("/"); // NOI18N
             String panelName = StringUtil.unescapeString(path[path.length - 1]);
             if ("png".equals(request.getParameter("format"))) {
                 BufferedImage panel = getPanelImage(panelName);
@@ -214,9 +216,15 @@ abstract class AbstractPanelServlet extends HttpServlet {
         }
     }
 
-    //build and return an "icons" element containing icon urls for all signalmast states,
-    //  element names are cleaned-up aspect names, aspect attribute is actual name of aspect
-    Element getSignalMastIconsElement(String name) {
+    /**
+     * Build and return an "icons" element containing icon URLs for all
+     * SignalMast states. Element names are cleaned-up aspect names, aspect
+     * attribute is actual name of aspect.
+     *
+     * @param name user/system name of the signalMast using the icons
+     * @return an icons element containing icon URLs for SignalMast states
+     */
+    protected Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
         jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         for (String aspect : signalMast.getValidAspects()) {

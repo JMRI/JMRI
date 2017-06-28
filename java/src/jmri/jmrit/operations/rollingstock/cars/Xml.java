@@ -4,7 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -39,7 +39,7 @@ public class Xml {
     static final String NEXT_DEST_ID = "nextDestId"; // NOI18N
     static final String NEXT_DEST_TRACK_ID = "nextDestTrackId"; // NOI18N
     static final String PREVIOUS_NEXT_DEST_ID = "previousNextDestId"; // NOI18N
-    static final String PREVIOUS_NEXT_DEST_TRACK_ID = "previousNextDestTrackId"; // NOI18N	
+    static final String PREVIOUS_NEXT_DEST_TRACK_ID = "previousNextDestTrackId"; // NOI18N 
     static final String PREVIOUS_SCHEDULE_ID = "previousScheduleId"; // NOI18N
     static final String RWE_DEST_ID = "rweDestId"; // NOI18N
     static final String RWE_DEST_TRACK_ID = "rweDestTrackId"; // NOI18N
@@ -60,7 +60,7 @@ public class Xml {
     // CarRoads.java
     static final String ROAD_NAMES = "roadNames"; // NOI18N
     static final String ROADS = "roads"; // NOI18N
-    static final String ROAD = "road"; // NOI18N	
+    static final String ROAD = "road"; // NOI18N 
 
     // CarOwners.java
     static final String CAR_OWNERS = "carOwners"; // NOI18N
@@ -82,9 +82,9 @@ public class Xml {
     static final String LOADS = "loads"; // NOI18N
     static final String NAMES = "names"; // NOI18N old style had a list of names
     static final String DEFAULTS = "defaults"; // NOI18N
-    static final String EMPTY = "empty"; // NOI18N	
+    static final String EMPTY = "empty"; // NOI18N 
     static final String CAR_LOAD = "carLoad"; // NOI18N
-    static final String PRIORITY = "priority"; // NOI18N	
+    static final String PRIORITY = "priority"; // NOI18N 
     static final String PICKUP_COMMENT = "pickupComment"; // NOI18N
     static final String DROP_COMMENT = "dropComment"; // NOI18N
     static final String LOAD_TYPE = "loadType"; // NOI18N

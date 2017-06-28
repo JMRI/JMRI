@@ -9,18 +9,19 @@ import junit.framework.TestSuite;
  * JUnit tests for the NceMessage class
  *
  * @author	Bob Jacobsen Copyright 2002-2004
- * @version	$Revision$
- */
+  */
 public class NceMessageTest extends TestCase {
 
     // ensure that the static useBinary value is left OK
     int saveCommandOptions;
     NceTrafficController tc = new NceTrafficController();
 
+    @Override
     public void setUp() {
         saveCommandOptions = tc.getCommandOptions();
     }
 
+    @Override
     public void tearDown() {
         tc.commandOptionSet = false;	// kill warning message
         tc.setCommandOptions(saveCommandOptions);

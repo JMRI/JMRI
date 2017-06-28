@@ -88,6 +88,7 @@ public class DnDList<E>
     }   // end initComponents
 
     /* ********  D R A G   G E S T U R E   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragGestureRecognized(java.awt.dnd.DragGestureEvent event) {   //System.out.println( "DragGestureListener.dragGestureRecognized" );
         final E selected = getSelectedValue();
         if (selected != null) {
@@ -98,6 +99,7 @@ public class DnDList<E>
                  * the very end. At this point we can remove the object from its
                  * original place in the list.
                  */
+                @Override
                 public E getObject() {
                     ((javax.swing.DefaultListModel<E>) getModel()).remove(sourceIndex);
                     return selected;
@@ -112,37 +114,47 @@ public class DnDList<E>
     }   // end dragGestureRecognized
 
     /* ********  D R A G   S O U R C E   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragDropEnd(java.awt.dnd.DragSourceDropEvent evt) {   //System.out.println( "DragSourceListener.dragDropEnd" );
     }   // end dragDropEnd
 
+    @Override
     public void dragEnter(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dragEnter" );
     }   // end dragEnter
 
+    @Override
     public void dragExit(java.awt.dnd.DragSourceEvent evt) {   //System.out.println( "DragSourceListener.dragExit" );
     }   // end dragExit
 
+    @Override
     public void dragOver(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dragOver" );
     }   // end dragOver
 
+    @Override
     public void dropActionChanged(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dropActionChanged" );
     }   // end dropActionChanged
 
     /* ********  D R O P   T A R G E T   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragEnter(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dragEnter" );
         evt.acceptDrag(java.awt.dnd.DnDConstants.ACTION_MOVE);
     }   // end dragEnter
 
+    @Override
     public void dragExit(java.awt.dnd.DropTargetEvent evt) {   //System.out.println( "DropTargetListener.dragExit" );
     }   // end dragExit
 
+    @Override
     public void dragOver(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dragOver" );
     }   // end dragOver
 
+    @Override
     public void dropActionChanged(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dropActionChanged" );
         evt.acceptDrag(java.awt.dnd.DnDConstants.ACTION_MOVE);
     }   // end dropActionChanged
 
     @SuppressWarnings("unchecked") // DnD starts with a generic Object
+    @Override
     public void drop(java.awt.dnd.DropTargetDropEvent evt) {   //System.out.println( "DropTargetListener.drop" );
         java.awt.datatransfer.Transferable transferable = evt.getTransferable();
 

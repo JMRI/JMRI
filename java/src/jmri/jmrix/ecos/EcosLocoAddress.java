@@ -11,7 +11,6 @@ import jmri.jmrit.roster.RosterEntry;
  * Stores all the loco information from the Ecos into JMRI
  *
  * @author Kevin Dickerson
- * @version $Revision$
  */
 public class EcosLocoAddress implements jmri.LocoAddress {
 
@@ -70,6 +69,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     /**
      * @return the loco address configured on the ECOS for this loco
      */
+    @Override
     public int getNumber() {
         return _dccAddress;
     }
@@ -200,6 +200,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
         }
     }
 
+    @Override
     public LocoAddress.Protocol getProtocol() {
         return _protocol;
     }

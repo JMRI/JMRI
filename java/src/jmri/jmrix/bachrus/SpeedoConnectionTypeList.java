@@ -1,4 +1,3 @@
-// SpeedoConnectionTypeList.java
 package jmri.jmrix.bachrus;
 
 /**
@@ -7,8 +6,7 @@ package jmri.jmrix.bachrus;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class SpeedoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

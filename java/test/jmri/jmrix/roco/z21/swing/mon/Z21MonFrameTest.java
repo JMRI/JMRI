@@ -2,13 +2,15 @@ package jmri.jmrix.roco.z21.swing.mon;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
+
+import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for Z21MonFrame class.
@@ -23,6 +25,7 @@ public class Z21MonFrameTest {
 
    @Test
    public void MemoConstructorTest(){
+      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       Assert.assertNotNull("Z21MonFrame constructor",new Z21MonFrame(memo));
    }
 

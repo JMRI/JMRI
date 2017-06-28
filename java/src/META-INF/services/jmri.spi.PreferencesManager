@@ -5,7 +5,9 @@ apps.gui.GuiLafPreferencesManager
 apps.systemconsole.SystemConsolePreferencesManager
 jmri.implementation.FileLocationsPreferences
 jmri.managers.ManagerDefaultSelector
+jmri.jmrit.logix.WarrantPreferences
 jmri.jmrit.roster.RosterConfigManager
 jmri.jmrit.symbolicprog.ProgrammerConfigManager
 jmri.jmrix.ConnectionConfigManager
 jmri.swing.JmriJTablePersistenceManager
+jmri.server.web.app.WebAppManager

@@ -1,6 +1,5 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010, 2015 -->
-<!-- Revision $Revision$ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -33,6 +32,19 @@
     <mkdir dir="${target}"/>
   </target>
 
+    <path id="class.path">
+        <pathelement location="jhelpdev.jar"/>
+        <pathelement location="jars/xmlenc.jar"/>
+        <pathelement location="jars/jhall.jar"/>
+        <pathelement location="jars/junit.jar"/>
+    </path>
+
+  <target name="jhelpdev" depends="init" 
+  			description="run batch jhelpdev">
+        <java classname="net.sourceforge.jhelpdev.JHelDevCmdLine" fork="yes">
+            <classpath refid="class.path"/>
+        </java>
+  </target>
   
   <target name="index" depends="init" 
   			description="create an en/index page">
@@ -80,7 +92,7 @@
     <move file="JmriHelp_enTOC.html" tofile="webtoc.shtml"/> 
   </target>
 
-  <target name="all" depends="init, index, TOC" 
+  <target name="all" depends="init, jhelpdev, index, TOC" 
   			description="create all en/help pages" />
  
 </project>

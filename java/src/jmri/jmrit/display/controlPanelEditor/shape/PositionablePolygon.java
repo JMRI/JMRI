@@ -24,14 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePolygon extends PositionableShape {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6175122309400060896L;
     private ArrayList<Rectangle> _vertexHandles;
     private boolean _editing = false;
 
-    public PositionablePolygon(Editor editor) {
+    // there is no default PositionablePolygon
+    private PositionablePolygon(Editor editor) {
         super(editor);
     }
 
@@ -45,7 +42,8 @@ public class PositionablePolygon extends PositionableShape {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionablePolygon pos) {
+    @Override
+    protected Positionable finishClone(PositionableShape pos) {
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         path.append(getPathIterator(null), false);
         /*
@@ -80,25 +78,14 @@ public class PositionablePolygon extends PositionableShape {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Polygon"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6740597325568794368L;
-            PositionablePolygon ps;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawPolygon(getEditor(), "Polygon", ps);
+                    _editFrame = new DrawPolygon("editShape", "Polygon", null);
                     setEditParams();
                 }
             }
-
-            javax.swing.AbstractAction init(PositionablePolygon p) {
-                ps = p;
-                return this;
-            }
-        }.init(this));
+        });
         return true;
     }
 
@@ -169,12 +156,6 @@ public class PositionablePolygon extends PositionableShape {
         if (_hitIndex >= 0 && _editor.isEditable()) {
             if (_editing) {
                 Point pt = new Point(event.getX() - _lastX, event.getY() - _lastY);
-                /*        		try {
-                 pt = getInversePoint(event.getX()-_lastX, event.getY()-_lastY);
-                 } catch (java.awt.geom.NoninvertibleTransformException nte) {
-                 log.error("Can't locate Hit Rectangles "+nte.getMessage());
-                 return false;
-                 }*/
                 Rectangle rect = _vertexHandles.get(_hitIndex);
                 rect.x += pt.x;
                 rect.y += pt.y;
@@ -228,6 +209,8 @@ public class PositionablePolygon extends PositionableShape {
                             _editor.moveItem(this, _width - SIZE, 0);
                         }
                         break;
+                    default:
+                        log.warn("Unhandled direction code: {}", _hitIndex);
                 }
                 if (path != null) {
                     setShape(path);
@@ -264,7 +247,7 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     private GeneralPath scale(float ratioX, float ratioY) {
-//    	log.info("scale("+ratioX+" , "+ratioY+")");
+//     log.info("scale("+ratioX+" , "+ratioY+")");
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         PathIterator iter = getPathIterator(null);
         float[] coord = new float[6];
@@ -286,8 +269,11 @@ public class PositionablePolygon extends PositionableShape {
                 case PathIterator.SEG_CLOSE:
                     path.closePath();
                     break;
+                default:
+                    log.warn("Unhandled path iterator type: {}", type);
+                    break;
             }
-//    		log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
+//      log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
             iter.next();
         }
         return path;

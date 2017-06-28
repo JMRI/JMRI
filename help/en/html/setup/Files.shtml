@@ -44,11 +44,14 @@
           <ol>
             <li>The originally-distributed versions of JMRI
             Configuration Files live in an 'xml' directory in the
-            JMRI application package and its subdirectories. Note
+            JMRI application package and its subdirectories. 
+            (The exact location depends on how you 
+            installed JMRI on your computer) 
+            <p>Note
             that anything you modify here will be lost when you
-            update JMRI to a new version.<br>
-            The JMRI application is installed in your Programs
-            folder by default.</li>
+            update JMRI to a new version. 
+            This is not the right place to make changes!
+            </li>
 
             <li>The user's JMRI Preferences directory and its
             subdirectories is also of importance. JMRI looks here
@@ -57,7 +60,8 @@
               here so they don't get overwritten by a JMRI update.
               Any files that the program writes to containing local
               information, e.g. Roster entries and Panel files, are
-              also written here.<br>
+              also written here.
+              <P>
               The default user's Preferences location varies by
               computer operating system. Normally, it's located:
 
@@ -77,7 +81,7 @@
                 called "JMRI".</li>
               </ul>
 
-              <p>The easiest way to find it is to start a JMRI
+              <p>The easiest way to find the preferences location is to start a JMRI
               program, e.g. DecoderPro or PanelPro, and select
               "Locations ..." from the "Help" menu. A special treat
               for Windows users: if you go to the Windows Start
@@ -85,6 +89,8 @@
               "Preferences" to have it open that directory for
               you.</p>
 
+            <li>User files can be stored under the preferences location, 
+              but JMRI can also be configured to put them somewhere else.
               <p>You may set or change the location scripts and
               user files in the <a href=
               "../../package/apps/TabbedPreferences.shtml#FileLocations">

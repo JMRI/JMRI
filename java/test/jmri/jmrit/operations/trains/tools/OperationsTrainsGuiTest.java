@@ -1,8 +1,7 @@
 package jmri.jmrit.operations.trains.tools;
 
-import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
-
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -13,10 +12,12 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
+import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -25,8 +26,9 @@ import junit.framework.TestSuite;
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
-
+    @Test
     public void testTrainModifyFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // confirm that train default accepts Boxcars
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.newTrain("Test Train Name 2");
@@ -50,7 +52,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testTrainByCarTypeFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         TrainManager tmanager = TrainManager.instance();
         Train train = tmanager.getTrainByName("Test Train Name");
         TrainByCarTypeFrame f = new TrainByCarTypeFrame();
@@ -60,7 +64,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testTrainsScheduleTableFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         f.setVisible(true);
 
@@ -69,7 +75,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     // test TrainIcon attributes
+    @Test
     public void testTrainIconAttributes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
 
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
@@ -91,16 +99,10 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         editor.getTargetFrame().dispose();
     }
 
-
-
-    private void enterClickAndLeave(Component comp) {
-        getHelper().enterClickAndLeave(new MouseEventData(this, comp));
-        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
-    }
-
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadTrains();
@@ -150,24 +152,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         RouteManager.instance().newRoute("Test Route E");
     }
 
-    public OperationsTrainsGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsTrainsGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsTrainsGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

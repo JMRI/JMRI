@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -197,6 +196,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private CommandStation commandStation = null;
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -225,7 +225,16 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
-            return true;
+            try {
+                return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
+            } catch (java.lang.NullPointerException npe){
+                // if the command station has not been configured yet,
+                // assume true
+                if(log.isTraceEnabled()){
+                   npe.printStackTrace();
+                }
+                return true;
+            }
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else {
@@ -234,6 +243,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -272,10 +282,12 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return null; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.lenz.XNetActionListBundle");
     }
 
+    @Override
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, XNetSystemConnectionMemo.class);
@@ -288,4 +300,4 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private final static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class.getName());
 
 }
-/* @(#)XNetSystemConnectionMemo.java */
+

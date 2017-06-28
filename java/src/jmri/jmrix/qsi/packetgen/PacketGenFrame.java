@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
@@ -27,6 +26,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -53,6 +53,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -84,9 +85,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         return m;
     }
 
+    @Override
     public void message(QsiMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(QsiReply r) {
     } // ignore replies
 

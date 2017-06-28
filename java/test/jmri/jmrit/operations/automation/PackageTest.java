@@ -28,23 +28,29 @@ public class PackageTest extends TestCase {
 
         suite.addTest(AutomationManagerTest.suite());
         suite.addTest(AutomationItemTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(AutomationTableFrameGuiTest.suite());
-            suite.addTest(AutomationsTableFrameGuiTest.suite());
-            suite.addTest(AutomationCopyFrameGuiTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationResetActionTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

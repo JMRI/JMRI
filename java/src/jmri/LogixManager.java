@@ -24,21 +24,21 @@ import java.util.List;
  */
 public interface LogixManager extends Manager {
 
-    // to free resources when no longer used
-    public void dispose();
-
     /**
-     * Method to create a new Logix if the Logix does not exist Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Logix.
+     * Method to create a new Logix if the Logix does not exist.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @return a new Logix or null if unable to create: An error, or the Logix already exists
      */
     public Logix createNewLogix(String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
-     * the user can optionally supply a username. Returns null if a Logix with
-     * the same userName already exists, or if there is trouble creating a new
-     * Logix.
+     * the user can optionally supply a username.
+     *
+     * @param userName the user name
+     * @return a new Logix or null if unable to create
      */
     public Logix createNewLogix(String userName);
 
@@ -63,17 +63,24 @@ public interface LogixManager extends Manager {
 
     /**
      * Get a list of all Logix system names.
+     *
+     * {@inheritDoc}
      */
+    @Override
     public List<String> getSystemNameList();
 
     /**
      * Delete Logix by removing it from the manager. The Logix must first be
      * deactivated so it stops processing.
+     *
+     * @param x the Logix to delete
      */
     void deleteLogix(Logix x);
 
     /**
      * Support for loading Logixs in a disabled state to debug loops
+     * 
+     * @param s true if Logix should be loadable while disabled
      */
     public void setLoadDisabled(boolean s);
 

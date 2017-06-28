@@ -1,9 +1,7 @@
 package jmri.jmrit.sound;
 
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 /**
  * Tests for the WavBuffer class.
@@ -11,18 +9,25 @@ import junit.framework.TestSuite;
  * Note: This makes noise!
  *
  * @author	Bob Jacobsen Copyright 2006
+ * @author Randall Wood (C) 2016
  */
-public class WavBufferTest extends TestCase {
+public class WavBufferTest {
 
+    @Test
     public void testCtor() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
             data[i] = (byte) idata[i];
         }
 
-        new WavBuffer(data);
+        try {
+            new WavBuffer(data);
+        } catch (Exception ex) {
+            Assert.fail("Unexpected exception thrown");
+        }
     }
 
+    @Test
     public void testSizes() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
@@ -36,6 +41,7 @@ public class WavBufferTest extends TestCase {
         Assert.assertEquals("channels   ", 1, w.getChannels());
     }
 
+    @Test
     public void testLocations() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
@@ -49,23 +55,6 @@ public class WavBufferTest extends TestCase {
         Assert.assertEquals("data size            ", 32, w.getDataSize());
         Assert.assertEquals("data end offset      ", 56 + 32 - 1, w.getDataEnd());
 
-    }
-
-    // from here down is testing infrastructure
-    public WavBufferTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {WavBufferTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(WavBufferTest.class);
-        return suite;
     }
 
     int[] idata = new int[]{
@@ -83,6 +72,6 @@ public class WavBufferTest extends TestCase {
         0x31, 0x30, 0x20, 0x70, 0x61, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x63, 0x61, 0x70, 0x74, 0x75,
         0x72, 0x65, 0x00, 0x00
     };
-    //static private Logger log = LoggerFactory.getLogger(WavBufferTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(WavBufferTest.class.getName());
 
 }

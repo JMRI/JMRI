@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
 
@@ -17,15 +18,23 @@ import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS") // OK by convention
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS") // OK by convention
 public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.configurexml.ConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SimDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SimDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

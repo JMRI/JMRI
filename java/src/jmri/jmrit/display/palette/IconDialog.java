@@ -1,4 +1,3 @@
-// IconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconDialog extends ItemDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3594751185136377740L;
     protected FamilyItemPanel _parent;
     protected String _family;
     protected HashMap<String, NamedIcon> _iconMap;
@@ -76,7 +71,7 @@ public class IconDialog extends ItemDialog {
             ItemPanel.checkIconMap(type, _iconMap);
         }
         _iconPanel = makeIconPanel(_iconMap);
-        panel.add(_iconPanel);	// put icons above buttons
+        panel.add(_iconPanel); // put icons above buttons
         panel.add(buttonPanel);
         //panel.setMaximumSize(panel.getPreferredSize());
 
@@ -119,6 +114,7 @@ public class IconDialog extends ItemDialog {
         panel.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage(text));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (doDoneAction()) {
                     dispose();
@@ -129,6 +125,7 @@ public class IconDialog extends ItemDialog {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 dispose();
             }

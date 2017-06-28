@@ -9,9 +9,9 @@ import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 /**
  * Swing action to create and register an AcelaPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaPacketGenAction extends AbstractAction {
@@ -27,6 +27,7 @@ public class AcelaPacketGenAction extends AbstractAction {
         this("Generate Acela message",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         AcelaPacketGenFrame f = new AcelaPacketGenFrame(_memo);
         try {
@@ -39,5 +40,3 @@ public class AcelaPacketGenAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
 }
-
-/* @(#)AcelaPacketGenAction.java */

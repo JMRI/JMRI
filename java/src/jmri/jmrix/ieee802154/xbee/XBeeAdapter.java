@@ -1,13 +1,18 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port.
@@ -35,7 +40,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             // try to set it for serial
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -65,9 +70,9 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             opened = true;
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -79,7 +84,8 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     /**
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
+    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
+    @Override
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
         try {
@@ -143,7 +149,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
      * Local method to do specific port configuration
      */
     @Override
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         log.debug("setSerialPort() called.");
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
@@ -221,14 +227,9 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     @Override

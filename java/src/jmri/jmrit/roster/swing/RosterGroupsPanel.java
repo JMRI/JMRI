@@ -91,6 +91,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
+     * @param defaultRosterGroup the name of the default selection
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
@@ -350,7 +351,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private DefaultMutableTreeNode getRoot() {
         if (_root == null) {
             _root = new DefaultMutableTreeNode();
-            _groups = new DefaultMutableTreeNode("Roster Groups");
+            _groups = new DefaultMutableTreeNode(Bundle.getMessage("MenuRosterGroups")); // "Roster Groups"
             _root.add(_groups);
             setRosterGroups(_groups);
             // once consists can be displayed in the DP3 table, add them here
@@ -364,25 +365,25 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private JPopupMenu defaultMenu(int menu) {
         JPopupMenu pm = new JPopupMenu();
         MenuActionListener ml = new MenuActionListener();
-        JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Exportddd"));
+        JMenuItem mi = new JMenuItem(Bundle.getMessage("Exportddd"));
         mi.addActionListener(ml);
         mi.setActionCommand("export");
         pm.add(mi);
-        mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Importddd"));
+        mi = new JMenuItem(Bundle.getMessage("Importddd"));
         mi.addActionListener(ml);
         mi.setActionCommand("import");
         pm.add(mi);
         if (menu == GROUPS_MENU) {
             pm.addSeparator();
-            mi = new JMenuItem("Rename...");
+            mi = new JMenuItem(Bundle.getMessage("Renameddd")); // key is in jmri.NamedBeanBundle
             mi.addActionListener(ml);
             mi.setActionCommand("rename");
             pm.add(mi);
-            mi = new JMenuItem("Duplicate");
+            mi = new JMenuItem(Bundle.getMessage("Duplicateddd"));
             mi.addActionListener(ml);
             mi.setActionCommand("duplicate");
             pm.add(mi);
-            mi = new JMenuItem("Delete");
+            mi = new JMenuItem(Bundle.getMessage("ButtonDelete"));
             mi.addActionListener(ml);
             mi.setActionCommand("delete");
             pm.add(mi);
@@ -486,12 +487,14 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
+            //log.debug(e.getPropertyName()); // seems a bit too much to keep active!
             if ((e.getPropertyName().equals("RosterGroupRemoved"))
                     || (e.getPropertyName().equals("RosterGroupAdded"))
                     || (e.getPropertyName().equals("RosterGroupRenamed"))) {
                 setRosterGroups(_groups);
                 _model.reload(_groups);
                 setSelectionToGroup(selectedRosterGroup);
+                log.debug("Refreshed Roster Groups pane"); // test for panel redraw after duplication
             }
         }
     }

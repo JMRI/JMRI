@@ -63,13 +63,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         super();
     }
 
-    public synchronized void setWait(boolean showWait) {
+    public void setWait(boolean showWait) {
         _showWait = showWait;
         fireTableStructureChanged();
         initTable(_table);
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         if (_route == null) {
             return;
         }
@@ -82,7 +82,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    protected synchronized void initTable(RouteEditFrame frame, JTable table, Route route) {
+    protected void initTable(RouteEditFrame frame, JTable table, Route route) {
         _frame = frame;
         _table = table;
         _route = route;
@@ -116,7 +116,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
-        table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(60);
+        table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
         table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
@@ -125,7 +125,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
-        
+
         _frame.loadTableDetails(table);
         // does not use a table sorter
         table.setRowSorter(null);
@@ -134,7 +134,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return _routeList.size();
     }
 
@@ -144,7 +144,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized String getColumnName(int col) {
+    public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -182,14 +182,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
     }
 
     @Override
-    public synchronized Class<?> getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
                 return String.class;
@@ -257,7 +257,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
@@ -313,7 +313,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 if (rl.getComment().equals(RouteLocation.NONE)) {
                     return Bundle.getMessage("Add");
                 } else {
-                    return Bundle.getMessage("Edit");
+                    return Bundle.getMessage("ButtonEdit");
                 }
             }
             case UP_COLUMN:
@@ -321,14 +321,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning route table row {} still in edit", row);
             return;
@@ -372,7 +372,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                     setDepartureTime(value, rl);
                 }
             }
-            break;
+                break;
             case MAXLENGTH_COLUMN:
                 setMaxTrainLength(value, rl);
                 break;
@@ -490,12 +490,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             log.error("Maximum departure length must be a postive number");
             return;
         }
-        if (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) || length < 160
-                && Setup.getLengthUnit().equals(Setup.METER)) {
+        if (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
+                length < 160 && Setup.getLengthUnit().equals(Setup.METER)) {
             // warn that train length might be too short
             if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
                     new Object[]{length, Setup.getLengthUnit().toLowerCase(), rl.getName()}), Bundle
-                    .getMessage("WarningTooShort"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
+                            .getMessage("WarningTooShort"),
+                    JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
                 return;
             }
         }
@@ -564,7 +565,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
 
-        JButton okayButton = new JButton(Bundle.getMessage("Okay"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -575,7 +576,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         });
         buttonPane.add(okayButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -618,7 +619,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             } else {
                 hour = Integer.toString(i);
             }
-            for (int j = 0; j < 60; j = j + 5) {
+            for (int j = 0; j < 60; j += 1) {
                 if (j < 10) {
                     minute = "0" + Integer.toString(j);
                 } else {
@@ -633,7 +634,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     // this table listens for changes to a route and it's locations
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -655,13 +656,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private synchronized void removePropertyChangeRouteLocations() {
+    private void removePropertyChangeRouteLocations() {
         for (RouteLocation rl : _routeList) {
             rl.removePropertyChangeListener(this);
         }
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         removePropertyChangeRouteLocations();
         if (_route != null) {
             _route.removePropertyChangeListener(this);

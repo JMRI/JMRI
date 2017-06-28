@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006, 2008
- * @version	$Revision$
- */
+  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     public SerialTrafficControlScaffold() {
@@ -20,6 +19,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     // override some SerialTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -29,6 +29,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
      */
     public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendSerialMessage [" + m + "]");

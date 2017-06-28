@@ -3,8 +3,10 @@ package jmri.jmrix.pi;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioProvider;
 
 /**
  * Tests for ConnectionConfig class.
@@ -14,18 +16,18 @@ import org.junit.Test;
 
 public class ConnectionConfigTest {
 
-   @Ignore
-   @Test(expected = java.lang.UnsatisfiedLinkError.class) // only really works on
-                                                    // Pi for now.
+   @Test
    public void ConstructorTest(){
       Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
    }
 
    @Before
    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+       apps.tests.Log4JFixture.setUp();
+       GpioProvider myprovider = new PiGpioProviderScaffold();
+       GpioFactory.setDefaultProvider(myprovider);
+
+       jmri.util.JUnitUtil.resetInstanceManager();
    }
 
    @After

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.nce.serialdriver;
 
 /**
@@ -7,8 +6,7 @@ package jmri.jmrix.nce.serialdriver;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author kcameron Copyright (C) 2010 added multiple connections
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "Serial";
@@ -16,6 +14,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p SerialPortAdapter for existing adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -28,10 +27,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

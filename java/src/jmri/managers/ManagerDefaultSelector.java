@@ -113,8 +113,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
      * Return the userName of the system that provides the default instance for
      * a specific class.
      *
-     * @param managerClass the specific type, e.g. TurnoutManager, for which a
-     *                     default system is desired
+     * @param managerClass the specific type, for example, TurnoutManager, for
+     *                     which a default system is desired
      * @return userName of the system, or null if none set
      */
     public String getDefault(Class<?> managerClass) {
@@ -129,8 +129,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
      * that are current registered are preserved. This way, reading in an old
      * file will just have irrelevant items ignored.
      *
-     * @param managerClass the specific type, e.g. TurnoutManager, for which a
-     *                     default system is desired
+     * @param managerClass the specific type, for example, TurnoutManager, for
+     *                     which a default system is desired
      * @param userName     of the system, or null if none set
      */
     public void setDefault(Class<?> managerClass, String userName) {
@@ -153,8 +153,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     @CheckForNull
     public InitializationException configure() {
         InitializationException error = null;
-        log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
+        log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -166,8 +166,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     found = true;
                     // match, store
                     try {
-                        log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
-                        InstanceManager.setDefault(c, memo.get(c));
+                        if (memo.provides(c)) {
+                            log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
+                            InstanceManager.setDefault(c, memo.get(c));
+                        }
                     } catch (NullPointerException ex) {
                         String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), c); // NOI18N
                         String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), c); // NOI18N
@@ -175,6 +177,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.warn("SystemConnectionMemo for {} ({}) provides a null {} instance", memo.getUserName(), memo.getClass(), c);
                     }
                     break;
+                } else {
+                    log.debug("   memo name didn't match: {} vs {}", testName, connectionName);
                 }
             }
             /*

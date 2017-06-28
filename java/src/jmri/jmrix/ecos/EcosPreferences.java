@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos;
 
-import apps.gui3.TabbedPreferences;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Stores User Preferences on how to deal with syncronising the Ecos Database
  * with JMRI.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
@@ -35,10 +34,10 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         });
 
         adaptermemo = memo;
-        InstanceManager.getDefault(TabbedPreferences.class).addPreferencesPanel(new PreferencesPane(this));
+        InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);
     }
 
-    private EcosSystemConnectionMemo adaptermemo;
+    private final EcosSystemConnectionMemo adaptermemo;
 
     boolean preferencesLoaded = false;
 

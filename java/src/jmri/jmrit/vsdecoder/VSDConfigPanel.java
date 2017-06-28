@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -41,12 +40,10 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
-
-    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
     // Local References
     VSDecoderManager decoder_mgr; // local reference to the VSDecoderManager instance
@@ -219,6 +216,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         // Connect to the VSDecoderManager, so we know when the Profile list changes.
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent e) {
                 if (e.getType() == VSDManagerEvent.EventType.PROFILE_LIST_CHANGE) {
                     log.debug("Received Decoder List Change Event");
@@ -262,12 +260,13 @@ public class VSDConfigPanel extends JmriPanel {
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText("Save");
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
         });
         rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-        rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
+        rosterSaveButton.setToolTipText(Bundle.getMessage("RosterSaveButtonToolTip"));
         rosterPanel.add(rosterSaveButton);
 
         addressLabel = new javax.swing.JLabel();
@@ -290,6 +289,7 @@ public class VSDConfigPanel extends JmriPanel {
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profile_selected = false;
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -304,6 +304,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         addressSetButton.setText("Set");
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -401,9 +402,9 @@ public class VSDConfigPanel extends JmriPanel {
                 r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
                 r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
                 int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(vsdecoderBundle.getString("UpdateRoster"),
+                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
-                        vsdecoderBundle.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
                     storeFile(r);
                 }
@@ -505,6 +506,7 @@ public class VSDConfigPanel extends JmriPanel {
                 return (main_pane.getDecoder(profileComboBox.getSelectedItem().toString()));
             }
 
+            @Override
             protected void done() {
                 busy_dialog.finish();
             }

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 import jmri.jmrit.display.Editor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,29 +20,26 @@ import org.slf4j.LoggerFactory;
  */
 public class DrawPolygon extends DrawFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8879310189293502065L;
     ArrayList<Point> _vertices;
     int _curX;
     int _curY;
     int _curVertexIdx = -1;
     private static final int NEAR = PositionableShape.SIZE;
     PositionablePolygon _pShape;
+    private boolean _editing;
 
     public DrawPolygon(String which, String title, ShapeDrawer parent) {
         super(which, title, parent);
         _vertices = new ArrayList<Point>();
+        _editing = false;
     }
 
-    public DrawPolygon(Editor ed, String title, PositionablePolygon ps) {
-        super("editShape", title, null);
-        _vertices = new ArrayList<Point>();
-        _pShape = ps;
+    @Override
+    protected JPanel makeParamsPanel(PositionableShape ps) {
+        JPanel panel = super.makeParamsPanel(ps);
+       _pShape = (PositionablePolygon)ps;
+        _editing = true;
         _pShape.editing(true);
-        _parent = ((jmri.jmrit.display.controlPanelEditor.ControlPanelEditor) ed).getShapeDrawer();
-        _parent.setDrawFrame(this);
         int x = getX();
         int y = getY();
         PathIterator iter = ps.getPathIterator(null);
@@ -52,16 +50,19 @@ public class DrawPolygon extends DrawFrame {
             iter.next();
         }
         _pShape.drawHandles();
+        return panel;
+    }
+
+    protected void setEditing(boolean set) {
+        _editing = true;
     }
 
     @Override
-    protected void closingEvent() {
+    protected void closingEvent(boolean cancel) {
         if (_pShape != null) {
-            _parent.setDrawFrame(null);
             _pShape.editing(false);
         }
-        super.closingEvent();
-        repaint();
+        super.closingEvent(cancel);
     }
 
     /*
@@ -104,7 +105,7 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    /*	@Override
+    /* @Override
      public void paint(Graphics g) {
      super.paint(g);
      if (_editing) {
@@ -120,22 +121,22 @@ public class DrawPolygon extends DrawFrame {
      if (hitIndex==0) {
      Point p0 = _vertices.get(1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);			
+     path.lineTo(_curX, _curY);   
      } else if (hitIndex==_vertices.size()-1) {
      Point p0 = _vertices.get(hitIndex-1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);						
+     path.lineTo(_curX, _curY);      
      } else {
      Point p0 = _vertices.get(hitIndex-1);
      Point p1 = _vertices.get(hitIndex+1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);			
-     path.lineTo(p1.x, p1.y);						
+     path.lineTo(_curX, _curY);   
+     path.lineTo(p1.x, p1.y);      
      }
-     g2d.draw(path);    		    			
+     g2d.draw(path);             
      }
      }
-     }		
+     }  
      /**
      * Create a new PositionableShape 
      */
@@ -161,16 +162,16 @@ public class DrawPolygon extends DrawFrame {
             Point p = new Point(event.getX(), event.getY());
             if (hitPolygonVertex(p)) {
                 if (near(_vertices.get(0), p)) {
-                    _vertices.add(p);	// close polygon    			
+                    _vertices.add(p); // close polygon       
                 }
                 Editor ed = _parent.getEditor();
                 Point spt = getStartPoint();
                 PositionablePolygon ps = new PositionablePolygon(ed, makePath(spt));
                 ps.setLocation(spt);
-                ps.setDisplayLevel(Editor.MARKERS);
-                setPositionableParams(ps);
                 ps.updateSize();
-                ed.putItem(ps);
+                setDisplayParams(ps);
+                ps.setEditFrame(this);
+                ed.putItem(ps);            
                 return true;
             }
             _vertices.add(p);
@@ -229,15 +230,11 @@ public class DrawPolygon extends DrawFrame {
         return false;
     }
 
-    /**
-     * Editing is done. Update the existing PositionableShape
-     */
     @Override
-    protected void updateFigure(PositionableShape p) {
-        PositionablePolygon pos = (PositionablePolygon) p;
-        _editing = false;
-        _pShape.editing(false);
-        setPositionableParams(pos);
+    void setDisplayWidth(int w) {
+    }
+    @Override
+    void setDisplayHeight(int h) {
     }
 
     protected void addVertex(boolean up) {

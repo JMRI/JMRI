@@ -71,6 +71,7 @@ public class PositionablePropertiesUtil {
 
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 undoChanges();
                 mFrame.dispose();
@@ -91,6 +92,7 @@ public class PositionablePropertiesUtil {
         JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
         _buttonArea.add(applyButton);
         applyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 fontApply();
             }
@@ -98,6 +100,7 @@ public class PositionablePropertiesUtil {
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         _buttonArea.add(okButton);
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 fontApply();
                 mFrame.dispose();
@@ -257,6 +260,7 @@ public class PositionablePropertiesUtil {
         italic.addActionListener(PreviewActionListener);
         //fontSizeChoice.addActionListener(PreviewActionListener);
         fontSizeChoice.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 fontSizeField.setText(fontSizeChoice.getSelectedValue());
                 preview();
@@ -297,6 +301,7 @@ public class PositionablePropertiesUtil {
 
             txtColor.setSelectedIndex(fontcolor);
             txtColor.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     txtList.get(x).setForeground(colorFromComboBox(txtColor, Color.black));
                 }
@@ -309,6 +314,7 @@ public class PositionablePropertiesUtil {
             txtBackColor.setMaximumRowCount(5);
             txtBackColor.setSelectedIndex(backcolor);
             txtBackColor.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     txtList.get(x).setBackground(colorFromComboBox(txtBackColor, null));
                 }
@@ -331,21 +337,25 @@ public class PositionablePropertiesUtil {
     }
 
     ActionListener PreviewActionListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent actionEvent) {
             preview();
         }
     };
 
     ChangeListener SpinnerChangeListener = new ChangeListener() {
+        @Override
         public void stateChanged(ChangeEvent actionEvent) {
             preview();
         }
     };
 
     FocusListener textFieldFocus = new FocusListener() {
+        @Override
         public void focusGained(FocusEvent e) {
         }
 
+        @Override
         public void focusLost(FocusEvent e) {
             JTextField tmp = (JTextField) e.getSource();
             if (tmp.getText().equals("")) {
@@ -356,12 +366,15 @@ public class PositionablePropertiesUtil {
     };
 
     KeyListener PreviewKeyActionListener = new KeyListener() {
+        @Override
         public void keyTyped(KeyEvent E) {
         }
 
+        @Override
         public void keyPressed(KeyEvent E) {
         }
 
+        @Override
         public void keyReleased(KeyEvent E) {
             JTextField tmp = (JTextField) E.getSource();
             if (!tmp.getText().equals("")) {
@@ -454,12 +467,15 @@ public class PositionablePropertiesUtil {
             JLabel txt = new JLabel(Bundle.getMessage("TextValueLabel") + ": ");
             JTextField textField = new JTextField(txtList.get(i).getText(), 20);
             textField.addKeyListener(new KeyListener() {
+                @Override
                 public void keyTyped(KeyEvent E) {
                 }
 
+                @Override
                 public void keyPressed(KeyEvent E) {
                 }
 
+                @Override
                 public void keyReleased(KeyEvent E) {
                     JTextField tmp = (JTextField) E.getSource();
                     txtList.get(x).setText(tmp.getText());
@@ -608,6 +624,9 @@ public class PositionablePropertiesUtil {
             case 2:
                 pop.setJustification(0x04);
                 break;
+            default:
+                log.warn("Unhandled combo index: {}", _justificationCombo.getSelectedIndex());
+                break;
         }
         _parent.rotate(deg);
     }
@@ -648,6 +667,9 @@ public class PositionablePropertiesUtil {
                 break;
             case 2:
                 hoz = (0x00);
+                break;
+            default:
+                log.warn("Unhandled combo index: {}", _justificationCombo.getSelectedIndex());
                 break;
         }
 
@@ -868,11 +890,6 @@ public class PositionablePropertiesUtil {
     class ColorComboBoxRenderer<E> extends JLabel
             implements ListCellRenderer<E> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1L;
-
         public ColorComboBoxRenderer() {
             setOpaque(true);
             setHorizontalAlignment(LEFT);
@@ -880,6 +897,7 @@ public class PositionablePropertiesUtil {
         }
 
         // FIXME: This still needs the JList typed, but I'm unsure how to type it properly
+        @Override
         public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value, int index,
                 boolean isSelected, boolean cellHasFocus) {
             if (value == null) {

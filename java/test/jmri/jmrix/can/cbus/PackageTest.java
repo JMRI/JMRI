@@ -35,10 +35,25 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CbusSensorManagerTest.class));
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusEventFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusOpCodesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusCommandStationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusConfigurationManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusDccProgrammerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusDccOpsModeProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusDccProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusLightTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusReporterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusTurnoutTest.class));
         return suite;
     }
 

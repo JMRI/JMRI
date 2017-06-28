@@ -1,4 +1,3 @@
-// Transmitter.java
 package jmri.jmrix.rps;
 
 import jmri.DccThrottle;
@@ -12,7 +11,6 @@ import jmri.ThrottleListener;
  * name (ID) of the roster entry this was originally created from.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class Transmitter implements ThrottleListener {
 
@@ -98,11 +96,13 @@ public class Transmitter implements ThrottleListener {
         return false;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         needReqThrottle = false;
         throttle = t;
     }
 
+    @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
     }
 }

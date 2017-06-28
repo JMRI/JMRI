@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.configurexml.StoreXmlConfigAction;
@@ -20,14 +19,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Save throttles to XML
  *
- * @author	Glen Oberhauser
- * @author	Mark Underwood Copyright (C) 2011
+ * @author Glen Oberhauser
+ * @author Mark Underwood Copyright (C) 2011
  * @author Daniel Boudreau (C) Copyright 2008
  */
 @SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
-
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
 
     /**
      * Constructor
@@ -37,7 +34,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
     public StoreXmlVSDecoderAction(String s) {
         super(s);
         // disable this ourselves if there is no throttle Manager
-	/*
+ /*
          if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }
@@ -54,8 +51,9 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooser.setCurrentDirectory(new File(VSDecoderPane.getDefaultVSDecoderFolder()));
         java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
@@ -70,11 +68,11 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
 
         try {
             Element root = new Element("VSDecoderConfig");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "vsdecoder-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "vsdecoder-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>
-	    /*TODO			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+     /*TODO   java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle-layout-config.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -86,11 +84,11 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
                 children.add(vsd.getXml());
             }
 
-	    // Throttle-specific stuff below.  Kept for reference
-	    /*
+     // Throttle-specific stuff below.  Kept for reference
+     /*
              // throttle list window
              children.add(ThrottleFrameManager.instance().getThrottlesListPanel().getXml() );
-	    
+     
              // throttle windows
              for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows(); i.hasNext();) {
              ThrottleWindow tw = i.next();

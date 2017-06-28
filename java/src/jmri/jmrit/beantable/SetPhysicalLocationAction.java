@@ -72,7 +72,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
      * @author Bob Jacobsen Copyright (C) 2001
      * @author Daniel Boudreau Copyright (C) 2010
      * @author Mark Underwood Copyright (C) 2011
-     * @version $Revision: 20246 $
+     * 
      */
     private static class SetPhysicalLocationFrame extends OperationsFrame {
 
@@ -273,7 +273,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         // Unused. Carried over from SetTrainIconPosition or whatever it was
         // called...
-	/*
+ /*
          * private void spinnersEnable(boolean enable){
          * physicalLocation.setEnabled(enable); }
          */

@@ -1,4 +1,3 @@
-// CbusMenu.java
 package jmri.jmrix.can.nmranet.swing;
 
 import java.util.ResourceBundle;
@@ -9,16 +8,10 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2008, 2009
+ * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision: 17977 $
  */
 public class NmraNetMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6905626225063951958L;
 
     public NmraNetMenu(CanSystemConnectionMemo memo) {
         super();

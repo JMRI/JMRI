@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ import javax.swing.JTextField;
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
@@ -59,6 +60,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         ok.addActionListener(okListener);
 
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 reset();
             }
@@ -68,10 +70,10 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
         reset();
         sysName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
-                    ok.setEnabled(true);
-                    ok.setToolTipText(null);
+                    setOK();
                 }
             }
         });
@@ -80,6 +82,23 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     void reset() {
         ok.setEnabled(false);
         ok.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
+    }
+
+    /**
+     * Activate the OK button without user key activity.
+     */
+    public void setOK() {
+        ok.setEnabled(true);
+        ok.setToolTipText(null);
+    }
+
+    /**
+     * Lock the System Name JTextField.
+     */
+    public void setSystemNameFieldIneditable() {
+        sysName.setEditable(false);
+        sysName.setBorder(null);
+        sysName.setDisabledTextColor(Color.black);
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {

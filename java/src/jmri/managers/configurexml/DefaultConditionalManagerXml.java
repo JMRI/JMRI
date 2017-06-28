@@ -7,6 +7,7 @@ import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
+import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.managers.DefaultConditionalManager;
@@ -32,6 +33,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @param o Object to store, of type ConditionalManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 //    	long numCond = 0;
 //    	long numStateVars = 0;
@@ -56,7 +58,17 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 log.debug("conditional system name is " + sname);
                 Conditional c = tm.getBySystemName(sname);
-                Element elem = new Element("conditional").setAttribute("systemName", sname);
+                if (c == null) {
+                    log.error("Unable to save '{}' to the XML file", sname);
+                    continue;
+                }
+                Element elem = new Element("conditional");
+
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                elem.setAttribute("systemName", sname);
+                if (c.getUserName()!=null && !c.getUserName().equals("")) elem.setAttribute("userName", c.getUserName());
+
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
@@ -153,6 +165,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         conditionals.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -196,18 +209,50 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 break;
             }
 
-            String userName = "";  // omitted username is treated as empty, not null
-            if (condElem.getAttribute("userName") != null) {
-                userName = condElem.getAttribute("userName").getValue();
+            // omitted username is treated as empty, not null
+            String userName = getUserName(condElem);
+            if (userName == null) {
+                userName = "";
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("create conditional: (" + sysName + ")("
-                        + (userName == null ? "<null>" : userName) + ")");
+                log.debug("create conditional: ({})({})", sysName, userName);
             }
-            Conditional c = tm.getBySystemName(sysName);
-            if (c == null) c = tm.createNewConditional(sysName, userName);
 
+            // Try getting the conditional.  This should fail
+            Conditional c = tm.getBySystemName(sysName);
+            if (c == null) {
+                // Check for parent Logix
+                Logix x = tm.getParentLogix(sysName);
+                if (x == null) {
+                    log.warn("Conditional '{}' has no parent Logix", sysName);
+                    continue;
+                }
+
+                // Found a potential parent Logix, check the Logix index
+                boolean inIndex = false;
+                for (int j = 0; j < x.getNumConditionals(); j++) {
+                    String cName = x.getConditionalByNumberOrder(j);
+                    if (sysName.equals(cName)) {
+                        inIndex = true;
+                        break;
+                    }
+                }
+                if (!inIndex) {
+                    log.warn("Conditional '{}' is not in the Logix index", sysName);
+                    continue;
+                }
+
+                // Create the condtional
+                c = tm.createNewConditional(sysName, userName);
+            }
+
+            if (c == null) {
+                // Should never get here
+                log.error("Conditional '{}' cannot be created", sysName);
+                continue;
+            }
+            
             // conditional already exists
             // load common parts
             loadCommon(c, condElem);
@@ -394,6 +439,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.CONDITIONALS);
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.ConditionalManager.class).getXMLOrder();
     }

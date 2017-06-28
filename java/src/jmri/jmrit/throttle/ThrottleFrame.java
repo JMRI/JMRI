@@ -60,7 +60,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private static int ADDRESS_PANEL_INDEX = 0;
     private static int CONTROL_PANEL_INDEX = 1;
     private static int FUNCTION_PANEL_INDEX = 2;
-    private static int NUM_FRAMES = 3;
+    private static int SPEED_DISPLAY_INDEX = 3;
+    private static int NUM_FRAMES = 4;
 
     private JInternalFrame[] frameList;
     private int activeFrame;
@@ -72,6 +73,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private AddressPanel addressPanel;
     private BackgroundPanel backgroundPanel;
     private FrameListener frameListener;
+    private SpeedPanel speedPanel;
 
     private String title;
     private String lastUsedSaveFile = null;
@@ -119,12 +121,16 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.toFront(title);
     }
 
+    public SpeedPanel getSpeedPanel() {
+        return speedPanel;
+    }
     /**
      * Sets the location of a throttle frame on the screen according to x and y
      * coordinates
      *
      * @see java.awt.Component#setLocation(int, int)
      */
+    @Override
     public void setLocation(int x, int y) {
         if (throttleWindow == null) {
             return;
@@ -166,19 +172,19 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         try {
             Element root = new Element("throttle-config");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttle-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-config.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*   java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             Element throttleElement = getXml();
             // don't save the loco address or consist address
-//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry	
+//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry
             {
                 throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
             }
@@ -245,7 +251,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 log.debug("Loading throttle exception: " + ex.getMessage());
             }
         }
-//    	checkPosition();
+//     checkPosition();
         if (switchAfter) {
             switchMode();
         }
@@ -258,6 +264,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * <li> ControlPanel
      * <li> FunctionPanel
      * <li> AddressPanel
+     * <li> SpeedPanel
      * <li> JMenu
      * </ul>
      *
@@ -284,8 +291,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10; 		// = 192
-        int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20;	// = 240 (but there seems to be another 10 needed for some LAFs)
+        int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
+        int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
                 && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
@@ -297,6 +304,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         functionPanel.setVisible(true);
         functionPanel.setEnabled(false);
         functionPanel.addInternalFrameListener(frameListener);
+
+        speedPanel = new SpeedPanel();
+        speedPanel.setResizable(true);
+        speedPanel.setVisible(false);
+        speedPanel.setClosable(true);
+        speedPanel.setIconifiable(true);
+        speedPanel.setTitle(Bundle.getMessage("ThrottleMenuViewSpeedPanel"));
+        speedPanel.pack();
 
         addressPanel = new AddressPanel();
         addressPanel.setResizable(true);
@@ -310,6 +325,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         addressPanel.addInternalFrameListener(frameListener);
         functionPanel.setAddressPanel(addressPanel); // so the function panel can get access to the roster
         controlPanel.setAddressPanel(addressPanel);
+        speedPanel.setAddressPanel(addressPanel);
 
         if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight()) {
             controlPanel.setSize(controlPanel.getWidth(), functionPanel.getHeight() + addressPanel.getHeight());
@@ -321,18 +337,27 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
+        if (!(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+                && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+                && (functionPanel.getWidth() < addressPanel.getWidth())) {
+        }
+
+        speedPanel.setSize(addressPanel.getWidth() + controlPanel.getWidth(), addressPanel.getHeight()/2);
+        speedPanel.setLocation(0, controlPanel.getHeight());
 
         addressPanel.addAddressListener(controlPanel);
         addressPanel.addAddressListener(functionPanel);
+        addressPanel.addAddressListener(speedPanel);
         addressPanel.addAddressListener(this);
         addressPanel.addAddressListener(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getTableModel());
 
         add(controlPanel, PANEL_LAYER_FRAME);
         add(functionPanel, PANEL_LAYER_FRAME);
         add(addressPanel, PANEL_LAYER_FRAME);
+        add(speedPanel,PANEL_LAYER_FRAME);
 
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) {
-            /*        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
+            /*         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
              setTransparent(functionPanel);
              setTransparent(addressPanel);
              setTransparent(controlPanel);
@@ -352,6 +377,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;
         frameList[CONTROL_PANEL_INDEX] = controlPanel;
         frameList[FUNCTION_PANEL_INDEX] = functionPanel;
+        frameList[SPEED_DISPLAY_INDEX] = speedPanel;
         activeFrame = ADDRESS_PANEL_INDEX;
 
         setPreferredSize(new Dimension(Math.max(controlPanel.getWidth() + functionPanel.getWidth(), controlPanel.getWidth() + addressPanel.getWidth()),
@@ -359,6 +385,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
         new FileDrop(this, new Listener() {
+            @Override
             public void filesDropped(File[] files) {
                 if (isEditMode) {
                     for (int i = 0; i < files.length; i++) {
@@ -395,9 +422,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         newiFrame.setClosable(true);
         newiFrame.setIconifiable(true);
         newiFrame.getContentPane().addContainerListener(new ContainerListener() {
+            @Override
             public void componentAdded(ContainerEvent e) {
             }
 
+            @Override
             public void componentRemoved(ContainerEvent e) {
                 Container c = e.getContainer();
                 while ((!(c instanceof JInternalFrame)) && (!(c instanceof TranslucentJPanel))) {
@@ -469,6 +498,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             setOpaque(false);
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             g.setColor(TRANS_COL);
             g.fillRoundRect(0, 0, getSize().width, getSize().height, 10, 10);
@@ -548,6 +578,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
+        speedPanel.destroy();
         // dispose of this last because it will release and destroy throttle.
         addressPanel.destroy();
     }
@@ -579,6 +610,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
          *
          * @param e The InternalFrameEvent leading to this action
          */
+        @Override
         public void internalFrameClosing(InternalFrameEvent e) {
             if (e.getSource() == controlPanel) {
                 throttleWindow.getViewControlPanel().setSelected(false);
@@ -589,6 +621,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             } else if (e.getSource() == functionPanel) {
                 throttleWindow.getViewFunctionPanel().setSelected(false);
                 functionPanel.setVisible(false);
+            } else if (e.getSource() == speedPanel) {
+                throttleWindow.getViewSpeedPanel().setSelected(false);
+                speedPanel.setVisible(false);
             } else {
                 try { // #JYNSTRUMENT#, Very important, clean the Jynstrument
                     if ((e.getSource() instanceof JInternalFrame)) {
@@ -615,6 +650,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
          *
          * @param e The InternalFrameEvent leading to this action
          */
+        @Override
         public void internalFrameActivated(InternalFrameEvent e) {
             if (e.getSource() == controlPanel) {
                 activeFrame = CONTROL_PANEL_INDEX;
@@ -622,6 +658,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 activeFrame = ADDRESS_PANEL_INDEX;
             } else if (e.getSource() == functionPanel) {
                 activeFrame = FUNCTION_PANEL_INDEX;
+            } else if (e.getSource() == functionPanel) {
+                activeFrame = SPEED_DISPLAY_INDEX;
             }
         }
     }
@@ -633,6 +671,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * <li> ControlPanel
      * <li> FunctionPanel
      * <li> AddressPanel
+     * <li> SpeedPanel
      * </ul>
      *
      *
@@ -658,7 +697,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         children.add(controlPanel.getXml());
         children.add(functionPanel.getXml());
         children.add(addressPanel.getXml());
-
+        children.add(speedPanel.getXml());
         // Save Jynstruments
         Component[] cmps = getComponents();
         for (int i = 0; i < cmps.length; i++) {
@@ -712,6 +751,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * <li> ControlPanel
      * <li> FunctionPanel
      * <li> AddressPanel
+     * <li> SpeedPanel
      * </ul>
      *
      *
@@ -756,6 +796,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
+        }
+        Element speedPanelElement = e.getChild("SpeedPanel");
+        speedPanel.setXml(speedPanelElement);
         if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
             ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
         }
@@ -814,16 +859,20 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
+    @Override
     public void componentHidden(ComponentEvent e) {
     }
 
+    @Override
     public void componentMoved(ComponentEvent e) {
     }
 
+    @Override
     public void componentResized(ComponentEvent e) {
-//		checkPosition ();
+//  checkPosition ();
     }
 
+    @Override
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
@@ -865,6 +914,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
          *
          * @param e Description of the Parameter
          */
+        @Override
         public void keyReleased(KeyEvent e) {
             if (e.isControlDown() && e.getKeyCode() == NEXT_FRAME_KEY) {
                 try {
@@ -887,15 +937,18 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
+    @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
 
+    @Override
     public void notifyAddressReleased(LocoAddress la) {
         setLastUsedSaveFile(null);
         setFrameTitle();
         throttleWindow.updateGUI();
     }
 
+    @Override
     public void notifyAddressThrottleFound(DccThrottle throttle) {
         if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
                 && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading())
@@ -907,12 +960,15 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.updateGUI();
     }
 
+    @Override
     public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
     }
 
+    @Override
     public void notifyConsistAddressReleased(int address, boolean isLong) {
     }
 
+    @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
 

@@ -1,4 +1,3 @@
-// NodeConfigToolPane.java
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.util.ResourceBundle;
@@ -15,16 +14,10 @@ import jmri.jmrix.can.TrafficController;
 /**
  * Pane to for setting node configuration
  *
- * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- * @since 2.3.1
+ * @author Bob Jacobsen Copyright (C) 2008
+  * @since 2.3.1
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5162692735562566371L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle");
 
@@ -44,6 +37,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         tc.addCanListener(this);
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " " + ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"));
@@ -98,12 +92,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
     }
 
+    @Override
     public void reply(jmri.jmrix.can.CanReply m) {
     }
 
+    @Override
     public void message(jmri.jmrix.can.CanMessage m) {
     }
 
+    @Override
     public void dispose() {
         // disconnect from the CBUS
         if (tc != null) {
@@ -115,11 +112,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7778206986212539509L;
 
         public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"),

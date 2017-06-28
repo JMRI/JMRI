@@ -1,4 +1,3 @@
-// OlcbConnectionTypeList.java
 package jmri.jmrix.openlcb;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.openlcb;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

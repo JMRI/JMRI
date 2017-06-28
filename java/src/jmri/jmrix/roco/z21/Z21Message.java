@@ -77,11 +77,13 @@ public class Z21Message extends AbstractMRMessage {
         setBinary(true);
     }
 
+    @Override
     public void setOpCode(int i) {
         _dataChars[2] = (i & 0x00ff);
         _dataChars[3] = ((i & 0xff00) >> 8);
     }
 
+    @Override
     public int getOpCode() {
         return ( (0xff & _dataChars[2]) + ((0xff & _dataChars[3]) << 8));
     }
@@ -224,6 +226,15 @@ public class Z21Message extends AbstractMRMessage {
 
 
     public String toMonitorString() {
+        switch(getOpCode()){
+           case 0x0010:
+               return Bundle.getMessage("Z21MessageStringSerialNoRequest");
+           case 0x001A:
+               return Bundle.getMessage("Z21MessageStringVersionRequest");
+           case 0x0040:
+               return Bundle.getMessage("Z21MessageXPressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());       
+           default:
+        }
         return toString();
     }
 

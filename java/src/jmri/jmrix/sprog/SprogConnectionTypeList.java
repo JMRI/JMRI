@@ -1,4 +1,3 @@
-// SprogConnectionTypeList.java
 package jmri.jmrix.sprog;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.sprog;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class SprogConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

@@ -1,4 +1,3 @@
-// ScheduleCopyAction.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 17977 $
  */
 public class ScheduleCopyAction extends AbstractAction {
 
@@ -34,8 +32,8 @@ public class ScheduleCopyAction extends AbstractAction {
             f = new ScheduleCopyFrame(schedule);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)ScheduleCopyAction.java */
+

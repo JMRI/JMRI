@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -347,7 +348,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * Service method to purge a stream of initial contents
      * while opening the connection.
      */
-     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
+     @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
         int count = serialStream.available();
         log.debug("input stream shows " + count + " bytes available");
@@ -393,6 +394,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
 
 }

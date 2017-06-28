@@ -26,24 +26,22 @@ public class RouteManager {
     public RouteManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static RouteManager _instance = null;
     private int _id = 0;
 
     public static synchronized RouteManager instance() {
-        if (_instance == null) {
+        RouteManager instance = jmri.InstanceManager.getNullableDefault(RouteManager.class);
+        if (instance == null) {
             log.debug("RouteManager creating instance");
             // create and load
-            _instance = new RouteManager();
+            instance = new RouteManager();
+            jmri.InstanceManager.setDefault(RouteManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManager returns instance {}", _instance);
+            log.debug("RouteManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {
@@ -55,6 +53,7 @@ public class RouteManager {
     protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();
 
     /**
+     * @param name The string name of the Route.
      * @return requested Route object or null if none exists
      */
     public Route getRouteByName(String name) {
@@ -76,6 +75,7 @@ public class RouteManager {
     /**
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
+     * @param name The string name of the new Route.
      *
      *
      * @return new route or existing route
@@ -95,6 +95,7 @@ public class RouteManager {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param route The Route to add.
      */
     public void register(Route route) {
         Integer oldSize = Integer.valueOf(_routeHashTable.size());
@@ -110,6 +111,7 @@ public class RouteManager {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param route The Route to delete.
      */
     public void deregister(Route route) {
         if (route == null) {
@@ -316,4 +318,4 @@ public class RouteManager {
 
 }
 
-/* @(#)RouteManager.java */
+

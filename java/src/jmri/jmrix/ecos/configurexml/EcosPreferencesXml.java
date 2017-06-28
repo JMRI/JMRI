@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
 
@@ -21,10 +20,12 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
         super();
     }
 
+    @Override
     public Element store(Object o) {
         return null;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -41,6 +42,7 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
      InstanceManager.getNullableDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));
      }*/
 
+    @Override
     public boolean load(Element shared, Element perNode) {
         return true;
     }

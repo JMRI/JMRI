@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.RemoteXBeeDevice;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -96,10 +94,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
+    @Override
     protected void getInstance() {
         adapter = new XBeeAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
@@ -118,7 +118,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
             // create the RemoteXBeeDevice for the node.
-            RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
+            RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
                          guid,address,Identifier);
             // Check to see if the node is a duplicate, if it is, move 
             // to the next one.

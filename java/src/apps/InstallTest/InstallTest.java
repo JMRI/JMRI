@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Ken Cameron Copyright 2008
+ * @author Ken Cameron Copyright 2008
  */
 public class InstallTest extends Apps {
 
@@ -41,23 +41,28 @@ public class InstallTest extends Apps {
         super(p);
     }
 
+    @Override
     protected String logo() {
         return "resources/InstallTest.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.InstallTest.InstallTest";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("InstallTestVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/InstallTest";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -66,6 +71,7 @@ public class InstallTest extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

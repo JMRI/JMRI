@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
- * @version	$Revision$
- */
+  */
 public class X10SequenceTest extends TestCase {
 
     public void testCtors() {
@@ -56,10 +55,12 @@ public class X10SequenceTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

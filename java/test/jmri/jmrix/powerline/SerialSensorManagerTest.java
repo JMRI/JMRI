@@ -1,9 +1,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,10 +14,22 @@ import org.junit.Test;
  * @author kcameron Copyright (C) 2011
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
     @Override
     public String getSystemName(int i) {
         return "PSP" + i;
+    }
+
+    /**
+     * Number of sensor to test. Made a separate method so it can be overridden
+     * in subclasses that do or don't support various numbers
+     */
+    protected int getNumToTest1() {
+        return 8;
+    }
+
+    protected int getNumToTest2() {
+        return 9;
     }
 
     @Test
@@ -70,6 +79,20 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("PSP" + getNumToTest1());
+        Sensor t2 = l.provideSensor("PSP" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
+
     // The minimal setup for log4J
     @Override
     @Before
@@ -91,6 +114,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         t.setAdapterMemo(m);
 
         l = new SerialSensorManager(t) {
+            @Override
             public void reply(SerialReply r) {
             }
         };

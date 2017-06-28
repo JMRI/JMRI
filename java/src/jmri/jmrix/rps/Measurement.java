@@ -1,4 +1,3 @@
-// Measurement.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -10,8 +9,7 @@ import javax.vecmath.Vector3d;
  * Immutable
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class Measurement {
 
     public Measurement(Reading r) {
@@ -122,6 +120,7 @@ public class Measurement {
 
     Reading r;  // a Reading object is by definition immutable
 
+    @Override
     public String toString() {
         if (!isValidPosition()) {
             // out-of-range
@@ -137,4 +136,4 @@ public class Measurement {
     }
 }
 
-/* @(#)Measurement.java */
+

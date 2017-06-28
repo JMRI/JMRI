@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright: (c) 2012
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 17977 $
  */
 public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.Abstrac
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element reporter) {
         reporter.setAttribute("class", "jmri.jmrix.dcc4pc.configurexml.Dcc4PcReporterManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

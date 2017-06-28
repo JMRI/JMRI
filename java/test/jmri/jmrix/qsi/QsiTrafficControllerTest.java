@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Description:	JUnit tests for the QsiTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 public class QsiTrafficControllerTest extends TestCase {
 
@@ -154,10 +153,12 @@ public class QsiTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(QsiMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(QsiReply r) {
             rcvdReply = r;
         }
@@ -168,17 +169,21 @@ public class QsiTrafficControllerTest extends TestCase {
     // internal class to simulate a QsiPortController
     class QsiPortControllerScaffold extends QsiPortController {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -195,16 +200,19 @@ public class QsiTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

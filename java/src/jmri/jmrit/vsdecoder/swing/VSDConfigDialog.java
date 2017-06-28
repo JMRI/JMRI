@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -53,12 +52,10 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
-
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static final String CONFIG_PROPERTY = "Config";
 
@@ -106,6 +103,7 @@ public class VSDConfigDialog extends JDialog {
         super(SwingUtilities.getWindowAncestor(parent), title);
         config = c;
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent evt) {
                 vsdecoderManagerEventAction(evt);
             }
@@ -122,7 +120,7 @@ public class VSDConfigDialog extends JDialog {
         // Tabbed pane for loco select (Roster or Manual)
         locoSelectPanel = new JTabbedPane();
         TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
-                rb.getString("LocoTabbedPaneTitle"));
+                Bundle.getMessage("LocoTabbedPaneTitle"));
         title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
         locoSelectPanel.setBorder(title);
 
@@ -131,23 +129,23 @@ public class VSDConfigDialog extends JDialog {
         rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-        locoSelectPanel.addTab(rb.getString("LocoTabbedPaneRosterTab"), rosterPanel);
-        locoSelectPanel.addTab(rb.getString("LocoTabbedPaneManualTab"), addressPanel);
+        locoSelectPanel.addTab(Bundle.getMessage("RosterLabel"), rosterPanel); // tab name
+        locoSelectPanel.addTab(Bundle.getMessage("LocoTabbedPaneManualTab"), addressPanel);
         //NOTE: There appears to be a bug in Swing that doesn't let Mnemonics work on a JTabbedPane when a sibling component
         // has the focus.  Oh well.
         try {
-            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneRosterTab")), rb.getString("LTPRosterTabToolTip"));
-            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneRosterTab")), Mnemonics.get("RosterTab"));
-            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneManualTab")), rb.getString("LTPManualTabToolTip"));
-            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
+            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("RosterLabel")), Bundle.getMessage("LTPRosterTabToolTip"));
+            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("RosterLabel")), Mnemonics.get("RosterTab"));
+            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Bundle.getMessage("LTPManualTabToolTip"));
+            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
         } catch (IndexOutOfBoundsException iobe) {
             log.debug("Index out of bounds setting up tabbed Pane: " + iobe);
             // Ignore out-of-bounds exception.  We just won't have mnemonics or tool tips this go round.
         }
         // Roster Tab components
         rosterSelector = new RosterEntrySelectorPanel();
-        rosterSelector.setNonSelectedItem(rb.getString("EmptyRosterBox"));
-        rosterSelector.setToolTipText(rb.getString("LTPRosterSelectorToolTip"));
+        rosterSelector.setNonSelectedItem(Bundle.getMessage("EmptyRosterBox"));
+        rosterSelector.setToolTipText(Bundle.getMessage("LTPRosterSelectorToolTip"));
         //rosterComboBox.setToolTipText("tool tip for roster box");
         rosterSelector.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
             @Override
@@ -157,18 +155,19 @@ public class VSDConfigDialog extends JDialog {
         });
         rosterPanel.add(rosterSelector);
         rosterLabel = new javax.swing.JLabel();
-        rosterLabel.setText(rb.getString("RosterLabel"));
+        rosterLabel.setText(Bundle.getMessage("RosterLabel"));
 
         // Address Tab Components
         addressLabel = new javax.swing.JLabel();
         addressSelector = new DccLocoAddressSelector();
-        addressSelector.setToolTipText(rb.getString("LTPAddressSelectorToolTip"));
+        addressSelector.setToolTipText(Bundle.getMessage("LTPAddressSelectorToolTip", Bundle.getMessage("ButtonSet")));
         addressSetButton = new javax.swing.JButton();
-        addressSetButton.setText(rb.getString("AddressSetButtonLabel"));
+        addressSetButton.setText(Bundle.getMessage("ButtonSet"));
         addressSetButton.setEnabled(true);
-        addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
+        addressSetButton.setToolTipText(Bundle.getMessage("AddressSetButtonToolTip"));
         addressSetButton.setMnemonic(Mnemonics.get("AddressSet"));
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -182,14 +181,14 @@ public class VSDConfigDialog extends JDialog {
         profilePanel = new JPanel();
         profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
         profileComboBox = new javax.swing.JComboBox<>();
-        profileComboBox.setToolTipText(rb.getString("ProfileComboBoxToolTip"));
+        profileComboBox.setToolTipText(Bundle.getMessage("ProfileComboBoxToolTip"));
         profileLabel = new javax.swing.JLabel();
-        profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
-        profileLoadButton.setToolTipText(rb.getString("ProfileLoadButtonToolTip"));
+        profileLoadButton = new JButton(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile"));
+        profileLoadButton.setToolTipText(Bundle.getMessage("ProfileLoadButtonToolTip"));
         profileLoadButton.setMnemonic(Mnemonics.get("ProfileLoad"));
         profileLoadButton.setEnabled(true);
         TitledBorder title2 = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
-                rb.getString("ProfileSelectorPaneTitle"));
+                Bundle.getMessage("ProfileSelectorPaneTitle"));
         title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
         profilePanel.setBorder(title2);
 
@@ -205,6 +204,7 @@ public class VSDConfigDialog extends JDialog {
         profileComboBox.addItem((loadProfilePrompt = new NullProfileBoxItem()));
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -212,39 +212,43 @@ public class VSDConfigDialog extends JDialog {
         profilePanel.add(profileComboBox);
         profilePanel.add(profileLoadButton);
         profileLoadButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileLoadButtonActionPerformed(evt);
             }
         });
 
-        profileLabel.setText(rb.getString("SoundProfileLabel"));
+        profileLabel.setText(Bundle.getMessage("SoundProfileLabel"));
 
         rosterSaveButton = new javax.swing.JButton();
-        rosterSaveButton.setText(rb.getString("ConfigSaveButtonLabel"));
+        rosterSaveButton.setText(Bundle.getMessage("ConfigSaveButtonLabel"));
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
         });
         rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-        rosterSaveButton.setToolTipText(rb.getString("RosterSaveButtonToolTip"));
+        rosterSaveButton.setToolTipText(Bundle.getMessage("RosterSaveButtonToolTip"));
         rosterSaveButton.setMnemonic(Mnemonics.get("RosterSave"));
 
         JPanel cbPanel = new JPanel();
-        closeButton = new JButton(rb.getString("CloseButtonLabel"));
+        closeButton = new JButton(Bundle.getMessage("ButtonOK"));
         closeButton.setEnabled(false);
-        closeButton.setToolTipText(rb.getString("CD_CloseButtonToolTip"));
+        closeButton.setToolTipText(Bundle.getMessage("CD_CloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }
         });
 
-        JButton cancelButton = new JButton(rb.getString("CancelButtonLabel"));
-        cancelButton.setToolTipText(rb.getString("CD_CancelButtonToolTip"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.setToolTipText(Bundle.getMessage("CD_CancelButtonToolTip"));
         cancelButton.setMnemonic(Mnemonics.get("CancelButton"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
@@ -293,7 +297,7 @@ public class VSDConfigDialog extends JDialog {
 
         @Override
         public String toString() {
-            return (rb.getString("NoLocoSelectedText"));
+            return (Bundle.getMessage("NoLocoSelectedText"));
         }
     }
 
@@ -345,9 +349,9 @@ public class VSDConfigDialog extends JDialog {
                 r.putAttribute("VSDecoder_Path", path);
                 r.putAttribute("VSDecoder_Profile", profile);
                 int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(rb.getString("UpdateRoster"),
+                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
-                        rb.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
                     storeFile(r);
                 }

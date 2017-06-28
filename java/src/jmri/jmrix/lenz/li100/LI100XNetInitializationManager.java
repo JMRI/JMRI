@@ -1,4 +1,3 @@
-// LI100XNetInitializationManager.java
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
@@ -11,15 +10,15 @@ import org.slf4j.LoggerFactory;
  * adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision$
- */
+ * @author Paul Bender Copyright (C) 2003
+  */
 public class LI100XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public LI100XNetInitializationManager(XNetSystemConnectionMemo memo) {
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

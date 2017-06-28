@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  */
 class LnMessageClientPollThread extends Thread {
 
@@ -19,6 +18,7 @@ class LnMessageClientPollThread extends Thread {
         this.start();
     }
 
+    @Override
     public void run() {
         try {
             Object[] lnMessages = null;

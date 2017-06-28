@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the NamedBeanHandleManager class
  *
  * @author	Kevin Dickerson Copyright (C) 2006
- * @version $Revision: 18111 $
+ * 
  */
 public class NamedBeanHandleManagerTest extends TestCase {
 
@@ -104,6 +104,7 @@ public class NamedBeanHandleManagerTest extends TestCase {
 
     jmri.NamedBeanHandleManager nbhm;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.resetInstanceManager();
@@ -112,6 +113,7 @@ public class NamedBeanHandleManagerTest extends TestCase {
         nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     }
 
+    @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();

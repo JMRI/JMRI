@@ -1,4 +1,3 @@
-// JMRIClientSensorManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Sensor;
@@ -9,9 +8,8 @@ import jmri.Sensor;
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the sensor number without padding.
  *
- * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+ * @author Paul Bender Copyright (C) 2010
+  */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -22,10 +20,12 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
         this.prefix = memo.getSystemPrefix();
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -45,4 +45,4 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
 
 }
 
-/* @(#)JMRIClientSensorManager.java */
+

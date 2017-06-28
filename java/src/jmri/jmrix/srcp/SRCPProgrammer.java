@@ -31,7 +31,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
         ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
@@ -159,14 +159,15 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
+    @Override
     public void message(SRCPMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(SRCPReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -176,7 +177,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             if (!m.isResponseOK()) {
                 log.warn("Reply \"" + m.toString() + "\"");
             }
-            return;
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in COMMANDSENT state");
@@ -212,6 +212,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
+    @Override
     synchronized public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
             log.debug("reply called with simpleNode " + n.jjtGetValue());
@@ -224,6 +225,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -240,8 +242,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
      * <P>
-     * Here, it sends a request to exit from programming mode. But subclasses,
-     * e.g. ops mode, may redefine that.
+     * Here, it sends a request to exit from programming mode. But subclasses
+     * may redefine that.
      */
     void cleanup() {
         controller().sendSRCPMessage(SRCPMessage.getExitProgMode(_bus), this);
@@ -272,6 +274,3 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     private final static Logger log = LoggerFactory.getLogger(SRCPProgrammer.class.getName());
 
 }
-
-
-/* @(#)SRCPProgrammer.java */

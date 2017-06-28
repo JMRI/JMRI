@@ -1,4 +1,3 @@
-// DuplexGroupTabbedPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.util.ResourceBundle;
@@ -16,14 +15,9 @@ import jmri.util.JmriJFrame;
  * clarity, only the term UR92 is used herein.
  *
  * @author B. Milhaupt, Copyright 2011
- * @version	$Revision: 1.0 $
  */
 public class DuplexGroupTabbedPanel extends LnPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5891070481222820538L;
     javax.swing.JTabbedPane tabbedPane = null;
     DuplexGroupInfoPanel dgip = null;
     DuplexGroupScanPanel dgsp = null;
@@ -64,6 +58,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     public void initContext(Object context) {
 
         tmr = new javax.swing.Timer(10, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 tmr.stop();
                 ((JmriJFrame) thisone.getRootPane().getParent()).setPreferredSize(null);
@@ -76,11 +71,11 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         tmr.start();
         return;
     }
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbed");
+    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbed");
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel";
+        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N
     }
 
     @Override

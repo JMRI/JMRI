@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,29 +27,45 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.configurexml.PackageTest");  // no tests in this class itself
 
-        suite.addTest(SchemaTest.suite());
-        suite.addTest(LoadAndCheckTest.suite());
-        suite.addTest(LoadAndStoreTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadAndCheckTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadAndStoreTest.class));
 
         suite.addTest(ConfigXmlManagerTest.suite());
 
         suite.addTest(BlockManagerXmlTest.suite());
         //suite.addTest(OBlockManagerXmlTest.suite());
         suite.addTest(SectionManagerXmlTest.suite());
+        suite.addTest(new JUnit4TestAdapter(TransitManagerXmlTest.class));
 
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
-        suite.addTest(BundleTest.suite());
-
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(DccLocoAddressXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriConfigureXmlExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.configurexml.turnoutoperations.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.configurexml.swing.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(ErrorHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadXmlConfigActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadXmlUserActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoAddressXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SaveMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlAllActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlConfigActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlUserActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerXmlTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
 }
+

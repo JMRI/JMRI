@@ -2,11 +2,17 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TestTrafficController;
 import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openlcb.EventID;
+import org.openlcb.implementations.EventTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.regex.Pattern;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -14,12 +20,11 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends TestCase {
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class.getName());
 
     public void testIncomingChange() {
-        // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -37,19 +42,54 @@ public class OlcbSensorTest extends TestCase {
         // check states
         Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
 
-        s.message(mActive);
+        t.sendMessage(mActive);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        s.message(mInactive);
+        t.sendMessage(mInactive);
         Assert.assertTrue(s.getKnownState() == Sensor.INACTIVE);
 
     }
 
-    public void testMomentarySensor() {
-        // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
+    public void testRecoverUponStartup() {
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t);
+        t.tc.rcvMessage = null;
+
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        t.flush();
+
+        assertNotNull(t.tc.rcvMessage);
+        log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
+        CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+
+
+        // message for Active and Inactive
+        CanMessage mStateActive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x194C4123
+        );
+        mStateActive.setExtended(true);
+
+        CanMessage mStateInactive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 9},
+                0x194C4123
+        );
+        mStateInactive.setExtended(true);
+
+        // check states
+        Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
+
+        t.sendMessage(mStateActive);
+        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+
+        t.sendMessage(mStateInactive);
+        Assert.assertTrue(s.getKnownState() == Sensor.INACTIVE);
+    }
+
+    public void testMomentarySensor() throws Exception {
+        Assert.assertNotNull("exists", t);
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t.iface);
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -61,7 +101,7 @@ public class OlcbSensorTest extends TestCase {
         // check states
         Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
 
-        s.message(mActive);
+        t.sendMessage(mActive);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
         // wait for twice timeout to make sure
@@ -70,25 +110,65 @@ public class OlcbSensorTest extends TestCase {
         } catch (Exception e) {
         }
 
-        Assert.assertTrue(s.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
+        // local flip
+        s.setKnownState(Sensor.ACTIVE);
+        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+
+        // wait for twice timeout to make sure
+        try {
+            Thread.sleep(2 * OlcbSensor.ON_TIME);
+        } catch (Exception e) {
+        }
+
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
 
     public void testLocalChange() throws jmri.JmriException {
-        // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        t.waitForStartup();
 
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
-        t.rcvMessage = null;
+        t.tc.rcvMessage = null;
         s.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.rcvMessage));
+        Assert.assertEquals(Sensor.ACTIVE, s.getKnownState());
+        t.flush();
+        assertNotNull(t.tc.rcvMessage);
+        log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
 
-        t.rcvMessage = null;
+        t.tc.rcvMessage = null;
         s.setKnownState(Sensor.INACTIVE);
-        Assert.assertTrue(s.getKnownState() == Sensor.INACTIVE);
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.rcvMessage));
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
+        t.flush();
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
+
+    public void testEventTable() {
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+
+        EventTable.EventTableEntry[] elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertTrue("Incorrect name: " + elist[0].getDescription(), Pattern.compile("Sensor.*Active").matcher(elist[0].getDescription()).matches());
+
+        s.setUserName("MyInput");
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Sensor MyInput Active", elist[0].getDescription());
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.9")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Sensor MyInput Inactive", elist[0].getDescription());
+    }
+
+    OlcbTestInterface t;
 
     // from here down is testing infrastructure
     public OlcbSensorTest(String s) {
@@ -108,10 +188,15 @@ public class OlcbSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        // load dummy TrafficController
+        t = new OlcbTestInterface();
+        t.waitForStartup();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

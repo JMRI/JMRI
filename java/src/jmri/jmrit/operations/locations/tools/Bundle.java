@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrit.operations.locations.tools;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -20,12 +19,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrit.operations.Bundle {
 
-    private final static String name = "jmri.jmrit.operations.locations.JmritOperationsLocationsBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.operations.locations.JmritOperationsLocationsBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -98,4 +97,4 @@ public class Bundle extends jmri.jmrit.operations.Bundle {
 
 }
 
-/* @(#)Bundle.java */
+

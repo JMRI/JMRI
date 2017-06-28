@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "XSnnn", where nnn is the sensor number without padding.
  * <P>
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -29,12 +30,14 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     static private XNetSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeXNetListener(XNetInterface.FEEDBACK, this);
         super.dispose();
     }
 
     // XPressNet specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new XNetSensor(systemName, userName, tc);
     }
@@ -47,6 +50,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // listen for sensors, creating them as needed
+    @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -88,16 +92,19 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -170,4 +177,4 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
 
 }
 
-/* @(#)XNetSensorManager.java */
+

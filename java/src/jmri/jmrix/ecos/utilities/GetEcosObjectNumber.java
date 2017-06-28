@@ -1,4 +1,3 @@
-// GetEcosObjectNumber.java
 package jmri.jmrix.ecos.utilities;
 
 
@@ -18,9 +17,8 @@ package jmri.jmrix.ecos.utilities;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
- */
+ * @author Kevin Dickerson Copyright (C) 2009
+  */
 public class GetEcosObjectNumber {
 
     /**

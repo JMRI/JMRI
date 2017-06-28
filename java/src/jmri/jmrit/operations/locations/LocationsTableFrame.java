@@ -1,4 +1,3 @@
-// LocationsTableFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -29,9 +28,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for adding and editing the location roster for operations.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class LocationsTableFrame extends OperationsFrame {
 
@@ -48,7 +46,7 @@ public class LocationsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -84,7 +82,7 @@ public class LocationsTableFrame extends OperationsFrame {
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
 
-        //	build menu
+        // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new LocationCopyAction());
@@ -95,12 +93,13 @@ public class LocationsTableFrame extends OperationsFrame {
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
         }
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 
         initMinimumSize();
         // make panel a bit wider than minimum if the very first time opened
@@ -132,7 +131,7 @@ public class LocationsTableFrame extends OperationsFrame {
     // add button
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("location button activated");
+//  log.debug("location button activated");
         if (ae.getSource() == addButton) {
             LocationEditFrame f = new LocationEditFrame(null);
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));

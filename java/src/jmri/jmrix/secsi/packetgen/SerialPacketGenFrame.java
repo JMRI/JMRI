@@ -15,14 +15,9 @@ import jmri.util.StringUtil;
  * Frame for user input of serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5550602463045125600L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -35,6 +30,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -61,6 +57,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -79,6 +76,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pollButtonActionPerformed(e);
             }
@@ -111,9 +109,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    @Override
     public void message(SerialMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SerialReply r) {
     } // ignore replies
 }

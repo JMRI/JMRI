@@ -14,11 +14,6 @@ import jmri.implementation.AbstractSensor;
  * @author Kevin Dickerson (C) 2009
  */
 public class TamsSensor extends AbstractSensor {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
     
     public TamsSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -33,6 +28,7 @@ public class TamsSensor extends AbstractSensor {
     private void init(String id) {
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 

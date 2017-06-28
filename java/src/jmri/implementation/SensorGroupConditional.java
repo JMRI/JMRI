@@ -23,16 +23,16 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
-public class SensorGroupConditional extends DefaultConditional
-        implements java.io.Serializable {
+public class SensorGroupConditional extends DefaultConditional {
 
     public SensorGroupConditional(String systemName, String userName) {
         super(systemName, userName);
     }
 
     @SuppressWarnings("null")
+    @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
         int currentState = super.calculate(false, evt);
         if (!enabled || evt == null) {

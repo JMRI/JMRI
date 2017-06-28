@@ -1,4 +1,3 @@
-// EcosSensor.java
 package jmri.jmrix.ecos;
 
 import jmri.implementation.AbstractSensor;
@@ -11,15 +10,9 @@ import jmri.implementation.AbstractSensor;
  * one Sensor object pointing to a single device is not allowed.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision$
- */
+  */
 public class EcosSensor extends AbstractSensor {
 
-    //final static String prefix = "US";
-    /**
-     *
-     */
-    private static final long serialVersionUID = 896698049236927292L;
     int objectNumber = 0;
 
     public EcosSensor(String systemName, String userName) {
@@ -39,6 +32,7 @@ public class EcosSensor extends AbstractSensor {
         objectNumber = o;
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
@@ -50,4 +44,4 @@ public class EcosSensor extends AbstractSensor {
     }
 }
 
-/* @(#)EcosSensor.java */
+

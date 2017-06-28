@@ -20,9 +20,10 @@ import jmri.util.JUnitUtil;
  *
  * @author	Bob Jacobsen Copyright 2006, 2015
  */
-public class CompositeVariableValueTest extends VariableValueTest {
+public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
@@ -34,19 +35,23 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return new CompositeVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
+    @Override
     void setValue(VariableValue var, String val) {
         ((JTextField) var.getCommonRep()).setText(val);
         ((JTextField) var.getCommonRep()).postActionEvent();
     }
 
+    @Override
     void setReadOnlyValue(VariableValue var, String val) {
         ((CompositeVariableValue) var).setValue(Integer.valueOf(val).intValue());
     }
 
+    @Override
     void checkValue(VariableValue var, String comment, String val) {
         Assert.assertEquals(comment, val, var.getCommonRep().toString());
     }
 
+    @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         Assert.assertEquals(comment, val, var.getCommonRep().toString());
     }
@@ -54,54 +59,70 @@ public class CompositeVariableValueTest extends VariableValueTest {
     // end of abstract members
     // some of the premade tests don't quite make sense; override them here.
     // (This is removing the majority of the tests, which seems rather much)
+    @Override
     public void testVariableValueCreate() {
     }// mask is ignored 
 
+    @Override
     public void testVariableValueCreateLargeValue() {
     } // mask is ignored 
 
+    @Override
     public void testVariableValueCreateLargeMaskValue() {
     } // mask is ignored 
 
+    @Override
     public void testVariableValueCreateLargeMaskValue256() {
     } // mask is ignored 
 
+    @Override
     public void testVariableValueCreateLargeMaskValue2up16() {
     } // mask is ignored 
 
+    @Override
     public void testVariableSynch() {
     }     // low CV is upper part of address
 
+    @Override
     public void testVariableReadOnly() {
     }     // low CV is upper part of address
 
+    @Override
     public void testVariableFromCV() {
     }     // low CV is upper part of address
 
+    @Override
     public void testVariableValueRead() {
     }	// due to multi-cv nature
 
+    @Override
     public void testVariableValueStates() {
     }	// due to multi-cv nature
 
+    @Override
     public void testVariableValueStateColor() {
     }	// due to multi-cv nature
 
+    @Override
     public void testVariableRepStateColor() {
     }	// due to multi-cv nature
 
     public void testVariableValueRepStateColor() {
     }	// due to multi-cv nature
 
+    @Override
     public void testVariableVarChangeColorRep() {
     }	// due to multi-cv nature
 
+    @Override
     public void testVariableValueWrite() {
     } // due to multi-cv nature
 
+    @Override
     public void testVariableCvWrite() {
     }    // due to multi-cv nature
 
+    @Override
     public void testWriteSynch2() {
     }        // programmer synch is different
 
@@ -153,6 +174,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 evtList.add(e);
                 if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -199,6 +221,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 evtList.add(e);
                 if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -323,10 +346,12 @@ public class CompositeVariableValueTest extends VariableValueTest {
     private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

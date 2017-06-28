@@ -1,7 +1,10 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import java.awt.geom.Point2D;
+import java.util.List;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -25,6 +28,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
      * @param o Object to store, of type TrackSegment
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         TrackSegment p = (TrackSegment) o;
@@ -42,7 +46,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         element.setAttribute("type2", "" + p.getType2());
         element.setAttribute("dashed", "" + (p.getDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.getMainline() ? "yes" : "no"));
-        element.setAttribute("hidden", "" + (p.getHidden() ? "yes" : "no"));
+        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("arc", "" + (p.getArc() ? "yes" : "no"));
         if (p.getArc()) {
             element.setAttribute("flip", "" + (p.getFlip() ? "yes" : "no"));
@@ -52,7 +56,27 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
+        if (p.getBezier()) {
+            element.setAttribute("bezier", "yes");
+        }
         element.setAttribute("class", getClass().getName());
+        
+        if (p.getBezier()) {
+            // add control points
+            Element elementControlpoints = new Element("controlpoints");
+            for (int i = 0; i < p.getNumberOfBezierControlPoints(); i++) {
+                Element elementControlpoint = new Element("controlpoint");
+
+                elementControlpoint.setAttribute("index", "" + i);
+
+                Point2D pt = p.getBezierControlPoint(i);
+                elementControlpoint.setAttribute("x", "" + pt.getX());
+                elementControlpoint.setAttribute("y", "" + pt.getY());
+
+                elementControlpoints.addContent(elementControlpoint);
+            }
+            element.addContent(elementControlpoints);
+        }
         return element;
     }
 
@@ -68,14 +92,15 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
 
         // get attributes
         String name = element.getAttribute("ident").getValue();
-        int type1 = LayoutEditor.NONE;
-        int type2 = LayoutEditor.NONE;
+        int type1 = LayoutTrack.NONE;
+        int type2 = LayoutTrack.NONE;
         try {
             type1 = element.getAttribute("type1").getIntValue();
             type2 = element.getAttribute("type2").getIntValue();
@@ -106,6 +131,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
         } catch (NullPointerException e) {
         }//considered normal if the attribute is not present }
+
         if (l.getArc()) {
             //int angle = 0;
             //int startangle = 0;
@@ -136,6 +162,44 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             } catch (NullPointerException e) {
             }//considered normal if the attribute is not present }
         }
+
+        try {
+            if (element.getAttribute("bezier").getValue().equals("yes")) {
+                // load control points
+                Element controlpointsElement = element.getChild("controlpoints");
+                if (null != controlpointsElement) {
+                    List<Element> elementList = controlpointsElement.getChildren("controlpoint");
+                    if (null != elementList) {
+                        if (elementList.size() >= 2) {
+                            for (int i = 0; i < elementList.size(); i++) {
+                                double x = 0.0;
+                                double y = 0.0;
+                                int index = 0;
+                                Element relem = elementList.get(i);
+                                try {
+                                    index = (relem.getAttribute("index")).getIntValue();
+                                    x = (relem.getAttribute("x")).getFloatValue();
+                                    y = (relem.getAttribute("y")).getFloatValue();
+                                } catch (org.jdom2.DataConversionException e) {
+                                    log.error("failed to convert controlpoint coordinates or index attributes");
+                                }
+                                l.setBezierControlPoint(new Point2D.Double(x, y), index);
+                            }
+                        } else {
+                            log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");
+                        }
+                    } else {
+                        log.error("Track segment Bezier controlpoint elements not found.");
+                    }
+                } else {
+                    log.error("Track segment Bezier controlpoints element not found.");
+                }
+                // NOTE: do this LAST (so reCenter won't be called yet)
+                l.setBezier(true);
+            }
+        } catch (NullPointerException e) {
+        }//considered normal if the attribute is not present }
+
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {

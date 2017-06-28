@@ -5,20 +5,22 @@ addons:
     packages:
     - graphviz
 
-# prevent travis default mvn install behavior
-install: true
+before_install:
+  # set Linux to use JDK 8, accept defaults on macOS
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
+  # install graphviz on macOS
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
+
+install:
+  - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  # setup a display on linux ( the sleep gives xvfb some time to start )
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
 
 script:
-  - export MAVEN_OPTS=-Xmx1536M
-  - travis_wait 30 mvn test -U -P travis --batch-mode
-
-jdk:
-  - oraclejdk8
+  travis_wait 40 ./scripts/travis.sh
 
 cache:
   directories:
@@ -26,4 +28,22 @@ cache:
 
 os:
   - linux
-#  - osx # Travis OS X support does not include Java
+#  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
+
+sudo: required
+
+env:
+  global:
+  # false to silence most maven output; true to catch tests that do not complete
+  - PRINT_SUMMARY=true
+  matrix:
+  - HEADLESS=true
+  - HEADLESS=false
+
+matrix:
+  exclude:
+  - os: osx
+    env: HEADLESS=true
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

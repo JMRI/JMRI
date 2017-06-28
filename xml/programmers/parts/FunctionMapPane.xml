@@ -5,6 +5,8 @@
   <name xml:lang="it">Mappa Funzioni</name>
   <name xml:lang="de">Funktionszuordnung</name>
   <name xml:lang="da">Funktions Indstillinger</name>
+  <name xml:lang="cs">Přiřazení funkcí</name>
+  <name xml:lang="nl">Funktietoewijzing</name>
   <column>
     <row>
       <column>
@@ -13,6 +15,8 @@
           <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
           <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
 		  <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
+          <text xml:lang="cs">Použijte tento list pro určení která funkce bude řídit který výstup</text>
+          <text xml:lang="nl">Stel per uitgang de aanstuurfunctie in</text>
         </label>
         <label>
           <text> </text>

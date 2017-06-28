@@ -1,4 +1,3 @@
-// QSIConnectionTypeList.java
 package jmri.jmrix.qsi;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.qsi;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class QSIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

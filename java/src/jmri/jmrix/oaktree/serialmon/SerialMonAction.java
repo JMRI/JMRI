@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class SerialMonAction extends AbstractAction {
         this("Oak Tree monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame();

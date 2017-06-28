@@ -1,6 +1,6 @@
-// TrainByCarTypeFrame.java
 package jmri.jmrit.operations.trains.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display by rolling stock, the locations serviced by this train
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013, 2014
- * @version $Revision$
  */
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -315,7 +314,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
                     op.setText(Bundle.getMessage("X(TrackCustomLoad)"));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
-                    op.setText(Bundle.getMessage("OK"));
+                    op.setText(Bundle.getMessage("ButtonOK"));
                 } else if (rl.isDropAllowed()) {
                     op.setText(Bundle.getMessage("DropOnly"));
                 } else if (rl.isPickUpAllowed()) {
@@ -394,7 +393,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         CarTypes.instance().updateComboBox(typeComboBox);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects")
     private void updateCarsComboBox() {
         log.debug("update car combobox");
@@ -409,7 +408,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
         List<RollingStock> cars = CarManager.instance().getList();

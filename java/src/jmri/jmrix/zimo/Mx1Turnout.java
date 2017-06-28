@@ -21,11 +21,14 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     /**
      * Mx1 turnouts use any address allowed as an accessory decoder address on
      * the particular command station.
+     *
+     * @param number the address
+     * @param tc     the controller for traffic to the layout
+     * @param p      the system connection prefix
      */
     public Mx1Turnout(int number, Mx1TrafficController tc, String p) {
         super(p + "T" + number);
         _number = number;
-        this.tc = tc;
         this.prefix = p + "T";
         //tc.addMx1Listener(Mx1Interface.TURNOUTS, null);
     }
@@ -35,6 +38,7 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -42,7 +46,6 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s); //IN18N
-                return;
             } else {
                 // send a CLOSED command
                 forwardToCommandStation(jmri.Turnout.THROWN);
@@ -54,11 +57,11 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     }
 
     void forwardToCommandStation(int state) {
-        Mx1Message m = null;
-        m = Mx1Message.getSwitchMsg(_number, state, true);
+        Mx1Message m = Mx1Message.getSwitchMsg(_number, state, true);
         tc.sendMx1Message(m, null);
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 

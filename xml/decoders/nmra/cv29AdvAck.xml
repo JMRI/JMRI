@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-08-19</date>
       <authorinitials>EF</authorinitials>
@@ -38,5 +44,6 @@
         <label>Advanced Decoder Acknowledgement</label>
         <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
         <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
+        <label xml:lang="cs">Pokročilé potvrzování dekodérem</label>
       </variable>
 </variables>

@@ -33,6 +33,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>9</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
     	<revnumber>7</revnumber>
     	<date>2014-07-25</date>
     	<authorinitials>Ba</authorinitials>
@@ -60,6 +72,10 @@
 	<comment xml:lang="it">Valori da 0 a 255</comment>
 	<label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
+	<label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
+	<comment xml:lang="cs">Meze 0-255</comment>
+	<label xml:lang="ca">Adreça CV de SUSI, offset 800</label>
+	<comment xml:lang="ca">RANG 0-255</comment>
   </variable>
   <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
 	<decVal min="0" max="255"/>
@@ -69,6 +85,10 @@
 	<comment xml:lang="it">Valori da 0 a 255</comment>
 	<label xml:lang="de">Transport-CV für SUSI</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
+	<label xml:lang="cs">CV transport pro SUSI</label>
+	<comment xml:lang="cs">Meze 0-255</comment>
+	<label xml:lang="ca">Dispositiu de transferència SUSI</label>
+	<comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   
 </variables>

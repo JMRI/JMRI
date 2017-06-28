@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Save throttles to XML
  *
- * @author	Glen Oberhauser
+ * @author Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
@@ -48,6 +48,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -63,11 +64,11 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
         try {
             Element root = new Element("throttle-layout-config");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttle-layout-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-layout-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>
-/*TODO			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO   java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle-layout-config.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);

@@ -1,6 +1,6 @@
-// TrainSwitchLists.java
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Builds a switch list for a location on the railroad
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
- * @version $Revision: 21846 $
+ * 
  *
  */
 public class TrainSwitchLists extends TrainCommon {
@@ -58,7 +58,7 @@ public class TrainSwitchLists extends TrainCommon {
      *
      * @param location The Location needing a switch list
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects") // NOI18N
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
@@ -475,7 +475,9 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     protected void newLine(PrintWriter file, String string) {
-        newLine(file, string, !IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, !IS_MANIFEST);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());

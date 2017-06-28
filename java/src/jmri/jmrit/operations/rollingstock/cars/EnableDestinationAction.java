@@ -1,4 +1,3 @@
-// CarsSetFrameAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +8,7 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 22219 $
+ * 
  */
 public class EnableDestinationAction extends AbstractAction {
 
@@ -26,4 +25,4 @@ public class EnableDestinationAction extends AbstractAction {
     }
 }
 
-/* @(#)CarsSetFrameAction.java */
+

@@ -1,4 +1,3 @@
-// TrainRoadOptionsFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -26,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train's road options
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 23502 $
+ * 
  */
 public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

@@ -5,7 +5,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright 2012, 2014 -->
-  <!-- $Id$ -->
 
   <title>JMRI Remote Panels</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -37,19 +36,19 @@
 
         <dd>Without any additional parameters, <em>/panel</em>
         lists the open JMRI panels. Clicking or tapping on the
-        listed panel will open a usable panel.</dd>
+        listed panel name will open a functioning panel.</dd>
 
         <dt>/panel?name=&lt;type&gt;/&lt;name&gt;</dt>
 
         <dd>Displays an open, usable panel. <em>&lt;type&gt;</em>
-        is one of: <em>Panel</em>, <em>ControlPanel</em>, or
+        is one of: <em>Panel</em>, <em>ControlPanel</em>, <em>Switchboard</em> or
         <em>Layout</em>.</dd>
 
         <dt>/panel/&lt;type&gt;/&lt;name&gt;?format=xml</dt>
 
         <dd>Retrieves a portable XML representation of the panel.
         <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
-        <em>ControlPanel</em>, or <em>Layout</em>.</dd>
+        <em>ControlPanel</em>, <em>Switchboard</em>  or <em>Layout</em>.</dd>
       </dl>
 
       <p>Panel redisplay requires a modern browser with HTML5

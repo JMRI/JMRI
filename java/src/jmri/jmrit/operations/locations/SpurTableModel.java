@@ -1,4 +1,3 @@
-//SpurTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of spurs used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class SpurTableModel extends TrackTableModel {
 
@@ -29,6 +27,9 @@ public class SpurTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("SpurName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
@@ -53,7 +54,7 @@ public class SpurTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's spurs
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

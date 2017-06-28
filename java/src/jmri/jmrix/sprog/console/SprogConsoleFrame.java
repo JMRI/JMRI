@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.console;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
@@ -12,13 +13,11 @@ import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionListener;
-import jmri.jmrix.sprog.update.SprogVersionQuery;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +109,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         super.dispose();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Ignore unsynchronized access to state
     @Override
     public void initComponents() throws Exception {
@@ -152,6 +151,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         );
 
         cmdTextField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -287,11 +287,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage m = new SprogMessage(cmdTextField.getText());
         // Messages sent by us will not be forwarded back so add to display manually
-        nextLine("cmd: \"" + m.toString() + "\"\n", "");
+        nextLine("cmd: \"" + m.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
         tc.sendSprogMessage(m, this);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // validateCurrent() is called from synchronised code
     public void validateCurrent() {
         String currentRange = "200 - 996";
@@ -336,31 +336,31 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             // Else send blank message to kick things off
             saveMsg = new SprogMessage(" " + tmpString);
         }
-        nextLine("cmd: \"" + saveMsg.toString() + "\"\n", "");
+        nextLine("cmd: \"" + saveMsg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
         tc.sendSprogMessage(saveMsg, this);
 
         // Further messages will be sent from state machine
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
         return sv.hasCurrentLimit();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
         return sv.hasBlueLine();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         return sv.hasFirmwareLock();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isZTCModePossible() {
         return sv.hasZTCMode();
@@ -431,7 +431,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     @Override
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
-        nextLine("cmd: \"" + l.toString() + "\"\n", "");
+        nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
     @Override
@@ -543,7 +543,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 // Send new mode word
                 state = State.MODESENT;
                 msg = new SprogMessage("M " + modeWord);
-                nextLine("cmd: \"" + msg.toString() + "\"\n", "");
+                nextLine("cmd: \"" + msg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
                 tc.sendSprogMessage(msg, this);
                 break;
             case MODESENT:
@@ -552,7 +552,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 // Write to EEPROM
                 state = State.WRITESENT;
                 msg = new SprogMessage("W");
-                nextLine("cmd: \"" + msg.toString() + "\"\n", "");
+                nextLine("cmd: \"" + msg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
                 tc.sendSprogMessage(msg, this);
                 break;
             case WRITESENT:
@@ -560,6 +560,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 log.debug("reply in WRITESENT state: " + replyString);
                 // All done
                 state = State.IDLE;
+                break;
+            default:
+                log.warn("Unhandled state: {}", state);
+                break;
         }
     }
 
@@ -594,6 +598,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

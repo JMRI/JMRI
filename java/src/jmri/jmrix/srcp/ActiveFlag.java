@@ -25,4 +25,4 @@ abstract public class ActiveFlag {
 }
 
 
-/* @(#)AbstractMRReply.java */
+

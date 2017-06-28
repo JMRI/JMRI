@@ -1,4 +1,3 @@
-// AutomationManager.java
 package jmri.jmrit.operations.automation;
 
 import java.util.ArrayList;
@@ -28,19 +27,20 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static AutomationManager _instance = null;
     private int _id = 0;
 
     public static synchronized AutomationManager instance() {
-        if (_instance == null) {
+        AutomationManager instance = jmri.InstanceManager.getNullableDefault(AutomationManager.class);
+        if (instance == null) {
             log.debug("AutomationManager creating instance");
             // create and load
-            _instance = new AutomationManager();
+            instance = new AutomationManager();
+            jmri.InstanceManager.setDefault(AutomationManager.class,instance);
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("AutomationManager returns instance {}", _instance);
+            log.debug("AutomationManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**
@@ -62,6 +62,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the automation to be returned.
      * @return requested Automation object or null if none exists
      */
     public Automation getAutomationByName(String name) {
@@ -83,6 +84,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
+     * @param name The string name of the automation.
      *
      *
      * @return new automation or existing automation
@@ -102,6 +104,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
         Integer oldSize = Integer.valueOf(_automationHashTable.size());
@@ -117,6 +120,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param automation The automation to be deleted.
      */
     public void deregister(Automation automation) {
         if (automation == null) {
@@ -286,4 +290,4 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)AutomationManager.java */
+

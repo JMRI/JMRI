@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class PacketPro extends Apps {
 
@@ -37,6 +37,7 @@ public class PacketPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PacketProVersionCredit"),
                 new Object[]{jmri.Version.name()});

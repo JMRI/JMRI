@@ -1,4 +1,3 @@
-// LocationTrackBlockingOrderFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of location
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 29365 $
+ * 
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -40,7 +39,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     JLabel locationName = new JLabel();
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
     JButton reorderButton = new JButton(Bundle.getMessage("Reorder"));
 

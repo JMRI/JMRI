@@ -1,7 +1,7 @@
 package jmri.util.swing;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class GuiUtilBase {
         String name = null;
         Icon icon = null;
 
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        HashMap<String, String> parameters = new HashMap<>();
         if (child == null) {
             log.warn("Action from node called without child");
             return createEmptyMenuItem(null, "<none>");
@@ -40,11 +41,11 @@ public class GuiUtilBase {
         }
         //This bit does not size very well, but it works for now.
         if (child.getChild("option") != null) {
-            for (Object item : child.getChildren("option")) {
+            child.getChildren("option").stream().forEach((item) -> {
                 String setting = ((Element) item).getAttribute("setting").getValue();
                 String setMethod = ((Element) item).getText();
                 parameters.put(setMethod, setting);
-            }
+            });
         }
 
         if (child.getChild("adapter") != null) {
@@ -131,6 +132,12 @@ public class GuiUtilBase {
      * Create an action against the object that invoked the creation of the
      * GUIBase, a string array is used so that in the future further options can
      * be specified to be passed.
+     *
+     * @param obj  the object to create an action for
+     * @param args arguments to passed remoteCalls method of obj
+     * @param name name of the action
+     * @param icon icon for the action
+     * @return the action for obj or an empty action with name and icon
      */
     static Action createActionInCallingWindow(Object obj, final String args[], String name, Icon icon) {
         java.lang.reflect.Method method = null;
@@ -179,15 +186,12 @@ public class GuiUtilBase {
             this.obj = obj;
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             try {
                 method.invoke(obj, args);
-            } catch (IllegalArgumentException ex) {
-                System.out.println("IllegalArgument " + ex);
-            } catch (IllegalAccessException ex) {
-                System.out.println("IllegalAccess " + ex);
-            } catch (java.lang.reflect.InvocationTargetException ex) {
-                System.out.println("InvocationTarget " + ex.toString());
+            } catch (IllegalArgumentException |  IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+               log.error("Exception in actionPerformed", ex);
             }
         }
     }
@@ -195,9 +199,11 @@ public class GuiUtilBase {
     static Action createEmptyMenuItem(Icon icon, String name) {
         if (icon != null) {
             AbstractAction act = new AbstractAction(name, icon) {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                 }
 
+                @Override
                 public String toString() {
                     return (String) getValue(javax.swing.Action.NAME);
                 }
@@ -207,9 +213,11 @@ public class GuiUtilBase {
         } else { // then name must be present
             AbstractAction act = new AbstractAction(name) {
 
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                 }
 
+                @Override
                 public String toString() {
                     return (String) getValue(javax.swing.Action.NAME);
                 }
@@ -220,20 +228,22 @@ public class GuiUtilBase {
     }
 
     static void setParameters(JmriAbstractAction act, HashMap<String, String> parameters) {
-        for (Map.Entry<String, String> map : parameters.entrySet()) {
+        parameters.entrySet().stream().forEach((map) -> {
             act.setParameter(map.getKey(), map.getValue());
-        }
+        });
     }
 
     /**
      * Get root element from XML file, handling errors locally.
      *
+     * @param name the name of the XML file
+     * @return the root element or null
      */
     static protected Element rootFromName(String name) {
         try {
             return new jmri.jmrit.XmlFile() {
             }.rootFromName(name);
-        } catch (Exception e) {
+        } catch (JDOMException | IOException e) {
             log.error("Could not parse file \"" + name + "\" due to: " + e);
             return null;
         }

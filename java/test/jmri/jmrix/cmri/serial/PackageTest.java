@@ -19,13 +19,27 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.class,
    jmri.jmrix.cmri.serial.SerialSensorManagerTest.class,
    jmri.jmrix.cmri.serial.SerialNodeTest.class,
+   jmri.jmrix.cmri.serial.SerialNodeListTest.class,
    jmri.jmrix.cmri.serial.SerialMessageTest.class,
    jmri.jmrix.cmri.serial.SerialTrafficControllerTest.class,
    jmri.jmrix.cmri.serial.SerialAddressTest.class,
+   jmri.jmrix.cmri.serial.SerialAddressTwoSystemTest.class,
    jmri.jmrix.cmri.serial.networkdriver.PackageTest.class,
    jmri.jmrix.cmri.serial.sim.PackageTest.class,
    jmri.jmrix.cmri.serial.serialdriver.PackageTest.class,
-   jmri.jmrix.cmri.serial.configurexml.PackageTest.class
+   jmri.jmrix.cmri.serial.configurexml.PackageTest.class,
+   jmri.jmrix.cmri.serial.serialmon.PackageTest.class,
+   jmri.jmrix.cmri.serial.nodeconfig.PackageTest.class,
+   jmri.jmrix.cmri.serial.assignment.PackageTest.class,
+   jmri.jmrix.cmri.serial.diagnostic.PackageTest.class,
+   jmri.jmrix.cmri.serial.packetgen.PackageTest.class,
+   SerialNetworkPortAdapterTest.class,
+   SerialPortAdapterTest.class,
+   SerialReplyTest.class,
+   SerialTurnoutTest.class,
+   SerialLightTest.class,
+   SerialLightManagerTest.class,
+   SerialSensorTest.class
 })
 
 public class PackageTest{

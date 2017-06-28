@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +61,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Modifications by Bob Jacobsen Copyright 2005, 2006, 2008
  */
+@WebServlet(name = "FrameServlet",
+        urlPatterns = {"/frame"})
 public class JmriJFrameServlet extends HttpServlet {
 
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions

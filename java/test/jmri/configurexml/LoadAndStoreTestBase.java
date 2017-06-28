@@ -1,66 +1,101 @@
 package jmri.configurexml;
 
+
+import apps.tests.Log4JFixture;
 import java.io.BufferedReader;
-import jmri.ConfigureManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Base for testing load-and-store of configuration files.
  * <p>
- * Including "LoadAndStoreTestBase.makeSuite("java/test/jmri/jmrit/display/configurexml/")"
- * in a subclass's test suite
- * will test each file in a "load" directory by loading it, then storing it,
- * then comparing (with certain lines skipped) against either a file by the same
- * name in the "loadref" directory, or against the original file itself.
+ * Creating a parameterized test class that extends this class will test each
+ * file in a "load" directory by loading it, then storing it, then comparing
+ * (with certain lines skipped) against either a file by the same name in the
+ * "loadref" directory, or against the original file itself. A minimal test
+ * class is: {@code
+ * @RunWith(Parameterized.class)
+ * public class LoadAndStoreTest extends LoadAndStoreTestBase {
+ *
+ * @Parameterized.Parameters(name = "{0} (pass={1})")
+ * public static Iterable<Object[]> data() { return getFiles(new
+ * File("java/test/jmri/configurexml"), false, true); }
+ *
+ * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
+ * }
+ * }
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
-public class LoadAndStoreTestBase extends TestCase {
+@RunWith(Parameterized.class)
+public class LoadAndStoreTestBase {
 
-    public LoadAndStoreTestBase(String s) {
-        super(s);
+    private final File file;
+    private final boolean pass; // currently ignored, but not removing this
+    // allows code reuse when building the parameter
+    // collection in getFiles()
+
+    public LoadAndStoreTestBase(File file, boolean pass) {
+        this.file = file;
+        this.pass = pass;
     }
 
     /**
-     * Create the tests that load-and-store test contents of all files in a
-     * directory
+     * Get all XML files in a directory and validate the ability to load and
+     * store them.
+     *
+     * @param directory the directory containing XML files; the subdirectory
+     *                  <code>load</code> under this directory will be used
+     * @param recurse   if true, will recurse into subdirectories
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a collection of Object arrays, where each array contains the
+     *         {@link java.io.File} to validate and a boolean matching the pass
+     *         parameter
      */
-    static public void loadAndStoreAllInDirectory(TestSuite suite, String name) {
-
-        java.io.File dir = new java.io.File(name + "/load/");
-        java.io.File[] files = dir.listFiles();
-        if (files == null) {
-            return;
-        }
-
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().endsWith(".xml")) {
-                suite.addTest(new CheckOneFilePasses(files[i]));
-            }
-        }
+    public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
+        // since this method gets the files to test, but does not trigger any
+        // tests itself, we can use SchemaTestBase.getFiles() by adding "load"
+        // to the directory to test
+        return SchemaTestBase.getFiles(new File(directory, "load"), recurse, pass);
     }
 
-    static void loadInit() {
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initMemoryManager();
+    /**
+     * Get all XML files in the immediate subdirectories of a directory and
+     * validate them.
+     *
+     * @param directory the directory containing subdirectories containing XML
+     *                  files
+     * @param recurse   if true, will recurse into subdirectories
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a collection of Object arrays, where each array contains the
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
+     * @throws IllegalArgumentException if directory is a file
+     */
+    public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+        // since this method gets the files to test, but does not trigger any
+        // tests itself, we can use SchemaTestBase.getDirectories() by adding "load"
+        // to the directory to test
+        return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
-    
+
     static void checkFile(File inFile, File outFile) throws Exception {
         // find comparison files
         File compFile = new File(inFile.getCanonicalFile().getParentFile().getParent() + "/loadref/" + inFile.getName());
@@ -78,8 +113,12 @@ public class LoadAndStoreTestBase extends TestCase {
                         new FileInputStream(outFile)));
         String inLine;
         String outLine;
+        String nextIn;
+        String nextOut;
         int count = 0;
-        while ((inLine = inFileStream.readLine()) != null && (outLine = outFileStream.readLine()) != null) {
+        inLine = inFileStream.readLine();
+        outLine = outFileStream.readLine();
+        while ( (nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
             count++;
             if (!inLine.startsWith("  <!--Written by JMRI version")
                     && !inLine.startsWith("  <timebase") // time changes from timezone to timezone
@@ -88,7 +127,8 @@ public class LoadAndStoreTestBase extends TestCase {
                     && !inLine.startsWith("    <major") // version changes over time
                     && !inLine.startsWith("    <minor") // version changes over time
                     && !inLine.startsWith("<?xml-stylesheet") // Linux seems to put attributes in different order
-                    && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies
+                    && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies - old format
+                    && !(inLine.contains("<memory value") && nextIn.contains("IMCURRENTTIME")) // time varies - new format
                     && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
                 if (!inLine.equals(outLine)) {
                     log.error("match failed in testLoadStoreCurrent line " + count);
@@ -98,12 +138,14 @@ public class LoadAndStoreTestBase extends TestCase {
                 }
                 Assert.assertEquals(inLine, outLine);
             }
+            inLine = nextIn;
+            outLine = nextOut;
         }
         inFileStream.close();
         outFileStream.close();
     }
-    
-    static void loadFile(File inFile) throws Exception  {
+
+    static void loadFile(File inFile) throws Exception {
         // load file
         InstanceManager.getDefault(ConfigureManager.class).load(inFile);
 
@@ -111,89 +153,49 @@ public class LoadAndStoreTestBase extends TestCase {
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
-    
-    static File storeFile(File inFile) throws Exception  {
+
+    static File storeFile(File inFile) throws Exception {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
         InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
         return outFile;
     }
-    
-    static public void loadStoreFileCheck(File inFile) throws Exception {
 
-        log.debug("Start check file " + inFile.getCanonicalPath());
+    @Test
+    public void loadLoadStoreFileCheck() throws Exception {
 
-        loadInit();
-        
-        loadFile(inFile);
+        log.debug("Start check file " + this.file.getCanonicalPath());
 
-        // store file
-        String name = inFile.getName();
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
+        loadFile(this.file);
+        loadFile(this.file);
 
-        checkFile(inFile, outFile);
-    }
-
-    /**
-     * Test by loading twice
-     */
-    static public void loadLoadStoreFileCheck(File inFile) throws Exception {
-
-        log.debug("Start check file " + inFile.getCanonicalPath());
-
-        loadInit();
-        
-        loadFile(inFile);
-        loadFile(inFile);
-
-        String name = inFile.getName();
+        String name = this.file.getName();
 
         // store file
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
         InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
 
-        checkFile(inFile, outFile);
+        checkFile(this.file, outFile);
     }
 
-    /**
-     * Internal TestCase class to allow separate tests for every file
-     */
-    static public class CheckOneFilePasses extends TestCase {
-
-        File file;
-
-        public CheckOneFilePasses(File file) {
-            super("Test load&store&compare matches: " + file);
-            this.file = file;
-        }
-
-        public void runTest() throws Exception {
-            loadLoadStoreFileCheck(file);
-        }
-    }
-
-    // Default test suite does all files in load subdirectory
-    // test suite from all defined tests
-    public static Test makeSuite(String dir) {
-        TestSuite suite = new TestSuite("Load-and-store checks");
-        loadAndStoreAllInDirectory(suite, dir);
-        return suite;
-    }
-
-    // The minimal setup for log4J and debug instances
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() throws Exception {
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initMemoryManager();
     }
-    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class.getName());
+
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
 }

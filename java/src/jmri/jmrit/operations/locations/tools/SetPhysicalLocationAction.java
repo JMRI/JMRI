@@ -1,4 +1,3 @@
-// SetTrainIconPositionAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
@@ -61,7 +59,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         // text field
         // check boxes
         // major buttons
-        JButton saveButton = new JButton(Bundle.getMessage("Save"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
         // combo boxes
@@ -133,6 +131,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Close button action
+         * @param ae The ActionEvent.
          */
         public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
             dispose();
@@ -140,6 +139,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Save button action {@literal ->} save this Reporter's location
+         * @param ae The ActionEvent.
          */
         public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
             // check to see if a location has been selected
@@ -218,4 +218,4 @@ public class SetPhysicalLocationAction extends AbstractAction {
             .getLogger(SetPhysicalLocationAction.class.getName());
 }
 
-/* @(#)SetPhysicalLocationAction.java */
+

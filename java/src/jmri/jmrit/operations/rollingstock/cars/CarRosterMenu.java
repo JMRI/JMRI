@@ -1,4 +1,3 @@
-// CarRosterMenu.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Frame;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007, 2012, 2016
- * @version $Revision$
  *
  */
 public class CarRosterMenu extends JMenu {

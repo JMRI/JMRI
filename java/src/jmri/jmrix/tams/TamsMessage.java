@@ -1,4 +1,3 @@
-// TamsMessage.java
 package jmri.jmrix.tams;
 
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author	Jan Boen
- * @version $Revision: 17977 $
  */
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -27,6 +25,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     //When receiving an ASCII reply we scan for ] which indicates end of reply. Anything after this can be ignored
     
     // accessor to get one element of the TamsMessage
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
@@ -283,4 +282,4 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     static Logger log = LoggerFactory.getLogger(TamsMessage.class.getName());
 }
 
-/* @(#)TamsMessage.java */
+

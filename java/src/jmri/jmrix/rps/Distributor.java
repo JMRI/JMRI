@@ -1,4 +1,3 @@
-// Distributor.java
 package jmri.jmrix.rps;
 
 import java.util.Vector;
@@ -10,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  *
- * @version	$Revision$
- */
+  */
 public class Distributor {
 
     /**
@@ -126,6 +124,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }
@@ -144,6 +143,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }
@@ -151,4 +151,4 @@ public class Distributor {
 
 }
 
-/* @(#)Distributor.java */
+

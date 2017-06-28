@@ -1,4 +1,3 @@
-// LsDecSignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a Copyright: Copyright (c) 2007
- * @version $Revision$
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -39,14 +37,13 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         LsDecSignalHead p = (LsDecSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -127,6 +124,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return tSetState;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -3,7 +3,6 @@ package jmri.jmrix.bachrus;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,8 +15,9 @@ import org.junit.Test;
 public class SpeedoTrafficControllerTest {
 
     @Test public void integerConstructorTest() {
-        SpeedoTrafficController m = new SpeedoTrafficController();
-        Assert.assertNotNull(m);
+        SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
+        SpeedoTrafficController tc = new SpeedoTrafficController(m);
+        Assert.assertNotNull(tc);
     }
 
     // The minimal setup for log4J

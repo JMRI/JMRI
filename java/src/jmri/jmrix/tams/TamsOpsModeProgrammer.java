@@ -34,6 +34,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
@@ -52,6 +53,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
 
     }
 
+    @Override
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
@@ -60,6 +62,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         throw new ProgrammerException();
     }
 
+    @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirm CV=" + CV);
@@ -69,6 +72,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     }
 
     // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    @Override
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("TamsOpsModeProgrammer adds 200mSec delay to response");
@@ -102,14 +106,17 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -120,6 +127,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
      * this routine does nothing except to replace the parent routine that does
      * something.
      */
+    @Override
     void cleanup() {
     }
 

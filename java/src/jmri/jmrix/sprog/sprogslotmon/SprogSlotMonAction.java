@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
@@ -24,6 +23,7 @@ public class SprogSlotMonAction extends AbstractAction {
         this("SPROG Slot Monitor",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if(_memo.getCommandStation() == null) {
@@ -31,16 +31,10 @@ public class SprogSlotMonAction extends AbstractAction {
            _memo.configureCommandStation();
         }
 
-        SprogSlotMonFrame f = _memo.getCommandStation().getSprogSlotMonFrame();
-        if( f == null ) { 
-            // there isn't an SprogSlotMonFrame associated with
-            // the command staiton for this connection, so create
-            // a new SprogSlotMonFrame
-            f = new SprogSlotMonFrame(_memo);
-        }
+        SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
         f.setVisible(true);
     }
 }
 
 
-/* @(#)SprogSlotMonAction.java */
+

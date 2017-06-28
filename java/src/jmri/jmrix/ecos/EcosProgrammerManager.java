@@ -9,9 +9,8 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
  *
  * @see jmri.ProgrammerManager
- * @author	Karl Johan Lisby Copyright (C) 2015
- * @version	$Revision$
- */
+ * @author Karl Johan Lisby Copyright (C) 2015
+  */
 public class EcosProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;
@@ -24,10 +23,12 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
      *
      * @return false
      */
+    @Override
     public boolean isAddressedModePossible() {
         return false;
     }
 
+    @Override
     public java.util.List<ProgrammingMode> getDefaultModes() {
         java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
         retval.add(DIRECTBYTEMODE);
@@ -36,4 +37,4 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
 }
 
 
-/* @(#)DefaultProgrammerManager.java */
+

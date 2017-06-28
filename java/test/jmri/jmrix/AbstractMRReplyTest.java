@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class AbstractMRReplyTest extends TestCase {
 
     AbstractMRReply testMsg;
@@ -21,6 +20,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testSimpleMatch1() {
         testMsg = new AbstractMRReply("foo") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -31,6 +31,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testSimpleMatch2() {
         testMsg = new AbstractMRReply("foo1") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -41,6 +42,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testSimpleMatch3() {
         testMsg = new AbstractMRReply("ffffffff") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -51,6 +53,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testDelaySimpleMatch1() {
         testMsg = new AbstractMRReply("123 foo") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -61,6 +64,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testDelaySimpleMatch2() {
         testMsg = new AbstractMRReply("123 foo 123") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -71,6 +75,7 @@ public class AbstractMRReplyTest extends TestCase {
 
     public void testOverlapMatch() {
         testMsg = new AbstractMRReply("1fo foo 123") {
+            @Override
             protected int skipPrefix(int index) {
                 return 0;
             }
@@ -93,10 +98,12 @@ public class AbstractMRReplyTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

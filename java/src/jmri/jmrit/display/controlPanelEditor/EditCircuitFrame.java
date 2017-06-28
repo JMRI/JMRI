@@ -69,6 +69,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent();
             }
@@ -142,6 +143,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _units = new JToggleButton("foo", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
             }
@@ -175,6 +177,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         _openPicklistButton = new JButton(Bundle.getMessage("OpenSensorPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_pickFrame == null) {
                     openPickList();
@@ -210,6 +213,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePickList();
             }
@@ -237,6 +241,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changeBlockName();
             }
@@ -246,6 +251,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteCircuit();
             }
@@ -265,6 +271,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
         convertButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 convertIcons();
             }
@@ -274,6 +281,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent();
             }
@@ -353,7 +361,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _errorSensorName.setText(name);
 
         int state = _block.getState();
-        StringBuffer stateText = new StringBuffer();
+        StringBuilder stateText = new StringBuilder();
         if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
         }
@@ -375,7 +383,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         if ((state & OBlock.OUT_OF_SERVICE) != 0) {
             stateText.append("OutOf Service ");
         }
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.UNDETECTED) != 0) {
             stateText.append("Dark ");
         }
         if ((state & OBlock.TRACK_ERROR) != 0) {
@@ -385,7 +393,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             stateText.append("Not Initialized");
         }
         if (log.isDebugEnabled()) {
-            log.debug("updateContentPanel: state= " + stateText.toString());
+            log.debug("updateContentPanel: state= {}", stateText.toString());
         }
         _blockState.setText(stateText.toString());
     }
@@ -456,7 +464,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         int turnouts = 0;
         if (icons != null) {
             if (log.isDebugEnabled()) {
-                log.debug("updateIconList: icons.size()= " + icons.size());
+                log.debug("updateIconList: icons.size()= {}", icons.size());
             }
             for (int i = 0; i < icons.size(); i++) {
                 Positionable pos = icons.get(i);

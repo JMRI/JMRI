@@ -15,7 +15,6 @@ import jmri.jmris.JmriConnection;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 

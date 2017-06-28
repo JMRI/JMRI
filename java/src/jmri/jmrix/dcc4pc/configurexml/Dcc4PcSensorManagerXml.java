@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright: (c) 2012
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 17977 $
  */
 public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.dcc4pc.configurexml.Dcc4PcSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

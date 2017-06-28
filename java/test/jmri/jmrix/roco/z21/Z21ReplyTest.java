@@ -3,7 +3,6 @@ package jmri.jmrix.roco.z21;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -86,7 +85,26 @@ public class Z21ReplyTest {
     public void MonitorStringXPressNetReply(){
         byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Z21Reply m = new Z21Reply(msg,7);
-        Assert.assertEquals("Monitor String","07 00 40 00 61 82 E3",m.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
+    }
+
+    @Test
+    public void getXPressNetThrottleReply(){
+        // this test comes from a user log, where the last byte in the 
+        // Z21 message incorrectly became the first byte of the XPressNet Reply.
+        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0xEF,(byte)0x00,(byte)0x03,(byte)0x04,(byte)0x80,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x78};
+        Z21Reply m = new Z21Reply(msg,14);
+        jmri.jmrix.lenz.XNetReply x = m.getXNetReply();
+        Assert.assertEquals("0th byte", 0xEF, x.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, x.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x03, x.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x04, x.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", 0x80, x.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", 0x10, x.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", 0x00, x.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", 0x00, x.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", 0x00, x.getElement(8) & 0xFF);
+        Assert.assertEquals("9th byte", 0x78, x.getElement(9) & 0xFF);
     }
 
     //Test RailCom related methods.

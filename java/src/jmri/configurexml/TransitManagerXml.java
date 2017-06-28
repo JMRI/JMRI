@@ -29,6 +29,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type TransitManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element transits = new Element("transits");
         setStoreElementClass(transits);
@@ -50,9 +51,14 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 } else {
                     log.debug("Transit system name is " + sname);
                     Transit x = tm.getBySystemName(sname);
-                    Element elem = new Element("transit")
-                            .setAttribute("systemName", sname);
+                    Element elem = new Element("transit");
+                    elem.addContent(new Element("systemName").addContent(sname));
 
+                    // As a work-around for backward compatibility, store systemName and username as attribute.
+                    // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                    elem.setAttribute("systemName", sname);
+                    if (x.getUserName()!=null && !x.getUserName().equals("")) elem.setAttribute("userName", x.getUserName());
+                            
                     // store common part
                     storeCommon(x, elem);
 
@@ -113,6 +119,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         transits.setAttribute("class", "jmri.configurexml.TransitManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -150,16 +157,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
 
         for (int i = 0; i < transitList.size(); i++) {
-            if (transitList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName " + transitList.get(i) + " "
-                        + transitList.get(i).getAttributes());
-                break;
-            }
-            String sysName = transitList.get(i).getAttribute("systemName").getValue();
-            String userName = null;
-            if (transitList.get(i).getAttribute("userName") != null) {
-                userName = transitList.get(i).getAttribute("userName").getValue();
-            }
+            String sysName = getSystemName(transitList.get(i));
+            String userName = getUserName(transitList.get(i));
+            
             Transit x = tm.createNewTransit(sysName, userName);
             if (x != null) {
                 // load common part
@@ -217,6 +217,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.TransitManager.class).getXMLOrder();
     }

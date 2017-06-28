@@ -1,4 +1,3 @@
-// YardmasterByTrackFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -9,7 +8,7 @@ import jmri.jmrit.operations.setup.Control;
  * Yardmaster by track frame. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterByTrackFrame extends OperationsFrame {
 

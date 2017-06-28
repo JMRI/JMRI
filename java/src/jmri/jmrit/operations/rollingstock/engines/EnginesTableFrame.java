@@ -1,4 +1,3 @@
-// EnginesTableFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
- * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
@@ -66,9 +64,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton findButton = new JButton(Bundle.getMessage("Find"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JTextField findEngineTextBox = new JTextField(6);
 

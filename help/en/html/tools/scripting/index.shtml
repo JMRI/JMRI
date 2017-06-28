@@ -27,14 +27,19 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Scripting</h2>These pages discusses scripting JMRI
-      using a language called Jython.
+      <h2>JMRI: Scripting</h2>
+      
+      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html">
+        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
+        however, beyond JavaScript and Python are not directly supported in the default installation.
+        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
+        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml">documented for your operating system</a>
+        (different operating systems have different launchers that are configured differently).</p>
 
-      <p>Information is available on</p>
+      <p>The following pages discuss scripting JMRI using the Jython version of Python:</p>
 
       <ol>
-        <li><a href="Start.shtml">Getting started with simple
-        scripts</a></li>
+        <li><a href="Start.shtml">Getting started with simple scripts</a></li>
 
         <li><a href="Python.shtml">The language itself</a></li>
 
@@ -42,9 +47,9 @@
 
         <li><a href="FAQ.shtml">Frequently asked questions</a></li>
 
-        <li><a href="Jynstruments.shtml">Modifying the GUI with
-        Jynstruments</a></li>
-      </ol><!--#include virtual="/Footer" -->
+        <li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a></li>
+      </ol>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

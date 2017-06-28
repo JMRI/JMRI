@@ -45,6 +45,7 @@ public class WaitHandlerTest extends TestCase {
         startTime = -1;
 
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -81,6 +82,7 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -122,6 +124,7 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -172,10 +175,12 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
                 new WaitHandler(this, THREAD_DELAY) {
+                    @Override
                     public boolean wasSpurious() {
                         return false;
                     }
@@ -236,11 +241,13 @@ public class WaitHandlerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

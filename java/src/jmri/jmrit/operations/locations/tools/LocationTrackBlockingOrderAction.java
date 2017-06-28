@@ -1,4 +1,3 @@
-// LocationTrackBlockingOrderAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -10,7 +9,7 @@ import jmri.jmrit.operations.locations.Location;
  * Opens the location track blocking order window.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class LocationTrackBlockingOrderAction extends AbstractAction {
 
@@ -35,8 +34,8 @@ public class LocationTrackBlockingOrderAction extends AbstractAction {
             _frame.initComponents(_location);
         }
         _frame.setExtendedState(Frame.NORMAL);
-        _frame.setVisible(true);	// this also brings the frame into focus
+        _frame.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)LocationTrackBlockingOrderAction.java */
+

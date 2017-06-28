@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * code just flips from one to the other as the user selects a mode. The
  * individual items all share data models to simplify the logic.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, limited speed,
  * changed layout, and tool tips. Dick Bronson (RJB) 2006
@@ -199,6 +199,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         g.add(buttonTrailDiv);
         g.add(buttonFacing);
         ActionListener a = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 buttonClicked();
             }
@@ -246,6 +247,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line.add(outSignalField = new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
         outSignalField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // user hit enter, use this name to fill in the rest of the fields
                 activate();
@@ -284,17 +286,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.setLayout(new FlowLayout());
-        line.add(new JLabel(rbt.getString("Comment:_")));
+        line.add(new JLabel(rbt.getString("Comment")));
         line.add(commentField = new JTextField(30));
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         // add OK button at bottom
-        JButton b = new JButton(rbt.getString("Apply"));
+        JButton b = new JButton(rbt.getString("Apply")); // TODO add Bundle to folder and use ButtonApply from NBB
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }
@@ -893,6 +896,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     SignalHead sh = null;
 
+    /**
+     * Programmatically open the frame to edit a specific signal by head.
+     *
+     * @param sh signal head of which the name should be entered in the Edit pane
+     */
     public void setSignal(SignalHead sh) {
         this.sh = sh;
         outSignalField.setText(sh.getDisplayName());
@@ -901,7 +909,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Programmatically open the frame to edit a specific signal
+     * Programmatically open the frame to edit a specific signal by name.
+     *
+     * @param name system or user name of the signal head to be entered in the Edit pane
      */
     public void setSignal(String name) {
         sh = null;

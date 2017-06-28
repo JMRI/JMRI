@@ -1,4 +1,3 @@
-// ScheduleOptionsFrame.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * staging.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2015
- * @version $Revision$
  */
 class ScheduleOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -36,7 +34,7 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
 
     // radio buttons
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     Track _track;
 

@@ -1,4 +1,3 @@
-// TrainsScheduleAction.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Frame;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a TrainsScheduleTableFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainsScheduleAction extends AbstractAction {
 
@@ -26,8 +24,8 @@ public class TrainsScheduleAction extends AbstractAction {
             f = new TrainsScheduleTableFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)TrainsScheduleAction.java */
+

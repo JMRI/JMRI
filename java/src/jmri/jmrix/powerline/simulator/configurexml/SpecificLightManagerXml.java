@@ -1,4 +1,3 @@
-// SpecificLightManagerXml.java
 package jmri.jmrix.powerline.simulator.configurexml;
 
 /**
@@ -15,7 +14,6 @@ package jmri.jmrix.powerline.simulator.configurexml;
  *
  * @author Bob Jacobsen 2008
  * @author Ken Cameron 2011
- * @version $Revision$
  */
 public class SpecificLightManagerXml extends jmri.jmrix.powerline.configurexml.SerialLightManagerXml {
 

@@ -66,20 +66,18 @@ public class MultiThrottle {
         }
 
         switch (message.charAt(0)) {
-            case 'A': {  //  'A'ction
+            case 'A':  //  'A'ction
                 passActionsToControllers(key, action);
                 break;
-            }
-
-            case '+': {  //  add loco
+            case '+':  //  add loco
                 addThrottleController(key, action);
                 break;
-            }
-
-            case '-': {  //  remove loco
+            case '-':  //  remove loco
                 removeThrottleController(key, action);
                 break;
-            }
+            default:
+                log.warn("Unhandled code: {}", message.charAt(0));
+                break;
         }   //  end switch
 
     }
@@ -177,5 +175,5 @@ public class MultiThrottle {
         }
     }
 
-    private static Logger log = LoggerFactory.getLogger(MultiThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottle.class.getName());
 }

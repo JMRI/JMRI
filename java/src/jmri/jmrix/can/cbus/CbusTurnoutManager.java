@@ -10,7 +10,7 @@ import jmri.managers.AbstractTurnoutManager;
  * <p>
  * Turnouts must be manually created.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
@@ -24,6 +24,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     String prefix = "M";
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -34,6 +35,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      *
      * @return never null
      */
+    @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
@@ -45,6 +47,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return false;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
             validateSystemNameFormat(curAddress);
@@ -54,6 +57,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return getSystemPrefix() + typeLetter() + curAddress;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // always return this (the current) name without change
         try {

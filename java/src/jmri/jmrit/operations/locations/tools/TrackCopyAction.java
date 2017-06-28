@@ -1,4 +1,3 @@
-// TrackCopyAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -11,7 +10,6 @@ import jmri.jmrit.operations.locations.LocationEditFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class TrackCopyAction extends AbstractAction {
 
@@ -30,8 +28,8 @@ public class TrackCopyAction extends AbstractAction {
             f = new TrackCopyFrame(_lef);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)TrackCopyAction.java */
+

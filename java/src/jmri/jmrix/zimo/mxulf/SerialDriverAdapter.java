@@ -1,19 +1,24 @@
 package jmri.jmrix.zimo.mxulf;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to Zimo's MX-1 on an attached
@@ -36,6 +41,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in MX-1 mode, check ability to set moderators
         try {
@@ -49,7 +55,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
             // try to set it for Can Net
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -85,6 +91,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -153,9 +160,9 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -170,6 +177,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
      */
+    @Override
     public boolean okToSend() {
         return activeSerialPort.isCTS();
     }
@@ -178,6 +186,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
      * set up all of the other objects to operate with a MX-1 connected to this
      * port
      */
+    @Override
     public void configure() {
         Mx1CommandStation cs = new Mx1CommandStation();
         this.getSystemConnectionMemo().setCommandStation(cs);
@@ -193,6 +202,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     }
 
 // base class methods for the ZimoPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -201,6 +211,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -213,6 +224,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -220,7 +232,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     /**
      * Local method to do specific configuration
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -242,13 +254,9 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"9,600 baud (Default)", "1,200 baud", "2,400 baud", "4,800 baud",

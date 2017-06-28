@@ -1,4 +1,3 @@
-// ImportEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  * Starts the ImportRosterEngines thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ImportRosterEngineAction extends AbstractAction {
 

@@ -1,13 +1,11 @@
-// CanConstants.java
 package jmri.jmrix.can;
 
 /**
  * CanConstants.java
  *
- * Description:	Constants to represent CAN protocols and adpters
+ * Description: Constants to represent CAN protocols and adpters
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @version $Revision$
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public final class CanConstants {
 
@@ -25,4 +23,4 @@ public final class CanConstants {
     public static final int CAN232 = 2;
 }
 
-/* @(#)CanConstants.java */
+

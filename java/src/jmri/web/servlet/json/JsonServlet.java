@@ -1,21 +1,11 @@
-// JsonServlet.java
 package jmri.web.servlet.json;
 
-import static jmri.server.json.JSON.CAR;
-import static jmri.server.json.JSON.CARS;
-import static jmri.server.json.JSON.CONSIST;
-import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.ENGINE;
-import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.LOCATION;
-import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TRAIN;
-import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -32,13 +22,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ServiceLoader;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
-import jmri.server.json.util.JsonUtilHttpService;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -68,6 +57,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2012, 2013, 2016
  */
+@WebServlet(name = "JsonServlet",
+        urlPatterns = {"/json"})
 public class JsonServlet extends WebSocketServlet {
 
     private transient ObjectMapper mapper;
@@ -131,8 +122,8 @@ public class JsonServlet extends WebSocketServlet {
 
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
-            int code = result.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
-            if (code == 200) {
+            int code = result.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+            if (code == HttpServletResponse.SC_OK) {
                 response.getWriter().write(this.mapper.writeValueAsString(result));
             } else {
                 this.sendError(response, code, this.mapper.writeValueAsString(result));
@@ -153,109 +144,71 @@ public class JsonServlet extends WebSocketServlet {
             JsonNode reply = null;
             try {
                 if (name == null) {
-                    switch (type) {
-                        case CARS:
-                            reply = JsonUtil.getCars(request.getLocale());
-                            break;
-                        case CONSISTS:
-                            reply = JsonUtil.getConsists(request.getLocale());
-                            break;
-                        case ENGINES:
-                            reply = JsonUtil.getEngines(request.getLocale());
-                            break;
-                        case LOCATIONS:
-                            reply = JsonUtil.getLocations(request.getLocale());
-                            break;
-                        case TRAINS:
-                            reply = JsonUtil.getTrains(request.getLocale());
-                            break;
-                        default:
-                            if (this.services.get(type) != null) {
-                                ArrayNode array = this.mapper.createArrayNode();
-                                JsonException exception = null;
-                                try {
-                                    for (JsonHttpService service : this.services.get(type)) {
-                                        array.add(service.doGetList(type, request.getLocale()));
-                                    }
-                                } catch (JsonException ex) {
-                                    exception = ex;
-                                }
-                                switch (array.size()) {
-                                    case 0:
-                                        if (exception != null) {
-                                            throw exception;
-                                        }
-                                        reply = array;
-                                        break;
-                                    case 1:
-                                        reply = array.get(0);
-                                        break;
-                                    default:
-                                        reply = array;
-                                        break;
-                                }
+                    if (this.services.get(type) != null) {
+                        ArrayNode array = this.mapper.createArrayNode();
+                        JsonException exception = null;
+                        try {
+                            for (JsonHttpService service : this.services.get(type)) {
+                                array.addAll(service.doGetList(type, request.getLocale()));
                             }
-                            if (reply == null) {
-                                log.warn("Type {} unknown.", type);
-                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
-                            }
-                            break;
+                        } catch (JsonException ex) {
+                            exception = ex;
+                        }
+                        switch (array.size()) {
+                            case 0:
+                                if (exception != null) {
+                                    throw exception;
+                                }
+                                reply = array;
+                                break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
+                            default:
+                                reply = array;
+                                break;
+                        }
+                    }
+                    if (reply == null) {
+                        log.warn("Type {} unknown.", type);
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 } else {
-                    switch (type) {
-                        case CAR:
-                            reply = JsonUtil.getCar(request.getLocale(), name);
-                            break;
-                        case CONSIST:
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                            break;
-                        case ENGINE:
-                            reply = JsonUtil.getEngine(request.getLocale(), name);
-                            break;
-                        case LOCATION:
-                            reply = JsonUtil.getLocation(request.getLocale(), name);
-                            break;
-                        case TRAIN:
-                            reply = JsonUtil.getTrain(request.getLocale(), name);
-                            break;
-                        default:
-                            if (this.services.get(type) != null) {
-                                ArrayNode array = this.mapper.createArrayNode();
-                                JsonException exception = null;
-                                try {
-                                    for (JsonHttpService service : this.services.get(type)) {
-                                        array.add(service.doGet(type, name, request.getLocale()));
-                                    }
-                                } catch (JsonException ex) {
-                                    exception = ex;
-                                }
-                                switch (array.size()) {
-                                    case 0:
-                                        if (exception != null) {
-                                            throw exception;
-                                        }
-                                        reply = array;
-                                        break;
-                                    case 1:
-                                        reply = array.get(0);
-                                        break;
-                                    default:
-                                        reply = array;
-                                        break;
-                                }
+                    if (this.services.get(type) != null) {
+                        ArrayNode array = this.mapper.createArrayNode();
+                        JsonException exception = null;
+                        try {
+                            for (JsonHttpService service : this.services.get(type)) {
+                                array.add(service.doGet(type, name, request.getLocale()));
                             }
-                            if (reply == null) {
-                                log.warn("Requested type '{}' unknown.", type);
-                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
-                            }
-                            break;
+                        } catch (JsonException ex) {
+                            exception = ex;
+                        }
+                        switch (array.size()) {
+                            case 0:
+                                if (exception != null) {
+                                    throw exception;
+                                }
+                                reply = array;
+                                break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
+                            default:
+                                reply = array;
+                                break;
+                        }
+                    }
+                    if (reply == null) {
+                        log.warn("Requested type '{}' unknown.", type);
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 }
             } catch (JsonException ex) {
                 reply = ex.getJsonMessage();
             }
-            int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
-            if (code == 200) {
+            int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+            if (code == HttpServletResponse.SC_OK) {
                 response.getWriter().write(this.mapper.writeValueAsString(reply));
             } else {
                 this.sendError(response, code, this.mapper.writeValueAsString(reply));
@@ -315,61 +268,49 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 log.debug("POST operation for {}/{} with {}", type, name, data);
                 if (name != null) {
-                    switch (type) {
-                        case CONSIST:
-                            JsonUtil.setConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                            break;
-                        case TRAIN:
-                            JsonUtil.setTrain(request.getLocale(), name, data);
-                            reply = JsonUtil.getTrain(request.getLocale(), name);
-                            break;
-                        default:
-                            if (this.services.get(type) != null) {
-                                log.debug("Using data: {}", data);
-                                ArrayNode array = this.mapper.createArrayNode();
-                                JsonException exception = null;
-                                try {
-                                    for (JsonHttpService service : this.services.get(type)) {
-                                        array.add(service.doPost(type, name, data, request.getLocale()));
-                                    }
-                                } catch (JsonException ex) {
-                                    exception = ex;
-                                }
-                                switch (array.size()) {
-                                    case 0:
-                                        if (exception != null) {
-                                            throw exception;
-                                        }
-                                        reply = array;
-                                        break;
-                                    case 1:
-                                        reply = array.get(0);
-                                        break;
-                                    default:
-                                        reply = array;
-                                        break;
-                                }
+                    if (this.services.get(type) != null) {
+                        log.debug("Using data: {}", data);
+                        ArrayNode array = this.mapper.createArrayNode();
+                        JsonException exception = null;
+                        try {
+                            for (JsonHttpService service : this.services.get(type)) {
+                                array.add(service.doPost(type, name, data, request.getLocale()));
                             }
-                            if (reply == null) {
-                                log.warn("Type {} unknown.", type);
-                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
-                            }
-                            break;
+                        } catch (JsonException ex) {
+                            exception = ex;
+                        }
+                        switch (array.size()) {
+                            case 0:
+                                if (exception != null) {
+                                    throw exception;
+                                }
+                                reply = array;
+                                break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
+                            default:
+                                reply = array;
+                                break;
+                        }
+                    }
+                    if (reply == null) {
+                        log.warn("Type {} unknown.", type);
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 } else {
                     log.error("Name must be defined.");
-                    throw new JsonException(400, "Name must be defined."); // Need to I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined."); // Need to I18N
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(400, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
-        if (code == 200) {
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+        if (code == HttpServletResponse.SC_OK) {
             response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
             this.sendError(response, code, this.mapper.writeValueAsString(reply));
@@ -395,7 +336,7 @@ public class JsonServlet extends WebSocketServlet {
                     data = data.path(DATA);
                 }
             } else {
-                throw new JsonException(400, "PUT request must be a JSON object"); // need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "PUT request must be a JSON object"); // need to I18N
             }
             if (type != null) {
                 // for historical reasons, set the name to POWER on a power request
@@ -405,56 +346,48 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    switch (type) {
-                        case CONSIST:
-                            JsonUtil.putConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                            break;
-                        default:
-                            if (this.services.get(type) != null) {
-                                ArrayNode array = this.mapper.createArrayNode();
-                                JsonException exception = null;
-                                try {
-                                    for (JsonHttpService service : this.services.get(type)) {
-                                        array.add(service.doPut(type, name, data, request.getLocale()));
-                                    }
-                                } catch (JsonException ex) {
-                                    exception = ex;
-                                }
-                                switch (array.size()) {
-                                    case 0:
-                                        if (exception != null) {
-                                            throw exception;
-                                        }
-                                        reply = array;
-                                        break;
-                                    case 1:
-                                        reply = array.get(0);
-                                        break;
-                                    default:
-                                        reply = array;
-                                        break;
-                                }
+                    if (this.services.get(type) != null) {
+                        ArrayNode array = this.mapper.createArrayNode();
+                        JsonException exception = null;
+                        try {
+                            for (JsonHttpService service : this.services.get(type)) {
+                                array.add(service.doPut(type, name, data, request.getLocale()));
                             }
-                            if (reply == null) {
-                                // not a creatable item
-                                throw new JsonException(400, type + " is not a creatable type"); // need to I18N
-                            }
-                            break;
+                        } catch (JsonException ex) {
+                            exception = ex;
+                        }
+                        switch (array.size()) {
+                            case 0:
+                                if (exception != null) {
+                                    throw exception;
+                                }
+                                reply = array;
+                                break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
+                            default:
+                                reply = array;
+                                break;
+                        }
+                    }
+                    if (reply == null) {
+                        // not a creatable item
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type"); // need to I18N
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
-                    throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(400, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
-        if (code == 200) {
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+        if (code == HttpServletResponse.SC_OK) {
             response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
             this.sendError(response, code, this.mapper.writeValueAsString(reply));
@@ -475,28 +408,21 @@ public class JsonServlet extends WebSocketServlet {
         try {
             if (type != null) {
                 if (name == null) {
-                    throw new JsonException(400, "name must be specified"); // need to I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified"); // need to I18N
                 }
-                if (type.equals(CONSIST)) {
-                    JsonUtil.delConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                } else if (this.services.get(type) != null) {
-                    for (JsonHttpService service : this.services.get(type)) {
-                        service.doDelete(type, name, request.getLocale());
-                    }
-                } else {
-                    // not a deletable item
-                    throw new JsonException(400, type + " is not a deletable type"); // need to I18N
+                for (JsonHttpService service : this.services.get(type)) {
+                    service.doDelete(type, name, request.getLocale());
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(400, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
         // only include a response body if something went wrong
-        if (code != 200) {
+        if (code != HttpServletResponse.SC_OK) {
             this.sendError(response, code, this.mapper.writeValueAsString(reply));
         }
     }

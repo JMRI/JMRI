@@ -32,7 +32,7 @@ import javax.swing.event.ChangeListener;
  */
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
-    MemoryIcon pl; 			// positional label tracked by this frame
+    MemoryIcon pl;    // positional label tracked by this frame
     int oldX;
     int oldY;
     double oldD;
@@ -44,11 +44,12 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     }
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
-        return new AbstractAction(Bundle.getMessage("SetXY")) {
+        return new AbstractAction(Bundle.getMessage("SetXY", "")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetXY"), pos, true);
+                f.init(Bundle.getMessage("SetXY", ""), pos, true);
                 f.initSetXY();
                 f.setVisible(true);
                 f.setLocationRelativeTo(pos);
@@ -56,6 +57,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         };
     }
 
+    @Override
     public void initSetXY() {
         oldX = pl.getOriginalX();
         oldY = pl.getOriginalY();
@@ -69,6 +71,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
         ChangeListener listener = new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
@@ -96,6 +99,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         addSpinItems(true);
 
         okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
@@ -105,7 +109,10 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pl.setLocation(oldX, oldY);
                 dispose();

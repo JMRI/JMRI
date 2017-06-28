@@ -1,4 +1,3 @@
-// RoutesTableFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class RoutesTableFrame extends OperationsFrame {
 
@@ -41,7 +39,7 @@ public class RoutesTableFrame extends OperationsFrame {
     JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public RoutesTableFrame() {
         super(Bundle.getMessage("TitleRoutesTable"));
@@ -82,6 +80,7 @@ public class RoutesTableFrame extends OperationsFrame {
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
         toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));
 

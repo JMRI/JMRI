@@ -1,11 +1,12 @@
-// PortNameMapper.java
 package jmri.util;
 
-import at.jta.*;
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.Win32Exception;
+import com.sun.jna.platform.win32.WinReg;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * Class used to provide a mapping between port numbers and 'friendly' names,
@@ -33,13 +34,9 @@ import java.util.Map.Entry;
  */
 public class PortNameMapper {
 
-    private static HashMap<String, SerialPortFriendlyName> serialPortNames = new HashMap<String, SerialPortFriendlyName>();
+    private static final HashMap<String, SerialPortFriendlyName> SERIAL_PORT_NAMES = new HashMap<String, SerialPortFriendlyName>();
 
     private static boolean portsRetrieved = false;
-
-    static {
-        getWindowsSerialPortNames();
-    }
 
     /*
      * We only go through the windows registry once looking for friendly names
@@ -58,65 +55,63 @@ public class PortNameMapper {
             return;
         }
 
-        try {
-            Regor reg = new Regor();
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\FTDIBUS\\", reg);
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\KEYSPAN\\", reg);
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\USB\\", reg);
-            //some modems are assigned in the HDAUDIO se we retrieve these
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\HDAUDIO\\", reg);
-            //some PCI software devices are located here
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\PCI\\", reg);
-            //some hardware devices are located here
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\ACPI\\", reg);
-        } catch (RegistryErrorException e) {
-            e.printStackTrace();
-        }
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\FTDIBUS\\");
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\KEYSPAN\\");
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\USB\\");
+        //some modems are assigned in the HDAUDIO se we retrieve these
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\HDAUDIO\\");
+        //some PCI software devices are located here
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\PCI\\");
+        //some hardware devices are located here
+        getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\ACPI\\");
 
         portsRetrieved = true;
     }
 
-    private static void getDetailsFromWinRegistry(String path, Regor reg) {
-        ArrayList<String> friendlyName = new ArrayList<String>();
-        try {
-            List<?> regentry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path);
-            if (regentry == null) {
-                return;
-            }
-            for (int i = 0; i < regentry.size(); i++) {
-                List<?> regSubEntry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i));
-                if (regSubEntry != null) {
-                    if (regSubEntry.size() > 0) {
-                        String name = null;
-                        String port = null;
-                        List<?> values = reg.listValueNames(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i) + "\\" + regSubEntry.get(0));
-                        if (values.contains("Class")) {
-                            Key pathKey = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i) + "\\" + regSubEntry.get(0), Regor.KEY_READ);
-                            String deviceClass = reg.readValueAsString(pathKey, "Class");
-                            if (deviceClass.equals("Ports") || deviceClass.equals("Modem")) {
-                                name = reg.readValueAsString(pathKey, "FriendlyName");
-                                Key pathKey2 = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i) + "\\" + regSubEntry.get(0) + "\\Device Parameters", Regor.KEY_READ);
-                                port = reg.readValueAsString(pathKey2, "PortName");
-                                reg.closeKey(pathKey2);
+    private static void getDetailsFromWinRegistry(String path) {
+        ArrayList<String> friendlyName = new ArrayList<>();
+        if (!Advapi32Util.registryKeyExists(WinReg.HKEY_LOCAL_MACHINE, path)) {
+            return;
+        }
+        String[] regEntries = Advapi32Util.registryGetKeys(WinReg.HKEY_LOCAL_MACHINE, path);
+        if (regEntries == null) {
+            return;
+        }
+        for (String regEntry : regEntries) {
+            String[] subRegEntries = Advapi32Util.registryGetKeys(WinReg.HKEY_LOCAL_MACHINE, path + regEntry);
+            if (subRegEntries != null) {
+                if (subRegEntries.length > 0) {
+                    String name = null;
+                    String port = null;
+                    TreeMap<String, Object> values = Advapi32Util.registryGetValues(WinReg.HKEY_LOCAL_MACHINE, path + regEntry + "\\" + subRegEntries[0]);
+                    if (values.containsKey("Class")) {
+                        String pathKey = path + regEntry + "\\" + subRegEntries[0];
+                        String deviceClass = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "Class");
+                        if (deviceClass.equals("Ports") || deviceClass.equals("Modem")) {
+                            name = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "FriendlyName");
+                            try {
+                                String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
+                                port = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey2, "PortName");
+                            } catch (Win32Exception | NullPointerException e) {
+                                // ...\\Device Parameters does not exist for some odd-ball Windows 
+                                // serial devices, so cannot get the "PortName" from there.
+                                // Instead, leave port as null and ignore the exception
                             }
-                            reg.closeKey(pathKey);
                         }
-                        if ((name != null) && (port != null)) {
-                            serialPortNames.put(port, new SerialPortFriendlyName(port, name));
-                        } else if (name != null) {
-                            friendlyName.add(name);
-                        }
+                    }
+                    if ((name != null) && (port != null)) {
+                        SERIAL_PORT_NAMES.put(port, new SerialPortFriendlyName(port, name));
+                    } else if (name != null) {
+                        friendlyName.add(name);
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         for (int i = 0; i < friendlyName.size(); i++) {
             int commst = friendlyName.get(i).lastIndexOf('(') + 1;
             int commls = friendlyName.get(i).lastIndexOf(')');
             String commPort = friendlyName.get(i).substring(commst, commls);
-            serialPortNames.put(commPort, new SerialPortFriendlyName(commPort, friendlyName.get(i)));
+            SERIAL_PORT_NAMES.put(commPort, new SerialPortFriendlyName(commPort, friendlyName.get(i)));
         }
     }
 
@@ -124,7 +119,7 @@ public class PortNameMapper {
         if (!portsRetrieved) {
             getWindowsSerialPortNames();
         }
-        for (Entry<String, SerialPortFriendlyName> en : serialPortNames.entrySet()) {
+        for (Entry<String, SerialPortFriendlyName> en : SERIAL_PORT_NAMES.entrySet()) {
             if (en.getValue().getDisplayName().equals(name)) {
                 return en.getKey();
             }
@@ -136,7 +131,7 @@ public class PortNameMapper {
         if (!portsRetrieved) {
             getWindowsSerialPortNames();
         }
-        return serialPortNames;
+        return SERIAL_PORT_NAMES;
     }
 
     public static class SerialPortFriendlyName {

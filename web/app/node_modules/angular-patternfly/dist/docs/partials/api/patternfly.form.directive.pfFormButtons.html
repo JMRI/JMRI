@@ -1,0 +1,69 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/form/form-buttons/form-buttons.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/form/form-buttons/form-buttons.directive.js#L55" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfFormButtons</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.form</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><p>Encapsulates the standard structure and styling for create and cancel buttons
+when used with a form.</p>
+<p>This directive creates new scope.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-form-buttons
+     pf-handle-cancel="{function}"
+     pf-handle-save="{function}"
+     pf-working="{expression}"
+     pf-button-class="{string}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfHandleCancel</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><p>function to call when the user clicks cancel.</p>
+</div></td></tr><tr><td>pfHandleSave</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><p>function to call when the user clicks save.</p>
+</div></td></tr><tr><td>pfWorking</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><p>the model to store the working status in.</p>
+</div></td></tr><tr><td>pfButtonClass</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><p>the class of the button container.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-form-directive-page patternfly-form-directive-pfformbuttons-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.form" source-edit-deps="angular.js script.js" source-edit-html="index.html-29" source-edit-css="" source-edit-js="script.js-30" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-29" ng-html-wrap-loaded="patternfly.form angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-29">
+    <div ng-controller="FormButtonCtrl">
+      <p>Saved?</p>
+      <p>{{ status }}</p>
+      <form>
+        <div class="form-group>
+          <label class="control-label col-sm-2">Input</label>
+          <input class="form-control col-sm-5" name="item" ng-model="input" type="text">
+        </div>
+        <div pf-form-buttons pf-on-cancel="cancel()" pf-on-save="save(item)" pf-working="working"></div>
+      </form>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-30"></pre>
+<script type="text/ng-template" id="script.js-30">
+    angular.module( 'patternfly.form' ).controller( 'FormButtonCtrl', function( $scope, $timeout ) {
+      $scope.status = 'Not yet Saved'
+      $scope.working = false;
+
+      $scope.save = function (item) {
+        $scope.status = 'saved';
+        $scope.working = true;
+
+        $timeout(function () {
+          $scope.working = false;
+        }, 1000);
+      };
+
+      $scope.cancel = function () {
+        $scope.status = 'cancelled';
+        $scope.input = null;
+      };
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.form" ng-set-html="index.html-29" ng-eval-javascript="script.js-30"></div>
+</div></div>
+</div>

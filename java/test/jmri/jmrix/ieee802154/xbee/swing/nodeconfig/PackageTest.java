@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
     BundleTest.class,
     NodeConfigActionTest.class,
     NodeConfigFrameTest.class,
+    AddNodeFrameTest.class,
+    EditNodeFrameTest.class,
     AssignmentTableModelTest.class
 })
 

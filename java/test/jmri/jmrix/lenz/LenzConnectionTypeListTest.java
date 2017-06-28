@@ -1,48 +1,33 @@
 package jmri.jmrix.lenz;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * LenzConnectionTypeListTest.java
  *
  * Description:	tests for the jmri.jmrix.lenz.LenzConnectionTypeList class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class LenzConnectionTypeListTest extends TestCase {
+public class LenzConnectionTypeListTest {
 
+    @Test
     public void testCtor() {
-
         LenzConnectionTypeList c = new LenzConnectionTypeList();
         Assert.assertNotNull(c);
     }
 
-    // from here down is testing infrastructure
-    public LenzConnectionTypeListTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LenzConnectionTypeListTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LenzConnectionTypeListTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

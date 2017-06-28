@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -26,7 +15,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-    
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2014-08-08</date>
@@ -35,12 +29,17 @@
     </revision>
   </revhistory>
   <variable CV="65" item="Kick Start" tooltip="sets the Kick Start Voltage [range 0-63]" default="63">
-        <decVal max="63"/>
-        <label>Kick Start Voltage</label>
-        <label xml:lang="it">Forza Avviamento (volt)</label>
-        <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
-        <label xml:lang="de">Kick Start</label>
-        <tooltip>sets the Kick Start Voltage [range 0-63]</tooltip>
-        <tooltip xml:lang="it">Setta tensione per forza Avviamento [valori 0-63]</tooltip>
-      </variable>
+    <decVal max="63"/>
+    <label>Kick Start Voltage</label>
+    <label xml:lang="cs">Napětí rozjezdového impulzu</label>
+    <label xml:lang="it">Forza Avviamento (volt)</label>
+    <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
+    <label xml:lang="de">Kick Startspannung</label>
+    <label xml:lang="nl">Kick Start spanning</label>
+    <tooltip>Sets the Kick Start Voltage [range 0-63]</tooltip>
+    <tooltip xml:lang="cs">Nastavení startovacího napětí [meze 0-63]</tooltip>
+    <tooltip xml:lang="it">Setta tensione per forza Avviamento [valori 0-63]</tooltip>
+    <tooltip xml:lang="de">Definiert die Abfahrtsspannung [Wert 0-63]</tooltip>
+    <tooltip xml:lang="nl">Stelt de Startspanning in [waarde van 0-63]</tooltip>
+  </variable>
 </variables>

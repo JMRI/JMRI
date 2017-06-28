@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -14,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Yardmaster Frame. Shows work at one location.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterFrame extends OperationsFrame {
 

@@ -1,6 +1,7 @@
 package jmri.server.json.sensor;
 
 import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.sensor.JsonSensor.SENSORS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -16,6 +17,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON Socket service for {@link jmri.Sensor}s.
@@ -25,8 +28,11 @@ import jmri.server.json.JsonSocketService;
 public class JsonSensorSocketService extends JsonSocketService {
 
     private final JsonSensorHttpService service;
-    private final HashMap<String, SensorListener> sensors = new HashMap<>();
+    private final HashMap<String, SensorListener> sensorListeners = new HashMap<>();
+    private final SensorsListener sensorsListener = new SensorsListener();
     private Locale locale;
+    private final static Logger log = LoggerFactory.getLogger(JsonSensorSocketService.class);
+
 
     public JsonSensorSocketService(JsonConnection connection) {
         super(connection);
@@ -42,12 +48,12 @@ public class JsonSensorSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.sensors.containsKey(name)) {
+        if (!this.sensorListeners.containsKey(name)) {
             Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
             if (sensor != null) {
                 SensorListener listener = new SensorListener(sensor);
                 sensor.addPropertyChangeListener(listener);
-                this.sensors.put(name, listener);
+                this.sensorListeners.put(name, listener);
             }
         }
     }
@@ -56,14 +62,31 @@ public class JsonSensorSocketService extends JsonSocketService {
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         this.connection.sendMessage(this.service.doGetList(type, locale));
+        log.debug("adding SensorsListener");
+        InstanceManager.getDefault(SensorManager.class).addPropertyChangeListener(sensorsListener); //add parent listener
+        addListenersToChildren();
+    }
+
+    private void addListenersToChildren() {
+        InstanceManager.getDefault(SensorManager.class).getSystemNameList().stream().forEach((sn) -> { //add listeners to each child (if not already)
+            if (!sensorListeners.containsKey(sn)) {
+                log.debug("adding SensorListener for Sensor {}", sn);
+                Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sn);
+                if (s != null) {
+                    sensorListeners.put(sn, new SensorListener(s));
+                    s.addPropertyChangeListener(this.sensorListeners.get(sn));
+                }
+            }
+        });
     }
 
     @Override
     public void onClose() {
-        sensors.values().stream().forEach((sensor) -> {
-            sensor.sensor.removePropertyChangeListener(sensor);
+        sensorListeners.values().stream().forEach((listener) -> {
+            listener.sensor.removePropertyChangeListener(listener);
         });
-        sensors.clear();
+        sensorListeners.clear();
+        InstanceManager.getDefault(SensorManager.class).removePropertyChangeListener(sensorsListener);
     }
 
     private class SensorListener implements PropertyChangeListener {
@@ -75,20 +98,43 @@ public class JsonSensorSocketService extends JsonSocketService {
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("KnownState")) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in SensorListener for '{}' '{}' ('{}'=>'{}')", this.sensor.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            try {
                 try {
-                    try {
-                        connection.sendMessage(service.doGet(SENSOR, this.sensor.getSystemName(), locale));
-                    } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
-                    }
-                } catch (IOException ex) {
-                    // if we get an error, de-register
-                    sensor.removePropertyChangeListener(this);
-                    sensors.remove(this.sensor.getSystemName());
+                    connection.sendMessage(service.doGet(SENSOR, this.sensor.getSystemName(), locale));
+                } catch (JsonException ex) {
+                    connection.sendMessage(ex.getJsonMessage());
                 }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                sensor.removePropertyChangeListener(this);
+                sensorListeners.remove(this.sensor.getSystemName());
+            }
+        }
+    }
+
+    private class SensorsListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in SensorsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+
+            try {
+                try {
+                 // send the new list
+                    connection.sendMessage(service.doGetList(SENSORS, locale)); 
+                    //child added or removed, reset listeners
+                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                        addListenersToChildren();
+                    }
+                } catch (JsonException ex) {
+                    log.warn("json error sending Sensors: {}", ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage());
+                }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                log.debug("deregistering sensorsListener due to IOException");
+                InstanceManager.getDefault(SensorManager.class).removePropertyChangeListener(sensorsListener);
             }
         }
     }

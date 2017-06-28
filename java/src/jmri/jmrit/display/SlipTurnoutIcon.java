@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -49,7 +50,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif"), editor);
         _control = true;
         displayState(turnoutState());
-        debug = log.isDebugEnabled();
         setPopupUtility(null);
     }
 
@@ -58,7 +58,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private NamedBeanHandle<Turnout> namedTurnoutWestLower = null;
     private NamedBeanHandle<Turnout> namedTurnoutEast = null;
     private NamedBeanHandle<Turnout> namedTurnoutEastLower = null;
-    private boolean debug = false;
 
     /**
      * Attached a named turnout to this display item
@@ -71,7 +70,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().
-                    provideTurnout(pName);
+                        provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
             } catch (IllegalArgumentException e) {
                 log.error("Turnout '" + pName + "' not available, icon won't see changes");
@@ -464,6 +463,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     // update icon as state of turnout changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
@@ -492,6 +492,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedTurnoutWest == null) {
@@ -529,6 +530,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
         tristateItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setTristate(tristateItem.isSelected());
             }
@@ -538,6 +540,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * ****** popup AbstractAction.actionPerformed method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         lowerWestToUpperEast.setRotation(lowerWestToUpperEast.getRotation() + 1, this);
         upperWestToLowerEast.setRotation(upperWestToLowerEast.getRotation() + 1, this);
@@ -550,6 +553,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         repaint();
     }
 
+    @Override
     public void setScale(double s) {
         lowerWestToUpperEast.scale(s, this);
         upperWestToLowerEast.scale(s, this);
@@ -560,6 +564,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         displayState(turnoutState());
     }
 
+    @Override
     public void rotate(int deg) {
         lowerWestToUpperEast.rotate(deg, this);
         upperWestToLowerEast.rotate(deg, this);
@@ -620,7 +625,13 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     case 11:
                         state = 0;
                         break;
+                    default:
+                        log.warn("Unhandled scissors state: {}", state);
+                        break;
                 }
+                break;
+            default:
+                log.warn("Unhandled turnout type: {}", getTurnoutType());
                 break;
         }
         switch (state) {
@@ -735,6 +746,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     SlipIconAdder _iconEditor;
 
+    @Override
     protected void edit() {
         if (_iconEditor == null) {
             _iconEditor = new SlipIconAdder();
@@ -783,6 +795,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         _iconEditor.makeIconPanel(true);
 
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateTurnout();
             }
@@ -838,6 +851,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Throw the turnout when the icon is clicked
      *
      */
+    @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             return;
@@ -1084,6 +1098,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * through each state
      *
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             // add tristate option if turnout has feedback
@@ -1101,6 +1116,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             JMenuItem LWUE = new JMenuItem(lowerWestToUpperEastText);
             if ((turnoutType == THREEWAY) && (!singleSlipRoute)) {
                 LWUE.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setLowerWestToLowerEast();
                     }
@@ -1108,6 +1124,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
             } else {
                 LWUE.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setLowerWestToUpperEast();
                     }
@@ -1116,6 +1133,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             popup.add(LWUE);
             JMenuItem UWLE = new JMenuItem(upperWestToLowerEastText);
             UWLE.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setUpperWestToLowerEast();
                 }
@@ -1124,6 +1142,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (!singleSlipRoute))) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
                 LWLE.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setLowerWestToLowerEast();
                     }
@@ -1133,6 +1152,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (singleSlipRoute))) {
                 JMenuItem UWUE = new JMenuItem(upperWestToUpperEastText);
                 UWUE.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setUpperWestToUpperEast();
                     }
@@ -1143,12 +1163,14 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
                 if (!singleSlipRoute) {
                     LWLE.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             setLowerWestToUpperEast();
                         }
                     });
                 } else {
                     LWLE.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             setLowerWestToLowerEast();
                         }
@@ -1159,6 +1181,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             if (turnoutType == SCISSOR) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
                 LWLE.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setLowerWestToLowerEast();
                     }
@@ -1170,6 +1193,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     // overide
+    @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         String popuptext = Bundle.getMessage("SetSlipText");
         if (turnoutType == THREEWAY) {
@@ -1178,6 +1202,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             popuptext = Bundle.getMessage("SetScissorText");
         }
         popup.add(new AbstractAction(popuptext) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
                 slipTurnoutTextEdit(name);
@@ -1187,9 +1212,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     public void slipTurnoutTextEdit(String name) {
-        if (debug) {
-            log.debug("make text edit menu");
-        }
+        log.debug("make text edit menu");
 
         SlipTurnoutTextEdit f = new SlipTurnoutTextEdit();
         f.addHelpMenu("package.jmri.jmrit.display.SlipTurnoutTextEdit", true);
@@ -1201,6 +1224,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         f.setVisible(true);
     }
 
+    @Override
     public void dispose() {
         if (namedTurnoutWest != null) {
             getTurnout(WEST).removePropertyChangeListener(this);
@@ -1277,7 +1301,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         //This is used to set the two turnouts, with a delay of 250ms between each one.
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+        @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+        @Override
         public void run() {
 
             HashMap<Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
@@ -1286,7 +1311,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             while (itr.hasNext()) {
                 Turnout t = itr.next();
                 int state = _turnoutSetting.get(t);
-                jmri.util.ThreadingUtil.runOnLayout(()->{ // run on layout thread
+                jmri.util.ThreadingUtil.runOnLayout(() -> { // run on layout thread
                     t.setCommandedState(state);
                 });
                 try {

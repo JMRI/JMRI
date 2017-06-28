@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a new throttle.
  *
- * @author	Lionel Jeanson Copyright 2009
+ * @author Lionel Jeanson Copyright 2009
  */
 public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 
@@ -54,6 +54,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         // load throttle preference 
         LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();

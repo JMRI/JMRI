@@ -1,4 +1,3 @@
-// SetupExcelProgramSwitchListFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.io.File;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * switch lists.
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 22249 $
+ * 
  */
 public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 

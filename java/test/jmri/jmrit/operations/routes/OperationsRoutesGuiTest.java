@@ -1,15 +1,17 @@
 //OperationsRoutesGuiTest.java
 package jmri.jmrit.operations.routes;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Routes GUI class
@@ -17,8 +19,10 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2009
  */
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
-
+  
+    @Test
     public void testRoutesTableFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
@@ -33,8 +37,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAME_COLUMN));
 
         // create add route frame
-        //f.addButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        f.addButton.doClick();
+        // the following fails on a 13" laptop
+        //enterClickAndLeave(f.addButton);
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame("Add Route");
         Assert.assertNotNull("route edit frame", ref);
@@ -46,15 +51,16 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testRouteEditFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
 
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
-        //f.addRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addRouteButton));
+        enterClickAndLeave(f.addRouteButton);
         
         loadRoutes();
 
@@ -69,23 +75,23 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         LocationManager lManager = LocationManager.instance();
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
 
         // put the next two locations at the start of the route
         //f.addLocAtTop.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocAtTop));
+        enterClickAndLeave(f.addLocAtTop);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
 
         // confirm that the route sequence is correct
         List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
@@ -97,22 +103,24 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("Newer Test Route");
         //f.saveRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveRouteButton));
+        enterClickAndLeave(f.saveRouteButton);
 
         Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteRouteButton));
+        enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
-        pressDialogButton(f, "Yes");
+        pressDialogButton(f,Bundle.getMessage("DeleteRoute?"),"Yes");
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
         f.dispose();
     }
 
+    @Test
     public void testRouteEditFrameRead() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadRoutes();
         RouteManager lManager = RouteManager.instance();
         Route l2 = lManager.getRouteByName("Test Route C");
@@ -158,28 +166,14 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
     }
 
-    public OperationsRoutesGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRoutesGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRoutesGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

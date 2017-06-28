@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Systems" menu containing the Jmri CMRI-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class CMRIMenu extends JMenu {
 
@@ -24,7 +24,11 @@ public class CMRIMenu extends JMenu {
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.CMRIBundle");
 
-        setText(rb.getString("MenuCMRI"));
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(rb.getString("MenuCMRI"));
+        }
 
         add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
         add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));

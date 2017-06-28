@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
@@ -14,7 +15,10 @@ import org.junit.Assert;
 public class OBlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testInvoke() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+        
         // ask for the window to open
         OBlockTableAction a = new OBlockTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -53,6 +57,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -60,6 +65,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

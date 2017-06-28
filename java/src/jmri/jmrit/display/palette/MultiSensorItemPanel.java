@@ -62,6 +62,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 makeAddToTableWindow();
             }
@@ -77,6 +78,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.setPositionRange(size - 3);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 clearSelections();
             }
@@ -122,6 +124,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         ButtonGroup group2 = new ButtonGroup();
         JRadioButton button = new JRadioButton(Bundle.getMessage("LeftRight"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _upDown = false;
             }
@@ -131,6 +134,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         button.setSelected(true);
         button = new JRadioButton(Bundle.getMessage("UpDown"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _upDown = true;
             }
@@ -231,9 +235,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.debug("getSelections: size= " + _selections.size()
                         + ", _nextPosition= " + _nextPosition);
             }
-            if (_nextPosition < _positions.length) {
-                return null;
-            }
             return _selections;
         }
 
@@ -263,8 +264,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
 
         /**
-         * ************* DefaultListSelectionModel overrides
-         * *******************
+         * ************* DefaultListSelectionModel overrides *******************
          */
         @Override
         public boolean isSelectedIndex(int index) {
@@ -336,23 +336,34 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor, map);
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, map, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
-            iconMap = map;
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+            super(flavor, icon);
+            iconMap = new HashMap<>(map);
         }
 
         @Override
-        public boolean isDataFlavorSupported(DataFlavor flavor) {
-            return super.isDataFlavorSupported(flavor);
+        protected boolean okToDrag() {
+            ArrayList<NamedBean> selections = _selectionModel.getSelections();
+            if (selections == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            if (selections.size() < _selectionModel.getPositions().length) {
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
         }
 
         @Override
@@ -364,26 +375,39 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-
-            MultiSensorIcon ms = new MultiSensorIcon(_editor);
-            ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-            ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-            ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
             ArrayList<NamedBean> selections = _selectionModel.getSelections();
-            if (selections == null) {
-                JOptionPane.showMessageDialog(_paletteFrame,
-                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            if (selections == null || selections.size() < _selectionModel.getPositions().length) {
                 return null;
             }
-            for (int i = 0; i < selections.size(); i++) {
-                ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
+
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                if (_itemType.equals("MultiSensor")) {
+                    MultiSensorIcon ms = new MultiSensorIcon(_editor);
+                    ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
+                    ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
+                    ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+                    for (int i = 0; i < selections.size(); i++) {
+                        ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
+                    }
+                    _selectionModel.clearSelection();
+                    ms.setFamily(_family);
+                    ms.setUpDown(_upDown);
+                    ms.setLevel(Editor.SENSORS);
+                    return ms;
+                }
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for ");
+                for (int i = 0; i < selections.size(); i++) {
+                    sb.append(selections.get(i).getDisplayName());
+                    if (i < selections.size()-1) {
+                        sb.append(", ");
+                    }
+                }
+                return  sb.toString();
             }
-            _selectionModel.clearSelection();
-            ms.setFamily(_family);
-            ms.setUpDown(_upDown);
-            ms.setLevel(Editor.SENSORS);
-            return ms;
+                
+            return null;
         }
     }
 

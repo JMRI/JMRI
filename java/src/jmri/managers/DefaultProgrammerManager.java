@@ -126,42 +126,50 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String getUserName() {
         return userName;
     }
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String toString() {
         return getUserName();
     }
 
+    @Override
     public Programmer getGlobalProgrammer() {
         log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)") );
         return mProgrammer;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
+    @Override
     public Programmer reserveGlobalProgrammer() {
         return mProgrammer;
     }
 
+    @Override
     public void releaseGlobalProgrammer(@Nonnull  Programmer p) {
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
+    @Override
     public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p) {
     }
 
@@ -170,6 +178,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      *
      * @return false since there's no chance of getting one
      */
+    @Override
     public boolean isAddressedModePossible() {
         return false;
     }
@@ -179,6 +188,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      *
      * @return false since there's no chance of getting one
      */
+    @Override
     public boolean isAddressedModePossible(@Nonnull jmri.LocoAddress l) {
         return isAddressedModePossible();
     }
@@ -188,6 +198,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      *
      * @return false if there's no chance of getting one
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         return true;
     }
@@ -196,6 +207,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      * Provide a default implementation of the mode (most) AddressProgrammers
      * make available.
      */
+    @Override
     public java.util.List<ProgrammingMode> getDefaultModes() {
         java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
         retval.add(OPSBYTEMODE);

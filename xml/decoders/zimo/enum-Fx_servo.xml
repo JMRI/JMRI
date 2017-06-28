@@ -6,6 +6,8 @@
       <enumChoice choice="Servo not in operation">
         <choice>Servo not in operation</choice>
         <choice xml:lang="it">Servo non operativo</choice>
+        <choice xml:lang="cs">Servo není v provozu</choice>
+        <choice xml:lang="de">Servo nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -46,73 +48,109 @@
       <enumChoice choice="forward = left, reverse = right" value="90">
         <choice>forward = left, reverse = right</choice>
         <choice xml:lang="it">Avanti=Sinistra; Indietro=destra</choice>
+        <choice xml:lang="cs">vpřed = vlevo, vzad = vpravo</choice>
+        <choice xml:lang="de">vorwärts = links, rückwärts = rechts</choice>
       </enumChoice>
       <enumChoice choice="stopped + forward = right, other = left">
         <choice>stopped + forward = right, other = left</choice>
         <choice xml:lang="it">Fermo+Avanti=destra; altri=sinistra</choice>
+        <choice xml:lang="cs">zastavit + vpřed = vpravo, ostatní = vlevo</choice>
+        <choice xml:lang="de">gestoppt + vorwärts = rechts, andere = links</choice>
       </enumChoice>
       <enumChoice choice="stopped + reverse = right, other = left">
         <choice>stopped + reverse = right, other = left</choice>
         <choice xml:lang="it">Fermo+Indietro=destra; altri=sinistra</choice>
+        <choice xml:lang="cs">zastavit + vzad = vpravo, ostatní = vlevo</choice>
+        <choice xml:lang="de">gestoppt + rückwärts = rechts, andere = links</choice>
       </enumChoice>
       <enumChoice choice="stopped = right, moving = left">
         <choice>stopped = right, moving = left</choice>
         <choice xml:lang="it">Fermo=destra; in movimento=sinistra</choice>
+        <choice xml:lang="cs">zastavit = vpravo, jet = vlevo</choice>
+        <choice xml:lang="de">gestoppt = rechts, fahren = links</choice>
       </enumChoice>
       <enumChoice choice="F1 left, F2 right" value="101">
         <choice>F1 left, F2 right</choice>
         <choice xml:lang="it">F1=sinistra; F2=destra</choice>
+        <choice xml:lang="cs">F1 vlevo, F2 vpravo</choice>
+        <choice xml:lang="de">F1 links, F2 rechts</choice>
       </enumChoice>
       <enumChoice choice="F2 left, F3 right">
         <choice>F2 left, F3 right</choice>
         <choice xml:lang="it">F2=sinistra; F3=destra</choice>
+        <choice xml:lang="cs">F2 vlevo, F3 vpravo</choice>
+        <choice xml:lang="de">F2 links, F3 rechts</choice>
       </enumChoice>
       <enumChoice choice="F3 left, F4 right">
         <choice>F3 left, F4 right</choice>
         <choice xml:lang="it">F3=sinistra; F4=destra</choice>
+        <choice xml:lang="cs">F3 vlevo, F4 vpravo</choice>
+        <choice xml:lang="de">F3 links, F4 rechts</choice>
       </enumChoice>
       <enumChoice choice="F4 left, F5 right">
         <choice>F4 left, F5 right</choice>
         <choice xml:lang="it">F4=sinistra; F5=destra</choice>
+        <choice xml:lang="cs">F4 vlevo, F5 vpravo</choice>
+        <choice xml:lang="de">F4 links, F5 rechts</choice>
       </enumChoice>
       <enumChoice choice="F5 left, F6 right">
         <choice>F5 left, F6 right</choice>
         <choice xml:lang="it">F5=sinistra; F6=destra</choice>
+        <choice xml:lang="cs">F5 vlevo, F6 vpravo</choice>
+        <choice xml:lang="de">F5 links, F6 rechts</choice>
       </enumChoice>
       <enumChoice choice="F6 left, F7 right">
         <choice>F6 left, F7 right</choice>
         <choice xml:lang="it">F6=sinistra; F7=destra</choice>
+        <choice xml:lang="cs">F6 vlevo, F7 vpravo</choice>
+        <choice xml:lang="de">F6 links, F7 rechts</choice>
       </enumChoice>
       <enumChoice choice="F7 left, F8 right">
         <choice>F7 left, F8 right</choice>
         <choice xml:lang="it">F7=sinistra; F8=destra</choice>
+        <choice xml:lang="cs">F7 vlevo, F8 vpravo</choice>
+        <choice xml:lang="de">F7 links, F8 rechts</choice>
       </enumChoice>
       <enumChoice choice="F8 left, F9 right">
         <choice>F8 left, F9 right</choice>
         <choice xml:lang="it">F8=sinistra; F9=destra</choice>
+        <choice xml:lang="cs">F8 vlevo, F9 vpravo</choice>
+        <choice xml:lang="de">F8 links, F9 rechts</choice>
       </enumChoice>
       <enumChoice choice="F9 left, F10 right">
         <choice>F9 left, F10 right</choice>
         <choice xml:lang="it">F9=sinistra; F10=destra</choice>
+        <choice xml:lang="cs">F9 vlevo, F10 vpravo</choice>
+        <choice xml:lang="de">F9 links, F10 rechts</choice>
       </enumChoice>
       <enumChoice choice="F10 left, F11 right">
         <choice>F10 left, F11 right</choice>
         <choice xml:lang="it">F10=sinistra; F11=destra</choice>
+        <choice xml:lang="cs">F10 vlevo, F11 vpravo</choice>
+        <choice xml:lang="de">F10 links, F11 rechts</choice>
       </enumChoice>
       <enumChoice choice="F11 left, F12 right">
         <choice>F11 left, F12 right</choice>
         <choice xml:lang="it">F11=sinistra; F12=destra</choice>
+        <choice xml:lang="cs">F11 vlevo, F12 vpravo</choice>
+        <choice xml:lang="de">F11 links, F12 rechts</choice>
       </enumChoice>
       <enumChoice choice="F3 left, F6 right">
         <choice>F3 left, F6 right</choice>
         <choice xml:lang="it">F3=sinistra; F6=destra</choice>
+        <choice xml:lang="cs">F3 vlevo, F6 vpravo</choice>
+        <choice xml:lang="de">F3 links, F6 rechts</choice>
       </enumChoice>
       <enumChoice choice="F4 left, F7 right">
         <choice>F4 left, F7 right</choice>
         <choice xml:lang="it">F4=sinistra; F7=destra</choice>
+        <choice xml:lang="cs">F4 vlevo, F7 vpravo</choice>
+        <choice xml:lang="de">F4 links, F7 rechts</choice>
       </enumChoice>
       <enumChoice choice="F5 left, F8 right">
         <choice>F5 left, F8 right</choice>
         <choice xml:lang="it">F5=sinistra; F8=destra</choice>
+        <choice xml:lang="cs">F5 vlevo, F8 vpravo</choice>
+        <choice xml:lang="de">F5 links, F8 rechts</choice>
       </enumChoice>
 </enumVal>

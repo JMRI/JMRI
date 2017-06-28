@@ -3,16 +3,15 @@ package jmri;
 /**
  * Represent a single signal head. (Try saying that ten times fast!) A signal
  * may have more than one of these (e.g. a signal mast consisting of several
- * heads) when needed to represent more complex aspects, e.g. Diverging Appoach
+ * heads) when needed to represent more complex aspects, e.g. Diverging Approach
  * etc.
  * <P>
- * Initially, this allows access to explicit appearance information. We don't
- * call this an Aspect, as that's a composite of the appearance of several
- * heads.
+ * This allows access to explicit appearance information. We don't call this an
+ * Aspect, as that's a composite of the appearance of several heads.
  * <P>
  * This class has three bound parameters:
  * <DL>
- * <DT>appearance<DD>The specific color being shown. Values are the various
+ * <DT>Appearance<DD>The specific color being shown. Values are the various
  * color constants defined in the class.
  * <p>
  * The appearance constants form a bit mask, so they can be used with hardware
@@ -21,15 +20,15 @@ package jmri;
  * ones probably won't. If a particular implementation can't display a commanded
  * color, it doesn't try to replace it, but rather just leaves that color off
  * the resulting display.
- * <DT>lit<DD>Whether the head's lamps are lit or left dark.
+ * <DT>Lit<DD>Whether the head's lamps are lit or left dark.
  * <P>
  * This differs from the DARK color defined for the appearance parameter, in
- * that it's independent of that. Lit is intended to allow you to extinquish a
+ * that it's independent of that. Lit is intended to allow you to extinguish a
  * signal head for approach lighting, while still allowing it's color to be set
  * to a definite value for e.g. display on a panel or evaluation in higher level
  * logic.
  *
- * <DT>held<DD>Whether the head's lamps should be forced to a specific
+ * <DT>Held<DD>Whether the head's lamps should be forced to a specific
  * appearance, e.g. RED in higher-level logic.
  * <P>
  * For use in signaling systems, this is a convenient way of storing whether a
@@ -50,7 +49,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public interface SignalHead extends NamedBean {
 
@@ -66,10 +65,19 @@ public interface SignalHead extends NamedBean {
     public static final int HELD = 0x100;
 
     /**
-     * Appearance is a bound parameter.
+     * Get the Signal Head Appearance.
+     * Changes in this value can be listened to using the
+     * {@literal Appearance} property.
+     *
+     * @return the appearance
      */
     public int getAppearance();
 
+    /**
+     * Set the Signal Head Appearance.
+     *
+     * @param newAppearance integer representing a valid Appearance for this head
+     */
     public void setAppearance(int newAppearance);
 
     public String getAppearanceName();
@@ -77,17 +85,22 @@ public interface SignalHead extends NamedBean {
     public String getAppearanceName(int appearance);
 
     /**
-     * Lit is a bound parameter. It controls whether the signal head's lamps are
-     * lit or left dark.
+     * Get whether the signal head is lit or dark. Changes to this value can be
+     * listened to using the {@literal Lit} property.
+     *
+     * @return true if lit; false if dark
      */
     public boolean getLit();
 
     public void setLit(boolean newLit);
 
     /**
-     * Held is a bound parameter. It controls what mechanisms can control the
-     * head's appearance. The actual semantics are defined by those external
-     * mechanisms.
+     * Get whether the signal head is held. Changes to this value can be listened to
+     * using the {@literal Held} property. It controls what mechanisms can
+     * control the head's appearance. The actual semantics are defined by those
+     * external mechanisms.
+     *
+     * @return true if held; false otherwise
      */
     public boolean getHeld();
 

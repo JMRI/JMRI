@@ -16,7 +16,6 @@ import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2012
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 17977 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -24,6 +23,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = SerialDriverAdapter.instance();
     }

@@ -1,6 +1,6 @@
-// LnTrafficRouter.java
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2002
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
         // set the instance to point here
         self = this;
@@ -31,6 +30,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
     // removeLocoNetListener, notify
     boolean connected = false;
 
+    @Override
     public boolean status() {
         return connected;
     }
@@ -40,6 +40,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -52,6 +53,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * Receive a LocoNet message from upstream and forward it to all the local
      * clients.
      */
+    @Override
     public void message(LocoNetMessage m) {
         notify(m);
     }
@@ -92,12 +94,10 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @return true if busy, false if nothing waiting to send
      */
+    @Override
     public boolean isXmtBusy() {
         return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
 }
-
-
-/* @(#)LnTrafficRouter.java */

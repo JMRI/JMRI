@@ -1,4 +1,3 @@
-// SerialMonAction.java
 package jmri.jmrix.maple.serialmon;
 
 import java.awt.event.ActionEvent;
@@ -9,15 +8,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+  */
 public class SerialMonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5677715436818613633L;
 
     public SerialMonAction(String s) {
         super(s);
@@ -27,6 +20,7 @@ public class SerialMonAction extends AbstractAction {
         this("Maple monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame();
@@ -41,6 +35,3 @@ public class SerialMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 
 }
-
-
-/* @(#)SerialMonAction.java */

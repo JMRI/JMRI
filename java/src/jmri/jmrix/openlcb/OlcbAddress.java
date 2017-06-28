@@ -1,10 +1,10 @@
-// OlcbAddress.java
 package jmri.jmrix.openlcb;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +22,7 @@ import org.slf4j.LoggerFactory;
  * </dl>
  *
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
 public class OlcbAddress {
 
@@ -43,6 +42,7 @@ public class OlcbAddress {
 
     /**
      * Construct from string without leading system or type letters
+     * @param s hex coded string of address
      */
     public OlcbAddress(String s) {
         aString = s;
@@ -78,6 +78,7 @@ public class OlcbAddress {
     /**
      * Two addresses are equal if they result in the same numeric contents
      */
+    @Override
     public boolean equals(Object r) {
         if (r == null) {
             return false;
@@ -97,6 +98,7 @@ public class OlcbAddress {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int ret = 0;
         for (int i = 0; i < this.aFrame.length; i++) {
@@ -196,6 +198,7 @@ public class OlcbAddress {
         return aFrame;
     }
 
+    @Override
     public String toString() {
         return aString;
     }
@@ -208,9 +211,15 @@ public class OlcbAddress {
         return retval;
     }
 
+    public EventID toEventID() {
+        byte[] b = new byte[8];
+        for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
+        return new EventID(b);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());
 
 }
 
 
-/* @(#)OlcbAddress.java */
+

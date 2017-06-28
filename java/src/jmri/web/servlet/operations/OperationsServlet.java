@@ -1,9 +1,5 @@
 package jmri.web.servlet.operations;
 
-import static jmri.server.json.JsonException.CODE;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.LOCATION;
-import static jmri.server.json.JSON.NULL;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -14,18 +10,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.server.json.JSON;
-import jmri.server.json.JsonException;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
+import jmri.server.json.operations.JsonOperations;
+import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
@@ -38,12 +36,14 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2014
  * @author Steve Todd (C) 2013
  */
+@WebServlet(name = "OperationsServlet",
+        urlPatterns = {
+            "/operations", // default
+            "/web/operationsConductor.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
+        })
 public class OperationsServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5856610982342205832L;
 
     private ObjectMapper mapper;
 
@@ -51,10 +51,12 @@ public class OperationsServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
-        // ensure all operations managers are functional before handling first request
-        OperationsManager.getInstance();
+        // only do complete initialization for default path, not redirections
+        if (this.getServletContext().getContextPath().equals("/operations")) { // NOI18N
+            this.mapper = new ObjectMapper();
+            // ensure all operations managers are functional before handling first request
+            OperationsManager.getInstance();
+        }
     }
 
     /*
@@ -64,9 +66,15 @@ public class OperationsServlet extends HttpServlet {
      * /operations/conductor/id - get the conductor's screen for train with Id "id"
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getRequestURI().equals("/web/operationsConductor.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsManifest.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsTrains.html")) { // NOI18N
+            response.sendRedirect("/operations"); // NOI18N
+            return;
+        }
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        if (pathInfo[0].equals("") || (pathInfo[0].equals(JSON.TRAINS) && pathInfo.length == 1)) {
+        if (pathInfo[0].equals("") || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {
             this.processTrains(request, response);
         } else {
             if (pathInfo.length == 1) {
@@ -74,7 +82,7 @@ public class OperationsServlet extends HttpServlet {
             } else {
                 String id = pathInfo[1];
                 String report = pathInfo[0];
-                if (report.equals(JSON.TRAINS) && pathInfo.length == 3) {
+                if (report.equals(JsonOperations.TRAINS) && pathInfo.length == 3) {
                     report = pathInfo[2];
                 }
                 log.debug("Handling {} with id {}", report, id);
@@ -100,9 +108,10 @@ public class OperationsServlet extends HttpServlet {
             response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
             try {
-                response.getWriter().print(JsonUtil.getTrains(request.getLocale()));
+                JsonUtil utilities = new JsonUtil(this.mapper);
+                response.getWriter().print(utilities.getTrains(request.getLocale()));
             } catch (JsonException ex) {
-                int code = ex.getJsonMessage().path(DATA).path(CODE).asInt(200);
+                int code = ex.getJsonMessage().path(JSON.DATA).path(JsonException.CODE).asInt(200);
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
             }
         } else if ("html".equals(request.getParameter("format"))) {
@@ -197,17 +206,17 @@ public class OperationsServlet extends HttpServlet {
         JsonNode data;
         if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
             data = this.mapper.readTree(request.getReader());
-            if (!data.path(DATA).isMissingNode()) {
-                data = data.path(DATA);
+            if (!data.path(JSON.DATA).isMissingNode()) {
+                data = data.path(JSON.DATA);
             }
         } else {
             data = this.mapper.createObjectNode();
             ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
-            if (!data.path(LOCATION).isMissingNode()) {
-                String location = data.path(LOCATION).asText();
-                if (location.equals(NULL) || train.getNextLocationName().equals(location)) {
+            if (!data.path(JsonOperations.LOCATION).isMissingNode()) {
+                String location = data.path(JsonOperations.LOCATION).asText();
+                if (location.equals(JSON.NULL) || train.getNextLocationName().equals(location)) {
                     train.move();
                     return; // done property change will cause update to client
                 }

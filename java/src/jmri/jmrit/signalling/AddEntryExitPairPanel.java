@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -37,9 +36,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new EntryExitPair.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
@@ -161,6 +160,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
             final PropertyChangeListener propertyNXListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("autoGenerateComplete")) {
                         if (entryExitFrame != null) {
@@ -264,11 +264,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3291217259103678604L;
 
         //needs a method to for when panel changes
         //need a method to delete an item
@@ -525,8 +520,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
-     * values
+     * Service method to set up a column so that it will hold a button for it's
+     * values.
      *
      * @param table  the table
      * @param column the column
@@ -661,7 +656,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     void optionSaveButton() {
-        int settingTimer = 2000;
+        int settingTimer = 2000; // in milliseconds
         try {
             settingTimer = Integer.parseInt(durationSetting.getText());
         } catch (Exception e) {

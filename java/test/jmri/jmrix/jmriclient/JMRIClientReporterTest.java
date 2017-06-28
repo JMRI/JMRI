@@ -11,12 +11,12 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientReporterTest extends TestCase {
 
     public void testCtor() {
         JMRIClientTrafficController tc = new JMRIClientTrafficController() {
+            @Override
             public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
                 // do nothing to avoid null pointer when sending to non-existant
                 // connection durring test.
@@ -44,10 +44,12 @@ public class JMRIClientReporterTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

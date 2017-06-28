@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008, 2010
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -33,6 +32,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      *
      * @return Formatted element containing no attributes except the class name
      */
+    @Override
     public Element store(Object o) {
 
         adapter = ((ConnectionConfig) o).getAdapter();
@@ -63,6 +63,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return e;
     }
 
+    @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
@@ -114,10 +115,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
         adapter = new Port();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

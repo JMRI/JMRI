@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision: 24246 $
+ * 
  */
 public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
 
@@ -25,6 +25,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -48,6 +49,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -86,6 +88,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;

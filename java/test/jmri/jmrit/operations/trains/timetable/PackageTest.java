@@ -25,13 +25,14 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.timetable.PackageTest"); // no tests in class itself
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(OperationsTrainsGuiTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsTrainsGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScheduleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
         return suite;
     }
 

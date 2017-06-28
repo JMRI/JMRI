@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     public void testValidateSystemNameFormat() {
@@ -202,10 +201,12 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

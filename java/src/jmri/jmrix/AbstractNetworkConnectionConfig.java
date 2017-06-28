@@ -295,8 +295,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
                     // no, set 1st option choice
                     opt.setSelectedIndex(0);
-                    adapter.setOptionState(i, (String) opt.getSelectedItem());
+                    // log before setting new value to show old value
                     log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
+                    adapter.setOptionState(i, (String) opt.getSelectedItem());
                 }
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
@@ -361,7 +362,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 });
         showAdvancedItems();
 
-        init = false;		// need to reload action listeners
+        init = false;  // need to reload action listeners
         checkInitDone();
     }
 

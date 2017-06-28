@@ -9,16 +9,20 @@ import java.util.Comparator;
  * the number case, this does a numeric comparison. If the number is appended
  * with letters, does the numeric sort on the digits followed by a lexigraphic
  * sort on the remainder.
+ * <p>
+ * Note this is intended to take names as provided:  It does not do normalization or 
+ * expansion.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Howard Penny
  * @author Pete Cressman
  */
-public class SystemNameComparator implements Comparator<Object>, java.io.Serializable {
+public class SystemNameComparator implements Comparator<Object> {
 
     public SystemNameComparator() {
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
         if (o1.toString().length() <= 3 && o2.toString().length() <= 3) {
             return o1.toString().compareTo(o2.toString());

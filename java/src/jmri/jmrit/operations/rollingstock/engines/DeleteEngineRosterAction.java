@@ -1,4 +1,3 @@
-// DeleteEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * This routine will remove all engines from the operation database.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class DeleteEngineRosterAction extends AbstractAction {
 

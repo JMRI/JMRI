@@ -1,10 +1,12 @@
 package jmri.jmrit.automat.monitor;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.automat.AutomatSummary;
@@ -17,14 +19,13 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of Automat instances.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
-public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
-        implements PropertyChangeListener {
+public class AutomatTableDataModel extends AbstractTableModel {
 
-    static final int NAMECOL = 0;		// display name
-    static final int TURNSCOL = 1;		// number of times through the loop
-    static final int KILLCOL = 2;		//
+    static final int NAMECOL = 0;  // display name
+    static final int TURNSCOL = 1;  // number of times through the loop
+    static final int KILLCOL = 2;  //
 
     static final int NUMCOLUMN = 3;
 
@@ -32,39 +33,47 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
 
     AutomatSummary summary = AutomatSummary.instance();
 
+    private final PropertyChangeListener listener = (PropertyChangeEvent evt) -> {
+        switch (evt.getPropertyName()) {
+            case "Insert":
+                // fireTableRowsInserted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
+                fireTableDataChanged();
+                break;
+            case "Remove":
+                //fireTableRowsDeleted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
+                fireTableDataChanged();
+                break;
+            case "Count":
+                // it's a count indication, so update TURNS
+                int row = ((Integer) evt.getNewValue());
+                // length might have changed...
+                if (row < getRowCount()) {
+                    fireTableCellUpdated(row, TURNSCOL);
+                }
+                break;
+            default:
+                log.debug("Ignoring unexpected property {}", evt.getPropertyName());
+                break;
+        }
+    };
+
     public AutomatTableDataModel() {
         super();
         // listen for new/gone/changed Automat instances
-        summary.addPropertyChangeListener(this);
+        summary.addPropertyChangeListener(this.listener);
     }
 
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("Insert")) {
-            // fireTableRowsInserted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
-            fireTableDataChanged();
-        } else if (e.getPropertyName().equals("Remove")) {
-            //fireTableRowsDeleted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
-            fireTableDataChanged();
-        } else if (e.getPropertyName().equals("Count")) {
-            // it's a count indication, so update TURNS
-            int row = ((Integer) e.getNewValue()).intValue();
-            // length might have changed...
-            if (row < getRowCount()) {
-                fireTableCellUpdated(row, TURNSCOL);
-            }
-        } else {
-            log.warn("Unexpected property named " + e.getPropertyName());
-        }
-    }
-
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public int getRowCount() {
         return AutomatSummary.instance().length();
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOL:
@@ -80,8 +89,10 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
     }
 
     /**
-     * Note that this returns String even for columns that contain buttons
+     * Note that this returns String even for columns that contain buttons.
+     * {@inheritDoc}
      */
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NAMECOL:
@@ -94,6 +105,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case KILLCOL:
@@ -103,12 +115,13 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case NAMECOL:
                 return summary.get(row).getName();
             case TURNSCOL:
-                return Integer.valueOf(summary.get(row).getCount());
+                return summary.get(row).getCount();
             case KILLCOL:  // return button text here
                 return rb.getString("ButtonKill");
             default:
@@ -131,6 +144,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == KILLCOL) {
             // button fired, handle
@@ -143,6 +157,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
+     * @param table the table to configure
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -166,7 +181,9 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param sample Typical button, used for size
+     * @param table the table in which to configure the column
+     * @param column the position of the configured column
+     * @param sample typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         TableColumnModel tcm = table.getColumnModel();
@@ -182,7 +199,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
     }
 
     synchronized public void dispose() {
-        AutomatSummary.instance().removePropertyChangeListener(this);
+        AutomatSummary.instance().removePropertyChangeListener(this.listener);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutomatTableDataModel.class.getName());

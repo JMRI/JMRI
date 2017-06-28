@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision$
  */
 public class MultiThrottleController extends ThrottleController {
 
@@ -212,6 +211,6 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
-    private static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
 
 }

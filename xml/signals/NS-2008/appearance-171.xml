@@ -7,18 +7,33 @@
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2010</year><year>2011</year><holder>JMRI</holder>
+    <year>2010</year>
+    <year>2011</year>
+    <holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <personname>
+          <firstname>Dick</firstname>
+          <surname>Bronson</surname>
+          </personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <personname>
+          <firstname>Bob</firstname>
+          <surname>Jacobsen</surname>
+        </personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
+    <author>
+        <personname>
+          <firstname>Suzie</firstname>
+          <surname>Tall</surname>
+        </personname>
+        <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,7 +42,13 @@
         <date>2013-01-28</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2016-12-01</date>
+        <authorinitials>ST</authorinitials>
+        <revremark>Added specific appearances</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -49,15 +70,21 @@
       <reference>292 (c5)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/171/rule-N292.gif</imagelink>
     </appearance>
-    
+
   </appearances>
   <specificappearances>
     <danger>
-      <aspect>171</aspect>
+      <aspect>Stop Signal</aspect>
     </danger>
-    <held>
+    <permissive>
       <aspect>171</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop Signal</aspect>
     </held>
+    <dark>
+      <aspect>171</aspect>
+    </dark>
   </specificappearances>
 
   <aspectMappings>
@@ -122,20 +149,20 @@
       <ourAspect>171</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>171</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop Signal</advancedAspect>
       <ourAspect>171</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>171</advancedAspect>
       <ourAspect>171</ourAspect>
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

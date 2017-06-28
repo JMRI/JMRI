@@ -13,7 +13,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Powerline messages
  *
- * @author	Ken Cameron	Copyright (C) 2010 derived from:
+ * @author Ken Cameron Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
@@ -39,6 +39,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof SerialSystemConnectionMemo) {
             try {
@@ -50,10 +51,12 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -66,6 +69,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
         return x.toString();
     }
 
+    @Override
     public void initComponents(SerialSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         tc = memo.getTrafficController();
@@ -95,6 +99,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
         add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -117,9 +122,11 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
         return m;
     }
 
+    @Override
     public void message(SerialMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SerialReply r) {
     } // ignore replies
 

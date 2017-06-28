@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
@@ -20,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MemoryTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class MemoryTableAction extends AbstractTableAction {
 
@@ -50,9 +52,11 @@ public class MemoryTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Memory objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
 
+            @Override
             public String getValue(String name) {
                 Memory mem = InstanceManager.memoryManagerInstance().getBySystemName(name);
                 if (mem == null) {
@@ -66,27 +70,33 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return InstanceManager.memoryManagerInstance();
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.memoryManagerInstance().getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.memoryManagerInstance().getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
                     Memory t = (Memory) getBySystemName(sysNameList.get(row));
@@ -97,6 +107,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
                     return Bundle.getMessage("BlockValue");
@@ -104,6 +115,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
                     return String.class;
@@ -112,45 +124,52 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameMemory");
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleMemoryTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.MemoryTable";
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(5);
-    JTextField userName = new JTextField(5);
+    JTextField sysName = new JTextField(20);
+    JTextField userName = new JTextField(20);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-
-    JTextField numberToAdd = new JTextField(10);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager p;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
@@ -159,14 +178,17 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
             ActionListener okListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
+            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "M")); // override tooltip with bean specific letter, doesn't work
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);
@@ -188,21 +210,13 @@ public class MemoryTableAction extends AbstractTableAction {
         int numberOfMemory = 1;
 
         if (range.isSelected()) {
-            try {
-                numberOfMemory = Integer.parseInt(numberToAdd.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Number to memory items to Add must be a number!", "" + ex, "", true, false);
-                return;
-            }
-
+            numberOfMemory = (Integer) numberToAdd.getValue();
         }
 
-        if (numberOfMemory >= 65) {
+        if (numberOfMemory >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    "You are about to add " + numberOfMemory + " Memory Objects into the configuration\nAre you sure?", "Warning",
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Memories"), numberOfMemory),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
@@ -215,12 +229,13 @@ public class MemoryTableAction extends AbstractTableAction {
         String sName = sysName.getText();
         StringBuilder b;
         for (int x = 0; x < numberOfMemory; x++) {
+
             if (x != 0) {
                 if (user != null) {
                     b = new StringBuilder(userName.getText());
                     b.append(":");
                     b.append(Integer.toString(x));
-                    user = b.toString();
+                    user = b.toString(); // add :x to user name starting with 2nd item
                 }
                 if (!autoSystemName.isSelected()) {
                     b = new StringBuilder(sysName.getText());
@@ -229,6 +244,19 @@ public class MemoryTableAction extends AbstractTableAction {
                     sName = b.toString();
                 }
             }
+
+            if (user != null && !user.equals("") && jmri.InstanceManager.memoryManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
+                user = null; // new Memory objects always receive a valid system name using the next free index, but user names must not be in use so use none in that case
+            }
+
+            if (sName != null && !sName.equals("") && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
+                return; // new Memory objects are always valid, but system names must not be in use so skip in that case
+            }
+
             try {
                 if (autoSystemName.isSelected()) {
                     InstanceManager.memoryManagerInstance().newMemory(user);
@@ -238,12 +266,11 @@ public class MemoryTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
         }
         p.setSimplePreferenceState(systemNameAuto, autoSystemName.isSelected());
     }
-    //private boolean noWarn = false;
 
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
@@ -254,10 +281,12 @@ public class MemoryTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleMemoryTable");
     }
 
+    @Override
     protected String getClassName() {
         return MemoryTableAction.class.getName();
     }

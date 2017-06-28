@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class TamsTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class TamsTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.tams.configurexml.TamsTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

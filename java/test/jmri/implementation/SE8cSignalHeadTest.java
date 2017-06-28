@@ -8,11 +8,10 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for the SE8cSignalHead implmentation
+ * Tests for the SE8cSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
@@ -36,7 +35,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
-
 
     @Test
     public void testCtor2() {
@@ -66,7 +64,7 @@ public class SE8cSignalHeadTest {
 
     @Test
     public void testCtor4() {
-        // original ctor from number and user name
+        // original ctor from number only 
         SE8cSignalHead s = new SE8cSignalHead(11);
 
         Assert.assertEquals("system name", "LH11", s.getSystemName());
@@ -137,39 +135,6 @@ public class SE8cSignalHeadTest {
 
         Assert.assertEquals("to low after", Turnout.UNKNOWN, it11.getCommandedState());
         Assert.assertEquals("to high after", Turnout.CLOSED, it12.getCommandedState());
-
-    }
-
-    @Test
-    public void testStateFollowing() {
-        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
-        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
-        SE8cSignalHead s1 = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
-                "user name"
-        );
-
-        SE8cSignalHead s2 = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
-                "user name"
-        );
-
-        s1.setAppearance(SignalHead.DARK);
-        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
-
-        s1.setAppearance(SignalHead.RED);
-        Assert.assertEquals("s2 after RED", SignalHead.RED, s2.getAppearance());
-
-        s1.setAppearance(SignalHead.GREEN);
-        Assert.assertEquals("s2 after GREEN", SignalHead.GREEN, s2.getAppearance());
-
-        s1.setAppearance(SignalHead.YELLOW);
-        Assert.assertEquals("s2 after YELLOW", SignalHead.YELLOW, s2.getAppearance());
-
-        s1.setAppearance(SignalHead.DARK);
-        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
 
     }
 

@@ -1,4 +1,3 @@
-// TrainsScriptFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GridBagLayout;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class TrainsScriptFrame extends OperationsFrame {
 
@@ -45,7 +43,7 @@ public class TrainsScriptFrame extends OperationsFrame {
     JButton addShutDownScriptButton = new JButton(Bundle.getMessage("AddScript"));
     JButton runStartUpScriptButton = new JButton(Bundle.getMessage("RunScripts"));
     JButton runShutDownScriptButton = new JButton(Bundle.getMessage("RunScripts"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     public TrainsScriptFrame() {
         super();

@@ -1,4 +1,3 @@
-// PollDataModel.java
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JComboBox;
@@ -14,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * Pane for user management of RPS alignment.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class PollDataModel extends AbstractTableModel implements MeasurementListener {
 
     static final int NAMECOL = 0;
@@ -40,14 +38,17 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         fireTableDataChanged();
     }
 
+    @Override
     public int getColumnCount() {
         return LAST + 1;
     }
 
+    @Override
     public int getRowCount() {
         return Engine.instance().getNumTransmitters();
     }
 
+    @Override
     public String getColumnName(int c) {
         switch (c) {
             case NAMECOL:
@@ -75,6 +76,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         if (c == LONGCOL || c == POLLCOL) {
             return Boolean.class;
@@ -89,6 +91,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         }
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         if (c == IDCOL || c == POLLCOL || c == TYPECOL) {
             return true;
@@ -97,6 +100,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         }
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         // r is row number, from 0
         Measurement m;
@@ -155,6 +159,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         }
     }
 
+    @Override
     public void setValueAt(Object value, int r, int c) {
         // r is row number, from 0
         switch (c) {
@@ -170,11 +175,16 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
                 return;
             case TYPECOL:
                 log.error("Got " + ((JComboBox<?>) value).getSelectedItem() + " but did not act");
+                break;
+            default:
+                log.warn("Unhandled col {}", c);
+                break;
         }
     }
 
     // When a measurement happens, mark data as changed.
     // It would be better to just mark one line...
+    @Override
     public void notify(Measurement m) {
         fireTableDataChanged();
     }

@@ -47,6 +47,7 @@ public class FullBackupExportAction
         _parent = parent;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         Roster roster = Roster.getDefault();
 
@@ -74,8 +75,7 @@ public class FullBackupExportAction
             zipper = new ZipOutputStream(new FileOutputStream(filename));
 
             // create a zip file roster entry for each entry in the main roster
-            for (int index = 0; index < roster.numEntries(); index++) {
-                RosterEntry entry = roster.getEntry(index);
+            for (RosterEntry entry : roster.getAllEntries()) {
                 copyFileToStream(entry.getPathName(), "roster", zipper, entry.getId());
             }
 
@@ -149,6 +149,7 @@ public class FullBackupExportAction
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

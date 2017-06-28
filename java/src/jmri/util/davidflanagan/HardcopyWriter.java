@@ -15,7 +15,6 @@ import java.awt.PageAttributes;
 import java.awt.PrintJob;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -31,8 +30,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * Provide graphic output to a screen/printer.
+ * <p>
  * This is from Chapter 12 of the O'Reilly Java book by David Flanagan with the
  * alligator on the front.
  *
@@ -73,7 +76,7 @@ public class HardcopyWriter extends Writer {
 //	protected Graphics previewedPage;
     protected Image previewImage;
 //	protected Graphics previewImagegr;
-    protected Vector<Image> pageImages = new Vector<Image>(3, 3);
+    protected Vector<Image> pageImages = new Vector<>(3, 3);
     protected JmriJFrame previewFrame;
     protected JPanel previewPanel;
     protected ImageIcon previewIcon = new ImageIcon();
@@ -198,44 +201,44 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Creates a print preview toolbar added by Dennis Miller
+     * Create a print preview toolbar.
+     *
+     * @author Dennis Miller
      */
     protected void toolBarInit() {
-        previousButton = new JButton("Previous Page");
+        previousButton = new JButton(Bundle.getMessage("ButtonPreviousPage"));
         previewToolBar.add(previousButton);
-        previousButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                pagenum--;
-                displayPage();
-            }
+        previousButton.addActionListener((ActionEvent actionEvent) -> {
+            pagenum--;
+            displayPage();
         });
-        nextButton = new JButton("Next Page");
+        nextButton = new JButton(Bundle.getMessage("ButtonNextPage"));
         previewToolBar.add(nextButton);
-        nextButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                pagenum++;
-                displayPage();
-            }
+        nextButton.addActionListener((ActionEvent actionEvent) -> {
+            pagenum++;
+            displayPage();
         });
-        previewToolBar.add(new JLabel("    Page "));
+        previewToolBar.add(new JLabel("  " + Bundle.getMessage("HeaderPageNum")));
         previewToolBar.add(pageCount);
-        previewToolBar.add(new JLabel(" of "));
+        previewToolBar.add(new JLabel(" / ")); // values don't stick to use {0} etc. variable fields
         previewToolBar.add(totalPages);
-        closeButton = new JButton(" Close ");
+
+        closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         previewToolBar.add(closeButton);
-        closeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (page != null) {
-                    page.dispose();
-                }
-                previewFrame.dispose();
+        closeButton.addActionListener((ActionEvent actionEvent) -> {
+            if (page != null) {
+                page.dispose();
             }
+            previewFrame.dispose();
         });
     }
 
     /**
-     * Method to display a page image in the preview pane Not in original class
-     * but added later by Dennis Miller
+     * Display a page image in the preview pane.
+     * <p>
+     * Not part of the original HardcopyWriter class.
+     *
+     * @author Dennis Miller
      */
     protected void displayPage() {
         // limit the pages to the actual range
@@ -262,7 +265,7 @@ public class HardcopyWriter extends Writer {
         previewPanel.add(previewLabel);
         // set the page count info
         pageCount.setText("" + pagenum);
-        totalPages.setText("" + pageImages.size() + "     ");
+        totalPages.setText(pageImages.size() + "     ");
         // repaint the frame but don't use pack() as we don't want resizing
         previewFrame.invalidate();
         previewFrame.revalidate();
@@ -270,8 +273,13 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * write method, implemented by all Write subclasses
+     * Send text to Writer output.
+     *
+     * @param buffer block of text characters
+     * @param index position to start printing
+     * @param len length (number of characters) of output
      */
+    @Override
     public void write(char[] buffer, int index, int len) {
         synchronized (this.lock) {
             // loop through all characters passed to us
@@ -341,11 +349,14 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Write the String with the desired color. Returns the text color back to
-     * the default after the string is written.
+     * Write a given String with the desired color.
+     * <p>
+     * Reset the text color back to the default after
+     * the string is written.
      *
      * @param c the color desired for this String
      * @param s the String
+     * @throws java.io.IOException if unable to write to printer
      */
     public void write(Color c, String s) throws IOException {
         if (page != null) {
@@ -358,12 +369,17 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    @Override
     public void flush() {
     }
 
     /**
-     * method modified by Dennis Miller to add preview capability
+     * Handle close event of pane.
+     * Modified to clean up the added preview capability.
+     *
+     * @author David Flanagan, modified by Dennis Miller
      */
+    @Override
     public void close() {
         synchronized (this.lock) {
             if (isPreview) {
@@ -383,7 +399,9 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Dispose added so that a preview can be canceled
+     * Free up resources .
+     * <p>
+     * Added so that a preview can be canceled.
      */
     public void dispose() {
         synchronized (this.lock) {
@@ -481,14 +499,18 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Return the number of columns of characters that fit on a page
+     * Return the number of columns of characters that fit on a page.
+     *
+     * @return the number of characters in a line
      */
     public int getCharactersPerLine() {
         return this.chars_per_line;
     }
 
     /**
-     * Return the number of lines that fit on a page
+     * Return the number of lines that fit on a page.
+     *
+     * @return the number of lines in a page
      */
     public int getLinesPerPage() {
         return this.lines_per_page;
@@ -575,6 +597,9 @@ public class HardcopyWriter extends Writer {
      * <P>
      * The image is positioned on the right side of the paper, at the current
      * height.
+     *
+     * @param c image to write
+     * @param i ignored, but maintained for API compatibility
      */
     public void write(Image c, Component i) {
         // if we haven't begun a new page, do that now
@@ -600,6 +625,9 @@ public class HardcopyWriter extends Writer {
      * <P>
      * The image is positioned on the right side of the paper, at the current
      * height.
+     *
+     * @param c the image to print
+     * @param i ignored but maintained for API compatibility
      */
     public void writeNoScale(Image c, Component i) {
         // if we haven't begun a new page, do that now
@@ -626,6 +654,8 @@ public class HardcopyWriter extends Writer {
      * itself at the current line and aligned at the left margin. The calling
      * method should check for sufficient space left on the page and move it to
      * the top of the next page if there isn't enough space.
+     *
+     * @param jW the window to print
      */
     public void write(JWindow jW) {
         // if we haven't begun a new page, do that now
@@ -664,6 +694,11 @@ public class HardcopyWriter extends Writer {
      * offset so they appear evenly spaced, although they don't take into
      * account any space needed for descenders, so they look best with all caps
      * text
+     *
+     * @param rowStart vertical starting position
+     * @param colStart horizontal starting position
+     * @param rowEnd   vertical ending position
+     * @param colEnd   horizontal ending position
      */
     public void write(int rowStart, int colStart, int rowEnd, int colEnd) {
         // if we haven't begun a new page, do that now
@@ -684,6 +719,8 @@ public class HardcopyWriter extends Writer {
      * <P>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
+     *
+     * @return the line number within the page
      */
     public int getCurrentLineNumber() {
         return this.linenum;
@@ -711,6 +748,8 @@ public class HardcopyWriter extends Writer {
      * This method was added to improve appearance when printing tables
      * <P>
      * This was not in the original class, added afterwards by DaveDuchamp.
+     *
+     * @param percent percentage by which to increase line spacing
      */
     public void increaseLineSpacing(int percent) {
         int delta = (lineheight * percent) / 100;
@@ -726,4 +765,5 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class.getName());
 }

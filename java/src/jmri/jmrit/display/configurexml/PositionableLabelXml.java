@@ -30,6 +30,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableLabel p = (PositionableLabel) o;
 
@@ -61,6 +62,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * This is always stored, even if the icon isn't in text mode, because some
      * uses (subclasses) of PositionableLabel flip back and forth between icon
      * and text, and want to remember their formatting.
+     *
+     * @param p the icon to store
+     * @param element the XML representation of the icon
      */
     protected void storeTextInfo(Positionable p, Element element) {
         //if (p.getText()!=null) element.setAttribute("text", p.getText());
@@ -131,7 +135,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     /**
      * Default implementation for storing the common contents of an Icon
      *
-     * @param element Element in which contents are stored
+     * @param p the icon to store
+     * @param element the XML representation of the icon
      */
     public void storeCommonAttributes(Positionable p, Element element) {
 
@@ -181,6 +186,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         PositionableLabel l = null;
@@ -188,7 +194,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         // get object class and determine editor being used
         Editor editor = (Editor) o;
         if (element.getAttribute("icon") != null) {
-            NamedIcon icon = null;
+            NamedIcon icon;
             String name = element.getAttribute("icon").getValue();
 //            if (log.isDebugEnabled()) log.debug("icon attribute= "+name);
             if (name.equals("yes")) {
@@ -203,7 +209,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     }
                 }
             }
-            // allow null icons for now
+            // abort if name != yes and have null icon
+            if (icon == null && !name.equals("yes")) {
+                log.info("PositionableLabel icon removed for url= " + name);
+                return;
+            }
             l = new PositionableLabel(icon, editor);
             try {
                 Attribute a = element.getAttribute("rotate");
@@ -223,22 +233,17 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     return;
                 }
             } else {
-                if (icon == null) {
-                    log.info("PositionableLabel icon removed for url= " + name);
-                    return;
-                } else {
-                    l.updateIcon(icon);
-                }
+                l.updateIcon(icon);
             }
         }
-        
+
         if (element.getAttribute("text") != null) {
-            if (l==null) {
-                l = new PositionableLabel(element.getAttribute("text").getValue(), editor);                
+            if (l == null) {
+                l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
             }
             loadTextInfo(l, element);
 
-        } else if (l==null){
+        } else if (l == null) {
             log.error("PositionableLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
@@ -291,6 +296,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     case 2:
                         drop = 1; //italic
                         break;
+                    default:
+                        // fall through
+                        break;
                 }
                 util.setFontStyle(style, drop);
             }
@@ -310,10 +318,10 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
 
         a = element.getAttribute("hasBackground");
-        if (a!=null) {
-            util.setHasBackground("yes".equals(a.getValue()));            
+        if (a != null) {
+            util.setHasBackground("yes".equals(a.getValue()));
         } else {
-            util.setHasBackground(true); 
+            util.setHasBackground(true);
         }
         if (util.hasBackground()) {
             try {
@@ -325,9 +333,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 log.warn("Could not parse background color attributes!");
             } catch (NullPointerException e) {
                 util.setHasBackground(false);// if the attributes are not listed, we consider the background as clear.
-            }            
+            }
         }
-        
+
         int fixedWidth = 0;
         int fixedHeight = 0;
         try {
@@ -346,11 +354,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (!(fixedWidth == 0 && fixedHeight == 0)) {
             util.setFixedSize(fixedWidth, fixedHeight);
         }
-        int margin = 0;
         if ((util.getFixedWidth() == 0) || (util.getFixedHeight() == 0)) {
             try {
-                margin = element.getAttribute("margin").getIntValue();
-                util.setMargin(margin);
+                util.setMargin(element.getAttribute("margin").getIntValue());
             } catch (org.jdom2.DataConversionException e) {
                 log.warn("Could not parse margin attribute!");
             } catch (NullPointerException e) {  // considered normal if the attributes are not present
@@ -391,7 +397,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.warn("invalid 'degrees' value (non integer)");
         }
         if (deg == 0 && util.hasBackground()) {
-            l.setOpaque(true);                    
+            l.setOpaque(true);
         }
     }
 

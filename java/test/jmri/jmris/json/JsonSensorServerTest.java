@@ -46,6 +46,7 @@ public class JsonSensorServerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -56,6 +57,7 @@ public class JsonSensorServerTest extends TestCase {
         jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();

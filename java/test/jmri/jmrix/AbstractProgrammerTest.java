@@ -29,6 +29,7 @@ public class AbstractProgrammerTest extends TestCase {
         // Programmer implementation that uses getBestMode for setting default
         abstractprogrammer = new AbstractProgrammer() {
 
+            @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
@@ -39,12 +40,18 @@ public class AbstractProgrammerTest extends TestCase {
                 return retval;
             }
 
+            @Override
             public ProgrammingMode getBestMode() { return DefaultProgrammerManager.REGISTERMODE; }
             
+            @Override
             public void writeCV(int i, int j, ProgListener l) {}
+            @Override
             public void confirmCV(String i, int j, ProgListener l) {}
+            @Override
             public void readCV(int i, ProgListener l) {}
+            @Override
             public void timeout() {}
+            @Override
             public boolean getCanRead() { return true;}
         };
 
@@ -97,6 +104,7 @@ public class AbstractProgrammerTest extends TestCase {
                 abstractprogrammer.registerFromCV(cv1); // should assert
                 Assert.fail("did not throw as expected for cv = " + cv1);
             } catch (Exception e) {
+                jmri.util.JUnitAppender.assertWarnMessage("Unhandled register from cv:  "+cv1);
             }
         }
     }
@@ -119,11 +127,13 @@ public class AbstractProgrammerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
         abstractprogrammer = new AbstractProgrammer() {
 
+            @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
@@ -134,14 +144,20 @@ public class AbstractProgrammerTest extends TestCase {
                 return retval;
             }
 
+            @Override
             public void writeCV(int i, int j, ProgListener l) {}
+            @Override
             public void confirmCV(String i, int j, ProgListener l) {}
+            @Override
             public void readCV(int i, ProgListener l) {}
+            @Override
             public void timeout() {}
+            @Override
             public boolean getCanRead() { return true;}
         };
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

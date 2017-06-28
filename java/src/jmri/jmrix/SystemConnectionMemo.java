@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
  * Lightweight abstract class to denote that a system is active, and provide
  * general information.
  * <p>
- * Objects of specific subtypes are registered in the instance manager to
+ * Objects of specific subtypes of this are registered in the {@link jmri.InstanceManager} to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 abstract public class SystemConnectionMemo {
 
@@ -36,6 +36,7 @@ abstract public class SystemConnectionMemo {
         if (!setSystemPrefix(prefix)) {
             for (int x = 2; x < 50; x++) {
                 if (setSystemPrefix(prefix + x)) {
+                    log.debug("created system prefix {}", prefix+x);
                     break;
                 }
             }
@@ -44,6 +45,7 @@ abstract public class SystemConnectionMemo {
         if (!setUserName(userName)) {
             for (int x = 2; x < 50; x++) {
                 if (setUserName(userName + x)) {
+                    log.debug("created user name {}", prefix+x);
                     break;
                 }
             }
@@ -55,18 +57,11 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    // private static boolean initialised = false;
-
     /**
      * Provides a method to reserve System Names and prefixes at creation
      */
     private static void initialise() {
         log.debug("initialise called");
-//        if (!initialised) {
-//             addUserName("Internal");
-//             addSystemPrefix("I");
-//             initialised = true;
-//        }
     }
 
     /**
@@ -76,8 +71,6 @@ abstract public class SystemConnectionMemo {
         userNames = new ArrayList<>();
         sysPrefixes = new ArrayList<>();
         listeners = new HashSet<>();
-        
-        //initialised = false;
     }
     
     protected static ArrayList<String> userNames = new ArrayList<>();
@@ -155,10 +148,11 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the system prefix.
      *
+     * @param systemPrefix prefix to use for this system connection
      * @throws java.lang.NullPointerException if systemPrefix is null
      * @return true if the system prefix could be set
      */
-    public boolean setSystemPrefix(@Nonnull String systemPrefix) {
+    public final boolean setSystemPrefix(@Nonnull String systemPrefix) {
         if (systemPrefix == null) {
             throw new NullPointerException();
         }
@@ -195,10 +189,11 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the user name for the system connection.
      *
+     * @param name user name to use for this system connection
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
      */
-    public boolean setUserName(@Nonnull String name) {
+    public final boolean setUserName(@Nonnull String name) {
         if (name == null) {
             throw new NullPointerException();
         }
@@ -301,12 +296,14 @@ abstract public class SystemConnectionMemo {
 
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    protected void addToActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
+    protected final void addToActionList() {
+        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || util == null) {
+        if (rb == null) {
+            // don't bother trying if there is no ActionModelResourceBundle
             return;
         }
+        log.debug("Adding actions from bundle {}", rb.getBaseBundleName());
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
@@ -318,12 +315,14 @@ abstract public class SystemConnectionMemo {
         }
     }
 
-    protected void removeFromActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
+    protected final void removeFromActionList() {
+        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || util == null) {
+        if (rb == null) {
+            // don't bother trying if there is no ActionModelResourceBundle
             return;
         }
+        log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();

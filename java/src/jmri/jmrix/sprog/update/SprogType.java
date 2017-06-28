@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Class to hold SPROG type
  *
  * @author	Andrew crosland Copyright (C) 2012
- * @version	$Revision: $
+ * 
  */
 public class SprogType {
 
@@ -216,6 +216,7 @@ public class SprogType {
      *
      * @return String representation of a SPROG type
      */
+    @Override
     public String toString() {
         return this.toString(sprogType);
     }
@@ -265,4 +266,4 @@ public class SprogType {
     private final static Logger log = LoggerFactory.getLogger(SprogType.class.getName());
 }
 
-/* @(#)SprogType.java */
+

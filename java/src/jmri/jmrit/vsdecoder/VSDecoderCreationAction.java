@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a new VSDecoder Pane.
  *
- * @author	Mark Underwood
- * @version $Revision$
+ * @author Mark Underwood
  */
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
@@ -49,7 +48,7 @@ public class VSDecoderCreationAction extends AbstractAction {
 
     public VSDecoderCreationAction() {
         //this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
-        this("Virtual Sound Decoder", false);
+        this("Virtual Sound Decoder", true);
     }
 
     /**
@@ -57,6 +56,7 @@ public class VSDecoderCreationAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         String fp = null, fn = null;
         JFrame tf = null;

@@ -1,4 +1,3 @@
-// SerialMonAction.java
 package jmri.jmrix.powerline.swing.serialmon;
 
 import java.awt.event.ActionEvent;
@@ -13,15 +12,9 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 @Deprecated
 public class SerialMonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -563795110468683083L;
 
     public SerialMonAction(String s, SerialTrafficController tc) {
         super(s);
@@ -34,6 +27,7 @@ public class SerialMonAction extends AbstractAction {
         this("Powerline Device Monitor", tc);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(tc);
@@ -50,4 +44,4 @@ public class SerialMonAction extends AbstractAction {
 }
 
 
-/* @(#)SerialMonAction.java */
+

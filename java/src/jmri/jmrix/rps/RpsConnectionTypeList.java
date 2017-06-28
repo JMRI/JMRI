@@ -1,4 +1,3 @@
-// RpsConnectionTypeList.java
 package jmri.jmrix.rps;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.rps;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class RpsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

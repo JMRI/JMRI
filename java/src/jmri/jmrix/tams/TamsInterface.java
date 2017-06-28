@@ -1,4 +1,3 @@
-// TamsInterface.java
 package jmri.jmrix.tams;
 
 /**
@@ -8,7 +7,6 @@ package jmri.jmrix.tams;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public interface TamsInterface {
 
@@ -32,4 +30,4 @@ public interface TamsInterface {
     void sendTamsMessage(TamsMessage m, TamsListener l);
 }
 
-/* @(#)TamsInterface.java */
+

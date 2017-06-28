@@ -1,4 +1,3 @@
-// PrintMoreOptionAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
@@ -10,7 +9,7 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 21656 $
+ * 
  */
 public class PrintMoreOptionAction extends AbstractAction {
 
@@ -35,4 +34,4 @@ public class PrintMoreOptionAction extends AbstractAction {
     }
 }
 
-/* @(#)PrintMoreOptionAction.java */
+

@@ -1,4 +1,3 @@
-// TrainsTableFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -60,7 +59,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
- * @version $Revision$
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -81,7 +79,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     // labels
     JLabel numTrains = new JLabel();
-    JLabel textTrains = new JLabel(Bundle.getMessage("Trains").toLowerCase());
+    JLabel textTrains = new JLabel(Bundle.getMessage("trains"));
     JLabel textSep1 = new JLabel("      ");
 
     // radio buttons
@@ -94,7 +92,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
@@ -288,6 +286,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
 
@@ -309,7 +308,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave();
+        new AutoSave().start();
     }
 
     @Override
@@ -362,7 +361,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
                             train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -387,7 +386,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
                             train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();

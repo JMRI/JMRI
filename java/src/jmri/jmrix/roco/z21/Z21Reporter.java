@@ -1,10 +1,7 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.Reporter;
 import jmri.RailCom; 
-import jmri.IdTag; 
 import jmri.RailComManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 
@@ -98,6 +95,7 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
     private void refreshTimer() {
         if (refreshTimer == null) {
             refreshTimer = new javax.swing.Timer(refreshTimeoutValue, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     // If the timer times out, send a request for status
                     requestUpdateFromLayout();
@@ -110,6 +108,7 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
         refreshTimer.start();
     }
 
+    @Override
     public void dispose(){
         super.dispose();
         refreshTimer.stop();

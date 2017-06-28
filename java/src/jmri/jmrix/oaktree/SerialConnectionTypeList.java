@@ -1,4 +1,3 @@
-// SerialConnectionTypeList.java
 package jmri.jmrix.oaktree;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.oaktree;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public static final String OAK = "Oak Tree Systems";

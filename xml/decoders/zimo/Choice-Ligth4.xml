@@ -5,9 +5,13 @@
       <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
         <choice>Speed or Load dependent Smoke for Steam Engines</choice>
         <choice xml:lang="it">Fumo per loco a Vapore dipendente da velocità o Carico</choice>
+        <choice xml:lang="cs">Kouř parní lokomotivy závisí na rychlosti nebo zátěži</choice>
+        <choice xml:lang="de">Geschwindigkeits- oder lastabhängige Raucherzeugung (Dampflok)</choice>
       </enumChoice>
       <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
         <choice>Operation dependent Smoke for Diesels</choice>
         <choice xml:lang="it">Fumo per loco diesel dipendente da operazioni</choice>
+        <choice xml:lang="cs">Kouř spalovacího motoru závisí na provozu</choice>
+        <choice xml:lang="de">Geschwindigkeits- oder lastabhängige Raucherzeugung (Diesellok)</choice>
       </enumChoice>
 </enumChoiceGroup>

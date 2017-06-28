@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class NodeConfigAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure Oak Tree Systems Nodes");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame();
         try {

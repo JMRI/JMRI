@@ -10,7 +10,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class OptionAction extends AbstractAction {
 
@@ -31,4 +30,4 @@ public class OptionAction extends AbstractAction {
     }
 }
 
-/* @(#)OptionAction.java */
+

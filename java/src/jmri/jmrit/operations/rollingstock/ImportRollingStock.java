@@ -1,4 +1,3 @@
-// ImportRollingStock.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.io.BufferedReader;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Provides common routes for importing cars and locomotives
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 24463 $
+ * 
  */
 public class ImportRollingStock extends Thread {
 

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -45,6 +51,9 @@
     <label xml:lang="it">Abilita attenuazione con F1</label>
     <label xml:lang="de">Dimmen einschalten mit F1</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F1</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F1</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F1</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F1</label>
   </variable>
   <variable item="Enable dimming with F2" CV="57" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -52,6 +61,9 @@
     <label xml:lang="it">Abilita attenuazione con F2</label>
     <label xml:lang="de">Dimmen einschalten mit F2</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F2</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F2</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F2</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F2</label>
   </variable>
   <variable item="Enable dimming with F3" CV="57" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -59,6 +71,9 @@
     <label xml:lang="it">Abilita attenuazione con F3</label>
     <label xml:lang="de">Dimmen einschalten mit F3</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F3</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F3</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F3</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F3</label>
   </variable>
   <variable item="Enable dimming with F4" CV="57" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -66,6 +81,9 @@
     <label xml:lang="it">Abilita attenuazione con F4</label>
     <label xml:lang="de">Dimmen einschalten mit F4</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F4</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F4</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F4</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F4</label>
   </variable>
   <variable item="Enable dimming with F5" CV="57" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -73,6 +91,9 @@
     <label xml:lang="it">Abilita attenuazione con F5</label>
     <label xml:lang="de">Dimmen einschalten mit F5</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F5</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F5</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F5</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F5</label>
   </variable>
   <variable item="Enable dimming with F6" CV="57" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -80,6 +101,9 @@
     <label xml:lang="it">Abilita attenuazione con F6</label>
     <label xml:lang="de">Dimmen einschalten mit F6</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F6</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F6</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F6</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F6</label>
   </variable>
   <variable item="Enable dimming with F7" CV="57" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -87,6 +111,9 @@
     <label xml:lang="it">Abilita attenuazione con F7</label>
     <label xml:lang="de">Dimmen einschalten mit F7</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F7</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F7</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F7</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F7</label>
   </variable>
   <variable item="Enable dimming with F8" CV="57" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -94,6 +121,9 @@
     <label xml:lang="it">Abilita attenuazione con F8</label>
     <label xml:lang="de">Dimmen einschalten mit F8</label>
     <tooltip xml:lang="de">Dimmen ein/aus mit F8</tooltip>
+    <label xml:lang="cs">Zpřístupnit snížení jasu s F8</label>
+    <tooltip xml:lang="cs">Snížení jasu zapnuto/vypnuto s F8</tooltip>
+    <label xml:lang="ca">Habilita atenuació amb F8</label>
   </variable>
   <variable item="Enable Low Speed with F1" CV="58" mask="XXXXXXXV" tooltip="Toggle low speed switching gear 'on' using F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -101,6 +131,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F1</label>
     <label xml:lang="de">Rangiergang einschalten mit F1</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F1</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F1</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F1</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F1</label>
   </variable>
   <variable item="Enable Low Speed with F2" CV="58" mask="XXXXXXVX" tooltip="Toggle low speed switching gear 'on' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -108,6 +141,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F2</label>
     <label xml:lang="de">Rangiergang einschalten mit F2</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F2</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F2</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F2</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F2</label>
   </variable>
   <variable item="Enable Low Speed with F3" CV="58" mask="XXXXXVXX" default="1" tooltip="Toggle low speed switching gear 'on' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -115,6 +151,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F3</label>
     <label xml:lang="de">Rangiergang einschalten mit F3</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F3</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F3</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F3</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F3</label>
   </variable>
   <variable item="Enable Low Speed with F4" CV="58" mask="XXXXVXXX" tooltip="Toggle low speed switching gear 'on' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -122,6 +161,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F4</label>
     <label xml:lang="de">Rangiergang einschalten mit F4</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F4</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F4</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F4</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F4</label>
   </variable>
   <variable item="Enable Low Speed with F5" CV="58" mask="XXXVXXXX" tooltip="Toggle low speed switching gear 'on' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -129,6 +171,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F5</label>
     <label xml:lang="de">Rangiergang einschalten mit F5</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F5</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F5</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F5</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F5</label>
   </variable>
   <variable item="Enable Low Speed with F6" CV="58" mask="XXVXXXXX" tooltip="Toggle low speed switching gear 'on' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -136,6 +181,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F6</label>
     <label xml:lang="de">Rangiergang einschalten mit F6</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F6</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F6</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F6</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F6</label>
   </variable>
   <variable item="Enable Low Speed with F7" CV="58" mask="XVXXXXXX" tooltip="Toggle low speed switching gear 'on' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -143,6 +191,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F7</label>
     <label xml:lang="de">Rangiergang einschalten mit F7</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F7</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F7</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F7</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F7</label>
   </variable>
   <variable item="Enable Low Speed with F8" CV="58" mask="VXXXXXXX" tooltip="Toggle low speed switching gear 'on' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -150,6 +201,9 @@
     <label xml:lang="it">Abilita velocità da manovra con F8</label>
     <label xml:lang="de">Rangiergang einschalten mit F8</label>
     <tooltip xml:lang="de">Rangiergang ein/aus mit F8</tooltip>
+    <label xml:lang="cs">Zpřístupnit posun s F8</label>
+    <tooltip xml:lang="cs">Posun zapnuto/vypnuto s F8</tooltip>
+    <label xml:lang="ca">Habilita marxa de maniobres amb F8</label>
   </variable>
   <variable item="Disable momentum with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle acceleration and deceleration delays 'off' using F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -157,6 +211,9 @@
     <label xml:lang="it">Disabilita inerzia con F1</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F1</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F1</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F1</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F1</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F1</label>
   </variable>
   <variable item="Disable momentum with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle acceleration and deceleration delays 'off' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -164,6 +221,9 @@
     <label xml:lang="it">Disabilita inerzia con F2</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F2</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F2</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F2</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F2</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F2</label>
   </variable>
   <variable item="Disable momentum with F3" CV="59" mask="XXXXXVXX" tooltip="Toggle acceleration and deceleration delays 'off' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -171,6 +231,9 @@
     <label xml:lang="it">Disabilita inerzia con F3</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F3</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F3</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F3</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F3</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F3</label>
   </variable>
   <variable item="Disable momentum with F4" CV="59" mask="XXXXVXXX" default="1" tooltip="Toggle acceleration and deceleration delays 'off' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -178,6 +241,9 @@
     <label xml:lang="it">Disabilita inerzia con F4</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F4</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F4</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F4</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F4</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F4</label>
   </variable>
   <variable item="Disable momentum with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -185,6 +251,10 @@
     <label xml:lang="it">Disabilita inerzia con F5</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F5</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F5</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F5</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F5</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F5</label>
+    
   </variable>
   <variable item="Disable momentum with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -192,6 +262,9 @@
     <label xml:lang="it">Disabilita inerzia con F6</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F6</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F6</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F6</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F6</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F6</label>
   </variable>
   <variable item="Disable momentum with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -199,6 +272,9 @@
     <label xml:lang="it">Disabilita inerzia con F7</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F7</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F7</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F7</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F7</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F7</label>
   </variable>
   <variable item="Disable momentum with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -206,5 +282,8 @@
     <label xml:lang="it">Disabilita inerzia con F8</label>
     <label xml:lang="de">Anfahr- / Bremsverzögerung ausschalten mit F8</label>
     <tooltip xml:lang="de">Anfahr- / Bremsverzögerung ein/aus mit F8</tooltip>
+    <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F8</label>
+    <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F8</tooltip>
+    <label xml:lang="ca">Deshabilita inèrcia amb F8</label>
   </variable>
 </variables>

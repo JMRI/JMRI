@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
@@ -44,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * Common elements for the Conductor and Yardmaster Frames.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
@@ -71,8 +70,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JLabel textStatus = new JLabel();
 
     // major buttons
-    protected JButton selectButton = new JButton(Bundle.getMessage("Select"));
-    protected JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+    protected JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    protected JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     protected JButton setButton = new JButton(Bundle.getMessage("Set"));
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
@@ -404,6 +403,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
      * three panes are pick up, set out, or local move. To keep track of each
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
+     * @param rl The RouteLocation
+     * @param isManifest True if manifest, false if switch list
      *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
@@ -429,7 +430,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // caboose or FRED is placed at end of the train
                     // passenger trains are already blocked in the car list
                     if (car.getTrack() != null && car.getRouteLocation() == rl && car.getRouteDestination() != rl
-                            && (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
+                            && (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName()))
                             && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) 
                                     || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
                                     || car.isPassenger())) {
@@ -475,7 +476,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 }
                 // car in train if track null, second check is for yard master window
                 if (car.getTrack() == null || car.getTrack() != null && (car.getRouteLocation() != rl)) {
-                    if (Setup.isSortByTrackEnabled() && !car.getDestinationTrack().getName().equals(track.getName())) {
+                    if (Setup.isSortByTrackNameEnabled() && !car.getDestinationTrack().getName().equals(track.getName())) {
                         continue;
                     }
                     // we have set outs
@@ -510,7 +511,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     }
                     // local move?
                 } else if (car.getTrack() != null && car.getRouteLocation() == rl
-                        && (!Setup.isSortByTrackEnabled() || car.getTrack().getName().equals(track.getName()))) {
+                        && (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
                     movePane.setVisible(true);
                     if (!rollingStock.contains(car)) {
                         rollingStock.add(car);
@@ -542,7 +543,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 }
             }
             // if not sorting by track, we're done
-            if (!Setup.isSortByTrackEnabled()) {
+            if (!Setup.isSortByTrackNameEnabled()) {
                 break;
             }
         }

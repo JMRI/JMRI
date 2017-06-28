@@ -33,6 +33,7 @@ public class Engine extends RollingStock {
     /**
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
+     * @param model The string model name.
      *
      */
     public void setModel(String model) {
@@ -211,6 +212,7 @@ public class Engine extends RollingStock {
 
     /**
      * Place locomotive in a consist
+     * @param consist The Consist to use.
      *
      */
     public void setConsist(Consist consist) {

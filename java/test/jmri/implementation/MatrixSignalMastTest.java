@@ -6,7 +6,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,7 @@ public class MatrixSignalMastTest {
     }
 
     @Test
+    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testCtor1() {
         // provide 3 turnouts:
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
@@ -63,6 +63,7 @@ public class MatrixSignalMastTest {
     }
 
     @Test
+    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testLit() {
         // provide 3 turnouts:
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
@@ -96,8 +97,8 @@ public class MatrixSignalMastTest {
     }
 
     @Test
+    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testAspects() {
-
         // provide 3 turnouts:
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -124,7 +125,7 @@ public class MatrixSignalMastTest {
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
         // wait for outputs and outputbits to be set
 
-        //System.out.println(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
+        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
         Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");
@@ -165,5 +166,5 @@ public class MatrixSignalMastTest {
         JUnitUtil.resetInstanceManager();
     }
 
-    static protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class.getName());
+    static protected Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class.getName());
 }

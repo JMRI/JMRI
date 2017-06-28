@@ -18,7 +18,6 @@ import jmri.jmrit.operations.OperationsXml;
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class RestoreFilesAction extends AbstractAction {
 
@@ -34,7 +33,7 @@ public class RestoreFilesAction extends AbstractAction {
     }
 
     private void restore() {
-		// This method can restore files from any directory selected by the File
+  // This method can restore files from any directory selected by the File
         // Chooser.
 
         // check to see if files are dirty
@@ -120,4 +119,4 @@ public class RestoreFilesAction extends AbstractAction {
 
 }
 
-/* @(#)RestoreFilesAction.java */
+

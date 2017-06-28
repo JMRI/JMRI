@@ -75,7 +75,7 @@
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
 
   <indexitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
@@ -200,6 +200,8 @@
 
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchbaordEditor"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lights " target="html.tools.Lights">
@@ -211,17 +213,35 @@
 
  </indexitem>
  <indexitem text="LocoNet ">
+  <indexitem text="BDL16/BDL162/BDL168 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
   <indexitem text="Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
+
+  <indexitem text="Duplex Group " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
   <indexitem text="Fast Clock " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
+
+  <indexitem text="Firmware Downloader " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
+
+  <indexitem text="LocoBuffer " target="html.hardware.loconet.LocoBuffer"/>
+
+  <indexitem text="LocoBuffer-II " target="html.hardware.loconet.LocoBufferII"/>
+
+  <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
 
   <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
 
   <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
+
+  <indexitem text="LocoNet Monitor " target="package.jmri.jmrix.loconet.locomon.LocoMonFrame"/>
+
+  <indexitem text="LocoNet Status " target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame"/>
+
+  <indexitem text="Packet sender " target="package.jmri.jmrix.loconet.locogen.LocoGenFrame"/>
 
   <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
 
@@ -232,6 +252,8 @@
   <indexitem text="SE8C " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
 
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
+
+  <indexitem text="Standalone LocoNet " target="html.hardware.loconet.StandaloneLocoNet"/>
 
  </indexitem>
  <indexitem text="Logix ">
@@ -306,6 +328,8 @@
  </indexitem>
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
   <indexitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
+
+  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHander"/>
 
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
@@ -433,6 +457,8 @@
 
  </indexitem>
  <indexitem text="SRCP " target="html.hardware.SRCP.index"/>
+
+ <indexitem text="System Console " target="package.apps.SystemConsole"/>
 
  <indexitem text="Tables ">
   <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>

@@ -4,6 +4,7 @@ import apps.SystemConsole;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.Properties;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
@@ -23,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * <dl>
  * <dt>jmri.log</dt><dd>The logging control file. If this file is not an
  * absolute path, this file is searched for in the following order:<ol>
- * <li>Current working directory</li>
  * <li>JMRI settings directory</li>
  * <li>JMRI installation (program) directory</li>
  * </ol>
@@ -57,26 +57,28 @@ public class Log4JUtil {
     static public void initLogging() {
         initLogging(System.getProperty("jmri.log", "default.lcf"));
     }
+
     /**
      * Initialize logging, specifying a control file.
      * <p>
-     * Generally, only used for unit testing.  Much better
-     * to use allow this class to find the control file
-     * using a set of conventions.
+     * Generally, only used for unit testing. Much better to use allow this
+     * class to find the control file using a set of conventions.
+     *
+     * @param controlfile the logging control file
      */
     static public void initLogging(String controlfile) {
         initLog4J(controlfile);
     }
-    
+
     /**
      * Initialize Log4J.
      * <p>
-     * Use the logging control file specified in
-     * the <i>jmri.log</i> property or, if none,
-     * the default.lcf file. If the file cannot be found in the current
-     * directory, look for the file first in the settings directory and then in
-     * the installation directory.
+     * Use the logging control file specified in the <i>jmri.log</i> property
+     * or, if none, the default.lcf file. If the file is absolute and cannot be
+     * found, look for the file first in the settings directory and then in the
+     * installation directory.
      *
+     * @param logFile the logging control file
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
@@ -90,13 +92,13 @@ public class Log4JUtil {
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
-        
+
         // initialize the java.util.logging to log4j bridge
         initializeJavaUtilLogging();
-        
+
         // initialize log4j - from logging control file (lcf) only
         try {
-            if (new File(logFile).canRead()) {
+            if (new File(logFile).isAbsolute() && new File(logFile).canRead()) {
                 configureLogging(logFile);
             } else if (new File(FileUtil.getPreferencesPath() + logFile).canRead()) {
                 configureLogging(FileUtil.getPreferencesPath() + logFile);
@@ -124,7 +126,7 @@ public class Log4JUtil {
         // the initialization phase of your application
         org.slf4j.bridge.SLF4JBridgeHandler.install();
     }
-    
+
     @SuppressWarnings("unchecked")
     static public String startupInfo(String program) {
         log.info(jmriLog);
@@ -155,11 +157,8 @@ public class Log4JUtil {
      */
     static private void configureLogging(String config) throws IOException {
         Properties p = new Properties();
-        FileInputStream f = new FileInputStream(config);
-        try {
+        try (FileInputStream f = new FileInputStream(config)) {
             p.load(f);
-        } finally {
-            f.close();
         }
 
         if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
@@ -172,7 +171,7 @@ public class Log4JUtil {
         // we don't need to explictly test for that here, just make sure the
         // directory is created if need be.
         if (!logDir.exists()) {
-            logDir.mkdirs();
+            Files.createDirectories(logDir.toPath());
         }
         PropertyConfigurator.configure(p);
     }

@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Date;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -32,12 +33,11 @@ import org.slf4j.LoggerFactory;
  * Unlike the parent class, this stores CurrentIntensity and TargetIntensity in
  * separate variables.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Ken Cameron Copyright (C) 2008,2009
- * @author	Bob Jacobsen Copyright (C) 2008,2009
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Ken Cameron Copyright (C) 2008,2009
+ * @author Bob Jacobsen Copyright (C) 2008,2009
  */
-public abstract class AbstractVariableLight extends AbstractLight
-        implements java.io.Serializable {
+public abstract class AbstractVariableLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 
@@ -261,7 +261,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * having on intensity. Currently, this implementation assumes there's a
      * fixed number of steps between min and max brightness.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     protected void newInternalMinute() {
         double origCurrent = mCurrentIntensity;
         int origState = mState;
@@ -333,7 +333,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
@@ -403,7 +403,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * transition is over.
      * @return is transitioning
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     public boolean isTransitioning() {
         if (mTransitionTargetIntensity != mCurrentIntensity) {

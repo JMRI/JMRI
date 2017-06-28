@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2012
- * @version $Revision: 17977 $
  */
 public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
@@ -19,10 +18,12 @@ public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractR
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element reporters) {
         reporters.setAttribute("class", "jmri.jmrix.ecos.configurexml.EcosReporterManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

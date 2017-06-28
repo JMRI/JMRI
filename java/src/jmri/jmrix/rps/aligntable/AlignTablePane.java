@@ -76,6 +76,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         // status info on bottom
         JPanel p = new JPanel() {
 
+            @Override
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -90,6 +91,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         JButton b = new JButton(rb.getString("ButtonSet"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // set number of columns
                 Engine.instance().setMaxReceiverNumber(
@@ -106,6 +108,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         p = new JPanel() {
 
+            @Override
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -127,6 +130,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         b = new JButton(rb.getString("ButtonSet"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // set number of vsound, offset
                 Engine.instance().setOffset(
@@ -145,6 +149,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         //
         add(loadStore = new jmri.jmrix.rps.swing.LoadStorePanel() {
             // make sure we redisplay if changed
+            @Override
             public void load() {
                 super.load();
                 alignModel.fireTableStructureChanged();
@@ -152,6 +157,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                 flag.setModifiedFlag(true);
             }
 
+            @Override
             public void storeDefault() {
                 super.storeDefault();
                 // no longer modified after storeDefault
@@ -161,6 +167,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         // add sound listener
         Engine.instance().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("vSound")) {
                     // update sound display
@@ -207,14 +214,17 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         static private final int LAST = MAXTIMECOL;
 
+        @Override
         public int getColumnCount() {
             return LAST + 1;
         }
 
+        @Override
         public int getRowCount() {
             return Engine.instance().getMaxReceiverNumber();
         }
 
+        @Override
         public String getColumnName(int c) {
             switch (c) {
                 case NUMCOL:
@@ -238,6 +248,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == XCOL || c == YCOL || c == ZCOL) {
                 return Double.class;
@@ -253,6 +264,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == XCOL || c == YCOL || c == ZCOL || c == ACTIVECOL
                     || c == MINTIMECOL || c == MAXTIMECOL) {
@@ -262,6 +274,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             // r is row number, from 0; receiver addresses start at 1
             Receiver rc;
@@ -315,6 +328,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object val, int r, int c) {
             // r is row number, from 0
             Receiver rc;

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -86,6 +87,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return iconMaps;
     }
 
+    @Override
     public Positionable deepClone() {
         IndicatorTurnoutIcon pos = new IndicatorTurnoutIcon(_editor);
         return finishClone(pos);
@@ -100,9 +102,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return super.finishClone(pos);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows more efficient return of copy")
     public HashMap<String, HashMap<Integer, NamedIcon>> getIconMaps() {
-        return _iconMaps;
+        return new HashMap<>(_iconMaps);
     }
 
     /**
@@ -110,6 +111,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
      *
      * @param pName Used as a system/user name to lookup the sensor object
      */
+    @Override
     public void setOccSensor(String pName) {
         if (pName == null || pName.trim().length() == 0) {
             setOccSensorHandle(null);
@@ -127,6 +129,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
     }
 
+    @Override
     public void setOccSensorHandle(NamedBeanHandle<Sensor> sen) {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
@@ -135,13 +138,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccSensor != null) {
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Turnout Icon");
-            _status = _pathUtil.setStatus(sensor.getKnownState());
+            _status = _pathUtil.getStatus(sensor.getKnownState());
             if (_iconMaps != null) {
                 displayState(turnoutState());
             }
         }
     }
 
+    @Override
     public Sensor getOccSensor() {
         if (namedOccSensor == null) {
             return null;
@@ -149,6 +153,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return namedOccSensor.getBean();
     }
 
+    @Override
     public NamedBeanHandle<Sensor> getNamedOccSensor() {
         return namedOccSensor;
     }
@@ -158,6 +163,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
      *
      * @param pName Used as a system/user name to lookup the OBlock object
      */
+    @Override
     public void setOccBlock(String pName) {
         if (pName == null || pName.trim().length() == 0) {
             setOccBlockHandle(null);
@@ -165,12 +171,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
         OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(pName);
         if (block != null) {
-            setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));
+            setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(pName, block));
         } else {
             log.error("Detection OBlock '" + pName + "' not available, icon won't see changes");
         }
     }
 
+    @Override
     public void setOccBlockHandle(NamedBeanHandle<OBlock> blockHandle) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
@@ -187,6 +195,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
     }
 
+    @Override
     public OBlock getOccBlock() {
         if (namedOccBlock == null) {
             return null;
@@ -194,18 +203,22 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return namedOccBlock.getBean();
     }
 
+    @Override
     public NamedBeanHandle<OBlock> getNamedOccBlock() {
         return namedOccBlock;
     }
 
+    @Override
     public void setShowTrain(boolean set) {
         _pathUtil.setShowTrain(set);
     }
 
+    @Override
     public boolean showTrain() {
         return _pathUtil.showTrain();
     }
 
+    @Override
     public ArrayList<String> getPaths() {
         return _pathUtil.getPaths();
     }
@@ -214,20 +227,22 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _pathUtil.setPaths(paths);
     }
 
+    @Override
     public void addPath(String path) {
         _pathUtil.addPath(path);
     }
 
+    @Override
     public void removePath(String path) {
         _pathUtil.removePath(path);
     }
 
+    /**
+     * get track name for known state of occupancy sensor
+     */
+    @Override
     public void setStatus(int state) {
-        // this code is almost certainly an error.  _pathUtil.setStatus(int) is a 
-        // method that converts an int argument to a String explanation.
-        // Perhaps _pathUtil.(OBlock block, int state) was intended,
-        // or that setStatus (in IndicatorTrackPaths) is just wrong.
-        _pathUtil.setStatus(state);
+        _status = _pathUtil.getStatus(state);
     }
 
     /**
@@ -251,8 +266,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
     }
 
-    /**
-     * Get clear icon by its localized bean state name
+    /*
+     * Get icon by its localized bean state name
      */
     public NamedIcon getIcon(String status, int state) {
         log.debug("getIcon: status= " + status + ", state= " + state);
@@ -271,6 +286,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return _status;
     }
 
+    @Override
     public int maxHeight() {
         int max = 0;
         if (_iconMaps != null) {
@@ -285,6 +301,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return max;
     }
 
+    @Override
     public int maxWidth() {
         int max = 0;
         if (_iconMaps != null) {
@@ -302,6 +319,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     /**
      * ****** popup AbstractAction.actionPerformed method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         if (_iconMaps != null) {
             Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
@@ -316,6 +334,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         displayState(turnoutState());
     }
 
+    @Override
     public void setScale(double s) {
         if (_iconMaps != null) {
             Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
@@ -329,6 +348,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         displayState(turnoutState());
     }
 
+    @Override
     public void rotate(int deg) {
         if (_iconMaps != null) {
             Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
@@ -346,6 +366,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
      * Drive the current state of the display from the state of the turnout and
      * status of track.
      */
+    @Override
     public void displayState(int state) {
         if (getNamedTurnout() == null) {
             log.debug("Display state " + state + ", disconnected");
@@ -361,6 +382,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         updateSize();
     }
 
+    @Override
     public String getNameString() {
         String str = "";
         if (namedOccBlock != null) {
@@ -373,6 +395,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     // update icon as state of turnout changes and status of track changes
     // Override
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getNameString() + " property \"" + evt.getPropertyName() + "\"= "
@@ -395,7 +418,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    _status = _pathUtil.setStatus(now);
+                    _status = _pathUtil.getStatus(now);
                 }
             }
         }
@@ -403,7 +426,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     private void setStatus(OBlock block, int state) {
-        _status = _pathUtil.setStatus(block, state);
+        _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             repaint();
@@ -415,11 +438,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
     }
 
+    @Override
     protected void editItem() {
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
@@ -463,6 +488,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _paletteFrame.setVisible(true);
     }
 
+    @Override
     void updateItem() {
         if (log.isDebugEnabled()) {
             log.debug("updateItem: " + getNameString() + " family= " + _TOPanel.getFamilyName());
@@ -502,6 +528,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         displayState(turnoutState());
     }
 
+    @Override
     public void dispose() {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);

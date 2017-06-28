@@ -1,4 +1,3 @@
-// TrackDestinationEditFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 22371 $
+ * 
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

@@ -1,9 +1,10 @@
 package jmri.jmrix.srcp;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * SRCPPowerManagerTest.java
@@ -12,48 +13,80 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPPowerManagerTest extends TestCase {
+public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
-    public void testCtor() {
-        SRCPPowerManager m = new SRCPPowerManager();
-        Assert.assertNotNull(m);
+    private SRCPTrafficControlScaffold stc = null;
+  
+    // service routines to simulate recieving on, off from interface
+    @Override
+    protected void hearOn() {
+       stc.sendTestReply(new SRCPReply("12345678910 100 INFO 1 POWER ON hello world\n\r"));
     }
 
-    public void testBusSpeciticCtor() {
-        SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
-            @Override
-            public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
-            }
-        }, "A", 1);
-        SRCPPowerManager m = new SRCPPowerManager(sm, 1);
-        Assert.assertNotNull(m);
+    @Override
+    protected void sendOnReply() {
+       stc.sendTestReply(new SRCPReply("12345678910 100 INFO 1 POWER ON hello world\n\r"));
     }
 
-    // from here down is testing infrastructure
-    public SRCPPowerManagerTest(String s) {
-        super(s);
+    @Override
+    protected void sendOffReply() {
+       stc.sendTestReply(new SRCPReply("12345678910 100 INFO 1 POWER OFF hello world\n\r"));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPPowerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    protected void hearOff() {
+       stc.sendTestReply(new SRCPReply("12345678910 100 INFO 1 POWER OFF hello world\n\r"));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPPowerManagerTest.class);
-        return suite;
+    @Override
+    protected int numListeners() {
+        return stc.numListeners();
+    }
+
+    @Override
+    protected int outboundSize() {
+        return stc.outbound.size();
+    }
+
+    @Override
+    protected boolean outboundOnOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER ON\n");
+    }
+
+    @Override
+    protected boolean outboundOffOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
+    }
+
+    @Test
+    @Override
+    @Ignore("unsolicited state changes are currently ignored")
+    public void testStateOn(){
+    }
+
+    @Test
+    @Override
+    @Ignore("unsolicited state changes are currently ignored")
+    public void testStateOff(){
+    }
+
+    @Test 
+    public void testDefaultCtor() {
+        Assert.assertNotNull(new SRCPPowerManager());
     }
 
     // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() {
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        stc = new SRCPTrafficControlScaffold();
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
+        p = new SRCPPowerManager(memo, 1);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 }

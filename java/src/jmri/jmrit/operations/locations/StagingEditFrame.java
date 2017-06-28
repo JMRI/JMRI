@@ -1,4 +1,3 @@
-// StagingEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
@@ -16,7 +15,6 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user edit of a staging track
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
@@ -97,7 +95,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
             loadAnyCheckBox.setSelected(_track.isAddCustomLoadsAnySpurEnabled());
             loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
             pShipLoadOption.setVisible(loadCheckBox.isSelected()
-                    || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected());	// show which loads this track can ship
+                    || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected()); // show which loads this track can ship
             blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
             if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()
                     || loadAnyStagingCheckBox.isSelected()) {

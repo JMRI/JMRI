@@ -32,6 +32,18 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+     <revision>
+      <revnumber></revnumber>
+      <date>2016-12-09</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+        <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
@@ -54,5 +66,9 @@
 	<comment xml:lang="it">Scrivendo un valore di 8 o 33 ripristina il decoder ai valori di fabbrica</comment>
 	<label xml:lang="de">Herstellerkennung - Reset</label>
 	<comment xml:lang="de">Schreiben eines Wertes von 8 oder 33 setzt den Dekoder auf die Werkseinstellungen zurück</comment>
+    <label xml:lang="cs">ID výrobce - Reset</label>
+    <comment xml:lang="cs">Zápis hodnoty 8 nebo 33 provede reset dekodéru na výchozí hodnoty továrního nastavení</comment>
+    <label xml:lang="ca">ID del Fabricant - Reset</label>
+	<comment xml:lang="ca">Escrivint un 8 o 33 resetejarà el descodificador a valors de fàbrica</comment>
   </variable>
 </variables>

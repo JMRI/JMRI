@@ -27,24 +27,22 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public LocationManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static LocationManager _instance = null;
     private int _id = 0;
 
     public static synchronized LocationManager instance() {
-        if (_instance == null) {
+        LocationManager instance = jmri.InstanceManager.getNullableDefault(LocationManager.class);
+        if (instance == null) {
             log.debug("LocationManager creating instance");
             // create and load
-            _instance = new LocationManager();
+            instance = new LocationManager();
+            jmri.InstanceManager.setDefault(LocationManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             LocationManagerXml.instance(); // load locations
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManager returns instance {}", _instance);
+            log.debug("LocationManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {
@@ -62,6 +60,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the Location to get.
      * @return requested Location object or null if none exists
      */
     public Location getLocationByName(String name) {
@@ -121,6 +120,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
+     * 
+     * @param name The string name for a new Location.
      *
      *
      * @return new location or existing location
@@ -132,6 +133,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             location = new Location(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_locationHashTable.size());
             _locationHashTable.put(location.getId(), location);
+            resetNameLengths();
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
                     Integer.valueOf(_locationHashTable.size()));
         }
@@ -140,6 +142,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * 
+     * @param location The Location to add.
      */
     public void register(Location location) {
         Integer oldSize = Integer.valueOf(_locationHashTable.size());
@@ -154,6 +158,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * 
+     * @param location The Location to delete.
      */
     public void deregister(Location location) {
         if (location == null) {
@@ -350,10 +356,16 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             }
         }
     }
-
+    
     protected int _maxLocationNameLength = 0;
     protected int _maxTrackNameLength = 0;
     protected int _maxLocationAndTrackNameLength = 0;
+    
+    public void resetNameLengths() {
+        _maxLocationNameLength = 0;
+        _maxTrackNameLength = 0;
+        _maxLocationAndTrackNameLength = 0;
+    }
 
     public int getMaxLocationNameLength() {
         calculateMaxNameLengths();
@@ -452,4 +464,4 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)LocationManager.java */
+

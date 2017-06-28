@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -70,8 +69,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     int ROW_HEIGHT;
 
     HashMap<String, JToggleButton> _iconMap;
@@ -93,12 +90,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     CatalogPanel _catalog;
     JFrame _parent;
     boolean _allowDeletes;
-    boolean _update;				// updating existing icon from popup
+    boolean _update;    // updating existing icon from popup
 
     public IconAdder() {
         _userDefaults = false;
-        _iconMap = new HashMap<String, JToggleButton>(10);
-        _order = new ArrayList<String>();
+        _iconMap = new HashMap<>(10);
+        _order = new ArrayList<>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -129,9 +126,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree != null) {
             CatalogTreeNode node = tree.getRoot();
-            
+
             Enumeration<CatalogTreeNode> e = node.children();
-            
+
             while (e.hasMoreElements()) {
                 CatalogTreeNode nChild = e.nextElement();
                 if (_type.equals(nChild.toString())) {
@@ -174,15 +171,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     /**
-     * Build iconMap and orderArray from user's choice of defaults
+     * Build iconMap and orderArray from user's choice of defaults.
+     *
+     * @param n the root in a catalog from which icons are made
      */
     protected void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("makeIcons from node= " + n.toString() + ", numChildren= "
-                    + n.getChildCount() + ", NumLeaves= " + n.getNumLeaves());
+            log.debug("makeIcons from node= {}, numChildren= {}, NumLeaves= {}", n.toString(), n.getChildCount(), n.getNumLeaves());
         }
-        _iconMap = new HashMap<String, JToggleButton>(10);
-        _order = new ArrayList<String>();
+        _iconMap = new HashMap<>(10);
+        _order = new ArrayList<>();
         ArrayList<CatalogTreeLeaf> list = n.getLeaves();
         // adjust order of icons
         int k = list.size() - 1;
@@ -190,13 +188,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             CatalogTreeLeaf leaf = list.get(i);
             String name = leaf.getName();
             String path = leaf.getPath();
-            if ("BeanStateInconsistent".equals(name)) {
-                this.setIcon(0, name, new NamedIcon(path, path));
-            } else if ("BeanStateUnknown".equals(name)) {
-                this.setIcon(1, name, new NamedIcon(path, path));
-            } else {
-                this.setIcon(k, name, new NamedIcon(path, path));
-                k--;
+            switch (name) {
+                case "BeanStateInconsistent":
+                    this.setIcon(0, name, new NamedIcon(path, path));
+                    break;
+                case "BeanStateUnknown":
+                    this.setIcon(1, name, new NamedIcon(path, path));
+                    break;
+                default:
+                    this.setIcon(k, name, new NamedIcon(path, path));
+                    k--;
+                    break;
             }
         }
     }
@@ -277,6 +279,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     /**
      * After all the calls to setIcon(...) are made, make the icon display. Two
      * columns to save space for subsequent panels.
+     *
+     * @param useDefaults true to use user-specified defaults; false otherwise
      */
     public void makeIconPanel(boolean useDefaults) {
         if (useDefaults && _userDefaults) {
@@ -308,7 +312,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             String labelName = key;
             try {
-                labelName = rbean.getString(key);
+                labelName = Bundle.getMessage(key);
             } catch (java.util.MissingResourceException mre) {
             }
             p.add(new JLabel(labelName));
@@ -330,11 +334,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     /**
-     * After the calls to makeIconPanel(), optionally. make a pick list table
-     * for managed elements. (Not all Icon Editors use pick lists)
+     * After the calls to makeIconPanel(), optionally make a pick list table for
+     * managed elements. (Not all Icon Editors use pick lists).
+     *
+     * @param tableModel the model from which the table is created
      */
     public void setPickList(PickListModel tableModel) {
-        tableModel.init();
         _pickListModel = tableModel;
         _table = new JTable(tableModel);
         _pickListModel.makeSorter(_table);
@@ -364,6 +369,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
+        row = _table.convertRowIndexToView(row);
         _table.addRowSelectionInterval(row, row);
         _pickTablePane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
     }
@@ -371,6 +377,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     /**
      * When a Pick list is installed, table selection controls the Add button
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
@@ -397,8 +404,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     void makeIconMap(NamedBean bean) {
         if (bean != null && _type != null && _type.equals("SignalHead")) {
-            _order = new ArrayList<String>();
-            _iconMap = new HashMap<String, JToggleButton>(12);
+            _order = new ArrayList<>();
+            _iconMap = new HashMap<>(12);
             int k = 0;
             ArrayList<CatalogTreeLeaf> list = _defaultIcons.getLeaves();
             String[] states = ((SignalHead) bean).getValidStateNames();
@@ -406,16 +413,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 CatalogTreeLeaf leaf = list.get(i);
                 String name = leaf.getName();
                 try {
-                    name = rbean.getString(leaf.getName());
+                    name = Bundle.getMessage(leaf.getName());
                 } catch (java.util.MissingResourceException mre) {
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("makeIconMap: leafName= " + leaf.getName() + ", name= " + name);
                 }
-                for (int j = 0; j < states.length; j++) {
-                    if (name.equals(states[j])
-                            || leaf.getName().equals(rbean.getString("SignalHeadStateDark"))
-                            || leaf.getName().equals(rbean.getString("SignalHeadStateHeld"))) {
+                for (String state : states) {
+                    if (name.equals(state)
+                            || leaf.getName().equals(Bundle.getMessage("SignalHeadStateDark"))
+                            || leaf.getName().equals(Bundle.getMessage("SignalHeadStateHeld"))) {
                         String path = leaf.getPath();
                         this.setIcon(k++, leaf.getName(), new NamedIcon(path, path));
                         break;
@@ -467,12 +474,15 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * <P>
      * Note! the selection is cleared. When two successive calls are made, the
      * 2nd will always return null, regardless of the 1st return.
+     *
+     * @return the selected item
      */
     public NamedBean getTableSelection() {
         if (ImageIndexEditor.isIndexChanged()) {
             checkIconSizes();
         }
         int row = _table.getSelectedRow();
+        row = _table.convertRowIndexToModel(row);
         if (row >= 0) {
             NamedBean b = _pickListModel.getBeanAt(row);
             _table.clearSelection();
@@ -504,12 +514,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     /**
      * Returns a new Hashtable of only the icons selected for display.
+     *
+     * @return a map of icons using the icon labels as keys
      */
     public Hashtable<String, NamedIcon> getIconMap() {
-        if (log.isDebugEnabled()) {
-            log.debug("getIconMap: _allowDeletes= " + _allowDeletes);
-        }
-        Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();
+        log.debug("getIconMap: _allowDeletes= {}", _allowDeletes);
+        Hashtable<String, NamedIcon> iconMap = new Hashtable<>();
         Iterator<String> iter = _iconMap.keySet().iterator();
         while (iter.hasNext()) {
             String key = iter.next();
@@ -548,15 +558,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNametext.setPreferredSize(
                     new Dimension(150, _sysNametext.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
-            _addTableButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addToTable();
-                }
+            _addTableButton.addActionListener((ActionEvent a) -> {
+                addToTable();
             });
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
             p.add(_sysNametext);
             _sysNametext.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyReleased(KeyEvent a) {
                     if (_sysNametext.getText().length() > 0) {
                         _addTableButton.setEnabled(true);
@@ -580,17 +589,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _addButton.setEnabled(true);
         if (changeIcon) {
             _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
-            _changeButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addCatalog();
-                }
+            _changeButton.addActionListener((ActionEvent a) -> {
+                addCatalog();
             });
             p.add(_changeButton);
             _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
-            _closeButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    closeCatalog();
-                }
+            _closeButton.addActionListener((ActionEvent a) -> {
+                closeCatalog();
             });
             _closeButton.setVisible(false);
             p.add(_closeButton);
@@ -684,7 +689,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
-    public void addDirectoryToCatalog(java.io.File dir) {
+    public void addDirectoryToCatalog() {
         if (_catalog == null) {
             _catalog = CatalogPanel.makeDefaultCatalog();
         }
@@ -692,8 +697,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _changeButton.setVisible(false);
             _closeButton.setVisible(true);
         }
-        String name = dir.getName();
-        _catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
         this.add(_catalog);
         this.pack();
     }
@@ -705,7 +708,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, default icon tree
         CatalogTree tree = manager.getBySystemName("NXDI");
-        if (tree == null) {	// build a new Default Icons tree
+        if (tree == null) { // build a new Default Icons tree
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
         CatalogTreeNode root = tree.getRoot();
@@ -728,6 +731,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     private class IconButton extends DropButton {
+
         String key;
 
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -748,6 +752,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     class DropButton extends JToggleButton implements DropTargetListener {
+
         DataFlavor dataFlavor;
 
         DropButton(Icon icon) {
@@ -755,28 +760,34 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             try {
                 dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to create drag and drop target.", cnfe);
             }
+            // is the item created in this next line ever used?
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
             //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragExit ");
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragEnter ");
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragOver ");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dropActionChanged ");
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

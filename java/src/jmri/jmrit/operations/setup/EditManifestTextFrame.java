@@ -1,4 +1,3 @@
-// EditManifestTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -7,7 +6,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditManifestTextFrame extends OperationsFrame {
 

@@ -175,6 +175,7 @@ public class ThrottleFrameManager {
          *
          * @param e Description of the Parameter
          */
+        @Override
         public void keyReleased(KeyEvent e) {
             if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
                 requestFocusForNextFrame();

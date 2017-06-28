@@ -1,4 +1,3 @@
-// ResetAutomationAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.event.ActionEvent;
@@ -8,7 +7,6 @@ import javax.swing.AbstractAction;
  * Action to reset an automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationResetAction extends AbstractAction {
 

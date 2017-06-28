@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2012
- * @version $Revision$
  */
 public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
 
@@ -28,6 +27,7 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(int CV, int value, int status) throws IOException {
         if (log.isDebugEnabled()) {
             log.debug("sendStatus called for CV " + CV
@@ -40,10 +40,12 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
         }
     }
 
+    @Override
     public void sendNotAvailableStatus() throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n");
     }
 
+    @Override
     public void parseRequest(String statusString) throws jmri.JmriException, java.io.IOException {
     }
 

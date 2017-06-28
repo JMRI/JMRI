@@ -34,7 +34,9 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(LoaderEngineTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EditorPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LoaderPaneTest.class));
         return suite;
     }
 

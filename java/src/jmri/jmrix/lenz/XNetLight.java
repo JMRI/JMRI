@@ -1,4 +1,3 @@
-// XNetLight.java
 package jmri.jmrix.lenz;
 
 import jmri.implementation.AbstractLight;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialLight.java
  *
  * @author Paul Bender Copyright (C) 2008-2010
- * @version $Revision$
  */
 public class XNetLight extends AbstractLight implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1847924231251447075L;
     private XNetTrafficController tc = null;
     private XNetLightManager lm = null;
 
@@ -54,6 +47,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     /*
      * Dispose of the light object
      */
+    @Override
     public void dispose() {
         tc.removeXNetListener(XNetInterface.FEEDBACK | XNetInterface.COMMINFO | XNetInterface.CS_INFO, this);
         super.dispose();
@@ -93,6 +87,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     /**
      * Return the current state of this Light
      */
+    @Override
     synchronized public int getState() {
         return mState;
     }
@@ -101,6 +96,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
@@ -130,6 +126,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      *  NOTE: We aren't registered as a listener, so This is only triggered 
      *  when we send out a message
      */
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -179,10 +176,12 @@ public class XNetLight extends AbstractLight implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -211,4 +210,4 @@ public class XNetLight extends AbstractLight implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
 }
 
-/* @(#)XNetLight.java */
+

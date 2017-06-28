@@ -33,6 +33,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -51,26 +63,38 @@
 	  <enumChoice choice="0 ">
 		<choice>0 </choice>
 		<choice xml:lang="de">0 </choice>
+		<choice xml:lang="cs">0 </choice>
+		<choice xml:lang="ca">0 </choice>
 	  </enumChoice>
 	  <enumChoice choice="1 ">
 		<choice>1 </choice>
 		<choice xml:lang="de">1 </choice>
+		<choice xml:lang="cs">1 </choice>
+		<choice xml:lang="ca">1 </choice>
 	  </enumChoice>
 	  <enumChoice choice="2 ">
 		<choice>2 </choice>
 		<choice xml:lang="de">2 </choice>
+		<choice xml:lang="cs">2 </choice>
+		<choice xml:lang="ca">2 </choice>
 	  </enumChoice>
 	  <enumChoice choice="3 ">
 		<choice>3 </choice>
 		<choice xml:lang="de">3 </choice>
+		<choice xml:lang="cs">3 </choice>
+		<choice xml:lang="ca">3 </choice>
 	  </enumChoice>
 	  <enumChoice choice="4 ">
 		<choice>4 </choice>
 		<choice xml:lang="de">4 </choice>
+		<choice xml:lang="cs">4 </choice>
+		<choice xml:lang="ca">4 </choice>
 	  </enumChoice>
 	  <enumChoice choice="5 ">
 		<choice>5 </choice>
 		<choice xml:lang="de">5 </choice>
+		<choice xml:lang="cs">5 </choice>
+		<choice xml:lang="ca">5 </choice>
 	  </enumChoice>
 	</enumVal>
 	<label>Motor Type(0-5)</label>
@@ -79,6 +103,10 @@
 	<comment xml:lang="it">Valori da 0 a 5</comment>
 	<label xml:lang="de">Motortyp (0-5)</label>
 	<comment xml:lang="de">Wertebereich 0-5</comment>
+        <label xml:lang="cs">Typ motoru</label>
+        <comment xml:lang="cs">Meze 0-5</comment>
+        <label xml:lang="ca">Tipus de motor</label>
+        <comment xml:lang="ca">Rang 0-5</comment>
   </variable>
   <variable CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
 	<enumVal>
@@ -86,31 +114,43 @@
 		<choice>Inactive</choice>
 		<choice xml:lang="it">Inattivo</choice>
 		<choice xml:lang="de">Aus</choice>
+                <choice xml:lang="cs">Neaktivní</choice>
+                <choice xml:lang="ca">Inactiu</choice>
 	  </enumChoice>
 	  <enumChoice choice="Active">
 		<choice>Active</choice>
 		<choice xml:lang="it">Attivo</choice>
 		<choice xml:lang="de">Ein</choice>
+                <choice xml:lang="cs">Aktivní</choice>
+                <choice xml:lang="ca">Actiu</choice>
 	  </enumChoice>
 	</enumVal>
 	<label>EMF Switch</label>
 	<label xml:lang="it">Interruttore EMF</label>
 	<label xml:lang="de">EMK Teiler</label>
+        <label xml:lang="cs">Vypínač EMF</label>
+    <label xml:lang="ca">Control EMF</label>
   </variable>
   <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
 	<enumVal>
 	  <enumChoice choice="On ">
 		<choice>On </choice>
 		<choice xml:lang="de">Ein </choice>
+                <choice xml:lang="cs">Zapnuto</choice>
+                <choice xml:lang="ca">Actiu</choice>
 	  </enumChoice>
 	  <enumChoice choice="Off">
 		<choice>Off</choice>
 		<choice xml:lang="de">Aus</choice>
+                <choice xml:lang="cs">Vypnuto</choice>
+                <choice xml:lang="ca">Apagat</choice>
 	  </enumChoice>
 	</enumVal>
 	<label>BEMF Control</label>
 	<label xml:lang="it">Controllo BEMF</label>
 	<label xml:lang="de">Regelung</label>
+        <label xml:lang="cs">Řízení BEMF</label>
+        <label xml:lang="ca">Control BEMF</label>
   </variable>
   <variable CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
 	<enumVal>
@@ -118,16 +158,22 @@
 		<choice>High </choice>
 		<choice xml:lang="it">Alta</choice>
 		<choice xml:lang="de">Hoch </choice>
+                <choice xml:lang="cs">Vysoká </choice>
+                <choice xml:lang="ca">Alta</choice>
 	  </enumChoice>
 	  <enumChoice choice="Low ">
 		<choice>Low </choice>
 		<choice xml:lang="it">bassa</choice>
 		<choice xml:lang="de">Niedrig </choice>
+                <choice xml:lang="cs">Nízká </choice>
+                <choice xml:lang="ca">Baixa</choice>
 	  </enumChoice>
 	</enumVal>
 	<label>Motor Drive Frequency</label>
 	<label xml:lang="it">Frequenza Pilotaggio Motore</label>
 	<label xml:lang="de">Frequenz zur Motoransteuerung</label>
+        <label xml:lang="cs">Frekvence regulace motoru</label>
+        <label xml:lang="ca">Freqüència de Control del Motor</label>
   </variable>
   
 </variables>

@@ -1,4 +1,3 @@
-// Model.java
 package jmri.jmrix.rps;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class Model {
 

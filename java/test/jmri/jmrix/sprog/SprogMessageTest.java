@@ -11,8 +11,7 @@ import org.junit.Test;
  * JUnit tests for the SprogMessage class
  *
  * @author	Bob Jacobsen Copyright 2012
- * @version	$Revision$
- */
+  */
 public class SprogMessageTest{
 
     @Test

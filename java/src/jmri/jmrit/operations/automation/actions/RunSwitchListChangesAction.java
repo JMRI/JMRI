@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -39,8 +40,9 @@ public class RunSwitchListChangesAction extends Action {
      * there's new work for that location.
      * <p>
      * common code see RunSwitchListAction.java
+     * @param isChanged if set true only locations with changes will get a custom switch list.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
             justification = "isChanged = false when called from RunSwitchListAction")
     protected void doAction(boolean isChanged) {
@@ -60,17 +62,22 @@ public class RunSwitchListChangesAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            // check that both the Excel custom manifest and custom switch lists aren't busy with other work
+            // We've found that on some OS only one copy of Excel can be running at a time
             // this can wait thread
-            if (!new TrainCustomManifest().checkProcessReady()) {
+            if (!TrainCustomManifest.instance().checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel manifest program to complete previous opeation, timeout value: {} seconds",
+                        "Timeout waiting for excel manifest program to complete previous operation, timeout value: {} seconds",
                         Control.excelWaitTime);
             }
             // this can wait thread
-            if (!new TrainCustomSwitchList().checkProcessReady()) {
+            if (!TrainCustomSwitchList.instance().checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
+                        "Timeout waiting for excel switch list program to complete previous operation, timeout value: {} seconds",
                         Control.excelWaitTime);                
+            }
+            if (TrainCustomSwitchList.instance().doesCommonFileExist()) {
+                log.warn("Switch List CSV common file exists!");
             }
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&

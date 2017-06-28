@@ -20,7 +20,7 @@ import jmri.util.FileUtil;
  * As a special case "simplification", the catalog tree will not contain CVS
  * directories, or files whose name starts with a "."
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class CatalogTreeModel extends DefaultTreeModel {
 
@@ -68,9 +68,15 @@ public class CatalogTreeModel extends DefaultTreeModel {
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
-            for (int i = 0; i < sp.length; i++) {
-                //if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
-                insertResourceNodes(sp[i], pPath + "/" + sp[i], newElement);
+
+            if (sp == null) {
+                log.warn("unexpected null list() in insertResourceNodes from \"{}\"", pPath);
+                return;
+            }
+
+            for (String item : sp) {
+                log.trace("Descend into resource: {}", item);
+                insertResourceNodes(item, pPath + "/" + item, newElement);
             }
         }
     }
@@ -79,6 +85,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
      * Recursively add a representation of the files below a particular file
      *
      * @param name   Name of the file to be scanned
+     * @param path   the path to the file
      * @param parent Node for the parent of the file to be scanned
      */
     void insertFileNodes(String name, String path, DefaultMutableTreeNode parent) {
@@ -103,9 +110,9 @@ public class CatalogTreeModel extends DefaultTreeModel {
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
-            for (int i = 0; i < sp.length; i++) {
+            for (String sp1 : sp) {
                 //if (log.isDebugEnabled()) log.debug("Descend into file: "+sp[i]);
-                insertFileNodes(sp[i], path + "/" + sp[i], newElement);
+                insertFileNodes(sp1, path + "/" + sp1, newElement);
             }
         }
     }
@@ -126,4 +133,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
      */
     static final String resourceRoot = "resources";
     static final String fileRoot = FileUtil.getUserFilesPath() + "resources";
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeModel.class.getName());
+
 }

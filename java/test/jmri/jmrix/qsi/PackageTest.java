@@ -1,5 +1,6 @@
 package jmri.jmrix.qsi;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,20 +35,26 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.qsi.QsiTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.qsi.serialdriver.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.suite());
-            suite.addTest(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.suite());
-        }
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.qsimon.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.packetgen.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(QsiSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(QsiPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.swing.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(QSIConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(QSIMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(QsiProgrammerTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

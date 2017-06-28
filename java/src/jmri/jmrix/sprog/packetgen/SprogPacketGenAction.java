@@ -10,8 +10,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  * Swing action to create and register a SprogPacketGenFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogPacketGenAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo;
@@ -21,6 +20,7 @@ public class SprogPacketGenAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SprogPacketGenFrame f = new SprogPacketGenFrame(_memo);
         try {
@@ -34,4 +34,4 @@ public class SprogPacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)SprogPacketGenAction.java */
+

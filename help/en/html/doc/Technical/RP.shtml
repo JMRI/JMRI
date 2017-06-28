@@ -44,17 +44,12 @@
         that's documented on <a href="Swing.shtml">another
         page</a>.</li>
 
-        <li>JMRI uses the RXTX libraries to support serial
-        communications on Macintosh, Linux and Windows. On Windows
-        only, the Serialio package from <a href=
-        "http://Serialio.com">Serialio.com</a> is also used to be
-        able to use the MS100 baud rate. To do this, the
-        jmri.jmrix.loconet.ms100.MS100Adapter class was converted
-        to use Java reflection to decide which whether the Serialio
-        package is available; on other systems, it uses RXTX. Note
-        that our license for Serialio limits it to this use only;
-        we are not permitted to distribute the libraries for other
-        purposes.</li>
+        <li>JMRI uses the
+        <a href="http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
+        to support serial
+        communications on Macintosh, Linux and Windows.
+        Before JMRI 4.7.5, we used the RXTX and
+        SerialIO libraries for this, but these were then removed.</li>
 
         <li>Take a few moments to learn about the the different
         types of <a href=
@@ -130,25 +125,26 @@
 &lt;property name="deprecation" value="on" /&gt;
 </code>
 </pre>
-
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
 
       <p>There are two forms of marking something as deprecated
-      (JavaDoc tag and Annotation), and both allow you to add
+      (Javadoc tag and Annotation), and both allow you to add
       additional information. A nice discussion of the
       technicalities is <a href=
       "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
       here</a>. We use them this way:</p>
       <pre>
 <code>
-* @deprecated 2.7.8
-
-@Deprecated // 2.7.8
+* @deprecated 2.7.8<br>
+<br>
+@Deprecated // 2.7.8<br>
 </code>
 </pre>where the line contains the version in which the deprecation
 is applied. That lets you easily know how long ago it was
-deprecated. <!--#include virtual="/Footer" -->
+deprecated. 
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

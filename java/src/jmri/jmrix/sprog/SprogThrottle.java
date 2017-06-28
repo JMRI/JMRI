@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class SprogThrottle extends AbstractThrottle {
 
@@ -51,6 +50,7 @@ public class SprogThrottle extends AbstractThrottle {
 
     DccLocoAddress address;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
@@ -58,6 +58,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(
                 address.getNumber(), address.isLongAddress(),
@@ -69,6 +70,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(
@@ -81,6 +83,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(
@@ -93,6 +96,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F13 F14, F15, F16.
      */
+    @Override
     protected void sendFunctionGroup4() {
 
         byte[] result = jmri.NmraPacket.function13Through20Packet(
@@ -106,6 +110,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F17 F18, F19, F20.
      */
+    @Override
     protected void sendFunctionGroup5() {
 
         byte[] result = jmri.NmraPacket.function21Through28Packet(
@@ -123,6 +128,7 @@ public class SprogThrottle extends AbstractThrottle {
      * @param Mode - the current speed step mode - default should be 128 speed
      *             step mode in most cases
      */
+    @Override
     public void setSpeedStepMode(int Mode) {
         SprogMessage m;
         int mode = address.isLongAddress()
@@ -167,6 +173,7 @@ public class SprogThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @Override
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
@@ -242,6 +249,7 @@ public class SprogThrottle extends AbstractThrottle {
         record(speed);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -251,6 +259,7 @@ public class SprogThrottle extends AbstractThrottle {
         }
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

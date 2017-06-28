@@ -1,4 +1,3 @@
-// XpaInterface.java
 package jmri.jmrix.xpa;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.xpa;
  * using an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 public interface XpaInterface {
 
     public void addXpaListener(XpaListener l);
@@ -31,4 +29,4 @@ public interface XpaInterface {
 }
 
 
-/* @(#)XpaInterface.java */
+

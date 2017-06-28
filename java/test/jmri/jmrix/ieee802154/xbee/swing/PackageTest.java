@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PackageTest.class
+    XBeeMenuTest.class,
+    XBeeComponentFactoryTest.class,
+    jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PackageTest.class,
+    jmri.jmrix.ieee802154.xbee.swing.packetgen.PackageTest.class
 })
 
 /**

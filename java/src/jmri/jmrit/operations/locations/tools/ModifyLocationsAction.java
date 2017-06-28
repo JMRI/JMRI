@@ -1,4 +1,3 @@
-// ModifyLocationsAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import jmri.jmrit.operations.locations.Location;
  * Swing action to create and register a LocationsByCarTypeFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class ModifyLocationsAction extends AbstractAction {
 
@@ -39,8 +37,8 @@ public class ModifyLocationsAction extends AbstractAction {
             f.initComponents(l);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

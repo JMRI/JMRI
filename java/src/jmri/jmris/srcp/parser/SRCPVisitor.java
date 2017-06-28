@@ -78,21 +78,25 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return false;
     }
 
+    @Override
     public Object visit(SimpleNode node, Object data) {
         log.debug("Generic Visit " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASThandshakecommand node, Object data) {
         log.debug("Handshake Mode Command ");
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTcommand node, Object data) {
         log.debug("Command " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTgo node, Object data) {
         log.debug("Go " + node.jjtGetValue());
         jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler) data;
@@ -108,6 +112,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASThandshake_set node, Object data) {
         log.debug("Handshake Mode SET ");
         jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler) data;
@@ -135,6 +140,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASTget node, Object data) {
         log.debug("Get " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
@@ -350,6 +356,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASTset node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
 
@@ -455,6 +462,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASTterm node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
@@ -489,16 +497,19 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTcheck node, Object data) {
         log.debug("CHECK " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTverify node, java.lang.Object data) {
         log.debug("VERIFY " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTreset node, java.lang.Object data) {
         log.debug("RESET " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
@@ -514,6 +525,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTinit node, java.lang.Object data) {
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
         log.debug("INIT " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
@@ -591,56 +603,67 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASTcomment node, java.lang.Object data) {
         log.debug("COMMENT " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTgl node, Object data) {
         log.debug("GL " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTsm node, Object data) {
         log.debug("SM " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTga node, Object data) {
         log.debug("GA" + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTfb node, Object data) {
         log.debug("FB " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTtime node, Object data) {
         log.debug("TIME " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTpower node, Object data) {
         log.debug("POWER " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTserver node, Object data) {
         log.debug("SERVER " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTsession node, Object data) {
         log.debug("SESION " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTlock node, Object data) {
         log.debug("LOCK " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTwait_cmd node, Object data) {
         log.debug("Received WAIT CMD " + node.jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
@@ -658,122 +681,146 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
+    @Override
     public Object visit(ASTbus node, Object data) {
         log.debug("Received Bus " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTaddress node, Object data) {
         log.debug("Received Address " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTvalue node, Object data) {
         log.debug("Received Value " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTzeroaddress node, Object data) {
         log.debug("Received Address " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTnonzeroaddress node, Object data) {
         log.debug("Received Address " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTport node, Object data) {
         log.debug("Received Port " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTdevicegroup node, Object data) {
         log.debug("Received Bus " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTonoff node, Object data) {
         log.debug("Received ON/OFF " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTdescription node, Object data) {
         log.debug("Description " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTdelay node, Object data) {
         log.debug("Delay " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTtimeout node, Object data) {
         log.debug("Timeout " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTzeroone node, Object data) {
         log.debug("ZeroOne " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTserviceversion node, Object data) {
         log.debug("Service Version " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTconnectionmode node, Object data) {
         log.debug("Connection Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTcvno node, Object data) {
         log.debug("CV Number " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTprogmode node, Object data) {
         log.debug("Programming Mode Production" + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTcv node, Object data) {
         log.debug("CV Programming Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTcvbit node, Object data) {
         log.debug("CVBIT Programming Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTreg node, Object data) {
         log.debug("REG Programming Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
+    @Override
     public Object visit(ASTprotocol node, Object data) {
         log.debug("Protocol Production " + node.jjtGetValue());
         //return node.childrenAccept(this,data);
         return data;
     }
 
+    @Override
     public Object visit(ASTdrivemode node, Object data) {
         log.debug("Drivemode Production " + node.jjtGetValue());
         return data;
     }
 
+    @Override
     public Object visit(ASTfunctionmode node, Object data) {
         log.debug("Functionmode Production " + node.jjtGetValue());
         return data;
     }
 
+    @Override
     public Object visit(ASTconnectionlitteral node, Object data) {
         log.debug("Connectionlitteral Production " + node.jjtGetValue());
         return data;
     }
 
+    @Override
     public Object visit(ASTprotocollitteral node, Object data) {
         log.debug("Protocol Litteral Production " + node.jjtGetValue());
         return data;

@@ -1,4 +1,3 @@
-// NceConsistRosterEntry.java
 package jmri.jmrix.nce.consist;
 
 import java.io.IOException;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision$
  * @see NceConsistRoster
  *
  */
@@ -459,6 +457,7 @@ public class NceConsistRosterEntry {
         return getId();
     }
 
+    @Override
     public String toString() {
         String out = "[ConsistRosterEntry: "
                 + _id + " "
@@ -481,6 +480,7 @@ public class NceConsistRosterEntry {
      * Prints the roster information. Updated to allow for multiline comment
      * field. Created separate write statements for text and line feeds to work
      * around the HardcopyWriter bug that misplaces borders
+     * @param w stream to printer
      */
     public void printEntry(Writer w) {
         try {
@@ -585,6 +585,9 @@ public class NceConsistRosterEntry {
      * wrapped on a word wrap basis
      *
      * This is exactly the same as RosterEntry.wrapComment
+     * @param comment string comment from consist roster entry
+     * @param textSpace size of space to wrap text into
+     * @return wrap formated comment
      */
     public Vector<String> wrapComment(String comment, int textSpace) {
         // Tokenize the string using \n to separate the text on mulitple lines

@@ -1,14 +1,14 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.loopback;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Definition of objects to handle configuring a layout connection via a LocoNet
  * hexfile emulator
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
+  */
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
@@ -24,10 +24,12 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "CAN Simulation";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new Port();

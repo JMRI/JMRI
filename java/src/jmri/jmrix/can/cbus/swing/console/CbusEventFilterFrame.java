@@ -1,7 +1,3 @@
-/*
- * CbusEventFilterFrame.java
- *
- */
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.awt.Color;
@@ -18,15 +14,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame to control an instance of CBUS filter to filter events
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusEventFilterFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -618391050120364272L;
     protected static final int FILTERS = 4;
     static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
@@ -62,11 +53,13 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         super.dispose();
 //        _console.filterFrameClosed();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setTitle(title());
         // Panels will be added downwards
@@ -138,7 +131,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected void addHelpMenu() {
 
         // *** TO DO
-//    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
+//     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class.getName());

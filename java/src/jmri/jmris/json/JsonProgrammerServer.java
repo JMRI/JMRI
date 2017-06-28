@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2014
- * @version $Revision: 21286 $
+ * 
  */
 public class JsonProgrammerServer extends AbstractProgrammerServer {
 

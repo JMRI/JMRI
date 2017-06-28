@@ -1,10 +1,13 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -14,20 +17,21 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
-    SignalMastIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
+    PanelEditor panel = null;
 
     public void testShowText() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         // this one is for Layout editor, which for now
         // is still in text form.
         JFrame jf = new JFrame("SignalMast Icon Text Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new SignalMastIcon(panel);
+        SignalMastIcon to = new SignalMastIcon(panel);
         to.setShowAutoText(true);
 
         jf.getContentPane().add(new JLabel("Should say Approach: "));
@@ -37,21 +41,24 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
 
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
@@ -71,10 +78,13 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     }
 
     public void testShowIcon() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JFrame jf = new JFrame("SignalMastIcon Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new SignalMastIcon(panel);
+        SignalMastIcon to = new SignalMastIcon(panel);
         to.setShowAutoText(false);
 
         jf.getContentPane().add(new JLabel("Should be yellow/red: "));
@@ -84,21 +94,24 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
-                    protected void updateOutput() {
-                    }
-                }
+            @Override
+            protected void updateOutput() {
+            }
+        }
         );
 
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
@@ -136,20 +149,27 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+        if (!GraphicsEnvironment.isHeadless()) {
+            panel = new PanelEditor("Test SignalMastIcon Panel");
+        }
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        if (panel != null) {
+            WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            for (WindowListener listener : listeners) {
+                panel.getTargetFrame().removeWindowListener(listener);
+            }
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            panel.dispose();
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
 }

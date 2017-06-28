@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -53,6 +53,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     /**
      * Get the configured programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if (progBox == null) {
             return null;
@@ -69,6 +70,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
      *
      * @return true
      */
+    @Override
     public boolean isSelected() {
         return true;
     }
@@ -111,6 +113,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         } else {
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
             progBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // new programmer selection
                     programmerSelected();
@@ -150,6 +153,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     /**
      * Listen to box for mode changes
      */
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // convey change to programmer
         log.debug("Selected mode: {}", modeBox.getSelectedItem());
@@ -161,6 +165,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     /**
      * Listen to programmer for mode changes
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
@@ -171,6 +176,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     }
 
     // no longer needed, disconnect if still connected
+    @Override
     public void dispose() {
     }
     private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());

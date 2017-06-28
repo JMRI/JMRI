@@ -1,4 +1,3 @@
-// TrainManifest.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * to their liking.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- * @version $Revision: 1 $
+ * 
  */
 public class TrainManifest extends TrainCommon {
 
@@ -313,7 +312,9 @@ public class TrainManifest extends TrainCommon {
     }
 
     private void newLine(PrintWriter file, String string) {
-        newLine(file, string, IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, IS_MANIFEST);
+        }
     }
 
 }

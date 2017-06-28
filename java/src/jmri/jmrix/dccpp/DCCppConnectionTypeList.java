@@ -1,4 +1,3 @@
-// LenzConnectionTypeList.java
 package jmri.jmrix.dccpp;
 
 /**
@@ -7,8 +6,7 @@ package jmri.jmrix.dccpp;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on jmri.jmrix.lenz.LenzConnectionTypeList
  */
 public class DCCppConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

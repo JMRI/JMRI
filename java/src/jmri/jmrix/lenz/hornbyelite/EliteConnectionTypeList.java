@@ -1,4 +1,3 @@
-// LenzConnectionTypeList.java
 package jmri.jmrix.lenz.hornbyelite;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.lenz.hornbyelite;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class EliteConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

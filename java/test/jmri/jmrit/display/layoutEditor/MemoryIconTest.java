@@ -1,59 +1,43 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of MemoryIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class MemoryIconTest extends TestCase {
+public class MemoryIconTest {
 
+    @Test
     public void testCtor() {
-        MemoryIcon  t = new MemoryIcon("test",new LayoutEditor());
-        Assert.assertNotNull("exists", t );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        MemoryIcon t = new MemoryIcon("test", new LayoutEditor());
+        Assert.assertNotNull("exists", t);
+        t.getEditor().dispose();
     }
 
-    // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
- 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+
+    @After
+    public void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-    }
-
-
-
-    public MemoryIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MemoryIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MemoryIconTest.class);
-        return suite;
     }
 
 }

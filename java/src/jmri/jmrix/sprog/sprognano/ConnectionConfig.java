@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.sprognano;
 
 import jmri.util.SystemType;
@@ -8,8 +7,7 @@ import jmri.util.SystemType;
  * SerialDriverAdapter object.
  *
  * @author Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -27,14 +25,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "SPROG Nano Command Station";
     }
 
+    @Override
     public String getManufacturer() {
         return adapter.getManufacturer();
     }
 
+    @Override
     public void setManufacturer(String manu) {
         adapter.setManufacturer(manu);
     }
@@ -46,6 +47,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null) {
            adapter = new SprogNanoSerialDriverAdapter();
@@ -53,4 +55,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 }
 
-/* @(#)ConnectionConfig.java */
+

@@ -1,24 +1,27 @@
 package jmri.jmrix.cmri.serial.sim;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
+import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Extends the serialdriver.SimDriverAdapter class to act as simulated
  * connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
+ * @author Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
+    @Override
     public String openPort(String portName, String appName) {
             // don't even try to get port
 
@@ -33,6 +36,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Can the port accept additional characters? Yes, always
      */
+    @Override
     public boolean okToSend() {
         return true;
     }
@@ -40,21 +44,18 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * set up all of the other objects to operate connected to this port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Access to 'self' OK until multiple instance pattern installed")
 
+    @Override
     public void configure() {
         // install a traffic controller that doesn't time out
         SerialTrafficController tc = new SerialTrafficController() {
             // timeout doesn't do anything
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "only until multi-connect update done")
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
-            }
-
-            // and make this the instance
-            {
-                self = this;
             }
         };
 
@@ -66,6 +67,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         try {
             return new DataInputStream(new java.io.PipedInputStream(new java.io.PipedOutputStream()));
@@ -75,13 +77,16 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         //return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         return new DataOutputStream(new java.io.OutputStream() {
+            @Override
             public void write(int b) throws java.io.IOException {
             }
         });
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -89,20 +94,19 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Local method to do specific port configuration
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    @Override
+    protected void setSerialPort() throws UnsupportedCommOperationException {
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Set the baud rate.
      */
+    @Override
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;

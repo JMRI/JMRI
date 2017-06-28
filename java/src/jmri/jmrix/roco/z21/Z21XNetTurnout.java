@@ -27,7 +27,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
             return;
         }
         // get the right packet
-        XNetMessage msg = Z21XNetMessage.getSetTurnoutRequestMessage(mNumber,
+        XNetMessage msg = Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (s & _mThrown) != 0,
                 true, false ); // for now always active and not queued.
         if (getFeedbackMode() == SIGNAL) {
@@ -53,7 +53,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
     public void requestUpdateFromLayout() {
         // On the z21, we send a LAN_X_GET_TURNOUT_INFO message 
         // (see section 5.1 of the protocol documenation ).
-        XNetMessage msg = Z21XNetMessage.getTurnoutInfoRequestMessage(mNumber);
+        XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
         synchronized (this) {
             internalState = STATUSREQUESTSENT;
         }
@@ -88,6 +88,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         internalState = oldState;
     }
 
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -95,6 +96,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
+          // the address sent byte the Z21 is one less than what JMRI's 
+          // XPressNet code (and lenz systems) expect.
+          address = address + 1; 
           if(log.isDebugEnabled()) {
                log.debug("message has address: {}",address);
           }
@@ -107,9 +111,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
              switch(l.getElement(3)){
                 case 0x03: newKnownState(INCONSISTENT);
                            break;
-                case 0x02: newKnownState(THROWN);
+                case 0x02: newKnownState(_inverted?CLOSED:THROWN);
                            break;
-                case 0x01: newKnownState(CLOSED);
+                case 0x01: newKnownState(_inverted?THROWN:CLOSED);
                            break;
                 case 0x00:
                 default:
@@ -130,8 +134,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         }
     }
 
+    @Override
     protected XNetMessage getOffMessage() {
-        return( Z21XNetMessage.getSetTurnoutRequestMessage(mNumber,
+        return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),
                 false, false ) );// for now always not active and not queued.
     }

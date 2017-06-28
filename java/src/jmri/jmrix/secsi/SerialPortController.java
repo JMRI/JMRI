@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.secsi;
 
 import jmri.jmrix.SystemConnectionMemo;
@@ -7,8 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
  * Abstract base for classes representing a communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -19,4 +17,4 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 }
 
 
-/* @(#)SerialPortController.java */
+

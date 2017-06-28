@@ -16,10 +16,11 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     DCCppInterfaceScaffold xnis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "DCCPPL" + i;
     }
@@ -55,6 +56,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register

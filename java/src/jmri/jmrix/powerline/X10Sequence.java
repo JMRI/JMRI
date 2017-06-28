@@ -15,7 +15,7 @@ package jmri.jmrix.powerline;
  * easier by converting to and from the standard line-code sequences, but you
  * should check the coding of your new specific adapter before using them.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class X10Sequence {
 
@@ -47,6 +47,9 @@ public class X10Sequence {
 
     /**
      * Append a new "do function" operation to the sequence
+     * @param house    house code
+     * @param function function
+     * @param dimcount dimming step count
      */
     public void addFunction(int house, int function, int dimcount) {
         if (index >= MAXINDEX) {
@@ -58,6 +61,8 @@ public class X10Sequence {
 
     /**
      * Append a new "set address" operation to the sequence
+     * @param house  house code A-P
+     * @param device device 1-16
      */
     public void addAddress(int house, int device) {
         if (index >= MAXINDEX) {
@@ -69,6 +74,10 @@ public class X10Sequence {
 
     /**
      * Append a new "do function" operation to the sequence
+     * @param house  A-P
+     * @param device 1-16
+     * @param cmd    command code
+     * @param data   additional data
      */
     public void addExtData(int house, int device, int cmd, int data) {
         if (index >= MAXINDEX) {
@@ -87,6 +96,7 @@ public class X10Sequence {
 
     /**
      * Retrieve the next command in the sequence
+     * @return next available command
      */
     public Command getCommand() {
         return cmds[index++];
@@ -117,6 +127,7 @@ public class X10Sequence {
         int house;
         int device;
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -125,10 +136,12 @@ public class X10Sequence {
             return device;
         }
 
+        @Override
         public boolean isAddress() {
             return true;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }
@@ -148,6 +161,7 @@ public class X10Sequence {
         int function;
         int dimcount;
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -160,10 +174,12 @@ public class X10Sequence {
             return dimcount;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return true;
         }
@@ -193,6 +209,7 @@ public class X10Sequence {
             return cmd;
         }
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -201,10 +218,12 @@ public class X10Sequence {
             return device;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }
@@ -223,6 +242,8 @@ public class X10Sequence {
 
     /**
      * Return a human-readable name for a function code
+     * @param i value of function code
+     * @return  string translation
      */
     public static String functionName(int i) {
         return functionNames[i];
@@ -231,6 +252,8 @@ public class X10Sequence {
     /**
      * For the house (A-P) and device (1-16) codes, get the line-coded value.
      * Argument is from 1 to 16 only.
+     * @param i house or device code value
+     * @return  line code value
      */
     public static int encode(int i) {
         if (i < 1 || i > 16) {
@@ -244,6 +267,8 @@ public class X10Sequence {
 
     /**
      * Get house (A-P as 1-16) or device (1-16) from line-coded value.
+     * @param i line code value
+     * @return  house or device code value
      */
     public static int decode(int i) {
         if (i < 0 || i > 15) {
@@ -257,6 +282,8 @@ public class X10Sequence {
 
     /**
      * Pretty-print an address code
+     * @param b address code value
+     * @return  human string form
      */
     public static String formatAddressByte(int b) {
         return "House " + X10Sequence.houseValueToText(X10Sequence.decode((b >> 4) & 0x0F))
@@ -265,6 +292,8 @@ public class X10Sequence {
 
     /**
      * Pretty-print a function code
+     * @param b command code value
+     * @return  human string form
      */
     public static String formatCommandByte(int b) {
         return "House " + X10Sequence.houseValueToText(X10Sequence.decode((b >> 4) & 0x0F))
@@ -273,6 +302,8 @@ public class X10Sequence {
 
     /**
      * Translate House Value (1 to 16) to text
+     * @param hV device code value
+     * @return  human string form
      */
     public static String houseValueToText(int hV) {
         if (hV >= 1 && hV <= 16) {
@@ -287,6 +318,8 @@ public class X10Sequence {
 
     /**
      * Translate House Code to text
+     * @param hC house code
+     * @return   A-P
      */
     public static String houseCodeToText(int hC) {
         String hCode = "";

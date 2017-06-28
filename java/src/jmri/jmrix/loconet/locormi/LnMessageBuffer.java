@@ -21,6 +21,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         super();
     }
 
+    @Override
     public void enable(int mask) throws RemoteException {
         if (messageList == null) {
             messageList = new LinkedList<LocoNetMessage>();
@@ -29,14 +30,17 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         LnTrafficController.instance().addLocoNetListener(mask, this);
     }
 
+    @Override
     public void disable(int mask) throws RemoteException {
         LnTrafficController.instance().removeLocoNetListener(mask, this);
     }
 
+    @Override
     public void clear() throws RemoteException {
         messageList.clear();
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         synchronized (messageList) {
             messageList.add(msg);
@@ -44,6 +48,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         }
     }
 
+    @Override
     public Object[] getMessages(long timeout) {
         Object[] messagesArray = null;
 
@@ -65,6 +70,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         return messagesArray;
     }
 
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         LnTrafficController.instance().sendLocoNetMessage(m);
     }

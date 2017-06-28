@@ -1,4 +1,3 @@
-// EcosConnectionTypeList.java
 package jmri.jmrix.ecos;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.ecos;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class EcosConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

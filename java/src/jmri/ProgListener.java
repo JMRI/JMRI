@@ -18,7 +18,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface ProgListener extends java.util.EventListener {
 
@@ -91,7 +91,7 @@ public interface ProgListener extends java.util.EventListener {
 
     /**
      * Constant denoting that there was an error with the programming sequence
-     * (e.g. early exit)
+     * (such as early exit)
      */
     public final int SequenceError = 0x200;
 

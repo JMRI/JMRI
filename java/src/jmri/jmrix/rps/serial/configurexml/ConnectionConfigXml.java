@@ -16,7 +16,6 @@ import org.jdom2.Element;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -29,6 +28,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      *
      * @param e Element being extended
      */
+    @Override
     protected void extendElement(Element e) {
         /*         SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0); */
         /*         int index = 1; */
@@ -53,6 +53,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
+    @Override
     protected void getInstance() {
         adapter = SerialAdapter.instance();
     }

@@ -1,4 +1,3 @@
-// SerialConnectionTypeList.java
 package jmri.jmrix.grapevine;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.grapevine;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

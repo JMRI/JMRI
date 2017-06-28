@@ -2,10 +2,8 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * EliteXNetThrottleManagerTest.java
@@ -14,40 +12,22 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class EliteXNetThrottleManagerTest extends TestCase {
-
-    public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-
-        EliteXNetThrottleManager c = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
-
-        Assert.assertNotNull(c);
-    }
-
-    // from here down is testing infrastructure
-    public EliteXNetThrottleManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EliteXNetThrottleManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EliteXNetThrottleManagerTest.class);
-        return suite;
-    }
+public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleManagerTest {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+        tm = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

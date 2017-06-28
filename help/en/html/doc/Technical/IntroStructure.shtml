@@ -43,6 +43,7 @@
       items on the layout) are named <a href="Names.shtml">is
       available on a separate page</a>.</p>
 
+      <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png" align="right" height="20%" width="20%" /></a>
       <p>More specifically:</p>
 
       <dl>
@@ -53,6 +54,15 @@
         overall JMRI library and its capabilities.<br>
         Code in the jmri package should depend on no other JMRI
         code, though it may depend on externals (log4j, etc.)</dd>
+
+        <dt>apps</dt>
+
+        <dd>Separate from the jmri package tree, this contains application classes and base classes that can use jmri, jmrit,
+        and jmrix classes, along with anything else. By having this
+        here, we break the dependency between jmrix and jmrit
+        classes (somebody has to create the general and
+        system-specific tool objects for an application; that
+        dependency is from the apps package)</dd>
 
         <dt>jmrit</dt>
 
@@ -69,6 +79,8 @@
         system, plus system-specific tools (in the long run, those
         could certainly be separated).<br>
         jmrix can depend on jmri and externals, but not jmrit.</dd>
+
+        <a href="images/OverallImplementationStructure.png"><img src="images/OverallImplementationStructure.png" align="right" height="20%" width="20%" /></a>
 
         <dt>util</dt>
 
@@ -91,26 +103,7 @@
         itself, to make the jmri package simpler to understand for
         people who just want to use the library.</dd>
 
-        <dt>apps</dt>
-
-        <dd>Contains application bases that can use jmri, jmrit,
-        and jmrix classes, along with anything else. By having this
-        here, we break the dependency between jmrix and jmrit
-        classes (somebody has to create the general and
-        system-specific tool objects for an application; that
-        dependency is from the apps package)</dd>
-      </dl>Basically:
-      <pre>
-
-      apps   -&gt;   jmri
-
-                  A  A
-                 /    \
-                /      \
-              jmrix     jmrit
-
-</pre>(This should show apps using jmrit and jmrix also, but that's
-too hard to draw in ASCII)
+      </dl>
 
       <p>Extensive use of Factory pattern via objects we call
       "Manager" objects.</p>

@@ -1,4 +1,3 @@
-// TrainSetColorFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014, 2016
- * @version $Revision: 17977 $
  */
 public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -38,7 +36,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     JRadioButton autoRadioButton = new JRadioButton(Bundle.getMessage("Auto"));
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
@@ -65,7 +63,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		// Layout the panel by rows
+  // Layout the panel by rows
 
         // row 1
         JPanel pOption = new JPanel();

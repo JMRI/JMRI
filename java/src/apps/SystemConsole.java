@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -122,7 +123,7 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private SystemConsole() {
         // Record current System.out and System.err
@@ -201,6 +202,9 @@ public final class SystemConsole extends JTextArea {
         frame = new JmriJFrame(Bundle.getMessage("TitleConsole"));
 
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
+        // Add Help menu (Windows menu automaitically added)
+        frame.addHelpMenu("package.apps.SystemConsole", true); // NOI18N
 
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
@@ -403,7 +407,7 @@ public final class SystemConsole extends JTextArea {
             }
 
             @Override
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+            @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
                     justification = "Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
@@ -419,14 +423,14 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(this.getOutputStream());
         System.setErr(this.getErrorStream());
     }
 
-    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via e.g. a script
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
     public void truncateTextArea() {
         int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
         if(numLinesToRemove > 0) {

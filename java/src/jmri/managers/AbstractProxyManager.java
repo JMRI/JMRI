@@ -3,6 +3,8 @@ package jmri.managers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.SystemNameComparator;
@@ -101,9 +103,10 @@ abstract public class AbstractProxyManager implements Manager {
 
     /**
      * Locate via user name, then system name if needed. Subclasses use this to
-     * provide e.g. getSensor, getTurnout, etc via casts.
+     * provide more specific getters such as getSensor or getTurnout via casts.
      *
-     * @return Null if nothing by that name exists
+     * @param name the user or system name for the requested NamedBean
+     * @return the requested NamedBean or null if nothing matches name
      */
     @Override
     public NamedBean getNamedBean(String name) {
@@ -115,13 +118,36 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager and its submanagers.
+     * <p>
+     * Attempts to match by system prefix first.
+     * <p> 
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @Override
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        int index = matchTentative(inputName);
+        if (index >= 0) {
+            return getMgr(index).normalizeSystemName(inputName);
+        }
+        log.debug("normalizeSystemName did not find manager for name " + inputName + ", defer to default");
+        return getMgr(0).normalizeSystemName(inputName);
+    }
+
+    /**
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
      * the new NamedBean. Otherwise, the makeSystemName method will attempt to
-     * turn it into a valid system name. Subclasses use this to provide e.g.
-     * getSensor, getTurnout, etc via casts.
+     * turn it into a valid system name. Subclasses use this to create provider methods such as 
+     * getSensor or getTurnout via casts.
      *
-     * @return Never null under normal circumstances
+     * @param name the user name or system name of the bean
+     * @return an existing or new NamedBean
      */
     protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
@@ -136,14 +162,16 @@ abstract public class AbstractProxyManager implements Manager {
         if (index >= 0) {
             return makeBean(index, name, null);
         }
-        log.debug("Did not find manager for name " + name + ", defer to default");
+        log.debug("provideNamedBean did not find manager for name " + name + ", defer to default");
         return makeBean(0, getMgr(0).makeSystemName(name), null);
     }
 
     /**
      * Defer creation of the proper type to the subclass
      *
-     * @param index      Which manager to invoke
+     * @param index      the manager to invoke
+     * @param systemName the system name
+     * @param userName   the user name
      * @return a bean
      */
     abstract protected NamedBean makeBean(int index, String systemName, String userName);
@@ -196,6 +224,8 @@ abstract public class AbstractProxyManager implements Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * NamedBean when you should be looking them up.
      *
+     * @param systemName the system name
+     * @param userName   the user name
      * @return requested NamedBean object (never null)
      */
     public NamedBean newNamedBean(String systemName, String userName) {
@@ -228,6 +258,7 @@ abstract public class AbstractProxyManager implements Manager {
      * Find the index of a matching manager. Returns -1 if there is no match,
      * which is not considered an error
      *
+     * @param systemname the system name
      * @return the index of the matching manager
      */
     protected int matchTentative(String systemname) {
@@ -243,6 +274,7 @@ abstract public class AbstractProxyManager implements Manager {
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
+     * @param systemname the system name
      * @return the index of the matching manager
      */
     protected int match(String systemname) {
@@ -271,6 +303,7 @@ abstract public class AbstractProxyManager implements Manager {
      * <P>
      * Forwards the register request to the matching system
      *
+     * @param s the bean
      */
     @Override
     public void register(NamedBean s) {
@@ -283,6 +316,7 @@ abstract public class AbstractProxyManager implements Manager {
      * <P>
      * Forwards the deregister request to the matching system
      *
+     * @param s the name
      */
     @Override
     public void deregister(NamedBean s) {
@@ -368,6 +402,7 @@ abstract public class AbstractProxyManager implements Manager {
     /**
      * Get a list of all system names.
      *
+     * @return a list, possibly empty, of system names
      */
     @Override
     public List<String> getSystemNameList() {
