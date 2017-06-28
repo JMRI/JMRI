@@ -128,6 +128,9 @@
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
     </memory>
+    <memory>
+        <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
+    </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
@@ -713,6 +716,9 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
+    <memoryInputIcon colWidth="12" memory="IMUSS CTC:SIGNALHEADSECTION:1:LOG" x="50" y="370" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" size="11" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+        <tooltip>Message log</tooltip>
+    </memoryInputIcon>
     <positionablelabel x="230" y="370" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="This panel requires the logic in jmri.ussctc.PackageDemo" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
