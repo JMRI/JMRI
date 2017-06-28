@@ -19,6 +19,8 @@ public class SignalHeadSection implements Section {
      */
     SignalHeadSection() {}
     
+    static final int DEFAULT_RUN_TIME_LENGTH = 30000;
+    
     /**
      * Create and configure.
      * 
@@ -37,6 +39,19 @@ public class SignalHeadSection implements Section {
                              String leftIndicator, String stopIndicator, String rightIndicator, 
                              String leftInput, String rightInput,
                              CodeLine codeline) {
+        
+        logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
+                        Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"LOG");
+        log.debug("log memory name is {}", logMemory.getSystemName());
+        
+        timeMemory = InstanceManager.getDefault(MemoryManager.class).getMemory(
+                        Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"TIME");
+        if (timeMemory == null) {
+            timeMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
+                        Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"TIME");
+            timeMemory.setValue(new Integer(DEFAULT_RUN_TIME_LENGTH));
+        }
+
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -80,6 +95,9 @@ public class SignalHeadSection implements Section {
     CodeLine codeline;
     Station station;
     
+    Memory timeMemory = null;
+    Memory logMemory = null;
+    
     public void addStation(Station station) { this.station = station; }
     
     ArrayList<NamedBeanHandle<SignalHead>> hRightHeads;
@@ -106,6 +124,8 @@ public class SignalHeadSection implements Section {
     }
     Machine machine;
 
+    boolean timeRunning = false;
+    
     /**
      * Start of sending code operation:
      * <ul>
@@ -116,10 +136,38 @@ public class SignalHeadSection implements Section {
      */
     @Override
     public Station.Value codeSendStart() {
+        // are we setting to stop, which might start running time?
+        // check for setting to stop while machine has been cleared to left or right
+        if (    (hRightInput.getBean().getKnownState()==Sensor.ACTIVE && 
+                    hLeftIndicator.getBean().getKnownState() == Turnout.THROWN )
+             ||
+                (hLeftInput.getBean().getKnownState()==Sensor.ACTIVE &&
+                    hRightIndicator.getBean().getKnownState() == Turnout.THROWN ) 
+             ||
+                (hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE &&
+                    ( hRightIndicator.getBean().getKnownState() == Turnout.THROWN || hLeftIndicator.getBean().getKnownState() == Turnout.THROWN) ) 
+            ) {
+        
+            // setting to stop, have to start running time
+            timeRunning = true;
+            jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
+                    log.debug("End running time");
+                    logMemory.setValue("");
+                    timeRunning = false;
+                    station.requestIndicationStart();
+                } ,
+                (int)timeMemory.getValue());
+            
+            log.debug("starting to run time");
+            logMemory.setValue("Running time");
+        }
+    
         // Set the indicators based on current and requested state
-        if (   ( machine==Machine.SET_LEFT && hLeftInput.getBean().getKnownState()==Sensor.ACTIVE)
-            || ( machine==Machine.SET_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) 
-            || ( machine==Machine.SET_STOP && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE && hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE)) {
+        if ( !timeRunning && (
+                  ( machine==Machine.SET_LEFT && hLeftInput.getBean().getKnownState()==Sensor.ACTIVE)
+                || ( machine==Machine.SET_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) 
+                || ( machine==Machine.SET_STOP && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE && hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE) )
+                ) {
             log.debug("No signal change required, states aligned");
         } else {
             log.debug("Signal change requested");
@@ -131,7 +179,10 @@ public class SignalHeadSection implements Section {
         
         // return the settings to send
         Station.Value retval;
-        if (hLeftInput.getBean().getKnownState()==Sensor.ACTIVE) {
+        if (timeRunning) {
+            machine = Machine.SET_STOP;
+            retval = CODE_STOP;        
+        } else if (hLeftInput.getBean().getKnownState()==Sensor.ACTIVE) {
             machine = Machine.SET_LEFT;
             retval = CODE_LEFT;
         } else if (hRightInput.getBean().getKnownState()==Sensor.ACTIVE) {
@@ -208,7 +259,9 @@ public class SignalHeadSection implements Section {
         Station.Value retval = getCurrentIndication();
         log.debug("indicationStart with {}; last indication was {}", retval, lastIndication);
         
-        // TODO: anti-fleeting done always
+        // TODO: anti-fleeting done always, need call-on logic
+        
+        // set Held right away
         if (retval == CODE_STOP && lastIndication != CODE_STOP) {
             for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
                 if (!handle.getBean().getHeld()) handle.getBean().setHeld(true);
@@ -260,7 +313,11 @@ public class SignalHeadSection implements Section {
      */
     public void indicationComplete(Station.Value value) {
         log.debug("indicationComplete sets from {} in state {}", value, machine);
-        if (value == CODE_LEFT) {
+        if (timeRunning) {
+            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+        } else if (value == CODE_LEFT) {
             hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
