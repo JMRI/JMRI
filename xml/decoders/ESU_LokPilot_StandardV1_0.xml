@@ -23,7 +23,7 @@
     <version author="Dave Heap" version="1.3" lastUpdated="20161101"/>
     <decoder>
         <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308">
+            <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308,16777361">
                 <output name="1" label="Front|Light" maxcurrent="250 mA"/>
                 <output name="2" label="Rear|Light" maxcurrent="250 mA"/>
                 <output name="3" label="AUX|1" maxcurrent="250 mA"/>
