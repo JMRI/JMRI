@@ -62,6 +62,9 @@ public class PackageDemo {
         turnout.addStation(station);
         signals.addStation(station);
         
+        Lock lock = new OccupancyLock("Sec1 Track OS");
+        turnout.addLocks(Arrays.asList(new Lock[]{lock}));
+        
         // slow down delayed turnouts
         jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 10000;
         

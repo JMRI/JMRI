@@ -30,7 +30,6 @@ public class SignalHeadSectionTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
     }
 
