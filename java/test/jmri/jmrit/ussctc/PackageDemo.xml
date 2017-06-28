@@ -122,7 +122,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:06 PM">
+    <memory value="9:48 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,6 +150,24 @@
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="2L Main" mode="2" watchedturnout="Sec 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Sec1 Track OS</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2L Siding" mode="3" watchedturnout="Sec 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Sec1 Track OS</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2R Upper" mode="2" watchedturnout="Sec 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Sec1 Track OS</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2R Lower" mode="3" watchedturnout="Sec 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Sec1 Track OS</sensorname>
+      <comment />
+    </signalelement>
+  </signalelements>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
@@ -823,99 +841,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Jun 25 15:02:02 PDT 2017</date>
+      <date>Tue Jun 27 21:46:12 PDT 2017</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jun 25 15:02:04 PDT 2017</date>
+      <date>Tue Jun 27 21:46:14 PDT 2017</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Jun 25 14:30:09 PDT 2017</date>
+          <date>Tue Jun 27 21:38:43 PDT 2017</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Jun 25 14:30:11 PDT 2017</date>
+          <date>Tue Jun 27 21:38:45 PDT 2017</date>
           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Tue Jun 20 17:33:33 PDT 2017</date>
+              <date>Sun Jun 25 15:02:02 PDT 2017</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Tue Jun 20 17:33:35 PDT 2017</date>
+              <date>Sun Jun 25 15:02:04 PDT 2017</date>
               <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Tue Jun 20 17:30:57 PDT 2017</date>
+                  <date>Sun Jun 25 14:30:09 PDT 2017</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Tue Jun 20 17:30:59 PDT 2017</date>
+                  <date>Sun Jun 25 14:30:11 PDT 2017</date>
                   <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Tue Jun 20 17:18:20 PDT 2017</date>
+                      <date>Tue Jun 20 17:33:33 PDT 2017</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Tue Jun 20 17:18:22 PDT 2017</date>
+                      <date>Tue Jun 20 17:33:35 PDT 2017</date>
                       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Tue Jun 20 14:22:30 PDT 2017</date>
+                          <date>Tue Jun 20 17:30:57 PDT 2017</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
+                          <type>Load OK</type>
+                          <date>Tue Jun 20 17:30:59 PDT 2017</date>
+                          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ussctc/PackageDemo.xml</filename>
+                        </operation>
+                        <operation>
                           <type>Store</type>
-                          <date>Tue Jun 20 14:30:38 PDT 2017</date>
+                          <date>Tue Jun 20 17:33:20 PDT 2017</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Tue Jun 20 17:29:07 PDT 2017</date>
+                      <date>Tue Jun 20 17:40:09 PDT 2017</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Tue Jun 20 17:33:20 PDT 2017</date>
+                  <date>Sun Jun 25 14:47:27 PDT 2017</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Tue Jun 20 17:40:09 PDT 2017</date>
+              <date>Sun Jun 25 15:06:02 PDT 2017</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Jun 25 14:47:27 PDT 2017</date>
+          <date>Tue Jun 27 21:42:17 PDT 2017</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Jun 25 15:06:02 PDT 2017</date>
+      <date>Tue Jun 27 21:48:10 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.9.1ish+jake+20170625T2201Z+R68016b0d7e on Sun Jun 25 15:06:02 PDT 2017-->
+  <!--Written by JMRI version 4.9.1ish+jake+20170628T0446Z+R95c028f62c on Tue Jun 27 21:48:10 PDT 2017-->
 </layout-config>

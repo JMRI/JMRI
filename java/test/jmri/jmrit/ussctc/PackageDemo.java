@@ -39,10 +39,10 @@ public class PackageDemo {
         
         // turn signals on for display
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
-        shm.getSignalHead("2R Upper").setAppearance(SignalHead.GREEN);
-        shm.getSignalHead("2R Lower").setAppearance(SignalHead.GREEN);
-        shm.getSignalHead("2L Main").setAppearance(SignalHead.GREEN);
-        shm.getSignalHead("2L Siding").setAppearance(SignalHead.GREEN);
+        shm.getSignalHead("2R Upper").setAppearance(SignalHead.RED);
+        shm.getSignalHead("2R Lower").setAppearance(SignalHead.RED);
+        shm.getSignalHead("2L Main").setAppearance(SignalHead.RED);
+        shm.getSignalHead("2L Siding").setAppearance(SignalHead.RED);
         
         // create and wire USS CTC objects
         CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
@@ -62,8 +62,9 @@ public class PackageDemo {
         turnout.addStation(station);
         signals.addStation(station);
         
-        Lock lock = new OccupancyLock("Sec1 Track OS");
-        turnout.addLocks(Arrays.asList(new Lock[]{lock}));
+        Lock occupancyLock = new OccupancyLock("Sec1 Track OS");
+        Lock routeLock = new RouteLock(new String[]{"2R Upper","2R Lower", "2L Main", "2L Siding"});
+        turnout.addLocks(Arrays.asList(new Lock[]{occupancyLock, routeLock}));
         
         // slow down delayed turnouts
         jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 10000;
