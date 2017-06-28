@@ -298,7 +298,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
         // Now set SignalSpeedMap members.
         SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
-        speedMap.setRampParams(_msIncrTime, _msIncrTime);
+        speedMap.setRampParams(_throttleIncr, _msIncrTime);
         speedMap.setDefaultThrottleFactor(_throttleScale);
         speedMap.setLayoutScale(_scale);
         speedMap.setAspects(new HashMap<>(this._speedNames), _interpretation);

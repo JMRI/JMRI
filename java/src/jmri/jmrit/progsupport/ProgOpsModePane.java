@@ -227,11 +227,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
         // configure buttons
         int index = 0;
-        List<ProgrammingMode> modes;
+        List<ProgrammingMode> modes = new ArrayList<ProgrammingMode>();
         if (getProgrammer() != null) {
-            modes = programmer.getSupportedModes();
+            modes.addAll(programmer.getSupportedModes());
         } else {
-            modes = ((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes();
+            modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
         }
         // add OPSACCBYTEMODE if possible
         if (modes.contains(DefaultProgrammerManager.OPSBYTEMODE)
