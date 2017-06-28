@@ -90,6 +90,9 @@ public class TurnoutSection implements Section {
     
     public void addStation(Station station) { this.station = station; }
     
+    List<Lock> locks;
+    public void addLocks(List<Lock> locks) { this.locks = locks; }
+    
     NamedBeanHandle<Turnout> hLayoutTO;
 
     NamedBeanHandle<Turnout> hNormalIndicator;
@@ -104,6 +107,8 @@ public class TurnoutSection implements Section {
     private final Station.Value CODE_CLOSED = Station.Value.Double10;
     private final Station.Value CODE_THROWN = Station.Value.Double01;
     private final Station.Value CODE_NEITHER = Station.Value.Double00;
+    
+    Station.Value lastCodeValue = CODE_NEITHER;
     
     /**
      * Start of sending code operation:
@@ -137,27 +142,60 @@ public class TurnoutSection implements Section {
      * Notification that code has been sent. Sets the turnout on the layout.
      */
     public void codeValueDelivered(Station.Value value) {
-        // @TODO add lock checking here; this is part of vital logic implementation
+        lastCodeValue = value;
         
-        // read and set turnout
-        if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
-            hLayoutTO.getBean().setCommandedState(Turnout.CLOSED);
-            log.debug("Layout turnout set THROWN");
-        } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
-            hLayoutTO.getBean().setCommandedState(Turnout.THROWN);
-            log.debug("Layout turnout set THROWN");
-        } else log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
+        // Check locks
+        boolean permitted = true;
+        if (locks != null) {
+            for (Lock lock : locks) {
+                if ( ! lock.isLockClear()) permitted = false;
+            }
+        }
+        log.debug(" Lock check found permitted = {}", permitted);
         
-        // indication will come back when turnout feedback (defined elsewhere) triggers        
+        if (permitted) {
+            // Set turnout as commanded, skipping redundant operations
+            if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
+                hLayoutTO.getBean().setCommandedState(Turnout.CLOSED);
+                log.debug("Layout turnout set THROWN");
+            } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
+                hLayoutTO.getBean().setCommandedState(Turnout.THROWN);
+                log.debug("Layout turnout set THROWN");
+            } else {
+                log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
+                // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
+                // from motion run above
+                // But we have to handle the case of re-commanding back to the current turnout state
+                if ( (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() == Turnout.CLOSED)
+                        || (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() == Turnout.THROWN) ) {
+                    
+                    log.debug("    Start indication due to aligned with last request");
+                    jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
+                
+                }
+            }
+        } else {
+            log.debug("No turnout operation due to not permitted by lock: {}", value);
+            // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
+            // from motion run above
+            // But we have to handle the case of re-commanding back to the current turnout state
+            if ( (value == CODE_CLOSED && hLayoutTO.getBean().getKnownState() == Turnout.CLOSED)
+                    || (value == CODE_THROWN && hLayoutTO.getBean().getKnownState() == Turnout.THROWN) ) {
+                
+                log.debug("    Start indication due to aligned with last request");
+                jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
+                
+            }
+        }
     }
 
     /**
      * Provide state that's returned from field to machine via indication.
      */
     public Station.Value indicationStart() {
-        if (hLayoutTO.getBean().getKnownState() == Turnout.CLOSED) {
+        if (hLayoutTO.getBean().getKnownState() == Turnout.CLOSED && lastCodeValue == CODE_CLOSED ) {
             return CODE_CLOSED;
-        } else if (hLayoutTO.getBean().getKnownState() == Turnout.THROWN) {
+        } else if (hLayoutTO.getBean().getKnownState() == Turnout.THROWN  && lastCodeValue == CODE_THROWN) {
             return CODE_THROWN;
         } else 
             return CODE_NEITHER;
@@ -186,6 +224,7 @@ public class TurnoutSection implements Section {
     void layoutTurnoutChanged(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && !e.getNewValue().equals(e.getOldValue()) ) {
             log.debug("Turnout changed from {} to {}, so requestIndicationStart", e.getOldValue(), e.getNewValue());
+            // Always send an indication if there's a change in the turnout
             station.requestIndicationStart();
         }
     }
