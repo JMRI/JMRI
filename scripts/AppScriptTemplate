@@ -109,6 +109,8 @@ function parse_args() {
             # ignore and do not pass the settingsdir argument
             --settingsdir) shift ;;
             --settingsdir=*) ;;
+            # ignore and do not pass a ProcessSerialNumber argument (from the open command on macOS)
+            -psn_*) ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
@@ -300,8 +302,9 @@ if [ -z "${JAVA_HOME}" ] ; then
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 1.8 or 1.9
-            if [[ ! "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
+            # Test if java is present and version 1.8 or 9
+            java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
+            if [[ ! "${java_version}" =~ \"1.8 && ! "${java_version}" =~ \"9 ]] ; then
                 JAVA_HOME=""
             fi
         else

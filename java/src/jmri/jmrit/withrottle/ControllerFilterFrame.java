@@ -50,7 +50,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
 
-            tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
+            tabbedPane.addTab(Bundle.getMessage("Turnouts"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
         }
 
         if (InstanceManager.getNullableDefault(jmri.RouteManager.class) != null) {
@@ -184,7 +184,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         });
         p.add(cancelButton);
 
-        JButton saveButton = new JButton(rb.getString("ButtonSave"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveButton.setAlignmentX(CENTER_ALIGNMENT);
         saveButton.setToolTipText(rb.getString("ToolTipSave"));
         saveButton.addActionListener(new ActionListener() {
