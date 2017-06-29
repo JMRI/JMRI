@@ -243,7 +243,8 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
-                return -1.0f;       // no forward speeds at all                
+                log.error("Nothing in speed Profile");
+                return -1.0f;       // no forward speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -294,7 +295,8 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
-                return -1.0f;       // no reverse speeds at all                
+                log.error("Nothing in speed Profile");
+                return -1.0f;       // no reverse speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -796,7 +798,7 @@ public class RosterSpeedProfile {
                 String reverse = spd.getChild("reverse").getText();
                 setSpeed(Integer.parseInt(step), Float.parseFloat(forward), Float.parseFloat(reverse));
             } catch (Exception ex) {
-                log.error("Not loaded {}", ex.toString());
+                log.error("Not loaded");
             }
         }
     }
@@ -835,9 +837,7 @@ public class RosterSpeedProfile {
     public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
         return speeds;
     }
-    public void setProfileSpeeds(TreeMap<Integer, SpeedStep> s) {
-        speeds = s;
-    }
+
     /**
      * Get the throttle setting to achieve a track speed
      * @param speed desired track speed in mms
