@@ -51,7 +51,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     protected JCheckBox unlockCheckBox = new JCheckBox();
 
     protected ButtonGroup speedGroup = new ButtonGroup();
-    protected JRadioButton speed14Button = new JRadioButton("14 step");
+    protected JRadioButton speed14Button = new JRadioButton("14 step"); // TODO i18n using shared sprogBundle
     protected JRadioButton speed28Button = new JRadioButton("28 step");
     protected JRadioButton speed128Button = new JRadioButton("128 step");
 

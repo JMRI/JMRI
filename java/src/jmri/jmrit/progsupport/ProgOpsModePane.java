@@ -51,6 +51,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean oldLongAddr = false;
     boolean opsAccyMode = false;
     boolean oldOpsAccyMode = false;
+    boolean opsSigMode = false;
+    boolean oldOpsSigMode = false;
     AddressedProgrammer programmer = null;
     AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
 
@@ -59,14 +61,15 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={})",
-                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode);
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode);
         if ((longAddrButton.isSelected() == oldLongAddr)
                 && mAddrField.getValue().equals(oldAddrValue)
-                && opsAccyMode == oldOpsAccyMode) {
+                && opsAccyMode == oldOpsAccyMode
+                && opsSigMode == oldOpsSigMode) {
             log.debug("getProgrammer hasn't changed");
             // hasn't changed
-            if (opsAccyMode) {
+            if (opsAccyMode || opsSigMode) {
                 return facadeProgrammer;
             } else {
                 return programmer;
@@ -78,6 +81,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         oldLongAddr = longAddrButton.isSelected();
         oldAddrValue = (Integer) mAddrField.getValue();
         oldOpsAccyMode = opsAccyMode;
+        oldOpsSigMode = opsSigMode;
         setAddrParams();
 
         if (pm != null) {
@@ -104,6 +108,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             log.debug("   getting AccessoryOpsModeProgrammerFacade");
             facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer,
                     longAddrButton.isSelected() ? "accessory" : "decoder");
+            return facadeProgrammer;
+        } else if (opsSigMode) {
+            log.debug("   getting AccessoryOpsModeProgrammerFacade signal mode");
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, "signal");
             return facadeProgrammer;
         }
         return programmer;
@@ -233,11 +241,16 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         } else {
             modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
         }
-        // add OPSACCBYTEMODE if possible
-        if (modes.contains(DefaultProgrammerManager.OPSBYTEMODE)
-                && !modes.contains(DefaultProgrammerManager.OPSACCBYTEMODE)) {
-            log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCBYTEMODE);
-            modes.add(DefaultProgrammerManager.OPSACCBYTEMODE);
+        // add OPSACCBYTEMODE & OPSACCEXTBYTEMODE if possible
+        if (modes.contains(DefaultProgrammerManager.OPSBYTEMODE)) {
+            if (!modes.contains(DefaultProgrammerManager.OPSACCBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCBYTEMODE);
+                modes.add(DefaultProgrammerManager.OPSACCBYTEMODE);
+            }
+            if (!modes.contains(DefaultProgrammerManager.OPSACCEXTBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+                modes.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+            }
         }
         log.debug("   has {} modes", modes.size());
         for (ProgrammingMode mode : modes) {
@@ -280,8 +293,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                     if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
                         log.debug("OPS ACCY was selected in actionPerformed");
                         opsAccyMode = true;
+                        opsSigMode = false;
+                    } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                        log.debug("OPS SIG was selected in actionPerformed");
+                        opsAccyMode = false;
+                        opsSigMode = true;
                     } else {
                         opsAccyMode = false;
+                        opsSigMode = false;
                         getProgrammer().setMode(mode);
                     }
                 }
@@ -303,8 +322,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
                     log.debug("OPS ACCY was selected in setProgrammerFromGui");
                     opsAccyMode = true;
+                    opsSigMode = false;
+                } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                    log.debug("OPS SIG was selected in setProgrammerFromGui");
+                    opsAccyMode = false;
+                    opsSigMode = true;
                 } else {
                     opsAccyMode = false;
+                    opsSigMode = false;
                     getProgrammer().setMode(mode);
                 }
             }
@@ -342,6 +367,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         ProgrammingMode mode = getProgrammer().getMode();
         if (opsAccyMode) {
             mode = DefaultProgrammerManager.OPSACCBYTEMODE;
+        } else if (opsSigMode) {
+            mode = DefaultProgrammerManager.OPSACCEXTBYTEMODE;
         }
         JRadioButton button = buttonMap.get(mode);
         if (button == null) {
@@ -360,6 +387,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         if (opsAccyMode) {
             shortAddrButton.setText(Bundle.getMessage("DecoderAddress"));
             shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipDecoderAddress"));
+            shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("AccessoryAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipAccessoryAddress"));
             if (longAddrButton.isSelected()) {
@@ -369,9 +397,17 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 lowAddrLimit = 1;
                 highAddrLimit = 511;
             }
+        } else if (opsSigMode) {
+            shortAddrButton.setVisible(false);
+            longAddrButton.setSelected(true);
+            longAddrButton.setText(Bundle.getMessage("SignalAddress"));
+            longAddrButton.setToolTipText(Bundle.getMessage("ToolTipSignalAddress"));
+            lowAddrLimit = 1;
+            highAddrLimit = 2044;
         } else {
             shortAddrButton.setText(Bundle.getMessage("ShortAddress"));
             shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipShortAddress"));
+            shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("LongAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipLongAddress"));
             if (longAddrButton.isSelected()) {
@@ -382,10 +418,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 highAddrLimit = 127;
             }
         }
-        log.debug("Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
+
+        log.debug(
+                "Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
         model.setMinimum(lowAddrLimit);
+
         model.setMaximum(highAddrLimit);
         int address;
+
         try {
             address = (Integer) mAddrField.getValue();
         } catch (java.lang.NumberFormatException e) {
@@ -399,11 +439,12 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
-    // Free up memory from no longer needed stuff, disconnect if still connected.
+// Free up memory from no longer needed stuff, disconnect if still connected.
     @Override
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class
+            .getName());
 
 }
