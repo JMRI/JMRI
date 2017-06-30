@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: decoderAddLabelElement.xsl 25756 2014-05-03 21:31:17Z jacobsen $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Process a JMRI decoder file, adding a text element (with default       -->
 <!-- language) based on the label attribute in a pane element               -->

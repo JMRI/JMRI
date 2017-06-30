@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Process a JMRI decoder or programmer file, adding a name element (with default     -->
 <!-- language) based on the name (preferred) of a pane element          -->

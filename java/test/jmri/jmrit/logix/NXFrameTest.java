@@ -31,9 +31,7 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -41,14 +39,25 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         }
         NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
+        nxFrame.dispose();
     }
 
-    public void testGetInstance() {
+    public void testRoutePanel() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
+
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SetEndPoint", Bundle.getMessage("OriginBlock")), "OK");
+
+        nxFrame._origin.blockBox.setText("NowhereBlock");
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BlockNotFound", "NowhereBlock"), "OK");
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SetEndPoint", Bundle.getMessage("OriginBlock")), "OK");
+
+        TestHelper.disposeWindow(nxFrame, this);
     }
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
@@ -59,39 +68,12 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        OBlock block = _OBlockMgr.getBySystemName("OB0");
 
         NXFrame nxFrame = NXFrame.getDefault();
-        nxFrame.init();
-        nxFrame.setVisible(true);
-        nxFrame.setThrottleIncrement(0.075f);
-        nxFrame.setTimeInterval(1000);
-        nxFrame.setThrottleFactor(0.75f);
-        flushAWT();
-        pressButton(nxFrame, Bundle.getMessage("ButtonCancel"));
-
-        // wait to calm down after cancel
-        flushAWT();
-        flushAWT();
-
-        // after cancel, try again
-        nxFrame = NXFrame.getDefault();
-        nxFrame.init();
-        nxFrame.setVisible(true);
-        nxFrame._maxSpeedBox.setText("0.30");
-
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
-
-        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
-        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("NoLoco"), "OK");
-        nxFrame.setAddress("666");
-        nxFrame.setTrainName("Nick");
-        flushAWT();
-        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
-
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
+        
         DialogFinder finder = new DialogFinder(Bundle.getMessage("DialogTitle"));
         java.awt.Container pickDia = (java.awt.Container) finder.find();
         Assert.assertNotNull("PickRoute Dialog not found", pickDia);
@@ -109,6 +91,20 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         nxFrame.setThrottleIncrement(0.05f);
         pressButton(pickDia, Bundle.getMessage("ButtonSelect"));
         flushAWT();     //pause for NXFrame to make commands
+
+        nxFrame.setMaxSpeed(2);
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
+        flushAWT();
+        
+        nxFrame.setMaxSpeed(0.6f);
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
+        flushAWT();
+        
+        nxFrame.setTrainInfo("666");
+        nxFrame.setTrainName("Nick");
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -135,6 +131,9 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        OBlock block = _OBlockMgr.getBySystemName("OB0");
         String name = block.getDisplayName();
         jmri.util.JUnitUtil.waitFor(
             ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
@@ -186,15 +185,9 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        TestHelper.disposeWindow(panel, this);
-
-        // Dialog has popped up, so handle that. First, locate it.
-//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-//       TestHelper.disposeWindow(dialogList.get(0), this);
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        
     }
+
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
@@ -311,7 +304,6 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     public static Test suite() {
         return new TestSuite(NXFrameTest.class);
     }
-
     @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
