@@ -10,12 +10,12 @@
   "license": "GPL-2.0",
   "dependencies": {
     "angular": "1.6.4",
-    "angular-patternfly": "4.0.0",
+    "angular-patternfly": "4.1.0",
     "angular-resource": "1.6.4",
     "angular-route": "1.6.4",
-    "angular-translate": "2.15.1",
-    "angular-translate-handler-log": "2.15.1",
-    "angular-translate-loader-partial": "2.15.1",
+    "angular-translate": "2.15.2",
+    "angular-translate-handler-log": "2.15.2",
+    "angular-translate-loader-partial": "2.15.2",
     "angular-websocket": "2.0.1"
   }
 }
