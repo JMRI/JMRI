@@ -25,6 +25,7 @@ public class IndicatorItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         IndicatorItemPanel t = new IndicatorItemPanel(jf,"test1","test2",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J

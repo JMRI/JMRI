@@ -25,6 +25,7 @@ public class PortalItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         PortalItemPanel t = new PortalItemPanel(jf,"test1","test2",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J

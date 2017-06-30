@@ -25,6 +25,7 @@ public class RPSItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         RPSItemPanel t = new RPSItemPanel(jf,"test1","test2",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J

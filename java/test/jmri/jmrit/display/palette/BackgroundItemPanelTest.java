@@ -25,6 +25,7 @@ public class BackgroundItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         BackgroundItemPanel t = new BackgroundItemPanel(jf,"test",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J

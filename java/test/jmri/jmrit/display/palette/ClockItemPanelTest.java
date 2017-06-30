@@ -25,6 +25,7 @@ public class ClockItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         ClockItemPanel t = new ClockItemPanel(jf,"test",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J

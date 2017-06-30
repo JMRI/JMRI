@@ -18,15 +18,13 @@ import java.awt.GraphicsEnvironment;
  */
 public class TextItemPanelTest {
 
+    private ItemPalette ip = null;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
-        ItemPalette ip = null;
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
-            ip.pack();
-        });
+        ip = new ItemPalette("Test ItemPalette", null);
         TextItemPanel t = new TextItemPanel(ip,"test",es);
         Assert.assertNotNull("exists",t);
     }

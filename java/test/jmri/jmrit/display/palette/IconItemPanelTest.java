@@ -25,6 +25,7 @@ public class IconItemPanelTest {
         EditorScaffold es = new EditorScaffold();
         IconItemPanel t = new IconItemPanel(jf,"test",es);
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J
