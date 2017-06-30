@@ -20,13 +20,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for SPROG firmware update utility.
  *
- * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't
- * being used
- *
  * Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2004
-  */
+ * @author Andrew Crosland Copyright (C) 2004
+ * @author Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't
+ * being used.
+ */
 abstract public class SprogUpdateFrame
         extends jmri.util.JmriJFrame
         implements SprogListener {
@@ -83,7 +82,7 @@ abstract public class SprogUpdateFrame
     }
 
     protected String title() {
-        return "SPROG Firmware Update";
+        return Bundle.getMessage("SprogFirmwareUpdate");
     }
 
     protected void init() {
@@ -100,7 +99,7 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Set up the GUI
+     * Set up the GUI.
      * <p>
      * This is expected to be subclassed, so it doesn't set up the help menu
      * here
@@ -108,20 +107,20 @@ abstract public class SprogUpdateFrame
     @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
-        programButton.setText("Program");
+        programButton.setText(Bundle.getMessage("ButtonProgram"));
         programButton.setVisible(true);
         programButton.setEnabled(false);
-        programButton.setToolTipText("Re-program SPROG with new firmware");
+        programButton.setToolTipText(Bundle.getMessage("ButtonProgramTooltip"));
 
-        openFileChooserButton.setText("Choose hex file");
+        openFileChooserButton.setText(Bundle.getMessage("ButtonSelectHexFile"));
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setEnabled(false);
-        openFileChooserButton.setToolTipText("Click here to select hex file to download");
+        openFileChooserButton.setToolTipText(Bundle.getMessage("ButtonSelectHexFileTooltip"));
 
-        setSprogModeButton.setText("Set SPROG Mode");
+        setSprogModeButton.setText(Bundle.getMessage("ButtonSetSPROGMode"));
         setSprogModeButton.setVisible(true);
         setSprogModeButton.setEnabled(false);
-        setSprogModeButton.setToolTipText("Click here to set SPROG II in SPROG mode");
+        setSprogModeButton.setToolTipText(Bundle.getMessage("ButtonSetSPROGModeTooltip"));
 
         statusBar.setVisible(true);
         statusBar.setText(" ");
@@ -285,8 +284,8 @@ abstract public class SprogUpdateFrame
                 log.debug("hex file chosen: " + hexFile.getName());
             }
             if ((hexFile.getName().indexOf("sprog") < 0)) {
-                JOptionPane.showMessageDialog(this, "File does not appear to be a valid SPROG II hex file",
-                        "Hex File Select", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),
+                        Bundle.getMessage("HexFileSelectTitle"), JOptionPane.ERROR_MESSAGE);
                 hexFile = null;
             } else {
                 hexFile.openRd();
@@ -308,7 +307,7 @@ abstract public class SprogUpdateFrame
     abstract protected void doneWriting();
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
         if (bootState == BootState.CRSENT) {
@@ -365,14 +364,14 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Internal routine to restart timer with a long delay
+     * Internal routine to restart timer with a long delay.
      */
     synchronized protected void startLongTimer() {
         restartTimer(LONG_TIMEOUT);
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     synchronized protected void stopTimer() {
         if (timer != null) {
@@ -381,7 +380,7 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      */
     synchronized protected void restartTimer(int delay) {
         if (timer == null) {
