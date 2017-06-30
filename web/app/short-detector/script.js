@@ -52,7 +52,7 @@ angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, N
   });
 
   // when run, check for the IMSHORTDETECTION memory object; if present
-  // get a list of sensors and listend to sensors of interest
+  // get a list of sensors and listen to sensors of interest
   $http.get('/json/memory/IMSHORTDETECTION').then(
     // handle a successful get for the memory
     function(response) {
