@@ -193,6 +193,14 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             retval = CODE_STOP;
         }
         log.debug("codeSendStart returns {}", retval);
+        
+        // A model thought -  if setting stop, hold signals immediately
+        // instead of waiting for code cycle.  Model railroads move fast...
+        if (retval == CODE_STOP) {
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+        }
+        
         return retval;
     }
 
@@ -247,7 +255,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
     protected void setListHeldState(ArrayList<NamedBeanHandle<SignalHead>> list, boolean state) {
         for (NamedBeanHandle<SignalHead> handle : list) {
-            handle.getBean().setHeld(state);
+            if (handle.getBean().getHeld() != state) handle.getBean().setHeld(state);
         }
     }
     
@@ -263,12 +271,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         // set Held right away
         if (retval == CODE_STOP && lastIndication != CODE_STOP) {
-            for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
-                if (!handle.getBean().getHeld()) handle.getBean().setHeld(true);
-            }
-            for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
-                if (!handle.getBean().getHeld()) handle.getBean().setHeld(true);
-            }
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
         }
         
         lastIndication = retval;
@@ -285,7 +289,6 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
         boolean rightStopped = true;
         for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
-            log.debug("    checking {} {}", handle.getBean().getHeld(), handle.getBean().getAppearance());
             if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) rightStopped = false;
         }
         log.debug("    found leftStopped {}, rightStopped {}", leftStopped, rightStopped);
