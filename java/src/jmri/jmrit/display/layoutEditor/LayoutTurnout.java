@@ -1106,8 +1106,7 @@ public class LayoutTurnout extends LayoutTrack {
      * get the object connected to this track for the specified connection type
      *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection
-     *         type
+     * @return the object connected for the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
@@ -1139,8 +1138,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection
-     * type
+     * set the object connected for the specified connection type
      *
      * @param connectionType the connection type (where it is connected to us)
      * @param o              the object that is being connected

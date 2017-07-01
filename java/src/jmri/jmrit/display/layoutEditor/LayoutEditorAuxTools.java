@@ -94,7 +94,7 @@ public class LayoutEditorAuxTools {
         cList = new ArrayList<LayoutConnectivity>();
         LayoutBlock blk1 = null;
         LayoutBlock blk2 = null;
-        LayoutConnectivity c = null;
+        LayoutConnectivity lc = null;
         Point2D p1;
         Point2D p2;
         // Check for block boundaries at positionable points.
@@ -112,7 +112,7 @@ public class LayoutEditorAuxTools {
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
                             log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, p);
-                            c = new LayoutConnectivity(blk1, blk2);
+                            lc = new LayoutConnectivity(blk1, blk2);
                             // determine direction from block 1 to block 2
                             if (ts1.getConnect1() == p) {
                                 p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
@@ -124,11 +124,11 @@ public class LayoutEditorAuxTools {
                             } else {
                                 p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                             }
-                            c.setDirection(computeDirection(p1, p2));
+                            lc.setDirection(computeDirection(p1, p2));
                             // save Connections
-                            c.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
+                            lc.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
                             // add to list
-                            cList.add(c);
+                            cList.add(lc);
                         }
                     }
                 }
@@ -143,7 +143,7 @@ public class LayoutEditorAuxTools {
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
                             log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, p);
-                            c = new LayoutConnectivity(blk1, blk2);
+                            lc = new LayoutConnectivity(blk1, blk2);
 
                             // determine direction from block 1 to block 2
                             if (ts1.getConnect1() == p) {
@@ -154,11 +154,11 @@ public class LayoutEditorAuxTools {
                             }
                             //In this instance work out the direction of the first track relative to the positionable poin.
 
-                            c.setDirection(computeDirection(p1, p.getCoords()));
+                            lc.setDirection(computeDirection(p1, p.getCoords()));
                             // save Connections
-                            c.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
+                            lc.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
                             // add to list
-                            cList.add(c);
+                            cList.add(lc);
                         }
                     }
                 }
@@ -198,12 +198,12 @@ public class LayoutEditorAuxTools {
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
                                 log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lt, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lt, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                         ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                                 // add to list
-                                cList.add(c);
+                                cList.add(lc);
                             }
                         } else {
                             // have connection to a level crossing
@@ -217,12 +217,12 @@ public class LayoutEditorAuxTools {
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
                                 log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lx, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lx, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                         ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                                 // add to list
-                                cList.add(c);
+                                cList.add(lc);
                             }
                         }
                     } else if ((ts.getType1() >= LayoutTrack.SLIP_A) && (ts.getType1() <= LayoutTrack.SLIP_D)) {
@@ -233,12 +233,12 @@ public class LayoutEditorAuxTools {
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, ls, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                            lc = new LayoutConnectivity(blk1, blk2);
+                            lc.setConnections(ts, ls, type, null);
+                            lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                     ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                             // add to list
-                            cList.add(c);
+                            cList.add(lc);
                         }
                     }
                     // check second connection for turnout or level crossing
@@ -265,12 +265,12 @@ public class LayoutEditorAuxTools {
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
                                 log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lt, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lt, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                         ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                                 // add to list
-                                cList.add(c);
+                                cList.add(lc);
                             }
                         } else {
                             // have connection to a level crossing
@@ -284,12 +284,12 @@ public class LayoutEditorAuxTools {
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
                                 log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lx, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lx, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                         ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                                 // add to list
-                                cList.add(c);
+                                cList.add(lc);
                             }
                         }
                     } else if ((ts.getType2() >= LayoutTrack.SLIP_A) && (ts.getType2() <= LayoutTrack.SLIP_D)) {
@@ -300,12 +300,12 @@ public class LayoutEditorAuxTools {
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, ls, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                            lc = new LayoutConnectivity(blk1, blk2);
+                            lc.setConnections(ts, ls, type, null);
+                            lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                     ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                             // add to list
-                            cList.add(c);
+                            cList.add(lc);
                         }
                     } // this is routinely reached in normal operation with
                 }
@@ -324,36 +324,36 @@ public class LayoutEditorAuxTools {
                         if (lt.getLayoutBlock() != lt.getLayoutBlockB()) {
                             // have a AB block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
-                            c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockB());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                            c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
-                            cList.add(c);
+                            lc = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockB());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AB);
+                            lc.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
+                            cList.add(lc);
                         }
                         if ((lt.getTurnoutType() != LayoutTurnout.LH_XOVER)
                                 && (lt.getLayoutBlock() != lt.getLayoutBlockC())) {
                             // have a AC block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
-                            c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                            c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsC()));
-                            cList.add(c);
+                            lc = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AC);
+                            lc.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsC()));
+                            cList.add(lc);
                         }
                         if (lt.getLayoutBlockC() != lt.getLayoutBlockD()) {
                             // have a CD block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
-                            c = new LayoutConnectivity(lt.getLayoutBlockC(), lt.getLayoutBlockD());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                            c.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
-                            cList.add(c);
+                            lc = new LayoutConnectivity(lt.getLayoutBlockC(), lt.getLayoutBlockD());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_CD);
+                            lc.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
+                            cList.add(lc);
                         }
                         if ((lt.getTurnoutType() != LayoutTurnout.RH_XOVER)
                                 && (lt.getLayoutBlockB() != lt.getLayoutBlockD())) {
                             // have a BD block boundary, create a LayoutConnectivity
                             log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
-                            c = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                            c.setDirection(computeDirection(lt.getCoordsB(), lt.getCoordsD()));
-                            cList.add(c);
+                            lc = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_BD);
+                            lc.setDirection(computeDirection(lt.getCoordsB(), lt.getCoordsD()));
+                            cList.add(lc);
                         }
                     }
                 }
@@ -374,7 +374,7 @@ public class LayoutEditorAuxTools {
         }
         LayoutBlock blk1 = null;
         LayoutBlock blk2 = null;
-        LayoutConnectivity c = null;
+        LayoutConnectivity lc = null;
         Point2D p1;
         Point2D p2;
         // Check for block boundaries at positionable points.
@@ -391,7 +391,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ts2.getLayoutBlock();
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
+                            lc = new LayoutConnectivity(blk1, blk2);
                             // determine direction from block 1 to block 2
                             if (ts1.getConnect1() == p) {
                                 p1 = layoutEditor.getCoords(
@@ -405,11 +405,11 @@ public class LayoutEditorAuxTools {
                             } else {
                                 p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                             }
-                            c.setDirection(computeDirection(p1, p2));
+                            lc.setDirection(computeDirection(p1, p2));
                             // save Connections
-                            c.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
+                            lc.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
                             // add to list, if not already present
-                            checkConnectivity(c, found);
+                            checkConnectivity(lc, found);
                         }
                     }
                 } else if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -422,7 +422,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ts2.getLayoutBlock();
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
+                            lc = new LayoutConnectivity(blk1, blk2);
 
                             // determine direction from block 1 to block 2
                             if (ts1.getConnect1() == p) {
@@ -433,11 +433,11 @@ public class LayoutEditorAuxTools {
                             }
                             //In this instance work out the direction of the first track relative to the positionable poin.
 
-                            c.setDirection(computeDirection(p1, p.getCoords()));
+                            lc.setDirection(computeDirection(p1, p.getCoords()));
                             // save Connections
-                            c.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
+                            lc.setConnections(ts1, ts2, LayoutTrack.TRACK, p);
                             // add to list, if not already present
-                            checkConnectivity(c, found);
+                            checkConnectivity(lc, found);
                         }
                     }
                 }
@@ -476,12 +476,12 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lt, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lt, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                         ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                                 // add to list
-                                checkConnectivity(c, found);
+                                checkConnectivity(lc, found);
                             }
                         } else {
                             // have connection to a level crossing
@@ -494,12 +494,12 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lx, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lx, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                         ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                                 // add to list
-                                checkConnectivity(c, found);
+                                checkConnectivity(lc, found);
                             }
                         }
                     } else if ((ts.getType1() >= LayoutTrack.SLIP_A) && (ts.getType1() <= LayoutTrack.SLIP_D)) {
@@ -509,12 +509,12 @@ public class LayoutEditorAuxTools {
                         blk2 = ls.getLayoutBlock();
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, ls, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                            lc = new LayoutConnectivity(blk1, blk2);
+                            lc.setConnections(ts, ls, type, null);
+                            lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
                                     ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
                             // add to list
-                            checkConnectivity(c, found);
+                            checkConnectivity(lc, found);
                         }
                     }
                     // check second connection for turnout or level crossing
@@ -540,12 +540,12 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lt, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lt, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                         ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                                 // add to list
-                                checkConnectivity(c, found);
+                                checkConnectivity(lc, found);
                             }
                         } else {
                             // have connection to a level crossing
@@ -558,12 +558,12 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                c = new LayoutConnectivity(blk1, blk2);
-                                c.setConnections(ts, lx, type, null);
-                                c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                lc = new LayoutConnectivity(blk1, blk2);
+                                lc.setConnections(ts, lx, type, null);
+                                lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                         ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                                 // add to list
-                                checkConnectivity(c, found);
+                                checkConnectivity(lc, found);
                             }
                         }
                     } else if ((ts.getType2() >= LayoutTrack.SLIP_A) && (ts.getType2() <= LayoutTrack.SLIP_D)) {
@@ -573,12 +573,12 @@ public class LayoutEditorAuxTools {
                         blk2 = ls.getLayoutBlock();
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, ls, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                            lc = new LayoutConnectivity(blk1, blk2);
+                            lc.setConnections(ts, ls, type, null);
+                            lc.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                     ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                             // add to list
-                            checkConnectivity(c, found);
+                            checkConnectivity(lc, found);
                         }
                     } else if (ts.getType2() != LayoutTrack.POS_POINT) {
                         log.warn("Did not decode ts.getType2() of {} (A)", ts.getType2());
@@ -598,34 +598,34 @@ public class LayoutEditorAuxTools {
                         // have multiple blocks and therefore internal block boundaries
                         if ((lt.getLayoutBlockB() != null) && (lt.getLayoutBlock() != lt.getLayoutBlockB())) {
                             // have a AB block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockB());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                            c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
-                            checkConnectivity(c, found);
+                            lc = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockB());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AB);
+                            lc.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
+                            checkConnectivity(lc, found);
                         }
                         if ((lt.getTurnoutType() != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC() != null)
                                 && (lt.getLayoutBlock() != lt.getLayoutBlockC())) {
                             // have a AC block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                            c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsC()));
-                            checkConnectivity(c, found);
+                            lc = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AC);
+                            lc.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsC()));
+                            checkConnectivity(lc, found);
                         }
                         if ((lt.getLayoutBlockC() != null) && (lt.getLayoutBlockD() != null)
                                 && (lt.getLayoutBlockC() != lt.getLayoutBlockD())) {
                             // have a CD block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(lt.getLayoutBlockC(), lt.getLayoutBlockD());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                            c.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
-                            checkConnectivity(c, found);
+                            lc = new LayoutConnectivity(lt.getLayoutBlockC(), lt.getLayoutBlockD());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_CD);
+                            lc.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
+                            checkConnectivity(lc, found);
                         }
                         if ((lt.getTurnoutType() != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB() != null)
                                 && (lt.getLayoutBlockD() != null) && (lt.getLayoutBlockB() != lt.getLayoutBlockD())) {
                             // have a BD block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
-                            c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                            c.setDirection(computeDirection(lt.getCoordsB(), lt.getCoordsD()));
-                            checkConnectivity(c, found);
+                            lc = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
+                            lc.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_BD);
+                            lc.setDirection(computeDirection(lt.getCoordsB(), lt.getCoordsD()));
+                            checkConnectivity(lc, found);
                         }
                     }
                 }
