@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -80,6 +81,8 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
+        JUnitUtil.resetInstanceManager();
     }
 
     @Override
@@ -93,6 +96,8 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
 
             panel = null;
+            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
+            JUnitUtil.resetInstanceManager();
         }
         apps.tests.Log4JFixture.tearDown();
     }
