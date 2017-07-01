@@ -1,4 +1,4 @@
-            package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -92,77 +92,29 @@ public class LayoutEditorAuxTools {
             return;
         }
         cList = new ArrayList<LayoutConnectivity>();
-        LayoutBlock blk1 = null;
-        LayoutBlock blk2 = null;
-        LayoutConnectivity lc = null;
-        Point2D p1;
-        Point2D p2;
-        // Check for block boundaries at positionable points.
+        ArrayList<LayoutConnectivity> lcs = null;
 
-        TrackSegment ts1 = null;
-        TrackSegment ts2 = null;
+        // Check for block boundaries at positionable points.
         for (PositionablePoint p : layoutEditor.pointList) {
-            lc = p.getLayoutConnectivity();
-            if (lc != null) {
-                cList.add(lc); // add to list
+            lcs = p.getLayoutConnectivity();
+            if (lcs != null) {
+                cList.addAll(lcs); // append to list
             }
         }
 
         // Check for block boundaries at layout turnouts and level crossings
-        int type = 0;
-        LevelXing lx = null;
-        LayoutSlip ls = null;
         for (TrackSegment ts : layoutEditor.trackList) {
-            lc = ts.getLayoutConnectivity();
-            if (lc != null) {
-                cList.add(lc); // add to list
+            lcs = ts.getLayoutConnectivity();
+            if (lcs != null) {
+                cList.addAll(lcs); // append to list
             }
         }
 
         // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout ltx : layoutEditor.turnoutList) {
-            // check for layout turnout
-            if ((ltx.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER)
-                    && (ltx.getLayoutBlock() != null)) {
-                // have a crossover turnout with at least one block, check for multiple blocks
-                if ((ltx.getLayoutBlockB() != ltx.getLayoutBlock()) || (ltx.getLayoutBlockC() != ltx.getLayoutBlock())
-                        || (ltx.getLayoutBlockD() != ltx.getLayoutBlock())) {
-                    // have multiple blocks and therefore internal block boundaries
-                    if (ltx.getLayoutBlock() != ltx.getLayoutBlockB()) {
-                        // have a AB block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ltx);
-                        lc = new LayoutConnectivity(ltx.getLayoutBlock(), ltx.getLayoutBlockB());
-                        lc.setXoverBoundary(ltx, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                        lc.setDirection(computeDirection(ltx.getCoordsA(), ltx.getCoordsB()));
-                        cList.add(lc);
-                    }
-                    if ((ltx.getTurnoutType() != LayoutTurnout.LH_XOVER)
-                            && (ltx.getLayoutBlock() != ltx.getLayoutBlockC())) {
-                        // have a AC block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ltx);
-                        lc = new LayoutConnectivity(ltx.getLayoutBlock(), ltx.getLayoutBlockC());
-                        lc.setXoverBoundary(ltx, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                        lc.setDirection(computeDirection(ltx.getCoordsA(), ltx.getCoordsC()));
-                        cList.add(lc);
-                    }
-                    if (ltx.getLayoutBlockC() != ltx.getLayoutBlockD()) {
-                        // have a CD block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ltx);
-                        lc = new LayoutConnectivity(ltx.getLayoutBlockC(), ltx.getLayoutBlockD());
-                        lc.setXoverBoundary(ltx, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                        lc.setDirection(computeDirection(ltx.getCoordsC(), ltx.getCoordsD()));
-                        cList.add(lc);
-                    }
-                    if ((ltx.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                            && (ltx.getLayoutBlockB() != ltx.getLayoutBlockD())) {
-                        // have a BD block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ltx);
-                        lc = new LayoutConnectivity(ltx.getLayoutBlockB(), ltx.getLayoutBlockD());
-                        lc.setXoverBoundary(ltx, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                        lc.setDirection(computeDirection(ltx.getCoordsB(), ltx.getCoordsD()));
-                        cList.add(lc);
-                    }
-                }
+        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+            lcs = lt.getLayoutConnectivity();
+            if (lcs != null) {
+                cList.addAll(lcs); // append to list
             }
         }
         initialized = true;

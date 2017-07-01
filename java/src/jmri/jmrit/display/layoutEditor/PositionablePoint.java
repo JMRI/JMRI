@@ -1260,8 +1260,9 @@ public class PositionablePoint extends LayoutTrack {
     /*
         return the layout connectivity for this PositionablePoint
     */
-    protected LayoutConnectivity getLayoutConnectivity() {
-        LayoutConnectivity result = null;
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+        LayoutConnectivity lc = null;
 
         LayoutBlock blk1 = null, blk2 = null;
         TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
@@ -1274,7 +1275,7 @@ public class PositionablePoint extends LayoutTrack {
                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                     // this is a block boundary, create a LayoutConnectivity
                     log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
-                    result = new LayoutConnectivity(blk1, blk2);
+                    lc = new LayoutConnectivity(blk1, blk2);
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
@@ -1286,9 +1287,10 @@ public class PositionablePoint extends LayoutTrack {
                     } else {
                         p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                     }
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(p1, p2));
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, p2));
                     // save Connections
-                    result.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    results.add(lc);
                 }
             }
         } else if (getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -1298,7 +1300,7 @@ public class PositionablePoint extends LayoutTrack {
                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                     // this is a block boundary, create a LayoutConnectivity
                     log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
-                    result = new LayoutConnectivity(blk1, blk2);
+                    lc = new LayoutConnectivity(blk1, blk2);
 
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
@@ -1309,13 +1311,14 @@ public class PositionablePoint extends LayoutTrack {
 
                     //Need to find a way to compute the direction for this for a split over the panel
                     //In this instance work out the direction of the first track relative to the positionable poin.
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoords()));
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoords()));
                     // save Connections
-                    result.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    results.add(lc);
                 }
             }
         }
-        return result;
+        return results;
     }   // getLayoutConnectivity()
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());

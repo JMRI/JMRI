@@ -3959,46 +3959,52 @@ public class LayoutTurnout extends LayoutTrack {
     /*
         return the layout connectivity for this Layout Turnout
      */
-    protected LayoutConnectivity getLayoutConnectivity() {
-        LayoutConnectivity result = null;
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
 
-        if ((getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) && (getLayoutBlock() != null)) {
+        LayoutConnectivity lc = null;
+
+        LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
+        if ((getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) && (lbA != null)) {
             // have a crossover turnout with at least one block, check for multiple blocks
-            LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
 
             if ((lbA != lbB) || (lbA != lbC) || (lbA != lbD)) {
                 // have multiple blocks and therefore internal block boundaries
                 if (lbA != lbB) {
                     // have a AB block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
-                    result = new LayoutConnectivity(lbA, lbB);
-                    result.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsB()));
+                    lc = new LayoutConnectivity(lbA, lbB);
+                    lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsB()));
+                    results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.LH_XOVER) && (lbA != lbC)) {
                     // have a AC block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
-                    result = new LayoutConnectivity(lbA, lbC);
-                    result.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsC()));
+                    lc = new LayoutConnectivity(lbA, lbC);
+                    lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsC()));
+                    results.add(lc);
                 }
                 if (lbC != lbD) {
                     // have a CD block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
-                    result = new LayoutConnectivity(lbC, lbD);
-                    result.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsC(), getCoordsD()));
+                    lc = new LayoutConnectivity(lbC, lbD);
+                    lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsC(), getCoordsD()));
+                    results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.RH_XOVER) && (lbB != lbD)) {
                     // have a BD block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
-                    result = new LayoutConnectivity(lbB, lbD);
-                    result.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                    result.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsD()));
+                    lc = new LayoutConnectivity(lbB, lbD);
+                    lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsD()));
+                    results.add(lc);
                 }
             }
         }
-        return result;
+        return results;
     }   // getLayoutConnectivity()
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class.getName());
