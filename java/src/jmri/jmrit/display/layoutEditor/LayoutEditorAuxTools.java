@@ -166,7 +166,7 @@ public class LayoutEditorAuxTools {
             }
         }
         initialized = true;
-    }
+    }   // initializeBlockConnectivity
 
     /**
      * Updates the block connectivity (block boundaries) for a Layout Editor
@@ -743,12 +743,8 @@ public class LayoutEditorAuxTools {
                     if (turnoutType > LayoutTurnout.WYE_TURNOUT) {
                         // have crossover turnout
                         if ((turnoutType == LayoutTurnout.DOUBLE_XOVER)
-                                || ((turnoutType == LayoutTurnout.RH_XOVER)
-                                && ((typeCurConnection == LayoutTrack.TURNOUT_A)
-                                || (typeCurConnection == LayoutTrack.TURNOUT_C)))
-                                || ((turnoutType == LayoutTurnout.LH_XOVER)
-                                && ((typeCurConnection == LayoutTrack.TURNOUT_B)
-                                || (typeCurConnection == LayoutTrack.TURNOUT_D)))) {
+                                || ((turnoutType == LayoutTurnout.RH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_A) || (typeCurConnection == LayoutTrack.TURNOUT_C)))
+                                || ((turnoutType == LayoutTurnout.LH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_B) || (typeCurConnection == LayoutTrack.TURNOUT_D)))) {
                             // entering turnout at a throat, cannot follow path any further
                             curConnection = null;
                         } else {
