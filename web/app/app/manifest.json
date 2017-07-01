@@ -55,7 +55,8 @@
     "angular-websocket",
     "pascalprecht.translate",
     "patternfly.charts",
-    "patternfly.table"
+    "patternfly.table",
+    "patternfly.toolbars"
   ],
   "routes":[
     {
