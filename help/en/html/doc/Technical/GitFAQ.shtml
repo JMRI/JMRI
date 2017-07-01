@@ -125,7 +125,7 @@
           <p>Once you have a copy of your changes on GitHub, it is
           easy to <a href=
           "https://help.github.com/articles/creating-a-pull-request/">
-          generate a pull request</a> (link to GitHub):</p>
+          generate a Pull Request</a> (link to GitHub):</p>
 
           <ul>
             <li>In a browser, navigate to your repository on GitHub
@@ -197,7 +197,7 @@
           cloned things from.</p>
 
           <p>The following reference should get you started using
-          either the git command line or GotHub Desktop:</p>
+          either the git command line or GitHub Desktop:</p>
 
           <ul>
             <li>Log in to GitHub and clone your own copy of the
@@ -1076,15 +1076,17 @@ your own.
         <dd>
         AppVeyor CI can have transient failures when processing a Pull Request.  When it 
         does, it looks like this:
-        <br><img src="images/AppVeyorRestart1.png"><br>
-        In that case, you can sign on and restart the build to have AppVeyor try again.
-        To do that, click the "Details" link indicated above.  This will take you to:
+        <br><img src="images/AppVeyorRestart1.png">
+        <p>
+        In that case, one of the JMRI Maintainers can sign in and restart the build to have AppVeyor try again.
+        To do that, click the "Details" link indicated above. This will take you to:
         <br><img src="images/AppVeyorRestart2.png"><br>
         Click the indicated sign in link (if you're already signed in, click sign off, then sign in)
-        You'll get choices of methods:
+        You'll get a choice of methods:
         <br><img src="images/AppVeyorRestart3.png"><br>
-        Pick GitHub. You'll get a choice of accounts. DO NOT select your own
-        or anybody elses; select JMRI.
+        Pick GitHub.<br>
+        Registered users with sufficient user priviliges will get a choice of accounts.
+        DO NOT select your own or anybody elses; select &quot;JMRI&quot;.
         <br><img src="images/AppVeyorRestart4.png"><br>
         Then click the "GitHub" bar again to finish the sign in.
         <p>

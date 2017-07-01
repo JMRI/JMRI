@@ -36,7 +36,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("StorePanelTitle"));
+        userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle
         userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
         java.io.File file = getFileCustom(userFileChooser);
 
