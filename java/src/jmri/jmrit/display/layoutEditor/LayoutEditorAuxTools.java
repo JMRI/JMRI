@@ -118,6 +118,14 @@ public class LayoutEditorAuxTools {
                 cList.addAll(lcs); // append to list
             }
         }
+
+        // check for block boundaries internal to slips
+        for (LayoutSlip ls : layoutEditor.slipList) {
+            lcs = ls.getLayoutConnectivity();
+            if (lcs != null) {
+                cList.addAll(lcs); // append to list
+            }
+        }
         initialized = true;
     }   // initializeBlockConnectivity
 
@@ -164,6 +172,18 @@ public class LayoutEditorAuxTools {
                 }
             }
         }
+
+        // check for block boundaries internal to slips
+        for (LayoutSlip ls : layoutEditor.slipList) {
+            lcs = ls.getLayoutConnectivity();
+            if (lcs != null) {
+                for (LayoutConnectivity lc : lcs) {
+                    // add to list, if not already present
+                    checkConnectivity(lc, found);
+                }
+            }
+        }
+
         // delete any LayoutConnectivity objects no longer needed
         for (int i = sz - 1; i >= 0; i--) {
             if (!found[i]) {
