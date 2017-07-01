@@ -1689,5 +1689,81 @@ public class LayoutSlip extends LayoutTurnout {
 
     }
 
+    /*
+        this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+    */
+    protected int getConnectivityStateForLayoutBlocks(LayoutBlock thisLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
+        int result = Turnout.UNKNOWN;
+        LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
+        LayoutBlock layoutBlockB = ((TrackSegment) getConnectB()).getLayoutBlock();
+        LayoutBlock layoutBlockC = ((TrackSegment) getConnectC()).getLayoutBlock();
+        LayoutBlock layoutBlockD = ((TrackSegment) getConnectD()).getLayoutBlock();
+
+        if (layoutBlockA == thisLayoutBlock) {
+            if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AC;
+            } else if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockC == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AC;
+            } else if (layoutBlockD == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            }
+        } else if (layoutBlockB == thisLayoutBlock) {
+            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                } else if (layoutBlockD == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockC == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                }
+            } else {
+                if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockD == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                }
+            }
+        } else if (layoutBlockC == thisLayoutBlock) {
+            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                } else if (layoutBlockA == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockB == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                }
+
+            } else {
+                if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockA == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                }
+            }
+        } else if (layoutBlockD == thisLayoutBlock) {
+            if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
+                result = LayoutSlip.STATE_BD;
+            } else if (layoutBlockA == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockB == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            }
+        } else {
+            result = LayoutSlip.UNKNOWN;
+        }
+        if (!suppress && (result == LayoutSlip.UNKNOWN)) {
+            log.error("Cannot determine slip setting for " + getName());
+        }
+        return result;
+    }   // getConnectivityStateForLayoutBlocks
+
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 }
