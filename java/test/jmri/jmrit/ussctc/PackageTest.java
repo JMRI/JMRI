@@ -36,6 +36,20 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(OsIndicatorFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(OsIndicatorPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
+        
+        // new classes last
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CombinedLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.OccupancyLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.RouteLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.StationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeLineTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeButtonTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.PhysicalBellTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.MaintainerCallSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TrackCircuitSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.SignalHeadSectionTest.class));
+        
         return suite;
     }
 
