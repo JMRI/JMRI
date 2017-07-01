@@ -1106,7 +1106,8 @@ public class LayoutTurnout extends LayoutTrack {
      * get the object connected to this track for the specified connection type
      *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
+     * @return the object connected to this slip for the specified connection
+     *         type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
@@ -1138,10 +1139,11 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
+     * set the object connected to this turnout for the specified connection
+     * type
      *
      * @param connectionType the connection type (where it is connected to us)
-     * @param o the object that is being connected
+     * @param o              the object that is being connected
      * @param type           the type of object that we're being connected to
      *                       (Should always be "NONE" or "TRACK")
      * @throws jmri.JmriException - if connectionType or type are invalid
@@ -1616,9 +1618,9 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param p the point
-     * @param useRectangles      whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
+     * @param p                  the point
+     * @param useRectangles      whether to use (larger) rectangles or (smaller)
+     *                           circles for hit testing
      * @param requireUnconnected only return free connection hit types
      * @return the location type for the point (or NONE)
      * @since 7.4.3
@@ -1961,15 +1963,15 @@ public class LayoutTurnout extends LayoutTrack {
     private void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
-                = (java.beans.PropertyChangeEvent e) -> {
-                if (secondNamedTurnout != null) {
-                    if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
+                    = (java.beans.PropertyChangeEvent e) -> {
+                        if (secondNamedTurnout != null) {
+                            if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
                             && e.getOldValue().equals(namedTurnout.getBean().getState())) {
-                        namedTurnout.getBean().setCommandedState((int) e.getNewValue());
-                    }
-                }
-                layoutEditor.redrawPanel();
-            }, namedTurnout.getName(), "Layout Editor Turnout");
+                                namedTurnout.getBean().setCommandedState((int) e.getNewValue());
+                            }
+                        }
+                        layoutEditor.redrawPanel();
+                    }, namedTurnout.getName(), "Layout Editor Turnout");
         }
         if (secondNamedTurnout != null) {
             secondNamedTurnout.getBean().addPropertyChangeListener(mTurnoutListener, secondNamedTurnout.getName(), "Layout Editor Turnout");
@@ -3943,7 +3945,7 @@ public class LayoutTurnout extends LayoutTrack {
                         }
                         result = Turnout.CLOSED;
                     }
-}
+                }
                 break;
             }
             default: {
@@ -3957,7 +3959,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /*
         return the layout connectivity for this Layout Turnout
-    */
+     */
     protected LayoutConnectivity getLayoutConnectivity() {
         LayoutConnectivity result = null;
 
