@@ -20,11 +20,11 @@ public class StationTest {
     @Test
     public void testSendCode() {
         Station s = new Station(codeline, button);
-        s.add(new Section(){
-            public Station.Value  codeSendStart() { countCodeSend++; return Station.Value.Double00; }
-            public void codeValueDelivered(Station.Value value) { }
-            public Station.Value indicationStart() { return Station.Value.Double00; }
-            public void indicationComplete(Station.Value value) {}
+        s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double00; }
+            public void codeValueDelivered(CodeGroupTwoBits value) { }
+            public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            public void indicationComplete(CodeGroupTwoBits value) {}
         });
         
         countCodeSend = 0;
@@ -37,23 +37,23 @@ public class StationTest {
     @Test
     public void testSendCodeSendAndImplementMultiSection() {
         Station s = new Station(codeline, button);
-        s.add(new Section(){
-            public Station.Value  codeSendStart() { countCodeSend++; return Station.Value.Double10; }
-            public void codeValueDelivered(Station.Value value) { 
-                Assert.assertEquals("deliver 10", Station.Value.Double10, value);
+        s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double10; }
+            public void codeValueDelivered(CodeGroupTwoBits value) { 
+                Assert.assertEquals("deliver 10", CodeGroupTwoBits.Double10, value);
                 countCodeSend = 0;
             }
-            public Station.Value indicationStart() { return Station.Value.Double00; }
-            public void indicationComplete(Station.Value value) {}
+            public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            public void indicationComplete(CodeGroupTwoBits value) {}
         });
-        s.add(new Section(){
-            public Station.Value  codeSendStart() { countCodeSend2++; return Station.Value.Double01; }
-            public void codeValueDelivered(Station.Value value) { 
-                Assert.assertEquals("deliver 01", Station.Value.Double01, value);
+        s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
+            public void codeValueDelivered(CodeGroupTwoBits value) { 
+                Assert.assertEquals("deliver 01", CodeGroupTwoBits.Double01, value);
                 countCodeSend2 = 0;
             }
-            public Station.Value indicationStart() { return Station.Value.Double00; }
-            public void indicationComplete(Station.Value value) {}
+            public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            public void indicationComplete(CodeGroupTwoBits value) {}
         });
         
         countCodeSend = 0;

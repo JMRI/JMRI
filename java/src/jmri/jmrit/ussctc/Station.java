@@ -7,19 +7,19 @@ import java.util.*;
 /**
  * A Station represents a specific codeline field station.
  * It defines the bits in the code message and holds references to the 
- * hardware at both ends that is controlled by those bits.
+ * hardware at both ends that is controlled by those bits. For example:
  * <ul>
- * <li>Two bits for Turnouts
- * <li>Three bits for Signals
- * <li>One bit for maintainer call, track circuits, etc
+ * <li>Two bits for Turnouts, see {@link CodeGroupTwoBits}
+ * <li>Three bits for Signals, see {@link CodeGroupThreeBits}
+ * <li>One bit for maintainer call, track circuits, etc, see {@link CodeGroupOneBit}
  * </ul>
  * The basic structure is to mate two objects that interact via a 
  * shared enum. Alternately, this can be a single object: e.g. a 
- * {@link TurnoutSection} that functions in both the CTC machine and field hardware roles.
+ * {@link TurnoutSection} that functions in both the central CTC machine and field hardware roles.
  * <ul>
  * <li>The field object listens to the status of the layout and sends indications on changes.
- * <p>The CTC object responds to those indications.
- * <li>The CTC machine object sends when Code is pressed.
+ * <p>The central (CTC machine) object responds to those indications.
+ * <li>The central (CTC machine) object sends when Code is pressed.
  * <p>The field object responds to those when received.
  * </ul>
  *
@@ -131,14 +131,8 @@ public class Station {
     }
 
     ArrayList<Section> sections = new ArrayList<>();
-    ArrayList<Value> sentValues;
-    ArrayList<Value> indicationValues;
-    
-    enum Value {
-        Single0, Single1,
-        Double00, Double10, Double01,
-        Triple000, Triple100, Triple010, Triple001
-    }
+    ArrayList<Enum> sentValues;         // type is constrained in generic arguments to Section
+    ArrayList<Enum> indicationValues;   // type is constrained in generic arguments to Section
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class.getName());
 }

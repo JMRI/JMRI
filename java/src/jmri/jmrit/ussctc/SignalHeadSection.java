@@ -12,7 +12,7 @@ import java.util.*;
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  * TODO: Update state diagram
  */
-public class SignalHeadSection implements Section {
+public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupThreeBits> {
 
     /**
      *  Anonymous object only for testing
@@ -111,10 +111,10 @@ public class SignalHeadSection implements Section {
     NamedBeanHandle<Sensor> hRightInput;
         
     // coding used locally to ensure consistency
-    private final Station.Value CODE_LEFT = Station.Value.Triple100;
-    private final Station.Value CODE_STOP = Station.Value.Triple010;
-    private final Station.Value CODE_RIGHT = Station.Value.Triple001;
-    private final Station.Value CODE_OFF = Station.Value.Triple000;
+    private final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
+    private final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
+    private final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
+    private final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
     
     // States to track changes at the Code Machine end
     enum Machine {
@@ -135,7 +135,7 @@ public class SignalHeadSection implements Section {
      * @return code line value to transmit from machine to field
      */
     @Override
-    public Station.Value codeSendStart() {
+    public CodeGroupThreeBits codeSendStart() {
         // are we setting to stop, which might start running time?
         // check for setting to stop while machine has been cleared to left or right
         if (    (hRightInput.getBean().getKnownState()==Sensor.ACTIVE && 
@@ -178,7 +178,7 @@ public class SignalHeadSection implements Section {
         }
         
         // return the settings to send
-        Station.Value retval;
+        CodeGroupThreeBits retval;
         if (timeRunning) {
             machine = Machine.SET_STOP;
             retval = CODE_STOP;        
@@ -201,14 +201,14 @@ public class SignalHeadSection implements Section {
     /**
      * Code arrives in field. Sets the signals on the layout.
      */
-    public void codeValueDelivered(Station.Value value) {
+    public void codeValueDelivered(CodeGroupThreeBits value) {
         log.debug("codeValueDelivered sets value {}", value);
         // @TODO add lock checking here; this is part of vital logic implementation
         
         // Set signals. While doing that, remember command as indication, so that the
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
-        Station.Value  currentIndication = getCurrentIndication();
+        CodeGroupThreeBits  currentIndication = getCurrentIndication();
         if (value == CODE_LEFT) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
@@ -255,8 +255,8 @@ public class SignalHeadSection implements Section {
     /**
      * Provide state that's returned from field to machine via indication.
      */
-    public Station.Value indicationStart() {
-        Station.Value retval = getCurrentIndication();
+    public CodeGroupThreeBits indicationStart() {
+        CodeGroupThreeBits retval = getCurrentIndication();
         log.debug("indicationStart with {}; last indication was {}", retval, lastIndication);
         
         // TODO: anti-fleeting done always, need call-on logic
@@ -278,7 +278,7 @@ public class SignalHeadSection implements Section {
     /**
      * Work out current indication from layout status
      */
-    public Station.Value getCurrentIndication() {     
+    public CodeGroupThreeBits getCurrentIndication() {     
         boolean leftStopped = true;
         for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
             if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) leftStopped = false;
@@ -292,7 +292,7 @@ public class SignalHeadSection implements Section {
         if (!leftStopped && !rightStopped) log.error("Found both left and right not at stop");
 
         
-        Station.Value retval;
+        CodeGroupThreeBits retval;
         
         if (leftStopped && rightStopped) {
             retval = CODE_STOP;
@@ -306,12 +306,12 @@ public class SignalHeadSection implements Section {
         return retval;
     }
 
-    Station.Value lastIndication = CODE_OFF;
+    CodeGroupThreeBits lastIndication = CODE_OFF;
     
     /**
      * Process values received from the field unit.
      */
-    public void indicationComplete(Station.Value value) {
+    public void indicationComplete(CodeGroupThreeBits value) {
         log.debug("indicationComplete sets from {} in state {}", value, machine);
         if (timeRunning) {
             hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
