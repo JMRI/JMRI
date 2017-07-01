@@ -28,9 +28,14 @@ import java.util.*;
  */
 /*
  * @startuml jmri/jmrit/ussctc/doc-files/TurnoutSection-ClassDiagram.png
- * TurnoutSection *.. CentralSection
- * TurnoutSection *.. FieldSection
- * note A TurnoutSection object comprises itself, plus\ncontained CentralSection and FieldSection objects
+ * FieldSection <|-- Section
+ * CentralSection <|-- Section
+ * Section <|-- TurnoutSection
+ * FieldSection <|-- TurnoutFieldSection
+ * CentralSection <|-- TurnoutCentralSection
+ * TurnoutSection *.. TurnoutCentralSection
+ * TurnoutSection *.. TurnoutFieldSection
+ * 'note A TurnoutSection object comprises itself, plus\ncontained CentralSection and FieldSection objects
  @end
  */
 /*
@@ -85,8 +90,8 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      */
     TurnoutSection() {}
     
-    FieldSection field;
-    CentralSection central;
+    TurnoutFieldSection field;
+    TurnoutCentralSection central;
     
     /**
      * Create and configure.
@@ -107,8 +112,8 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         this.codeline = codeline;
         
-        central = new CentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
-        field = new FieldSection(layoutTO);
+        central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
+        field = new TurnoutFieldSection(layoutTO);
 
         // initialize lamps to follow layout state
         if (tm.provideTurnout(layoutTO).getKnownState()==Turnout.THROWN) {
@@ -170,8 +175,8 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
 
     
-    static class CentralSection {
-        public CentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
+    static class TurnoutCentralSection implements CentralSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
+        public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -205,6 +210,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
          * </ul>
          * @return code line value to transmit
          */
+        @Override
         public CodeGroupTwoBits codeSendStart() {
             // Set the indicators based on current and requested state
             if (   (state == State.SHOWING_NORMAL && hNormalInput.getBean().getKnownState()==Sensor.ACTIVE)
@@ -227,6 +233,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         /**
          * Process values received from the field unit.
          */
+        @Override
         public void indicationComplete(CodeGroupTwoBits value) {
             log.debug("Indication sets from {}", value);
             if (value == CODE_CLOSED) {
@@ -245,10 +252,10 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         } 
     }
     
-    static class FieldSection {
+    static class TurnoutFieldSection implements FieldSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
         CodeGroupTwoBits lastCodeValue = CODE_NEITHER;
     
-        public FieldSection(String layoutTO) {
+        public TurnoutFieldSection(String layoutTO) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -269,6 +276,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         /**
          * Notification that code has arrived in the field. Sets the turnout on the layout.
          */
+        @Override
         public void codeValueDelivered(CodeGroupTwoBits value) {
             lastCodeValue = value;
         
@@ -320,6 +328,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         /**
          * Provide state that's returned from field to machine via indication.
          */
+        @Override
         public CodeGroupTwoBits indicationStart() {
             if (hLayoutTO.getBean().getKnownState() == Turnout.CLOSED && lastCodeValue == CODE_CLOSED ) {
                 return CODE_CLOSED;
