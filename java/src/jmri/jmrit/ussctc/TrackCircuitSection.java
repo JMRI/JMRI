@@ -48,7 +48,6 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      *
      * @param inputSensor  Sensor for input from central CTC machine
      * @param panelOutput  Turnout name for maintainer call on layout
-     * @param bell  Bell driver (can be null)
      * @param codeline common CodeLine for this machine panel
      */
     public TrackCircuitSection(String inputSensor, String panelOutput, CodeLine codeline) {
