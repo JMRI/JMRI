@@ -24,7 +24,10 @@ public class TextItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
-        ip = new ItemPalette("Test ItemPalette", null);
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            ip = new ItemPalette("Test ItemPalette", null);
+            ip.pack();
+        });
         TextItemPanel t = new TextItemPanel(ip,"test",es);
         Assert.assertNotNull("exists",t);
     }
