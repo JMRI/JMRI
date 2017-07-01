@@ -26,7 +26,7 @@ public class SPROGCSMenu extends JMenu {
         add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
         add(new jmri.jmrix.sprog.console.SprogConsoleAction(rb.getString("MenuItemConsole"),_memo));
         add(new jmri.jmrix.sprog.update.SprogVersionAction(Bundle.getMessage("GetSprogFirmwareVersion"),_memo));
-        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("Sprog4FirmwareUpdate"),_memo));
-        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction(Bundle.getMessage("Sprog2FirmwareUpdate"),_memo));
+        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", " v3/v4"),_memo));
+        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", " II"),_memo));
     }
 }

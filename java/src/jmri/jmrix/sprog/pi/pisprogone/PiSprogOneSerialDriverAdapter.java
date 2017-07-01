@@ -20,7 +20,7 @@ public class PiSprogOneSerialDriverAdapter
 
     public PiSprogOneSerialDriverAdapter() {
         super(SprogMode.SERVICE, 115200, new SprogType(SprogType.PISPROGONE));
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG One Programmer");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprog1ProgrammerTitle"));
     }
 
     /**

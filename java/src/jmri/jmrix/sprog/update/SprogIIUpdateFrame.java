@@ -140,7 +140,7 @@ public class SprogIIUpdateFrame
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
             JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusUnableToConnectBootloader"),
-                    Bundle.getMessage("Sprog2FirmwareUpdate"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             statusBar.setText(Bundle.getMessage("StatusUnableToConnectBootloader"));
             return;
         }
@@ -164,7 +164,7 @@ public class SprogIIUpdateFrame
         } else {
             // Houston, we have a problem
 //            JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusBadReplyWriteRequest"),
-//                                        Bundle.getMessage("Sprog2FirmwareUpdate"), JOptionPane.ERROR_MESSAGE);
+//                                        Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             log.error("Bad reply to write request");
             statusBar.setText(Bundle.getMessage("StatusBadReplyWriteRequest"));
             bootState = BootState.IDLE;
@@ -205,7 +205,7 @@ public class SprogIIUpdateFrame
         } else {
             // Houston, we have a problem
 //        JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusBadReplyErase"),
-//                                        Bundle.getMessage("Sprog2FirmwareUpdate"), JOptionPane.ERROR_MESSAGE);
+//                                        Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             log.error("Bad reply to erase request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
@@ -231,7 +231,7 @@ public class SprogIIUpdateFrame
         } else {
             // Houston, we have a problem
 //        JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusBadReplyModeRequest"),
-//                                        Bundle.getMessage("Sprog2FirmwareUpdate"), JOptionPane.ERROR_MESSAGE);
+//                                        Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             log.error("Bad reply to SPROG Mode request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);

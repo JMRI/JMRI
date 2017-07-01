@@ -21,7 +21,7 @@ public class PiSprogOneCSSerialDriverAdapter
         super(SprogMode.OPS, 115200);
         options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG One Command Station");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprog1CSTitle"));
     }
 
     /**

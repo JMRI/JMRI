@@ -82,7 +82,7 @@ abstract public class SprogUpdateFrame
     }
 
     protected String title() {
-        return Bundle.getMessage("SprogFirmwareUpdate");
+        return Bundle.getMessage("SprogXFirmwareUpdate", "");
     }
 
     protected void init() {
