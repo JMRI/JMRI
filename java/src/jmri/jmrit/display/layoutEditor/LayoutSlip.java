@@ -50,7 +50,11 @@ import org.slf4j.LoggerFactory;
  * may proceed between A &amp; D, A &amp; C, B &amp; D and in the case of
  * double-slips, B &amp; C.
  * <P>
- * ==A==-==D== \\ // X // \\ ==B==-==C==
+ * ==A==-==D==
+ *    \\ //
+ *      X
+ *    // \\
+ * ==B==-==C==
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for

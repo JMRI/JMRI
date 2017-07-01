@@ -1594,8 +1594,8 @@ public class TrackSegment extends LayoutTrack {
                         result = new LayoutConnectivity(lb1, lb2);
                         result.setConnections(this, lx, type1, null);
                         result.setDirection(LayoutEditorAuxTools.computeDirection(
-                                layoutEditor.getCoords(getConnect2(), type2),
-                                layoutEditor.getCoords(getConnect1(), type1)));
+                            layoutEditor.getCoords(getConnect2(), type2),
+                            layoutEditor.getCoords(getConnect1(), type1)));
                     }
                 }
             } else if ((type1 >= LayoutTrack.SLIP_A) && (type1 <= LayoutTrack.SLIP_D)) {
@@ -1636,8 +1636,8 @@ public class TrackSegment extends LayoutTrack {
                         result = new LayoutConnectivity(lb1, lb2);
                         result.setConnections(this, lt, type2, null);
                         result.setDirection(LayoutEditorAuxTools.computeDirection(
-                                layoutEditor.getCoords(getConnect1(), type1),
-                                layoutEditor.getCoords(getConnect2(), type2)));
+                            layoutEditor.getCoords(getConnect1(), type1),
+                            layoutEditor.getCoords(getConnect2(), type2)));
                     }
                 } else {
                     // have connection to a level crossing
