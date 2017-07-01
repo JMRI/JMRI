@@ -84,7 +84,7 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
     /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
-     this is so that we can keep up with moves and changes of userNames */
+                     this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
@@ -1126,9 +1126,10 @@ public class PositionablePoint extends LayoutTrack {
      * find the hit (location) type for a point
      *
      * @param p                  the point
-     * @param useRectangles      whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
-     * @param requireUnconnected whether to only return free connection hit types
+     * @param useRectangles      whether to use (larger) rectangles or (smaller)
+     *                           circles for hit testing
+     * @param requireUnconnected whether to only return free connection hit
+     *                           types
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -1164,7 +1165,7 @@ public class PositionablePoint extends LayoutTrack {
      * get the object connected to this track for the specified connection type
      *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
+     * @return the object connected for the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
@@ -1183,9 +1184,9 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
+     * set the object connected for the specified connection type
      *
-     * @param connectionType the connection type (where it is connected to the us)
+     * @param connectionType the connection type (where it is connected to us)
      * @param o              the object that is being connected
      * @param type           the type of object that we're being connected to
      *                       (Should always be "NONE" or "TRACK")
@@ -1257,8 +1258,8 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /*
-        return the layout connectivity for this PositionablePoint
-    */
+                        return the layout connectivity for this PositionablePoint
+     */
     protected LayoutConnectivity getLayoutConnectivity() {
         LayoutConnectivity result = null;
 
@@ -1274,7 +1275,6 @@ public class PositionablePoint extends LayoutTrack {
                     // this is a block boundary, create a LayoutConnectivity
                     log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
                     result = new LayoutConnectivity(blk1, blk2);
-
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
