@@ -105,10 +105,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
     }
 
-    /**
-     * Only called from MultiSensorIcon popup
-     *
-     */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {
             MultiSensorIcon.Entry entry = icons.get(i);
@@ -363,9 +359,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
     }
 
-    /**
-     *
-     */
     void delete(String key) {
         _iconMap.remove(key);
         _sensorMap.remove(key);
