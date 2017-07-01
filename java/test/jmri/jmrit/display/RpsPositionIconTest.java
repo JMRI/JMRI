@@ -105,6 +105,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -121,6 +122,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         }
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
