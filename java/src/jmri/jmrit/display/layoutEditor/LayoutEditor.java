@@ -3613,7 +3613,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // set the new zoom (return value may be different)
         result = setZoom(result);
-        
+
         // calculate new scroll bounds
         scrollBounds = MathUtil.scale(scrollBounds, result);
 
@@ -3739,10 +3739,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         repaint();
     }   //removeMarkers
 
-    /*****************************************\
+    /*======================================*\
     |*  Dialog box to enter new track widths *|
-    \*****************************************/
-
+    \*======================================*/
     //operational variables for enter track width pane
     private JmriJFrame enterTrackWidthFrame = null;
     private boolean enterTrackWidthOpen = false;
@@ -3905,10 +3904,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   //trackWidthCancelPressed
 
-    /***************************************\
+    /*====================================*\
     |*  Dialog box to enter new grid sizes *|
-    \***************************************/
-
+    \*====================================*/
     //operational variables for enter grid sizes pane
     private JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
@@ -4071,10 +4069,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   //gridSizesCancelPressed
 
-    /******************************************\
+    /*=======================================*\
     |*  Dialog box to enter new reporter info *|
-    \******************************************/
-
+    \*=======================================*/
     //operational variables for enter reporter pane
     private JmriJFrame enterReporterFrame = null;
     private boolean reporterOpen = false;
@@ -4258,10 +4255,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         repaint();
     }   //reporterCancelPressed
 
-    /*************************************************************\
-    |*  Dialog box to enter scale / translate track diagram info *|
-    \*************************************************************/
-
+    /*===============================*\
+    |*  Dialog box to enter scale /  *|
+    |*  translate track diagram info *|
+    \*===============================*/
     //operational variables for scale/translate track diagram pane
     private JmriJFrame scaleTrackDiagramFrame = null;
     private boolean scaleTrackDiagramOpen = false;
@@ -4542,10 +4539,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return true;
     }   //scaleTrack
 
-    /********************************************\
+    /*=========================================*\
     |*  Dialog box to enter move selection info *|
-    \********************************************/
-
+    \*=========================================*/
     //operational variables for move selection pane
     private JmriJFrame moveSelectionFrame = null;
     private boolean moveSelectionOpen = false;
@@ -5595,7 +5591,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
         // see if any of those points are in it instead...
-
         Rectangle2D r = trackControlCircleRectAt(loc);
 
         //check Track Segments, if any
@@ -5770,6 +5765,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * get the coordinates for the connection type of the specified object
+     *
      * @param o the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
