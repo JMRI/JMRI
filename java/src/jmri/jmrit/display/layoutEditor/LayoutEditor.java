@@ -3243,20 +3243,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // get the scroll bars from the scroll pane
             JScrollPane scrollPane = getPanelScrollPane();
-            JScrollBar hsb = scrollPane.getHorizontalScrollBar();
-            JScrollBar vsb = scrollPane.getVerticalScrollBar();
+            if (scrollPane != null) {
+                JScrollBar hsb = scrollPane.getHorizontalScrollBar();
+                JScrollBar vsb = scrollPane.getVerticalScrollBar();
 
-            // Increase scroll bar unit increments!!!
-            vsb.setUnitIncrement(16);
-            hsb.setUnitIncrement(16);
+                // Increase scroll bar unit increments!!!
+                vsb.setUnitIncrement(16);
+                hsb.setUnitIncrement(16);
 
-            // add scroll bar adjustment listeners
-            vsb.addAdjustmentListener((AdjustmentEvent e) -> {
-                scrollBarAdjusted(e);
-            });
-            hsb.addAdjustmentListener((AdjustmentEvent e) -> {
-                scrollBarAdjusted(e);
-            });
+                // add scroll bar adjustment listeners
+                vsb.addAdjustmentListener((AdjustmentEvent e) -> {
+                    scrollBarAdjusted(e);
+                });
+                hsb.addAdjustmentListener((AdjustmentEvent e) -> {
+                    scrollBarAdjusted(e);
+                });
+            }
 
             // remove all mouse wheel listeners
             mouseWheelListeners = scrollPane.getMouseWheelListeners();
@@ -5517,11 +5519,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         listOfLists.add(turntableList);
 
         Object obj = findFirstMatchingItemInListOfLists(listOfLists,
-            (Object o) -> {
-                LayoutTrack layoutTrack = (LayoutTrack) o;
-                selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-                return (LayoutTrack.NONE != selectedPointType);
-            }
+                (Object o) -> {
+                    LayoutTrack layoutTrack = (LayoutTrack) o;
+                    selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
+                    return (LayoutTrack.NONE != selectedPointType);
+                }
         );
         if (null != obj) {
             if (obj instanceof LayoutTurntable) {
@@ -5566,13 +5568,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         foundPointType = LayoutTrack.NONE;
         Object obj = findFirstMatchingItemInListOfLists(listOfLists,
-            (Object o) -> {
-                LayoutTrack layoutTrack = (LayoutTrack) o;
-                if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
-                    foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
+                (Object o) -> {
+                    LayoutTrack layoutTrack = (LayoutTrack) o;
+                    if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
+                        foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
+                    }
+                    return (LayoutTrack.NONE != foundPointType);
                 }
-                return (LayoutTrack.NONE != foundPointType);
-            }
         );
         if (null != obj) {
             LayoutTrack layoutTrack = (LayoutTrack) obj;
@@ -5766,7 +5768,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * get the coordinates for the connection type of the specified object
      *
-     * @param o the object (Layout track subclass)
+     * @param o              the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
