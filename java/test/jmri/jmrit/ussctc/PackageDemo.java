@@ -48,7 +48,10 @@ public class PackageDemo {
         Bell bell = new PhysicalBell("CTC Bell");
         
         CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+
         CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
+        Station station = new Station(line, button);
+
         TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", line);
         SignalHeadSection signals = new SignalHeadSection(
                         Arrays.asList(new String[]{"2R Upper","2R Lower"}), Arrays.asList(new String[]{"2L Main", "2L Siding"}),
@@ -56,12 +59,10 @@ public class PackageDemo {
                         "Sec1 Sig 2 Left", "Sec1 Sig 2 Right",
                         line);
         
-        Station station = new Station(line, button);
         station.add(turnout);
-        station.add(signals);
-
-        button.addStation(station);
         turnout.addStation(station);
+
+        station.add(signals);
         signals.addStation(station);
         
         Lock occupancyLock = new OccupancyLock("Sec1 Track OS");
@@ -69,10 +70,14 @@ public class PackageDemo {
         turnout.addLocks(Arrays.asList(new Lock[]{occupancyLock, routeLock}));
         
         TrackCircuitSection tc;
-        tc = new TrackCircuitSection("Sec1 Track Between", "Sec1 Track Outside", line); station.add(tc); tc.addStation(station); station.add(tc);
-        tc = new TrackCircuitSection("Sec1 Track OS", "Sec1 Track OS", line, bell); station.add(tc); tc.addStation(station);
-        tc = new TrackCircuitSection("Sec1 Track Main", "Sec1 Track Main", line); station.add(tc); tc.addStation(station);
-        tc = new TrackCircuitSection("Sec1 Track Siding", "Sec1 Track Siding", line); station.add(tc); tc.addStation(station);
+        tc = new TrackCircuitSection("Sec1 Track Between", "Sec1 Track Outside", line); 
+            station.add(tc); tc.addStation(station);
+        tc = new TrackCircuitSection("Sec1 Track OS", "Sec1 Track OS", line, bell); 
+            station.add(tc); tc.addStation(station);
+        tc = new TrackCircuitSection("Sec1 Track Main", "Sec1 Track Main", line); 
+            station.add(tc); tc.addStation(station);
+        tc = new TrackCircuitSection("Sec1 Track Siding", "Sec1 Track Siding", line); 
+            station.add(tc); tc.addStation(station);
 
         MaintainerCallSection mc = new MaintainerCallSection("Sec1 MC", "Sec 1 MC", line); station.add(mc); mc.addStation(station);
 
