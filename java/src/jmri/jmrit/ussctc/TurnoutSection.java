@@ -293,7 +293,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
                 // Set turnout as commanded, skipping redundant operations
                 if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
                     hLayoutTO.getBean().setCommandedState(Turnout.CLOSED);
-                    log.debug("Layout turnout set THROWN");
+                    log.debug("Layout turnout set CLOSED");
                 } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
                     hLayoutTO.getBean().setCommandedState(Turnout.THROWN);
                     log.debug("Layout turnout set THROWN");
