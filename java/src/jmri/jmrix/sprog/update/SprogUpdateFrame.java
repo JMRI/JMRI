@@ -187,8 +187,13 @@ abstract public class SprogUpdateFrame
     public void notifyMessage(SprogMessage m) {
     }
 
-    // State machine to catch replies that calls functions to handle each state.
-    // These functions can be overridden for each SPROG type
+    /**
+     * State machine to catch replies that calls functions to handle each state.
+     * <p>
+     * These functions can be overridden for each SPROG type.
+     *
+     * @param m the SprogReply received from the SPROG
+     */
     @Override
     synchronized public void notifyReply(SprogReply m) {
         reply = m;
@@ -198,7 +203,7 @@ abstract public class SprogUpdateFrame
             case IDLE:
                 stateIdle();
                 break;
-            case SETBOOTSENT:           // Awaiting reply from bootloader
+            case SETBOOTSENT:           // awaiting reply from bootloader
                 stateSetBootSent();
                 break;
             case VERREQSENT:            // awaiting reply to version request
@@ -320,17 +325,17 @@ abstract public class SprogUpdateFrame
             requestBoot();
         } else if (bootState == BootState.VERREQSENT) {
             log.error("timeout in VERREQSENT!");
-            JOptionPane.showMessageDialog(this, "Unable to connect to bootloader",
-                    "Fatal Error", JOptionPane.ERROR_MESSAGE);
-            statusBar.setText("Fatal error - unable to connect");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorConnectingDialogString"),
+                    Bundle.getMessage("FatalErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            statusBar.setText(Bundle.getMessage("ErrorConnectingStatus"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
         } else if (bootState == BootState.WRITESENT) {
             log.error("timeout in WRITESENT!");
             // This is fatal!
-            JOptionPane.showMessageDialog(this, "Timeout during write",
-                    "Fatal Error", JOptionPane.ERROR_MESSAGE);
-            statusBar.setText("Fatal error - unable to write");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorTimeoutDialogString"),
+                    Bundle.getMessage("FatalErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            statusBar.setText(Bundle.getMessage("ErrorTimeoutStatus"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
         } else if (bootState == BootState.NULLWRITE) {

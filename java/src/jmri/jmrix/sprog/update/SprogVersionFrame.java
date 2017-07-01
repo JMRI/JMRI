@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
- * Get the firmware version of the attached SPROG hardware
+ * Display the firmware version of the attached SPROG hardware.
  *
  * @author	Andrew Crosland Copyright (C) 2008
  */
@@ -21,7 +21,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
 
     @Override
     synchronized public void initComponents() throws Exception {
-        setTitle("SPROG Version");
+        setTitle(Bundle.getMessage("SprogVersionTitle"));
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
@@ -33,11 +33,9 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
 
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
-        if (log.isDebugEnabled()) {
-            log.debug("Version " + v.toString() + " notified");
-        }
-        JOptionPane.showMessageDialog(null, v.toString(),
-                "SPROG Version", JOptionPane.INFORMATION_MESSAGE);
+        log.debug("Version {} notified", v.toString());
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("SprogVersionDialogString", v.toString()),
+                Bundle.getMessage("SprogVersionTitle"), JOptionPane.INFORMATION_MESSAGE);
         setVisible(false);
         dispose();
     }

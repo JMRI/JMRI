@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
- * Frame for SPROG firmware update utility.
+ * Frame for SPROG v4 firmware update utility.
  *
  * Refactored
  *

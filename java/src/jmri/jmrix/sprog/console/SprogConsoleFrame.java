@@ -52,6 +52,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     protected JCheckBox unlockCheckBox = new JCheckBox();
 
     protected ButtonGroup speedGroup = new ButtonGroup();
+    protected javax.swing.JLabel speedLabel = new javax.swing.JLabel();
     protected JRadioButton speed14Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 14)); // i18n using shared sprogBundle
     protected JRadioButton speed28Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 28));
     protected JRadioButton speed128Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 128));
@@ -175,8 +176,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
          * Speed Step Panel
          */
         JPanel speedPanel = new JPanel();
-        speedPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), Bundle.getMessage("SpeedStepModeTitle")));
+        speedPanel.setBorder(BorderFactory.createEtchedBorder());
+        speedLabel.setText(Bundle.getMessage("SpeedStepModeLabel"));
+        speedPanel.add(speedLabel);
         speedPanel.add(speed14Button);
         speedPanel.add(speed28Button);
         speedPanel.add(speed128Button);
@@ -187,7 +189,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         speed28Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 28));
         speed128Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 128));
 
-//        getContentPane().add(speedPanel); // is now embedded inside "Configuration" frame
+//        getContentPane().add(speedPanel); // now embedded inside "Configuration" frame
 
         /*
          * Configuration panel
@@ -257,8 +259,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             }
         });
 
-        statusPanel.add(configPanel);
         statusPanel.add(speedPanel);
+        statusPanel.add(configPanel);
         statusPanel.add(saveButton);
 
         getContentPane().add(statusPanel);
@@ -571,7 +573,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
         JOptionPane.showMessageDialog(null, "Timeout talking to SPROG",
@@ -591,7 +593,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {

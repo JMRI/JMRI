@@ -19,9 +19,9 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonContinue")};
         if (1 == JOptionPane.showOptionDialog(null,
-                Bundle.getMessage("Sprog2UpdateDialogString"),
+                Bundle.getMessage("SprogXUpdateDialogString", " II"),
                 Bundle.getMessage("Sprog2FirmwareUpdate"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame

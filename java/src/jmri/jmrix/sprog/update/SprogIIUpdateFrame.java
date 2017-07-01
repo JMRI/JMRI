@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for SPROG firmware update utility.
+ * Frame for SPROG II firmware update utility.
  *
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
@@ -84,8 +84,8 @@ public class SprogIIUpdateFrame
         // If SPROG II is in boot mode, check message framing and checksum
         if ((bootState != BootState.RESETSENT) && tc.isSIIBootMode() && !reply.strip()) {
             stopTimer();
-            JOptionPane.showMessageDialog(this, "Malformed  bootloader reply/nDid you remember to unlock the firmware?",
-                    "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFrameDialogString"),
+                    Bundle.getMessage("ErrorFrameDialogTitle"), JOptionPane.ERROR_MESSAGE);
             log.error("Malformed bootloader reply");
             statusBar.setText(Bundle.getMessage("StatusMalformedbootLoaderReply"));
             bootState = BootState.IDLE;
