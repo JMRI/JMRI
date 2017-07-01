@@ -191,6 +191,7 @@ public class WarrantTest {
         PropertyChangeListener listener = new WarrantListener(warrant);
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
+        Assert.assertNotNull("speedProfile", warrant.getSpeedUtil().getSpeedProfile());
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);

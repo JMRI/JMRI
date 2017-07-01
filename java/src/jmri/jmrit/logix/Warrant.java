@@ -530,9 +530,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 
                 switch (_engineer.getRunState()) {
                     case Warrant.HALT:
-                        if (_speedUtil.getSpeed() > 0.0f) {
-                            return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);                            
-                        }
                         return Bundle.getMessage("Halted", blockName, cmdIdx);
                         
                     case Warrant.RESUME:
@@ -549,9 +546,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         return Bundle.getMessage("Aborted", blockName, cmdIdx);
 
                     case Warrant.WAIT_FOR_CLEAR:
-                        if (_speedUtil.getSpeed() > 0.0f) {
-                            return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);                            
-                        }
                         return Bundle.getMessage("WaitForClear", _trainName, blockName, (_waitForSignal ?
                                 Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy")));
 
@@ -962,7 +956,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _totalAllocated = false;
         if (orders != null) {
             _orders = orders;
-            _speedUtil.setOrders(orders);
         }
         _allocated = false;
         String msg = checkInService();
@@ -1437,7 +1430,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (msg !=null) {
                 log.error("goingActive setPath fails: {}",  msg);
             }
-            if (_engineer != null && _speedUtil.getSpeed() <= 0.000001f) {
+            if (_engineer != null && _speedUtil.getSpeedSetting() <= 0.000001f) {
                 // Already stopped, cannot have just entered block 
                 // Rogue may have just entered or signal aspect just set to Stop
                 setStoppingBlock(block);
@@ -1879,13 +1872,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // Error checking done.
 
         if(log.isDebugEnabled())
-            log.debug("Stopping flags _waitForBlock= {}, _waitForSignal= {}, speed= {}, warrant {}",
-                    _waitForBlock, _waitForSignal, _speedUtil.getSpeed(), getDisplayName());
+            log.debug("Stopping flags _waitForBlock= {}, _waitForSignal= {}, speedSetting= {}, warrant {}",
+                    _waitForBlock, _waitForSignal, _speedUtil.getSpeedSetting(), getDisplayName());
 
         if ((runState==WAIT_FOR_CLEAR || runState==HALT) /*&& _engineer.getSpeed()<= 0.0001f*/) {
             if(log.isDebugEnabled())
-                log.debug("Hold train at block \"{}\" runState= {}, speed= {}.warrant {}",
-                        curBlock.getDisplayName(), RUN_STATE[runState], _speedUtil.getSpeed(), getDisplayName());
+                log.debug("Hold train at block \"{}\" runState= {}, speedSetting= {}.warrant {}",
+                        curBlock.getDisplayName(), RUN_STATE[runState], _speedUtil.getSpeedSetting(), getDisplayName());
             firePropertyChange("SpeedChange", _idxCurrentOrder-1, _idxCurrentOrder);    // message reason for hold
             return true;
         }
@@ -1923,7 +1916,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 } else {
                     log.info("Train {} moved past required speed of \"{}\" at speed \"{}\" in block \"{}\"! Set speed to {}. warrant= {}",
                             getTrainName(), currentType, _curSpeedType, curBlock.getDisplayName(), currentType, getDisplayName());
-                    float current = _speedUtil.getSpeed();
+                    float current = _speedUtil.getSpeedSetting();
                     if (current < _engineer.getExpectedSpeed(currentType)) {
                         _engineer.rampSpeedTo(currentType); // always ramp increases                        
                     } else {

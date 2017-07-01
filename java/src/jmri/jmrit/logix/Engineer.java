@@ -53,7 +53,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _warrant = warrant;
         _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
-        _speedUtil.makeSpeedTree();
+//        _speedUtil.makeSpeedTree();
         _idxCurrentCommand = 0;
         _idxNoSpeedCommand = -1;
         _throttle = throttle;
@@ -76,7 +76,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _runOnET = _setRunOnET;     // OK to set here
             long time = ts.getTime();
             synchronized (this) {
-                if (_speedUtil.getSpeed() > 0.0f) {
+                if (_speedUtil.getSpeedSetting() > 0.0f) {
                     time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
                 }                
             }
@@ -196,11 +196,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     synchronized (this) {
                         if (!_halt && !_waitForClear) {
                             _lock.lock();
-                            float speed = Float.parseFloat(ts.getValue());
-                            _normalSpeed = speed;
-                            float speedMod = _speedUtil.modifySpeed(speed, _speedType, _isForward);
-                            if (Math.abs(speed - speedMod) > .0001f) {
-                                _timeRatio = speed / speedMod;
+                            float throttle = Float.parseFloat(ts.getValue());
+                            float speed = ts.getSpeed();
+                            if (speed > 0.4f) {
+                                throttle = _speedUtil.getThrottleSetting(speed);
+                            }
+                            _normalSpeed = throttle;
+                            float speedMod = _speedUtil.modifySpeed(throttle, _speedType, _isForward);
+                            if (Math.abs(throttle - speedMod) > .0001f) {
+                                _timeRatio = throttle / speedMod;
                             } else {
                                 _timeRatio = 1.0f;
                             }
@@ -383,7 +387,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
-        Float speed = _speedUtil.getSpeed();
+        Float speed = _speedUtil.getSpeedSetting();
         if (Math.abs(speed - _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward)) < 0.0001f) {
             // already at speed, no need to reset throttle
             _speedType = speedType;
@@ -440,8 +444,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("setHalt({}) calls notifyAll()", halt);
             }
         } else {
-            _halt = true;
             rampSpeedTo(Warrant.Stop);
+            _halt = true;
         }
         if (log.isDebugEnabled()) log.debug("setHalt({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
                 halt, _halt,  _throttle.getSpeedSetting(), _waitForClear, _waitForSync, _warrant.getDisplayName());
@@ -461,8 +465,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("setWaitforClear({}) calls notifyAll()", stop);
             }
         } else {
-            _waitForClear = true;
             rampSpeedTo(Warrant.Stop);
+            _waitForClear = true;
         }
         if (log.isDebugEnabled()) log.debug("setWaitforClear({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
                 stop, _halt,  _throttle.getSpeedSetting(), _waitForClear, _waitForSync, _warrant.getDisplayName());
@@ -883,7 +887,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
             float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);   // requested endspeed
-            float speed = _speedUtil.getSpeed();
+            float speed = _speedUtil.getSpeedSetting();
             if (speed < 0.0f) {
                 speed = 0.0f;
             }

@@ -158,11 +158,17 @@ public class WarrantManagerXml //extends XmlFile
         elem.setAttribute("time", time);
 
         String str = command.getCommand();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no command type! {}", command);
+        }
         elem.setAttribute("command", str);
 
         str = command.getValue();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no value! {}", command);
+        }
         elem.setAttribute("value", str);
 
         str = command.getBeanSystemName();
@@ -171,6 +177,8 @@ public class WarrantManagerXml //extends XmlFile
             log.error("ThrottleSetting command has no bean name! {}", command);
         }
         elem.setAttribute("block", str);
+        
+        elem.setAttribute("speed", Float.toString(command.getSpeed()));
 
         return elem;
     }
@@ -373,8 +381,19 @@ public class WarrantManagerXml //extends XmlFile
         String block = null;
         if (attr != null)
             block =attr.getValue();
+
+        float speed = 0.0f;
+        attr = elem.getAttribute("speed");
+        if (attr != null) {
+            try {
+                speed = attr.getFloatValue();
+            } catch (DataConversionException ex) {
+                speed = 0.0f;;
+                log.error("Unable to read speed of command.", ex);
+            }
+        }
         
-        return new ThrottleSetting(time, command, value, block);
+        return new ThrottleSetting(time, command, value, block, speed);
     }
     
     @Override

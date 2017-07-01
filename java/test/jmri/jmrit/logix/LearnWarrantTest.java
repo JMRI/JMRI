@@ -131,7 +131,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("ButtonSave"));
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
-        Assert.assertEquals("11 ThrottleCommands", 11, commands.size());
+        Assert.assertEquals("12 ThrottleCommands", 12, commands.size());
         /*
         for (ThrottleSetting ts: commands) {
             System.out.println(ts.toString());

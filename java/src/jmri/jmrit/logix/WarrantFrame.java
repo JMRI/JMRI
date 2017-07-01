@@ -65,6 +65,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
+    private float _speed;
     private long _TTP = 0;
     private boolean _forward = true;
     LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
@@ -959,7 +960,9 @@ public class WarrantFrame extends WarrantRoute {
 
         _warrant.setTrainName(getTrainName());
         _startTime = System.currentTimeMillis();
+        _speed = 0.0f;
         _warrant.addPropertyChangeListener(this);
+//        _warrant.getSpeedUtil().makeSpeedTree();
 
         msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
                 _throttleCommands, _runETOnlyBox.isSelected());
@@ -1028,12 +1031,6 @@ public class WarrantFrame extends WarrantRoute {
           return;
         }
         if (_learnThrottle != null) {
-            // if last block is dark and previous block has not been exited, we must assume train
-            // has entered the last block now that the user is terminating the recording.
-            if (_learnThrottle.getSpeedSetting() > 0.0) {
-                _learnThrottle.setSpeedSetting(-0.5F);
-                _learnThrottle.setSpeedSetting(0.0F);
-            }
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
@@ -1246,12 +1243,17 @@ public class WarrantFrame extends WarrantRoute {
         }
         setThrottleCommand(cmd, value, bName);
     }
+    
+    protected void setSpeedCommand(float speed, boolean isForward) {
+        _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);
+        setThrottleCommand("speed", Float.toString(speed));
+    }
 
     private void setThrottleCommand(String cmd, String value, String bName) {
         long endTime = System.currentTimeMillis();
         long time = endTime - _startTime;
         _startTime = endTime;
-        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
+        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName, _speed));
         _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());
