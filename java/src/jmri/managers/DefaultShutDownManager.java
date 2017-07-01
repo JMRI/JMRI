@@ -58,7 +58,12 @@ public class DefaultShutDownManager implements ShutDownManager {
         this.shutdownHook = new Thread(() -> {
             DefaultShutDownManager.this.shutdown(0, false);
         });
-        Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+        try {
+            Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+        } catch (IllegalStateException ex) {
+            // this is thrown only if System.exit() has already been called,
+            // so ignore
+        }
     }
 
     @Override
@@ -73,7 +78,10 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     @Override
     synchronized public void deregister(ShutDownTask s) {
-        Objects.requireNonNull(s, "Shutdown task cannot be null.");
+        if (s == null) {
+            // silently ignore null task
+            return;
+        }
         if (this.tasks.contains(s)) {
             this.tasks.remove(s);
         }

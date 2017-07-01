@@ -34,6 +34,7 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;

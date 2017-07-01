@@ -76,7 +76,10 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         log.debug("Simulator Thread Started");
         for (;;) {
             XNetMessage m = readMessage();
-            message(m);
+            if(m != null) {
+               // don't forward a null message.
+               message(m);
+            }
         }
     }
 
@@ -127,7 +130,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.

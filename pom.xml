@@ -20,6 +20,7 @@
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
+        <openlcb.version>0.7.14</openlcb.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -307,7 +308,7 @@
                         <!-- ignore until #3340 is merged -->
                         <exclude>jmri.jmrix.nce.**.Nce*</exclude>
                         <!-- ignore until #3492 is resolved -->
-                        <exclude>jmri.jmrix.loconet.locormi.LnMessage*Test</exclude>
+                        <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
@@ -411,7 +412,7 @@
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
                     <!-- change from default 100 warnings -->
-                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 4000</additionalparam>
+                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2350</additionalparam>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -473,16 +474,17 @@
                 ]]>
                     </bottom>
                     <links>
+                        <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <link>http://users.frii.com/jarvi/rxtx/doc/</link>
+                        <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
-                        <link>http://fasterxml.github.io/jackson-databind/javadoc/2.0.6</link>
+                        <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
                         <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
-                        <link>https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.12</link>
-                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release</link>
+                        <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
+                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
                     </links>
                 </configuration>
             </plugin>
@@ -660,11 +662,6 @@
             <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.bidib.jbidib</groupId>
-            <artifactId>jbidibc-rxtx-2.2</artifactId>
-            <version>1.6.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -700,11 +697,6 @@
             <version>5.0.2</version>
         </dependency>
         -->
-        <dependency>
-            <groupId>com.serialio</groupId>
-            <artifactId>serialio</artifactId>
-            <version>1.0</version>
-        </dependency>
         <!--
         <dependency>
             <groupId>org.jogamp.jogl</groupId>
@@ -766,7 +758,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.14</version>
+            <version>${openlcb.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>
@@ -812,6 +804,14 @@
                     <groupId>com.digi</groupId>
                     <artifactId>android-sdk-addon</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx-native</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -819,6 +819,11 @@
             <artifactId>powermock-module-junit4</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.purejavacomm</groupId>
+            <artifactId>purejavacomm</artifactId>
+            <version>1.0.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>

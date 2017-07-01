@@ -2,8 +2,10 @@ package jmri.util;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 
 /**
@@ -79,8 +81,8 @@ public final class MathUtil {
     }
 
     /**
-     *  multiply a point times a scalar
-     * @param p the  point
+     * multiply a point times a scalar
+     * @param p the point
      * @param s the scalar
      * @return the point multiplied by the scalar
      */
@@ -89,18 +91,18 @@ public final class MathUtil {
     }
 
     /**
-     *  multiply a scalar times a point
+     * multiply a scalar times a point
      * @param s the scalar
-     * @param p the  point
+     * @param p the point
      * @return the point multiplied by the scalar
      */
-    // (again just so parameter order doesn't matter…)
+    // (again just so parameter order doesn't matter...)
     public static Point2D multiply(double s, Point2D p) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
 
     /**
-     *  divide a point times a scalar
+     * divide a point times a scalar
      * @param p the point
      * @param s the scalar
      * @return the point divided by the scalar
@@ -196,6 +198,37 @@ public final class MathUtil {
         return new Point2D.Double(
             lerp(pA.getX(), pB.getX(), t),
             lerp(pA.getY(), pB.getY(), t));
+    }
+
+    /**
+     * round value to granular increment
+     * @param v the value to granulize
+     * @param g the granularity
+     * @return the value granulized to the granularity
+     */
+    public static double granulize(double v, double g) {
+        return Math.round(v / g) * g;
+    }
+
+    /**
+     * round point to horzontal and vertical granular increments
+     * @param p the point to granulize
+     * @param gH the horzontal granularity
+     * @param gV the vertical granularity
+     * @return the point granulized to the granularity
+     */
+    public static Point2D granulize(Point2D p, double gH, double gV) {
+        return new Point2D.Double(granulize(p.getX(), gH), granulize(p.getY(), gV));
+    }
+
+    /**
+     * round point to granulur increment
+     * @param p the point to granulize
+     * @param g the granularity
+     * @return the point granulized to the granularity
+     */
+    public static Point2D granulize(Point2D p, double g) {
+        return granulize(p, g, g);
     }
 
     /**
@@ -319,20 +352,119 @@ public final class MathUtil {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
 
-    // recursive routine to draw a cubic Bezier…
+    /**
+     * Convert Rectangle to Rectangle2D
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle2D Rectangle2DForRectangle(Rectangle r) {
+        return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+    }
+
+    /**
+     * Convert Rectangle to Rectangle2D
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle2D RectangleToRectangle2D(Rectangle r) {
+        return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+    }
+
+    /**
+     * Convert Rectangle2D to Rectangle
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle RectangleForRectangle2D(Rectangle2D r) {
+        return new Rectangle((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * Convert Rectangle2D to Rectangle
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle Rectangle2DToRectangle(Rectangle2D r) {
+        return new Rectangle((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * calculate the center of the rectangle
+     * @param r the rectangle
+     * @return the center of the rectangle
+     */
+    public static Point2D center(Rectangle2D r) {
+        return new Point2D.Double(r.getCenterX(), r.getCenterY());
+    }
+
+    /**
+     * offset a rectangle
+     * @param r the rectangle
+     * @param o the offset
+     * @return the offset rectangle
+     */
+    public static Rectangle2D offset(Rectangle2D r, Point2D o) {
+        return new Rectangle2D.Double(r.getX() + o.getX(), r.getY() + o.getY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * inset a rectangle
+     * @param r the rectangle
+     * @param i the inset (positive make it smaller, negative, bigger)
+     * @return the inset rectangle
+     */
+    public static Rectangle2D inset(Rectangle2D r, double i) {
+        return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+    }
+
+    /**
+     * scale a rectangle
+     * @param r the rectangle
+     * @param s the scale
+     * @return the scaled rectangle
+     */
+    public static Rectangle2D scale(Rectangle2D r, double s) {
+        Point2D c = center(r);
+        double w = r.getWidth() * s, h = r.getHeight() * s;
+        return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
+    }
+
+    /**
+     * center rectangle on point
+     * @param r the rectangle
+     * @param p the point
+     * @return the Point2D
+     */
+    public static Rectangle2D centerRectangleOnPoint(Rectangle2D r, Point2D p) {
+        Rectangle2D result = r.getBounds2D();
+        result = offset(r, subtract(p, center(result)));
+        return result;
+    }
+
+    /**
+     * center rectangle on rectangle
+     * @param r1 the first rectangle
+     * @param r2 the second rectangle
+     * @return the first rectangle centered on the second
+     */
+    public static Rectangle2D centerRectangleOnRectangle(Rectangle2D r1, Rectangle2D r2) {
+        return offset(r1, subtract(center(r2), center(r1)));
+    }
+
+    // recursive routine to draw a cubic Bezier...
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
         double result = 0;
 
-        // calculate flatness to determine if we need to recurse…
+        // calculate flatness to determine if we need to recurse...
         double l01 = distance(p0, p1);
         double l12 = distance(p1, p2);
         double l23 = distance(p2, p3);
         double l03 = distance(p0, p3);
         double flatness = (l01 + l12 + l23) / l03;
 
-        // depth prevents stack overflow…
-        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // depth prevents stack overflow
+        // (I picked 12 because 2^12 = 2048 is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
@@ -366,19 +498,19 @@ public final class MathUtil {
      * @param p1 first control point
      * @param p2 second control point
      * @param p3 terminating control point
-     * @return  the length of the Bezier curve
+     * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
         return drawBezier(g2, p0, p1, p2, p3, 0);
     }
 
-    // recursive routine to draw a Bezier curve…
+    // recursive routine to draw a Bezier curve...
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D points[], int depth) {
         int len = points.length, idx, jdx;
         double result = 0;
 
-        // calculate flatness to determine if we need to recurse…
+        // calculate flatness to determine if we need to recurse...
         double outer_distance = 0;
         for (idx = 1; idx < len; idx++) {
             outer_distance += MathUtil.distance(points[idx - 1], points[idx]);
@@ -386,8 +518,8 @@ public final class MathUtil {
         double inner_distance = MathUtil.distance(points[0], points[len - 1]);
         double flatness = outer_distance / inner_distance;
 
-        // depth prevents stack overflow…
-        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // depth prevents stack overflow
+        // (I picked 12 because 2^12 = 2048 is larger than most monitors ;-)
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
@@ -434,7 +566,7 @@ public final class MathUtil {
      * Draw a Bezier curve
      * @param g2 the Graphics2D to draw to
      * @param p[] control points
-     * @return  the length of the Bezier curve
+     * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, Point2D p[]) {
         if (p.length == 4) {    // draw cubic bezier?

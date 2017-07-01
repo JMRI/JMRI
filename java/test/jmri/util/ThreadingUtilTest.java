@@ -70,6 +70,34 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
     }
 
+    public void testThreadingDelayGUI() {
+        done = false;
+        
+        ThreadingUtil.runOnGUIDelayed( ()-> { 
+            done = true; 
+        }, 200 );
+
+        // ensure not done now
+        Assert.assertTrue(!done);
+        
+        // wait for separate thread to do it's work before confirming test
+        JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
+    }
+
+    public void testThreadingDelayLayout() {
+        done = false;
+        
+        ThreadingUtil.runOnLayoutDelayed( ()-> { 
+            done = true; 
+        }, 200 );
+
+        // ensure not done now
+        Assert.assertTrue(!done);
+        
+        // wait for separate thread to do it's work before confirming test
+        JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
+    }
+
 
     // from here down is testing infrastructure
     public ThreadingUtilTest(String s) {

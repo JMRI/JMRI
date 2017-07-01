@@ -547,15 +547,10 @@
  <indexitem text="USB-to-Serial Adapter " target="html.hardware.USBtoSerial"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
-  <indexitem text="Code  Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
 
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
-
-  <indexitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-  <indexitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 
  </indexitem>
  <indexitem text="Wangrow " target="html.hardware.nce.Wangrow"/>
