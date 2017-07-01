@@ -89,6 +89,10 @@
       <userName>Sec 1 MC</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT14</systemName>
+      <userName>CTC Bell</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT2</systemName>
       <userName>Sec1 TO 1 R</userName>
     </turnout>
@@ -607,10 +611,10 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <positionablelabel x="73" y="123" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Start code line End" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="73" y="123" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Start code End" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="Code Sequencer End" x="172" y="148" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Code Sequencer End" x="142" y="148" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Code Sequencer End (IS12)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -656,7 +660,10 @@
     <positionablelabel x="430" y="281" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Code" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <turnouticon turnout="Sec 1 MC" x="114" y="179" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <positionablelabel x="100" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="MC" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <turnouticon turnout="Sec 1 MC" x="74" y="179" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <tooltip>IT13</tooltip>
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
@@ -674,9 +681,27 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <positionablelabel x="140" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="MC" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="160" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Bell" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
+    <turnouticon turnout="CTC Bell" x="134" y="179" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>Bell</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/blink-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-r.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-r.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
     <multisensoricon x="401" y="172" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
       <tooltip>Sec1 Sig 2 Left,Sec1 Sig 2 Left,Sec1 Sig 2 Center,Sec1 Sig 2 Right</tooltip>
       <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="Sec1 Sig 2 Left">
