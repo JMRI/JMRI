@@ -25,7 +25,6 @@ public class LayoutEditorAuxTools {
 
     // Defined text resource
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     // constants
     // operational instance variables
     private LayoutEditor layoutEditor = null;
@@ -75,8 +74,8 @@ public class LayoutEditorAuxTools {
      * LayoutEditor.
      * <P>
      * One LayoutConnectivity object is created for each block boundary --
-     * connection points where two blocks join. Block boundaries can occur
-     * where ever a track segment in one block joins with: 1) a track segment in
+     * connection points where two blocks join. Block boundaries can occur where
+     * ever a track segment in one block joins with: 1) a track segment in
      * another block -OR- 2) a connection point in a layout turnout in another
      * block -OR- 3) a connection point in a level crossing in another block.
      * <P>
@@ -683,7 +682,7 @@ public class LayoutEditorAuxTools {
                 }
             }
         }
-        
+
         // Check for duplicate connectivity
         // This occurs for the first layout editor panel when there are multiple panels
         // connected by edge connectors.
@@ -696,7 +695,7 @@ public class LayoutEditorAuxTools {
                 }
             }
         }
-        
+
         if (noDuplicate) {
             cList.add(c);
         } else {
