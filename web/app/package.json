@@ -16,6 +16,8 @@
     "angular-translate": "2.15.2",
     "angular-translate-handler-log": "2.15.2",
     "angular-translate-loader-partial": "2.15.2",
-    "angular-websocket": "2.0.1"
+    "angular-websocket": "2.0.1",
+    "lodash": "4.17.4",
+    "moment": "2.18.1"
   }
 }
