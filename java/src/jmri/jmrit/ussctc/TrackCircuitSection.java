@@ -25,17 +25,17 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      *
      * @param inputSensor  Sensor for occupancy on layout
      * @param panelOutput  Turnout drives lamp on panel
+     * @param station Station to which this Section belongs
      * @param bell  Bell driver (can be null)
-     * @param codeline common CodeLine for this machine panel
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, CodeLine codeline, Bell bell) {
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station station, Bell bell) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         hInputSensor = hm.getNamedBeanHandle(inputSensor, sm.provideSensor(inputSensor));
         hPanelOutput = hm.getNamedBeanHandle(panelOutput, tm.provideTurnout(panelOutput));
-        this.codeline = codeline;
+        this.station = station;
         this.bell = bell;
 
         sm.provideSensor(inputSensor).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
@@ -48,20 +48,18 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      *
      * @param inputSensor  Sensor for input from central CTC machine
      * @param panelOutput  Turnout name for maintainer call on layout
-     * @param codeline common CodeLine for this machine panel
+     * @param station Station to which this Section belongs
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, CodeLine codeline) {
-        this(inputSensor, panelOutput, codeline, null);
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station station) {
+        this(inputSensor, panelOutput, station, null);
     }
     
     NamedBeanHandle<Sensor> hInputSensor;
     NamedBeanHandle<Turnout> hPanelOutput;
     
-    CodeLine codeline;
     Bell bell;
 
     Station station;
-    public void addStation(Station station) { this.station = station; }
  
      /**
      * Start of sending code operation.

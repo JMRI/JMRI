@@ -103,17 +103,18 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      * @param reversedIndicator Turnout name for reversed (right) indicator light on panel
      * @param normalInput Sensor name for normal (left) side of switch on panel
      * @param reversedInput Sensor name for reversed (right) side of switch on panel
-     * @param codeline common CodeLine for this machine panel
+     * @param station Station to which this Section belongs
      */
-    public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, CodeLine codeline) {
+    public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
-        this.codeline = codeline;
-        
         central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
+        central.addStation(station);
+
         field = new TurnoutFieldSection(layoutTO);
+        field.addStation(station);
 
         // initialize lamps to follow layout state
         if (tm.provideTurnout(layoutTO).getKnownState()==Turnout.THROWN) {
@@ -145,13 +146,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
          */
         DARK_UNABLE
         
-    }
-    
-    CodeLine codeline;
-    
-    public void addStation(Station station) { 
-        central.addStation(station);
-        field.addStation(station);
     }
     
     public void addLocks(List<Lock> locks) { 

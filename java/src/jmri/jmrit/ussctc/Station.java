@@ -30,6 +30,8 @@ public class Station {
     public Station(CodeLine codeline, CodeButton button) {
         this.codeline = codeline;
         this.button = button;
+        
+        button.addStation(this);  // register with Codebutton
     }
     
     CodeLine codeline;
@@ -44,6 +46,11 @@ public class Station {
         return this;
     }
 
+    /**
+     * Provide access to CodeLine to which this Station is attached.
+     */
+    CodeLine getCodeLine() { return codeline; }
+    
     /**
      * Tell the Sections to start a code-send operation (from machine to field).
      * Usually comes from a {@link CodeButton}

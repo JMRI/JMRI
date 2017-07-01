@@ -35,11 +35,15 @@ public class CodeButton {
     }
 
     /**
-     * Configure the Station connection for this CodeButton
+     * Configure the Station connection for this CodeButton.
+     *<p>
+     * Note that {@link Station} normally invokes this automatically
+     * as part of its construction
+     *
      * @param station A Station instance for this panel
      * @return This CodeButton object to permit call linking
      */
-    public CodeButton addStation(Station station) {
+    CodeButton addStation(Station station) {
         this.station = station;
         return this;
     }
@@ -86,5 +90,5 @@ public class CodeButton {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeButton.class.getName());
 }

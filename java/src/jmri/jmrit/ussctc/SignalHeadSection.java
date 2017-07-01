@@ -33,12 +33,12 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      * @param rightIndicator  Turnout name for rightward indicator
      * @param leftInput Sensor name for rightward side of lever on panel
      * @param rightInput Sensor name for leftward side of lever on panel
-     * @param codeline common CodeLine for this machine panel
+     * @param station Station to which this Section belongs
      */
     public SignalHeadSection(List<String> rightHeads, List<String> leftHeads, 
                              String leftIndicator, String stopIndicator, String rightIndicator, 
                              String leftInput, String rightInput,
-                             CodeLine codeline) {
+                             Station station) {
         
         logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
                         Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"LOG");
@@ -70,7 +70,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         hLeftInput = hm.getNamedBeanHandle(leftInput, sm.provideSensor(leftInput));
         hRightInput = hm.getNamedBeanHandle(rightInput, sm.provideSensor(rightInput));
         
-        this.codeline = codeline;
+        this.station = station;
         
         // initialize lamps to follow layout state to all off - you don't know anything
         tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
@@ -91,14 +91,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             );
 
     }
-
-    CodeLine codeline;
-    Station station;
     
     Memory timeMemory = null;
     Memory logMemory = null;
-    
-    public void addStation(Station station) { this.station = station; }
     
     ArrayList<NamedBeanHandle<SignalHead>> hRightHeads;
     ArrayList<NamedBeanHandle<SignalHead>> hLeftHeads;
@@ -125,6 +120,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     Machine machine;
 
     boolean timeRunning = false;
+    
+    Station station;
     
     /**
      * Start of sending code operation:

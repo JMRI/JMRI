@@ -25,25 +25,22 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      *
      * @param inputSensor  Sensor for input from central CTC machine
      * @param layoutOutput  Turnout name for maintainer call on layout
-     * @param codeline common CodeLine for this machine panel
+     * @param station Station to which this Section belongs
      */
-    public MaintainerCallSection(String inputSensor, String layoutOutput, CodeLine codeline) {
+    public MaintainerCallSection(String inputSensor, String layoutOutput, Station station) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         hInputSensor = hm.getNamedBeanHandle(inputSensor, sm.provideSensor(inputSensor));
         hLayoutOutput = hm.getNamedBeanHandle(layoutOutput, tm.provideTurnout(layoutOutput));
-        this.codeline = codeline;
+        this.station = station;
     }
 
     NamedBeanHandle<Sensor> hInputSensor;
     NamedBeanHandle<Turnout> hLayoutOutput;
     
-    CodeLine codeline;
-
     Station station;
-    public void addStation(Station station) { this.station = station; }
  
      /**
      * Start of sending code operation.

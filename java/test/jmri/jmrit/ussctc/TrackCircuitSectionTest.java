@@ -14,14 +14,13 @@ public class TrackCircuitSectionTest {
 
     @Test
     public void testConstruction() {
-        new TrackCircuitSection("Sec1 track input", "Sec 1 track output", codeline);
+        new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
     }
  
     @Test
     public void testLayoutMonitoring() throws JmriException {
         sensor.setKnownState(Sensor.INACTIVE);        
-        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", codeline);
-        t.addStation(station);
+        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
         
         sensor.setKnownState(Sensor.ACTIVE);        
         
@@ -33,8 +32,7 @@ public class TrackCircuitSectionTest {
     public void testIndicationStart() throws JmriException {
         
         // test getting indication from layout
-        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", codeline);
-        t.addStation(station);
+        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
         // check multiple patterns for state -> return value
         sensor.setState(Sensor.INACTIVE);        
@@ -59,8 +57,8 @@ public class TrackCircuitSectionTest {
     @Test
     public void testIndicationComplete0() throws JmriException  {
 
-        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", codeline);
-        t.addStation(station);
+        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
+
         indicator.setCommandedState(Turnout.INCONSISTENT);
         
         t.indicationComplete(CodeGroupOneBit.Single0);
@@ -71,8 +69,8 @@ public class TrackCircuitSectionTest {
     @Test
     public void testIndicationComplete1() throws JmriException  {
 
-        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", codeline);
-        t.addStation(station);
+        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
+
         indicator.setCommandedState(Turnout.INCONSISTENT);
         
         t.indicationComplete(CodeGroupOneBit.Single1);
@@ -105,7 +103,7 @@ public class TrackCircuitSectionTest {
         codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
-        station = new Station(codeline, null) {
+        station = new Station(codeline, new CodeButton("IS221", "IS222")) {
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

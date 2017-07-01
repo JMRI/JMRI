@@ -14,7 +14,7 @@ public class TurnoutSectionTest {
 
     @Test
     public void testConstruction() {
-        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
+        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
     }
  
     @Test
@@ -23,7 +23,7 @@ public class TurnoutSectionTest {
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.INACTIVE);
         
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         
         // initialization sets indicators to follow actual turnout state
         Assert.assertEquals(Turnout.THROWN, layoutTurnout.getKnownState());
@@ -35,8 +35,7 @@ public class TurnoutSectionTest {
     @Test
     public void testLayoutMonitoring() throws JmriException {
         layoutTurnout.setCommandedState(Turnout.THROWN);        
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         
         layoutTurnout.setCommandedState(Turnout.CLOSED);
         
@@ -47,8 +46,7 @@ public class TurnoutSectionTest {
     @Test 
     public void testCodeSendStartReturns() throws JmriException {
         // return value depends only on set inputs
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
 
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
@@ -62,8 +60,7 @@ public class TurnoutSectionTest {
     @Test 
     public void testCodeSendStartIndicatorsUnchanged() throws JmriException {
         // unchanged setting, not changing indicators
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
 
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
@@ -90,8 +87,7 @@ public class TurnoutSectionTest {
         // unchanged setting, not changing indicators
 
         // test getting indication from layout
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
         t.central.state = TurnoutSection.State.SHOWING_REVERSED;
@@ -109,8 +105,7 @@ public class TurnoutSectionTest {
         // unchanged setting, not changing indicators
 
         // test getting indication from layout
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
         t.central.state = TurnoutSection.State.SHOWING_NORMAL;
@@ -127,8 +122,7 @@ public class TurnoutSectionTest {
     public void testIndicationStart() throws JmriException {
         
         // test getting indication from layout
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
 
         // check multiple patterns for state -> return value
         t.field.lastCodeValue = CodeGroupTwoBits.Double10;  // access for testing
@@ -152,8 +146,7 @@ public class TurnoutSectionTest {
     @Test
     public void testIndicationComplete00()  throws JmriException  {
 
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normIndicator.setCommandedState(Turnout.INCONSISTENT);
         revIndicator.setCommandedState(Turnout.INCONSISTENT);
         
@@ -166,8 +159,7 @@ public class TurnoutSectionTest {
     @Test
     public void testIndicationComplete10()  throws JmriException  {
 
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normIndicator.setCommandedState(Turnout.INCONSISTENT);
         revIndicator.setCommandedState(Turnout.INCONSISTENT);
         
@@ -180,8 +172,7 @@ public class TurnoutSectionTest {
     @Test
     public void testIndicationComplete01()  throws JmriException  {
 
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", codeline);
-        t.addStation(station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normIndicator.setCommandedState(Turnout.INCONSISTENT);
         revIndicator.setCommandedState(Turnout.INCONSISTENT);
         
@@ -224,7 +215,7 @@ public class TurnoutSectionTest {
         codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
-        station = new Station(codeline, null) {
+        station = new Station(codeline, new CodeButton("IS221", "IS222")) {
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

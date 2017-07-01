@@ -14,15 +14,14 @@ public class MaintainerCallSectionTest {
 
     @Test
     public void testConstruction() {
-        new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", codeline);
+        new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station);
     }
  
     @Test 
     public void testCodeSendStartReturns() throws JmriException {
         mcLayoutTurnout.setCommandedState(Turnout.THROWN);
         panelSensor.setKnownState(Sensor.INACTIVE);
-        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", codeline);
-        t.addStation(station);
+        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station);
 
         // return value depends only on set inputs
 
@@ -37,8 +36,7 @@ public class MaintainerCallSectionTest {
     public void testCodeValueDelivered1() throws JmriException {
         mcLayoutTurnout.setCommandedState(Turnout.CLOSED);
         panelSensor.setKnownState(Sensor.INACTIVE);
-        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", codeline);
-        t.addStation(station);
+        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station);
         
         t.codeValueDelivered(CodeGroupOneBit.Single1);
         Assert.assertEquals(Turnout.THROWN, mcLayoutTurnout.getCommandedState());
@@ -48,8 +46,7 @@ public class MaintainerCallSectionTest {
     public void testCodeValueDelivered0() throws JmriException {
         mcLayoutTurnout.setCommandedState(Turnout.THROWN);
         panelSensor.setKnownState(Sensor.INACTIVE);
-        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", codeline);
-        t.addStation(station);
+        MaintainerCallSection t = new MaintainerCallSection("Sec1 MC input", "Sec 1 MC output", station);
         
         t.codeValueDelivered(CodeGroupOneBit.Single0);
         Assert.assertEquals(Turnout.CLOSED, mcLayoutTurnout.getCommandedState());
@@ -82,7 +79,7 @@ public class MaintainerCallSectionTest {
         codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
-        station = new Station(codeline, null) {
+        station = new Station(codeline, new CodeButton("IS221", "IS222")) {
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

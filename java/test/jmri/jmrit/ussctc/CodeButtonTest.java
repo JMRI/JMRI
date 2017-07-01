@@ -15,7 +15,7 @@ public class CodeButtonTest {
     public void testConstruction() {
         new CodeButton("IS21", "IS22");
     }
-       
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
