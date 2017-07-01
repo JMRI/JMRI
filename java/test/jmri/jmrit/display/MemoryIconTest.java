@@ -192,6 +192,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
         JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
@@ -211,6 +212,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         }
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         JUnitUtil.resetInstanceManager();
     }
 
