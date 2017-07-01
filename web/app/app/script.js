@@ -58,11 +58,11 @@ angular.module('jmri.app').controller('NavigationCtrl',
     // starting railroad name
     $rootScope.railroad = "%5$s";
 
-    var translate = new RegExp("^translate:");
+    var translatable = new RegExp("^translate:");
     for (var i = 0; i < $scope.navigationItems.length; i++) {
       var index = i;
       var title = $scope.navigationItems[index].title;
-      if (translate.test(title)) {
+      if (translatable.test(title)) {
         $translate(title.substr(10)).then(
           function(translated) {
             $scope.navigationItems[index].title = translated;
