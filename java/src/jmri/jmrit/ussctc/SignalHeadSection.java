@@ -173,7 +173,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                 (int)timeMemory.getValue());
             
             log.debug("starting to run time");
-            logMemory.setValue("Running time");
+            logMemory.setValue("Running time: Station "+station.getName());
         }
     
         // Set the indicators based on current and requested state

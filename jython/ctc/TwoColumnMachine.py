@@ -58,7 +58,7 @@ codeline = CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104")
 # Set up Station 1 - stations are numbered 1, 2, 3 etc. 
 # Station 1 is levers 1 and 2
 
-station = Station(codeline, CodeButton("Sta 1 Code", "Sta 1 Code"))
+station = Station("1", codeline, CodeButton("Sta 1 Code", "Sta 1 Code"))
 
 turnout = TurnoutSection("Sta 1 Layout TO", "Sta 1 TO 1 N", "Sta 1 TO 1 R", "Sta 1 TO 1 N", "Sta 1 TO 1 R", station)
 station.add(turnout)
@@ -68,7 +68,7 @@ station.add(TrackCircuitSection("TC Sta 1 OS", "Sta 1 OS TC", station))
 
 # Set up Station 2 - levers 3 and 4
 
-station = Station(codeline, CodeButton("Sta 2 Code", "Sta 2 Code"))
+station = Station("2", codeline, CodeButton("Sta 2 Code", "Sta 2 Code"))
 
 station.add(TurnoutSection("Sta 2 Layout TO", "Sta 2 TO 3 N", "Sta 2 TO 3 R", "Sta 2 TO 3 N", "Sta 2 TO 3 R", station))   
 station.add(TrackCircuitSection("TC Main", "Sta 2 Main TC", station))

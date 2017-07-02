@@ -104,7 +104,7 @@ public class CodeLine {
     void startSendCode(Station station) {
         final Station s = station;
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");
-        logMemory.setValue("Sending Code");
+        logMemory.setValue("Sending Code: Station "+station.getName());
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
@@ -150,7 +150,7 @@ public class CodeLine {
         station.indicationStart();
     
         log.debug("Tell hardware to start sending indication");
-        logMemory.setValue("Receiving Indication");
+        logMemory.setValue("Receiving Indication: Station "+station.getName());
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
