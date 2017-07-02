@@ -39,10 +39,10 @@ if (master.getKnownState() != INACTIVE) : raise AssertionError('master didnt fol
 follower2.setKnownState(UNKNOWN)
 if (master.getKnownState() != UNKNOWN) : raise AssertionError('master didnt follow follower2 UNKNOWN')
 
-follower1.setKnownState(ACTIVE)
+follower1.setKnownState(INACTIVE)
 follower2.setKnownState(ACTIVE)
-if (master.getKnownState() != ACTIVE) : raise AssertionError('master didnt follow ACTIVE, ACTIVE')
+if (master.getKnownState() != ACTIVE) : raise AssertionError('master didnt follow INACTIVE, ACTIVE')
 
 follower1.setKnownState(ACTIVE)
 follower2.setKnownState(INACTIVE)
-if (master.getKnownState() != INCONSISTENT) : raise AssertionError('master didnt follow ACTIVE, INACTIVE')
+if (master.getKnownState() != ACTIVE) : raise AssertionError('master didnt follow ACTIVE, INACTIVE')
