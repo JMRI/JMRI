@@ -650,8 +650,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
 
         if (filterIndex >= 0) {
-            sbCan.append(("Filter " + (filterIndex + 1) + ": ")); // NOI18N
-            sbCbus.append(("Filter " + (filterIndex + 1) + ": ")); // NOI18N
+            sbCan.append(("Filter " + (filterIndex + 1) + ": ")); // TODO I18N
+            sbCbus.append(("Filter " + (filterIndex + 1) + ": ")); // TODO NOI18N
         }
 
         // display decoded data
@@ -804,11 +804,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             sb.append(("Event " + ev + " "));
         }
         if (ty == CbusConstants.EVENT_ON) {
-            sb.append("ON"); // NOI18N
+            sb.append("ON"); // TODO I18N
         } else if (ty == CbusConstants.EVENT_OFF) {
-            sb.append("OFF"); // NOI18N
+            sb.append("OFF"); // TODO I18N
         } else {
-            sb.append("On or OFF"); // NOI18N
+            sb.append("On or OFF"); // TODO I18N
         }
         sb.append("\n");
         nextLine(sb.toString(), sb.toString(), "", index);
@@ -823,11 +823,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         int j;
         int data, data2;
         CanMessage m = new CanMessage(tc.getCanid());
-        data = parseBinDecHexByte(dynPriField.getText(), 2, _decimal, Bundle.getMessage("CbusConsoleTitle"), "Invalid Dynamic Priority Value");
+        data = parseBinDecHexByte(dynPriField.getText(), 2, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("DynPriErrorDialog"));
         if (data == -1) {
             return;
         }
-        data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, Bundle.getMessage("CbusConsoleTitle"), "Invalid Minor Priority Value");
+        data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("MinPriErrorDialog"));
         if (data2 == -1) {
             return;
         }
@@ -835,7 +835,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         for (j = 0; j < 8; j++) {
             if (!dataFields[j].getText().equals("")) {
                 data = parseBinDecHexByte(dataFields[j].getText(), 255, _decimal, Bundle.getMessage("CbusConsoleTitle"),
-                        "Invalid Data Value in d" + j);
+                        Bundle.getMessage("DbxErrorDialog", j));
                 if (data == -1) {
                     return;
                 }
@@ -848,15 +848,14 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         }
         if (j == 0) {
-            JOptionPane.showMessageDialog(null, "You must enter at least an opcode",
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("OpcErrorDialog"),
                     Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // Does the number of data match the opcode?
         // Subtract one as loop variable will have incremented
         if ((j - 1) != (data2 >> 5)) {
-            JOptionPane.showMessageDialog(null, "Number of data bytes entered\n"
-                    + "does not match count in d0(OPC):" + (data2 >> 5),
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("OpcCountErrorDialog", (data2 >> 5)),
                     Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -902,11 +901,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
         int nn, ev;
         CanMessage m = new CanMessage(tc.getCanid());
-        nn = parseBinDecHexByte(nnField.getText(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), "Invalid Node Number");
+        nn = parseBinDecHexByte(nnField.getText(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("SendEventNodeError"));
         if (nn == -1) {
             return;
         }
-        ev = parseBinDecHexByte(evField.getText(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), "Invalid Event");
+        ev = parseBinDecHexByte(evField.getText(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("SendEventInvalidError"));
         if (ev == -1) {
             return;
         }
@@ -954,7 +953,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     static private int MAX_LINES = 500;
 
     @Override
-    public synchronized void message(CanMessage m) {  // receive a message and log it
+    public synchronized void message(CanMessage m) {  // receive a message and log it TODO I18N?
         nextLine("sent: " + m.toString() + "\n",
                 "ID:" + CbusMessage.getId(m) + " " + (m.isRtr() ? "R " : "N ") + decode(m, m.isExtended(), m.getHeader()) + " [" + CbusMessage.toAddress(m) + "]\n",
                 "Dyn Pri:" + CbusMessage.getPri(m) / 4 + " Min Pri:" + (CbusMessage.getPri(m) & 3),
@@ -963,7 +962,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     }
 
     @Override
-    public synchronized void reply(CanReply r) {  // receive a reply message and log it
+    public synchronized void reply(CanReply r) {  // receive a reply message and log it TODO I18N?
         int j;
         // Capture most recent received packet
         if (_decimal) {
