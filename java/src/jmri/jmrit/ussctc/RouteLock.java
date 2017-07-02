@@ -58,7 +58,7 @@ public class RouteLock implements Lock {
     }
 
     /**
-     * @param array User or system name of a SignalHead that covers this route
+     * @param head User or system name of a SignalHead that covers this route
      */
     public RouteLock(String head) {
         this(new String[]{head});
