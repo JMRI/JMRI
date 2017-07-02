@@ -121,6 +121,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
     boolean timeRunning = false;
     
+    public boolean isRunningTime() { return timeRunning; }
+    
     Station station;
     
     /**
