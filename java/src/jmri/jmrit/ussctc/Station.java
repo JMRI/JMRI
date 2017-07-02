@@ -127,13 +127,14 @@ public class Station {
      */
     public void indicationComplete() {
         log.debug("Station - start indicationComplete");
-        // clear the code light
-        button.indicationComplete();
         
         // tell each section
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).indicationComplete(indicationValues.get(i));
         }
+        // clear the code light
+        button.indicationComplete();
+
         log.debug("Station - end indicationComplete");
     }
 
