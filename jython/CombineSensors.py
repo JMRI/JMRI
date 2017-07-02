@@ -56,7 +56,7 @@ class CombineSensors(java.beans.PropertyChangeListener):
     return
 
 # Example of use - add lines like the following 
-# that includes system or user names for the master turnout and 
+# that includes system or user names for the master sensor and 
 # the array of followers. These must already exist.
-# CombineTurnouts().set("IT100",["IT101", "IT102"])
+# CombineSensors().set("IS100",["IS101", "IS102"])
  
