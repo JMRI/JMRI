@@ -115,14 +115,14 @@ public class CbusEventFilterPanel extends JPanel {
 
         this.add(eventPane);
 
-        enableButton.setText("Apply");
+        enableButton.setText(Bundle.getMessage("ButtonApply"));
         enableButton.setVisible(true);
         enableButton.setToolTipText("Click to apply filter");
         this.add(enableButton);
 
-        disableButton.setText("Disable");
+        disableButton.setText(Bundle.getMessage("ButtonDisable"));
         disableButton.setVisible(true);
-        disableButton.setToolTipText("Click to disable filter");
+        disableButton.setToolTipText(Bundle.getMessage("TooltipDisable"));
         this.add(disableButton);
 
         // connect actions to buttons
