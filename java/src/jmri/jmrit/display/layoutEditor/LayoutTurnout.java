@@ -61,6 +61,12 @@ import org.slf4j.LoggerFactory;
  * route). A-C (and B-D for crossovers) is the diverging route. B-C (and A-D for
  * crossovers) is an illegal condition.
  * <P>
+ * ==A==-==B==
+ *    \\ //
+ *      X
+ *    // \\
+ * ==D==-==C==
+ * <P>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block,however, a block border may
  * occur at any connection (A,B,C,D). For a double crossover turnout, up to four

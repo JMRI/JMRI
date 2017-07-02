@@ -65,6 +65,8 @@ public class LayoutConnectivity {
     final public static int XOVER_BOUNDARY_CD = 2;  // continuing
     final public static int XOVER_BOUNDARY_AC = 3;  // xed over
     final public static int XOVER_BOUNDARY_BD = 4;  // xed over
+    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
+    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
 
     // instance variables
     private LayoutBlock block1 = null;
