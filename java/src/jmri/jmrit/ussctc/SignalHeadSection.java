@@ -125,6 +125,21 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     
     Station station;
     
+    List<Lock> locks;
+    public void addLocks(List<Lock> locks) { this.locks = locks; }
+
+    protected boolean checkLockPermitted() {
+        boolean permitted = true;
+        if (locks != null) {
+            for (Lock lock : locks) {
+                if ( ! lock.isLockClear()) permitted = false;
+            }
+        }
+        log.debug(" Lock check found permitted = {}", permitted);
+        return permitted;
+    }
+    
+    
     /**
      * Start of sending code operation:
      * <ul>
@@ -216,7 +231,15 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
-        if (value == CODE_LEFT) {
+        if (! checkLockPermitted() ) {
+            // lock sets stop
+            lastIndication = CODE_STOP;
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            log.debug("Layout signals set LEFT");
+            lastIndication = CODE_LEFT;
+            setListHeldState(hLeftHeads, false);
+        } else if (value == CODE_LEFT) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);

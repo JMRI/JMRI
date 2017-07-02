@@ -56,7 +56,6 @@ public class RouteLockTest {
 
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
-        ArrayList<NamedBeanHandle<SignalHead>> list = new ArrayList<>();
         
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
@@ -109,8 +108,6 @@ public class RouteLockTest {
  
     @Test
     public void testBeanSettingMatch() throws JmriException {
-        ArrayList<NamedBeanHandle<SignalHead>> list = new ArrayList<>();
-        
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
@@ -127,8 +124,6 @@ public class RouteLockTest {
 
     @Test
     public void testBeanSettingoMatch() throws JmriException {
-        ArrayList<NamedBeanHandle<SignalHead>> list = new ArrayList<>();
-        
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
