@@ -12,7 +12,7 @@ angular.module('jmri.app', [
 
 // configure the jmri.app module
 angular.module('jmri.app').config(
-  function($routeProvider, $logProvider, $translateProvider, $translatePartialLoaderProvider) {
+  function($routeProvider, $logProvider, $translateProvider) {
     'use strict';
 
     $translateProvider
@@ -145,7 +145,7 @@ angular.module('jmri.app').controller('NavigationCtrl',
         $scope.startHeartbeat(data.heartbeat);
       },
       pong: function(data, method) {
-        $log.debug("Received pong");
+        $log.debug("Received heartbeat");
       },
       close: function() {
         $scope.stopHeartbeat();

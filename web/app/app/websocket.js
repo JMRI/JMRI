@@ -13,14 +13,23 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
   var parts = document.URL.split('/');
   var url = parts[0] + '//' + parts[2] + '/json/';
   var socket = $websocket(url.replace(/^http/, 'ws'));
+  // control object exposed as config to consumers
+  var ctrl = {
+    logSent: false,
+    logReceived: false
+  };
 
   socket.onMessage(function onMessage(message) {
-    $log.debug('Received message ' + message.data);
+    if (ctrl.logReceived) {
+      $log.debug('Received message ' + message.data);
+    }
   });
 
   var send = function send(type, data, method) {
     var m = {type: type, data: data, method: method};
-    $log.debug('Sending ' + JSON.stringify(m) + '...');
+    if (ctrl.logSent) {
+      $log.debug('Sending ' + JSON.stringify(m) + '...');
+    }
     socket.send(m);
   };
 
@@ -48,6 +57,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
   var methods = {
     // general methods
     socket: socket,
+    config: ctrl,
     delete: sendDelete,
     get: sendGet,
     post: sendPost,
