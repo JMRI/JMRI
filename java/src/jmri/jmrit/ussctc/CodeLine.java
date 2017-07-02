@@ -31,6 +31,10 @@ public class CodeLine {
     public CodeLine(String startTO, String output1TO, String output2TO, String output3TO, String output4TO) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+
+        logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
+                        Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");
+        log.debug("log memory name is {}", logMemory.getSystemName());
         
         hStartTO = hm.getNamedBeanHandle(startTO, tm.provideTurnout(startTO));
 
@@ -39,6 +43,8 @@ public class CodeLine {
         hOutput3TO = hm.getNamedBeanHandle(output3TO, tm.provideTurnout(output3TO));
         hOutput4TO = hm.getNamedBeanHandle(output4TO, tm.provideTurnout(output4TO));
     }
+
+    Memory logMemory = null;
 
     NamedBeanHandle<Turnout> hStartTO;
 
@@ -77,6 +83,7 @@ public class CodeLine {
             return;
         }
         active = false;
+        logMemory.setValue("");
         log.debug("CodeLine goes inactive");
     }
     
@@ -97,6 +104,7 @@ public class CodeLine {
     void startSendCode(Station station) {
         final Station s = station;
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");
+        logMemory.setValue("Sending Code");
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
@@ -142,6 +150,7 @@ public class CodeLine {
         station.indicationStart();
     
         log.debug("Tell hardware to start sending indication");
+        logMemory.setValue("Receiving Indication");
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
