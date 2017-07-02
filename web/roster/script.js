@@ -8,18 +8,30 @@
  * @param {angularService} $log Angular logger
  * @param {angularService} jmriWebSocket JMRI web socket provider
  * @param {angularService} pfViewUtils Patternfly utilities for handling data views
+ * @param {angularService} $filter Patternfly filter service
  */
-angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, $translatePartialLoader, $http, $log, jmriWebSocket, pfViewUtils) {
+angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, $translate, $translatePartialLoader, $http, $log, jmriWebSocket, pfViewUtils, $filter) {
 
   $translatePartialLoader.addPart('web/roster');
 
   $scope.loading = true;
 
-  $scope.filtersText = '';
   $scope.columns = [
-    { header: "ID", itemField: "name" },
-    { header: "DCC Address", itemField: "address" }
+    {header: 'Railroad', itemField: 'road'},
+    {header: 'Number', itemField: 'number'},
+    {header: 'DCC Address', itemField: 'address'},
+    {header: 'ID', itemField: 'name'},
+    {header: 'Owner', itemField: 'owner'}
   ];
+  for (var i in $scope.columns) {
+    var c = $scope.columns[i];
+    $translate('ROSTER.FIELD.' + c.itemField).then(function(translation) {
+      c.header = translation;
+    }, function(translationId) {
+      $log.error('Unable to translate ' + translationId);
+    });
+    $scope.columns[i] = c;
+  }
 
   $scope.allItems = [];
   $scope.items = $scope.allItems;
@@ -38,7 +50,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
   $scope.emptyStateConfig = {
     icon: 'pficon-warning-triangle-o',
     title: 'No Items Available',
-    info: "This is the Empty State component. The goal of a empty state pattern is to provide a good first impression that helps users to achieve their goals. It should be used when a view is empty because no objects exists and you want to guide the user to perform specific actions.",
+    info: 'This is the Empty State component. The goal of a empty state pattern is to provide a good first impression that helps users to achieve their goals. It should be used when a view is empty because no objects exists and you want to guide the user to perform specific actions.',
     helpLink: {
        label: 'For more information please see',
        urlLabel: 'pfExample',
@@ -48,9 +60,14 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
   $scope.tableConfig = {
     onCheckBoxChange: handleCheckBoxChange,
-    selectionMatchProp: "name",
+    selectionMatchProp: 'name',
     itemsAvailable: true,
   };
+
+  $scope.dtOptions = {
+    displayLength: 3,
+    dom: 'tp'
+  }
 
   //
   // Toolbar
@@ -60,7 +77,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
   var viewSelected = function(viewId) {
     $scope.viewType = viewId;
-    $scope.sortConfig.show = ($scope.viewType === "tableView" ? false : true);
+    $scope.sortConfig.show = ($scope.viewType === 'tableView' ? false : true);
   };
 
   $scope.viewsConfig = {
@@ -79,12 +96,12 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
     if (filter.id === 'name') {
       match = item.name.match(re) !== null;
-    } else if (filter.id === 'age') {
-      match = item.age === parseInt(filter.value);
+    } else if (filter.id === 'number') {
+      match = item.number === parseInt(filter.value);
     } else if (filter.id === 'address') {
       match = item.address === parseInt(filter.value);
-    } else if (filter.id === 'birthMonth') {
-      match = item.birthMonth === filter.value;
+    } else if (filter.id === 'owner') {
+      match = item.owner.match(re) !== null;
     }
     return match;
   };
@@ -114,35 +131,38 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     }
   };
 
-  var filterChange = function (filters) {
-    $scope.filtersText = "";
-    filters.forEach(function (filter) {
-      $scope.filtersText += filter.title + " : " + filter.value + "\n";
-    });
+  var filterChange = function(filters) {
     applyFilters(filters);
     $scope.toolbarConfig.filterConfig.resultsCount = $scope.items.length;
   };
 
   $scope.filterConfig = {
     fields: [
-      {
-        id: 'name',
-        title:  'ID',
-        placeholder: 'Filter by ID...',
-        filterType: 'text'
-      },
-      {
-        id: 'address',
-        title:  'DCC Address',
-        placeholder: 'Filter by DCC Address...',
-        filterType: 'text'
-      },
+      {id: 'name', title: 'ID', placeholder: 'Filter by ID...', filterType: 'text'},
+      {id: 'address', title: 'DCC Address', placeholder: 'Filter by DCC Address...', filterType: 'text'},
+      {id: 'owner', title: 'Owner', placeholder: 'Filter by Owner...', filterType: 'text'}
     ],
     resultsCount: $scope.items.length,
     totalCount: $scope.allItems.length,
     appliedFilters: [],
     onFilterChange: filterChange
   };
+  for (var i in $scope.filterConfig.fields) {
+    var f = $scope.filterConfig.fields[i];
+    $scope.filterTitle = f.title;
+    $translate('ROSTER.FIELD.' + f.id).then(function(translation) {
+      f.title = translation;
+    }, function(translationId) {
+      $log.error('Unable to translate ' + translationId);
+    });
+    $scope.filterTitle = f.title;
+    $translate('ROSTER.FILTER_PLACEHOLDER').then(function(translation) {
+      f.placeholder = translation;
+    }, function(translationId) {
+      $log.error('Unable to translate ' + translationId);
+    });
+    $scope.filterConfig.fields[i] = f;
+  }
 
   var compareFn = function(item1, item2) {
     var compValue = 0;
@@ -150,6 +170,8 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
       compValue = item1.name.localeCompare(item2.name);
     } else if ($scope.sortConfig.currentField.id === 'address') {
       compValue = item1.address - item2.address;
+    } else if ($scope.sortConfig.currentField.id === 'owner') {
+      compValue = item1.owner.localeCompare(item2.owner);
     }
 
     if (!$scope.sortConfig.isAscending) {
@@ -165,25 +187,27 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
   $scope.sortConfig = {
     fields: [
-      {
-        id: 'name',
-        title:  'ID',
-        sortType: 'alpha'
-      },
-      {
-        id: 'address',
-        title:  'DCC Address',
-        sortType: 'numeric'
-      }
+      {id: 'name', title: 'ID', sortType: 'alpha'},
+      {id: 'address', title: 'DCC Address', sortType: 'numeric'},
+      {id: 'owner', title: 'Owner', sortType: 'alpha'}
     ],
     onSortChange: sortChange
   };
+  for (var i in $scope.sortConfig.fields) {
+    var c = $scope.sortConfig.fields[i];
+    $translate('ROSTER.FIELD.' + c.id).then(function(translation) {
+      c.title = translation;
+    }, function(translationId) {
+      $log.error('Unable to translate ' + translationId);
+    });
+    $scope.sortConfig.fields[i] = c;
+  }
 
   $scope.toolbarConfig = {
     viewsConfig: $scope.viewsConfig,
     filterConfig: $scope.filterConfig,
-    sortConfig: $scope.sortConfig,
-    actionsConfig: $scope.actionsConfig
+    sortConfig: $scope.sortConfig
+    // actionsConfig: $scope.actionsConfig
   };
 
   //
@@ -212,10 +236,8 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
         for (var i in response.data) {
           var entry = response.data[i];
           if (entry.type === 'rosterEntry') {
-            $log.debug(entry.data);
             $scope.allItems.push(entry.data);
           }
-          $log.debug($scope.allItems.length);
         }
         $scope.items = $scope.allItems;
       }

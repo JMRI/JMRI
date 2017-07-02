@@ -14,16 +14,13 @@
           <div class="list-group-item-heading">
             {{item.road}} {{item.number}}
           </div>
-          <div class="list-group-item-heading">
+          <div class="list-group-item-text">
             {{item.address}}
           </div>
         </div>
         <div class="list-view-pf-additional-info">
           <div class="list-view-pf-additional-info-item">
-            {{item.age}}
-          </div>
-          <div class="list-view-pf-additional-info-item">
-            {{item.birthMonth}}
+            {{item.owner}}
           </div>
         </div>
       </pf-list-view>
@@ -34,7 +31,10 @@
           <span>{{item.road}} {{item.number}}</span>
         </div>
         <div class="col-md-12">
-          <span><strong>{{item.address}}</strong></span>
+          <span><span translate="ROSTER.FIELD.address"></span> <strong>{{item.address}}</strong></span>
+        </div>
+        <div class="col-md-12">
+          <span>{{item.owner}}</span>
         </div>
         <div class="col-md-12" ng-show="item.icon || item.image" style="">
           <span><a target="_blank" ng-href="{{item.icon}}" ng-show="item.icon && !item.image"><img src="{{item.icon}}" class="img-responsive" style="max-height: 50%"></a>

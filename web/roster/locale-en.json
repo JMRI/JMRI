@@ -1,5 +1,13 @@
 {
-  "ROSTER":{
-    "ROSTER": "Roster"
+  "ROSTER": {
+    "ROSTER": "Roster",
+    "FILTER_PLACEHOLDER": "Filter by {{filterTitle}}...",
+    "FIELD": {
+      "name": "ID",
+      "address": "DCC Address",
+      "road": "Road Name",
+      "number": "Road Number",
+      "owner": "Owner"
+    }
   }
 }
