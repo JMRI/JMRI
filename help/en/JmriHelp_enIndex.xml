@@ -547,7 +547,6 @@
  <indexitem text="USB-to-Serial Adapter " target="html.hardware.USBtoSerial"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
-
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
