@@ -8,6 +8,20 @@
       "road": "Road Name",
       "number": "Road Number",
       "owner": "Owner"
+    },
+    "EMPTY": {
+      "TITLE": "No Roster Entries",
+      "INFO": "There are no roster entries. If this is unexpected, review the roster preferences in JMRI.",
+      "HELP": {
+        "LABEL": "For more information please see",
+        "URL_LABEL": "JMRI: DecoderPro User Guide - Rosters"
+      }
+    },
+    "ACTION": {
+      "UPLOAD": {
+        "FULLNAME": "Upload Roster Entry",
+        "TITLE": "Upload a roster entry."
+      }
     }
   }
 }

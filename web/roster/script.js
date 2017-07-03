@@ -12,10 +12,13 @@
  */
 angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, $translate, $translatePartialLoader, $http, $log, jmriWebSocket, pfViewUtils, $filter) {
 
+  // load translations
   $translatePartialLoader.addPart('web/roster');
 
+  // true if loading indicator should be shown; false otherwise
   $scope.loading = true;
 
+  // columns for table view with default text
   $scope.columns = [
     {header: 'Railroad', itemField: 'road'},
     {header: 'Number', itemField: 'number'},
@@ -23,6 +26,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     {header: 'ID', itemField: 'name'},
     {header: 'Owner', itemField: 'owner'}
   ];
+  // translate column headers
   for (var i in $scope.columns) {
     var c = $scope.columns[i];
     $translate('ROSTER.FIELD.' + c.itemField).then(function(translation) {
@@ -33,6 +37,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     $scope.columns[i] = c;
   }
 
+  // the roster items, initially an empty list
   $scope.allItems = [];
   $scope.items = $scope.allItems;
 
@@ -48,15 +53,29 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
   };
 
   $scope.emptyStateConfig = {
-    icon: 'pficon-warning-triangle-o',
-    title: 'No Items Available',
-    info: 'This is the Empty State component. The goal of a empty state pattern is to provide a good first impression that helps users to achieve their goals. It should be used when a view is empty because no objects exists and you want to guide the user to perform specific actions.',
+    icon: 'pficon-warning-triangle-o', // replace with pficon-add-circle-o once patternfly/angular-patterfly#510 is addressed
+    title: 'No Roster Entries',
+    info: 'There are no roster entries to show. If this is unexpected, review the roster preferences in JMRI.',
     helpLink: {
        label: 'For more information please see',
-       urlLabel: 'pfExample',
-       url : '#/api/patternfly.views.component:pfEmptyState'
+       urlLabel: 'JMRI: DecoderPro User Guide',
+       url: '/help/en/html/apps/DecoderPro/Roster.shtml'
     }
   };
+  $scope.emptyStateActions = [
+    {name: 'Upload Roster Entry', title: 'Upload a roster entry.', actionFn: uploadEntry, type: 'main'}
+  ];
+  $translate(['ROSTER.EMPTY.TITLE', 'ROSTER.EMPTY.INFO', 'ROSTER.EMPTY.HELP.LABEL', 'ROSTER.EMPTY.HELP.URL_LABEL', 'ROSTER.ACTION.UPLOAD.FULLNAME', 'ROSTER.ACTION.UPLOAD.TITLE'])
+  .then(function(translations) {
+    $scope.emptyStateConfig.title = translations['ROSTER.EMPTY.TITLE'];
+    $scope.emptyStateConfig.info = translations['ROSTER.EMPTY.INFO'];
+    $scope.emptyStateConfig.helpLink.label = translations['ROSTER.EMPTY.HELP.LABEL'];
+    $scope.emptyStateConfig.helpLink.urlLabel = translations['ROSTER.EMPTY.HELP.URL_LABEL'];
+    $scope.emptyStateActions[0].name = translations['ROSTER.ACTION.UPLOAD.FULLNAME'];
+    $scope.emptyStateActions[0].title = translations['ROSTER.ACTION.UPLOAD.TITLE'];
+  }, function(translationIds) {
+    $log.error('Unable to translate emptyStateConfig elements');
+  });
 
   $scope.tableConfig = {
     onCheckBoxChange: handleCheckBoxChange,
@@ -65,7 +84,6 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
   };
 
   $scope.dtOptions = {
-    displayLength: 3,
     dom: 'tp'
   }
 
@@ -149,14 +167,12 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
   };
   for (var i in $scope.filterConfig.fields) {
     var f = $scope.filterConfig.fields[i];
-    $scope.filterTitle = f.title;
     $translate('ROSTER.FIELD.' + f.id).then(function(translation) {
       f.title = translation;
     }, function(translationId) {
       $log.error('Unable to translate ' + translationId);
     });
-    $scope.filterTitle = f.title;
-    $translate('ROSTER.FILTER_PLACEHOLDER').then(function(translation) {
+    $translate('ROSTER.FILTER_PLACEHOLDER', f.title, 'filterTitle').then(function(translation) {
       f.placeholder = translation;
     }, function(translationId) {
       $log.error('Unable to translate ' + translationId);
@@ -221,6 +237,10 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     }
   }
 
+  function uploadEntry() {
+
+  }
+
   //
   // Websockets
   //
@@ -237,9 +257,11 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
           var entry = response.data[i];
           if (entry.type === 'rosterEntry') {
             $scope.allItems.push(entry.data);
+            $scope.toolbarConfig.filterConfig.totalCount = $scope.allItems.length;
           }
         }
         $scope.items = $scope.allItems;
+        filterChange($scope.toolbarConfig.filterConfig.appliedFilters);
       }
       jmriWebSocket.get('roster', {});
       $scope.loading = false;
