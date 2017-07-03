@@ -13,13 +13,16 @@ public class StationTest {
 
     @Test
     public void testConstruction() {
-        Station s = new Station(codeline, button);
+        Station s = new Station("test", codeline, button);
         s.add(new TurnoutSection());
+        
+        Assert.assertEquals("test", s.getName());        
+        Assert.assertEquals("Station "+s.getName(), s.toString());        
     }
 
     @Test
     public void testSendCode() {
-        Station s = new Station(codeline, button);
+        Station s = new Station("tests", codeline, button);
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
             public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double00; }
             public void codeValueDelivered(CodeGroupTwoBits value) { }
@@ -36,7 +39,7 @@ public class StationTest {
 
     @Test
     public void testSendCodeSendAndImplementMultiSection() {
-        Station s = new Station(codeline, button);
+        Station s = new Station("test", codeline, button);
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
             public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double10; }
             public void codeValueDelivered(CodeGroupTwoBits value) { 

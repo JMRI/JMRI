@@ -153,7 +153,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
             if (l.getElement(1) == XNetConstants.LI101_REQUEST_ADDRESS) {
                 // The third element is the address
                 addrBox.setSelectedIndex(l.getElement(2));
-                status.setText("Address" + l.getElement(2) + "recieved from LIUSB");
+                status.setText("Address" + l.getElement(2) + "received from LIUSB");
             }
         }
     }

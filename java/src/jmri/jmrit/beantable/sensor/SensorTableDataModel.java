@@ -131,7 +131,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     protected NamedBean getByUserName(String name) {
-        return senManager.getByUserName(name);
+        return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
     @Override
