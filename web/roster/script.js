@@ -20,10 +20,10 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
   // columns for table view with default text
   $scope.columns = [
-    {header: 'Railroad', itemField: 'road'},
-    {header: 'Number', itemField: 'number'},
-    {header: 'DCC Address', itemField: 'address'},
     {header: 'ID', itemField: 'name'},
+    {header: 'DCC Address', itemField: 'address'},
+    {header: 'Road Name', itemField: 'road'},
+    {header: 'Road Number', itemField: 'number'},
     {header: 'Owner', itemField: 'owner'}
   ];
   // translate column headers
@@ -84,7 +84,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
   };
 
   $scope.dtOptions = {
-    dom: 'tp'
+    dom: 't'
   }
 
   //
@@ -114,6 +114,8 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
 
     if (filter.id === 'name') {
       match = item.name.match(re) !== null;
+    } else if (filter.id === 'road') {
+      match = item.road.match(re) !== null;
     } else if (filter.id === 'number') {
       match = item.number === parseInt(filter.value);
     } else if (filter.id === 'address') {
@@ -158,6 +160,8 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     fields: [
       {id: 'name', title: 'ID', placeholder: 'Filter by ID...', filterType: 'text'},
       {id: 'address', title: 'DCC Address', placeholder: 'Filter by DCC Address...', filterType: 'text'},
+      {id: 'road', title: 'Road Name', placeholder: 'Filter by Road Name...', filterType: 'text'},
+      {id: 'number', title: 'Road Number', placeholder: 'Filter by Road Number...', filterType: 'text'},
       {id: 'owner', title: 'Owner', placeholder: 'Filter by Owner...', filterType: 'text'}
     ],
     resultsCount: $scope.items.length,
@@ -186,6 +190,10 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
       compValue = item1.name.localeCompare(item2.name);
     } else if ($scope.sortConfig.currentField.id === 'address') {
       compValue = item1.address - item2.address;
+    } else if ($scope.sortConfig.currentField.id === 'road') {
+      compValue = item1.road.localeCompare(item2.road);
+    } else if ($scope.sortConfig.currentField.id === 'number') {
+      compValue = item1.number - item2.number;
     } else if ($scope.sortConfig.currentField.id === 'owner') {
       compValue = item1.owner.localeCompare(item2.owner);
     }
@@ -205,6 +213,8 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     fields: [
       {id: 'name', title: 'ID', sortType: 'alpha'},
       {id: 'address', title: 'DCC Address', sortType: 'numeric'},
+      {id: 'road', title: 'Road Name', sortType: 'alpha'},
+      {id: 'number', title: 'Road Number', sortType: 'numeric'},
       {id: 'owner', title: 'Owner', sortType: 'alpha'}
     ],
     onSortChange: sortChange

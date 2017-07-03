@@ -12,10 +12,13 @@
       <pf-list-view config="listConfig" items="items" empty-state-config="emptyStateConfig">
         <div class="list-view-pf-description">
           <div class="list-group-item-heading">
-            {{item.road}} {{item.number}}
+            {{item.name}}
+          </div>
+          <div class="list-group-item-heading">
+            <span translate="ROSTER.FIELD.address"></span>: {{item.address}}
           </div>
           <div class="list-group-item-text">
-            {{item.address}}
+            {{item.road}} {{item.number}}
           </div>
         </div>
         <div class="list-view-pf-additional-info">
@@ -27,6 +30,9 @@
     </div>
     <div class="col-md-12" ng-if="viewType == 'cardView'">
       <pf-card-view config="listConfig" items="items" empty-state-config="emptyStateConfig">
+        <div class="col-md-12">
+          <span>{{item.name}}</span>
+        </div>
         <div class="col-md-12">
           <span>{{item.road}} {{item.number}}</span>
         </div>
