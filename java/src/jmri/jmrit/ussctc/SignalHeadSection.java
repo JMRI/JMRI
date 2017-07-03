@@ -281,6 +281,25 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
     }
     
+    public String toString() {
+        String retVal = "SignalHeadSection [";
+        boolean first;
+        first = true;
+        for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
+            if (!first) retVal = retVal + ", ";
+            first = false;
+            retVal = retVal + "\""+ handle.getName()+"\"";
+        }
+        retVal = retVal+"],[";
+        first = true;
+        for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
+            if (!first) retVal = retVal + ", ";
+            first = false;
+            retVal = retVal + "\""+ handle.getName()+"\"";
+        }        
+        retVal = retVal+"]";
+        return retVal;
+    }
     
     /**
      * Provide state that's returned from field to machine via indication.
@@ -302,32 +321,53 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
     
     /**
+     * Clear is defined as showing above Restricting.
+     * We implement that as not Held, not RED, not Restricting.
+     */
+    public boolean headShowsClear(NamedBeanHandle<SignalHead> handle) { return ( (!handle.getBean().getHeld()) && (handle.getBean().getAppearance()!=SignalHead.RED) && !headShowsRestricting(handle)); }
+    
+    /**
+     * "Restricting" means that a signal is showing FLASHRED
+     */
+    public boolean headShowsRestricting(NamedBeanHandle<SignalHead> handle) { return handle.getBean().getAppearance()==SignalHead.FLASHRED; }
+    
+    /**
      * Work out current indication from layout status
      */
-    public CodeGroupThreeBits getCurrentIndication() {     
-        boolean leftStopped = true;
+    public CodeGroupThreeBits getCurrentIndication() {
+        boolean leftClear = false;
+        boolean leftRestricting = false;
         for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
-            if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) leftStopped = false;
+            if (headShowsClear(handle)) leftClear = true;
+            if (headShowsRestricting(handle)) leftRestricting = true;
         }
-        boolean rightStopped = true;
+        boolean rightClear = false;
+        boolean rightRestricting = false;
         for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
-            if ((!handle.getBean().getHeld()) && handle.getBean().getAppearance()!=SignalHead.RED) rightStopped = false;
+            if (headShowsClear(handle)) rightClear = true;
+            if (headShowsRestricting(handle)) rightRestricting = true;
         }
-        log.debug("    found leftStopped {}, rightStopped {}", leftStopped, rightStopped);
-        if (!leftStopped && !rightStopped) log.error("Found both left and right not at stop");
+        log.debug("    found leftClear {}, leftRestricting {}, rightClear {}, rightRestricting {}", leftClear, leftRestricting, rightClear, rightRestricting);
+        if (leftClear && rightClear) log.error("Found both left and right clear: {}", this);
+        if (leftClear && rightRestricting) log.warn("Found left clear and right at restricting: {}", this);
+        if (leftRestricting && rightClear) log.warn("Found left at restricting and right clear {}", this);
 
         
         CodeGroupThreeBits retval;
-        
-        if (leftStopped && rightStopped) {
-            retval = CODE_STOP;
-        } else if (!rightStopped && leftStopped) {
-            retval = CODE_RIGHT;
-        } else if (!leftStopped && rightStopped) {
-            retval = CODE_LEFT;
-        } else 
+
+        // Restricting cases show OFF
+        if (leftRestricting || rightRestricting) {      
             retval = CODE_OFF;
-            
+        } else if ((!leftClear) && (!rightClear)) {
+            retval = CODE_STOP;
+        } else if ((!leftClear) && rightClear) {
+            retval = CODE_RIGHT;
+        } else if (leftClear && (!rightClear)) {
+            retval = CODE_LEFT;
+        } else {
+            log.debug("not individually cleared, set OFF");
+            retval = CODE_OFF;
+        }
         return retval;
     }
 
