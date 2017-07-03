@@ -215,7 +215,7 @@ public class TurnoutSectionTest {
         codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
-        station = new Station(codeline, new CodeButton("IS221", "IS222")) {
+        station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

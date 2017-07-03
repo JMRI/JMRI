@@ -56,7 +56,6 @@ public class RouteLockTest {
 
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
-        ArrayList<NamedBeanHandle<SignalHead>> list = new ArrayList<>();
         
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
@@ -106,7 +105,40 @@ public class RouteLockTest {
         
         Assert.assertTrue( ! lock.isLockClear());
     }
-       
+ 
+    @Test
+    public void testBeanSettingMatch() throws JmriException {
+        SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
+        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
+
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+        
+        s.setState(SignalHead.YELLOW);
+        BeanSetting b = new BeanSetting(t, Turnout.CLOSED);
+        RouteLock lock = new RouteLock(new String[]{"IH1"}, new BeanSetting[]{b});
+        
+        Assert.assertTrue( ! lock.isLockClear());
+    }
+
+    @Test
+    public void testBeanSettingoMatch() throws JmriException {
+        SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
+        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
+
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+        
+        s.setState(SignalHead.YELLOW);
+        BeanSetting b = new BeanSetting(t, Turnout.THROWN);
+        RouteLock lock = new RouteLock(new String[]{"IH1"}, new BeanSetting[]{b});
+        
+        Assert.assertTrue( lock.isLockClear());
+    }
+
+      
     // The minimal setup for log4J
     @Before
     public void setUp() {

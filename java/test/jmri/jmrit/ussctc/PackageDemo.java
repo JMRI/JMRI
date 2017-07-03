@@ -50,7 +50,7 @@ public class PackageDemo {
         CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
 
         CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
-        Station station = new Station(line, button);
+        Station station = new Station("1", line, button);
 
         TurnoutSection turnout = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         station.add(turnout);

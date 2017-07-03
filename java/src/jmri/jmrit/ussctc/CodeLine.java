@@ -31,6 +31,10 @@ public class CodeLine {
     public CodeLine(String startTO, String output1TO, String output2TO, String output3TO, String output4TO) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+
+        logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
+                        Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");
+        log.debug("log memory name is {}", logMemory.getSystemName());
         
         hStartTO = hm.getNamedBeanHandle(startTO, tm.provideTurnout(startTO));
 
@@ -39,6 +43,8 @@ public class CodeLine {
         hOutput3TO = hm.getNamedBeanHandle(output3TO, tm.provideTurnout(output3TO));
         hOutput4TO = hm.getNamedBeanHandle(output4TO, tm.provideTurnout(output4TO));
     }
+
+    Memory logMemory = null;
 
     NamedBeanHandle<Turnout> hStartTO;
 
@@ -50,9 +56,55 @@ public class CodeLine {
     public static int START_PULSE_LENGTH = 500; // mSec
     public static int CODE_SEND_DELAY = 2500; // mSec
     
-    void requestSendCode(Station station) {
+    volatile Deque<Station> codeQueue = new ArrayDeque<>();
+    volatile Deque<Station> indicationQueue = new ArrayDeque<>();
+    
+    volatile boolean active = false;
+    
+    synchronized void endAndCheckNext() {
+        if (!active) log.error("endAndCheckNext with active false", new Exception("traceback"));
+        active = false;
+        checkForWork();
+    }
+    
+    synchronized void checkForWork() {
+        log.debug("checkForWork with active == {}", active);
+        if (active) return;
+        active = true;
+        Station station;
+        station = indicationQueue.pollFirst();
+        if (station != null) {
+            startSendIndication(station);
+            return;
+        }
+        station = codeQueue.pollFirst();
+        if (station != null) {
+            startSendCode(station);
+            return;
+        }
+        active = false;
+        logMemory.setValue("");
+        log.debug("CodeLine goes inactive");
+    }
+    
+    /**
+     * Request processing of an indication from the field
+     */
+    synchronized void requestSendCode(Station station) {
+        log.debug("requestSendCode queued");
+        // remove if present
+        while (codeQueue.contains(station)) {
+            codeQueue.remove(station);
+            log.debug("     removed previous request");
+        }
+        codeQueue.addLast(station);
+        checkForWork();
+    }
+
+    void startSendCode(Station station) {
         final Station s = station;
-        log.debug("CodeLine requestSendCode - Tell hardware to start sending code");
+        log.debug("CodeLine startSendCode - Tell hardware to start sending code");
+        logMemory.setValue("Sending Code: Station "+station.getName());
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
@@ -68,6 +120,9 @@ public class CodeLine {
             public void run() {
                 jmri.util.ThreadingUtil.runOnGUI( ()->{
                     s.codeValueDelivered();
+                    // and see if anything else needs to be done
+                    log.debug("end of codeValueDelivered");
+                    endAndCheckNext();
                 } );
             }
         }, CODE_SEND_DELAY);
@@ -76,14 +131,26 @@ public class CodeLine {
     /**
      * Request processing of an indication from the field
      */
-    void requestIndicationStart(Station station) {
+    synchronized void requestIndicationStart(Station station) {
+        log.debug("requestIndicationStart queued");
+        // remove if present
+        while (indicationQueue.contains(station)) {
+            indicationQueue.remove(station);
+            log.debug("     removed previous request");
+        }
+        indicationQueue.addLast(station);
+        checkForWork();
+    }
+    
+    void startSendIndication(Station station) {
         final Station s = station;
-        log.debug("CodeLine requestIndicationStart - process indication from field");
+        log.debug("CodeLine startSendIndication - process indication from field");
 
-        // light code light
+        // light code light and gather values
         station.indicationStart();
     
         log.debug("Tell hardware to start sending indication");
+        logMemory.setValue("Receiving Indication: Station "+station.getName());
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
         new Timer().schedule(new TimerTask() { // turn that off
             @Override
@@ -98,7 +165,11 @@ public class CodeLine {
             @Override
             public void run() {
                 jmri.util.ThreadingUtil.runOnGUI( ()->{
+                    log.debug("hardware delay done, receiving indication");
                     s.indicationComplete();
+                    log.debug("end of indicationComplete");
+                    // and see if anything else needs to be done
+                    endAndCheckNext();
                 } );
             }
         }, CODE_SEND_DELAY);

@@ -27,13 +27,15 @@ import java.util.*;
  */
 public class Station {
 
-    public Station(CodeLine codeline, CodeButton button) {
+    public Station(String name, CodeLine codeline, CodeButton button) {
+        this.name = name;
         this.codeline = codeline;
         this.button = button;
         
         button.addStation(this);  // register with Codebutton
     }
     
+    String name;
     CodeLine codeline;
     CodeButton button;
     
@@ -50,6 +52,13 @@ public class Station {
      * Provide access to CodeLine to which this Station is attached.
      */
     CodeLine getCodeLine() { return codeline; }
+    
+    /**
+     * Provide access this Station's name
+     */
+    String getName() { return name; }
+    
+    public String toString() { return "Station "+name; }
     
     /**
      * Tell the Sections to start a code-send operation (from machine to field).
@@ -127,13 +136,14 @@ public class Station {
      */
     public void indicationComplete() {
         log.debug("Station - start indicationComplete");
-        // clear the code light
-        button.indicationComplete();
         
         // tell each section
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).indicationComplete(indicationValues.get(i));
         }
+        // clear the code light
+        button.indicationComplete();
+
         log.debug("Station - end indicationComplete");
     }
 
