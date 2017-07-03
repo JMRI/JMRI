@@ -1322,24 +1322,6 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code Button </a>
-<ul></ul>
-</li>
-
-   
-<li>
 <a href="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator </a>
 <ul></ul>
 </li>

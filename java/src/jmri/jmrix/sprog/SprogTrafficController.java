@@ -41,7 +41,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
        memo = adaptermemo;
     }
 
-// The methods to implement the SprogInterface
+    // Methods to implement the Sprog Interface
+
     protected Vector<SprogListener> cmdListeners = new Vector<SprogListener>();
 
     @Override
@@ -175,8 +176,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     /**
-     * Forward a preformatted message to the interface
-     *
+     * Forward a preformatted message to the interface.
      */
     public void sendSprogMessage(SprogMessage m) {
         // stream to port in single write, as that's needed by serial
@@ -195,7 +195,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     /**
      * Forward a preformatted message to the actual interface (by calling
      * SendSprogMessage(SprogMessage) after notifying any listeners Notifies
-     * listeners
+     * listeners.
      *
      * @param m         Message to send
      * @param replyTo   Who is sending the message
@@ -243,19 +243,19 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         controller = p;
     }
 
-
     /**
-     * return the port controller, as an SerialDriverAdapter.
+     * Get the port controller, as a SerialDriverAdapter.
      * 
-     * @return The port controller
+     * @return the port controller
      */
     protected SerialDriverAdapter getController(){
        return (SerialDriverAdapter)controller;
     }
 
     /**
-     * Break connection to existing SprogPortController object. Once broken,
-     * attempts to send via "message" member will fail.
+     * Break connection to existing SprogPortController object.
+     * <p>
+     * Once broken, attempts to send via "message" member will fail.
      */
     public void disconnectPort(AbstractPortController p) {
         istream = null;
@@ -267,7 +267,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     /**
-     * static function returning the SprogTrafficController instance to use.
+     * Static function returning the SprogTrafficController instance to use.
      *
      * @return The registered SprogTrafficController instance for general use,
      *         if need be creating one.
@@ -303,9 +303,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
 
     /**
-     * serialEvent - respond to an event triggered by RXTX. In this case we are
-     * only dealing with DATA_AVAILABLE but the other events are left here for
-     * reference. AJB Jan 2010
+     * Respond to an event triggered by RXTX.
+     * <p>
+     * In this case we are only dealing with DATA_AVAILABLE but the other
+     * events are left here for reference.
+     * @author AJB Jan 2010
      */
     @Override
     public void serialEvent(SerialPortEvent event) {
@@ -331,7 +333,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     /**
-     * Handle an incoming reply
+     * Handle an incoming reply.
      */
     void handleOneIncomingReply() {
         // we get here if data has been received
@@ -358,7 +360,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     /**
-     * Send the current reply - built using data from serialEvent
+     * Send the current reply - built using data from serialEvent.
      */
     private void sendreply() {
         //send the reply
