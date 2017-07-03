@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -147,7 +148,8 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
+        JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
@@ -163,8 +165,10 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         }
         apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetInstanceManager();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());

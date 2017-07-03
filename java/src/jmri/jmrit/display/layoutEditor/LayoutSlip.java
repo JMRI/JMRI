@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -47,10 +48,14 @@ import org.slf4j.LoggerFactory;
  * going straight across.
  * <P>
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
- * may proceed between A &amp; D, A &amp; C, B &amp; D and in the case of
- * double-slips, B &amp; C.
+ * may proceed between A and D, A and C, B and D and in the case of
+ * double-slips, B and C.
  * <P>
- * ==A==-==D== \\ // X // \\ ==B==-==C==
+ * ==A==-==D==
+ *    \\ //
+ *      X
+ *    // \\
+ * ==B==-==C==
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -168,8 +173,10 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * get the object connected to this track for the specified connection type
+     *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
+     * @return the object connected to this slip for the specified connection
+     *         type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
@@ -537,9 +544,12 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
+     *
+     * @param p                  the point
+     * @param useRectangles      - whether to use (larger) rectangles or
+     *                           (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free
+     *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -1688,6 +1698,126 @@ public class LayoutSlip extends LayoutTurnout {
         }
 
     }
+
+    /*
+        this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+     */
+    protected int getConnectivityStateForLayoutBlocks(LayoutBlock thisLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
+        int result = Turnout.UNKNOWN;
+        LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
+        LayoutBlock layoutBlockB = ((TrackSegment) getConnectB()).getLayoutBlock();
+        LayoutBlock layoutBlockC = ((TrackSegment) getConnectC()).getLayoutBlock();
+        LayoutBlock layoutBlockD = ((TrackSegment) getConnectD()).getLayoutBlock();
+
+        if (layoutBlockA == thisLayoutBlock) {
+            if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AC;
+            } else if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockC == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AC;
+            } else if (layoutBlockD == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            }
+        } else if (layoutBlockB == thisLayoutBlock) {
+            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                } else if (layoutBlockD == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockC == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                }
+            } else {
+                if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                } else if (layoutBlockD == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BD;
+                }
+            }
+        } else if (layoutBlockC == thisLayoutBlock) {
+            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                } else if (layoutBlockA == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockB == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_BC;
+                }
+            } else {
+                if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                } else if (layoutBlockA == thisLayoutBlock) {
+                    result = LayoutSlip.STATE_AC;
+                }
+            }
+        } else if (layoutBlockD == thisLayoutBlock) {
+            if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
+                result = LayoutSlip.STATE_BD;
+            } else if (layoutBlockA == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            } else if (layoutBlockB == thisLayoutBlock) {
+                result = LayoutSlip.STATE_AD;
+            }
+        } else {
+            result = LayoutSlip.UNKNOWN;
+        }
+        if (!suppress && (result == LayoutSlip.UNKNOWN)) {
+            log.error("Cannot determine slip setting for " + getName());
+        }
+        return result;
+    }   // getConnectivityStateForLayoutBlocks
+
+    /*
+        return the layout connectivity for this Layout Slip
+     */
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+
+        LayoutConnectivity lc = null;
+        LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
+        if (lbA != null) {
+            if (lbA != lbC) {
+                // have a AC block boundary, create a LayoutConnectivity
+                log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
+                lc = new LayoutConnectivity(lbA, lbC);
+                lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
+                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsC()));
+                results.add(lc);
+            }
+            if ((type == DOUBLE_SLIP) && (lbB != lbD)) {
+                // have a BD block boundary, create a LayoutConnectivity
+                log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
+                lc = new LayoutConnectivity(lbB, lbD);
+                lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
+                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsD()));
+                results.add(lc);
+            }
+            if (lbA != lbD) {
+                // have a AD block boundary, create a LayoutConnectivity
+                log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
+                lc = new LayoutConnectivity(lbA, lbD);
+                lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
+                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsD()));
+                results.add(lc);
+            }
+            if (lbB != lbC) {
+                // have a BC block boundary, create a LayoutConnectivity
+                log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
+                lc = new LayoutConnectivity(lbB, lbC);
+                lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
+                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsC()));
+                results.add(lc);
+            }
+        }
+        return results;
+    }   // getLayoutConnectivity()
 
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 }

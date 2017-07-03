@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -152,6 +153,8 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
+        JUnitUtil.resetInstanceManager();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test SignalMastIcon Panel");
         }
@@ -168,6 +171,8 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel.dispose();
         }
+        JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

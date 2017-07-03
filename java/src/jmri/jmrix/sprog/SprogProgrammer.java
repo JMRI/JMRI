@@ -10,7 +10,7 @@ import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Implements the jmri.Programmer interface via commands for the Sprog
+ * Implement the jmri.Programmer interface via commands for the Sprog
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -24,7 +24,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     /**
-     * Types implemented here.
+     * Implemented Types.
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
@@ -79,7 +79,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     private jmri.ProgListener _usingProgrammer = null;
 
     /**
-     * Send the command to start programming operation
+     * Send the command to start programming operation.
      * 
      * @param val   Value to be written, or -1 for read
      * @param CV    CV to read/write
@@ -98,7 +98,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    // internal method to remember who's using the programmer
+    /**
+     * Internal method to remember who's using the programmer.
+     */
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
@@ -112,7 +114,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    // internal method to create the SprogMessage for programmer task start
+    /**
+     * Internal method to create the SprogMessage for programmer task start.
+     */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
@@ -212,5 +216,3 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     private final static Logger log = LoggerFactory.getLogger(SprogProgrammer.class.getName());
 
 }
-
-

@@ -1,0 +1,44 @@
+@startuml
+participant Layout
+participant CodeButton
+participant Column
+participant CodeLine
+participant TurnoutSection
+
+Layout o-> TurnoutSection : Turnout Stat\nCHANGED
+
+activate TurnoutSection
+
+TurnoutSection -> Column : indicationRequest()
+
+activate Column
+Column -> CodeLine : indicationStart()
+activate CodeLine
+CodeLine -> CodeButton : indicationStart()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nON
+deactivate CodeButton
+CodeLine ->o Layout : Indication sequence\nSTART
+deactivate CodeLine
+deactivate Column
+
+...
+
+Layout o-> CodeLine: Indication sequence\nCOMPLETE
+activate CodeLine
+CodeLine -> CodeButton : indicationComplete()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nOFF
+deactivate CodeButton
+CodeLine -> Column : indicationComplete()
+
+Column -> TurnoutSection : indicationComplete()
+activate TurnoutSection
+TurnoutSection ->o Layout : TO Indicators\nSET
+deactivate TurnoutSection
+
+deactivate CodeLine
+
+
+@enduml
+

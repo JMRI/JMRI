@@ -557,7 +557,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public NamedBean getByUserName(String name) {
-                return turnManager.getByUserName(name);
+                return InstanceManager.getDefault(TurnoutManager.class).getByUserName(name);
             }
 
             @Override
