@@ -152,7 +152,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Add a protected newKnownState() for use by implementations.
+     * Add a newKnownState() for use by implementations.
      * <P>
      * Use this to update internal information when a state change is detected
      * <em>outside</em> the Turnout object, e.g. via feedback from sensors on
@@ -168,11 +168,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <P>
-     * Not intended for general use, e.g. for users to set the KnownState.
+     * This method is intended for general use, e.g. for users to set the KnownState,
+     * so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
      */
-    protected void newKnownState(int s) {
+    public void newKnownState(int s) {
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
