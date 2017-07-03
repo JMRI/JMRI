@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.11
+; - Remove outmoded jython files
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.10
 ; - Support Java 9
 ; -------------------------------------------------------------------------
@@ -578,6 +581,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
     Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
+    Delete "$OUTDIR\lib\jython-standalone-2.7.0.jar"
     Delete "$OUTDIR\lib\jython.jar"
 
     ; -- Delete .jar & support files installed using previous layout
