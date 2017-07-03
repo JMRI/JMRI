@@ -130,7 +130,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
             msg = Bundle.getMessage("speedChangeBlock", afterBlock);
         } else {
             _maxSpeed = speed;
-            jmri.jmrit.roster.RosterEntry ent = _speedUtil.getRosterEntry();
+            jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
             if (ent!=null) {
                 _speedProfile = ent.getSpeedProfile();
             }
@@ -280,7 +280,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         if (_speedProfile!=null) {
             p.add(new JLabel(Bundle.getMessage("trainInfo5", spSpeed, speedUnits, spFactor)));
         } else {
-            p.add(new JLabel(Bundle.getMessage("trainInfo6", _speedUtil.getTrainId())));
+            p.add(new JLabel(Bundle.getMessage("trainInfo6", _warrant.getTrainId())));
         }
         panel.add(p, BorderLayout.CENTER);
         panel.add(Box.createRigidArea(new java.awt.Dimension(10,100)), BorderLayout.WEST);
