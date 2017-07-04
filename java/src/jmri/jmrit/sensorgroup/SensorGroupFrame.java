@@ -219,7 +219,10 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         int count = 0;
         for (int i = 0; i < _sensorModel.getRowCount(); i++) {
             if ((Boolean) _sensorModel.getValueAt(i, BeanTableModel.INCLUDE_COLUMN)) {
-                String sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
+                String sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.UNAME_COLUMN);
+                if (sensor == null || sensor.length() == 0) {
+                    sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
+                }
                 variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_OR,
                         Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
@@ -234,7 +237,6 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
-//        InstanceManager.getDefault(jmri.ConditionalManager.class).register(c);
         c.setStateVariables(variableList);
         c.setLogicType(Conditional.ALL_OR, "");
         c.setAction(actionList);
@@ -277,6 +279,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
+
         // look for  Sensor group in SYSTEM Logix
         if (!isRoute) {
             Logix logix = getSystemLogix();
@@ -292,10 +295,13 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                         ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                         for (int k = 0; k < variableList.size(); k++) {
                             String sensor = variableList.get(k).getName();
-                            for (int j = _sensorModel.getRowCount() - 1; j >= 0; j--) {
-                                if (_sensorModel.getValueAt(j, BeanTableModel.SNAME_COLUMN).equals(sensor)) {
-                                    _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
-                                    setRow = j;
+                            if (sensor != null) {
+                                for (int j = _sensorModel.getRowCount() - 1; j >= 0; j--) {
+                                    if (sensor.equals(_sensorModel.getValueAt(j, BeanTableModel.UNAME_COLUMN))
+                                            || sensor.equals(_sensorModel.getValueAt(j, BeanTableModel.SNAME_COLUMN))) {
+                                        _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
+                                        setRow = j;
+                                    }
                                 }
                             }
                         }
