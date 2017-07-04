@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.eventtable;
+package jmri.jmrix.can.cbus.swing;
 
 import javax.annotation.CheckReturnValue;
 import java.util.Locale;
@@ -24,7 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class Bundle extends jmri.jmrix.can.cbus.Bundle {
 
     @Nullable
-    private static final String name = null; // NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
