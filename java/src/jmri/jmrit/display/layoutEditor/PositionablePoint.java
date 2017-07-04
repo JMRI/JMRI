@@ -1124,9 +1124,12 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
+     *
+     * @param p                  the point
+     * @param useRectangles      whether to use (larger) rectangles or (smaller)
+     *                           circles for hit testing
+     * @param requireUnconnected whether to only return free connection hit
+     *                           types
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -1160,8 +1163,9 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * get the object connected to this track for the specified connection type
+     *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
+     * @return the object connected for the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
     @Override
@@ -1180,10 +1184,12 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * set the object connected for the specified connection type
+     *
+     * @param connectionType the connection type (where it is connected to us)
+     * @param o              the object that is being connected
+     * @param type           the type of object that we're being connected to
+     *                       (Should always be "NONE" or "TRACK")
      * @throws jmri.JmriException - if connectionType or type are invalid
      */
     @Override
@@ -1192,24 +1198,7 @@ public class PositionablePoint extends LayoutTrack {
             log.error("unexpected type of connection to positionable point - " + type);
             throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
         }
-        if (connectionType == POS_POINT) {
-            /*
-            // Note: Not used
-            TrackSegment ts = (TrackSegment) o;
-            if ((getType() == PositionablePoint.ANCHOR) && setTrackConnection(ts)) {
-                if (o.getConnect1() == p) {
-                    o.setNewConnect1(this, LayoutTrack.POS_POINT);
-                } else {
-                    o.setNewConnect2(this, LayoutTrack.POS_POINT);
-                }
-                ts.removeTrackConnection(ts);
-
-                if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
-                    removePositionablePoint(p);
-                }
-            }
-            */
-        } else {
+        if (connectionType != POS_POINT) {
             log.error("Invalid Connection Type " + connectionType); //I18IN
             throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
@@ -1217,6 +1206,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * return true if this connection type is disconnected
+     *
      * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
      */
@@ -1267,6 +1257,69 @@ public class PositionablePoint extends LayoutTrack {
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
+    /*
+        return the layout connectivity for this PositionablePoint
+    */
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+        LayoutConnectivity lc = null;
 
+        LayoutBlock blk1 = null, blk2 = null;
+        TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
+        Point2D p1, p2;
+
+        if (getType() == PositionablePoint.ANCHOR) {
+            if ((ts1 != null) && (ts2 != null)) {
+                blk1 = ts1.getLayoutBlock();
+                blk2 = ts2.getLayoutBlock();
+                if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
+                    // this is a block boundary, create a LayoutConnectivity
+                    log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
+                    lc = new LayoutConnectivity(blk1, blk2);
+                    // determine direction from block 1 to block 2
+                    if (ts1.getConnect1() == this) {
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                    } else {
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                    }
+                    if (ts2.getConnect1() == this) {
+                        p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
+                    } else {
+                        p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
+                    }
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, p2));
+                    // save Connections
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    results.add(lc);
+                }
+            }
+        } else if (getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if ((ts1 != null) && (ts2 != null)) {
+                blk1 = ts1.getLayoutBlock();
+                blk2 = ts2.getLayoutBlock();
+                if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
+                    // this is a block boundary, create a LayoutConnectivity
+                    log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
+                    lc = new LayoutConnectivity(blk1, blk2);
+
+                    // determine direction from block 1 to block 2
+                    if (ts1.getConnect1() == this) {
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                    } else {
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                    }
+
+                    //Need to find a way to compute the direction for this for a split over the panel
+                    //In this instance work out the direction of the first track relative to the positionable poin.
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoords()));
+                    // save Connections
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    results.add(lc);
+                }
+            }
+        }
+        return results;
+    }   // getLayoutConnectivity()
+
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
 }
