@@ -160,7 +160,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    // prevent NPE as getWindowInterface().getFrame() returned null, TODO fix alignment
                     writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, false);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
                     log.debug("Print cancelled");
@@ -177,7 +176,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    // prevent NPE as getWindowInterface().getFrame() returned null, TODO fix alignment
                     writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, true);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
                     log.debug("Preview cancelled");

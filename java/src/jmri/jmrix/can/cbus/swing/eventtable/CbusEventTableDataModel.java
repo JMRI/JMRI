@@ -100,7 +100,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case TYPECOLUMN:
                 return 7;
             case COMMENTCOLUMN:
-                return 0;
+                return 0; // to get writer recognize it as the last column, will fill with spaces
             default:
                 return -1;
         }
@@ -389,9 +389,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     /**
      * Self print or print preview the table.
-     *
+     * <p>
      * Copied from BeanTableDataModel modified to print variable column widths.
-     * Final column with size zero runs to extent of page width
+     * Final column with size zero runs to extent of page width.
      *
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
@@ -402,6 +402,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // [AC] variable column sizes
         int columnTotal = 0;
         int[] columnWidth = new int[this.getColumnCount()];
+        // in a test, thats 86 chars on a line
         for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnWidth(i) == 0) {
                 // Fill to end of line
@@ -432,7 +433,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // create a base string the width of the column
         String spaces;
         StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < this.getRowCount(); i++) {
+        for (int i = 0; i < this.getRowCount() - 1; i++) {
             //spaces = "";
             for (int j = 0; j < columnWidth[i]; j++) {
                 //spaces = spaces + " ";
@@ -465,23 +466,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         String columnString = "";
         String lineString = "";
         String spaces;
-        StringBuffer buf = new StringBuffer();
         // loop through each column
         boolean complete = false;
         while (!complete) {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                //spaces = "";
+                StringBuffer buf = new StringBuffer();
                 for (int j = 0; j < columnWidth[i]; j++) {
-                    //spaces = spaces + " ";
                     buf.append(" ");
                 }
                 spaces = buf.toString();
-                // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
-                // use the intial part of the text,pad it with spaces and place the remainder back in the array
-                // for further processing on next line
-                // if column string isn't too wide, pad it to column width with spaces if needed
+                // if the column string is too wide, cut it at word boundary (valid delimiters are space, - and _)
+                // Use the intial part of the text, pad it with spaces and place the remainder back in the array
+                // for further processing on next line.
+                // If column string isn't too wide, pad it to column width with spaces if needed
                 if (columnStrings[i].length() > columnWidth[i]) {
                     boolean noWord = true;
                     for (int k = columnWidth[i]; k >= 1; k--) {
@@ -489,21 +488,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                                 || columnStrings[i].substring(k - 1, k).equals("-")
                                 || columnStrings[i].substring(k - 1, k).equals("_")) {
                             columnString = columnStrings[i].substring(0, k)
-                                    + spaces.substring(columnStrings[i].substring(0, k).length());
+                                    + spaces.substring(k);
                             columnStrings[i] = columnStrings[i].substring(k);
                             noWord = false;
                             complete = false;
                             break;
                         }
                     }
-                    if (noWord) {
+                    if (noWord) { // not breakable, hard break
                         columnString = columnStrings[i].substring(0, columnWidth[i]);
                         columnStrings[i] = columnStrings[i].substring(columnWidth[i]);
                         complete = false;
                     }
 
                 } else {
-                    columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
+                    columnString = columnStrings[i] + spaces.substring(columnStrings[i].length()); // pad with spaces
                     columnStrings[i] = "";
                 }
                 lineString = lineString + columnString + " ";
