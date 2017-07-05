@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanInterface;
@@ -55,7 +56,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Returns the number of rows to be displayed.
+     * Return the number of rows to be displayed.
      */
     @Override
     public int getRowCount() {
@@ -296,6 +297,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Self save as a .csv file.
      */
     public void saveTable() {
+        // check for empty table
+        if (this.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("EmptyTableDialogString"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (_saveFile == null) {
             saveAsTable();
         } else {
@@ -307,7 +314,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Self save as a .csv file, first prompting for a filename.
      */
     public void saveAsTable() {
-        // get filename
         // start at current file, show dialog
         int retVal = fileChooser.showSaveDialog(null);
 
@@ -315,9 +321,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         if (retVal == JFileChooser.APPROVE_OPTION) {
             _saveFileName = fileChooser.getSelectedFile().getPath();
             _saveFile = new File(_saveFileName);
-            if (log.isDebugEnabled()) {
-                log.debug("File chosen: {}", _saveFileName);
-            }
+            log.debug("File chosen: {}", _saveFileName);
         } else {
             return; // cancelled or pane closed, prevent NPE
         }
@@ -337,9 +341,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             out = new FileOutputStream(_saveFileName);
             p = new PrintWriter(out, true);
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
                 log.debug("Problem creating output stream");
-            }
         }
 
         if (out == null) {
@@ -349,7 +351,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             log.error("Null Print Writer");
         }
 
-        // Save rows
+        // Save rows, we've checked for an empty table in SaveTable()
+        // print header labels
+        for (int i = 0; i < this.getColumnCount() - 1; i++) {
+            p.print(this.getColumnName(i));
+            p.print(",");
+        }
+        p.println(this.getColumnName(getColumnCount() - 1)); // last column, without comma
+        // print rows
         for (int i = 0; i < this.getRowCount(); i++) {
             p.print(_id[i]);
             p.print(",");
