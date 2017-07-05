@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.eventtable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -125,6 +126,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
+        Frame mFrame = new Frame();
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
@@ -158,14 +160,14 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    // NPE as getWindowInterface().getFrame() returns null
-                    writer = new HardcopyWriter(getWindowInterface().getFrame(), getTitle(), 10, .8, .5, .5, .5, false);
+                    // prevent NPE as getWindowInterface().getFrame() returned null, TODO fix alignment
+                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, false);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
                     log.debug("Print cancelled");
                     return;
                 }
                 writer.increaseLineSpacing(20);
-                eventModel.printTable(writer);
+                eventModel.printTable(writer); // close() is taken care of in printTable()
             }
         });
         JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
@@ -175,14 +177,14 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    // NPE as getWindowInterface().getFrame() returns null
-                    writer = new HardcopyWriter(getWindowInterface().getFrame(), getTitle(), 10, .8, .5, .5, .5, true);
+                    // prevent NPE as getWindowInterface().getFrame() returned null, TODO fix alignment
+                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, true);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
                     log.debug("Preview cancelled");
                     return;
                 }
                 writer.increaseLineSpacing(20);
-                eventModel.printTable(writer);
+                eventModel.printTable(writer); // close() is taken care of in printTable()
             }
         });
         menuList.add(fileMenu);
