@@ -211,17 +211,9 @@
 
       <p align="center"><img src="images/Speed_Table_QSI.png" alt=
       "QSI speed table" height="308" width="799"><br></p>
-      <hr>
 
-      <div align="right">
-        <p><a href="Comp_FMap.shtml"></a> <a href=
-        "Comp_Speed.shtml">Previous |</a> <a href=
-        "Comp_FMap.shtml">Next</a></p>
-
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
-      </div>
-      
+        <hr>
+              
       There are some "gotchas" with programming speed curves in various decoders:
 
       <ul>
@@ -273,7 +265,17 @@
     Failure to do observe this restriction can cause strange behaviour in some decoders 
     so both LokProgrammer and JMRI DecoderPro prevent you from doing so.
       
-      
+       <hr>
+
+      <div align="right">
+        <p><a href="Comp_FMap.shtml"></a> <a href=
+        "Comp_Speed.shtml">Previous |</a> <a href=
+        "Comp_FMap.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+     
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
