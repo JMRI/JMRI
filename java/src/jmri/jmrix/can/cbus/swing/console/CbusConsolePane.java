@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -95,9 +97,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     protected JRadioButton onButton = new JRadioButton();
     protected JRadioButton offButton = new JRadioButton();
     protected ButtonGroup onOffGroup = new ButtonGroup();
-    protected JLabel nnLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("NodeNumberCol")));
-    protected JLabel evLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("EventCol")));
-    protected JTextField nnField = new JTextField();
+    protected JLabel nodeNumberLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("NodeNumberCol")));
+    protected JLabel eventLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("EventCol")));
+    protected JSpinner nodeNumberSpinner;
     protected JTextField evField = new JTextField();
     protected JButton sendEvButton = new JButton();
 
@@ -475,11 +477,14 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         evPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("ButtonSendEvent")));
 
-        nnField = new JTextField("0", 5);
-        evPane.add(nnLabel);
-        evPane.add(nnField);
+        nodeNumberSpinner = new JSpinner(new SpinnerNumberModel(256, 256, 1000000, 1));
+        nodeNumberSpinner.setToolTipText(Bundle.getMessage("ToolTipNodeNumber"));
+        evPane.add(nodeNumberLabel);
+        evPane.add(nodeNumberSpinner);
+
         evField = new JTextField("0", 5);
-        evPane.add(evLabel);
+        evField.setToolTipText(Bundle.getMessage("ToolTipEvent"));
+        evPane.add(eventLabel);
         evPane.add(evField);
 
         onOffGroup.add(onButton);
@@ -619,7 +624,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             ((javax.swing.JFrame) getTopLevelAncestor()).setMinimumSize(d);
             ((javax.swing.JFrame) getTopLevelAncestor()).setPreferredSize(d);
             ((javax.swing.JFrame) getTopLevelAncestor()).pack();
-
         }
     }
 
@@ -901,7 +905,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
         int nn, ev;
         CanMessage m = new CanMessage(tc.getCanid());
-        nn = parseBinDecHexByte(nnField.getText(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("SendEventNodeError"));
+        nn = parseBinDecHexByte(nodeNumberSpinner.getValue().toString(), 65535, _decimal, Bundle.getMessage("CbusConsoleTitle"), Bundle.getMessage("SendEventNodeError"));
         if (nn == -1) {
             return;
         }

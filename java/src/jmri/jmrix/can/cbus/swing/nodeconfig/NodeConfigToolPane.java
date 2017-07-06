@@ -68,6 +68,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
         setNN = new JButton(Bundle.getMessage("ButtonSet"));
         setNN.setToolTipText(Bundle.getMessage("ToolTipSetNodeNumber"));
+        setNN.addActionListener((ActionEvent e1) -> {
+            //not yet functional
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("NotYetDialogString", Bundle.getMessage("Title")),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        });
         p1.add(setNN);
 
         p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderNodeNumber")));
@@ -91,7 +97,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
         read = new JButton(Bundle.getMessage("ButtonRead"));
         read.setToolTipText(Bundle.getMessage("ToolTipRead"));
-        read.addActionListener((ActionEvent e1) -> {
+        read.addActionListener((ActionEvent e2) -> {
             //not yet functional
             JOptionPane.showMessageDialog(null, Bundle.getMessage("NotYetDialogString", Bundle.getMessage("Title")),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -100,7 +106,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         p1.add(read);
         write = new JButton(Bundle.getMessage("ButtonWrite"));
         write.setToolTipText(Bundle.getMessage("ToolTipWrite"));
-        write.addActionListener((ActionEvent e2) -> {
+        write.addActionListener((ActionEvent e3) -> {
             //not yet functional
             JOptionPane.showMessageDialog(null, Bundle.getMessage("NotYetDialogString", Bundle.getMessage("Title")),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
