@@ -18,7 +18,7 @@ public class LearnThrottleFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "LearnThrottleFrameTestWarrant")));
+        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
         Assert.assertNotNull("exists",t);
         t.dispose();
     }

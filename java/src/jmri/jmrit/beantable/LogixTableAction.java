@@ -781,27 +781,46 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Combo boxes for name selection and their JPanel variables
     // These are shared by the conditional and action selection processs
-    JmriBeanComboBox _sensorNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _turnoutNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _lightNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _sigheadNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _sigmastNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _memoryNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _warrantNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _oblockNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    JmriBeanComboBox _logixNameBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _sensorNameBox;
+    JmriBeanComboBox _turnoutNameBox;
+    JmriBeanComboBox _lightNameBox;
+    JmriBeanComboBox _sigheadNameBox;
+    JmriBeanComboBox _sigmastNameBox;
+    JmriBeanComboBox _memoryNameBox;
+    JmriBeanComboBox _warrantNameBox;
+    JmriBeanComboBox _oblockNameBox;
+    JmriBeanComboBox _logixNameBox;
 //    JmriBeanComboBox _entryexitNameBox = new JmriBeanComboBox(
 //            InstanceManager.getDefault(EntryExitManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
+    /**
+     * Defer creation of the JmriBeanComboBox objects until needed.
+     * <p>
+     * These are big, and more importantly they require supralinear update work
+     * every time one of their objects is added to a manager.  Delaying their 
+     * creation until the table is used saves a lot of time at e.g. initialization and file reading.
+     */
+    void initNameBoxObjects() {
+        if (_sensorNameBox == null) _sensorNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_turnoutNameBox == null) _turnoutNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_lightNameBox == null) _lightNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_sigheadNameBox == null) _sigheadNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_sigmastNameBox == null) _sigmastNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_memoryNameBox == null) _memoryNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_warrantNameBox == null) _warrantNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_oblockNameBox == null) _oblockNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_logixNameBox == null) _logixNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    }
+    
     JPanel _actionComboNamePanel;
     JPanel _variableComboNamePanel;
     boolean _nameBoxListenersDone = false;
@@ -1492,6 +1511,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Create and/or initialize the Edit Logix pane.
      */
     void makeEditLogixWindow() {
+        initNameBoxObjects();
         setNameBoxListeners();      // Setup the name box components.
         //if (log.isDebugEnabled()) log.debug("makeEditLogixWindow ");
         editUserName.setText(_curLogix.getUserName());
@@ -2982,6 +3002,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param row index of item to be edited in _variableList
      */
     void makeEditVariableWindow(int row) {
+        initNameBoxObjects();
         if (alreadyEditingActionOrVariable()) {
             return;
         }
@@ -3144,6 +3165,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param row index in the table of the Action to be edited
      */
     void makeEditActionWindow(int row) {
+        initNameBoxObjects();
         if (alreadyEditingActionOrVariable()) {
             return;
         }
@@ -3473,6 +3495,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @since 4.7.3
      */
     void setNameBoxListeners() {
+        initNameBoxObjects();
         if (_nameBoxListenersDone) {
             return;
         }
@@ -4081,6 +4104,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param type index of the newly selected Action type
      */
     void actionItemChanged(int type) {
+        initNameBoxObjects();
         int actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
             log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);
@@ -4738,6 +4762,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param itemType value representing the newly selected Conditional type, i.e. ITEM_TYPE_SENSOR
      */
     private void variableTypeChanged(int itemType) {
+        initNameBoxObjects();
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
             log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);
