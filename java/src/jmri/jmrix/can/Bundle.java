@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.can;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.can.Bundle {
+public class Bundle extends jmri.jmrix.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.can.cbus.CbusBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.can.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

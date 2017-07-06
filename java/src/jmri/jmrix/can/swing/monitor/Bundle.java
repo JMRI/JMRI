@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
-public class Bundle extends jmri.jmrix.can.CanActionListBundle {
+public class Bundle extends jmri.jmrix.can.Bundle {
 
     @Nullable private static final String name = null; // No local resources
 

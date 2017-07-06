@@ -15,8 +15,6 @@ public class CanMenu extends JMenu {
     public CanMenu(CanSystemConnectionMemo memo) {
         super();
 
-        //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
         String title;
         if (memo != null) {
             title = memo.getUserName();
