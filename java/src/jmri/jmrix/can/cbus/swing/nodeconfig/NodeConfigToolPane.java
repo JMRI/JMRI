@@ -62,7 +62,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         p1.add(new JLabel(Bundle.getMessage("LabelNodeNumber")));
 
         numberSpinner = new JSpinner(new SpinnerNumberModel(256, 256, 1000000, 1));
-        //number = new JTextField(5);
         p1.add(numberSpinner);
         numberSpinner.setToolTipText(Bundle.getMessage("ToolTipNodeNumber"));
 
