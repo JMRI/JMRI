@@ -6,6 +6,9 @@ import java.util.*;
 
 /**
  * Lock if any of the SignalHeads controlling traffic over a turnout are not at stop.
+ * <p>
+ * This checks SignalHeads for RED; it locks against Restricting (FLASHRED) but you can
+ * change that by overriding the checkSignalClear() method.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
@@ -80,9 +83,12 @@ public class RouteLock implements Lock {
         }
         
         for (NamedBeanHandle<SignalHead> handle : list) {
-            if (handle.getBean().getState() != SignalHead.RED) return false;
+            if ( isSignalClear(handle) ) return false;
         }
         return true;
     }
     
+    boolean isSignalClear(NamedBeanHandle<SignalHead> handle) {
+        return handle.getBean().getState() != SignalHead.RED;
+    }
 }
