@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin.swing.packetgen;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -49,24 +50,27 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
 
         sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText(Bundle.getMessage("SendMessageToolTip"));
+        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
         packetTextField.setText("");
         packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
-        entrybox.setLayout(new GridLayout(3, 2));
+        entrybox.setLayout(new GridLayout(2, 2));
         entrybox.add(entryLabel);
         entrybox.add(packetTextField);
-        entrybox.add(new JLabel("")); // spacer
-        entrybox.add(sendButton);
         entrybox.add(replyLabel);
-        //packetReplyField.setEditable(false); // keep field editable to allow user to select and copy the reply
 
+        JPanel buttonbox = new JPanel();
+        FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
+        buttonbox.setLayout(buttonLayout);
+        buttonbox.add(sendButton);
+        entrybox.add(buttonbox);
+        //packetReplyField.setEditable(false); // keep field editable to allow user to select and copy the reply
         add(entrybox);
-        add(Box.createVerticalGlue());
         add(packetReplyField);
+        add(Box.createVerticalGlue());
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
