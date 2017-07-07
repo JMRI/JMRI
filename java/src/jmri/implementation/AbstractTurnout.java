@@ -455,6 +455,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     protected boolean _enablePushButtonLockout = false;
 
+    /**
+     * This implementation by itself doesn't provide locking support.
+     * Override this in subclasses that do. 
+     *
+     * @return One of 0 for none
+     */
+    public int getPossibleLockModes() { return 0; }
+
+    /**
+     * This implementation by itself doesn't provide locking support.
+     * Override this in subclasses that do. 
+     *
+     * @return false for not supported
+     */
     @Override
     public boolean canLock(int turnoutLockout) {
         return false;
