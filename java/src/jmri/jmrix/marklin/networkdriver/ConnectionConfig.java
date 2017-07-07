@@ -35,7 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     @Override
     public String name() {
         return "CS2 via network";
-    }
+    } // NOI18N
 
     /**
      * Access to current selected command station mode
