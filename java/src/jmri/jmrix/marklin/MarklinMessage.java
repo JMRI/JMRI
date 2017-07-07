@@ -286,5 +286,3 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return new MarklinMessage();
     }
 }
-
-

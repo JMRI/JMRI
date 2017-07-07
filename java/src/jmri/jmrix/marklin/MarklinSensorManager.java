@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement sensor manager for Marklin systems. The Manager handles all the
  * state changes.
- * <P>
+ * <p>
  * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
  * given s88 Bus Module and yy is the port on that module.
  *
@@ -118,7 +118,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
