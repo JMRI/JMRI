@@ -112,6 +112,28 @@ public final class MathUtil {
     }
 
     /**
+     * rotate a point (by radians)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(Point2D p, double a) {
+        double pX = p.getX(), pY = p.getY();
+        double cosA = Math.cos(a), sinA = Math.sin(a);
+        return new Point2D.Double(cosA * pX - sinA * pY, sinA * pX + cosA * pY);
+    }
+
+    /**
+     * rotate a point (by degrees)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(Point2D p, double a) {
+        return rotateRAD(p, Math.toRadians(a));
+    }
+
+    /**
      * dot product of two points (vectors)
      * @param pA the first point
      * @param pB the second point
@@ -163,6 +185,27 @@ public final class MathUtil {
             result = divide(p, length);
         }
         return result;
+    }
+
+    /**
+     * compute the angle (direction in radians) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in radians
+     */
+    public static double computeAngleRAD(Point2D p1, Point2D p2) {
+        Point2D delta = subtract(p1, p2);
+        return Math.atan2(delta.getX(), delta.getY());
+    }
+
+    /**
+     * compute the angle (direction in degrees) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in degrees
+     */
+    public static double computeAngleDEG(Point2D p1, Point2D p2) {
+        return Math.toDegrees(computeAngleRAD(p1, p2));
     }
 
     /**

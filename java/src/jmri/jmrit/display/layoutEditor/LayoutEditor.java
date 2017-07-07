@@ -9723,7 +9723,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         putItem(l);
         l.updateSize();
         l.setDisplayLevel(SIGNALS);
-
     }   //putSignal
 
     SignalHead getSignalHead(String name) {
