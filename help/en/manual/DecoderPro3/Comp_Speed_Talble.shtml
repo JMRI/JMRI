@@ -213,7 +213,7 @@
       "QSI speed table" height="308" width="799"><br></p>
 
         <hr>
-              
+      <a name="gotchas" id="gotchas"></a>
       There are some "gotchas" with programming speed curves in various decoders:
 
       <ul>
