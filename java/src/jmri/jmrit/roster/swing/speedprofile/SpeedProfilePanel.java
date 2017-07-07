@@ -750,7 +750,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             if (table != null) {
                 table.dispose();
             }
-            table = new SpeedProfileTable(tmpSp, tmpRe.getId());
+            table = new SpeedProfileTable(tmpRe);
             table.setVisible(true);
             return;
         }
@@ -802,7 +802,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 if (table != null) {
                     table.dispose();
                 }
-                table = new SpeedProfileTable(speedProfile, tmpRe.getId());
+                table = new SpeedProfileTable(tmpRe);
                 table.setVisible(true);
                 return;
             }
@@ -827,7 +827,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 if (table != null) {
                     table.dispose();
                 }
-                table = new SpeedProfileTable(re.getSpeedProfile(), re.getId());
+                table = new SpeedProfileTable(re);
                 table.setVisible(true);
                 return;
             }

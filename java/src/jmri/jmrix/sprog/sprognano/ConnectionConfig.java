@@ -27,7 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "SPROG Nano Command Station";
+        return Bundle.getMessage("SprogNanoCSTitle");
     }
 
     @Override
