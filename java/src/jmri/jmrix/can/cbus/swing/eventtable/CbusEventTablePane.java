@@ -141,6 +141,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 eventModel.saveAsTable();
             }
         });
+        saveItem.setEnabled(eventModel.isTableDirty()); // disable menuItem if table was saved and has not changed since
 
         JMenuItem saveAsItem = new JMenuItem(rb.getString("MenuItemSaveAs"));
         fileMenu.add(saveAsItem);
@@ -206,6 +207,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     public void update() {
         eventModel.fireTableDataChanged();
+        // TODO disable menuItem if table was saved and has not changed since
+        // replacing menuItem by a new getMenus(). Note saveItem.setEnabled(eventModel.isTableDirty());
     }
 
     private boolean mShown = false;
