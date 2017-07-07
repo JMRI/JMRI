@@ -332,7 +332,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 _saveFile = new File(_saveFileName);
                 log.debug("File chosen: {}", _saveFileName);
             } else {
-                log.error("saveAsTable: No file name available. Aborted");
+                log.debug("saveAsTable: No file name available. Aborted");
                 return;
             }
         } else {
