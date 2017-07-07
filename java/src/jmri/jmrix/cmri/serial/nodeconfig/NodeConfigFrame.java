@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle"); // NOI18N
+    // TODO change rb to Bundle.getMessage in this file
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000"); // NOI18N
@@ -102,7 +103,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

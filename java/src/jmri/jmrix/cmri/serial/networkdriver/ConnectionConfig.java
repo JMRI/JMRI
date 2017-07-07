@@ -35,7 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
-    JButton b = new JButton("Configure C/MRI nodes");
+    JButton b = new JButton(Bundle.getMessage("WindowTitle")); // = Configure C/MRI
 
     @Override
     public void loadDetails(JPanel details) {

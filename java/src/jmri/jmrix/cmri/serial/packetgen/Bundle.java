@@ -1,10 +1,10 @@
-package jmri.jmrix.loconet.se8;
+package jmri.jmrix.cmri.serial.packetgen;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import java.util.Locale;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.loconet.Bundle {
+public class Bundle extends jmri.jmrix.cmri.serial.Bundle {
 
     @Nullable
-    private static final String name = null; // no local keys NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
