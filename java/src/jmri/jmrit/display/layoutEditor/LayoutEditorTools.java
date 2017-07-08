@@ -12693,9 +12693,6 @@ public class LayoutEditorTools {
                     }
             );
             theContentPane.add(panel1);
-
-            JPanel panel11 = new JPanel(new FlowLayout());
-
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             // Signal heads located at turnout 1
