@@ -277,11 +277,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSignalHeads = new JButton(rb.getString("GetSaved")));
-            getSavedSignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        turnoutSignalsGetSaved(e);
-                    }
-            );
+            getSavedSignalHeads.addActionListener((ActionEvent e) -> {
+                turnoutSignalsGetSaved(e);
+            });
             getSavedSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -352,36 +350,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeSignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeSignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalsDonePressed(e);
-                    }
-            );
+            setSignalsDone.addActionListener((ActionEvent e) -> {
+                setSignalsDonePressed(e);
+            });
             setSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
-                        rootPane.setDefaultButton(setSignalsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
+                rootPane.setDefaultButton(setSignalsDone);
+            });
 
             panel6.add(setSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalsCancelPressed(e);
-                    }
-            );
+            setSignalsCancel.addActionListener((ActionEvent e) -> {
+                setSignalsCancelPressed(e);
+            });
             setSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -2081,11 +2071,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSignalHeads = new JButton(rb.getString("GetSaved")));
-            getAnchorSavedSignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        getSavedAnchorSignals(e);
-                    }
-            );
+            getAnchorSavedSignalHeads.addActionListener((ActionEvent e) -> {
+                getSavedAnchorSignals(e);
+            });
             getAnchorSavedSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
             if (showEast) {
@@ -2132,36 +2120,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSignalAtBoundaryIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeSignalAtBoundaryIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeSignalAtBoundaryIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeSignalAtBoundaryIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setSignalsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalsAtBoundaryDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalsAtBoundaryDonePressed(e);
-                    }
-            );
+            setSignalsAtBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSignalsAtBoundaryDonePressed(e);
+            });
             setSignalsAtBoundaryDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBoundaryDone);
-                        rootPane.setDefaultButton(setSignalsAtBoundaryDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBoundaryDone);
+                rootPane.setDefaultButton(setSignalsAtBoundaryDone);
+            });
 
             panel6.add(setSignalsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalsAtBoundaryCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalsAtBoundaryCancelPressed(e);
-                    }
-            );
+            setSignalsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSignalsAtBoundaryCancelPressed(e);
+            });
             setSignalsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -2717,11 +2697,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXoverSignalHeads = new JButton(rb.getString("GetSaved")));
-            getSavedXoverSignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        xoverTurnoutSignalsGetSaved(e);
-                    }
-            );
+            getSavedXoverSignalHeads.addActionListener((ActionEvent e) -> {
+                xoverTurnoutSignalsGetSaved(e);
+            });
             getSavedXoverSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -2856,36 +2834,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeXoverSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeXoverSignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeXoverSignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeXoverSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setXoverSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setXoverSignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setXoverSignalsDonePressed(e);
-                    }
-            );
+            setXoverSignalsDone.addActionListener((ActionEvent e) -> {
+                setXoverSignalsDonePressed(e);
+            });
             setXoverSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
-                        rootPane.setDefaultButton(setXoverSignalsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
+                rootPane.setDefaultButton(setXoverSignalsDone);
+            });
 
             panel6.add(setXoverSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setXoverSignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setXoverSignalsCancelPressed(e);
-                    }
-            );
+            setXoverSignalsCancel.addActionListener((ActionEvent e) -> {
+                setXoverSignalsCancelPressed(e);
+            });
             setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXoverFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -3872,11 +3842,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSignalHeads = new JButton(rb.getString("GetSaved")));
-            getSavedXingSignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        xingSignalsGetSaved(e);
-                    }
-            );
+            getSavedXingSignalHeads.addActionListener((ActionEvent e) -> {
+                xingSignalsGetSaved(e);
+            });
             getSavedXingSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -3947,36 +3915,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeXingSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeXingSignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeXingSignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeXingSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setXingSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setXingSignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSignalsDonePressed(e);
-                    }
-            );
+            setXingSignalsDone.addActionListener((ActionEvent e) -> {
+                setXingSignalsDonePressed(e);
+            });
             setXingSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
-                        rootPane.setDefaultButton(setXingSignalsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
+                rootPane.setDefaultButton(setXingSignalsDone);
+            });
 
             panel6.add(setXingSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setXingSignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSignalsCancelPressed(e);
-                    }
-            );
+            setXingSignalsCancel.addActionListener((ActionEvent e) -> {
+                setXingSignalsCancelPressed(e);
+            });
             setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -4748,11 +4708,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("     "));
             panel2.add(getSavedTToTSignalHeads = new JButton(rb.getString("GetSaved")));
-            getSavedTToTSignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        tToTTurnoutSignalsGetSaved(e);
-                    }
-            );
+            getSavedTToTSignalHeads.addActionListener((ActionEvent e) -> {
+                tToTTurnoutSignalsGetSaved(e);
+            });
             getSavedTToTSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -4903,36 +4861,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeTToTSignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeTToTSignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setTToTSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setTToTSignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setTToTSignalsDonePressed(e);
-                    }
-            );
+            setTToTSignalsDone.addActionListener((ActionEvent e) -> {
+                setTToTSignalsDonePressed(e);
+            });
             setTToTSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
-                        rootPane.setDefaultButton(setTToTSignalsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
+                rootPane.setDefaultButton(setTToTSignalsDone);
+            });
 
             panel6.add(setTToTSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setTToTSignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setTToTSignalsCancelPressed(e);
-                    }
-            );
+            setTToTSignalsCancel.addActionListener((ActionEvent e) -> {
+                setTToTSignalsCancelPressed(e);
+            });
             setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtTToTFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -6360,11 +6310,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("     "));
             panel2.add(getSaved3WaySignalHeads = new JButton(rb.getString("GetSaved")));
-            getSaved3WaySignalHeads.addActionListener(
-                    (ActionEvent e) -> {
-                        getSaved3WaySignals(e);
-                    }
-            );
+            getSaved3WaySignalHeads.addActionListener((ActionEvent e) -> {
+                getSaved3WaySignals(e);
+            });
             getSaved3WaySignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -6477,36 +6425,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(change3WaySignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            change3WaySignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            change3WaySignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             change3WaySignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(set3WaySignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            set3WaySignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        set3WaySignalsDonePressed(e);
-                    }
-            );
+            set3WaySignalsDone.addActionListener((ActionEvent e) -> {
+                set3WaySignalsDonePressed(e);
+            });
             set3WaySignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
-                        rootPane.setDefaultButton(set3WaySignalsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
+                rootPane.setDefaultButton(set3WaySignalsDone);
+            });
 
             panel6.add(set3WaySignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            set3WaySignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        set3WaySignalsCancelPressed(e);
-                    }
-            );
+            set3WaySignalsCancel.addActionListener((ActionEvent e) -> {
+                set3WaySignalsCancelPressed(e);
+            });
             set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAt3WayFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -7676,11 +7616,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSensors = new JButton(rb.getString("GetSaved")));
-            getAnchorSavedSensors.addActionListener(
-                    (ActionEvent e) -> {
-                        getSavedAnchorSensors(e);
-                    }
-            );
+            getAnchorSavedSensors.addActionListener((ActionEvent e) -> {
+                getSavedAnchorSensors(e);
+            });
             getAnchorSavedSensors.setToolTipText(rb.getString("GetSavedHint"));
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 main.add(panel2);
@@ -7724,36 +7662,28 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorAtBoundaryIcon = new JButton(rb.getString("ChangeSensorIcon")));
-            changeSensorAtBoundaryIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        sensorFrame.setVisible(true);
-                    }
-            );
+            changeSensorAtBoundaryIcon.addActionListener((ActionEvent e) -> {
+                sensorFrame.setVisible(true);
+            });
             changeSensorAtBoundaryIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setSensorsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSensorsAtBoundaryDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSensorsAtBoundaryDonePressed(e);
-                    }
-            );
+            setSensorsAtBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSensorsAtBoundaryDonePressed(e);
+            });
             setSensorsAtBoundaryDone.setToolTipText(rb.getString("SensorDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBoundaryDone);
-                        rootPane.setDefaultButton(setSensorsAtBoundaryDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBoundaryDone);
+                rootPane.setDefaultButton(setSensorsAtBoundaryDone);
+            });
 
             panel6.add(setSensorsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSensorsAtBoundaryCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSensorsAtBoundaryCancelPressed(e);
-                    }
-            );
+            setSensorsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSensorsAtBoundaryCancelPressed(e);
+            });
             setSensorsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSensorsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8222,11 +8152,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSignalMasts = new JButton(rb.getString("GetSaved")));
-            getAnchorSavedSignalMasts.addActionListener(
-                    (ActionEvent e) -> {
-                        getSavedAnchorSignalMasts(e);
-                    }
-            );
+            getAnchorSavedSignalMasts.addActionListener((ActionEvent e) -> {
+                getSavedAnchorSignalMasts(e);
+            });
             getAnchorSavedSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 main.add(panel2);
@@ -8270,28 +8198,22 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalMastsAtBoundaryDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalMastsAtBoundaryDonePressed(e);
-                    }
-            );
+            setSignalMastsAtBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSignalMastsAtBoundaryDonePressed(e);
+            });
             setSignalMastsAtBoundaryDone.setToolTipText(rb.getString("SignalMastDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBoundaryDone);
-                        rootPane.setDefaultButton(setSignalMastsAtBoundaryDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBoundaryDone);
+                rootPane.setDefaultButton(setSignalMastsAtBoundaryDone);
+            });
 
             panel6.add(setSignalMastsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalMastsAtBoundaryCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalMastsAtBoundaryCancelPressed(e);
-                    }
-            );
+            setSignalMastsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSignalMastsAtBoundaryCancelPressed(e);
+            });
             setSignalMastsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSignalMastsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -9396,20 +9318,15 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSignalMasts = new JButton(rb.getString("GetSaved")));
-            getSavedSignalMasts.addActionListener(
-                    (ActionEvent e) -> {
-                        turnoutSignalMastsGetSaved(e);
-                    }
-            );
+            getSavedSignalMasts.addActionListener((ActionEvent e) -> {
+                turnoutSignalMastsGetSaved(e);
+            });
             getSavedSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
             turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-
             turnoutSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-
             turnoutSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-
             turnoutSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
 
             signalMastTurnoutPanel.setLayout(new GridLayout(0, 2));
@@ -9438,28 +9355,22 @@ public class LayoutEditorTools {
             JPanel panel6 = new JPanel();
             panel6.add(new JLabel("  "));
             panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalMastsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalMastsDonePressed(e);
-                    }
-            );
+            setSignalMastsDone.addActionListener((ActionEvent e) -> {
+                setSignalMastsDonePressed(e);
+            });
             setSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
-                        rootPane.setDefaultButton(setSignalMastsDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
+                rootPane.setDefaultButton(setSignalMastsDone);
+            });
 
             panel6.add(setSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalMastsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSignalMastsCancelPressed(e);
-                    }
-            );
+            setSignalMastsCancel.addActionListener((ActionEvent e) -> {
+                setSignalMastsCancelPressed(e);
+            });
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsJmriFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -9959,20 +9870,15 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSignalMasts = new JButton(rb.getString("GetSaved")));
-            getSavedSlipSignalMasts.addActionListener(
-                    (ActionEvent e) -> {
-                        slipSignalMastsGetSaved(e);
-                    }
-            );
+            getSavedSlipSignalMasts.addActionListener((ActionEvent e) -> {
+                slipSignalMastsGetSaved(e);
+            });
             getSavedSlipSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
             slipSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-
             slipSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-
             slipSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-
             slipSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
 
             signalMastLayoutSlipPanel.setLayout(new GridLayout(0, 2));
@@ -10002,18 +9908,14 @@ public class LayoutEditorTools {
 
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSlipSignalMastsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSignalMastsDonePressed(e);
-                    }
-            );
+            setSlipSignalMastsDone.addActionListener((ActionEvent e) -> {
+                setSlipSignalMastsDonePressed(e);
+            });
             setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSlipSignalMastsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSignalMastsCancelPressed(e);
-                    }
-            );
+            setSlipSignalMastsCancel.addActionListener((ActionEvent e) -> {
+                setSlipSignalMastsCancelPressed(e);
+            });
             setSlipSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -10463,11 +10365,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSignalMasts = new JButton(rb.getString("GetSaved")));
-            getSavedXingSignalMasts.addActionListener(
-                    (ActionEvent e) -> {
-                        xingSignalMastsGetSaved(e);
-                    }
-            );
+            getSavedXingSignalMasts.addActionListener((ActionEvent e) -> {
+                xingSignalMastsGetSaved(e);
+            });
             getSavedXingSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -10506,18 +10406,14 @@ public class LayoutEditorTools {
 
             panel6.add(new JLabel("  "));
             panel6.add(setXingSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setXingSignalMastsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSignalMastsDonePressed(e);
-                    }
-            );
+            setXingSignalMastsDone.addActionListener((ActionEvent e) -> {
+                setXingSignalMastsDonePressed(e);
+            });
             setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setXingSignalMastsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSignalMastsCancelPressed(e);
-                    }
-            );
+            setXingSignalMastsCancel.addActionListener((ActionEvent e) -> {
+                setXingSignalMastsCancelPressed(e);
+            });
             setXingSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -10958,11 +10854,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSensors = new JButton(rb.getString("GetSaved")));
-            getSavedSensors.addActionListener(
-                    (ActionEvent e) -> {
-                        turnoutSensorsGetSaved(e);
-                    }
-            );
+            getSavedSensors.addActionListener((ActionEvent e) -> {
+                turnoutSensorsGetSaved(e);
+            });
             getSavedSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -10999,26 +10893,20 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorIcon = new JButton(rb.getString("ChangeSensorIcon")));
-            changeSensorIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        turnoutSensorFrame.setVisible(true);
-                    }
-            );
+            changeSensorIcon.addActionListener((ActionEvent e) -> {
+                turnoutSensorFrame.setVisible(true);
+            });
             changeSensorIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSensorsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSensorsDonePressed(e);
-                    }
-            );
+            setSensorsDone.addActionListener((ActionEvent e) -> {
+                setSensorsDonePressed(e);
+            });
             setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSensorsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSensorsCancelPressed(e);
-                    }
-            );
+            setSensorsCancel.addActionListener((ActionEvent e) -> {
+                setSensorsCancelPressed(e);
+            });
             setSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSensorsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -11500,11 +11388,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSensors = new JButton(rb.getString("GetSaved")));
-            getSavedXingSensors.addActionListener(
-                    (ActionEvent e) -> {
-                        xingSensorsGetSaved(e);
-                    }
-            );
+            getSavedXingSensors.addActionListener((ActionEvent e) -> {
+                xingSensorsGetSaved(e);
+            });
             getSavedXingSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -11541,27 +11427,21 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorXingIcon = new JButton(rb.getString("ChangeSensorIcon")));
-            changeSensorXingIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        sensorXingFrame.setVisible(true);
-                    }
-            );
+            changeSensorXingIcon.addActionListener((ActionEvent e) -> {
+                sensorXingFrame.setVisible(true);
+            });
             changeSensorXingIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("  "));
             panel6.add(setXingSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setXingSensorsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSensorsDonePressed(e);
-                    }
-            );
+            setXingSensorsDone.addActionListener((ActionEvent e) -> {
+                setXingSensorsDonePressed(e);
+            });
             setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setXingSensorsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setXingSensorsCancelPressed(e);
-                    }
-            );
+            setXingSensorsCancel.addActionListener((ActionEvent e) -> {
+                setXingSensorsCancelPressed(e);
+            });
             setXingSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -12028,11 +11908,9 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSensors = new JButton(rb.getString("GetSaved")));
-            getSavedSlipSensors.addActionListener(
-                    (ActionEvent e) -> {
-                        slipSensorsGetSaved(e);
-                    }
-            );
+            getSavedSlipSensors.addActionListener((ActionEvent e) -> {
+                slipSensorsGetSaved(e);
+            });
             getSavedSlipSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -12078,27 +11956,21 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorSlipIcon = new JButton(rb.getString("ChangeSensorIcon")));
-            changeSensorSlipIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        sensorSlipFrame.setVisible(true);
-                    }
-            );
+            changeSensorSlipIcon.addActionListener((ActionEvent e) -> {
+                sensorSlipFrame.setVisible(true);
+            });
             changeSensorSlipIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSlipSensorsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSensorsDonePressed(e);
-                    }
-            );
+            setSlipSensorsDone.addActionListener((ActionEvent e) -> {
+                setSlipSensorsDonePressed(e);
+            });
             setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSlipSensorsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSensorsCancelPressed(e);
-                    }
-            );
+            setSlipSensorsCancel.addActionListener((ActionEvent e) -> {
+                setSlipSensorsCancelPressed(e);
+            });
             setSlipSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -12674,24 +12546,22 @@ public class LayoutEditorTools {
             } else {
                 slipNameCombo.setSelectedIndex(0);
             }
-            slipNameCombo.addActionListener(
-                    (ActionEvent e) -> {
-                        for (LayoutSlip slip : layoutEditor.slipList) {
-                            if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
-                                //slip1NameField.setText(slip.getDisplayName());
-                                getSlipTurnoutSignalsGetSaved(e);
-                                dblSlipC2SigPanel.setVisible(false);
-                                dblSlipB2SigPanel.setVisible(false);
-                                if (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
-                                    dblSlipB2SigPanel.setVisible(true);
-                                    dblSlipC2SigPanel.setVisible(true);
-                                }
-                                setSignalsAtSlipFrame.pack();
-                                return;
-                            }
+            slipNameCombo.addActionListener((ActionEvent e) -> {
+                for (LayoutSlip slip : layoutEditor.slipList) {
+                    if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
+                        //slip1NameField.setText(slip.getDisplayName());
+                        getSlipTurnoutSignalsGetSaved(e);
+                        dblSlipC2SigPanel.setVisible(false);
+                        dblSlipB2SigPanel.setVisible(false);
+                        if (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
+                            dblSlipB2SigPanel.setVisible(true);
+                            dblSlipC2SigPanel.setVisible(true);
                         }
+                        setSignalsAtSlipFrame.pack();
+                        return;
                     }
-            );
+                }
+            });
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -12850,26 +12720,20 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
-            changeTToTSignalIcon.addActionListener(
-                    (ActionEvent e) -> {
-                        signalFrame.setVisible(true);
-                    }
-            );
+            changeTToTSignalIcon.addActionListener((ActionEvent e) -> {
+                signalFrame.setVisible(true);
+            });
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSlipSignalsDone.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSignalsDonePressed(e);
-                    }
-            );
+            setSlipSignalsDone.addActionListener((ActionEvent e) -> {
+                setSlipSignalsDonePressed(e);
+            });
             setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSlipSignalsCancel.addActionListener(
-                    (ActionEvent e) -> {
-                        setSlipSignalsCancelPressed(e);
-                    }
-            );
+            setSlipSignalsCancel.addActionListener((ActionEvent e) -> {
+                setSlipSignalsCancelPressed(e);
+            });
             setSlipSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -13339,21 +13203,25 @@ public class LayoutEditorTools {
             return false;
         }
         a2SlipHead = getSignalHeadFromEntry(a2SlipSignalHeadComboBox, false, setSignalsAtSlipFrame);
+
         b1SlipHead = getSignalHeadFromEntry(b1SlipSignalHeadComboBox, true, setSignalsAtSlipFrame);
         if (b1SlipHead == null) {
             return false;
         }
         b2SlipHead = getSignalHeadFromEntry(b2SlipSignalHeadComboBox, false, setSignalsAtSlipFrame);
+
         c1SlipHead = getSignalHeadFromEntry(c1SlipSignalHeadComboBox, true, setSignalsAtSlipFrame);
         if (c1SlipHead == null) {
             return false;
         }
         c2SlipHead = getSignalHeadFromEntry(c2SlipSignalHeadComboBox, false, setSignalsAtSlipFrame);
+
         d1SlipHead = getSignalHeadFromEntry(d1SlipSignalHeadComboBox, true, setSignalsAtSlipFrame);
         if (d1SlipHead == null) {
             return false;
         }
         d2SlipHead = getSignalHeadFromEntry(d2SlipSignalHeadComboBox, false, setSignalsAtSlipFrame);
+
         return true;
     }
 
