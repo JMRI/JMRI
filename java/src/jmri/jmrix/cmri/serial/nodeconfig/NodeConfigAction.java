@@ -21,7 +21,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction(CMRISystemConnectionMemo memo) {
-        this(Bundle.getMessage("WindowTitle"), memo);
+        this(Bundle.getMessage("ConfigureNodesTitle"), memo);
     }
 
     @Override

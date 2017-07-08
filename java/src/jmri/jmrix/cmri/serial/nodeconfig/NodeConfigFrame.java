@@ -100,7 +100,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("ConfigureNodesTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
