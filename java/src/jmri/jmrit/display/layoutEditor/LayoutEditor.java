@@ -3258,17 +3258,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hsb.addAdjustmentListener((AdjustmentEvent e) -> {
                     scrollBarAdjusted(e);
                 });
-            }
 
-            // remove all mouse wheel listeners
-            mouseWheelListeners = scrollPane.getMouseWheelListeners();
-            for (MouseWheelListener mwl : mouseWheelListeners) {
-                scrollPane.removeMouseWheelListener(mwl);
-            }
+                // remove all mouse wheel listeners
+                mouseWheelListeners = scrollPane.getMouseWheelListeners();
+                for (MouseWheelListener mwl : mouseWheelListeners) {
+                    scrollPane.removeMouseWheelListener(mwl);
+                }
 
-            // add my mouse wheel listener
-            // (so mouseWheelMoved (below) will be called)
-            scrollPane.addMouseWheelListener(this);
+                // add my mouse wheel listener
+                // (so mouseWheelMoved (below) will be called)
+                scrollPane.addMouseWheelListener(this);
+            }
         });
     }   //setupZoomMenu
 
