@@ -66,6 +66,7 @@ public class TimeLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear() {
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
@@ -74,7 +75,11 @@ public class TimeLock implements Lock {
         }
         
         for (SignalHeadSection section : list) {
-            if (section.isRunningTime()) return false;
+            if (section.isRunningTime()) {
+                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
+                    .setValue("Locked: "+section.getStation()+" running time");
+                return false;
+            }
         }
         return true;
     }
