@@ -44,18 +44,12 @@ Layout o-> CodeLine: Code sequence\nCOMPLETE
 activate CodeLine
 CodeLine -> Station : codeValueDelivered()
 activate Station
-Station -> CodeButton : codeSendComplete()
-activate CodeButton
-CodeButton ->o Layout : Code Indicator\nOFF
-deactivate CodeButton
 Station -> TurnoutSection : codeValueDelivered()
 activate TurnoutSection
 TurnoutSection ->o Layout : Set Turnout
 deactivate TurnoutSection
 deactivate CodeLine
 deactivate Station
-
-note over Station: Wait for remote\noperation to complete\ne.g. turnout to move\nMaybe in CodeLine?
 
 note over Station: This is typically followed by receipt of a indication from the remote station - see as other diagram!
 

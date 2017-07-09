@@ -38,7 +38,11 @@ public class SensorGroupConditional extends DefaultConditional {
         if (!enabled || evt == null) {
             return currentState;
         }
-        String listener = ((Sensor) evt.getSource()).getSystemName();
+        Sensor evtSensor = (Sensor) evt.getSource();
+        if (evtSensor == null) {
+            return currentState;
+        }
+        String listener = evtSensor.getSystemName();
         log.debug("SGConditional \"" + getUserName() + "\" (" + getSystemName() + ") has event from \"" + listener + "\"");
         if (Sensor.INACTIVE == ((Integer) evt.getNewValue()).intValue()) {
             return currentState;
@@ -48,9 +52,10 @@ public class SensorGroupConditional extends DefaultConditional {
             Sensor sn = InstanceManager.sensorManagerInstance().getSensor(action.getDeviceName());
             if (sn == null) {
                 log.error("invalid sensor name in action - " + action.getDeviceName());
+                return currentState;
             }
-            if (!listener.equals(action.getDeviceName())) // don't change who triggered the action
-            {   // find the old one and reset it
+            if (sn != evtSensor) { // don't change who triggered the action
+                // find the old one and reset it
                 if (sn.getState() != action.getActionData()) {
                     try {
                         sn.setKnownState(action.getActionData());

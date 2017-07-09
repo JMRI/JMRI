@@ -80,8 +80,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     //                        Object newValue)
     // _once_ if anything has changed state
     /**
-     * Sets a new Commanded state, if need be notifying the listeners, but does
-     * NOT send the command downstream. This is used when a new commanded state
+     * Set a new Commanded state, if need be notifying the listeners, but do
+     * NOT send the command downstream.
+     * <p>
+     * This is used when a new commanded state
      * is noticed from another command.
      * @param s new state
      */
@@ -134,7 +136,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /** 
-     * Defines duration of delay for DELAYED feedback mode.
+     * Define duration of delay for DELAYED feedback mode.
      *<p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
@@ -187,9 +189,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Show whether state is one you can safely run trains over
+     * Show whether state is one you can safely run trains over.
      *
-     * @return    true iff state is a valid one and the known state is the same as
+     * @return true iff state is a valid one and the known state is the same as
      *         commanded
      */
     @Override
@@ -262,10 +264,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private int _numberOutputBits = 1;
 
-    /* Number of bits to control a turnout - defaults to one */
+    /** Number of bits to control a turnout - defaults to one */
     private int _controlType = 0;
 
-    /* Type of turnout control - defaults to 0 for 'steady state' */
+    /** Type of turnout control - defaults to 0 for 'steady state' */
     @Override
     public int getNumberOutputBits() {
         return _numberOutputBits;
@@ -427,6 +429,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Determine if turnout is locked. Returns true if turnout is locked. There
      * are two types of locks, cab lockout, and pushbutton lockout.
+     *
      * @param turnoutLockout turnout to check
      * @return locked state
      */
@@ -452,6 +455,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     protected boolean _enablePushButtonLockout = false;
 
+    /**
+     * This implementation by itself doesn't provide locking support.
+     * Override this in subclasses that do. 
+     *
+     * @return One of 0 for none
+     */
+    public int getPossibleLockModes() { return 0; }
+
+    /**
+     * This implementation by itself doesn't provide locking support.
+     * Override this in subclasses that do. 
+     *
+     * @return false for not supported
+     */
     @Override
     public boolean canLock(int turnoutLockout) {
         return false;
@@ -465,6 +482,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * When true, report to console anytime a cab attempts to change the state
      * of a turnout on the layout. When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
+     *
      * @param reportLocked report locked state
      */
     @Override
@@ -481,6 +499,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * When true, report to console anytime a cab attempts to change the state
      * of a turnout on the layout. When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
+     *
      * @return report locked state
      */
     @Override
@@ -573,11 +592,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * find the TurnoutOperation class for this turnout, and get an instance of
+     * Find the TurnoutOperation class for this turnout, and get an instance of
      * the corresponding operator Override this function if you want another way
-     * to choose the operation
+     * to choose the operation.
      *
-     * @return    newly-instantiated TurnoutOPerator, or null if nothing suitable
+     * @return newly-instantiated TurnoutOPerator, or null if nothing suitable
      */
     protected TurnoutOperator getTurnoutOperator() {
         TurnoutOperator to = null;
@@ -598,7 +617,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Allow an actual turnout class to transform private feedback types into
-     * ones that the generic turnout operations know about
+     * ones that the generic turnout operations know about.
      *
      * @return    apparent feedback mode for operation lookup
      */
@@ -606,8 +625,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return getFeedbackMode();
     }
 
-    /*
-     * support for associated sensor or sensors
+    /**
+     * Support for associated sensor or sensors.
      */
     //Sensor getFirstSensor() = null;
     private NamedBeanHandle<Sensor> _firstNamedSensor;
@@ -744,7 +763,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * React to sensor changes by changing the KnownState if using an
-     * appropriate sensor mode
+     * appropriate sensor mode.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {

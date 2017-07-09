@@ -329,7 +329,7 @@
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
   <indexitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
-  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHander"/>
+  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
 
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
@@ -547,7 +547,6 @@
  <indexitem text="USB-to-Serial Adapter " target="html.hardware.USBtoSerial"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
-
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
