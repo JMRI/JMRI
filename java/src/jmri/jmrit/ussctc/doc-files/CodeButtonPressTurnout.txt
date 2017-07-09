@@ -16,8 +16,18 @@ Station -> TurnoutSection : codeSendStart()
 activate TurnoutSection
 TurnoutSection ->o Layout : TO Indicators\nOFF
 deactivate TurnoutSection
+Station -> CodeLine : requestSendCode()
+activate CodeLine
+CodeLine -> CodeLine : queue then checkForWork()
+deactivate Station
+...
+CodeLine -> CodeLine : startSendCode()
+CodeLine o-> Layout : start code sending
+...
+Layout o-> CodeLine : (Timeout)
+CodeLine -> Station : codeValueDelivered()
 
-Station -> TurnoutSection : codeSendOK()
+Station -> TurnoutSection : codeSendStart()
 activate TurnoutSection
 TurnoutSection -> Locking : opOK()
 activate Locking
@@ -25,14 +35,8 @@ note over Locking : Checks multiple modes, OK
 deactivate Locking
 deactivate TurnoutSection
 
-note over Station : If Locking not OK,\nend here by telling\nCodeButton it's over
-Station -> CodeLine : requestSendCode()
-activate CodeLine
-note over CodeLine : Might be delay here\nif already running
-CodeLine ->o Layout : Code sequence\nSTART
 deactivate CodeLine
 deactivate Station
-deactivate CodeButton
 
 note over Layout : hardware or software\n          delay
 
@@ -44,10 +48,6 @@ Station -> TurnoutSection : codeValueDelivered()
 activate TurnoutSection
 TurnoutSection ->o Layout : Set Turnout
 deactivate TurnoutSection
-Station -> CodeButton : codeSendComplete()
-activate CodeButton
-CodeButton ->o Layout : Code Indicator\nOFF
-deactivate CodeButton
 deactivate CodeLine
 deactivate Station
 
