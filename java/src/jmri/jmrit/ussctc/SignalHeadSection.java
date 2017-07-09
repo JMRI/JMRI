@@ -106,10 +106,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     NamedBeanHandle<Sensor> hRightInput;
         
     // coding used locally to ensure consistency
-    private final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
-    private final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
-    private final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
-    private final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
+    public static final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
+    public static final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
+    public static final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
+    public static final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
     
     // States to track changes at the Code Machine end
     enum Machine {
@@ -126,15 +126,20 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     Station station;
     public Station getStation() { return station; }
     public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
-    List<Lock> locks;
-    public void addLocks(List<Lock> locks) { this.locks = locks; }
 
-    protected boolean checkLockPermitted() {
+    List<Lock> rightwardLocks;
+    public void addRightwardLocks(List<Lock> locks) { this.rightwardLocks = locks; }
+    List<Lock> leftwardLocks;
+    public void addLeftwardLocks(List<Lock> locks) { this.leftwardLocks = locks; }
+
+    protected boolean checkLockPermitted(List<Lock> locks) {
         boolean permitted = true;
         if (locks != null) {
             for (Lock lock : locks) {
-                if ( ! lock.isLockClear()) permitted = false;
-                break;
+                if ( ! lock.isLockClear()) {
+                    permitted = false;
+                    break;
+                }
             }
         }
         log.debug(" Lock check found permitted = {}", permitted);
@@ -245,20 +250,14 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
         deferIndication = true;
-        if (! checkLockPermitted() ) {
-            // lock sets stop
-            lastIndication = CODE_STOP;
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
-            log.debug("Lock determines signals set STOP");
-        } else if (value == CODE_LEFT) {
+        if (value == CODE_LEFT && checkLockPermitted(leftwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
             log.debug("Layout signals set LEFT");
             lastIndication = CODE_LEFT;
             setListHeldState(hLeftHeads, false);
-        } else if (value == CODE_RIGHT) {
+        } else if (value == CODE_RIGHT && checkLockPermitted(rightwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
@@ -413,7 +412,17 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     } 
 
     void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
-        if (getCurrentIndication() != lastIndication && ! deferIndication) {
+        CodeGroupThreeBits current = getCurrentIndication();
+        // as a modeling thought, if we're dropping to stop, set held right now
+        if (current == CODE_STOP && current != lastIndication && ! deferIndication ) {
+            deferIndication = true;
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            deferIndication = false;
+        }
+        
+        // if there was a change, need to send indication back to central
+        if (current != lastIndication && ! deferIndication) {
             log.debug("  SignalHead change resulted in changed Indication, driving update");
             station.requestIndicationStart();
         } else {
