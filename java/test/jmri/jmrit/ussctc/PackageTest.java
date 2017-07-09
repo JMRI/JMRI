@@ -42,6 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.OccupancyLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.RouteLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TrafficLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TimeLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.StationTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeLineTest.class));
