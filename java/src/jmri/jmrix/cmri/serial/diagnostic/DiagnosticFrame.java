@@ -99,7 +99,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     public void initComponents() throws Exception {
 
         // set the frame's initial state
-        setTitle("Run CMRI Diagnostic");
+        setTitle(Bundle.getMessage("DiagnosticTitle"));
         setSize(500, 200);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

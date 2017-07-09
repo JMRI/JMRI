@@ -273,7 +273,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                         Bundle.getMessage("ErrorAssignFormatHelp"),
                         Bundle.getMessage("ErrorAssignTitle"),
                         JOptionPane.INFORMATION_MESSAGE, null);
-                throw new JmriException("Address {} is not an integer.", curAddress);
+                throw new JmriException("Address " + curAddress + " is not an integer");
             }
             tmpSName = prefix + "T" + curAddress;
             bitNum = _memo.getBitFromSystemName(tmpSName);
