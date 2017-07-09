@@ -48,6 +48,10 @@ Station -> TurnoutSection : codeValueDelivered()
 activate TurnoutSection
 TurnoutSection ->o Layout : Set Turnout
 deactivate TurnoutSection
+Station -> CodeButton : codeSendComplete()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nOFF
+deactivate CodeButton
 deactivate CodeLine
 deactivate Station
 
