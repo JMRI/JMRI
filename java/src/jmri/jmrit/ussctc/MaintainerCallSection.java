@@ -41,6 +41,8 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
     NamedBeanHandle<Turnout> hLayoutOutput;
     
     Station station;
+    public Station getStation() { return station; }
+    public String getName() { return "MC for "+hLayoutOutput.getBean().getDisplayName(); }
  
      /**
      * Start of sending code operation.

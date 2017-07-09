@@ -72,9 +72,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         this.station = station;
         
-        // initialize lamps to follow layout state to all off - you don't know anything
+        // initialize lamps to follow layout state to signal at Stop
         tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
-        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.THROWN);
         tm.provideTurnout(rightIndicator).setCommandedState(Turnout.CLOSED);
         // hold everything
         setListHeldState(hRightHeads, true);
@@ -124,7 +124,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     public boolean isRunningTime() { return timeRunning; }
     
     Station station;
-    
+    public Station getStation() { return station; }
+    public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
     List<Lock> locks;
     public void addLocks(List<Lock> locks) { this.locks = locks; }
 
@@ -133,6 +134,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         if (locks != null) {
             for (Lock lock : locks) {
                 if ( ! lock.isLockClear()) permitted = false;
+                break;
             }
         }
         log.debug(" Lock check found permitted = {}", permitted);
@@ -162,18 +164,24 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                     ( hRightIndicator.getBean().getKnownState() == Turnout.THROWN || hLeftIndicator.getBean().getKnownState() == Turnout.THROWN) ) 
             ) {
         
-            // setting to stop, have to start running time
-            timeRunning = true;
-            jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
-                    log.debug("End running time");
-                    logMemory.setValue("");
-                    timeRunning = false;
-                    station.requestIndicationStart();
-                } ,
-                (int)timeMemory.getValue());
+            // setting to stop, have to start running time?
+            if (!timeRunning && timeMemory!=null && ! timeMemory.getValue().equals("") && ((int)timeMemory.getValue() > 0 ) ) {
+                timeRunning = true;
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                
+                jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
+                        log.debug("End running time");
+                        logMemory.setValue("");
+                        timeRunning = false;
+                        station.requestIndicationStart();
+                    } ,
+                    (int)timeMemory.getValue());
             
-            log.debug("starting to run time");
-            logMemory.setValue("Running time: Station "+station.getName());
+                log.debug("starting to run time for {} seconds", ((int)timeMemory.getValue())/1000);
+                logMemory.setValue("Running time: Station "+station.getName());
+            }
         }
     
         // Set the indicators based on current and requested state
@@ -182,9 +190,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                 || ( machine==Machine.SET_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) 
                 || ( machine==Machine.SET_STOP && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE && hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE) )
                 ) {
-            log.debug("No signal change required, states aligned");
+            log.debug("No signal change requested, states aligned, lamps unchanged");
         } else {
-            log.debug("Signal change requested");
+            log.debug("Signal change requested, turn off lamps");
             // have to turn off
             hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
@@ -211,14 +219,19 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // A model thought -  if setting stop, hold signals immediately
         // instead of waiting for code cycle.  Model railroads move fast...
         if (retval == CODE_STOP) {
+            deferIndication = true;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
+            deferIndication = false;
         }
         
         return retval;
     }
 
-    public static int MOVEMENT_DELAY = 5000;
+    public static int MOVEMENT_DELAY = 6000;
+    
+    boolean deferIndication = false; // when set, don't indicate on layout change
+                                     // because something else will ensure it later
     
     /**
      * Code arrives in field. Sets the signals on the layout.
@@ -231,14 +244,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
+        deferIndication = true;
         if (! checkLockPermitted() ) {
             // lock sets stop
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
-            log.debug("Layout signals set LEFT");
-            lastIndication = CODE_LEFT;
-            setListHeldState(hLeftHeads, false);
+            log.debug("Lock determines signals set STOP");
         } else if (value == CODE_LEFT) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
@@ -263,15 +275,11 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // start the timer for the signals to change
         if (currentIndication != lastIndication) {
             log.debug("codeValueDelivered started timer for return indication");
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    jmri.util.ThreadingUtil.runOnGUI( ()->{
+            jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
                         log.debug("end of movement delay from codeValueDelivered");
+                        deferIndication = false;
                         station.requestIndicationStart();
-                    } );
-                }
-            }, MOVEMENT_DELAY);
+                }, MOVEMENT_DELAY);
         }
     }
 
@@ -312,8 +320,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         // set Held right away
         if (retval == CODE_STOP && lastIndication != CODE_STOP) {
+            deferIndication = true;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
+            deferIndication = false;
         }
         
         lastIndication = retval;
@@ -403,7 +413,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     } 
 
     void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
-        if (getCurrentIndication() != lastIndication) {
+        if (getCurrentIndication() != lastIndication && ! deferIndication) {
             log.debug("  SignalHead change resulted in changed Indication, driving update");
             station.requestIndicationStart();
         } else {
