@@ -29,14 +29,12 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         // send a reply the memory read instruction trigged by the constructor above.
         nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
         Assert.assertNotNull(c);
+        c.dispose();
     }
 
     @Ignore("not quite ready yet")
     @Override
     @Test public void checkDisposeMethod(){
-        NceConsist c =  new NceConsist(3,memo);
-        // send a reply the memory read instruction trigged by the constructor above.
-        nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
         // verify that c has been added to the traffic controller's
         // list of listeners.
         int listeners = nnis.numListeners();
@@ -72,9 +70,6 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
 
     @Override
     @Test public void checkGetLocoDirectionAdvanced(){
-        NceConsist c = new NceConsist(3,memo);
-        // send a reply the memory read instruction trigged by the constructor above.
-        nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
