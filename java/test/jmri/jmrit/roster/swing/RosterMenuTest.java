@@ -21,7 +21,7 @@ public class RosterMenuTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestRosterWindow");
-        RosterMenu t = new RosterMenu("Test Roster Menu",5,jf);
+        RosterMenu t = new RosterMenu("Test Roster Menu",RosterMenu.MAINMENU,jf);
         Assert.assertNotNull("exists",t);
         jf.dispose();
     }
