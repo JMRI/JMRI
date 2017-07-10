@@ -83,7 +83,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
-                Bundle.getMessage("ErrorAssignLine2"),
+                Bundle.getMessage("ErrorAssignLine2T"),
                 Bundle.getMessage("ErrorAssignTitle"),
                 JOptionPane.INFORMATION_MESSAGE, null);
     }
@@ -207,7 +207,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     public void notifySecondBitConflict(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +
-                Bundle.getMessage("ErrorAssignLine2"),
+                Bundle.getMessage("ErrorAssignLine2X", Bundle.getMessage("BeanNameTurnout")),
                 Bundle.getMessage("ErrorAssignTitle"),
                 JOptionPane.INFORMATION_MESSAGE, null);
     }

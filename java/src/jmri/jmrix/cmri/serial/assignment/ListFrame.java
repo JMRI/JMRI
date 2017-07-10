@@ -53,7 +53,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     JLabel nodeLabel = new JLabel(Bundle.getMessage("NodeBoxLabel") + " ");
     JComboBox<String> nodeSelBox = new JComboBox<>();
     ButtonGroup bitTypeGroup = new ButtonGroup();
-    JRadioButton inputBits = new JRadioButton(Bundle.getMessage("ShowInputButton") + "   ", false);
+    JRadioButton inputBits = new JRadioButton(Bundle.getMessage("ShowInputButton"), false);
     JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"), true);
     JLabel nodeInfoText = new JLabel(Bundle.getMessage("NodeInfoCol"));
 
