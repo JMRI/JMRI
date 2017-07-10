@@ -2,12 +2,15 @@ package jmri.jmrit.roster.swing.speedprofile;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
 
 /**
  *
@@ -17,7 +20,10 @@ public class SpeedProfileTableTest {
 
     @Test
     public void testCTor() {
-        SpeedProfileTable t = new SpeedProfileTable(new RosterEntry());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RosterEntry re = new RosterEntry();
+        re.setSpeedProfile(new RosterSpeedProfile(re));
+        SpeedProfileTable t = new SpeedProfileTable(re);
         Assert.assertNotNull("exists",t);
     }
 
