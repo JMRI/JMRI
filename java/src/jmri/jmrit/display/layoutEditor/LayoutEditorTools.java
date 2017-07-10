@@ -1172,11 +1172,11 @@ public class LayoutEditorTools {
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
      */
-    public void setSignalHeadOnPanel(double rotation, String headName, Point2D where) {
-        setSignalHeadOnPanel(rotation, headName, (int) where.getX(), (int) where.getY());
+    public void setSignalHeadOnPanel(double directionDEG, String headName, Point2D where) {
+        setSignalHeadOnPanel(directionDEG, headName, (int) where.getX(), (int) where.getY());
     }
 
-    public void setSignalHeadOnPanel(double rotation, String headName,
+    public void setSignalHeadOnPanel(double directionDEG, String headName,
             int xLoc, int yLoc) {
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(headName);
@@ -1191,13 +1191,17 @@ public class LayoutEditorTools {
         l.setIcon(Bundle.getMessage("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
         l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
 
-        double delta = Math.hypot(l.maxWidth(), l.maxHeight()) / 2.0;
-        l.setLocation(xLoc - (int) delta, yLoc - (int) delta);
+        if (true) {
+            l.setLocation(xLoc, yLoc);
+        } else {
+            double delta = Math.hypot(l.maxWidth(), l.maxHeight()) / 2.0;
+            l.setLocation(xLoc - (int) delta, yLoc - (int) delta);
+        }
 
-        if (rotation > 0) {
+        if (directionDEG > 0) {
             java.util.Iterator<String> e = l.getIconStateNames();
             while (e.hasNext()) {
-                l.getIcon(e.next()).rotate((int) rotation, l);
+                l.getIcon(e.next()).rotate((int) directionDEG, l);
             }
         }
         layoutEditor.putSignal(l);
