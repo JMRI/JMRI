@@ -55,7 +55,7 @@ deactivate CodeButton
 deactivate CodeLine
 deactivate Station
 
-note over Station: This is typically followed by receipt of a indication from the remote station - see as other diagram!
+note over Station: After this, the Station may initiate an return indication transfer
 
 @enduml
 

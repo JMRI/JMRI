@@ -11,12 +11,12 @@ import jmri.DccLocoAddress;
 /**
  * LocoNetConsistTest.java
  *
- * Description:	tests for the jmri.jmrix.nce.LocoNetConsist class
+ * Description:	tests for the jmri.jmrix.loconet.LocoNetConsist class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author	Paul Bender Copyright (C) 2016,2017
  */
 
-public class LocoNetConsistTest {
+public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     // infrastructure objects, populated by setUp;
     LocoNetInterfaceScaffold lnis;
@@ -51,12 +51,6 @@ public class LocoNetConsistTest {
         slotmanager.message(m2);
     }
 
-    @Test public void testCtor() {
-        LocoNetConsist m = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        Assert.assertNotNull(m);
-    }
-
     @Test public void testCtor2() {
         // DccLocoAddress constructor test.
         LocoNetConsist c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
@@ -66,8 +60,6 @@ public class LocoNetConsistTest {
 
     @Ignore("not quite ready yet")
     @Test public void checkDisposeMethod(){
-        LocoNetConsist c =  new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
         // verify that c has been added to the traffic controller's
         // list of listeners.
         int listeners = lnis.numListeners();
@@ -75,40 +67,23 @@ public class LocoNetConsistTest {
         Assert.assertEquals("dispose check",listeners -1, lnis.numListeners());
     }
 
-    @Test public void testGetConsistType(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
+    @Test
+    @Override 
+    public void testGetConsistType(){
         // LocoNet consists default to CS consists.
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Test public void testSetConsistTypeAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertEquals("default consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
-    }
-
-    @Test public void testSetConsistTypeCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
+    @Test 
+    @Override
+    public void testSetConsistTypeCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Test public void testSetConsistTypeOther(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(255);
-        // make sure an error message is generated.
-        jmri.util.JUnitAppender.assertErrorMessage("Consist Type Not Supported");
-    }
-
-    @Test public void checkAddressAllowedGoodCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertTrue("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(200,true)));
+    @Ignore("LocoNet CS consists allow any address")
+    @Override
+    @Test public void checkAddressAllowedBad(){
     }
 
     @Test public void checkAddressAllowedGoodAdvanced(){
@@ -125,72 +100,11 @@ public class LocoNetConsistTest {
         Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
     }
 
-    @Test public void checkSizeLimitAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertEquals("Advanced Consist Limit",-1,c.sizeLimit());   
-    } 
 
     @Test public void checkSizeLimitCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());   
     } 
-
-    @Test public void checkContainsAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        // nothing added, should be false for all.
-        Assert.assertFalse("Advanced Consist Contains",c.contains(A));   
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
-        // add just A
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
-        // then add B
-        c.restore(B,false);
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));   
-    }
-
-    @Test public void checkContainsCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        // nothing added, should be false for all.
-        Assert.assertFalse("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
-        // add just A
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
-        // then add B
-        c.restore(B,false);
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertTrue("CS Consist Contains",c.contains(B));   
-    }
-
-    @Test public void checkGetLocoDirectionAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in Advanced Consist",c.getLocoDirection(A));   
-        Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));   
-    }
 
     @Test public void checkGetLocoDirectionCS(){
         LocoNetConsist c = new LocoNetConsist(3,memo);
@@ -208,6 +122,7 @@ public class LocoNetConsistTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -234,6 +149,8 @@ public class LocoNetConsistTest {
         } catch(LocoNetException lne) {
           Assert.fail("failed to add addresses to slot durring setup");
         }
+        c = new LocoNetConsist(3,memo);
+        ReturnSlotInfo();
 
     }
    
@@ -241,6 +158,7 @@ public class LocoNetConsistTest {
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
+        c = null;
     }
 
 }
