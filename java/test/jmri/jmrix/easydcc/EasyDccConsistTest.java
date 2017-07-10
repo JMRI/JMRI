@@ -73,12 +73,16 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        EasyDccSystemConnectionMemo m = new EasyDccSystemConnectionMemo(new EasyDccTrafficControlScaffold());
+        jmri.InstanceManager.setDefault(jmri.CommandStation.class,new EasyDccCommandStation(m));
         c = new EasyDccConsist(5);
     }
    
     @After
     @Override
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         c = null;
     }

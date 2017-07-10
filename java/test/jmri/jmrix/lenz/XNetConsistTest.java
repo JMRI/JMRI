@@ -27,12 +27,29 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     }
 
     @Override
-    @Test public void checkDisposeMethod(){
+    @Test(expected=java.lang.NullPointerException.class)
+    public void checkDisposeMethod(){
         // verify that c has been added to the traffic controller's 
         // list of listeners.
         int listeners = tc.numListeners();
+
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // use restore here, as it does not send
+                           // any data to the command station
+        // before dispose, this should succeed.
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
+        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+
         c.dispose();
         Assert.assertEquals("dispose check",listeners -1, tc.numListeners()); 
+
+        // after dispose, this should fail
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
+        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+
     }
 
     @Override
