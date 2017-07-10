@@ -27,6 +27,8 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
         c = new DccConsist(new DccLocoAddress(12, true));
     }
    

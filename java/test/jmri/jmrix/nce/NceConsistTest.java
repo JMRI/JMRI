@@ -32,15 +32,6 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         c.dispose();
     }
 
-    @Ignore("not quite ready yet")
-    @Override
-    @Test public void checkDisposeMethod(){
-        // verify that c has been added to the traffic controller's
-        // list of listeners.
-        int listeners = nnis.numListeners();
-        Assert.assertEquals("dispose check",listeners -1, nnis.numListeners());
-    }
-
     @Override
     @Test public void checkSizeLimitAdvanced(){
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);

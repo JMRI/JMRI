@@ -58,15 +58,6 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertNotNull(c);
     }
 
-    @Ignore("not quite ready yet")
-    @Test public void checkDisposeMethod(){
-        // verify that c has been added to the traffic controller's
-        // list of listeners.
-        int listeners = lnis.numListeners();
-        c.dispose();
-        Assert.assertEquals("dispose check",listeners -1, lnis.numListeners());
-    }
-
     @Test
     @Override 
     public void testGetConsistType(){
