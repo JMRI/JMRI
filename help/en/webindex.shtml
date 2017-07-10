@@ -1008,7 +1008,7 @@
 
   
 <li>
-<a href="">Handling Errors </a>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
 <ul></ul>
 </li>
 
@@ -1666,12 +1666,6 @@
 <ul>
   
 <li>
-<a href="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code  Button </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower </a>
 <ul></ul>
 </li>
@@ -1679,18 +1673,6 @@
   
 <li>
 <a href="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever </a>
 <ul></ul>
 </li>
 

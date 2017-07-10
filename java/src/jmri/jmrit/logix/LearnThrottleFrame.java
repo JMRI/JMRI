@@ -27,6 +27,7 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.KeyListenerInstaller;
 import jmri.util.JmriJFrame;
@@ -82,7 +83,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 
     /**
      * Default constructor
-     * @param warrantFrame parent frame
      */
     public LearnThrottleFrame(WarrantFrame warrantFrame) {
         super(false, false);
@@ -111,7 +111,11 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _functionPanel.notifyThrottleFound(t);
         _buttonPanel.notifyThrottleFound(t);
         setSpeedSetting(0.0f);      // be sure loco is stopped.
-        String name = _warrantFrame.getTrainName();
+        RosterEntry train = _warrantFrame.getTrain();
+        String name = "";
+        if (train != null) {
+            name = train.getId();
+        }
         setTitle(name + " (" + t.getLocoAddress().toString() + ")");
     }
 
@@ -125,7 +129,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             }
         });
         initializeMenu();
-        _functionPanel = new FunctionPanel(_warrantFrame._speedUtil.getRosterEntry(), this);
+        _functionPanel = new FunctionPanel(_warrantFrame.getTrain(), this);
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
@@ -235,7 +239,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     @Override
     public void dispose() {
         if (_throttle!=null) {
-            _warrantFrame.getWarrant().getSpeedUtil().releaseThrottle();            
+            InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrantFrame.getWarrant());            
         }
         if (powerMgr != null) {
             powerMgr.removePropertyChangeListener(this);

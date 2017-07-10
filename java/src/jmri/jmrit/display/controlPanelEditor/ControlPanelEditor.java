@@ -120,17 +120,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private boolean _disableShapeSelection;
     private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
 
-    private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
-//    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
-    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
-    private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
-    private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
-    private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
-    private JCheckBoxMenuItem disableShapeSelect = new JCheckBoxMenuItem(Bundle.getMessage("disableShapeSelect"));
-    private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
-    private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
-    private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
-    private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
+    private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
+//    private final JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
+    private final JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
+    private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
+    private final JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    private final JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
+    private final JCheckBoxMenuItem disableShapeSelect = new JCheckBoxMenuItem(Bundle.getMessage("disableShapeSelect"));
+    private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
+    private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
+    private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
+    private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     public ControlPanelEditor() {
     }
@@ -246,11 +246,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_drawMenu == null) {
             _drawMenu = _shapeDrawer.makeMenu();
             _drawMenu.add(disableShapeSelect);
-            disableShapeSelect.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    _disableShapeSelection = disableShapeSelect.isSelected();
-                }
+            disableShapeSelect.addActionListener((ActionEvent event) -> {
+                _disableShapeSelection = disableShapeSelect.isSelected();
             });
         }
         _menuBar.add(_drawMenu, 0);
@@ -274,11 +271,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_zoomMenu, 0);
         JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
         _zoomMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                zoomRestore();
-            }
+        addItem.addActionListener((ActionEvent event) -> {
+            zoomRestore();
         });
 
         addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
@@ -289,11 +283,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
         _zoomMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                zoomToFit();
-            }
+        addItem.addActionListener((ActionEvent event) -> {
+            zoomToFit();
         });
     }
 
@@ -309,11 +300,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _warrantMenu.add(aboutItem);
             aboutItem = new JMenuItem(Bundle.getMessage("OpenCircuitMenu"));
             _warrantMenu.add(aboutItem);
-            aboutItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    makeCircuitMenu(true);
-                }
+            aboutItem.addActionListener((ActionEvent event) -> {
+                makeCircuitMenu(true);
             });
         } else {
             makeCircuitMenu(edit);
@@ -349,47 +337,32 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_optionMenu, 0);
         // use globals item
         _optionMenu.add(useGlobalFlagBox);
-        useGlobalFlagBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setUseGlobalFlag(useGlobalFlagBox.isSelected());
-            }
+        useGlobalFlagBox.addActionListener((ActionEvent event) -> {
+            setUseGlobalFlag(useGlobalFlagBox.isSelected());
         });
         useGlobalFlagBox.setSelected(useGlobalFlag());
         // positionable item
         _optionMenu.add(positionableBox);
-        positionableBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllPositionable(positionableBox.isSelected());
-            }
+        positionableBox.addActionListener((ActionEvent event) -> {
+            setAllPositionable(positionableBox.isSelected());
         });
         positionableBox.setSelected(allPositionable());
         // controlable item
         _optionMenu.add(controllingBox);
-        controllingBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllControlling(controllingBox.isSelected());
-            }
+        controllingBox.addActionListener((ActionEvent event) -> {
+            setAllControlling(controllingBox.isSelected());
         });
         controllingBox.setSelected(allControlling());
         // hidden item
         _optionMenu.add(hiddenBox);
-        hiddenBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setShowHidden(hiddenBox.isSelected());
-            }
+        hiddenBox.addActionListener((ActionEvent event) -> {
+            setShowHidden(hiddenBox.isSelected());
         });
         hiddenBox.setSelected(showHidden());
 
         _optionMenu.add(showTooltipBox);
-        showTooltipBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setAllShowTooltip(showTooltipBox.isSelected());
-            }
+        showTooltipBox.addActionListener((ActionEvent e) -> {
+            setAllShowTooltip(showTooltipBox.isSelected());
         });
         showTooltipBox.setSelected(showTooltip());
 
@@ -399,35 +372,23 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         ButtonGroup scrollGroup = new ButtonGroup();
         scrollGroup.add(scrollBoth);
         scrollMenu.add(scrollBoth);
-        scrollBoth.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_BOTH);
-            }
+        scrollBoth.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_BOTH);
         });
         scrollGroup.add(scrollNone);
         scrollMenu.add(scrollNone);
-        scrollNone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_NONE);
-            }
+        scrollNone.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_NONE);
         });
         scrollGroup.add(scrollHorizontal);
         scrollMenu.add(scrollHorizontal);
-        scrollHorizontal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_HORIZONTAL);
-            }
+        scrollHorizontal.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_HORIZONTAL);
         });
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
-        scrollVertical.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_VERTICAL);
-            }
+        scrollVertical.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_VERTICAL);
         });
     }
 
@@ -439,11 +400,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
-        storeIndexItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
-            }
+        storeIndexItem.addActionListener((ActionEvent event) -> {
+            jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -472,35 +430,26 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         editItem = new JMenuItem(Bundle.getMessage("PEView"));
         _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                changeView("jmri.jmrit.display.panelEditor.PanelEditor");
-                if (_itemPalette != null) {
-                    _itemPalette.dispose();
-                }
+        editItem.addActionListener((ActionEvent event) -> {
+            changeView("jmri.jmrit.display.panelEditor.PanelEditor");
+            if (_itemPalette != null) {
+                _itemPalette.dispose();
             }
         });
 
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
         _fileMenu.add(deleteItem);
-        deleteItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (deletePanel()) {
-                    dispose(true);
-                }
+        deleteItem.addActionListener((ActionEvent event) -> {
+            if (deletePanel()) {
+                dispose(true);
             }
         });
         _fileMenu.addSeparator();
         editItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
         _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllEditable(false);
-            }
+        editItem.addActionListener((ActionEvent event) -> {
+            setAllEditable(false);
         });
     }
 
@@ -556,12 +505,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
          */
 
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                copyToClipboard();
-                removeSelections(null);
-            }
+        menuItem.addActionListener((ActionEvent event) -> {
+            copyToClipboard();
+            removeSelections(null);
         });
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
@@ -574,11 +520,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _editMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                copyToClipboard();
-            }
+        menuItem.addActionListener((ActionEvent event) -> {
+            copyToClipboard();
         });
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
@@ -591,11 +534,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _editMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                pasteFromClipboard();
-            }
+        menuItem.addActionListener((ActionEvent event) -> {
+            pasteFromClipboard();
         });
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
@@ -611,12 +551,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _editMenu.add(makeSelectLevelMenu());
 
         menuItem = new JMenuItem(Bundle.getMessage("SelectAll"));
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                _selectionGroup = _contents;
-                _targetPanel.repaint();
-            }
+        menuItem.addActionListener((ActionEvent event) -> {
+            _selectionGroup = _contents;
+            _targetPanel.repaint();
         });
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
@@ -692,7 +629,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private void selectType(String name) {
         try {
             Class<?> cl = Class.forName(name);
-            _selectionGroup = new ArrayList<Positionable>();
+            _selectionGroup = new ArrayList<>();
             Iterator<Positionable> it = _contents.iterator();
             while (it.hasNext()) {
                 Positionable pos = it.next();
@@ -709,7 +646,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu makeSelectLevelMenu() {
         JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
         ButtonGroup levelGroup = new ButtonGroup();
-        JRadioButtonMenuItem button = null;
+        JRadioButtonMenuItem button;
         for (int i = 0; i < 11; i++) {
             button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", "" + i));
             levelGroup.add(button);
@@ -732,7 +669,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     private void selectLevel(int i) {
-        _selectionGroup = new ArrayList<Positionable>();
+        _selectionGroup = new ArrayList<>();
         Iterator<Positionable> it = _contents.iterator();
         while (it.hasNext()) {
             Positionable pos = it.next();
@@ -743,9 +680,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint();
     }
 
-    /**
-     * *********************** end Menus ************************
-     */
+    ////////////////////////// end Menus //////////////////////////
     public CircuitBuilder getCircuitBuilder() {
         return _circuitBuilder;
     }
@@ -771,7 +706,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         if (_pastePending) {
                             abortPasteItems();
                         }
-                        _selectionGroup = new ArrayList<Positionable>();
+                        _selectionGroup = new ArrayList<>();
                         for (int i = 0; i < clipGroup.size(); i++) {
                             pos = clipGroup.get(i);
                             // make positionable belong to this editor
@@ -812,7 +747,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     private void copyToClipboard() {
         if (_selectionGroup != null) {
-            ArrayList<Positionable> dragGroup = new ArrayList<Positionable>();
+            ArrayList<Positionable> dragGroup = new ArrayList<>();
 
             for (Positionable comp : _selectionGroup) {
                 Positionable pos = comp.deepClone();
@@ -839,7 +774,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_clipGroup == null) {
             return null;
         }
-        ArrayList<Positionable> clipGrp = new ArrayList<Positionable>();
+        ArrayList<Positionable> clipGrp = new ArrayList<>();
         for (Positionable _comp : _clipGroup) {
             Positionable pos = _comp.deepClone();
             clipGrp.add(pos);
@@ -1083,9 +1018,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         log.debug("InitView done");
     }
 
-    /**
-     * *************** Overridden methods of Editor ******************
-     */
+    ////////////////// Overridden methods of Editor //////////////////
     private boolean _manualSelection = false;
 
     protected Positionable getCurrentSelection(MouseEvent event) {
@@ -1094,7 +1027,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         List<Positionable> selections = getSelectedItems(event);
         if (_disableShapeSelection || _disablePortalSelection) {
-            ArrayList<Positionable> list = new ArrayList<Positionable>();
+            ArrayList<Positionable> list = new ArrayList<>();
             Iterator<Positionable> it = selections.iterator();
             while (it.hasNext()) {
                 Positionable pos = it.next();
@@ -1136,7 +1069,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         iter = selections.iterator();
                         while (iter.hasNext()) {
                             Positionable pos = iter.next();
-                            String name = null;
+                            String name;
                             if (pos instanceof jmri.NamedBean) {
                                 name = ((jmri.NamedBean) pos).getDisplayName();
                             } else {
@@ -1196,7 +1129,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     /**
-     * ********* KeyListener of Editor ********
+     * Capture key events.
+     *
+     * @param e the event
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -1250,7 +1185,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     /**
-     * ********* Mouse **************
+     * Handle mouse events.
+     *
+     * @param event the moust event to handle
      */
     @Override
     public void mousePressed(MouseEvent event) {
@@ -1331,7 +1268,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                     if (_currentSelection != null && (_selectionGroup == null || _selectionGroup.isEmpty())) {
                         if (_selectionGroup == null) {
-                            _selectionGroup = new ArrayList<Positionable>();
+                            _selectionGroup = new ArrayList<>();
                         }
                         _selectionGroup.add(_currentSelection);
                     }
@@ -1488,12 +1425,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint();  // needed for ToolTip
     }
 
-    /**
-     * ************* implementation of Abstract Editor methods **********
-     */
+    ////////////////// implementation of Abstract Editor methods //////////////////
     /**
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
+     *
+     * @param e the triggering event
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
@@ -1537,8 +1474,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     @Override
     protected void copyItem(Positionable p) {
         if (log.isDebugEnabled()) { // avoid string concatination if not debug
-            log.debug("Enter copyItem: _selectionGroup {}",
-                    _selectionGroup != null ? "size=" + _selectionGroup.size() : "null");
+            log.debug("Enter copyItem: _selectionGroup size={}",
+                    _selectionGroup != null ? _selectionGroup.size() : "(null)");
         }
         // If popup menu hit again, Paste selections and make another copy
         if (_pastePending) {
@@ -1548,17 +1485,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             deselectSelectionGroup();
         }
         if (_selectionGroup == null) {
-            _selectionGroup = new ArrayList<Positionable>();
+            _selectionGroup = new ArrayList<>();
             _selectionGroup.add(p);
         }
-        ArrayList<Positionable> selectionGroup = new ArrayList<Positionable>();
+        ArrayList<Positionable> selectionGroup = new ArrayList<>();
         for (Positionable comp : _selectionGroup) {
             Positionable pos = comp.deepClone();
             selectionGroup.add(pos);
         }
         _selectionGroup = selectionGroup;  // group is now disconnected
         _pastePending = true;
-//        if (_debug) log.debug("Exit copyItem: _selectionGroup.size()= "+_selectionGroup.size());
+        log.debug("Exit copyItem: _selectionGroup.size()={}", _selectionGroup.size());
     }
 
     void pasteItems() {
@@ -1609,6 +1546,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /**
      * Add an action to copy the Positionable item and the group to which is may
      * belong.
+     *
+     * @param p     the copyable item
+     * @param popup the menu to add it to
      */
     public void setCopyMenu(Positionable p, JPopupMenu popup) {
         JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemDuplicate"));
@@ -1745,7 +1685,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private HashMap<String, NamedIcon> _portalIconMap;
 
     private void makePortalIconMap() {
-        _portalIconMap = new HashMap<String, NamedIcon>();
+        _portalIconMap = new HashMap<>();
         _portalIconMap.put(PortalIcon.VISIBLE,
                 new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
         _portalIconMap.put(PortalIcon.PATH,
@@ -1816,7 +1756,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     /**
-     * ********************** Called by CircuitBuilder *********************
+     * Highlight an item.
+     *
+     * @param pos the item to hightlight
      */
     protected void highlight(Positionable pos) {
         if (pos == null) {

@@ -183,7 +183,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
             if (l.getElement(1) == XNetConstants.LI101_REQUEST_ADDRESS) {
                 // The third element is the address
                 addrBox.setSelectedIndex(l.getElement(2));
-                status.setText("Address" + l.getElement(2) + "recieved from LI101");
+                status.setText("Address" + l.getElement(2) + "received from LI101");
             } else if (l.getElement(1) == XNetConstants.LI101_REQUEST_BAUD) {
                 // The third element is the encoded Baud rate
                 speedBox.setSelectedIndex(l.getElement(2) - 1);

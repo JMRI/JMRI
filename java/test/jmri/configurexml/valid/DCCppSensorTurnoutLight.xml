@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>9</minor>
+    <test>1</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.dccpp.configurexml.DCCppSensorManagerXml">
+    <sensor inverted="false">
+      <systemName>DCCPPS0</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>DCCPPS1</systemName>
+      <properties>
+        <property>
+          <key>Pin</key>
+          <value class="java.lang.Integer">4</value>
+        </property>
+        <property>
+          <key>Pullup</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>DCCPPS2</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.dccpp.configurexml.DCCppTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>DCCPPT1</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.dccpp.configurexml.DCCppLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>DCCPPL3</systemName>
+    </light>
+  </lights>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sat Jul 01 10:08:04 PDT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sat Jul 01 10:10:47 PDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.9.1ish+jake+20170701T1705Z+R5c211008cb on Sat Jul 01 10:10:47 PDT 2017-->
+</layout-config>
