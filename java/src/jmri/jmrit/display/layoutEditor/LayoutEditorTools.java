@@ -1192,10 +1192,12 @@ public class LayoutEditorTools {
         l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
 
         if (true) {
+            l.setLocation(xLoc - (int) (l.maxWidth() / 2.0), yLoc - (int) (l.maxHeight() / 2.0));
+        } else if (true) {
             l.setLocation(xLoc, yLoc);
         } else {
-            double delta = Math.hypot(l.maxWidth(), l.maxHeight()) / 2.0;
-            l.setLocation(xLoc - (int) delta, yLoc - (int) delta);
+            int delta = (int) (Math.hypot(l.maxWidth(), l.maxHeight()) / 2.0);
+            l.setLocation(xLoc - delta, yLoc - delta);
         }
 
         if (directionDEG > 0) {
@@ -3352,8 +3354,8 @@ public class LayoutEditorTools {
         Point2D pointA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a1ComboBox.getDisplayName());
         if (true) {
-            double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(0.0, +iconSize);
+            //double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+            Point2D delta = new Point2D.Double(0.0, +testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointA, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
@@ -3386,7 +3388,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(a2ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(-iconSize, +iconSize);
+            Point2D delta = new Point2D.Double(-iconSize, +testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointA, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
@@ -3419,7 +3421,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(b1ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(-iconSize, -iconSize / 4.0);
+            Point2D delta = new Point2D.Double(-iconSize, -testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointB, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
@@ -3452,7 +3454,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(b2ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(0.0, -iconSize / 4.0);
+            Point2D delta = new Point2D.Double(0.0, -testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointB, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
@@ -3485,7 +3487,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(c1ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(0.0, -iconSize / 4.0);
+            Point2D delta = new Point2D.Double(0.0, -testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointC, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
@@ -3518,7 +3520,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(c2ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(+iconSize, -iconSize / 4.0);
+            Point2D delta = new Point2D.Double(+iconSize, -testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointC, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
@@ -3551,7 +3553,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(d1ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(+iconSize, +iconSize);
+            Point2D delta = new Point2D.Double(+iconSize, +testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointD, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
@@ -3584,7 +3586,7 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(d2ComboBox.getDisplayName());
         if (true) {
             double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-            Point2D delta = new Point2D.Double(0.0, +iconSize);
+            Point2D delta = new Point2D.Double(0.0, +testIcon.getIconHeight());
             delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
             Point2D where = MathUtil.add(pointD, delta);
             setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
@@ -8795,19 +8797,9 @@ public class LayoutEditorTools {
 
     }
 
-    void setIconOnPanel(TrackSegment t, PositionableIcon l, boolean eastbound, Point2D p, Point2D pt2, boolean side, double fromPoint) {
-
-        Point2D pt1 = p;
-
-        double pt1x;
-        double pt1y;
-        pt1x = pt1.getX();
-        pt1y = pt1.getY();
-
-        double pt2x;
-        double pt2y;
-        pt2x = pt2.getX();
-        pt2y = pt2.getY();
+    void setIconOnPanel(TrackSegment t, PositionableIcon l, boolean eastbound, Point2D pt1, Point2D pt2, boolean side, double fromPoint) {
+        double pt1x = pt1.getX(), pt1y = pt1.getY();
+        double pt2x = pt2.getX(), pt2y = pt2.getY();
 
         int triX = (int) Math.round(pt2x - pt1x);
         int triY = (int) Math.round(pt2y - pt1y);
@@ -8816,60 +8808,52 @@ public class LayoutEditorTools {
             log.debug("X " + triX + " Y " + triY);
         }
         Point loc = new Point(0, 0);
-        if (triX == 0 || triX == 360) {
+        if (triX == 0) {
             //In a vertical Striaght Line
             if (eastbound) {
                 log.debug("In a vertical striaghtline facing South");
-                loc = northToSouth(p, l, side, fromPoint);
+                loc = northToSouth(pt1, l, side, fromPoint);
             } else {
                 log.debug("In a vertical striaghtline facing North");
-                loc = southToNorth(p, l, side, fromPoint);
+                loc = southToNorth(pt1, l, side, fromPoint);
             }
-        } else if (triY == 0 || triY == 360) {
+        } else if (triY == 0) {
             //In a Horizontal Straight Line
             if (eastbound) {
                 log.debug("In a Horizontal striaghtline facing east");
-                loc = westToEast(p, l, side, fromPoint);
+                loc = westToEast(pt1, l, side, fromPoint);
             } else {
                 log.debug("In a Horizontal striaghtline facing west");
-                loc = eastToWest(p, l, side, fromPoint);
+                loc = eastToWest(pt1, l, side, fromPoint);
             }
         } else {
-            double a;
-            double o;
             // Compute arc's chord
-            a = pt2x - pt1x;
-            o = pt2y - pt1y;
-            double radius = Math.sqrt(((a * a) + (o * o)));  //chord equates to radius of circle
+            double a = pt2x - pt1x;
+            double o = pt2y - pt1y;
+            double radius = Math.hypot(a, o);  //chord equates to radius of circle
 
-            double pt1xa;
-            double pt1ya;
-            pt1xa = pt1x + radius;
-            pt1ya = pt1y;
-            double a1;
-            double o1;
-            a1 = pt2x - pt1xa;
-            o1 = pt2y - pt1ya;
-            double chord = Math.sqrt(((a1 * a1) + (o1 * o1)));
-
+            double pt1xa = pt1x + radius;
+            double pt1ya = pt1y;
+            double a1 = pt2x - pt1xa;
+            double o1 = pt2y - pt1ya;
+            double chord = Math.hypot(a1, o1);
             double rsq = Math.pow(radius, 2);
 
-            double anglefromdatum = Math.acos((rsq + rsq - Math.pow(chord, 2)) / (2 * radius * radius));
+            double radAngleFromDatum = Math.acos((rsq + rsq - Math.pow(chord, 2)) / (2 * rsq));
             if (log.isDebugEnabled()) {
                 log.debug("radius " + radius + " Chord " + chord);
-                log.debug("Angle from datum line " + Math.toDegrees(anglefromdatum));
+                log.debug("Angle from datum line " + Math.toDegrees(radAngleFromDatum));
             }
-            double tanx = o / a;
 
-            double angletan = Math.atan(tanx);
+            int rotateDEG = ((int) Math.toDegrees(radAngleFromDatum));
+            if (log.isDebugEnabled()) {
+                double tanx = o / a;
+                double angletan = Math.atan2(o, a);
+                log.debug(Math.toDegrees(angletan) + " " + a + " " + o + " " + Math.toDegrees(tanx));
+            }
 
             int oldHeight = l.maxHeight();
             int oldWidth = l.maxWidth();
-
-            int rotate = ((int) Math.toDegrees(anglefromdatum));
-            if (log.isDebugEnabled()) {
-                log.debug(Math.toDegrees(angletan) + " " + a + " " + o + " " + Math.toDegrees(tanx));
-            }
 
             //pt1 is always our boundary point
             //East side
@@ -8877,28 +8861,28 @@ public class LayoutEditorTools {
                 //East Sides
                 if (pt2y > pt1y) {
                     //"South East Corner"
-                    rotate = rotate + 270;  //Correct for SM111, sm101, sm121, SM80
-                    l.rotate(rotate);
-                    loc = southEastToNorthWest(p, l, oldWidth, oldHeight, rotate, side, fromPoint);
+                    rotateDEG = rotateDEG + 270;  //Correct for SM111, sm101, sm121, SM80
+                    l.rotate(rotateDEG);
+                    loc = southEastToNorthWest(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
                 } else {
                     //"North East corner" //correct for sm110, sm70, sm131
-                    rotate = 270 - rotate;
-                    l.rotate(rotate);
-                    loc = northEastToSouthWest(p, l, oldWidth, oldHeight, rotate, side, fromPoint);
+                    rotateDEG = 270 - rotateDEG;
+                    l.rotate(rotateDEG);
+                    loc = northEastToSouthWest(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
                 }
 
             } else {
                 //West Side
                 if (pt2y > pt1y) {
                     //South West //WORKING FOR SM141, sm130, SM71
-                    l.rotate(rotate - 90);
+                    l.rotate(rotateDEG - 90);
                     //South West
-                    loc = southWestToNorthEast(p, l, oldWidth, oldHeight, rotate, side, fromPoint);
+                    loc = southWestToNorthEast(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
                 } else {
                     //North West //Working FOR SM140, SM81, sm120
-                    rotate = (180 - rotate) + 90;
-                    l.rotate(rotate);
-                    loc = northWestToSouthEast(p, l, oldWidth, oldHeight, rotate, side, fromPoint);
+                    rotateDEG = (180 - rotateDEG) + 90;
+                    l.rotate(rotateDEG);
+                    loc = northWestToSouthEast(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
                 }
             }
         }
@@ -8946,7 +8930,6 @@ public class LayoutEditorTools {
         int offsety = 0;
         if (right) {
             offsety = (int) p.getY() - (offSetFromPoint - 1) - l.maxHeight();
-
         } else {
             offsety = (int) p.getY() + (offSetFromPoint);
         }
@@ -8957,28 +8940,28 @@ public class LayoutEditorTools {
      * come back to this as its a bit tight to the rail on SM110 need re
      * checking
      */
-    Point northEastToSouthWest(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angle, boolean right, double fromPoint) {
-        angle = angle - 180;
-        if (angle < 45) {
+    Point northEastToSouthWest(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
+        angleDEG = angleDEG - 180;
+        if (angleDEG < 45) {
             //Because of the angle things get shifted about.
             int tmpWidth = oldWidth;
             int tmpHeight = oldHeight;
             oldWidth = tmpHeight;
             oldHeight = tmpWidth;
         }
-        double ang = angle;
+        double ang = angleDEG;
         double oppAng = 90 - ang;
-        angle = Math.toRadians(angle);
-        double oppAngRad = Math.toRadians(oppAng);
-        double iconAdj = Math.sin(angle) * oldHeight;
-        double iconAdjOpp = Math.sin(oppAngRad) * oldHeight;
-        double bpa = Math.sin(angle) * (offSetFromPoint + fromPoint);
-        double bpo = Math.sin(oppAngRad) * (offSetFromPoint + fromPoint);
-        double ta = Math.sin(angle) * offSetFromPoint;
-        double to = Math.sin(oppAngRad) * offSetFromPoint;
+        double angleRAD = Math.toRadians(angleDEG);
+        double oppAngRAD = Math.toRadians(oppAng);
+        double iconAdj = Math.sin(angleRAD) * oldHeight;
+        double iconAdjOpp = Math.sin(oppAngRAD) * oldHeight;
+        double bpa = Math.sin(angleRAD) * (offSetFromPoint + fromPoint);
+        double bpo = Math.sin(oppAngRAD) * (offSetFromPoint + fromPoint);
+        double ta = Math.sin(angleRAD) * offSetFromPoint;
+        double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("north east to south west " + angle);
+            log.debug("north east to south west " + angleDEG);
             log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
             log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
             log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
@@ -9020,31 +9003,31 @@ public class LayoutEditorTools {
 
     }
 
-    Point southWestToNorthEast(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angle, boolean right, double fromPoint) {
-        angle = 180 - angle;
+    Point southWestToNorthEast(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
+        angleDEG = 180 - angleDEG;
 
-        double oppAng = angle;
-        double ang = 90 - oppAng;
+        double oppAng = angleDEG;
+        double angDEG = 90 - oppAng;
 
         //Because of the angle things get shifted about.
-        if (ang < 45) { //was angle
+        if (angDEG < 45) { //was angle
             int tmpWidth = oldWidth;
             int tmpHeight = oldHeight;
             oldWidth = tmpHeight;
             oldHeight = tmpWidth;
         }
 
-        ang = Math.toRadians(ang);
-        double oppAngRad = Math.toRadians(oppAng);
-        double iconAdj = Math.sin(ang) * oldHeight;
-        double iconAdjOpp = Math.sin(oppAngRad) * oldHeight;
-        double bpa = Math.sin(ang) * (offSetFromPoint + fromPoint);  //was angle
-        double bpo = Math.sin(oppAngRad) * (offSetFromPoint + fromPoint);
-        double ta = Math.sin(ang) * offSetFromPoint; //was angle
-        double to = Math.sin(oppAngRad) * offSetFromPoint;
+        double angRAD = Math.toRadians(angDEG);
+        double oppAngRAD = Math.toRadians(oppAng);
+        double iconAdj = Math.sin(angRAD) * oldHeight;
+        double iconAdjOpp = Math.sin(oppAngRAD) * oldHeight;
+        double bpa = Math.sin(angRAD) * (offSetFromPoint + fromPoint);
+        double bpo = Math.sin(oppAngRAD) * (offSetFromPoint + fromPoint);
+        double ta = Math.sin(angRAD) * offSetFromPoint;
+        double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("south west to north east " + angle);
+            log.debug("south west to north east " + angleDEG);
             log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
             log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
             log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
@@ -9084,12 +9067,12 @@ public class LayoutEditorTools {
     }
 
     //Working FOR SM140, SM81, sm120
-    Point northWestToSouthEast(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angledeg, boolean right, double fromPoint) {
-        log.debug("angle before " + angledeg);
-        angledeg = 180 - angledeg;
-        angledeg = 90 - angledeg;
-        log.debug("north west to south east " + angledeg);
-        if (angledeg < 45) {
+    Point northWestToSouthEast(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
+        log.debug("angle before " + angleDEG);
+        angleDEG = 180 - angleDEG;
+        angleDEG = 90 - angleDEG;
+        log.debug("north west to south east " + angleDEG);
+        if (angleDEG < 45) {
             //Because of the angle things get shifted about.
             int tmpWidth = oldWidth;
             int tmpHeight = oldHeight;
@@ -9099,19 +9082,19 @@ public class LayoutEditorTools {
         log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
         log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
         //double ang = angle;
-        double oppAng = 90 - angledeg;
-        double angle = Math.toRadians(angledeg);
-        double oppAngRad = Math.toRadians(oppAng);
-        double iconAdj = Math.sin(angle) * oldHeight;
-        double iconAdjOpp = Math.sin(oppAngRad) * oldHeight;
+        double oppAng = 90 - angleDEG;
+        double angleRAD = Math.toRadians(angleDEG);
+        double oppAngRAD = Math.toRadians(oppAng);
+        double iconAdj = Math.sin(angleRAD) * oldHeight;
+        double iconAdjOpp = Math.sin(oppAngRAD) * oldHeight;
 
-        double bpa = Math.sin(angle) * (offSetFromPoint + fromPoint);  //distance from point
-        double bpo = Math.sin(oppAngRad) * (offSetFromPoint + fromPoint);
-        double ta = Math.sin(angle) * offSetFromPoint; //distance from track
-        double to = Math.sin(oppAngRad) * offSetFromPoint;
+        double bpa = Math.sin(angleRAD) * (offSetFromPoint + fromPoint);  //distance from point
+        double bpo = Math.sin(oppAngRAD) * (offSetFromPoint + fromPoint);
+        double ta = Math.sin(angleRAD) * offSetFromPoint; //distance from track
+        double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("north west to south east " + angledeg);
+            log.debug("north west to south east " + angleDEG);
             log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
             log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
             log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
@@ -9159,10 +9142,10 @@ public class LayoutEditorTools {
     final int offSetFromPoint = 5;
 
     //Correct for SM111, sm101, sm121, SM80
-    Point southEastToNorthWest(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDeg, boolean right, double fromPoint) {
-        angleDeg = 360 - angleDeg;
+    Point southEastToNorthWest(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
+        angleDEG = 360 - angleDEG;
 
-        if (angleDeg > 45) {
+        if (angleDEG > 45) {
             //Because of the angle things get shifted about.
             int tmpWidth = oldWidth;
             int tmpHeight = oldHeight;
@@ -9171,17 +9154,17 @@ public class LayoutEditorTools {
         }
 
 //        double ang = angle;
-        double oppAng = 90 - angleDeg;
-        double angle = Math.toRadians(angleDeg);
-        double oppAngRad = Math.toRadians(oppAng);
-        double iconAdj = Math.sin(angle) * oldHeight;
-        double iconAdjOpp = Math.sin(oppAngRad) * oldHeight;
-        double bpa = Math.sin(angle) * (offSetFromPoint + fromPoint);
-        double bpo = Math.sin(oppAngRad) * (offSetFromPoint + fromPoint);
-        double ta = Math.sin(angle) * offSetFromPoint; //distance from track
-        double to = Math.sin(oppAngRad) * offSetFromPoint;
+        double oppAng = 90 - angleDEG;
+        double angleRAD = Math.toRadians(angleDEG);
+        double oppAngRAD = Math.toRadians(oppAng);
+        double iconAdj = Math.sin(angleRAD) * oldHeight;
+        double iconAdjOpp = Math.sin(oppAngRAD) * oldHeight;
+        double bpa = Math.sin(angleRAD) * (offSetFromPoint + fromPoint);
+        double bpo = Math.sin(oppAngRAD) * (offSetFromPoint + fromPoint);
+        double ta = Math.sin(angleRAD) * offSetFromPoint; //distance from track
+        double to = Math.sin(oppAngRAD) * offSetFromPoint;
         if (log.isDebugEnabled()) {
-            log.debug("south east to north west " + angleDeg);
+            log.debug("south east to north west " + angleDEG);
             log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
             log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
             log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
