@@ -2,11 +2,13 @@ package jmri.jmrit.roster;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
 
 /**
@@ -17,6 +19,7 @@ public class ExportRosterItemActionTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestExportWindow");
         jmri.util.swing.WindowInterface wi = jf;
         ExportRosterItemAction t = new ExportRosterItemAction("test export",jf);
