@@ -51,6 +51,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PrintRosterActionTest.class));
         suite.addTest(new JUnit4TestAdapter(PrintRosterEntryTest.class));
         suite.addTest(new JUnit4TestAdapter(UpdateDecoderDefinitionActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterSpeedProfileTest.class));
         return suite;
     }
 
