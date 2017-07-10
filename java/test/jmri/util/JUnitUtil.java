@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -370,6 +371,23 @@ public class JUnitUtil {
 
     public static void initDefaultSignalMastManager() {
         InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
+    }
+
+    public static void initDebugCommandStation() {
+        jmri.CommandStation cs = new jmri.CommandStation(){
+            public void sendPacket(@Nonnull byte[] packet, int repeats){
+            }
+
+            public String getUserName(){
+               return "testCS";
+            }
+
+            public String getSystemPrefix(){
+               return "I";
+            }
+
+        };
+        InstanceManager.setDefault(jmri.CommandStation.class,cs);
     }
 
     public static void initDebugThrottleManager() {

@@ -26,4 +26,5 @@ public interface Lock {
      */
     public boolean isLockClear();  
     
+    static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
 }

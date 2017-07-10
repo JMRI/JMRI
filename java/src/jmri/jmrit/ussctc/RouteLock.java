@@ -75,6 +75,7 @@ public class RouteLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear() {
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
@@ -83,7 +84,11 @@ public class RouteLock implements Lock {
         }
         
         for (NamedBeanHandle<SignalHead> handle : list) {
-            if ( isSignalClear(handle) ) return false;
+            if ( isSignalClear(handle) ) {
+                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
+                    .setValue("Locked due to route including signal "+handle.getBean().getDisplayName());
+                return false;
+            }
         }
         return true;
     }
