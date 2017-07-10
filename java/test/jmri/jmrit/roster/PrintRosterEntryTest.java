@@ -8,8 +8,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
+import org.jdom2.JDOMException;
 
 /**
  *
@@ -18,10 +22,11 @@ import jmri.util.JmriJFrame;
 public class PrintRosterEntryTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws JDOMException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
-        PrintRosterEntry t = new PrintRosterEntry(new RosterEntry(),jf,"test print roster entry");
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
         Assert.assertNotNull("exists",t);
         jf.dispose();
     }
