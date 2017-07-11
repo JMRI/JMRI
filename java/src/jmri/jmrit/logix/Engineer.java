@@ -53,7 +53,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _warrant = warrant;
         _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
-//        _speedUtil.makeSpeedTree();
         _idxCurrentCommand = 0;
         _idxNoSpeedCommand = -1;
         _throttle = throttle;
@@ -197,9 +196,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         if (!_halt && !_waitForClear) {
                             _lock.lock();
                             float throttle = Float.parseFloat(ts.getValue());
+                            // If recording speed is known, get throttle setting for that speed
                             float speed = ts.getSpeed();
-                            if (speed > 0.4f) {
-                                throttle = _speedUtil.getThrottleSetting(speed);
+                            if (speed > 0.0f) {
+                                speed = _speedUtil.getThrottleSetting(speed);
+                                if (speed > 0.0f) {
+                                    throttle = speed;
+                                }
                             }
                             _normalSpeed = throttle;
                             float speedMod = _speedUtil.modifySpeed(throttle, _speedType, _isForward);
@@ -265,7 +268,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param idx index
      */
     protected void advanceToCommandIndex(int idx) {
-//        _idxNoSpeedCommand = idx;
+//        _idxNoSpeedCommand = idx; TODO
 //        if (log.isDebugEnabled()) log.debug("_idxCurrentCommand= {} _normalSpeed= {} _speedType= {} speed= {}",
 //                _idxCurrentCommand, _normalSpeed, _speedType, _throttle.getSpeedSetting());
     }
@@ -509,8 +512,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     /**
      * End running warrant.
+     * @param abort not normal shutdown
      */
-    public void stopRun() {
+    public void stopRun(boolean abort) {
+        if (abort) {
+            _abort =true;            
+        }
         cancelRamp();
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
@@ -891,8 +898,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (speed < 0.0f) {
                 speed = 0.0f;
             }
-            float incr = _speedUtil.getStepIncrement();
-            int delay = _speedUtil.getStepDelay();
+            float incr = _speedUtil.getRampThrottleIncrement();
+            int delay = _speedUtil.getRampTimeIncrement();
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
                     _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward), speed);
             // endSpeed should not exceed scripted speed modified by _speedType

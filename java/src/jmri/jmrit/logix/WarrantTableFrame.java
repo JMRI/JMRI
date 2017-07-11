@@ -74,7 +74,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     private JTextField _status = new JTextField(90);
     private ArrayList<String> _statusHistory = new ArrayList<String>();
     private JScrollPane _tablePane;
-    private int _rowHeight;
 
     private WarrantTableModel _model;
 
@@ -180,8 +179,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WarrantTableModel.MANUAL_RUN_COLUMN), false);
 
-        _rowHeight = box.getPreferredSize().height;
-        table.setRowHeight(_rowHeight);
+        int rowHeight = box.getPreferredSize().height;
+        table.setRowHeight(rowHeight);
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _tablePane = new JScrollPane(table);
@@ -256,7 +255,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
 
         getContentPane().add(tablePanel);
-//        setLocation(50,0);
         pack();
     }
 

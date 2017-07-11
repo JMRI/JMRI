@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
     
-    private HashMap<String, RosterSpeedProfile> _profiles;
+    private HashMap<String, RosterSpeedProfile> _mergeProfiles;
+    private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
         super();
@@ -174,9 +175,10 @@ public class WarrantManager extends AbstractManager
         return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
     }
     
-    protected void setSpeedProfile(String id, RosterSpeedProfile sp) {
-        if (_profiles == null) {
-            _profiles = new HashMap<String, RosterSpeedProfile>();
+    protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
+        if (_mergeProfiles == null) {
+            _mergeProfiles = new HashMap<String, RosterSpeedProfile>();
+            _sessionProfiles = new HashMap<String, RosterSpeedProfile>();
             if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
                 ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
                         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
@@ -184,20 +186,30 @@ public class WarrantManager extends AbstractManager
                 log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
             }
         }
-        if (id != null && sp != null) {
-            _profiles.put(id, sp);
+        if (id != null && merge != null) {
+            _mergeProfiles.put(id, merge);
+            _sessionProfiles.put(id, session);
         }
     }
     
-    protected RosterSpeedProfile getSpeedProfile(String id) {
-        if (_profiles == null) {
+    protected RosterSpeedProfile getMergeProfile(String id) {
+        if (_mergeProfiles == null) {
             return null;
         }
-        return _profiles.get(id);
+        return _mergeProfiles.get(id);
+    }
+    protected RosterSpeedProfile getSessionProfile(String id) {
+        if (_sessionProfiles == null) {
+            return null;
+        }
+        return _sessionProfiles.get(id);
     }
     
-    protected HashMap<String, RosterSpeedProfile> getProfiles() {
-        return _profiles;
+    protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
+        return _mergeProfiles;
+    }
+    protected HashMap<String, RosterSpeedProfile> getSessionProfiles() {
+        return _sessionProfiles;
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());

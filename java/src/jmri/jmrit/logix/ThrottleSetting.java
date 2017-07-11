@@ -142,7 +142,7 @@ public class ThrottleSetting {
         sb.append(_value);
         sb.append(" for bean \"");
         sb.append( getBeanDisplayName());
-        sb.append("\"");
+        sb.append("\" at trackSpeed ");
         sb.append( getSpeed());
         sb.append("\"");
         return sb.toString();

@@ -1,13 +1,15 @@
 package jmri.jmrit.logix;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,14 +18,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
-import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -37,18 +38,24 @@ import org.slf4j.LoggerFactory;
 public class MergePrompt extends JDialog {
     
     HashMap<String, Boolean> _candidates;   // merge candidate choices
-    HashMap<String, RosterSpeedProfile> _profiles;  // candidate's speedprofile
-    JmriJFrame _viewFrame;
+    HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
+    HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
+    JPanel _viewFrame;
+    JTable _viewTable;
+    static int STRUT = 20;
 
-    MergePrompt(String name, HashMap<String, Boolean> cand, HashMap<String, RosterSpeedProfile> prof) {
+    MergePrompt(String name, HashMap<String, Boolean> cand) {
         super();
         _candidates = cand;
-        _profiles = prof;
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        _mergeProfiles = manager.getMergeProfiles();
+        _sessionProfiles = manager.getSessionProfiles();
         setTitle(name);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
+                noMerge();
                 dispose();
             }
         });
@@ -60,11 +67,13 @@ public class MergePrompt extends JDialog {
         table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellEditor(new ButtonEditor(new JButton()));
         table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonRenderer());
 
+        int tablewidth = 0;
         for (int i = 0; i < model.getColumnCount(); i++) {
-            int width = model.getPreferredWidth(i);
             TableColumn column = table.getColumnModel().getColumn(i);
-            column.setPreferredWidth(width);
+            tablewidth += column.getPreferredWidth();
         }
+        int rowHeight = new JButton("VIEW").getPreferredSize().height;
+        table.setRowHeight(rowHeight);
 //        java.awt.Font font = table.getFont();
         JPanel description = new JPanel();
         JLabel label = new JLabel(Bundle.getMessage("MergePrompt"));
@@ -73,69 +82,75 @@ public class MergePrompt extends JDialog {
         description.add(label);
 
         JPanel panel = new JPanel();
-        JButton button = new JButton(Bundle.getMessage("ButtonDone"));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        JButton button = new JButton(Bundle.getMessage("ButtonNoMerge"));
+        button.addActionListener((ActionEvent evt) -> {
+            noMerge();
+            dispose();
+        });
+        panel.add(button);
+        panel.add(Box.createHorizontalStrut(STRUT));
+        button = new JButton(Bundle.getMessage("ButtonMerge"));
         button.addActionListener((ActionEvent evt) -> {
             dispose();
         });
         panel.add(button);
+        panel.add(Box.createHorizontalStrut(STRUT));
+        button = new JButton(Bundle.getMessage("ButtonCloseView"));
+        button.addActionListener((ActionEvent evt) -> {
+            if (_viewFrame != null) {
+                getContentPane().remove(_viewFrame);
+            }
+            pack();
+        });
+        panel.add(button);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        contentPane.add(description, BorderLayout.NORTH);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.add(description);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane pane = new JScrollPane(table);
-        contentPane.add(pane, BorderLayout.CENTER);
-        contentPane.add(panel, BorderLayout.SOUTH);
+        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
+        mainPanel.add(pane);
+        mainPanel.add(panel);
 
-        getContentPane().add(contentPane);
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(Box.createHorizontalStrut(STRUT));
+        p.add(Box.createHorizontalGlue());
+        p.add(mainPanel);
+        p.add(Box.createHorizontalGlue());
+        p.add(Box.createHorizontalStrut(STRUT));
+        
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
+        contentPane.add(p);
+        setContentPane(contentPane);
         pack();
         Dimension screen = getToolkit().getScreenSize();
         setLocation(screen.width/3, screen.height/4);
+        setAlwaysOnTop(true);
         setVisible(true);
     }
-
-    static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
-
-        String _trueValue;
-        String _falseValue;
-
-        MyBooleanRenderer(String trueValue, String falseValue) {
-            _trueValue = trueValue;
-            _falseValue = falseValue;
-        }
-
-        @Override
-        public java.awt.Component getTableCellRendererComponent(JTable table,
-                Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-
-            JLabel val;
-            if (value instanceof Boolean) {
-                if (((Boolean) value).booleanValue()) {
-                    val = new JLabel(_trueValue);
-                } else {
-                    val = new JLabel(_falseValue);
-                }
-            } else {
-                val = new JLabel("");
-            }
-            val.setFont(table.getFont().deriveFont(java.awt.Font.PLAIN));
-            return val;
+    
+    private void noMerge() {
+        for (Map.Entry<String, Boolean> ent : _candidates.entrySet()) {
+            _candidates.put(ent.getKey(), Boolean.valueOf(false));
         }
     }
 
     void showProfiles(String id) {
         if (_viewFrame != null) {
-            _viewFrame.dispose();
+            getContentPane().remove(_viewFrame);
+//            _viewFrame.removeKeyListener(_viewFrame);
         }
-        _viewFrame = new JmriJFrame(Bundle.getMessage("viewTitle", id), false, true);
-        JPanel mainPanel = new JPanel();
-//        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));
-
+        _viewFrame = new JPanel();
+        _viewFrame.setLayout(new BoxLayout(_viewFrame, BoxLayout.PAGE_AXIS));
         JPanel panel = new JPanel();
         panel.add(new JLabel(Bundle.getMessage("viewTitle", id)));
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-        mainPanel.add(panel);
+        panel = new JPanel();
+        panel.add(new JLabel(Bundle.getMessage("deletePrompt", id)));
+        _viewFrame.add(panel);
  
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
@@ -153,43 +168,81 @@ public class MergePrompt extends JDialog {
         }
         SpeedTableModel model = new SpeedTableModel(speedProfile);
         JTable table = new JTable(model);
+        int tablewidth = 0;
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            TableColumn column = table.getColumnModel().getColumn(i);
+            int width = model.getPreferredWidth(i);
+            column.setPreferredWidth(width);
+            tablewidth += width;
+        }
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        JScrollPane pane = new JScrollPane(table);
+        int barWidth = pane.getVerticalScrollBar().getPreferredSize().width;
+        tablewidth += barWidth;
+        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
+        panel.add(pane);
+        spPanel.add(panel);
+        
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(new JLabel(Bundle.getMessage("mergedSpeedProfile")));
+        model = new SpeedTableModel(_mergeProfiles.get(id));
+        _viewTable = new JTable(model);
+        _viewTable.addKeyListener(new KeyListener() {
+            public void keyTyped(KeyEvent ke) {
+                char ch = ke.getKeyChar(); 
+                if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
+                    deleteRow();
+                }
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        });
+        tablewidth = barWidth;
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
             TableColumn column = table.getColumnModel().getColumn(i);
             column.setPreferredWidth(width);
-            if (i>0) {
-                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                column.setCellRenderer(renderer);                
-            }
+            tablewidth += width;
         }
-        JScrollPane pane = new JScrollPane(table);
+        _viewTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        pane = new JScrollPane(_viewTable);
+        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
         panel.add(pane);
         spPanel.add(panel);
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("sessionSpeedProfile")));
-        model = new SpeedTableModel(_profiles.get(id));
+        model = new SpeedTableModel(_sessionProfiles.get(id));
         table = new JTable(model);
+        tablewidth = barWidth;
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
             TableColumn column = table.getColumnModel().getColumn(i);
             column.setPreferredWidth(width);
-            if (i>0) {
-                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                column.setCellRenderer(renderer);                
-            }
+            tablewidth += width;
         }
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         pane = new JScrollPane(table);
+        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
         panel.add(pane);
         spPanel.add(panel);
-        mainPanel.add(spPanel);
+        
+        _viewFrame.add(spPanel);
+        getContentPane().add(_viewFrame);
+        pack();
+    }
 
-        _viewFrame.add(mainPanel);
-        _viewFrame.setVisible(true);
-        _viewFrame.pack();
+    private void deleteRow() {
+        int row = _viewTable.getSelectedRow();
+        if (row >= 0) {
+            SpeedTableModel model = (SpeedTableModel)_viewTable.getModel();
+            Map.Entry<Integer, SpeedStep> entry = model.speedArray.get(row);
+            model.speedArray.remove(entry);
+            model.profile.deleteStep(entry.getKey());
+            model.fireTableDataChanged();
+        }
     }
 
     class MergeTableModel extends javax.swing.table.AbstractTableModel {
@@ -315,8 +368,10 @@ public class MergePrompt extends JDialog {
         
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
+        RosterSpeedProfile profile;
         
         SpeedTableModel(RosterSpeedProfile sp) {
+            profile = sp;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
             while (entry!=null) {

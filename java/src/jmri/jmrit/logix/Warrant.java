@@ -609,9 +609,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _student = null;
         }
         if (_engineer != null) {
-            _engineer.stopRun();    // release throttle
+            _engineer.stopRun(abort);    // release throttle
             _engineer = null;
-            _speedUtil.stopRun(!abort);     // write speed profile measurements
+            _speedUtil.stopRun(!abort);     // don't write speed profile measurements
         }
         deAllocate();
         int oldMode = _runMode;
@@ -1483,16 +1483,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     activeIdx, _idxCurrentOrder);
             return;
         }
-        if (_runMode == MODE_RUN) {
-            _speedUtil.enteredBlock(_idxCurrentOrder, activeIdx);               
+        if (_engineer != null) {
+            _engineer.clearWaitForSync();
         }
         _idxLastOrder = _idxCurrentOrder;            
         _idxCurrentOrder = activeIdx;
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
         block._entryTime = System.currentTimeMillis();
-        if (_engineer != null) {
-            _engineer.clearWaitForSync();
+        if (_runMode == MODE_RUN) {
+            _speedUtil.enteredBlock(_idxCurrentOrder, activeIdx);               
         }
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
         // Do signals, speed etc.
@@ -1935,7 +1935,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // continue, there may be blocks ahead that need a speed decrease to begin in this block
         }
         
-        // Halt and waitForCleat may have been freed
+        // Halt and waitForClear may have been freed
         _engineer.rampSpeedTo(currentType);                    
         
         //look ahead for a speed change slower than the current speed

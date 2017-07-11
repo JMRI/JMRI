@@ -116,8 +116,8 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.");
-        }, "Train starts to move at 2nd command");
+            return m.endsWith("Cmd #3.");
+        }, "Train starts to move at 3rd command");
 
         sensor = runtimes(route);
 

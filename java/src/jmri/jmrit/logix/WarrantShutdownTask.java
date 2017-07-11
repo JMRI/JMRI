@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantShutdownTask extends AbstractShutDownTask {
 
-    HashMap<String, RosterSpeedProfile> _profiles;
     HashMap<String, Boolean> _mergeCandidates;
+    HashMap<String, RosterSpeedProfile> _mergeProfiles;
     /**
      * Constructor specifies the warning message and action to take
      *
@@ -65,12 +65,12 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
     
     private boolean makeMergeCandidates() {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        _profiles = manager.getProfiles();
-        if (_profiles == null || _profiles.size() == 0) {
+        _mergeProfiles = manager.getMergeProfiles();
+        if (_mergeProfiles == null || _mergeProfiles.size() == 0) {
             return false;
         }
         _mergeCandidates = new HashMap<String, Boolean> ();
-        Iterator <java.util.Map.Entry <String, RosterSpeedProfile>> iter = _profiles.entrySet().iterator(); 
+        Iterator <java.util.Map.Entry <String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator(); 
         while (iter.hasNext()) {
             java.util.Map.Entry <String, RosterSpeedProfile> entry = iter.next();
             _mergeCandidates.put(entry.getKey(), new Boolean(true));
@@ -79,7 +79,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
     }
     
     private void makeMergeWindow() {
-        new MergePrompt(Bundle.getMessage("MergeTitle"), _mergeCandidates, _profiles);
+        new MergePrompt(Bundle.getMessage("MergeTitle"), _mergeCandidates);
     }
     
     private void merge() {
@@ -90,10 +90,10 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
             if (entry.getValue().booleanValue()) {
                 RosterEntry rosterEntry = Roster.getDefault().entryFromTitle(id);
                 if (rosterEntry != null) {
-                    rosterEntry.setSpeedProfile(_profiles.get(id));
+                    rosterEntry.setSpeedProfile(_mergeProfiles.get(id));
                     if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster. id= {}", id);
                 } else {
-                    if (log.isDebugEnabled()) log.debug("Unable to Write SpeedProfile to Roster. id= {}", id);
+                    if (log.isDebugEnabled()) log.debug("Unable to Write SpeedProfile to Roster. No RosterEntry for {}", id);
                 }
             } else {
                 if (log.isDebugEnabled()) log.debug("SpeedProfile not merged to Roster. id= {}", id);
