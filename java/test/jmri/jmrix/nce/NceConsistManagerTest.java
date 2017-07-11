@@ -12,29 +12,27 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceConsistManagerTest {
+public class NceConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCTor() {
-        NceConsistManager t = new NceConsistManager(memo);
-        Assert.assertNotNull("exists",t);
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
+        cm = new NceConsistManager(memo);
     }
 
     @After
+    @Override
     public void tearDown() {
+        cm = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
