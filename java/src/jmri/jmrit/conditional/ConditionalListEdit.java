@@ -2169,9 +2169,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_comboNameBox == null) {
             return;
         }
-        String newName = _curVariable.getName();
-        _comboNameBox.setSelectedBeanByName(newName);
         _comboNameBox.addItemListener(new NameBoxListener(_variableNameField));
+        _comboNameBox.setSelectedBeanByName(_curVariable.getName());
+        _variableComboNamePanel.remove(1);
+        _variableComboNamePanel.add(_comboNameBox, null, 1);
         _variableNamePanel.setVisible(false);
         _variableComboNamePanel.setVisible(true);
     }
@@ -2919,9 +2920,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_HEAD_ACTION, actionType) + 1);
-//                 if (actionType == Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-//                     loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());  TODO
-//                 }
                 break;
 
             case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -3429,9 +3427,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_comboNameBox == null) {
             return;
         }
-        String newName = _curAction.getDeviceName();
-        _comboNameBox.setSelectedBeanByName(newName);
+        _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
         _comboNameBox.addItemListener(new NameBoxListener(_actionNameField));
+        _actionComboNamePanel.remove(1);
+        _actionComboNamePanel.add(_comboNameBox, null, 1);
         _namePanel.setVisible(false);
         _actionComboNamePanel.setVisible(true);
     }

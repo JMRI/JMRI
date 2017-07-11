@@ -201,8 +201,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-        _editLogixFrame.addHelpMenu(
-                "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
+//         _editLogixFrame.addHelpMenu(
+//                 "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
         Container contentPane = _editLogixFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -785,7 +785,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Setup the edit environment for the selected node
-     * Called from {@link #treeRowSelected()}
+     * Called from {@link #treeRowSelected}
      * This takes the place of an actual button
      */
     void editPressed() {
@@ -1300,7 +1300,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Move a conditional, variable or action row up 1 row
-     * @param e The event
      */
     void upPressed() {
         _showReminder = true;
@@ -4478,7 +4477,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     // ============ Conditional Tree Node Definition ============
 
-    static class ConditionalTreeNode extends DefaultMutableTreeNode {
+    class ConditionalTreeNode extends DefaultMutableTreeNode {
         private String cdlText;
         private String cdlType;
         private String cdlName;

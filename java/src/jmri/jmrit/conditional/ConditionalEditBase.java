@@ -226,7 +226,7 @@ public class ConditionalEditBase {
     /**
      * Create a combo name box for Variable and Action name selection.
      * @param itemType The selected variable or action type
-     * @retun nameBox A combo box based on the item type
+     * @return nameBox A combo box based on the item type
      */
     JmriBeanComboBox createNameBox(int itemType) {
         JmriBeanComboBox nameBox;
@@ -283,9 +283,11 @@ public class ConditionalEditBase {
      * <p>
      * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
      * @since 4.7.3
-     * @param textField The target field object when an entry is selected
      */
     class NameBoxListener implements ItemListener {
+        /**
+         * @param textField The target field object when an entry is selected
+         */
         public NameBoxListener(JTextField textField) {
             saveTextField = textField;
         }
@@ -397,10 +399,12 @@ public class ConditionalEditBase {
      * <p>
      * When a table row is selected, the user/system name is copied to the Action or Variable name field.
      * @since 4.7.3
-     * @param textField The target field object when an entry is selected
-     * @param itemType The current selected table type number
      */
     class PickSingleListener implements ListSelectionListener {
+        /**
+         * @param textField The target field object when an entry is selected
+         * @param itemType The current selected table type number
+         */
         public PickSingleListener(JTextField textField, int itemType) {
             saveItemType = itemType;
             saveTextField = textField;
