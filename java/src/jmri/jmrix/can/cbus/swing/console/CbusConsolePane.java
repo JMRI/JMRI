@@ -95,8 +95,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     protected JRadioButton onButton = new JRadioButton();
     protected JRadioButton offButton = new JRadioButton();
     protected ButtonGroup onOffGroup = new ButtonGroup();
-    protected JLabel nnLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("NodeNumberCol")));
-    protected JLabel evLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("EventCol")));
+    protected JLabel nodeNumberLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("NodeNumberCol")));
+    protected JLabel eventLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("EventCol")));
     protected JTextField nnField = new JTextField();
     protected JTextField evField = new JTextField();
     protected JButton sendEvButton = new JButton();
@@ -128,7 +128,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.can.cbus.swing.console.CbusConsolePane";
+        return "package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame";
     }
 
     public void init() {
@@ -279,7 +279,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
         offButton.setText(Bundle.getMessage("InitialStateOff"));
         offButton.setVisible(true);
-        offButton.setToolTipText("TooltipSendOffEvent");
+        offButton.setToolTipText(Bundle.getMessage("TooltipSendOffEvent"));
 
         sendEvButton.setText(Bundle.getMessage("ButtonSend"));
         sendEvButton.setVisible(true);
@@ -476,10 +476,15 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("ButtonSendEvent")));
 
         nnField = new JTextField("0", 5);
-        evPane.add(nnLabel);
+        nnField.setToolTipText("<html>" + Bundle.getMessage("ToolTipNodeNumber") + "<br>" +
+                Bundle.getMessage("ToolTipPrefix") + "</html>");
+        evPane.add(nodeNumberLabel);
         evPane.add(nnField);
+
         evField = new JTextField("0", 5);
-        evPane.add(evLabel);
+        evField.setToolTipText("<html>" + Bundle.getMessage("ToolTipEvent") + "<br>" +
+                Bundle.getMessage("ToolTipPrefix") + "</html>");
+        evPane.add(eventLabel);
         evPane.add(evField);
 
         onOffGroup.add(onButton);
@@ -619,7 +624,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             ((javax.swing.JFrame) getTopLevelAncestor()).setMinimumSize(d);
             ((javax.swing.JFrame) getTopLevelAncestor()).setPreferredSize(d);
             ((javax.swing.JFrame) getTopLevelAncestor()).pack();
-
         }
     }
 

@@ -361,10 +361,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 switch (col) {
                     case SYSNAMECOL:
                     case USERNAMECOL:
-                    case VALUECOL:
                     case PROTOCOL:
                     case SPEEDDIR:
                         return String.class;
+                    case VALUECOL:
+                        return Integer.class;
                     case ADDTOROSTERCOL:
                     case DELETECOL:
                     case STOP:

@@ -12,10 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JsonTimeServerTest {
+public class JsonTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
 
-    @Test
-    public void testCTor() {
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -25,19 +28,12 @@ public class JsonTimeServerTest {
                     }
                 });
         JsonConnection jc = new JsonConnection(output);
-        JsonTimeServer t = new JsonTimeServer(jc);
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        a = new JsonTimeServer(jc);
     }
 
     @After
     public void tearDown() {
+        a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

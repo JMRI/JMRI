@@ -51,7 +51,7 @@ public class PrintRosterEntry implements PaneContainer {
      *
      * @param rosterEntry Roster item, either as a selection or object
      * @param parent window over which this dialog will be centered
-     * @param filename xml file name for the user's Roster entry
+     * @param filename xml file name for programmer used in printing.
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;

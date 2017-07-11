@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -174,8 +175,6 @@ public class TabbedPreferences extends AppConfigBase {
                 this.addPreferencesPanel(panel);
             }
         }
-
-
 
         for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
             if (panel instanceof PreferencesSubPanel) {
@@ -421,14 +420,17 @@ public class TabbedPreferences extends AppConfigBase {
             TabDetailsArray.add(tab);
             JScrollPane scroller = new JScrollPane(tab.getPanel());
             scroller.setBorder(BorderFactory.createEmptyBorder());
-            tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
+            ThreadingUtil.runOnGUI( ()->{ 
 
-            for (String disableItem : disableItemsList) {
-                if (item.getClass().getName().equals(disableItem)) {
-                    tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
-                    return;
+                tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
+
+                for (String disableItem : disableItemsList) {
+                    if (item.getClass().getName().equals(disableItem)) {
+                        tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
+                        return;
+                    }
                 }
-            }
+            } );
         }
 
         String getPrefItem() {
@@ -520,8 +522,10 @@ public class TabbedPreferences extends AppConfigBase {
                     p.add(t, BorderLayout.NORTH);
                 }
                 p.add(item, BorderLayout.CENTER);
-                tabPanel.setLayout(new BorderLayout());
-                tabPanel.add(p, BorderLayout.CENTER);
+                ThreadingUtil.runOnGUI( ()->{ 
+                    tabPanel.setLayout(new BorderLayout());
+                    tabPanel.add(p, BorderLayout.CENTER);
+                } );
             }
 
             String getToolTip() {

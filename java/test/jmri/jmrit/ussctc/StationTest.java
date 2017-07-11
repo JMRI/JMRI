@@ -28,6 +28,9 @@ public class StationTest {
             public void codeValueDelivered(CodeGroupTwoBits value) { }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;
@@ -48,6 +51,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
             public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
@@ -57,6 +63,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;

@@ -25,7 +25,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
      *
      * @param name the name for the action; a value of null is ignored
      * @param wi   the window interface controlling how this action is displayed

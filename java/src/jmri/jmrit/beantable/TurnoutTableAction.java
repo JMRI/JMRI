@@ -123,7 +123,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
-    String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
+
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
@@ -284,7 +284,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 if (col == INVERTCOL) {
                     return t.canInvert();
                 } else if (col == LOCKCOL) {
-                    return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
+                    // checkbox disabled unless current configuration allows locking
+                    return t.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT);
                 } else if (col == KNOWNCOL) {
                     return false;
                 } else if (col == MODECOL) {
@@ -298,8 +299,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == OPSEDITCOL) {
                     return t.getTurnoutOperation() != null;
                 } else if (col == LOCKOPRCOL) {
+                    // editable always so user can configure it, even if current configuration prevents locking now
                     return true;
                 } else if (col == LOCKDECCOL) {
+                    // editable always so user can configure it, even if current configuration prevents locking now
                     return true;
                 } else if (col == DIVERGCOL) {
                     return true;
@@ -330,7 +333,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     boolean val = t.getInverted();
                     return Boolean.valueOf(val);
                 } else if (col == LOCKCOL) {
-                    boolean val = t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
+                    boolean val = t.getLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT);
                     return Boolean.valueOf(val);
                 } else if (col == KNOWNCOL) {
                     if (t.getKnownState() == Turnout.CLOSED) {
@@ -365,7 +368,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == LOCKDECCOL) {
-                    JComboBox<String> c = new JComboBox<String>(t.getValidDecoderNames());
+                    JComboBox<String> c;
+                    if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) !=0 ) c = new JComboBox<String>(t.getValidDecoderNames());
+                    else c = new JComboBox<String>(new String[]{t.getDecoderName()});
+                    
                     c.setSelectedItem(t.getDecoderName());
                     c.addActionListener(new ActionListener() {
                         @Override
@@ -375,7 +381,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                     });
                     return c;
                 } else if (col == LOCKOPRCOL) {
+                    java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
+                    int modes = t.getPossibleLockModes();
+                    if ( (modes & Turnout.CABLOCKOUT) !=0 && (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(bothText);
+                    if ( (modes & Turnout.CABLOCKOUT) !=0 ) lockOperations.add(cabOnlyText);
+                    if ( (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(pushbutText);
+                    lockOperations.add(noneText);
                     JComboBox<String> c = new JComboBox<String>(lockOperations);
+                    
                     if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         c.setSelectedItem(bothText);
                     } else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
@@ -431,7 +444,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                 } else if (col == LOCKCOL) {
                     boolean b = ((Boolean) value).booleanValue();
-                    t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, b);
+                    t.setLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT, b);
                 } else if (col == MODECOL) {
                     @SuppressWarnings("unchecked")
                     String modeName = (String) ((JComboBox<String>) value).getSelectedItem();
@@ -479,7 +492,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String lockOpName = (String) ((JComboBox<String>) value)
                             .getSelectedItem();
                     if (lockOpName.equals(bothText)) {
-                        t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+                        t.enableLockOperation(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT, true);
                     }
                     if (lockOpName.equals(cabOnlyText)) {
                         t.enableLockOperation(Turnout.CABLOCKOUT, true);
