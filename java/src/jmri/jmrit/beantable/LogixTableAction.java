@@ -339,7 +339,7 @@ public class LogixTableAction extends AbstractTableAction {
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -515,7 +515,7 @@ public class LogixTableAction extends AbstractTableAction {
                     _selectionMode = SelectionMode.USECOMBO;
                     break;
                 default:
-                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);
+                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);  // NOI18N
                     _selectionMode = SelectionMode.USEMULTI;
             }
         }
@@ -553,7 +553,7 @@ public class LogixTableAction extends AbstractTableAction {
                     _editMode = EditMode.TREEEDIT;
                     break;
                 default:
-                    log.warn("Invalid conditional edit mode value, '{}', returned", currentMode);
+                    log.warn("Invalid conditional edit mode value, '{}', returned", currentMode);  // NOI18N
                     _editMode = EditMode.LISTEDIT;
             }
         }
@@ -904,7 +904,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("copyPressed started for " + sName);
+            log.debug("copyPressed started for " + sName);  // NOI18N
         }
         javax.swing.SwingUtilities.invokeLater(t);
         _inCopyMode = true;
@@ -960,11 +960,11 @@ public class LogixTableAction extends AbstractTableAction {
                 targetLogix = _logixManager.createNewLogix(sName, uName);
                 if (targetLogix == null) {
                     // should never get here unless there is an assignment conflict
-                    log.error("Failure to create Logix with System Name: " + sName);
+                    log.error("Failure to create Logix with System Name: " + sName);  // NOI18N
                     return;
                 }
             } else if (targetLogix == null) {
-                log.error("Error targetLogix is null!");
+                log.error("Error targetLogix is null!");  // NOI18N
                 return;
             } else {
                 targetLogix.setUserName(uName);
@@ -988,7 +988,7 @@ public class LogixTableAction extends AbstractTableAction {
     void copyConditionalToLogix(String cSysName, Logix srcLogix, Logix targetLogix) {
         Conditional cOld = _conditionalManager.getBySystemName(cSysName);
         if (cOld == null) {
-            log.error("Failure to find Conditional with System Name: " + cSysName);
+            log.error("Failure to find Conditional with System Name: " + cSysName);  // NOI18N
             return;
         }
         String cOldSysName = cOld.getSystemName();
@@ -1020,8 +1020,8 @@ public class LogixTableAction extends AbstractTableAction {
         Conditional cNew = _conditionalManager.createNewConditional(cNewSysName, cNewUserName);
         if (cNew == null) {
             // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: \""
-                    + cNewSysName + "\" and User Name: \"" + cNewUserName + "\"");
+            log.error("Failure to create Conditional with System Name: \""  // NOI18N
+                    + cNewSysName + "\" and User Name: \"" + cNewUserName + "\"");  // NOI18N
             return;
         }
         cNew.setLogicType(cOld.getLogicType(), cOld.getAntecedentExpression());
@@ -1176,7 +1176,7 @@ public class LogixTableAction extends AbstractTableAction {
             _curLogix = _logixManager.createNewLogix(sName, uName);
             if (_curLogix == null) {
                 // should never get here unless there is an assignment conflict
-                log.error("Failure to create Logix with System Name: " + sName);
+                log.error("Failure to create Logix with System Name: " + sName);  // NOI18N
                 return;
             }
         }
@@ -1399,7 +1399,7 @@ public class LogixTableAction extends AbstractTableAction {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: "
+                log.error("Failure to update Conditional with Duplicate User Name: "  // NOI18N
                         + uName);
                 javax.swing.JOptionPane.showMessageDialog(
                         null, rbx.getString("Error10"),     // NOI18N

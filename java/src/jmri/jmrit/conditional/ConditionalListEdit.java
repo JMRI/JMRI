@@ -441,14 +441,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cName != null) {
                     c = _conditionalManager.getBySystemName(cName);
                     if (c == null) {
-                        log.error("Invalid conditional system name when calculating - "
+                        log.error("Invalid conditional system name when calculating - "  // NOI18N
                                 + cName);
                     } else {
                         // calculate without taking any action
                         c.calculate(false, null);
                     }
                 } else {
-                    log.error("null conditional system name when calculating");
+                    log.error("null conditional system name when calculating");  // NOI18N
                 }
             }
             // force the table to update
@@ -481,7 +481,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 Logix p = _logixManager.getByUserName(uName);
                 if (p != null) {
                     // Logix with this user name already exists
-                    log.error("Failure to update Logix with Duplicate User Name: "
+                    log.error("Failure to update Logix with Duplicate User Name: "  // NOI18N
                             + uName);
                     javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error6"), Bundle.getMessage("ErrorTitle"),  // NOI18N
@@ -562,7 +562,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
         if (_curConditional == null) {
             // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: "
+            log.error("Failure to create Conditional with System Name: "  // NOI18N
                     + cName);
             return;
         }
@@ -599,7 +599,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // get Conditional to edit
         _curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
         if (_curConditional == null) {
-            log.error("Attempted edit of non-existant conditional.");
+            log.error("Attempted edit of non-existant conditional.");  // NOI18N
             return;
         }
         _variableList = _curConditional.getCopyOfStateVariables();
@@ -633,7 +633,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: "
+                log.error("Failure to update Conditional with Duplicate User Name: "  // NOI18N
                         + uName);
                 javax.swing.JOptionPane.showMessageDialog(
                         _editConditionalFrame, Bundle.getMessage("Error10"),  // NOI18N
@@ -1315,7 +1315,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             _curLogix.activateLogix();
         } catch (NumberFormatException nfe) {
             if (log.isDebugEnabled()) {
-                log.error("NumberFormatException on activation of Logix " + nfe);
+                log.error("NumberFormatException on activation of Logix " + nfe);  // NOI18N
             }
             //nfe.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
@@ -1546,7 +1546,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      */
     void loadJComboBoxWithHeadAppearances(JComboBox<String> box, String signalHeadName) {
         box.removeAllItems();
-        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);
+        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);  // NOI18N
         SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
         if (h == null) {
             box.addItem(Bundle.getMessage("PromptLoadHeadName"));  // NOI18N
@@ -1569,7 +1569,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      */
     void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
-        log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);
+        log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);  // NOI18N
         SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (m == null) {
             box.addItem(Bundle.getMessage("PromptLoadMastName"));  // NOI18N
@@ -1843,14 +1843,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void initializeStateVariables() {
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: testType= " + testType);
+            log.debug("initializeStateVariables: testType= " + testType);  // NOI18N
         }
         if (testType == Conditional.TYPE_NONE) {
             return;
         }
         int itemType = Conditional.TEST_TO_ITEM[testType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);
+            log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         // set type after call to variableTypeChanged - addItemListener action will call variableTypeChanged
         _variableTypeBox.setSelectedIndex(itemType);
@@ -1970,7 +1970,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     private void variableTypeChanged(int itemType) {
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
-            log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);
+            log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         _variableNamePanel.setVisible(false);
         _variableStatePanel.setVisible(false);
@@ -2295,7 +2295,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         } else {
             Logix x = _conditionalManager.getParentLogix(cdlName);
             if (x == null) {
-                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);
+                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);  // NOI18N
                 lgxName = _curLogix.getSystemName();
             } else {
                 lgxName = x.getSystemName();
@@ -2348,7 +2348,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         Logix x = _logixManager.getBySystemName(logixName);
         if (x == null) {
-            log.error("Logix '{}' not found while building the conditional list", logixName);
+            log.error("Logix '{}' not found while building the conditional list", logixName);  // NOI18N
             return;
         }
         if (x.getNumConditionals() == 0) {
@@ -2438,7 +2438,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
         _curVariable.setType(testType);
         if (log.isDebugEnabled()) {
-            log.debug("validateVariable: itemType= " + itemType + ", testType= " + testType);
+            log.debug("validateVariable: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -2520,8 +2520,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curVariable.setType(type);
                     _curVariable.setDataString(appStr);
                     if (log.isDebugEnabled()) {
-                        log.debug("SignalHead \"" + name + "\"of type '" + testType
-                                + "' _variableSignalBox.getSelectedItem()= "
+                        log.debug("SignalHead \"" + name + "\"of type '" + testType  // NOI18N
+                                + "' _variableSignalBox.getSelectedItem()= "  // NOI18N
                                 + _variableSignalBox.getSelectedItem());
                     }
                 }
@@ -2557,8 +2557,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 String str = (String) _variableStateBox.getSelectedItem();
                 _curVariable.setDataString(OBlock.getSystemStatusName(str));
                 if (log.isDebugEnabled()) {
-                    log.debug("OBlock \"" + name + "\"of type '" + testType
-                            + "' _variableStateBox.getSelectedItem()= "
+                    log.debug("OBlock \"" + name + "\"of type '" + testType  // NOI18N
+                            + "' _variableStateBox.getSelectedItem()= "  // NOI18N
                             + _variableStateBox.getSelectedItem());
                 }
                 break;
@@ -2577,7 +2577,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setName(name);
         boolean result = _curVariable.evaluate();
         if (log.isDebugEnabled()) {
-            log.debug("State Variable \"" + name + "\"of type '"
+            log.debug("State Variable \"" + name + "\"of type '"  // NOI18N
                     + ConditionalVariable.getTestTypeString(testType)
                     + "' state= " + result + " type= " + _curVariable.getType());
         }
@@ -2595,9 +2595,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= "
+            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= "  // NOI18N
                     + _variableTypeBox.getSelectedIndex()
-                    + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");
+                    + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");  // NOI18N
 
             int itemType = _variableTypeBox.getSelectedIndex();
 
@@ -2637,7 +2637,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
-            log.debug("variableSignalMastNameListener fires; _variableNameField : " + _variableNameField.getText().trim());
+            log.debug("variableSignalMastNameListener fires; _variableNameField : " + _variableNameField.getText().trim());  // NOI18N
             loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
         }
     };
@@ -2815,7 +2815,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             public void actionPerformed(ActionEvent e) {
                 int select = _actionItemTypeBox.getSelectedIndex();
                 if (log.isDebugEnabled()) {
-                    log.debug("_actionItemTypeBoxListener: select= " + select);
+                    log.debug("_actionItemTypeBoxListener: select= " + select);  // NOI18N
                 }
                 actionItemChanged(select);
                 _editActionFrame.pack();
@@ -2844,7 +2844,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);
+            log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);  // NOI18N
         }
         if (actionType == Conditional.ACTION_NONE) {
             return;
@@ -3012,7 +3012,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                             _actionBox.setSelectedIndex(9);
                             break;
                         default:
-                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());  // NOI18N
                             break;
                     }
                 }
@@ -3035,7 +3035,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.error("Unhandled type: {}", itemType);
+                log.error("Unhandled type: {}", itemType);  // NOI18N
                 break;
         }
         _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
@@ -3053,7 +3053,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void actionItemChanged(int type) {
         int actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
-            log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);
+            log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);  // NOI18N
         }
         _actionTypeBox.removeActionListener(_actionTypeListener);
         _actionTypePanel.setVisible(false);
@@ -3407,7 +3407,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionTypeListener.setItemType(itemType);
         _actionTypeBox.addActionListener(_actionTypeListener);
         if (log.isDebugEnabled()) {
-            log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth()
+            log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth()  // NOI18N
                     + " X " + _editActionFrame.getHeight());
         }
     }
@@ -3544,7 +3544,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType[" + actionType + "] = " + DefaultConditionalAction.getActionTypeString(actionType));
+            log.warn("Unexpected actionType[" + actionType + "] = " + DefaultConditionalAction.getActionTypeString(actionType));  // NOI18N
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -3561,7 +3561,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) {
-                    log.error("exception setting file location: " + ex);
+                    log.error("exception setting file location: " + ex);  // NOI18N
                 }
                 _longActionString.setText("");
             }
@@ -3927,7 +3927,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                             _curAction.setActionData(Audio.CMD_RESET_POSITION);
                             break;
                         default:
-                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());  // NOI18N
                             break;
                     }
                 }
@@ -3980,13 +3980,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
             int select1 = _actionItemTypeBox.getSelectedIndex();
             int select2 = _actionTypeBox.getSelectedIndex() - 1;
             if (log.isDebugEnabled()) {
-                log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= "
+                log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= "  // NOI18N
                         + _itemType + ", action= " + select2);
             }
             if (select1 != _itemType) {
                 if (log.isDebugEnabled()) {
-                    log.error("ActionTypeListener actionItem selection (" + select1
-                            + ") != expected actionItem (" + _itemType + ")");
+                    log.error("ActionTypeListener actionItem selection (" + select1  // NOI18N
+                            + ") != expected actionItem (" + _itemType + ")");  // NOI18N
                 }
             }
             if (_curAction != null) {
@@ -4015,7 +4015,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal head name changes, but only
             // while in signal head mode
-            log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
+            log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());  // NOI18N
             loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
         }
     };
@@ -4025,7 +4025,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
-            log.debug("actionSignalMastNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
+            log.debug("actionSignalMastNameListener fires; _actionNameField : " + _actionNameField.getText().trim());  // NOI18N
             loadJComboBoxWithMastAspects(_actionBox, _actionNameField.getText().trim());
         }
     };
@@ -4182,7 +4182,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 case SNAME_COLUMN:
                     return _curLogix.getConditionalByNumberOrder(rx);
                 case UNAME_COLUMN: {
-                    //log.debug("ConditionalTableModel: "+_curLogix.getConditionalByNumberOrder(rx));
+                    //log.debug("ConditionalTableModel: "+_curLogix.getConditionalByNumberOrder(rx));  // NOI18N
                     Conditional c = _conditionalManager.getBySystemName(
                             _curLogix.getConditionalByNumberOrder(rx));
                     if (c != null) {
@@ -4432,7 +4432,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                         case NamedBean.UNKNOWN:
                             return Bundle.getMessage("BeanStateUnknown");  // NOI18N
                         default:
-                            log.warn("Unhandled state type: {}", variable.getState());
+                            log.warn("Unhandled state type: {}", variable.getState());  // NOI18N
                             break;
                     }
                     break;

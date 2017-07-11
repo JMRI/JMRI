@@ -130,7 +130,7 @@ public class ConditionalEditBase {
                     _selectionMode = SelectionMode.USECOMBO;
                     break;
                 default:
-                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);
+                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);  // NOI18N
                     _selectionMode = SelectionMode.USEMULTI;
             }
         }
@@ -211,7 +211,7 @@ public class ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: "
+                log.error("Failure to update Conditional with Duplicate User Name: "  // NOI18N
                         + uName);
                 javax.swing.JOptionPane.showMessageDialog(
                         null, Bundle.getMessage("Error10"),     // NOI18N
@@ -307,7 +307,7 @@ public class ConditionalEditBase {
 
             if (newState == ItemEvent.SELECTED) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Name ComboBox Item Event: new name = '{}'", newName);
+                    log.debug("Name ComboBox Item Event: new name = '{}'", newName);  // NOI18N
                 }
                 saveTextField.setText(newName);
             }
@@ -420,7 +420,7 @@ public class ConditionalEditBase {
                 int selectedCol = _pickTable.getSelectedColumn();
                 String newName = (String) _pickTable.getValueAt(selectedRow, selectedCol);
                 if (log.isDebugEnabled()) {
-                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'",
+                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'",  // NOI18N
                              selectedRow, selectedCol, newName);
                 }
                 saveTextField.setText(newName);
@@ -513,7 +513,7 @@ public class ConditionalEditBase {
         for (Component compItem : compList) {
             // Safety catch
             if (level > 10) {
-                log.warn("findPickListTabPane: safety breaker reached");
+                log.warn("findPickListTabPane: safety breaker reached");  // NOI18N
                 return;
             }
 
@@ -818,7 +818,7 @@ public class ConditionalEditBase {
                 errorNum = "Error29";       // NOI18N
                 break;
             default:
-                log.warn("Unexpected action type {} in displayBadNumberReference", actionType);
+                log.warn("Unexpected action type {} in displayBadNumberReference", actionType);  // NOI18N
         }
         javax.swing.JOptionPane.showMessageDialog(
                 null, java.text.MessageFormat.format(Bundle.getMessage("Error9"),       // NOI18N

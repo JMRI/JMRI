@@ -236,7 +236,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         Logix p = _logixManager.getByUserName(uName);
                         if (p != null) {
                             // Logix with this user name already exists
-                            log.error("Failure to update Logix with Duplicate User Name: "
+                            log.error("Failure to update Logix with Duplicate User Name: "  // NOI18N
                                     + uName);
                             javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
                                     Bundle.getMessage("Error6"), Bundle.getMessage("ErrorTitle"),  // NOI18N
@@ -544,7 +544,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.warn("Invalid grid type: '{}'", gridType);
+                log.warn("Invalid grid type: '{}'", gridType);  // NOI18N
                 makeEmptyGrid(c);
         }
 
@@ -640,7 +640,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 if (_curConditional == null) {
                     // should never get here unless there is an assignment conflict
-                    log.error("Failure to create Conditional with System Name: {}", cName);
+                    log.error("Failure to create Conditional with System Name: {}", cName);  // NOI18N
                     return;
                 }
                 // add to Logix at the end of the calculate order
@@ -691,7 +691,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.error("Add called for unsupported node type: '{}'", _curNodeType);
+                log.error("Add called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
     }
 
@@ -855,7 +855,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.error("Edit called for unsupported node type: '{}'", _curNodeType);
+                log.error("Edit called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
     }
 
@@ -889,7 +889,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.warn("Invalid update button press");
+                log.warn("Invalid update button press");  // NOI18N
         }
         _curLogix.activateLogix();
         _cdlTree.setSelectionPath(_curTreePath);
@@ -1008,7 +1008,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             antNode.setText(buildNodeText("Antecedent", _curConditional, 0));  // NOI18N
             _cdlModel.nodeChanged(antNode);
         } else {
-            log.warn("Unable to find the antecedent node");
+            log.warn("Unable to find the antecedent node");  // NOI18N
         }
     }
 
@@ -1090,7 +1090,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             antNode.setText(buildNodeText("Antecedent", _curConditional, 0));  // NOI18N
             _cdlModel.nodeChanged(antNode);
         } else {
-            log.warn("Unable to find the antecedent node");
+            log.warn("Unable to find the antecedent node");  // NOI18N
         }
     }
 
@@ -1293,7 +1293,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.error("Delete called for unsupported node type: '{}'", _curNodeType);
+                log.error("Delete called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
         _curLogix.activateLogix();
     }
@@ -1336,7 +1336,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.warn("Move Up called for unsupported node type: '{}'", _curNodeType);
+                log.warn("Move Up called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
     }
 
@@ -1377,7 +1377,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.warn("Move Down called for unsupported node type: '{}'", _curNodeType);
+                log.warn("Move Down called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
     }
 
@@ -1732,7 +1732,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.warn("Should not be here");
+                log.warn("Should not be here");  // NOI18N
         }
     }
 
@@ -2172,11 +2172,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     void initializeStateVariables() {
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: testType= " + testType);
+            log.debug("initializeStateVariables: testType= " + testType);  // NOI18N
         }
         int itemType = Conditional.TEST_TO_ITEM[testType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);
+            log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         if (itemType == _variableTypeBox.getSelectedIndex()) {
             // Force a refresh of variableTypeChanged
@@ -2295,7 +2295,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     private void variableTypeChanged(int itemType) {
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
-            log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);
+            log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         _variableStateBox.removeAllItems();
         _variableNameField.removeActionListener(variableSignalHeadNameListener);
@@ -2531,7 +2531,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         } else {
             Logix x = _conditionalManager.getParentLogix(cdlName);
             if (x == null) {
-                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);
+                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);  // NOI18N
                 lgxName = _curLogix.getSystemName();
             } else {
                 lgxName = x.getSystemName();
@@ -2584,7 +2584,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         Logix x = _logixManager.getBySystemName(logixName);
         if (x == null) {
-            log.error("Logix '{}' not found while building the conditional list", logixName);
+            log.error("Logix '{}' not found while building the conditional list", logixName);  // NOI18N
             return;
         }
         if (x.getNumConditionals() == 0) {
@@ -2640,7 +2640,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void loadJComboBoxWithHeadAppearances(JComboBox<String> box, String signalHeadName) {
         box.removeAllItems();
-        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);
+        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);  // NOI18N
         SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
         if (h == null) {
             box.addItem(Bundle.getMessage("PromptLoadHeadName"));  // NOI18N
@@ -2742,7 +2742,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         _curVariable.setType(testType);
         if (log.isDebugEnabled()) {
-            log.debug("validateVariable: itemType= " + itemType + ", testType= " + testType);
+            log.debug("validateVariable: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -2824,7 +2824,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _curVariable.setType(type);
                     _curVariable.setDataString(appStr);
                     if (log.isDebugEnabled()) {
-                        log.debug("SignalHead \"" + name + "\"of type '" + testType
+                        log.debug("SignalHead \"" + name + "\"of type '" + testType  // NOI18N
                                 + "' _variableSignalBox.getSelectedItem()= "
                                 + _variableSignalBox.getSelectedItem());
                     }
@@ -2861,8 +2861,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 String str = (String) _variableStateBox.getSelectedItem();
                 _curVariable.setDataString(OBlock.getSystemStatusName(str));
                 if (log.isDebugEnabled()) {
-                    log.debug("OBlock \"" + name + "\"of type '" + testType
-                            + "' _variableStateBox.getSelectedItem()= "
+                    log.debug("OBlock \"" + name + "\"of type '" + testType  // NOI18N
+                            + "' _variableStateBox.getSelectedItem()= "  // NOI18N
                             + _variableStateBox.getSelectedItem());
                 }
                 break;
@@ -2881,7 +2881,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setName(name);
         boolean result = _curVariable.evaluate();
         if (log.isDebugEnabled()) {
-            log.debug("State Variable \"" + name + "\"of type '"
+            log.debug("State Variable \"" + name + "\"of type '"  // NOI18N
                     + ConditionalVariable.getTestTypeString(testType)
                     + "' state= " + result + " type= " + _curVariable.getType());
         }
@@ -2945,7 +2945,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal head name changes, but only
             // while in signal head mode
-            log.debug("variableSignalHeadNameListener fires; _variableNameField : " + _variableNameField.getText().trim());
+            log.debug("variableSignalHeadNameListener fires; _variableNameField : " + _variableNameField.getText().trim());  // NOI18N
             loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
         }
     };
@@ -2955,7 +2955,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
-            log.debug("variableSignalMastNameListener fires; _variableNameField : " + _variableNameField.getText().trim());
+            log.debug("variableSignalMastNameListener fires; _variableNameField : " + _variableNameField.getText().trim());  // NOI18N
             loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
         }
     };
@@ -2963,7 +2963,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= "
+            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= "  // NOI18N
                     + _variableTypeBox.getSelectedIndex()
                     + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");
 
@@ -3295,7 +3295,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);
+            log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);  // NOI18N
         }
         _actionItemTypeBox.setSelectedIndex(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
@@ -3470,7 +3470,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             _actionBox.setSelectedIndex(9);
                             break;
                         default:
-                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());  // NOI18N
                             break;
                     }
                 }
@@ -3493,7 +3493,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                log.error("Unhandled type: {}", itemType);
+                log.error("Unhandled type: {}", itemType);  // NOI18N
                 break;
         }
         _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
@@ -3509,7 +3509,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     void actionItemChanged(int type) {
         int actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
-            log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);
+            log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);  // NOI18N
         }
         _detailGrid.setVisible(false);
         _actionTypeBox.removeActionListener(_actionTypeListener);
@@ -4035,7 +4035,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType[" + actionType + "] = " + DefaultConditionalAction.getActionTypeString(actionType));
+            log.warn("Unexpected actionType[" + actionType + "] = " + DefaultConditionalAction.getActionTypeString(actionType));  // NOI18N
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -4052,7 +4052,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) {
-                    log.error("exception setting file location: " + ex);
+                    log.error("exception setting file location: " + ex);  // NOI18N
                 }
                 _longActionString.setText("");
             }
@@ -4373,7 +4373,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             _curAction.setActionData(Audio.CMD_RESET_POSITION);
                             break;
                         default:
-                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());  // NOI18N
                             break;
                     }
                 }
@@ -4425,13 +4425,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             int select1 = _actionItemTypeBox.getSelectedIndex();
             int select2 = _actionTypeBox.getSelectedIndex() - 1;
             if (log.isDebugEnabled()) {
-                log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= "
+                log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= "  // NOI18N
                         + _itemType + ", action= " + select2);
             }
             if (select1 != _itemType) {
                 if (log.isDebugEnabled()) {
-                    log.error("ActionTypeListener actionItem selection (" + select1
-                            + ") != expected actionItem (" + _itemType + ")");
+                    log.error("ActionTypeListener actionItem selection (" + select1  // NOI18N
+                            + ") != expected actionItem (" + _itemType + ")");  // NOI18N
                 }
             }
             if (_curAction != null) {
@@ -4460,7 +4460,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal head name changes, but only
             // while in signal head mode
-            log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
+            log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());  // NOI18N
             loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
         }
     };
@@ -4470,7 +4470,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
-            log.debug("actionSignalMastNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
+            log.debug("actionSignalMastNameListener fires; _actionNameField : " + _actionNameField.getText().trim());  // NOI18N
             loadJComboBoxWithMastAspects(_actionBox, _actionNameField.getText().trim());
         }
     };
