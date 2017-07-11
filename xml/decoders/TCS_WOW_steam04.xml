@@ -21,6 +21,8 @@
    <!--Add CV1.34 & 4.38 & 4.40                             -->
 	<version author="Michael Mosher" version="5" lastUpdated="20170317"/>
 	<!-- update factory resets -->
+	<version author="Michael Mosher" version="6" lastUpdated="20170616"/>
+	<!-- update names of CV 4.30,31,33,34 -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="130">
@@ -2781,28 +2783,28 @@
          </variable>
          <variable item="Sound Setting 14" CV="T2CV.4.30" default="10" mask="VVVVVVVVVVVVVVVV">
             <decVal max="255"/>
-            <label>BEMF Low Calibration</label>
-            <tooltip>This is the Low BEMF point when calibrating for prototype load based chuff volume</tooltip>
+            <label>Forward Light Chuff BEMF Calibration</label>
+            <tooltip>Early V4 decoder this is BEMF Low Calibration</tooltip>
          </variable>
          <variable item="Sound Setting 15" CV="T2CV.4.31" default="40" mask="VVVVVVVVVVVVVVVV">
             <decVal max="255"/>
-            <label>BEMF High Calibration</label>
-            <tooltip>This is the High BEMF point when calibrating for prototype load based chuff volume</tooltip>
+            <label>Forward Loaded Chuff BEMF Calibration</label>
+            <tooltip>Early V4 decoder this is BEMF High Calibration</tooltip>
          </variable>
          <variable item="Sound Setting 16" CV="T2CV.4.32" default="612" mask="VVVVVVVVVVVVVVVV">
             <decVal max="2047"/>
             <label>Chuff Volume Velocity Adjustment</label>
             <tooltip>controls the effects accelerating and decelerating have upon the chuff volume. The higher the value the more drastic the change in volume from accelerating and decelerating</tooltip>
          </variable>
-         <variable item="Sound Setting 17" CV="T2CV.4.33" default="0" mask="VVVVVVVVVVVVVVVV">
-            <decVal max="32511"/>
-            <label>Chuff Volume Forward Trim</label>
-            <tooltip>value is subtracted from the chuff volume only when the locomotive is going forward, this can be used to balance the chuff volume. if the locomotive is "stiffer" in the forward direction. The higher the value the quieter the chuffs will be when going forward</tooltip>
+         <variable item="Sound Setting 17" CV="T2CV.4.33" default="10" mask="VVVVVVVVVVVVVVVV">
+            <decVal max="255"/>
+            <label>Reverse Light Chuff BEMF Calibration</label>
+            <tooltip>Early V4 decoder this is Chuff Volume Forward Trim</tooltip>
          </variable>
-         <variable item="Sound Setting 18" CV="T2CV.4.34" default="0" mask="VVVVVVVVVVVVVVVV">
-            <decVal max="32511"/>
-            <label>Chuff Volume Reverse Trim</label>
-            <tooltip>value is subtracted from the chuff volume only when the locomotive is going reverse, this can be used to balance the chuff volume. if the locomotive is "stiffer" in the reverse direction. The higher the value the quieter the chuffs will be when going reverse</tooltip>
+         <variable item="Sound Setting 18" CV="T2CV.4.34" default="40" mask="VVVVVVVVVVVVVVVV">
+            <decVal max="255"/>
+            <label>Reverse Loaded Chuff BEMF Calibration</label>
+            <tooltip>Early V4 decoder this is Chuff Volume Reverse Trim</tooltip>
          </variable>
          <variable item="Sound Setting 7" CV="T2CV.4.35" default="30" mask="VVVVVVVVVVVVVVVV">
             <decVal max="100"/>
@@ -2968,19 +2970,19 @@
          <xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV.xml"/>
       </variables>
       <resets>
-			<mode>PAGEMODE</mode>
-			<mode>DIRECTMODE</mode>
-			<mode>OPSBYTEMODE</mode>
-			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
-			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
-			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
-			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
-			<factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
-			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
-			<factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
-			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
-			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
-			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+        <mode>PAGEMODE</mode>
+        <mode>DIRECTMODE</mode>
+        <mode>OPSBYTEMODE</mode>
+        <factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
+        <factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
+        <factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
+        <factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
+        <factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
+        <factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
+        <factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
+        <factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
+        <factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
+        <factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
 			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
 			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
 			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
