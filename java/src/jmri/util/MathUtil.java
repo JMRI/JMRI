@@ -370,7 +370,7 @@ public final class MathUtil {
      * @param a the angle
      * @return the angle wrapped between 0 and 360
      */
-    public static double normalizeAngle(double a) {
+    public static double normalizeAngleDEG(double a) {
         return wrap360(a);
     }
 
@@ -380,7 +380,7 @@ public final class MathUtil {
      * @param b the second angle
      * @return the absolute difference between the two angles
      */
-    public static double diffAngle(double a, double b) {
+    public static double diffAngleDEG(double a, double b) {
         return Math.abs(wrapPM180(a - b));
     }
 

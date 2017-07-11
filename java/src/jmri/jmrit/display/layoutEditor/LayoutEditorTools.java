@@ -214,7 +214,7 @@ public class LayoutEditorTools {
     private JButton setSignalsCancel = null;
 
     private LayoutTurnout layoutTurnout = null;
-    private double layoutTurnoutDirection = 0.0;
+    private double placeSignalDirectionDEG = 0.0;
 
     private boolean turnoutFromMenu = false;
     private Turnout turnout = null;
@@ -649,7 +649,7 @@ public class LayoutEditorTools {
         if (layoutTurnout != null) {
             Point2D pointA = layoutTurnout.getCoordsA();
             Point2D pointB = layoutTurnout.getCoordsB();
-            layoutTurnoutDirection = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointA));
+            placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointA));
             return true;
         }
         JOptionPane.showMessageDialog(setSignalsFrame,
@@ -687,9 +687,9 @@ public class LayoutEditorTools {
         Point2D pointC = layoutTurnout.getCoordsC();
 
         Point2D delta = new Point2D.Double(0.0, MathUtil.distance(pointB, pointC));
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointA, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeThroatDiverging() {
@@ -702,9 +702,9 @@ public class LayoutEditorTools {
         Point2D pointC = layoutTurnout.getCoordsC();
 
         Point2D delta = new Point2D.Double(0.0, MathUtil.distance(pointB, pointC));
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(layoutTurnout.getCoordsCenter(), delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeContinuing(String signalHeadName) {
@@ -714,7 +714,7 @@ public class LayoutEditorTools {
         Point2D pointB = layoutTurnout.getCoordsB();
         Point2D pointC = layoutTurnout.getCoordsC();
         Point2D where = MathUtil.subtract(pointB, MathUtil.subtract(pointC, pointB));
-        setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeDiverging(String signalHeadName) {
@@ -1384,8 +1384,7 @@ public class LayoutEditorTools {
         if ((signalName == null) || (signalName.length() < 1)) {
             return;
         }
-        SignalHead head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                getSignalHead(signalName);
+        SignalHead head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
         removeAssignment(head);
         layoutEditor.removeSignalHead(head);
         /*SignalHeadIcon h = null;
@@ -1488,8 +1487,7 @@ public class LayoutEditorTools {
                     if (signalName.equals("")) {
                         return null;
                     }
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 obj = p;
             } else if (type == LayoutTrack.TURNOUT_A) {
@@ -1497,8 +1495,7 @@ public class LayoutEditorTools {
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalA2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = to.getSignalA1Name();
                 if ((signalName == null) || (signalName.equals(""))) {
@@ -1512,8 +1509,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.TURNOUT_B) {
                 // Reached turnout continuing, should be signalled
@@ -1523,8 +1519,7 @@ public class LayoutEditorTools {
                     signalName = to.getSignalC2Name();
                 }
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     signalName = to.getSignalB1Name();
@@ -1552,8 +1547,7 @@ public class LayoutEditorTools {
                     signalName = to.getSignalB2Name();
                 }
                 if ((signalName != null) && !signalName.equals("")) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     signalName = to.getSignalC1Name();
@@ -1571,16 +1565,14 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.TURNOUT_D) {
                 // Reached turnout xover 4, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalD2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = to.getSignalD1Name();
                 if ((signalName == null) || (signalName.equals(""))) {
@@ -1594,16 +1586,14 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.LEVEL_XING_A) {
                 // Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalAName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectC();
                 if (t == null) {
@@ -1618,8 +1608,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalBName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectD();
                 if (t == null) {
@@ -1634,8 +1623,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalCName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectA();
                 if (t == null) {
@@ -1650,8 +1638,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalDName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectB();
                 if (t == null) {
@@ -1665,8 +1652,7 @@ public class LayoutEditorTools {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalA2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = sl.getSignalA1Name();
                 if ((signalName == null) || (signalName.equals(""))) {
@@ -1680,8 +1666,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.SLIP_B) {
                 LayoutSlip sl = (LayoutSlip) connect;
@@ -1689,8 +1674,7 @@ public class LayoutEditorTools {
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalB2Name();
                     if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                                getSignalHead(signalName);
+                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                     }
                 }
                 signalName = sl.getSignalB1Name();
@@ -1705,8 +1689,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.SLIP_C) {
                 LayoutSlip sl = (LayoutSlip) connect;
@@ -1714,8 +1697,7 @@ public class LayoutEditorTools {
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalC2Name();
                     if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                                getSignalHead(signalName);
+                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                     }
                 }
                 signalName = sl.getSignalC1Name();
@@ -1730,15 +1712,13 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutTrack.SLIP_D) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalD2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = sl.getSignalD1Name();
                 if ((signalName == null) || (signalName.equals(""))) {
@@ -1752,8 +1732,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                 hitEndBumper = true;
@@ -1924,8 +1903,6 @@ public class LayoutEditorTools {
     private TrackSegment eastTrack = null;
     private TrackSegment westTrack = null;
 
-    private boolean trackHorizontal = false;
-    private boolean trackVertical = false;
     private boolean boundaryFromMenu = false;
 
     private PositionablePoint boundary = null;
@@ -2123,14 +2100,6 @@ public class LayoutEditorTools {
                                 new Object[]{newEastBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!trackHorizontal) && (!trackVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (eastBoundHead != getHeadFromName(boundary.getEastBoundSignal())) {
-                    removeSignalHeadFromPanel(boundary.getEastBoundSignal());
-                    removeAssignment(eastBoundHead);
-                    boundary.setEastBoundSignal(newEastBoundSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(boundary.getEastBoundSignal());
                 placeEastBound();
@@ -2165,14 +2134,6 @@ public class LayoutEditorTools {
                                 new Object[]{newWestBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!trackHorizontal) && (!trackVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (westBoundHead != getHeadFromName(boundary.getWestBoundSignal())) {
-                    removeSignalHeadFromPanel(boundary.getWestBoundSignal());
-                    removeAssignment(westBoundHead);
-                    boundary.setWestBoundSignal(newWestBoundSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(boundary.getWestBoundSignal());
                 placeWestBound();
@@ -2288,12 +2249,12 @@ public class LayoutEditorTools {
         } else {
             point2 = layoutEditor.getCoords(track2.getConnect1(), track2.getType1());
         }
+
+        placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(point2, point1));
+
         double delX = point1.getX() - point2.getX();
         double delY = point1.getY() - point2.getY();
-        trackVertical = false;
-        trackHorizontal = false;
-        if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
-            trackHorizontal = true;
+        if (Math.abs(delX) >= Math.abs(delY)) {
             if (delX > 0.0) {
                 eastTrack = track1;
                 westTrack = track2;
@@ -2301,9 +2262,7 @@ public class LayoutEditorTools {
                 eastTrack = track2;
                 westTrack = track1;
             }
-        }
-        if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
-            trackVertical = true;
+        } else {
             if (delY > 0.0) {
                 eastTrack = track1;  // south
                 westTrack = track2;  // north
@@ -2357,34 +2316,26 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = boundary.getCoords();
-        String newEastBoundSignalName = NamedBean.normalizeUserName(eastBoundSignalHeadComboBox.getDisplayName());
-        if (trackHorizontal) {
-            setSignalHeadOnPanel(2, newEastBoundSignalName,
-                    (int) (p.getX() - testIcon.getIconHeight() - 8),
-                    (int) (p.getY() - testIcon.getIconWidth()));
-        } else if (trackVertical) {
-            setSignalHeadOnPanel(1, newEastBoundSignalName,
-                    (int) (p.getX() - 4 - testIcon.getIconHeight()),
-                    (int) (p.getY() - 4 - testIcon.getIconWidth()));
-        }
+        String signalHeadName = NamedBean.normalizeUserName(eastBoundSignalHeadComboBox.getDisplayName());
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D point = boundary.getCoords();
+        Point2D where = MathUtil.add(point, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeWestBound() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = boundary.getCoords();
-        String newWestBoundSignalName = NamedBean.normalizeUserName(westBoundSignalHeadComboBox.getDisplayName());
-        if (trackHorizontal) {
-            setSignalHeadOnPanel(0, newWestBoundSignalName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 5));
-        } else if (trackVertical) {
-            setSignalHeadOnPanel(3, newWestBoundSignalName,
-                    (int) (p.getX() + 5),
-                    (int) (p.getY()) + 4);
-        }
+        String signalHeadName = NamedBean.normalizeUserName(westBoundSignalHeadComboBox.getDisplayName());
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D point = boundary.getCoords();
+        Point2D where = MathUtil.add(point, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void setLogicEastBound() {
@@ -2477,11 +2428,6 @@ public class LayoutEditorTools {
         } else {
             block1IDComboBox.getEditor().setItem(boundary.getConnect1().getLayoutBlock().getID());
             block2IDComboBox.getEditor().setItem(boundary.getConnect2().getLayoutBlock().getID());
-        }
-        if (p.getConnect1Dir() == jmri.Path.EAST || p.getConnect1Dir() == jmri.Path.WEST) {
-            trackHorizontal = true;
-        } else if (p.getConnect1Dir() == jmri.Path.NORTH || p.getConnect1Dir() == jmri.Path.SOUTH) {
-            trackVertical = true;
         }
         boundaryFromMenu = true;
 
@@ -3212,10 +3158,11 @@ public class LayoutEditorTools {
         }
         Point2D pointA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a1ComboBox.getDisplayName());
-        Point2D delta = new Point2D.Double(0.0, +testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointA, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeA2() {
@@ -3225,10 +3172,10 @@ public class LayoutEditorTools {
         Point2D pointA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a2ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(-iconSize, +testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(-iconSize, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointA, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeB1() {
@@ -3238,10 +3185,10 @@ public class LayoutEditorTools {
         Point2D pointB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b1ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(-iconSize, -testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(-iconSize, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointB, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeB2() {
@@ -3251,10 +3198,10 @@ public class LayoutEditorTools {
         Point2D pointB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b2ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, -testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(0.0, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointB, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeC1() {
@@ -3264,11 +3211,10 @@ public class LayoutEditorTools {
         Point2D pointC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c1ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, -testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(0.0, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointC, delta);
-        log.info("placeC1(): pointC = " + pointC.getX() + ", " + pointC.getY());
-        setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeC2() {
@@ -3278,10 +3224,10 @@ public class LayoutEditorTools {
         Point2D pointC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c2ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(+iconSize, -testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(+iconSize, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointC, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeD1() {
@@ -3291,10 +3237,10 @@ public class LayoutEditorTools {
         Point2D pointD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d1ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(+iconSize, +testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(+iconSize, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointD, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeD2() {
@@ -3304,10 +3250,10 @@ public class LayoutEditorTools {
         Point2D pointD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d2ComboBox.getDisplayName());
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, +testIcon.getIconHeight());
-        delta = MathUtil.rotateDEG(delta, layoutTurnoutDirection);
+        Point2D delta = new Point2D.Double(0.0, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointD, delta);
-        setSignalHeadOnPanel(layoutTurnoutDirection + 180.0, signalHeadName, where);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     @SuppressWarnings("null")
@@ -3528,16 +3474,7 @@ public class LayoutEditorTools {
     private JButton changeXingSignalIcon = null;
     private JButton setXingSignalsDone = null;
     private JButton setXingSignalsCancel = null;
-    //private TrackSegment xingTrackA = null;
-    //private TrackSegment xingTrackB = null;
-    //private TrackSegment xingTrackC = null;
-    //private TrackSegment xingTrackD = null;
-    private boolean levelXingACHorizontal = false;
-    private boolean levelXingACVertical = false;
-    private boolean levelXingALeft = false;
-    private boolean levelXingAUp = false;
-    private boolean levelXingBUp = false;
-    private boolean levelXingBLeft = false;
+
     private boolean xingFromMenu = false;
     private LevelXing levelXing = null;
     private SignalHead aHead = null;
@@ -3757,14 +3694,6 @@ public class LayoutEditorTools {
                                 new Object[]{aNewSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!levelXingACHorizontal) && (!levelXingACVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (aHead != getHeadFromName(levelXing.getSignalAName())) {
-                    removeSignalHeadFromPanel(levelXing.getSignalAName());
-                    removeAssignment(aHead);
-                    levelXing.setSignalAName(aNewSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalAName());
                 placeXingA();
@@ -3806,14 +3735,6 @@ public class LayoutEditorTools {
                                 new Object[]{bNewSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!levelXingACHorizontal) && (!levelXingACVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (bHead != getHeadFromName(levelXing.getSignalBName())) {
-                    removeSignalHeadFromPanel(levelXing.getSignalBName());
-                    removeAssignment(bHead);
-                    levelXing.setSignalBName(bNewSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalBName());
                 placeXingB();
@@ -3855,14 +3776,6 @@ public class LayoutEditorTools {
                                 new Object[]{cNewSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!levelXingACHorizontal) && (!levelXingACVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (cHead != getHeadFromName(levelXing.getSignalCName())) {
-                    removeSignalHeadFromPanel(levelXing.getSignalCName());
-                    removeAssignment(cHead);
-                    levelXing.setSignalCName(cNewSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalCName());
                 placeXingC();
@@ -3904,14 +3817,6 @@ public class LayoutEditorTools {
                                 new Object[]{dNewSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if ((!levelXingACHorizontal) && (!levelXingACVertical)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
-                        rb.getString("InfoMessage3"), "", JOptionPane.INFORMATION_MESSAGE);
-                if (dHead != getHeadFromName(levelXing.getSignalDName())) {
-                    removeSignalHeadFromPanel(levelXing.getSignalDName());
-                    removeAssignment(dHead);
-                    levelXing.setSignalDName(dNewSignalName);
-                }
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalDName());
                 placeXingD();
@@ -4059,35 +3964,11 @@ public class LayoutEditorTools {
                 }
             }
         }
-        //if (levelXing.getConnectA()!=null) xingTrackA = ((TrackSegment)levelXing.getConnectA());
-        //if (levelXing.getConnectB()!=null) xingTrackB = ((TrackSegment)levelXing.getConnectB());
-        //if (levelXing.getConnectC()!=null) xingTrackC = ((TrackSegment)levelXing.getConnectC());
-        //if (levelXing.getConnectD()!=null) xingTrackD = ((TrackSegment)levelXing.getConnectD());
-        double delX = levelXing.getCoordsA().getX() - levelXing.getCoordsC().getX();
-        double delY = levelXing.getCoordsA().getY() - levelXing.getCoordsC().getY();
-        levelXingACHorizontal = false;
-        levelXingACVertical = false;
-        levelXingALeft = false;
-        levelXingAUp = false;
-        levelXingBUp = false;
-        levelXingBLeft = false;
-        if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
-            levelXingACHorizontal = true;
-            if (delX < 0.0) {
-                levelXingALeft = true;
-            }
-            if (levelXing.getCoordsB().getY() < levelXing.getCoordsD().getY()) {
-                levelXingBUp = true;
-            }
-        } else if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
-            levelXingACVertical = true;
-            if (delY < 0.0) {
-                levelXingAUp = true;
-            }
-            if (levelXing.getCoordsB().getX() < levelXing.getCoordsD().getX()) {
-                levelXingBLeft = true;
-            }
-        }
+
+        Point2D pointA = levelXing.getCoordsA();
+        Point2D pointC = levelXing.getCoordsC();
+        placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointC, pointA));
+
         return true;
     }
 
@@ -4117,100 +3998,80 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsA();
-        String newSignalHeadName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
-        if (levelXingACHorizontal && levelXingALeft) {
-            setSignalHeadOnPanel(2, newSignalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
-        } else if (levelXingACHorizontal && (!levelXingALeft)) {
-            setSignalHeadOnPanel(0, newSignalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
-        } else if (levelXingACVertical && levelXingAUp) {
-            setSignalHeadOnPanel(1, newSignalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
-        } else if (levelXingACVertical && (!levelXingAUp)) {
-            setSignalHeadOnPanel(3, newSignalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+        Point2D pointA = levelXing.getCoordsA();
+        String signalHeadName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
+
+        Point2D pointB = levelXing.getCoordsB();
+        Point2D pointD = levelXing.getCoordsD();
+        double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointD));
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, +iconSize / 2.0);
+        double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
+        if (diffAngleDEG < 90.0) {
+            delta = new Point2D.Double(-iconSize / 2.0, +iconSize / 2.0);
         }
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointA, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeXingB() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsB();
-        String newSignalHeadName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
-        if (levelXingACVertical && levelXingBLeft) {
-            setSignalHeadOnPanel(2, newSignalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
-        } else if (levelXingACVertical && (!levelXingBLeft)) {
-            setSignalHeadOnPanel(0, newSignalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
-        } else if (levelXingACHorizontal && levelXingBUp) {
-            setSignalHeadOnPanel(1, newSignalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
-        } else if (levelXingACHorizontal && (!levelXingBUp)) {
-            setSignalHeadOnPanel(3, newSignalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+        Point2D pointB = levelXing.getCoordsB();
+        Point2D pointD = levelXing.getCoordsD();
+        String signalHeadName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
+
+        double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointD));
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
+        double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
+        if (diffAngleDEG < 90.0) {
+            delta = new Point2D.Double(-iconSize / 2.0, -iconSize / 2.0);
         }
+        delta = MathUtil.rotateDEG(delta, directionDEG);
+        Point2D where = MathUtil.add(pointB, delta);
+        setSignalHeadOnPanel(directionDEG, signalHeadName, where);
     }
 
     private void placeXingC() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsC();
-        String newSignalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
-        if (levelXingACHorizontal && (!levelXingALeft)) {
-            setSignalHeadOnPanel(2, newSignalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
-        } else if (levelXingACHorizontal && levelXingALeft) {
-            setSignalHeadOnPanel(0, newSignalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
-        } else if (levelXingACVertical && (!levelXingAUp)) {
-            setSignalHeadOnPanel(1, newSignalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
-        } else if (levelXingACVertical && levelXingAUp) {
-            setSignalHeadOnPanel(3, newSignalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+        Point2D pointB = levelXing.getCoordsB();
+        Point2D pointC = levelXing.getCoordsC();
+        Point2D pointD = levelXing.getCoordsD();
+        String signalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
+        double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointD, pointB));
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
+        double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
+        if (diffAngleDEG < 90.0) {
+            delta = new Point2D.Double(+iconSize / 2.0, -iconSize / 2.0);
         }
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointC, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeXingD() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsD();
-        String newSignalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
-        if (levelXingACVertical && (!levelXingBLeft)) {
-            setSignalHeadOnPanel(2, newSignalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
-        } else if (levelXingACVertical && levelXingBLeft) {
-            setSignalHeadOnPanel(0, newSignalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
-        } else if (levelXingACHorizontal && (!levelXingBUp)) {
-            setSignalHeadOnPanel(1, newSignalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
-        } else if (levelXingACHorizontal && levelXingBUp) {
-            setSignalHeadOnPanel(3, newSignalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+        Point2D pointB = levelXing.getCoordsB();
+        Point2D pointD = levelXing.getCoordsD();
+        String signalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
+        double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointD, pointB));
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
+        double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
+        if (diffAngleDEG < 90.0) {
+            delta = new Point2D.Double(+iconSize / 2.0, -iconSize / 2.0);
         }
+        delta = MathUtil.rotateDEG(delta, directionDEG);
+        Point2D where = MathUtil.add(pointD, delta);
+        setSignalHeadOnPanel(directionDEG, signalHeadName, where);
     }
 
     @SuppressWarnings("null")
@@ -9503,7 +9364,6 @@ public class LayoutEditorTools {
             Point2D end;
             if (t.getConnect1() == layoutTurnout) {
                 end = layoutEditor.getCoords(t.getConnect2(), t.getType2());
-
             } else {
                 end = layoutEditor.getCoords(t.getConnect1(), t.getType1());
             }
@@ -10122,11 +9982,8 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
 
             xingSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-
             xingSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-
             xingSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-
             xingSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
 
             signalMastLevelXingPanel.setLayout(new GridLayout(0, 2));
@@ -10186,10 +10043,12 @@ public class LayoutEditorTools {
     void refreshSignalMastAtXingComboBox() {
         xingSignalMastsGetSaved(null);
         createListUsedSignalMasts();
+
         usedMasts.remove(xingSignalMastA.getBean());
         usedMasts.remove(xingSignalMastB.getBean());
         usedMasts.remove(xingSignalMastC.getBean());
         usedMasts.remove(xingSignalMastD.getBean());
+
         xingSignalMastA.getCombo().excludeItems(usedMasts);
         xingSignalMastB.getCombo().excludeItems(usedMasts);
         xingSignalMastC.getCombo().excludeItems(usedMasts);

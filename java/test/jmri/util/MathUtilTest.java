@@ -173,7 +173,7 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= +limits) {t -= limits;}
             while (t < 0.0) {t += limits;};
-            double c = MathUtil.normalizeAngle(a);
+            double c = MathUtil.normalizeAngleDEG(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
@@ -196,7 +196,7 @@ public class MathUtilTest extends TestCase {
                 while (t >= theMax) {t -= theRange;}
                 while (t < theMin) {t += theRange;}
                 if (t < 0.0) { t = -t;};
-                double c = MathUtil.diffAngle(a, b);
+                double c = MathUtil.diffAngleDEG(a, b);
                 Assert.assertEquals(t, c, tolerance);
                 passed = (math.fabs(t - c) <= tolerance);
                 if (!passed) {
