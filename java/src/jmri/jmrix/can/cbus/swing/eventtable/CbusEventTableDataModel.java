@@ -233,6 +233,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
+     * Report whether table has changed.
+     *
+     */
+    public boolean isTableDirty() {
+        return(_saved == false);
+    }
+
+    /**
      * Capture node and event and add to table.
      */
     @Override
@@ -320,8 +328,13 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             _saveFileName = fileChooser.getSelectedFile().getPath();
-            _saveFile = new File(_saveFileName);
-            log.debug("File chosen: {}", _saveFileName);
+            if (_saveFileName != null) {
+                _saveFile = new File(_saveFileName);
+                log.debug("File chosen: {}", _saveFileName);
+            } else {
+                log.debug("saveAsTable: No file name available. Aborted");
+                return;
+            }
         } else {
             return; // cancelled or pane closed, prevent NPE
         }
@@ -347,11 +360,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         if (out == null) {
             log.debug("Null File Output Stream");
         }
-        if (p == null) {
+        if (p == null) { // certainly null if out == null
             log.error("Null Print Writer");
+            return;
         }
 
-        // Save rows, we've checked for an empty table in SaveTable()
+        // Save table per row. We've checked for an empty table in SaveTable()
         // print header labels
         for (int i = 0; i < this.getColumnCount() - 1; i++) {
             p.print(this.getColumnName(i));
@@ -382,10 +396,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
 
         try {
-            if (p != null) {
-                p.flush();
-                p.close();
-            }
+            p.flush();
+            p.close();
             if (out != null) {
                 out.close();
             }
@@ -393,7 +405,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
         }
         // mark that the table has been saved
-        _saved = true;
+        _saved = true; // TODO disable the Save menu item in CbusEventTablePane
     }
 
     /**

@@ -16,8 +16,18 @@ Station -> TurnoutSection : codeSendStart()
 activate TurnoutSection
 TurnoutSection ->o Layout : TO Indicators\nOFF
 deactivate TurnoutSection
+Station -> CodeLine : requestSendCode()
+activate CodeLine
+CodeLine -> CodeLine : queue then checkForWork()
+deactivate Station
+...
+CodeLine -> CodeLine : startSendCode()
+CodeLine o-> Layout : start code sending
+...
+Layout o-> CodeLine : (Timeout)
+CodeLine -> Station : codeValueDelivered()
 
-Station -> TurnoutSection : codeSendOK()
+Station -> TurnoutSection : codeSendStart()
 activate TurnoutSection
 TurnoutSection -> Locking : opOK()
 activate Locking
@@ -25,14 +35,8 @@ note over Locking : Checks multiple modes, OK
 deactivate Locking
 deactivate TurnoutSection
 
-note over Station : If Locking not OK,\nend here by telling\nCodeButton it's over
-Station -> CodeLine : requestSendCode()
-activate CodeLine
-note over CodeLine : Might be delay here\nif already running
-CodeLine ->o Layout : Code sequence\nSTART
 deactivate CodeLine
 deactivate Station
-deactivate CodeButton
 
 note over Layout : hardware or software\n          delay
 
@@ -40,10 +44,6 @@ Layout o-> CodeLine: Code sequence\nCOMPLETE
 activate CodeLine
 CodeLine -> Station : codeValueDelivered()
 activate Station
-Station -> CodeButton : codeSendComplete()
-activate CodeButton
-CodeButton ->o Layout : Code Indicator\nOFF
-deactivate CodeButton
 Station -> TurnoutSection : codeValueDelivered()
 activate TurnoutSection
 TurnoutSection ->o Layout : Set Turnout
@@ -55,43 +55,7 @@ deactivate CodeButton
 deactivate CodeLine
 deactivate Station
 
-note over Station: Wait for remote\noperation to complete\ne.g. turnout to move\nMaybe in CodeLine?
-
-note over Station: From here down, this is a receipt of a indication from the remote station - same as other diagram - make sure consistent!
-
-Layout -> Station : timeout
-activate Station
-Station -> TurnoutSection : indicationStart()
-activate TurnoutSection
-note over TurnoutSection : Query layout turnout
-deactivate TurnoutSection
-Station -> CodeLine : requestIndicationStart()
-activate CodeLine
-CodeLine -> CodeButton : indicationStart()
-activate CodeButton
-CodeButton ->o Layout : Code Indicator\nON
-deactivate CodeButton
-CodeLine ->o Layout : Indication sequence\nSTART
-deactivate CodeLine
-deactivate Station
-
-...
-
-Layout o-> CodeLine: Indication sequence\nCOMPLETE
-activate CodeLine
-CodeLine -> CodeButton : indicationComplete()
-activate CodeButton
-CodeButton ->o Layout : Code Indicator\nOFF
-deactivate CodeButton
-CodeLine -> Station : indicationComplete()
-
-Station -> TurnoutSection : indicationComplete()
-activate TurnoutSection
-TurnoutSection ->o Layout : TO Indicators\nSET
-deactivate TurnoutSection
-
-deactivate CodeLine
-
+note over Station: After this, the Station may initiate an return indication transfer
 
 @enduml
 
