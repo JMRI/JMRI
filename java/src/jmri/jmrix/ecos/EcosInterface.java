@@ -26,6 +26,5 @@ public interface EcosInterface {
      * @param l Listener to be notified of reply.
      */
     void sendEcosMessage(EcosMessage m, EcosListener l);
+
 }
-
-

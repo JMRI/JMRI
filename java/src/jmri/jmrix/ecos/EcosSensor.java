@@ -42,6 +42,5 @@ public class EcosSensor extends AbstractSensor {
     public int getObject() {
         return objectNumber;
     }
+
 }
-
-

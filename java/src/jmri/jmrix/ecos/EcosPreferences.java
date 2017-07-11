@@ -172,7 +172,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance if a loco has been created ad-hoc, on the
+     * Stores the user's preference if a loco has been created ad-hoc, on the
      * Throttle, should the entry created for it in the ECOS be deleted.
      * Currently not implemented.
      */
@@ -220,7 +220,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance if a loco has been created ad-hoc, on the
+     * Stores the user's preference if a loco has been created ad-hoc, on the
      * Throttle, should the entry created for it in the ECOS be deleted.
      * Currently not implemented.
      */
@@ -236,7 +236,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
      changeMade();
      }*/
     /**
-     * Stores the users preferance for deleting a loco from the roster should
+     * Stores the user's preference for deleting a loco from the roster should
      * it, also be deleted from the ECOS. Currently not implemented.
      */
     //0x00 - always ask
@@ -254,7 +254,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance for deleting a loco from the ECOS should it,
+     * Stores the user's preference for deleting a loco from the ECOS should it,
      * also be deleted from the JMRI Roster. Currently not implemented.
      */
     private int _removelocofromjmri = ASK;
@@ -269,7 +269,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when creating a turnout in JMRI should it
+     * Stores the user's preference when creating a turnout in JMRI should it
      * also be created on the ECOS. Currently not implemented.
      */
     private int _addturnoutstoecos = ASK;
@@ -284,7 +284,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is created on the ECOS
+     * Stores the user's preference when a new turnout is created on the ECOS
      * should it also be created in JMRI. Currently not implemented.
      */
     private int _addturnoutstojmri = ASK;
@@ -299,7 +299,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is removed from the ECOS
+     * Stores the user's preference when a new turnout is removed from the ECOS
      * should it also be removed from JMRI.. Currently not implemented.
      */
     private int _removeturnoutsfromjmri = ASK;
@@ -314,7 +314,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is removed from JMRI
+     * Stores the user's preference when a new turnout is removed from JMRI
      * should it also be removed from the ECOS. Currently not implemented.
      */
     private int _removeturnoutsfromecos = ASK;

@@ -94,7 +94,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else {
             getControl();
         }
-
     }
 
     private void getControl() {
@@ -123,8 +122,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     //The values here might need a bit of re-working
+
     /**
-     * Convert a Ecos speed integer to a float speed value
+     * Convert an Ecos speed integer to a float speed value.
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -955,7 +955,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     private void createEcosLoco() {
-        objEcosLoco.setEcosDescription("Created By JMRI");
+        objEcosLoco.setEcosDescription(Bundle.getMessage("CreatedByJMRI"));
         objEcosLoco.setProtocol(protocol(address.getProtocol()));
         String message = "create(10, addr[" + objEcosLoco.getNumber() + "], name[\"Created By JMRI\"], protocol[" + objEcosLoco.getECOSProtocol() + "], append)";
         EcosMessage m = new EcosMessage(message);

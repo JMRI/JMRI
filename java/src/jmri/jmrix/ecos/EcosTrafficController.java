@@ -60,7 +60,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
-     * CommandStation implementation This is NOT Supported in the ECOS
+     * CommandStation implementation.
+     * This is NOT Supported in the ECOS
      */
     @Override
     public void sendPacket(byte[] packet, int count) {
@@ -320,4 +321,5 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return adaptermemo.getSystemPrefix();
     }
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
+
 }

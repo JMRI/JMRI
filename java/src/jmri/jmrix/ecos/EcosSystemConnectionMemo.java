@@ -223,6 +223,3 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 }
-
-
-

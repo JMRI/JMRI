@@ -126,9 +126,9 @@ public class EcosLocoAddress implements jmri.LocoAddress {
 
     public String getDirectionAsString() {
         if (direction) {
-            return "Forward";
+            return Bundle.getMessage("Forward");
         }
-        return "Reverse";
+        return Bundle.getMessage("Reverse");
     }
 
     //Should this option be made public? should setting the object only be available when the Loco is created.
@@ -277,4 +277,5 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     public void dispose() {
         pcs = null;
     }
+
 }

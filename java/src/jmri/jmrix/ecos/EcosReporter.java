@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
- * <P>
+ *
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
@@ -75,14 +75,12 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         } else {
             setReport(null);
         }
-
     }
 
     // Methods to support PhysicalLocationReporter interface
+
     /**
-     * getLocoAddress()
-     *
-     * get the locomotive address we're reporting about from the current report.
+     * Get the locomotive address we're reporting about from the current report.
      *
      * Note: We ignore the string passed in, because Ecos Reporters don't send
      * String type reports.
@@ -107,9 +105,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
     }
 
     /**
-     * getDirection()
-     *
-     * Gets the direction (ENTER/EXIT) of the report. Because of the way Ecos
+     * Get the direction (ENTER/EXIT) of the report. Because of the way Ecos.
      * Reporters work (or appear to), all reports are ENTER type.
      */
     @Override
@@ -119,9 +115,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
     }
 
     /**
-     * getPhysicalLocation()
-     *
-     * Returns the PhysicalLocation of the Reporter
+     * Get the PhysicalLocation of the Reporter
      *
      * Reports its own location, for now. Not sure if that's the right thing or
      * not. NOT DONE YET
@@ -132,9 +126,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
     }
 
     /**
-     * getPhysicalLocation(String s)
-     *
-     * Returns the PhysicalLocation of the Reporter
+     * Get the PhysicalLocation of the Reporter.
      *
      * Does not use the parameter s.
      */

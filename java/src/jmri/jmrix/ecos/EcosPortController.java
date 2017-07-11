@@ -16,7 +16,5 @@ public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortC
     public EcosSystemConnectionMemo getSystemConnectionMemo() {
         return (EcosSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }
-
-
-

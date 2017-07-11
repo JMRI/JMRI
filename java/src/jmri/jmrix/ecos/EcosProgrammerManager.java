@@ -1,4 +1,3 @@
-/* EcosProgrammerManager.java */
 package jmri.jmrix.ecos;
 
 import jmri.Programmer;
@@ -33,8 +32,6 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
         java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
         retval.add(DIRECTBYTEMODE);
         return retval;
-    } 
+    }
+
 }
-
-
-

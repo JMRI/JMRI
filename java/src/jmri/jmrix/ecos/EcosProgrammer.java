@@ -231,5 +231,3 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
 
 }
-
-
