@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.DccLocoAddress;
 
 /**
  *
@@ -16,6 +17,18 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
+
+    @Override
+    @Test
+    public void testGetConsist(){
+        // getConsist with a valid address should always return
+        // a consist.
+        DccLocoAddress addr = new DccLocoAddress(5,false);
+        Assert.assertNotNull("add consist",cm.getConsist(addr));
+        tcis.sendTestReply(new NceReply(tcis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"));
+
+    }
+
 
     // The minimal setup for log4J
     @Before
