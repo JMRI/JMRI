@@ -52,7 +52,7 @@ public class TrafficLock implements Lock {
             }
         }
 
-        if (farSignal.lastIndication == direction || farSignal.timeRunning ) {
+        if (farSignal.getLastIndication() == direction || farSignal.isRunningTime() ) {
                 InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
                     .setValue("Traffic locked to "+farSignal.getName());
                 return false;
