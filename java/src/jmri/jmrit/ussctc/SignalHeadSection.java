@@ -2,6 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 import java.util.*;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.beans.PropertyChangeListener;
 
 /**
  * Drive a signal section on a USS CTC panel.
@@ -119,8 +122,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
     Machine machine;
 
-    boolean timeRunning = false;
-    
+    protected boolean timeRunning = false;
     public boolean isRunningTime() { return timeRunning; }
     
     Station station;
@@ -176,13 +178,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                 hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 
-                jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
-                        log.debug("End running time");
-                        logMemory.setValue("");
-                        timeRunning = false;
-                        station.requestIndicationStart();
-                    } ,
-                    (int)timeMemory.getValue());
+                startSignalRunningTimeTimer();
             
                 log.debug("starting to run time for {} seconds", ((int)timeMemory.getValue())/1000);
                 logMemory.setValue("Running time: Station "+station.getName());
@@ -233,6 +229,16 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         return retval;
     }
 
+    protected void startSignalRunningTimeTimer() {
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
+                log.debug("End running time");
+                logMemory.setValue("");
+                timeRunning = false;
+                station.requestIndicationStart();
+            } ,
+                    (int)timeMemory.getValue());
+    }
+    
     public static int MOVEMENT_DELAY = 6000;
     
     boolean deferIndication = false; // when set, don't indicate on layout change
@@ -243,7 +249,6 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      */
     public void codeValueDelivered(CodeGroupThreeBits value) {
         log.debug("codeValueDelivered sets value {}", value);
-        // @TODO add lock checking here; this is part of vital logic implementation
         
         // Set signals. While doing that, remember command as indication, so that the
         // following signal change won't drive an _immediate_ indication cycle.
@@ -273,15 +278,19 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         // start the timer for the signals to change
         if (currentIndication != lastIndication) {
-            log.debug("codeValueDelivered started timer for return indication");
-            jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
-                        log.debug("end of movement delay from codeValueDelivered");
-                        deferIndication = false;
-                        station.requestIndicationStart();
-                }, MOVEMENT_DELAY);
+            startSignalChangeTimer();
         }
     }
 
+    protected void startSignalChangeTimer() {
+        log.debug("codeValueDelivered started timer for return indication");
+        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
+                    log.debug("end of movement delay from codeValueDelivered");
+                    deferIndication = false;
+                    station.requestIndicationStart();
+            }, MOVEMENT_DELAY);
+    }
+    
     protected void setListHeldState(ArrayList<NamedBeanHandle<SignalHead>> list, boolean state) {
         for (NamedBeanHandle<SignalHead> handle : list) {
             if (handle.getBean().getHeld() != state) handle.getBean().setHeld(state);
@@ -380,7 +389,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         return retval;
     }
 
-    CodeGroupThreeBits lastIndication = CODE_OFF;
+    protected CodeGroupThreeBits lastIndication = CODE_OFF;
+    CodeGroupThreeBits getLastIndication() { return lastIndication; }
+    void setLastIndication(CodeGroupThreeBits val) {
+        CodeGroupThreeBits previous = lastIndication;
+        lastIndication = val;
+        firePropertyChange("LastIndication", previous, lastIndication);
+    }
     
     /**
      * Process values received from the field unit.
@@ -429,6 +444,20 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             log.debug("  SignalHead change without change in Indication");
         }
     }
-    
+
+    final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class.getName());
 }
