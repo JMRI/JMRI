@@ -456,14 +456,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         String columnString = "";
         String lineString = "";
         String spaces;
-        StringBuffer buf = new StringBuffer();
+        // StringBuffer buf = new StringBuffer();
         // loop through each column
         boolean complete = false;
         while (!complete) {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                //spaces = "";
+                StringBuffer buf = new StringBuffer();
                 for (int j = 0; j < columnWidth[i]; j++) {
                     //spaces = spaces + " ";
                     buf.append(" ");
