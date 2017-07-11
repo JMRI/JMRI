@@ -22,10 +22,12 @@ public class SpeedoMenu extends JMenu {
         super();
         _memo = memo;
 
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+
         // setText(rb.getString("MenuSystems"));
         setText("Speedo");
 
-        add(new jmri.jmrix.bachrus.SpeedoConsoleAction(Bundle.getMessage("MenuItemSpeedo"), _memo));
+        add(new jmri.jmrix.bachrus.SpeedoConsoleAction(rb.getString("MenuItemSpeedo"), _memo));
     }
 
 }

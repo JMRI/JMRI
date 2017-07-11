@@ -1042,7 +1042,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
         if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
             log.error("Failed to set 28 step mode");
-            statusLabel.setText(Bundle.getMessage("ThrottleError28");
+            statusLabel.setText(Bundle.getMessage("ThrottleError28"));
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             //throttle.release();
             return;
@@ -1174,10 +1174,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         } else if (state == ProfileState.RUNNING) {
             if (profileDir == ProfileDirection.FORWARD) {
                 spFwd.setPoint(profileStep, avSpeed);
-                statusLabel.setText(Bundle.getMessage("Fwd", profileStep);
+                statusLabel.setText(Bundle.getMessage("Fwd", profileStep));
             } else {
                 spRev.setPoint(profileStep, avSpeed);
-                statusLabel.setText(Bundle.getMessage("Rev"), profileStep);
+                statusLabel.setText(Bundle.getMessage("Rev", profileStep));
             }
             profileGraphPane.repaint();
             if (profileStep == 29) {
