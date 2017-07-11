@@ -75,9 +75,8 @@ public class SerialLightManager extends AbstractLightManager {
      * Public method to notify user of Light creation error.
      */
     public void notifyLightCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
-                + ", is currently assigned to " + conflict + ". Light cannot be created as "
-                + "you specified.", "C/MRI Assignment Conflict",
+        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
+                Bundle.getMessage("ErrorAssignLine2L"), Bundle.getMessage("ErrorAssignTitle"),
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 

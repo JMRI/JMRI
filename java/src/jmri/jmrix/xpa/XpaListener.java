@@ -12,5 +12,3 @@ public interface XpaListener extends java.util.EventListener {
 
     public void reply(XpaMessage m);
 }
-
-

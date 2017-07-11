@@ -5,7 +5,7 @@ import jmri.Turnout;
 /**
  * Implement turnout manager for Xpa+Modem connections to XPressNet Based
  * systems.
- * <P>
+ * <p>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  * <p>
  * @author	Paul Bender Copyright (C) 2004,2016
@@ -45,4 +45,3 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
 }
-
