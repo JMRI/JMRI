@@ -101,7 +101,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provide manager by class
+     * Provide manager by class.
      */
     @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
     @Override
@@ -154,8 +154,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
     }
 
-    /*
-     * Provides access to the Command Station for this particular connection.
+    /**
+     * Provide access to the Command Station for this particular connection.
+     * <p>
      * NOTE: Command Station defaults to NULL
      */
     public CommandStation getCommandStation() {
@@ -168,9 +169,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private CommandStation commandStation = null;
 
-    /*
-     * Provides access to the Roco Z21 Command Station for this particular 
+    /**
+     * Provide access to the Roco Z21 Command Station for this particular
      * connection.
+     * <p>
      * NOTE: Command Station defaults to NULL
      */
     public RocoZ21CommandStation getRocoZ21CommandStation() {

@@ -1,4 +1,4 @@
-package jmri.jmrix.roco.z21.swing;
+package jmri.jmrix.roco.z21.simulator;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.roco.z21.Bundle {
 
     @Nullable
-    private static final String name = null; // No local properties
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
