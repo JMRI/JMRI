@@ -122,10 +122,15 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
     Machine machine;
 
-    protected boolean timeRunning = false;
+    private boolean timeRunning = false;
     public boolean isRunningTime() { return timeRunning; }
+    private void setRunningTime(boolean value) { 
+        boolean oldValue = timeRunning;
+        timeRunning = value;
+        firePropertyChange("TimeRunning", oldValue, timeRunning);
+    }
     
-    Station station;
+    private Station station;
     public Station getStation() { return station; }
     public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
 
@@ -172,8 +177,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             ) {
         
             // setting to stop, have to start running time?
-            if (!timeRunning && timeMemory!=null && ! timeMemory.getValue().equals("") && ((int)timeMemory.getValue() > 0 ) ) {
-                timeRunning = true;
+            if (! isRunningTime() && timeMemory!=null && ! timeMemory.getValue().equals("") && ((int)timeMemory.getValue() > 0 ) ) {
+                setRunningTime(true);
                 hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
@@ -186,7 +191,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
     
         // Set the indicators based on current and requested state
-        if ( !timeRunning && (
+        if ( ! isRunningTime() && (
                   ( machine==Machine.SET_LEFT && hLeftInput.getBean().getKnownState()==Sensor.ACTIVE)
                 || ( machine==Machine.SET_RIGHT && hRightInput.getBean().getKnownState()==Sensor.ACTIVE) 
                 || ( machine==Machine.SET_STOP && hRightInput.getBean().getKnownState()!=Sensor.ACTIVE && hLeftInput.getBean().getKnownState()!=Sensor.ACTIVE) )
@@ -202,7 +207,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         // return the settings to send
         CodeGroupThreeBits retval;
-        if (timeRunning) {
+        if (isRunningTime()) {
             machine = Machine.SET_STOP;
             retval = CODE_STOP;        
         } else if (hLeftInput.getBean().getKnownState()==Sensor.ACTIVE) {
@@ -233,7 +238,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{ 
                 log.debug("End running time");
                 logMemory.setValue("");
-                timeRunning = false;
+                setRunningTime(false);
                 station.requestIndicationStart();
             } ,
                     (int)timeMemory.getValue());
@@ -402,7 +407,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      */
     public void indicationComplete(CodeGroupThreeBits value) {
         log.debug("indicationComplete sets from {} in state {}", value, machine);
-        if (timeRunning) {
+        if (isRunningTime()) {
             hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
