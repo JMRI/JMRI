@@ -4,7 +4,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * JPanel extension to handle automatic creation of window title and help
- * reference for Cbus panels
+ * reference for Cbus panels.
  * <p>
  * For use with JmriAbstractAction, etc
  *
@@ -14,7 +14,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanPanelInterface {
 
     /**
-     * make "memo" object available as convenience
+     * Make "memo" object available as convenience.
      */
     protected CanSystemConnectionMemo memo;
 

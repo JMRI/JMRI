@@ -209,5 +209,3 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isExtended;
     boolean _isRtr;
 }
-
-
