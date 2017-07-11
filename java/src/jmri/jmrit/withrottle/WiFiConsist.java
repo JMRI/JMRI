@@ -1,7 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import jmri.DccLocoAddress;
-import jmri.implementation.DccConsist;
+import jmri.implementation.NmraConsist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2010, 2011
  * 
  */
-public class WiFiConsist extends DccConsist {
+public class WiFiConsist extends NmraConsist {
 
     public WiFiConsist(DccLocoAddress address) {
         super(address);

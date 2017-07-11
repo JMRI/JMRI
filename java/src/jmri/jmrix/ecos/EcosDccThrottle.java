@@ -686,8 +686,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         }
                     } else if (line.contains("func[")) {
                         String funcStr = EcosReply.getContentDetails(line, "func");
-                        int function = Integer.parseInt(funcStr.substring(0, funcStr.indexOf(",")));
-                        int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(",") + 1), funcStr.length()));
+                        int function = Integer.parseInt(funcStr.substring(0, funcStr.indexOf(",")).trim());
+                        int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(",") + 1), funcStr.length()).trim());
                         boolean functionresult = false;
                         if (functionValue == 1) {
                             functionresult = true;

@@ -28,5 +28,3 @@ public interface CanFrame {
     public int getElement(int n);
 
 }
-
-
