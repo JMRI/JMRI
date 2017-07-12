@@ -598,7 +598,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     protected void portWarn(Exception e) {
-        log.warn("sendMessage: Exception: port warn {}", e.toString());
+        log.warn("sendMessage: Exception: In {} port warn: ", this.getClass().getName(), e);
     }
 
     protected boolean connectionError = false;
