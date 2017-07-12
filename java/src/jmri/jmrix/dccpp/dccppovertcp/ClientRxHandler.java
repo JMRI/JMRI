@@ -53,6 +53,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     public void run() {
         
         try {
+            txThread = new Thread(new ClientTxHandler(this));
+            txThread.setDaemon(true);
+            txThread.setPriority(Thread.MAX_PRIORITY);
+            txThread.setName("ClientTxHandler:" + remoteAddress);
+
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
             
@@ -60,10 +65,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             memo.getDCCppTrafficController().addDCCppListener(~0, this);
             //DCCppTrafficController.instance().addDCCppListener(~0, this);
             
-            txThread = new Thread(new ClientTxHandler(this));
-            txThread.setDaemon(true);
-            txThread.setPriority(Thread.MAX_PRIORITY);
-            txThread.setName("ClientTxHandler:" + remoteAddress);
             txThread.start();
             
             while (!isInterrupted()) {
