@@ -138,8 +138,8 @@ public class EcosLocoToRoster implements EcosListener {
                                 //user preferences do not have the save option, but once complete the following line can be removed
                                 //Need to get the method to save connection configuration.
                                 remember.setVisible(true);
-                                JButton yesButton = new JButton("Yes");
-                                JButton noButton = new JButton("No");
+                                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                                 JPanel button = new JPanel();
                                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 button.add(yesButton);
@@ -475,7 +475,7 @@ public class EcosLocoToRoster implements EcosListener {
         //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //frame.setDefaultCloseOperation(frameclosed());
         JLabel jLabel1 = new JLabel("Decoder installed can not be identified, please select from the list below");
-        JButton okayButton = new JButton("Okay");
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         p1.add(jLabel1);
         p2.add(okayButton);
         topPanel.add(p1);

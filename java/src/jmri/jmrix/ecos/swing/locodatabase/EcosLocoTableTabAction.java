@@ -103,4 +103,5 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
     public String getClassDescription() {
         return "Ecos Loco Table";
     }
+
 }

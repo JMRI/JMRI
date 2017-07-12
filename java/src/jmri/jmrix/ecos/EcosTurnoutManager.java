@@ -454,7 +454,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         new Object[]{Bundle.getMessage("ButtonYes"),
                                             rb.getString("ButtonYesPlus"),
                                                 Bundle.getMessage("ButtonNo")},
-                                        rb.getString("ButtonNo"));
+                                        Bundle.getMessage("ButtonNo"));
                                 if (val == 2) {
                                     _tecos.remove(et.getObject());
                                     deregister(et);

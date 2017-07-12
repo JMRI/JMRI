@@ -15,12 +15,11 @@ public class EcosMenu extends JMenu {
     public EcosMenu(EcosSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle");
         String title;
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuEcos");
+            title = Bundle.getMessage("MenuEcos");
         }
 
         setText(title);
@@ -39,13 +38,13 @@ public class EcosMenu extends JMenu {
             try {
                 new jmri.jmrit.beantable.ListedTableFrame();
             } catch (java.lang.NullPointerException ex) {
-                log.error("Unable to register Ecos table");
+                log.error("Unable to register ECos table");
             }
         }
 
-        add(new jmri.jmrit.beantable.ListedTableAction("ECoS Loco Database", "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
-        add(new apps.gui3.TabbedPreferencesAction("ECoS Preferences", "ECOS", title));
-        if (memo != null) add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos("Add Roster Entry to ECoS", memo));
+        add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
+        add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECOS", title));
+        if (memo != null) add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
 
     }
 
@@ -68,4 +67,5 @@ public class EcosMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosMenu.class.getName());
+
 }
