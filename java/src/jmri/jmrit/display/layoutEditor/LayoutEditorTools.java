@@ -3995,11 +3995,8 @@ public class LayoutEditorTools {
         Point2D pointD = levelXing.getCoordsD();
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointD));
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, +iconSize / 2.0);
         double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
-        if (diffAngleDEG < 90.0) {
-            delta = new Point2D.Double(-iconSize / 2.0, +iconSize / 2.0);
-        }
+        Point2D delta = new Point2D.Double(iconSize / 2.0 * Math.cos(Math.toDegrees(diffAngleDEG)), +iconSize / 2.0);
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -4015,11 +4012,8 @@ public class LayoutEditorTools {
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointD));
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
         double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
-        if (diffAngleDEG < 90.0) {
-            delta = new Point2D.Double(-iconSize / 2.0, -iconSize / 2.0);
-        }
+        Point2D delta = new Point2D.Double(iconSize / 2.0 * -Math.cos(Math.toDegrees(diffAngleDEG)), -iconSize / 2.0);
         delta = MathUtil.rotateDEG(delta, directionDEG);
         Point2D where = MathUtil.add(pointB, delta);
         setSignalHeadOnPanel(directionDEG, signalHeadName, where);
@@ -4035,11 +4029,8 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointD, pointB));
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
         double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
-        if (diffAngleDEG < 90.0) {
-            delta = new Point2D.Double(+iconSize / 2.0, -iconSize / 2.0);
-        }
+        Point2D delta = new Point2D.Double(iconSize / 2.0 * -Math.cos(Math.toDegrees(diffAngleDEG)), -iconSize / 2.0);
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(pointC, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -4054,11 +4045,8 @@ public class LayoutEditorTools {
         String signalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointD, pointB));
         double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, -iconSize / 2.0);
         double diffAngleDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
-        if (diffAngleDEG < 90.0) {
-            delta = new Point2D.Double(+iconSize / 2.0, -iconSize / 2.0);
-        }
+        Point2D delta = new Point2D.Double(iconSize / 2.0 * -Math.cos(Math.toDegrees(diffAngleDEG)), -iconSize / 2.0);
         delta = MathUtil.rotateDEG(delta, directionDEG);
         Point2D where = MathUtil.add(pointD, delta);
         setSignalHeadOnPanel(directionDEG, signalHeadName, where);
