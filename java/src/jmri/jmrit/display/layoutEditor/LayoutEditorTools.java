@@ -2271,16 +2271,6 @@ public class LayoutEditorTools {
                 westTrack = track1;  // north
             }
         }
-        if (eastTrack == null) {
-            // did not meet the horizontal or vertical test, assume horizontal
-            if (delX > 0.0) {
-                eastTrack = track1;
-                westTrack = track2;
-            } else {
-                eastTrack = track2;
-                westTrack = track1;
-            }
-        }
         return true;
     }
 
