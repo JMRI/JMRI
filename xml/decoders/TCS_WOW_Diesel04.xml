@@ -16,6 +16,8 @@
 	<!-- new file, based on Wow diesel sound set 3 -->
 	<version author="Michael Mosher" version="2" lastUpdated="20170317"/>
 	<!-- update factory resets -->
+	<version author="Michael Mosher" version="3" lastUpdated="20170616"/>
+	<!-- add funtion output 7 and 8 and update sound none number -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 4" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -32,14 +34,16 @@
 				<output name="Brake"/>
 				<size length="1.35" width="0.66" height="0.22" units="inches"/>
 			</model>
-			<model model="WOW Diesel 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
+			<model model="WOW Diesel 121 SS4" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
 				lowVersionID="4" highVersionID="4" productID="171">
 				<output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
 				<output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
 				<output name="4" label="Purple" connection="plug" maxcurrent="100 mA"/>
-				<output name="5" label="Brown" connection="plug" maxcurrent="100 mA"/>
-				<output name="6" label="Pink" connection="plug" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="plug" maxcurrent="logic"/>
+				<output name="6" label="Pink" connection="plug" maxcurrent="logic"/>
+				<output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic"/>
+				<output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic"/>
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
@@ -1634,6 +1638,12 @@
         <xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
         <label>Mainline Mode Primemover</label>
       </variable>
+      <variable item="First Bell" CV="222" default="0" infoOnly="yes" mask="XXXXXXVX">
+        <enumVal>
+           <enumChoice choice="Electric E-Bell"/>
+        </enumVal>
+        <label>For steam sound set 4, the first bell is named</label>
+      </variable>
 			<variable item="Sound Option 5" CV="T2CV.4.23" default="0" tooltip="Rotate bell function will change this setting">
 				<enumVal>
 					<enumChoice choice="Electric E-Bell"/>
@@ -1701,9 +1711,9 @@
       </variable>
 		</variables>
 		<resets>
-			<mode>PAGEMODE</mode>
-			<mode>DIRECTMODE</mode>
-			<mode>OPSBYTEMODE</mode>
+      <mode>PAGEMODE</mode>
+      <mode>DIRECTMODE</mode>
+      <mode>OPSBYTEMODE</mode>
 			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
 			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
 			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
