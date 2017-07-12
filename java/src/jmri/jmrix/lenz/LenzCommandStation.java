@@ -220,7 +220,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "XPressnet";
+            return "XPressNet";
         }
         return adaptermemo.getUserName();
     }
