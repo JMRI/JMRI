@@ -3,13 +3,13 @@ package jmri.jmrix.ecos;
 import jmri.Reporter;
 
 /**
- * EcosReporterManager implements the ReporterManager for ECos
+ * EcosReporterManager implements the ReporterManager for ECoS
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
-    // ctor has to register for LocoNet events
+    // ctor has to register for ECoS events
     public EcosReporterManager(EcosSystemConnectionMemo memo) {
         this.memo = memo;
     }

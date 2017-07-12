@@ -22,8 +22,9 @@ public interface NetworkPortAdapter extends PortAdapter {
     public void configure();
 
     /**
-     * Query the status of this connection. If all OK, at least as far as is
-     * known, return true
+     * Query the status of this connection.
+     *
+     * @return true if all is OK, at least as far as known
      */
     @Override
     public boolean status();
@@ -58,7 +59,7 @@ public interface NetworkPortAdapter extends PortAdapter {
     public boolean getMdnsConfigure();
 
     /*
-     * perform the automatic configuration
+     * Perform the automatic configuration.
      */
     public void autoConfigure();
 

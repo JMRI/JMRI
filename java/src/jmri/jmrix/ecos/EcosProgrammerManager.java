@@ -9,7 +9,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author Karl Johan Lisby Copyright (C) 2015
-  */
+ */
 public class EcosProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;
@@ -18,7 +18,7 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
     }
     
     /**
-     * Ecos command station does not provide Ops Mode on the LAN interface
+     * ECoS command station does not provide Ops Mode on the LAN interface.
      *
      * @return false
      */

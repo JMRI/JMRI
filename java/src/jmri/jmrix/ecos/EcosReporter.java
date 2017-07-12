@@ -116,7 +116,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
 
     /**
      * Get the PhysicalLocation of the Reporter
-     *
+     * <p>
      * Reports its own location, for now. Not sure if that's the right thing or
      * not. NOT DONE YET
      */
@@ -128,7 +128,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
     /**
      * Get the PhysicalLocation of the Reporter.
      *
-     * Does not use the parameter s.
+     * @param s is not used
      */
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {

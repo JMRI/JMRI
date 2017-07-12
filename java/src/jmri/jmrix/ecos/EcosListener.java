@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos;
 
 /**
- * Defines the interface for listening to traffic on the Ecos communications
+ * Defines the interface for listening to traffic on the ECoS communications
  * link.
  *
  * @author Bob Jacobsen Copyright (C) 2001

@@ -30,7 +30,7 @@ public class EcosMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new EcosNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new EcosNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 
@@ -38,12 +38,12 @@ public class EcosMenu extends JMenu {
             try {
                 new jmri.jmrit.beantable.ListedTableFrame();
             } catch (java.lang.NullPointerException ex) {
-                log.error("Unable to register ECos table");
+                log.error("Unable to register ECoS table");
             }
         }
 
         add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
-        add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECOS", title));
+        add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
         if (memo != null) add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
 
     }

@@ -916,7 +916,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else if (resultCode == 15) {
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
             try {
-                javax.swing.JOptionPane.showMessageDialog(null, "Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again", "No Control", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
+                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -980,7 +981,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             int val = 0;
             if (p.getForceControlFromEcos() == 0x00) {
                 try {
-                    val = javax.swing.JOptionPane.showConfirmDialog(null, "Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?", "No Control", JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+                    val = javax.swing.JOptionPane.showConfirmDialog(null, "UnableToGainDialog",
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
                 } catch (HeadlessException he) {
                     val = 1;
                 }

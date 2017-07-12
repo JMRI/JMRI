@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Managers the Ecos Loco entries within JMRI.
+ * Manages the ECoS Loco entries within JMRI.
  *
  * @author Kevin Dickerson
  */
@@ -301,7 +301,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return true;
     }
 
-    /*Dispose is dealt with at shutdown*/
+    /* Dispose is dealt with at shutdown */
     @Override
     public void dispose() {
     }
@@ -801,12 +801,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     public void message(EcosMessage m) {
 
     }
-    /*
-     *The purpose of this is to get some of the basic cv details that are required
-     *for selecting the decoder mfg and family in the roster file.
-     *This might work as sending a single request rather than multiple.
+    /**
+     * The purpose of this is to get some of the basic cv details that are required
+     * for selecting the decoder mfg and family in the roster file.
+     * This might work as sending a single request rather than multiple.
      */
-
     private void getEcosCVs(EcosLocoAddress tmploco) {
         tc.addEcosListener(this);
         // ask to be notified
@@ -882,7 +881,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
     @Override
     public String getBeanTypeHandled() {
-        return "Ecos Loco Addresses";
+        return Bundle.getMessage("EcosLocoAddresses");
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());

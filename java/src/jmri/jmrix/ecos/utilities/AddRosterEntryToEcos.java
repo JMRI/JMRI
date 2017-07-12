@@ -49,13 +49,13 @@ public class AddRosterEntryToEcos extends AbstractAction {
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), rosterEntry}, null);
         log.debug("Dialog value " + retval + " selected, "
                 + rosterEntry.getSelectedIndex() + ":" + rosterEntry.getSelectedItem());
-        if (retval != 1) {
+        if (retval != 1 | rosterEntry.getItemCount() == 0) {
             return;
         }
 
         String selEntry = (String) rosterEntry.getSelectedItem();
         RosterEntry re = roster.entryFromTitle(selEntry);
-        log.debug("Add " + re.getId() + " to ECos");
+        log.debug("Add " + re.getId() + " to ECoS");
         RosterToEcos rosterToEcos = new RosterToEcos();
         rosterToEcos.createEcosLoco(re, adaptermemo);
     }
@@ -65,15 +65,20 @@ public class AddRosterEntryToEcos extends AbstractAction {
             rosterEntry.removeAllItems();
         }
         for (RosterEntry r : roster.getAllEntries()) {
-            // Add only those locos to the drop-down list that are in the roster but not in the Ecos
+            // Add only those locos to the drop-down list that are in the JMRI Roster but not in the ECoS
             String DccAddress = r.getDccAddress();
             EcosLocoAddress EcosAddress = null;
             if (DccAddress != null) {
                 log.debug("DccAddress=" + DccAddress);
-                EcosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(DccAddress));
+                try {
+                    EcosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(DccAddress));
+                } catch (NullPointerException npe) {
+                    log.warn("Could not connect to ECoS roster via objEcosLocoManager to loop up Loco {}", DccAddress);
+                    return;
+                }
             }
             if (EcosAddress == null) {
-                // It is not possible to create MFX locomotives in the Ecos. They are auto-discovered.
+                // It is not possible to create MFX locomotives in the ECoS. They are auto-discovered.
                 if (r.getProtocol() != jmri.LocoAddress.Protocol.MFX) {
                     rosterEntry.addItem(r.titleString());
                 }

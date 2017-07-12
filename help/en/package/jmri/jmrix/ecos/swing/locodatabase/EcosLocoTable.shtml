@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Ecos Command Generator</title>
+  <title>JMRI: Ecos Loco Database</title>
   <meta name="Author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Help ECoS Command Generator">
+  <meta name="keywords" content="JMRI Help ECoS Loco Database Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -25,10 +25,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>ECoS Command Generator</h1>
+      <h1>ECoS Loco Database</h1>
 
-      <p>The ECoS Command Generator tool lets you type a message
-      for the ECoS Command Station and then send it.</p>
+      <p>The ECoS Loco Table lets you organise the
+        Locos stored inside the ECoS Command Station.</p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
