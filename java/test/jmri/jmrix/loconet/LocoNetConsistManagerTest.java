@@ -12,26 +12,31 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoNetConsistManagerTest {
-
+public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
+ 
+    @Ignore("Need to implement a loconet specific version of this test that responds to slot messages")
     @Test
-    public void testCTor() {
-        LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        LocoNetConsistManager t = new LocoNetConsistManager(memo);
-        Assert.assertNotNull("exists",t);
+    @Override
+    public void testGetConsist(){
     }
+
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        cm = new LocoNetConsistManager(memo);
     }
 
     @After
+    @Override
     public void tearDown() {
+        cm = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

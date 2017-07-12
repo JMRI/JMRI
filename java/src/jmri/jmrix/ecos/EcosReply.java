@@ -31,7 +31,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     // these can be very large
     @Override
     public int maxSize() {
-        return 5000;
+        return 10000;
     }
 
     // no need to do anything
