@@ -186,7 +186,6 @@ public class SpeedUtil {
                 if (log.isDebugEnabled()) log.debug("makeSpeedTree - Copy TreeMap");
                 RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
                 if (speedProfile!=null) { // make copy of tree
-                    TreeMap<Integer, SpeedStep> speedtree = new TreeMap<Integer, SpeedStep> ();
                     TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
                     for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
                         _speedProfile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
@@ -239,7 +238,7 @@ public class SpeedUtil {
         return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
     }
 
-    // return a boolean so minSpeedType() can return a non-null String if possible
+    // return true if the speed named 'speed2' is strictly greater than that of 'speed1'
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed2 == null) {
             return false;
@@ -252,6 +251,14 @@ public class SpeedUtil {
         return (s1 < s2);
     }
 
+    /**
+     * Modify a throttle setting to match a speed name type
+     * Modification is done according to the interpretation of the speed name
+     * @param tSpeed throttle speed (current)
+     * @param sType speed name
+     * @param isForward direction of travel
+     * @return modified throttle setting
+     */
     protected float modifySpeed(float tSpeed, String sType, boolean isForward) {
 //        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
@@ -309,7 +316,14 @@ public class SpeedUtil {
         return throttleSpeed;
     }
 
-    // return millimeters per millisecond (= meters/sec)
+    /**
+     * Get the track speed in millimeters per millisecond (= meters/sec)
+     * for a given throttle setting and direction. 
+     * SpeedProfile returns 0 if it has no speed information
+     * @param throttleSetting throttle setting
+     * @param isForward direction
+     * @return track speed in mm/ms
+     */
     protected float getTrackSpeed(float throttleSetting, boolean isForward) {
         RosterSpeedProfile speedProfile = getSpeedProfile();
         // Note SpeedProfile uses milliseconds per second.
@@ -324,19 +338,24 @@ public class SpeedUtil {
         return speed;
     }
 
-    // track speed is mm/ms.  SpeedProfile wants mm/s
+    /**
+     * Get the throttle setting needed to achieve a given track speed
+     * track speed is mm/ms.  SpeedProfile wants mm/s
+     * SpeedProfile returns 0 if it has no speed information
+     * @param trackSpeed in millimeters per millisecond (m/s)
+     * @return throttle setting or 0
+     */
     protected float getThrottleSetting(float trackSpeed) {
         RosterSpeedProfile speedProfile = getSpeedProfile();
         return speedProfile.getThrottleSetting(trackSpeed * 1000, _throttle.getIsForward());
     }
 
     /**
-     * @param speedSetting Recorded (Normanl) throttle setting
-     * @param speedtype speed name to modify throttle setting
+     * @param speedSetting Recorded (Normal) throttle setting
+     * @param speedtype speed name to modify throttle setting to get modified speed
      * @param time milliseconds
      * @param isForward direction
      * @return distance in millimeters
-     * 
      */
     protected float getDistanceTraveled(float speedSetting, String speedtype, float time, boolean isForward) {
         float throttleSetting = modifySpeed(speedSetting, speedtype, isForward);

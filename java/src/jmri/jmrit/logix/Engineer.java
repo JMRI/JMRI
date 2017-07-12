@@ -253,7 +253,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         // shut down
         ThreadingUtil.runOnLayout(() -> {
-            _warrant.stopWarrant(false);
+            _warrant.stopWarrant(_abort);
         });
     }
 
