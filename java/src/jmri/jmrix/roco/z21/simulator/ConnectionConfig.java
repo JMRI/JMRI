@@ -25,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -49,7 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
         hostNameField.setText("localhost");
         hostNameField.setEnabled(false); // always localhost.
         portField.setEnabled(false); // we don't change this on the simulator.
-        portFieldLabel.setText("Communication Port");
+        portFieldLabel.setText(Bundle.getMessage("CommunicationPort"));
         portField.setText(String.valueOf(adapter.getPort()));
         portField.setEnabled(false); // we can't change this now.
     }

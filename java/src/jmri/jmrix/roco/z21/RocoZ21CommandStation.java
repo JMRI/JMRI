@@ -130,8 +130,6 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
         }
     }
 
-
-
    /**
     * Is flag bit 0x00000002 which tells the command station to send 
     * data changes on the RMBus to the client set?
@@ -236,7 +234,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * set flag bit 0x01000000 which tells the command station to send 
+    * Set flag bit 0x01000000 which tells the command station to send
     * LocoNet data,except Locomotive and Turnout data, to the client.
     * @param flag true if flag is to be set.
     */

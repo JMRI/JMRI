@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager.
- * <P>
+ * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2016 
@@ -34,7 +34,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
@@ -65,4 +65,3 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }
-

@@ -2,7 +2,7 @@ package jmri.jmrix.ecos;
 
 /**
  * Returns a list of valid ESU Ecos Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *

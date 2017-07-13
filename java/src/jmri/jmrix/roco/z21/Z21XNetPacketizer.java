@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extension of the XNetPacketizer for Roco the Roco Z21 XPressNet 
+ * Extension of the XNetPacketizer for Roco: the Roco Z21 XPressNet
  * Tunnel.
  *
  * @author	Paul Bender Copyright (C) 2017 
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Z21XNetPacketizer extends XNetPacketizer {
 
     /**
-     * Must provide a LenzCommandStation reference at creation time
+     * Must provide a LenzCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,
      *                        preserved for later.
@@ -31,7 +31,7 @@ public class Z21XNetPacketizer extends XNetPacketizer {
        try{
            super.handleOneIncomingReply();
        } catch(java.io.IOException ioe){
-           log.info("Z21 XPressNet Connection Terminanted");
+           log.info("Z21 XPressNet Connection Terminated");
            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
        }
     }
@@ -42,4 +42,5 @@ public class Z21XNetPacketizer extends XNetPacketizer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XNetPacketizer.class.getName());
+
 }
