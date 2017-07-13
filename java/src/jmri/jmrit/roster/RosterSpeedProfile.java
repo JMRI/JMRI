@@ -250,7 +250,8 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
-                return -1.0f;       // no forward speeds at all                
+                log.error("Nothing in speed Profile");
+                return 0.0f;       // no forward speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -308,7 +309,8 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
-                return -1.0f;       // no reverse speeds at all                
+                log.error("Nothing in speed Profile");
+                return 0.0f;       // no reverse speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -333,6 +335,10 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
+        if (spd <= 0.0f) {
+            log.error("Speed not available to compute duration of travel");
+            return 0.0f;
+        }
         return (distance / spd);
     }
 
@@ -346,6 +352,10 @@ public class RosterSpeedProfile {
             spd = getForwardSpeed(speedStep);
         } else {
             spd = getReverseSpeed(speedStep);
+        }
+        if (spd <= 0.0f) {
+            log.error("Speed not available to compute distance travelled");
+            return 0.0f;
         }
         return Math.abs(spd * duration);
     }
@@ -849,9 +859,7 @@ public class RosterSpeedProfile {
     public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
         return speeds;
     }
-    public void setProfileSpeeds(TreeMap<Integer, SpeedStep> s) {
-        speeds = s;
-    }
+
     /**
      * Get the throttle setting to achieve a track speed
      * @param speed desired track speed in mms

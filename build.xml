@@ -534,12 +534,14 @@
 
     <macrodef name="java-compile">
         <attribute name="javac.source"/>
+        <attribute name="javac.includes" default=""/>
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
         <sequential>
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <javac compiler="modern"
+                   includes="@{javac.includes}"
                    srcdir="@{javac.source}"
                    destdir="@{javac.target}"
                    source="${source_version}"
@@ -1575,7 +1577,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2350"/><!-- change from default 100 warnings -->
+            <arg value="2250"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1642,7 +1644,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2350"/><!-- change from default 100 warnings -->
+            <arg value="2250"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->

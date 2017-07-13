@@ -82,7 +82,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
         confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");
-//        confirmJOptionPane(frame, Bundle.getMessage("QuestionTitle"), "Yes");
 
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
@@ -105,13 +104,12 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         }, "Found address");
         address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=111", 111, address.getNumber());
-        
+
         sensor.setState(Sensor.INACTIVE);
 
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
-        flushAWT();
 
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -121,7 +119,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         sensor = runtimes(route);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return (warrant.getThrottle()==null);
         }, "Wait for run to end");
         String msg = w.getRunModeMessage();
@@ -153,7 +151,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         flushAWT();
         // confirm one message logged
-//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {

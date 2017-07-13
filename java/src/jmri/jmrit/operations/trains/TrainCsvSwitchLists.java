@@ -120,7 +120,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         addLine(fileOut, ETE + expectedArrivalTime);
                     } else {
                         addLine(fileOut, DL + splitString(splitString(train.getTrainDepartsName())));
-                        addLine(fileOut, DT + train.getDepartureTime());
+                        addLine(fileOut, DT + train.getFormatedDepartureTime());
                         if (rl == train.getRoute().getDepartsRouteLocation() && routeList.size() > 1) {
                             addLine(fileOut, TD + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
                         }

@@ -533,9 +533,6 @@ public class SlipIconAdder extends IconAdder {
         }
     }
 
-    /**
-     *
-     */
     void delete(int index) {
         if (index >= _order.size()) {
             return;

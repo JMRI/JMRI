@@ -41,13 +41,9 @@ public class WarrantTest {
     public void testWarrant() {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
-        bWest.setLength(1);
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
-        bEast.setLength(1);
         OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
-        bNorth.setLength(1);
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
-        bSouth.setLength(1);
         Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
         Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
         
@@ -217,7 +213,7 @@ public class WarrantTest {
         jmri.util.JUnitUtil.releaseThread(this);
 
         // confirm one message logged
-//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");

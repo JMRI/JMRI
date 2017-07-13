@@ -426,6 +426,63 @@ public class NmraPacket {
     }
 
     /**
+     * Provide an extended operations mode accessory CV programming packet via a
+     * simplified interface, given a signal address.
+     * <br><br>
+     * From the NMRA Standard: Extended Decoder Packet address for operations
+     * mode programming
+     * <br><br>
+     * 10AAAAAA 0 0AAA0AA1
+     * <br><br>
+     * <br>
+     * The resulting packet would be
+     * <br><br>
+     * {preamble} 10AAAAAA 0 0AAA0AA1 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0
+     * EEEEEEEE 1
+     *
+     * @param addr  the signal address
+     * @param cvNum the CV
+     * @param data  the data
+     * @return a packet
+     */
+    public static byte[] accSignalDecoderPktOpsMode(int addr, int cvNum, int data) {
+
+        if (addr < 1 || addr > 2044) {
+            log.error("invalid address " + addr);
+            throw new IllegalArgumentException();
+        }
+
+        if (cvNum < 1 || cvNum > 1024) {
+            log.error("invalid CV number " + cvNum);
+            return null;
+        }
+
+        if (data < 0 || data > 255) {
+            log.error("invalid data " + data);
+            return null;
+        }
+
+        int outputAddr = addr - 1; // Make the address 0 based
+        int lowAddr = (outputAddr & 0x03);
+        int boardAddr = (outputAddr >> 2) + 1; // Board Address
+        int midAddr = (boardAddr & 0x3F);
+        int highAddr = (~(boardAddr >> 6)) & 0x07;
+
+        int lowCVnum = (cvNum - 1) & 0xFF;
+        int highCVnum = ((cvNum - 1) >> 8) & 0x03;
+
+        byte[] retVal = new byte[6];
+        retVal[0] = (byte) (0x80 | midAddr);
+        retVal[1] = (byte) (0x01 | (highAddr << 4) | (lowAddr << 1));
+        retVal[2] = (byte) (0xEC | highCVnum);
+        retVal[3] = (byte) (lowCVnum);
+        retVal[4] = (byte) (0xFF & data);
+        retVal[5] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4]);
+
+        return retVal;
+    }
+
+    /**
      * Determine if a packet is an Extended Accessory Decoder Control Packet
      * otherwise known as a Signal Decoder Packet.
      * <p>

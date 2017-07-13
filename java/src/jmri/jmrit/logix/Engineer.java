@@ -849,7 +849,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             w.startupWarrant();
             msg = "Launching warrant \"" + _warrant.getDisplayName() + "\" again.";
         } else {
-            if (w.getSpeedUtil().getDccAddress().equals(_speedUtil.getDccAddress())) {
+            if (_speedUtil.getDccAddress().equals(_speedUtil.getDccAddress())) {
                 OBlock block = w.getfirstOrder().getBlock();
                 block.deAllocate(_warrant);     // insure w can start
             }

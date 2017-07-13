@@ -31,7 +31,9 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
+//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -69,13 +71,16 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        OBlock block = _OBlockMgr.getBySystemName("OB0");
 
         NXFrame nxFrame = NXFrame.getDefault();
         nxFrame.setVisible(true);
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
         pressButton(nxFrame, Bundle.getMessage("Calculate"));
-        
+
         DialogFinder finder = new DialogFinder(Bundle.getMessage("DialogTitle"));
         java.awt.Container pickDia = (java.awt.Container) finder.find();
         Assert.assertNotNull("PickRoute Dialog not found", pickDia);
@@ -103,12 +108,12 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
         confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
         flushAWT();
-        
+
         nxFrame.setTrainInfo("666");
         nxFrame.setTrainName("Nick");
         pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
 
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+       WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
         WarrantTableModel model = tableFrame.getModel();
         Assert.assertNotNull("tableFrame model", model);
@@ -133,9 +138,6 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        OBlock block = _OBlockMgr.getBySystemName("OB0");
         String name = block.getDisplayName();
         jmri.util.JUnitUtil.waitFor(
             ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
@@ -187,9 +189,15 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-        
-    }
+//        TestHelper.disposeWindow(panel, this);
 
+        // Dialog has popped up, so handle that. First, locate it.
+//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
+//       TestHelper.disposeWindow(dialogList.get(0), this);
+
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+    }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
@@ -306,6 +314,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     public static Test suite() {
         return new TestSuite(NXFrameTest.class);
     }
+
     @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();

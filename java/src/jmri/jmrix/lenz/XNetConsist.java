@@ -60,18 +60,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     @Override
     synchronized public void dispose() {
-        for (int i = (ConsistList.size() - 1); i >= 0; i--) {
-            DccLocoAddress loco = ConsistList.get(i);
-            if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + loco.toString());
-            }
-            try {
-                remove(loco);
-            } catch (Exception ex) {
-                log.error("Error removing loco: " + loco.toString() + " from consist: " + ConsistAddress.toString());
-            }
-        }
-
+        super.dispose();
         tc.removeXNetListener(
                 XNetInterface.COMMINFO
                 | XNetInterface.CONSIST,
