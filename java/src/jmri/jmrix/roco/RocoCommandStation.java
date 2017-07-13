@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * a Roco Command Station, on an XPressNet network.
  *
  * @author	Bob Jacobsen Copyright (C) 2001 
- * @author      Paul Bender Copyright (C) 2016
+ * @author  Paul Bender Copyright (C) 2016
  */
 public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
 

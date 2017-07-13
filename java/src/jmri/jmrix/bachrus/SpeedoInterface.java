@@ -18,6 +18,5 @@ public interface SpeedoInterface {
      * @return true is interface implementation is operational.
      */
     boolean status();
+
 }
-
-

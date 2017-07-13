@@ -62,10 +62,11 @@ public class RemoveObjectFromEcos implements EcosListener {
             String message = "request(" + _ecosObject + ", control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
-            log.error("We have no control over the ecos object " + _ecosObject + " Retrying Attempt " + ecosretry);
+            log.error("JMRI has no control over the ecos object " + _ecosObject + ". Retrying Attempt " + ecosretry);
         } //We do not want to do a force control over an object when we are trying to delete it, bad things might happen on the layout if we do this!
         else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Unable to delete the loco from the Ecos" + "\n" + "Please delete it manually", "No Control", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("DeleteFromEcosWarning"),
+                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             ecosretry = 0;
         }
     }
@@ -83,4 +84,5 @@ public class RemoveObjectFromEcos implements EcosListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(RemoveObjectFromEcos.class.getName());
+
 }

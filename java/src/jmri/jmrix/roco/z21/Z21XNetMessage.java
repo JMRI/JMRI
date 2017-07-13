@@ -6,25 +6,28 @@ import jmri.jmrix.lenz.XNetMessage;
 
 /**
  * Represents a single command or response on the XpressNet.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
- *
  */
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Serializable {
 
 //    static private int _nRetries = 5;
 
-    // constructors, just pass on to the supperclass.
+    /**
+     * Constructor, just pass on to the supperclass.
+     */
     public Z21XNetMessage(int len) {
         super(len);
     }
 
-    // construct from a Z21Message
+    /**
+     * Constructor from a Z21Message
+     */
     public Z21XNetMessage(Z21Message m) {
         super(m.getLength()-4);
         for(int i = 4; i< m.getLength() ; i++ ){
@@ -32,7 +35,9 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         }
     }
 
-    // create messages of a particular form
+    /**
+     * Create messages of a particular form
+     */
     public static XNetMessage getZ21ReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(5);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -58,8 +63,9 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return m;
     }
 
-    /*
-     * Given a locomotive address, request its status 
+    /**
+     * Given a locomotive address, request its status.
+     *
      * @param address is the locomotive address
      */
     public static XNetMessage getZ21LocomotiveInfoRequestMsg(int address) {
@@ -72,12 +78,13 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return (msg);
     }
 
-    /*
-     * Given a locomotive address, a function number, and it's value, 
-     * generate a message to change the state. 
+    /**
+     * Given a locomotive address, a function number, and its value,
+     * generate a message to change the state.
+     *
      * @param address is the locomotive address
      * @param functionno is the function to change
-     * @param newstate is boolean representing whether the function is to be on or off.
+     * @param state is boolean representing whether the function is to be on or off
      */
     public static XNetMessage getZ21LocomotiveFunctionOperationMsg(int address, int functionno, boolean state) {
         XNetMessage msg = new XNetMessage(6);
@@ -99,9 +106,10 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return (msg);
     }
 
-    /*
-     * Given a turnout address, generate a message to request the state. 
-     * @param address is the turnout address
+    /**
+     * Given a turnout address, generate a message to request the state.
+     *
+     * @param address the turnout address
      */
     public static XNetMessage getZ21TurnoutInfoRequestMessage(int address ) {
         // refer to section 5.1 of the z21 lan protocol manual.
@@ -116,9 +124,10 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return(msg);
     }
 
-    /*
+    /**
      * Given a turnout address and whether or not it is thrown, generate 
-     * a message to operate the turnout. 
+     * a message to operate the turnout.
+     *
      * @param address is the turnout address
      * @param thrown boolean value representing whether the turnout is thrown.
      * @param active boolean value representing whether the output is being set
@@ -126,7 +135,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * @param queue boolean value representing whehter or not the message is 
      * added to the queue.
      */
-    public static XNetMessage getZ21SetTurnoutRequestMessage(int address, boolean thrown,boolean active, boolean queue) {
+    public static XNetMessage getZ21SetTurnoutRequestMessage(int address, boolean thrown, boolean active, boolean queue) {
         // refer to section 5.2 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0,Z21Constants.LAN_X_SET_TURNOUT);
@@ -150,4 +159,5 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         msg.setParity();
         return(msg);
     }
+
 }

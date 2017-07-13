@@ -2,7 +2,7 @@ package jmri.jmrix.cmri;
 
 /**
  * Returns a list of valid CMRI Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  *

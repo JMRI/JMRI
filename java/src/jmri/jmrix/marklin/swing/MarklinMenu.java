@@ -15,12 +15,11 @@ public class MarklinMenu extends JMenu {
     public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinBundle");
         String title;
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuMarklin");
+            title = Bundle.getMessage("MenuMarklin");
         }
 
         setText(title);
@@ -31,7 +30,7 @@ public class MarklinMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new MarklinNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new MarklinNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 

@@ -80,11 +80,15 @@
 
       <h4>Monitor Marklin Commands</h4><img src=
       "images/MarklinCommandMonitor.png" width="410" height="88"
-      alt="Menu">
+      alt="Command Monitor Tool">
 
-      <h4>Send Marklin Commands</h4><img src=
-      "images/MarklinCS2SendCommand.png" width="252" height="137"
-      alt="Menu"> <!--#include virtual="/Footer" -->
+      <h4>Send Marklin Commands</h4>
+      <img src="images/MarklinCS2SendCommand.png" width="348"
+           height="128" alt="Send Packet Tool"><br>
+      Enter a message as a hex string, starting with the prefix 0x
+      e.g. <code>0x4467</code>. Press [Send] and wait for a reply from
+      the CS2 connection to appear in the Reply field.
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -837,7 +837,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * setFrameTitle - set the frame title based on type, text and address
      */
     public void setFrameTitle() {
-        String addr = Bundle.getMessage("ThrottleFrameTitle");
+        String addr = Bundle.getMessage("ThrottleTitle");
         if (addressPanel.getThrottle() != null) {
             addr = addressPanel.getCurrentAddress().toString();
         }

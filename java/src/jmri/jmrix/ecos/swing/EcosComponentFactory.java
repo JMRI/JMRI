@@ -25,4 +25,5 @@ public class EcosComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new EcosMenu(memo);
     }
+
 }

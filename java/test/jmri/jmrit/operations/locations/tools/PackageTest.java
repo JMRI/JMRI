@@ -63,6 +63,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(PrintSwitchListActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintLocationsActionTest.class));
         return suite;
     }
 
