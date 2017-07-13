@@ -1,8 +1,9 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.prefs.BackingStoreException;
@@ -19,6 +20,7 @@ import jmri.PowerManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -41,18 +43,19 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015
  * @since 2.9.4
  */
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
-    public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
+    public final HashMap<Class<?>, String> defaults = new HashMap<>();
+    private PropertyChangeListener memoListener;
 
     public ManagerDefaultSelector() {
-        SystemConnectionMemo.addPropertyChangeListener((PropertyChangeEvent e) -> {
+        memoListener = (PropertyChangeEvent e) -> {
             switch (e.getPropertyName()) {
-                case "ConnectionNameChanged":
+                case SystemConnectionMemo.USER_NAME:
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
                     log.debug("ConnectionNameChanged from \"{}\" to \"{}\"", oldName, newName);
@@ -62,36 +65,53 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                             ManagerDefaultSelector.this.defaults.put(c, newName);
                         }
                     });
+                    this.firePropertyChange("Updated", null, null);
                     break;
-                case "ConnectionDisabled":
+                case SystemConnectionMemo.DISABLED:
                     Boolean newState = (Boolean) e.getNewValue();
                     if (newState) {
-                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
-                        String disabledName = memo.getUserName();
+                        String disabledName = ((SystemConnectionMemo) e.getSource()).getUserName();
                         log.debug("ConnectionDisabled true: \"{}\"", disabledName);
                         removeConnectionAsDefault(disabledName);
-                    }
-                    break;
-                case "ConnectionRemoved":
-                    String removedName = (String) e.getOldValue();
-                    log.debug("ConnectionRemoved for \"{}\"", removedName);
-                    removeConnectionAsDefault(removedName);
-                    break;
-                case "ConnectionAdded":
-                    // check for special case of anything else then Internal
-                    List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
-                    if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
-                        log.debug("First real system added, reset defaults");
-                        String name = list.get(1).getUserName();
-                        removeConnectionAsDefault(name);
                     }
                     break;
                 default:
                     log.debug("ignoring notification of \"{}\"", e.getPropertyName());
                     break;
             }
-            this.firePropertyChange("Updated", null, null);
+        };
+        SystemConnectionMemoManager.getDefault().addPropertyChangeListener((PropertyChangeEvent e) -> {
+            switch (e.getPropertyName()) {
+                case SystemConnectionMemoManager.CONNECTION_REMOVED:
+                    if (e.getOldValue() instanceof SystemConnectionMemo) {
+                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getOldValue();
+                        String removedName = ((SystemConnectionMemo) e.getOldValue()).getUserName();
+                        log.debug("ConnectionRemoved for \"{}\"", removedName);
+                        removeConnectionAsDefault(removedName);
+                        memo.removePropertyChangeListener(this.memoListener);
+                    }
+                    break;
+                case SystemConnectionMemoManager.CONNECTION_ADDED:
+                    if (e.getNewValue() instanceof SystemConnectionMemo) {
+                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getNewValue();
+                        // check for special case of anything else then Internal
+                        List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
+                        if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
+                            log.debug("First real system added, reset defaults");
+                            String name = list.get(1).getUserName();
+                            removeConnectionAsDefault(name);
+                        }
+                        memo.addPropertyChangeListener(this.memoListener);
+                    }
+                    break;
+                default:
+                    log.debug("ignoring notification of \"{}\"", e.getPropertyName());
+                    break;
+            }
         });
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            memo.addPropertyChangeListener(this.memoListener);
+        }
     }
 
     // remove connection's record
@@ -107,6 +127,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         tmpArray.stream().forEach((tmpArray1) -> {
             ManagerDefaultSelector.this.defaults.remove(tmpArray1);
         });
+        this.firePropertyChange("Updated", null, null);
     }
 
     /**
@@ -188,16 +209,27 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.getNullableDefault(ThrottleManager.class) != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class).isPresent()) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getNullableDefault(PowerManager.class) != null) {
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class).isPresent()) {
                     currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getNullableDefault(ProgrammerManager.class) != null) {
+                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class).isPresent()) {
                     currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
                     this.defaults.put(c, currentName);
+                }
+            }
+        }
+        if (connList.size() > 1) {
+            for (SystemConnectionMemo memo : connList) {
+                if (memo instanceof InternalSystemConnectionMemo) {
+                    if (defaults.values().stream().allMatch((userName) -> {
+                        return userName.equals(memo.getUserName());
+                    })) {
+                        error = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "ManagerDefaultSelector.AllInternal"), Bundle.getMessage("ManagerDefaultSelector.AllInternal"));
+                    }
                 }
             }
         }
@@ -234,12 +266,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             InitializationException ex = this.configure();
-            ConfigureManager manager = InstanceManager.getNullableDefault(ConfigureManager.class);
-            if (manager != null) {
+            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((manager) -> {
                 manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
-            }
+            });
             this.setInitialized(profile, true);
             if (ex != null) {
+                this.addInitializationException(profile, ex);
                 throw ex;
             }
         }
@@ -282,5 +314,5 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class);
 }

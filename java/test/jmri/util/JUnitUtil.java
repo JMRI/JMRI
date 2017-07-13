@@ -259,9 +259,6 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // clear system connections
-        jmri.jmrix.SystemConnectionMemo.reset();
-
         // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
             {
