@@ -26,7 +26,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<DCCppReply> replyQueue;
+    LinkedList<DCCppReply> replyQueue = new LinkedList<DCCppReply>(); // Init before Rx and Tx
+                
     Thread txThread;
     String inString;
     String remoteAddress;
@@ -167,8 +168,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 outBuf = new StringBuffer(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
                 outStream.write(outBuf.toString().getBytes());
-                
-                replyQueue = new LinkedList<DCCppReply>(); // Should this be in the other thread?
                 
                 while (!isInterrupted()) {
                     msg = null;
