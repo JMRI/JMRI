@@ -38,8 +38,6 @@ public class GraphPane extends JPanel implements Printable {
 
     protected boolean _grid = false;
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
-
     // Use a default 28 step profile
     public GraphPane() {
         super();
@@ -85,12 +83,12 @@ public class GraphPane extends JPanel implements Printable {
 
     void setUnitsMph() {
         units = Speed.MPH;
-        setYLabel(rb.getString("SpeedMPH"));
+        setYLabel(Bundle.getMessage("SpeedMPH"));
     }
 
     void setUnitsKph() {
         units = Speed.KPH;
-        setYLabel(rb.getString("SpeedKPH"));
+        setYLabel(Bundle.getMessage("SpeedKPH"));
     }
 
     public int getUnits() {

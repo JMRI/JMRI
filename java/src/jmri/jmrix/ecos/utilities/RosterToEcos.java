@@ -152,4 +152,5 @@ public class RosterToEcos implements EcosListener {
         _re = null;
         createloco = false;
     }
+
 }

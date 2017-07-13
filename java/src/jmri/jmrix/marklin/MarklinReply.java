@@ -134,6 +134,3 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return arr;
     }
 }
-
-
-

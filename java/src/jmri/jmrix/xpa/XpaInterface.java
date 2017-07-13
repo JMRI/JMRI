@@ -27,6 +27,3 @@ public interface XpaInterface {
      */
     void sendXpaMessage(XpaMessage m, XpaListener l);
 }
-
-
-
