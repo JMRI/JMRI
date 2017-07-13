@@ -49,7 +49,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), rosterEntry}, null);
         log.debug("Dialog value " + retval + " selected, "
                 + rosterEntry.getSelectedIndex() + ":" + rosterEntry.getSelectedItem());
-        if (retval != 1 | rosterEntry.getItemCount() == 0) {
+        if (retval != 1 || rosterEntry.getItemCount() == 0) {
             return;
         }
 

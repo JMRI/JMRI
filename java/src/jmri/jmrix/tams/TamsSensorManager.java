@@ -142,8 +142,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            return null;
-            //throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
+            // TODO prevent further execution, ruturn error flag
+            throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
         }
 
         //Address format passed is in the form of board:channel or T:turnout address
@@ -165,8 +165,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             log.error("Port number must be between 1 and 16");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            return null;
-            //throw new JmriException("Port number must be between 1 and 16");
+            // TODO prevent further execution, ruturn error flag
+            throw new JmriException("Port number must be between 1 and 16");
         }
         StringBuilder sb = new StringBuilder();
         sb.append(getSystemPrefix());
