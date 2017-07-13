@@ -1,8 +1,8 @@
 package jmri.jmrix.marklin;
 
 /**
- * Returns a list of valid ESU Marklin Connection Types
- * <P>
+ * Returns list of valid ESU Marklin Connection Types
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  *
@@ -14,9 +14,7 @@ public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.marklin.networkdriver.ConnectionConfig"/*,
-         "jmri.jmrix.ecos.csreloaded.ConnectionConfig",*/
-
+            "jmri.jmrix.marklin.networkdriver.ConnectionConfig"
         };
     }
 

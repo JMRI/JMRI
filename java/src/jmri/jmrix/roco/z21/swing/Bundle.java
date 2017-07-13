@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.roco.z21.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.roco.z21.swing.Z21SwingBundle"; // NOI18N
+    private static final String name = null; // No local properties
 
     //
     // below here is boilerplate to be copied exactly

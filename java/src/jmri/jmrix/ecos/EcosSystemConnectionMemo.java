@@ -127,7 +127,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tell which managers this provides by class.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -222,7 +222,5 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
 }
-
-
-
