@@ -50,8 +50,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(CarDeleteAttributActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarDeleteAttributeActionTest.class));
         return suite;
     }
 
