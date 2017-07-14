@@ -116,7 +116,9 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         field = new TurnoutFieldSection(layoutTO);
 
         central.initializeLamps(tm.provideTurnout(layoutTO));        
-        field.initializeState(tm.provideTurnout(layoutTO));        
+        field.initializeState(tm.provideTurnout(layoutTO)); 
+        
+        this.station = station;       
     }
     
     public void addLocks(List<Lock> locks) { 
