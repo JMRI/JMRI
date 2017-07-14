@@ -33,16 +33,11 @@ public class RemoveObjectFromEcos implements EcosListener {
 
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        if (lines[lines.length - 1].contains("<END 0 (OK)>")) {
+        if(m.getResultCode()==0){
             if (lines[0].startsWith("<REPLY request(" + _ecosObject + ",")) {
                 deleteObject();
-            } else if (lines[0].startsWith("<EVENT " + _ecosObject + ">")) {
-                if (msg.contains("CONTROL_LOST")) {
-                    retryControl();
-                    log.debug("We have no control over the ecos object");
-                }
             }
-        } else if (lines[lines.length - 1].equals("<END 25 (NERROR_NOCONTROL)>")) {
+        } else if (m.getResultCode()==25){
             /**
              * This section deals with no longer having control over the ecos
              * loco object. we try three times to request control, on the fourth
