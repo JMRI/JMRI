@@ -217,12 +217,6 @@ public class LayoutEditorTools {
     private LayoutTurnout layoutTurnout = null;
     private double placeSignalDirectionDEG = 0.0;
 
-    private boolean layoutTurnoutHorizontal = false;
-    private boolean layoutTurnoutVertical = false;
-    private boolean layoutTurnoutThroatLeft = false;
-    private boolean layoutTurnoutThroatUp = false;
-    private boolean layoutTurnoutBUp = false;
-    private boolean layoutTurnoutBLeft = false;
     private boolean turnoutFromMenu = false;
     private Turnout turnout = null;
     private SignalHead throatContinuingHead = null;
@@ -652,34 +646,11 @@ public class LayoutEditorTools {
                 }
             }
         }
-        LayoutTurnout t = layoutTurnout;
-        if (t != null) {
-            double delX = t.getCoordsA().getX() - t.getCoordsB().getX();
-            double delY = t.getCoordsA().getY() - t.getCoordsB().getY();
-            layoutTurnoutHorizontal = false;
-            layoutTurnoutVertical = false;
-            layoutTurnoutThroatLeft = false;
-            layoutTurnoutThroatUp = false;
-            layoutTurnoutBUp = false;
-            layoutTurnoutBLeft = false;
-            if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
-                layoutTurnoutHorizontal = true;
-                if (delX < 0.0) {
-                    layoutTurnoutThroatLeft = true;
-                }
-                if (t.getCoordsB().getY() < t.getCoordsC().getY()) {
-                    layoutTurnoutBUp = true;
-                }
-            }
-            if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
-                layoutTurnoutVertical = true;
-                if (delY < 0.0) {
-                    layoutTurnoutThroatUp = true;
-                }
-                if (t.getCoordsB().getX() < t.getCoordsC().getX()) {
-                    layoutTurnoutBLeft = true;
-                }
-            }
+
+        if (layoutTurnout != null) {
+            Point2D pointA = layoutTurnout.getCoordsA();
+            Point2D pointB = layoutTurnout.getCoordsB();
+            placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointB, pointA));
             return true;
         }
         JOptionPane.showMessageDialog(setSignalsFrame,
@@ -712,23 +683,14 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(throatContinuingSignalHeadComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4),
-                    (int) (layoutTurnout.getCoordsA().getY()));
-        }
+        Point2D pointA = layoutTurnout.getCoordsA();
+        Point2D pointB = layoutTurnout.getCoordsB();
+        Point2D pointC = layoutTurnout.getCoordsC();
+
+        Point2D delta = new Point2D.Double(0.0, MathUtil.distance(pointB, pointC));
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointA, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeThroatDiverging() {
@@ -736,101 +698,35 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(throatDivergingSignalHeadComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - (2 * testIcon.getIconWidth())),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4 + testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - (2 * testIcon.getIconHeight())));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4 + testIcon.getIconHeight()));
-        }
+        Point2D pointA = layoutTurnout.getCoordsA();
+        Point2D pointB = layoutTurnout.getCoordsB();
+        Point2D pointC = layoutTurnout.getCoordsC();
+
+        Point2D delta = new Point2D.Double(0.0, MathUtil.distance(pointB, pointC));
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(layoutTurnout.getCoordsCenter(), delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeContinuing(String signalHeadName) {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft && layoutTurnoutBUp) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX()),
-                    (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft && (!layoutTurnoutBUp)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX()),
-                    (int) (layoutTurnout.getCoordsB().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft) && layoutTurnoutBUp) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft) && (!layoutTurnoutBUp)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() + 4));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp && layoutTurnoutBLeft) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp && (!layoutTurnoutBLeft)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() + 4),
-                    (int) (layoutTurnout.getCoordsB().getY()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp) && layoutTurnoutBLeft) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp) && (!layoutTurnoutBLeft)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() + 4),
-                    (int) (layoutTurnout.getCoordsB().getY() - testIcon.getIconHeight()));
-        }
+        Point2D pointB = layoutTurnout.getCoordsB();
+        Point2D pointC = layoutTurnout.getCoordsC();
+        Point2D where = MathUtil.subtract(pointB, MathUtil.subtract(pointC, pointB));
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeDiverging(String signalHeadName) {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft && layoutTurnoutBUp) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX()),
-                    (int) (layoutTurnout.getCoordsC().getY() + 4));
-        } else if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft && (!layoutTurnoutBUp)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX()),
-                    (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft) && layoutTurnoutBUp) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft) && (!layoutTurnoutBUp)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp && layoutTurnoutBLeft) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() + 4),
-                    (int) (layoutTurnout.getCoordsC().getY()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp && (!layoutTurnoutBLeft)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp) && layoutTurnoutBLeft) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() + 4),
-                    (int) (layoutTurnout.getCoordsC().getY() - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp) && (!layoutTurnoutBLeft)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() - testIcon.getIconHeight()));
-        }
+        Point2D pointB = layoutTurnout.getCoordsB();
+        Point2D pointC = layoutTurnout.getCoordsC();
+        Point2D where = MathUtil.add(pointC, MathUtil.subtract(pointC, pointB));
+        double dir = MathUtil.wrap360(270.0 - MathUtil.computeAngleDEG(layoutTurnout.getCoordsCenter(), pointC));
+        setSignalHeadOnPanel(dir, signalHeadName, where);
     }
 
     private void setLogicThroatContinuing() {
@@ -3314,192 +3210,104 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a1ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4),
-                    (int) (layoutTurnout.getCoordsA().getY()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointA, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeA2() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a2ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - (2 * testIcon.getIconWidth())),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4 + testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsA().getY() - 4 - (2 * testIcon.getIconHeight())));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsA().getX() + 4),
-                    (int) (layoutTurnout.getCoordsA().getY() + 4 + testIcon.getIconHeight()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(-iconSize, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointA, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeB1() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b1ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX()),
-                    (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() + 4));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() + 4),
-                    (int) (layoutTurnout.getCoordsB().getY()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() - testIcon.getIconHeight()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(-iconSize, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointB, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeB2() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b2ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() + 4 + testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - 4 - (2 * testIcon.getIconWidth())),
-                    (int) (layoutTurnout.getCoordsB().getY() + 4));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() + 4),
-                    (int) (layoutTurnout.getCoordsB().getY() + 4 + testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsB().getY() - 4 - (2 * testIcon.getIconHeight())));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointB, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeC1() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c1ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX()),
-                    (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() + 4));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() + 4),
-                    (int) (layoutTurnout.getCoordsC().getY()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() - testIcon.getIconHeight()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointC, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeC2() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c2ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() + 4 + testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - 4 - (2 * testIcon.getIconWidth())),
-                    (int) (layoutTurnout.getCoordsC().getY() + 4));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() + 4),
-                    (int) (layoutTurnout.getCoordsC().getY() + 4 + testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsC().getY() - 4 - (2 * testIcon.getIconHeight())));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(+iconSize, -iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointC, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
 
     private void placeD1() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d1ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsD().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX()),
-                    (int) (layoutTurnout.getCoordsD().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsD().getY() - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() + 4),
-                    (int) (layoutTurnout.getCoordsD().getY()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(+iconSize, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointD, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     private void placeD2() {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        Point2D pointD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d2ComboBox.getDisplayName());
-        if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() - 4 - (2 * testIcon.getIconWidth())),
-                    (int) (layoutTurnout.getCoordsD().getY() + 4));
-        } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() + 4 + testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsD().getY() - 4 - testIcon.getIconHeight()));
-        } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() - 4 - testIcon.getIconWidth()),
-                    (int) (layoutTurnout.getCoordsD().getY() - 4 - (2 * testIcon.getIconHeight())));
-        } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (layoutTurnout.getCoordsD().getX() + 4),
-                    (int) (layoutTurnout.getCoordsD().getY() + 4 + testIcon.getIconHeight()));
-        }
+        double iconSize = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        Point2D delta = new Point2D.Double(0.0, +iconSize);
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        Point2D where = MathUtil.add(pointD, delta);
+        setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
 
     @SuppressWarnings("null")
