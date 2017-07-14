@@ -2911,19 +2911,20 @@ public class LayoutEditorTools {
             return;
         }
         // place signal icons if requested, and assign signal heads to this turnout
+        String signalHeadName = NamedBean.normalizeUserName(a1Field.getText());
         if (setA1Head.isSelected()) {
             if (isHeadOnPanel(a1Head)
                     && (a1Head != getHeadFromName(layoutTurnout.getSignalA1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalA1Name());
                 placeA1();
                 removeAssignment(a1Head);
-                layoutTurnout.setSignalA1Name(a1Field.getText().trim());
+                layoutTurnout.setSignalA1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -2933,31 +2934,32 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a1Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalA1Name());
                     removeAssignment(a1Head);
-                    layoutTurnout.setSignalA1Name(a1Field.getText().trim());
+                    layoutTurnout.setSignalA1Name(signalHeadName);
                 }
             } else if (assigned != A1) {
 // need to figure out what to do in this case.
             }
         }
+        signalHeadName = NamedBean.normalizeUserName(a2Field.getText());
         if ((a2Head != null) && setA2Head.isSelected()) {
             if (isHeadOnPanel(a2Head)
                     && (a2Head != getHeadFromName(layoutTurnout.getSignalA2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
                 placeA2();
                 removeAssignment(a2Head);
-                layoutTurnout.setSignalA2Name(a2Field.getText().trim());
+                layoutTurnout.setSignalA2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (a2Head != null) {
@@ -2967,13 +2969,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a2Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
                     removeAssignment(a2Head);
-                    layoutTurnout.setSignalA2Name(a2Field.getText().trim());
+                    layoutTurnout.setSignalA2Name(signalHeadName);
                 }
             } else if (assigned != A2) {
 // need to figure out what to do in this case.
@@ -2982,19 +2984,21 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
             layoutTurnout.setSignalA2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b1Field.getText());
         if (setB1Head.isSelected()) {
             if (isHeadOnPanel(b1Head)
                     && (b1Head != getHeadFromName(layoutTurnout.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalB1Name());
                 placeB1();
                 removeAssignment(b1Head);
-                layoutTurnout.setSignalB1Name(b1Field.getText().trim());
+                layoutTurnout.setSignalB1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -3004,31 +3008,33 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b1Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalB1Name());
                     removeAssignment(b1Head);
-                    layoutTurnout.setSignalB1Name(b1Field.getText().trim());
+                    layoutTurnout.setSignalB1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b2Field.getText());
         if ((b2Head != null) && setB2Head.isSelected()) {
             if (isHeadOnPanel(b2Head)
                     && (b2Head != getHeadFromName(layoutTurnout.getSignalB2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalB2Name());
                 placeB2();
                 removeAssignment(b2Head);
-                layoutTurnout.setSignalB2Name(b2Field.getText().trim());
+                layoutTurnout.setSignalB2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (b2Head != null) {
@@ -3038,13 +3044,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b2Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalB2Name());
                     removeAssignment(b2Head);
-                    layoutTurnout.setSignalB2Name(b2Field.getText().trim());
+                    layoutTurnout.setSignalB2Name(signalHeadName);
                 }
             } else if (assigned != B2) {
 // need to figure out what to do in this case.
@@ -3053,19 +3059,21 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout.getSignalB2Name());
             layoutTurnout.setSignalB2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(c1Field.getText());
         if (setC1Head.isSelected()) {
             if (isHeadOnPanel(c1Head)
                     && (c1Head != getHeadFromName(layoutTurnout.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalC1Name());
                 placeC1();
                 removeAssignment(c1Head);
-                layoutTurnout.setSignalC1Name(c1Field.getText().trim());
+                layoutTurnout.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -3075,31 +3083,33 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c1Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalC1Name());
                     removeAssignment(c1Head);
-                    layoutTurnout.setSignalC1Name(c1Field.getText().trim());
+                    layoutTurnout.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(c2Field.getText());
         if ((c2Head != null) && setC2Head.isSelected()) {
             if (isHeadOnPanel(c2Head)
                     && (c2Head != getHeadFromName(layoutTurnout.getSignalC2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalC2Name());
                 placeC2();
                 removeAssignment(c2Head);
-                layoutTurnout.setSignalC2Name(c2Field.getText().trim());
+                layoutTurnout.setSignalC2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (c2Head != null) {
@@ -3109,13 +3119,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c2Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalC2Name());
                     removeAssignment(c2Head);
-                    layoutTurnout.setSignalC2Name(c2Field.getText().trim());
+                    layoutTurnout.setSignalC2Name(signalHeadName);
                 }
             } else if (assigned != C2) {
 // need to figure out what to do in this case.
@@ -3124,19 +3134,21 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout.getSignalC2Name());
             layoutTurnout.setSignalC2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d1Field.getText());
         if (setD1Head.isSelected()) {
             if (isHeadOnPanel(d1Head)
                     && (d1Head != getHeadFromName(layoutTurnout.getSignalD1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalD1Name());
                 placeD1();
                 removeAssignment(d1Head);
-                layoutTurnout.setSignalD1Name(d1Field.getText().trim());
+                layoutTurnout.setSignalD1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -3146,31 +3158,33 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d1Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalD1Name());
                     removeAssignment(d1Head);
-                    layoutTurnout.setSignalD1Name(d1Field.getText().trim());
+                    layoutTurnout.setSignalD1Name(signalHeadName);
                 }
             } else if (assigned != D1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d2Field.getText());
         if ((d2Head != null) && setD2Head.isSelected()) {
             if (isHeadOnPanel(d2Head)
                     && (d2Head != getHeadFromName(layoutTurnout.getSignalD2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout.getSignalD2Name());
                 placeD2();
                 removeAssignment(d2Head);
-                layoutTurnout.setSignalD2Name(d2Field.getText().trim());
+                layoutTurnout.setSignalD2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (d2Head != null) {
@@ -3180,13 +3194,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d2Field.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout.getSignalD2Name());
                     removeAssignment(d2Head);
-                    layoutTurnout.setSignalD2Name(d2Field.getText().trim());
+                    layoutTurnout.setSignalD2Name(signalHeadName);
                 }
             } else if (assigned != D2) {
 // need to figure out what to do in this case.
@@ -3290,20 +3304,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(a1Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, a1Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsA().getY() + 4));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, a1Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX()),
                     (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, a1Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsA().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, a1Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() + 4),
                     (int) (layoutTurnout.getCoordsA().getY()));
         }
@@ -3313,20 +3328,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(a2Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, a2Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() - 4 - (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnout.getCoordsA().getY() + 4));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, a2Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() + 4 + testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, a2Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsA().getY() - 4 - (2 * testIcon.getIconHeight())));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, a2Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsA().getX() + 4),
                     (int) (layoutTurnout.getCoordsA().getY() + 4 + testIcon.getIconHeight()));
         }
@@ -3336,20 +3352,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(b1Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, b1Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX()),
                     (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, b1Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsB().getY() + 4));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, b1Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() + 4),
                     (int) (layoutTurnout.getCoordsB().getY()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, b1Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsB().getY() - testIcon.getIconHeight()));
         }
@@ -3359,20 +3376,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(b2Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, b2Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() + 4 + testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, b2Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() - 4 - (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnout.getCoordsB().getY() + 4));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, b2Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() + 4),
                     (int) (layoutTurnout.getCoordsB().getY() + 4 + testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, b2Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsB().getY() - 4 - (2 * testIcon.getIconHeight())));
         }
@@ -3382,20 +3400,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(c1Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, c1Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX()),
                     (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, c1Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsC().getY() + 4));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, c1Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() + 4),
                     (int) (layoutTurnout.getCoordsC().getY()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, c1Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsC().getY() - testIcon.getIconHeight()));
         }
@@ -3405,20 +3424,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(c2Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(0, c2Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() + 4 + testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(2, c2Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() - 4 - (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnout.getCoordsC().getY() + 4));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(3, c2Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() + 4),
                     (int) (layoutTurnout.getCoordsC().getY() + 4 + testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(1, c2Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsC().getY() - 4 - (2 * testIcon.getIconHeight())));
         }
@@ -3428,20 +3448,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(d1Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, d1Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsD().getY() + 4));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, d1Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX()),
                     (int) (layoutTurnout.getCoordsD().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, d1Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsD().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, d1Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() + 4),
                     (int) (layoutTurnout.getCoordsD().getY()));
         }
@@ -3451,20 +3472,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(d2Field.getText());
         if (layoutTurnoutHorizontal && layoutTurnoutThroatLeft) {
-            setSignalHeadOnPanel(2, d2Field.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() - 4 - (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnout.getCoordsD().getY() + 4));
         } else if (layoutTurnoutHorizontal && (!layoutTurnoutThroatLeft)) {
-            setSignalHeadOnPanel(0, d2Field.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() + 4 + testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsD().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutVertical && layoutTurnoutThroatUp) {
-            setSignalHeadOnPanel(1, d2Field.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnout.getCoordsD().getY() - 4 - (2 * testIcon.getIconHeight())));
         } else if (layoutTurnoutVertical && (!layoutTurnoutThroatUp)) {
-            setSignalHeadOnPanel(3, d2Field.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnout.getCoordsD().getX() + 4),
                     (int) (layoutTurnout.getCoordsD().getY() + 4 + testIcon.getIconHeight()));
         }
@@ -5018,23 +5040,24 @@ public class LayoutEditorTools {
             return;
         }
         // place signal icons if requested, and assign signal heads to this turnout
+        String signalHeadName = NamedBean.normalizeUserName(a1TToTField.getText());
         if (setA1TToTHead.isSelected()) {
             if (isHeadOnPanel(a1TToTHead)
                     && (a1TToTHead != getHeadFromName(layoutTurnout1.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
                 if (layoutTurnout1.getContinuingSense() == Turnout.CLOSED) {
-                    placeA1TToT(a1TToTField.getText().trim());
+                    placeA1TToT(signalHeadName);
                 } else {
-                    placeB1TToT(a1TToTField.getText().trim());
+                    placeB1TToT(signalHeadName);
                 }
                 removeAssignment(a1TToTHead);
-                layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
+                layoutTurnout1.setSignalB1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -5044,35 +5067,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a1TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
                     removeAssignment(a1TToTHead);
-                    layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
+                    layoutTurnout1.setSignalB1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case - assigned to a different position on the same turnout.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(a2Field.getText());
         if ((a2TToTHead != null) && setA2TToTHead.isSelected()) {
             if (isHeadOnPanel(a2TToTHead)
                     && (a2TToTHead != getHeadFromName(layoutTurnout1.getSignalB2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
                 if (layoutTurnout1.getContinuingSense() == Turnout.CLOSED) {
-                    placeA2TToT(a2TToTField.getText().trim());
+                    placeA2TToT(signalHeadName);
                 } else {
-                    placeB2TToT(a2TToTField.getText().trim());
+                    placeB2TToT(signalHeadName);
                 }
                 removeAssignment(a2TToTHead);
-                layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
+                layoutTurnout1.setSignalB2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (a2TToTHead != null) {
@@ -5082,13 +5107,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a2TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
                     removeAssignment(a2TToTHead);
-                    layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
+                    layoutTurnout1.setSignalB2Name(signalHeadName);
                 }
             } else if (assigned != B2) {
 // need to figure out what to do in this case.
@@ -5097,23 +5122,25 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
             layoutTurnout1.setSignalB2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b1TToTField.getText());
         if (setB1TToTHead.isSelected()) {
             if (isHeadOnPanel(b1TToTHead)
                     && (b1TToTHead != getHeadFromName(layoutTurnout1.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b1TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout1.getSignalC1Name());
                 if (layoutTurnout1.getContinuingSense() == Turnout.CLOSED) {
-                    placeB1TToT(b1TToTField.getText().trim());
+                    placeB1TToT(signalHeadName);
                 } else {
-                    placeA1TToT(b1TToTField.getText().trim());
+                    placeA1TToT(signalHeadName);
                 }
                 removeAssignment(b1TToTHead);
-                layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
+                layoutTurnout1.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -5123,35 +5150,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b1TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout1.getSignalC1Name());
                     removeAssignment(b1TToTHead);
-                    layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
+                    layoutTurnout1.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b2TToTField.getText());
         if ((b2TToTHead != null) && setB2TToTHead.isSelected()) {
             if (isHeadOnPanel(b2TToTHead)
                     && (b2TToTHead != getHeadFromName(layoutTurnout1.getSignalC2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b2TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
                 if (layoutTurnout1.getContinuingSense() == Turnout.CLOSED) {
-                    placeB2TToT(b2TToTField.getText().trim());
+                    placeB2TToT(signalHeadName);
                 } else {
-                    placeA2TToT(b2TToTField.getText().trim());
+                    placeA2TToT(signalHeadName);
                 }
                 removeAssignment(b2TToTHead);
-                layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
+                layoutTurnout1.setSignalC2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (b2TToTHead != null) {
@@ -5161,13 +5190,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b2TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
                     removeAssignment(b2TToTHead);
-                    layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
+                    layoutTurnout1.setSignalC2Name(signalHeadName);
                 }
             } else if (assigned != C2) {
 // need to figure out what to do in this case.
@@ -5176,24 +5205,26 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
             layoutTurnout1.setSignalC2Name("");
         }
+
         // signal heads on turnout 2
+        signalHeadName = NamedBean.normalizeUserName(c1TToTField.getText());
         if (setC1TToTHead.isSelected()) {
             if (isHeadOnPanel(c1TToTHead)
                     && (c1TToTHead != getHeadFromName(layoutTurnout2.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c1TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
                 if (layoutTurnout2.getContinuingSense() == Turnout.CLOSED) {
-                    placeC1TToT(c1TToTField.getText().trim());
+                    placeC1TToT(signalHeadName);
                 } else {
-                    placeD1TToT(c1TToTField.getText().trim());
+                    placeD1TToT(signalHeadName);
                 }
                 removeAssignment(c1TToTHead);
-                layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
+                layoutTurnout2.setSignalB1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -5203,35 +5234,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c1TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
                     removeAssignment(c1TToTHead);
-                    layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
+                    layoutTurnout2.setSignalB1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(c2TToTField.getText());
         if ((c2TToTHead != null) && setC2TToTHead.isSelected()) {
             if (isHeadOnPanel(c2TToTHead)
                     && (c2TToTHead != getHeadFromName(layoutTurnout2.getSignalB2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c2TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
                 if (layoutTurnout2.getContinuingSense() == Turnout.CLOSED) {
-                    placeC2TToT(c2TToTField.getText().trim());
+                    placeC2TToT(signalHeadName);
                 } else {
-                    placeD2TToT(c2TToTField.getText().trim());
+                    placeD2TToT(signalHeadName);
                 }
                 removeAssignment(c2TToTHead);
-                layoutTurnout2.setSignalB2Name(c2TToTField.getText().trim());
+                layoutTurnout2.setSignalB2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (c2TToTHead != null) {
@@ -5241,13 +5274,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c2TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
                     removeAssignment(c2TToTHead);
-                    layoutTurnout2.setSignalB2Name(c2TToTField.getText().trim());
+                    layoutTurnout2.setSignalB2Name(signalHeadName);
                 }
             } else if (assigned != B2) {
 // need to figure out what to do in this case.
@@ -5256,23 +5289,25 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
             layoutTurnout2.setSignalB2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d1TToTField.getText());
         if (setD1TToTHead.isSelected()) {
             if (isHeadOnPanel(d1TToTHead)
                     && (d1TToTHead != getHeadFromName(layoutTurnout2.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d1TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
                 if (layoutTurnout2.getContinuingSense() == Turnout.CLOSED) {
-                    placeD1TToT(d1TToTField.getText().trim());
+                    placeD1TToT(signalHeadName);
                 } else {
-                    placeC1TToT(d1TToTField.getText().trim());
+                    placeC1TToT(signalHeadName);
                 }
                 removeAssignment(d1TToTHead);
-                layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
+                layoutTurnout2.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -5282,35 +5317,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d1TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
                     removeAssignment(d1TToTHead);
-                    layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
+                    layoutTurnout2.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d2TToTField.getText());
         if ((d2TToTHead != null) && setD2TToTHead.isSelected()) {
             if (isHeadOnPanel(d2TToTHead)
                     && (d2TToTHead != getHeadFromName(layoutTurnout2.getSignalC2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d2TToTField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
                 if (layoutTurnout2.getContinuingSense() == Turnout.CLOSED) {
-                    placeD2TToT(d2TToTField.getText().trim());
+                    placeD2TToT(signalHeadName);
                 } else {
-                    placeC2TToT(d2TToTField.getText().trim());
+                    placeC2TToT(signalHeadName);
                 }
                 removeAssignment(d2TToTHead);
-                layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
+                layoutTurnout2.setSignalC2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (d2TToTHead != null) {
@@ -5320,13 +5357,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d2TToTField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
                     removeAssignment(d2TToTHead);
-                    layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
+                    layoutTurnout2.setSignalC2Name(signalHeadName);
                 }
             } else if (assigned != C2) {
 // need to figure out what to do in this case.
@@ -6275,15 +6312,15 @@ public class LayoutEditorTools {
     private boolean get3WayTurnoutInformation() {
         int type = 0;
         Object connect = null;
-        String str = "";
         turnoutA = null;
         turnoutB = null;
         layoutTurnoutA = null;
         layoutTurnoutB = null;
-        str = turnoutANameField.getText().trim();
+
+        String str = NamedBean.normalizeUserName(turnoutANameField.getText());
         if (str.equals("")) {
             // turnout A not entered, test turnout B
-            str = turnoutBNameField.getText().trim();
+            str = NamedBean.normalizeUserName(turnoutBNameField.getText());
             if (str.equals("")) {
                 // no entries in turnout fields
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame, rb.getString("SignalsError1"),
@@ -6363,7 +6400,7 @@ public class LayoutEditorTools {
             }
             turnoutANameField.setText(str);
             // have turnout A and layout turnout A - was something entered for turnout B
-            str = turnoutBNameField.getText().trim();
+            str = NamedBean.normalizeUserName(turnoutBNameField.getText());
             if (str.equals("")) {
                 // no entry for turnout B
                 connectorTrack = (TrackSegment) layoutTurnoutA.getConnectB();
@@ -6494,19 +6531,20 @@ public class LayoutEditorTools {
             return;
         }
         // place signals as requested at turnout A
+        String signalHeadName = NamedBean.normalizeUserName(a13WayField.getText());
         if (setA13WayHead.isSelected()) {
             if (isHeadOnPanel(a13WayHead)
                     && (a13WayHead != getHeadFromName(layoutTurnoutA.getSignalA1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a13WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutA.getSignalA1Name());
                 place3WayThroatContinuing();
                 removeAssignment(a13WayHead);
-                layoutTurnoutA.setSignalA1Name(a13WayField.getText().trim());
+                layoutTurnoutA.setSignalA1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -6516,31 +6554,33 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a13WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a13WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutA.getSignalA1Name());
                     removeAssignment(a13WayHead);
-                    layoutTurnoutA.setSignalA1Name(a13WayField.getText().trim());
+                    layoutTurnoutA.setSignalA1Name(signalHeadName);
                 }
             } else if (assigned != A1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(a23WayField.getText());
         if ((setA23WayHead.isSelected()) && (a23WayHead != null)) {
             if (isHeadOnPanel(a23WayHead)
                     && (a23WayHead != getHeadFromName(layoutTurnoutA.getSignalA2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a23WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutA.getSignalA2Name());
                 place3WayThroatDivergingA();
                 removeAssignment(a23WayHead);
-                layoutTurnoutA.setSignalA2Name(a23WayField.getText().trim());
+                layoutTurnoutA.setSignalA2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (a23WayHead != null) {
@@ -6550,13 +6590,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a23WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a23WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutA.getSignalA2Name());
                     removeAssignment(a23WayHead);
-                    layoutTurnoutA.setSignalA2Name(a23WayField.getText().trim());
+                    layoutTurnoutA.setSignalA2Name(signalHeadName);
                 }
             } else if (assigned != A2) {
 // need to figure out what to do in this case.
@@ -6565,19 +6605,21 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA2Name());
             layoutTurnoutA.setSignalA2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(a33WayField.getText());
         if ((setA33WayHead.isSelected()) && (a33WayHead != null)) {
             if (isHeadOnPanel(a33WayHead)
                     && (a33WayHead != getHeadFromName(layoutTurnoutA.getSignalA3Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a33WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutA.getSignalA3Name());
                 place3WayThroatDivergingB();
                 removeAssignment(a33WayHead);
-                layoutTurnoutA.setSignalA3Name(a33WayField.getText().trim());
+                layoutTurnoutA.setSignalA3Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (a33WayHead != null) {
@@ -6587,13 +6629,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a33WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a33WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutA.getSignalA3Name());
                     removeAssignment(a33WayHead);
-                    layoutTurnoutA.setSignalA3Name(a33WayField.getText().trim());
+                    layoutTurnoutA.setSignalA3Name(signalHeadName);
                 }
             } else if (assigned != A3) {
 // need to figure out what to do in this case.
@@ -6602,19 +6644,21 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA3Name());
             layoutTurnoutA.setSignalA3Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b3WayField.getText());
         if (setB3WayHead.isSelected()) {
             if (isHeadOnPanel(b3WayHead)
                     && (b3WayHead != getHeadFromName(layoutTurnoutA.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b3WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutA.getSignalC1Name());
                 place3WayDivergingA();
                 removeAssignment(b3WayHead);
-                layoutTurnoutA.setSignalC1Name(b3WayField.getText().trim());
+                layoutTurnoutA.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -6624,32 +6668,34 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b3WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutA.getSignalC1Name());
                     removeAssignment(b3WayHead);
-                    layoutTurnoutA.setSignalC1Name(b3WayField.getText().trim());
+                    layoutTurnoutA.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != A1) {
 // need to figure out what to do in this case.
             }
         }
-        // place signals as requested at Turnout B
+
+        // place signals as requested at Turnout C
+        signalHeadName = NamedBean.normalizeUserName(c3WayField.getText());
         if (setC3WayHead.isSelected()) {
             if (isHeadOnPanel(c3WayHead)
                     && (c3WayHead != getHeadFromName(layoutTurnoutB.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c3WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutB.getSignalB1Name());
                 place3WayContinuing();
                 removeAssignment(c3WayHead);
-                layoutTurnoutB.setSignalB1Name(c3WayField.getText().trim());
+                layoutTurnoutB.setSignalB1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -6659,31 +6705,33 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c3WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutB.getSignalB1Name());
                     removeAssignment(c3WayHead);
-                    layoutTurnoutB.setSignalB1Name(c3WayField.getText().trim());
+                    layoutTurnoutB.setSignalB1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d3WayField.getText());
         if (setD3WayHead.isSelected()) {
             if (isHeadOnPanel(d3WayHead)
                     && (d3WayHead != getHeadFromName(layoutTurnoutB.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d3WayField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutTurnoutB.getSignalC1Name());
                 place3WayDivergingB();
                 removeAssignment(d3WayHead);
-                layoutTurnoutB.setSignalC1Name(d3WayField.getText().trim());
+                layoutTurnoutB.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -6693,13 +6741,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d3WayField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutTurnoutB.getSignalC1Name());
                     removeAssignment(d3WayHead);
-                    layoutTurnoutB.setSignalC1Name(d3WayField.getText().trim());
+                    layoutTurnoutB.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
 // need to figure out what to do in this case.
@@ -6725,9 +6773,11 @@ public class LayoutEditorTools {
             set3WayLogicDivergingB();
         }
         // link the two turnouts
-        layoutTurnoutA.setLinkedTurnoutName(turnoutBNameField.getText().trim());
+        signalHeadName = NamedBean.normalizeUserName(turnoutBNameField.getText());
+        layoutTurnoutA.setLinkedTurnoutName(signalHeadName);
         layoutTurnoutA.setLinkType(LayoutTurnout.FIRST_3_WAY);
-        layoutTurnoutB.setLinkedTurnoutName(turnoutANameField.getText().trim());
+        signalHeadName = NamedBean.normalizeUserName(turnoutANameField.getText());
+        layoutTurnoutB.setLinkedTurnoutName(signalHeadName);
         layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
         // finish up
         setSignalsAt3WayOpen = false;
@@ -6769,20 +6819,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(a13WayField.getText());
         if (layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft) {
-            setSignalHeadOnPanel(2, a13WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsA().getY() + 4));
         } else if (layoutTurnoutAHorizontal && (!layoutTurnoutAThroatLeft)) {
-            setSignalHeadOnPanel(0, a13WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX()),
                     (int) (layoutTurnoutA.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && layoutTurnoutAThroatUp) {
-            setSignalHeadOnPanel(1, a13WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsA().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && (!layoutTurnoutAThroatUp)) {
-            setSignalHeadOnPanel(3, a13WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() + 4),
                     (int) (layoutTurnoutA.getCoordsA().getY()));
         }
@@ -6792,20 +6843,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(a23WayField.getText());
         if (layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft) {
-            setSignalHeadOnPanel(2, a23WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnoutA.getCoordsA().getY() + 4));
         } else if (layoutTurnoutAHorizontal && (!layoutTurnoutAThroatLeft)) {
-            setSignalHeadOnPanel(0, a23WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() + 4 + testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && layoutTurnoutAThroatUp) {
-            setSignalHeadOnPanel(1, a23WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsA().getY() - 4 - (2 * testIcon.getIconHeight())));
         } else if (layoutTurnoutAVertical && (!layoutTurnoutAThroatUp)) {
-            setSignalHeadOnPanel(3, a23WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() + 4),
                     (int) (layoutTurnoutA.getCoordsA().getY() + 4 + testIcon.getIconHeight()));
         }
@@ -6815,20 +6867,21 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(a33WayField.getText());
         if (layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft) {
-            setSignalHeadOnPanel(2, a33WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - (3 * testIcon.getIconWidth())),
                     (int) (layoutTurnoutA.getCoordsA().getY() + 4));
         } else if (layoutTurnoutAHorizontal && (!layoutTurnoutAThroatLeft)) {
-            setSignalHeadOnPanel(0, a33WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() + 8 + (2 * testIcon.getIconWidth())),
                     (int) (layoutTurnoutA.getCoordsA().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && layoutTurnoutAThroatUp) {
-            setSignalHeadOnPanel(1, a33WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsA().getY() - 4 - (3 * testIcon.getIconHeight())));
         } else if (layoutTurnoutAVertical && (!layoutTurnoutAThroatUp)) {
-            setSignalHeadOnPanel(3, a33WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsA().getX() + 4),
                     (int) (layoutTurnoutA.getCoordsA().getY() + 8 + (2 * testIcon.getIconHeight())));
         }
@@ -6838,36 +6891,37 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(b3WayField.getText());
         if (layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft && layoutTurnoutABUp) {
-            setSignalHeadOnPanel(0, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX()),
                     (int) (layoutTurnoutA.getCoordsC().getY() + 4));
         } else if (layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft && (!layoutTurnoutABUp)) {
-            setSignalHeadOnPanel(0, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX()),
                     (int) (layoutTurnoutA.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutAHorizontal && (!layoutTurnoutAThroatLeft) && layoutTurnoutABUp) {
-            setSignalHeadOnPanel(2, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsC().getY() + 4));
         } else if (layoutTurnoutAHorizontal && (!layoutTurnoutAThroatLeft) && (!layoutTurnoutABUp)) {
-            setSignalHeadOnPanel(2, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && layoutTurnoutAThroatUp && layoutTurnoutABLeft) {
-            setSignalHeadOnPanel(3, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() + 4),
                     (int) (layoutTurnoutA.getCoordsC().getY()));
         } else if (layoutTurnoutAVertical && layoutTurnoutAThroatUp && (!layoutTurnoutABLeft)) {
-            setSignalHeadOnPanel(3, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsC().getY()));
         } else if (layoutTurnoutAVertical && (!layoutTurnoutAThroatUp) && layoutTurnoutABLeft) {
-            setSignalHeadOnPanel(1, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() + 4),
                     (int) (layoutTurnoutA.getCoordsC().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutAVertical && (!layoutTurnoutAThroatUp) && (!layoutTurnoutABLeft)) {
-            setSignalHeadOnPanel(1, b3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutA.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutA.getCoordsC().getY() - testIcon.getIconHeight()));
         }
@@ -6877,36 +6931,37 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(c3WayField.getText());
         if (layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && layoutTurnoutBBUp) {
-            setSignalHeadOnPanel(0, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX()),
                     (int) (layoutTurnoutB.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && (!layoutTurnoutBBUp)) {
-            setSignalHeadOnPanel(0, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX()),
                     (int) (layoutTurnoutB.getCoordsB().getY() + 4));
         } else if (layoutTurnoutBHorizontal && (!layoutTurnoutBThroatLeft) && layoutTurnoutBBUp) {
-            setSignalHeadOnPanel(2, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsB().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutBHorizontal && (!layoutTurnoutBThroatLeft) && (!layoutTurnoutBBUp)) {
-            setSignalHeadOnPanel(2, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsB().getY() + 4));
         } else if (layoutTurnoutBVertical && layoutTurnoutBThroatUp && layoutTurnoutBBLeft) {
-            setSignalHeadOnPanel(3, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsB().getY()));
         } else if (layoutTurnoutBVertical && layoutTurnoutBThroatUp && (!layoutTurnoutBBLeft)) {
-            setSignalHeadOnPanel(3, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() + 4),
                     (int) (layoutTurnoutB.getCoordsB().getY()));
         } else if (layoutTurnoutBVertical && (!layoutTurnoutBThroatUp) && layoutTurnoutBBLeft) {
-            setSignalHeadOnPanel(1, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsB().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutBVertical && (!layoutTurnoutBThroatUp) && (!layoutTurnoutBBLeft)) {
-            setSignalHeadOnPanel(1, c3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsB().getX() + 4),
                     (int) (layoutTurnoutB.getCoordsB().getY() - testIcon.getIconHeight()));
         }
@@ -6916,36 +6971,37 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(d3WayField.getText());
         if (layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && layoutTurnoutBBUp) {
-            setSignalHeadOnPanel(0, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX()),
                     (int) (layoutTurnoutB.getCoordsC().getY() + 4));
         } else if (layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && (!layoutTurnoutBBUp)) {
-            setSignalHeadOnPanel(0, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(0, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX()),
                     (int) (layoutTurnoutB.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutBHorizontal && (!layoutTurnoutBThroatLeft) && layoutTurnoutBBUp) {
-            setSignalHeadOnPanel(2, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsC().getY() + 4));
         } else if (layoutTurnoutBHorizontal && (!layoutTurnoutBThroatLeft) && (!layoutTurnoutBBUp)) {
-            setSignalHeadOnPanel(2, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(2, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsC().getY() - 4 - testIcon.getIconHeight()));
         } else if (layoutTurnoutBVertical && layoutTurnoutBThroatUp && layoutTurnoutBBLeft) {
-            setSignalHeadOnPanel(3, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() + 4),
                     (int) (layoutTurnoutB.getCoordsC().getY()));
         } else if (layoutTurnoutBVertical && layoutTurnoutBThroatUp && (!layoutTurnoutBBLeft)) {
-            setSignalHeadOnPanel(3, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(3, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsC().getY()));
         } else if (layoutTurnoutBVertical && (!layoutTurnoutBThroatUp) && layoutTurnoutBBLeft) {
-            setSignalHeadOnPanel(1, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() + 4),
                     (int) (layoutTurnoutB.getCoordsC().getY() - testIcon.getIconHeight()));
         } else if (layoutTurnoutBVertical && (!layoutTurnoutBThroatUp) && (!layoutTurnoutBBLeft)) {
-            setSignalHeadOnPanel(1, d3WayField.getText().trim(),
+            setSignalHeadOnPanel(1, signalHeadName,
                     (int) (layoutTurnoutB.getCoordsC().getX() - 4 - testIcon.getIconWidth()),
                     (int) (layoutTurnoutB.getCoordsC().getY() - testIcon.getIconHeight()));
         }
@@ -6972,8 +7028,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(a13WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
-                a13WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -6983,7 +7040,7 @@ public class LayoutEditorTools {
         }
         if (a23WayHead != null) {
             // set up logic for continuing head with 3 heads at throat
-            if (!initializeBlockBossLogic(a13WayField.getText().trim())) {
+            if (!initializeBlockBossLogic(signalHeadName)) {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGMAIN);
@@ -7027,8 +7084,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(a23WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                a23WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -7036,7 +7094,7 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(a23WayField.getText().trim())) {
+        if (!initializeBlockBossLogic(signalHeadName)) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
@@ -7075,8 +7133,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(a33WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
-                a33WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -7084,7 +7143,7 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(a33WayField.getText().trim())) {
+        if (!initializeBlockBossLogic(signalHeadName)) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
@@ -7125,8 +7184,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(b3WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                b3WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -7134,7 +7194,7 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(b3WayField.getText().trim())) {
+        if (!initializeBlockBossLogic(signalHeadName)) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
@@ -7173,8 +7233,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(c3WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                c3WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -7182,7 +7243,7 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(c3WayField.getText().trim())) {
+        if (!initializeBlockBossLogic(signalHeadName)) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
@@ -7223,8 +7284,9 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        String signalHeadName = NamedBean.normalizeUserName(d3WayField.getText());
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                d3WayField.getText().trim(), setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
             JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
                     java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -7232,7 +7294,7 @@ public class LayoutEditorTools {
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(d3WayField.getText().trim())) {
+        if (!initializeBlockBossLogic(signalHeadName)) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
@@ -12520,24 +12582,26 @@ public class LayoutEditorTools {
         if (!getSlipSignalHeadInformation()) {
             return;
         }
+
         // place signal icons if requested, and assign signal heads to this turnout
+        String signalHeadName = NamedBean.normalizeUserName(a1SlipField.getText());
         if (setA1SlipHead.isSelected()) {
             if (isHeadOnPanel(a1SlipHead)
                     && (a1SlipHead != getHeadFromName(layoutSlip.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a1Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalA1Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeA1Slip(a1SlipField.getText().trim());
+                    placeA1Slip(signalHeadName);
                 } else {
-                    placeB1Slip(a1SlipField.getText().trim());
+                    placeB1Slip(signalHeadName);
                 }
                 removeAssignment(a1SlipHead);
-                layoutSlip.setSignalA1Name(a1SlipField.getText().trim());
+                layoutSlip.setSignalA1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -12547,35 +12611,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a1SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
                     removeAssignment(a1SlipHead);
-                    layoutSlip.setSignalA1Name(a1SlipField.getText().trim());
+                    layoutSlip.setSignalA1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case - assigned to a different position on the same turnout.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(a2SlipField.getText());
         if ((a2SlipHead != null) && setA2SlipHead.isSelected()) {
             if (isHeadOnPanel(a2SlipHead)
                     && (a2SlipHead != getHeadFromName(layoutSlip.getSignalB2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{a2Field.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeA2Slip(a2SlipField.getText().trim());
+                    placeA2Slip(signalHeadName);
                 } else {
-                    placeB2Slip(a2SlipField.getText().trim());
+                    placeB2Slip(signalHeadName);
                 }
                 removeAssignment(a2SlipHead);
-                layoutSlip.setSignalA2Name(a2SlipField.getText().trim());
+                layoutSlip.setSignalA2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (a2SlipHead != null) {
@@ -12585,13 +12651,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(a2SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{a2SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
                     removeAssignment(a2SlipHead);
-                    layoutSlip.setSignalA2Name(a2SlipField.getText().trim());
+                    layoutSlip.setSignalA2Name(signalHeadName);
                 }
             } else if (assigned != B2) {
 // need to figure out what to do in this case.
@@ -12600,23 +12666,25 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
             layoutSlip.setSignalB2Name("");
         }
+
+        signalHeadName = NamedBean.normalizeUserName(b1SlipField.getText());
         if (setB1SlipHead.isSelected()) {
             if (isHeadOnPanel(b1SlipHead)
                     && (b1SlipHead != getHeadFromName(layoutSlip.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{b1SlipField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeB1Slip(b1SlipField.getText().trim());
+                    placeB1Slip(signalHeadName);
                 } else {
-                    placeA1Slip(b1SlipField.getText().trim());
+                    placeA1Slip(signalHeadName);
                 }
                 removeAssignment(b1SlipHead);
-                layoutSlip.setSignalB1Name(b1SlipField.getText().trim());
+                layoutSlip.setSignalB1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -12626,36 +12694,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(b1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{b1SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
                     removeAssignment(b1SlipHead);
-                    layoutSlip.setSignalB1Name(b1SlipField.getText().trim());
+                    layoutSlip.setSignalB1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
                 // need to figure out what to do in this case.
             }
         }
         if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            signalHeadName = NamedBean.normalizeUserName(b2SlipField.getText());
             if ((b2SlipHead != null) && setB2SlipHead.isSelected()) {
                 if (isHeadOnPanel(b2SlipHead)
                         && (b2SlipHead != getHeadFromName(layoutSlip.getSignalC2Name()))) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                    new Object[]{b2SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
                     if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                        placeB2Slip(b2SlipField.getText().trim());
+                        placeB2Slip(signalHeadName);
                     } else {
-                        placeA2Slip(b2SlipField.getText().trim());
+                        placeA2Slip(signalHeadName);
                     }
                     removeAssignment(b2SlipHead);
-                    layoutSlip.setSignalB2Name(b2SlipField.getText().trim());
+                    layoutSlip.setSignalB2Name(signalHeadName);
                     needRedraw = true;
                 }
             } else if (b2SlipHead != null) {
@@ -12665,13 +12734,13 @@ public class LayoutEditorTools {
                             && isHeadAssignedAnywhere(b2SlipHead)) {
                         JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                                 java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                        new Object[]{b2SlipField.getText().trim()}),
+                                        new Object[]{signalHeadName}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
                         removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
                         removeAssignment(b2SlipHead);
-                        layoutSlip.setSignalB2Name(b2SlipField.getText().trim());
+                        layoutSlip.setSignalB2Name(signalHeadName);
                     }
                 } else if (assigned != C2) {
                     // need to figure out what to do in this case.
@@ -12688,24 +12757,26 @@ public class LayoutEditorTools {
                 b2SlipHead = null;
             }
         }
+
         // signal heads on turnout 2
+        signalHeadName = NamedBean.normalizeUserName(c1SlipField.getText());
         if (setC1SlipHead.isSelected()) {
             if (isHeadOnPanel(c1SlipHead)
                     && (c1SlipHead != getHeadFromName(layoutSlip.getSignalB1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{c1SlipField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalC1Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeC1Slip(c1SlipField.getText().trim());
+                    placeC1Slip(signalHeadName);
                 } else {
-                    placeD1Slip(c1SlipField.getText().trim());
+                    placeD1Slip(signalHeadName);
                 }
                 removeAssignment(c1SlipHead);
-                layoutSlip.setSignalC1Name(c1SlipField.getText().trim());
+                layoutSlip.setSignalC1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -12715,36 +12786,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(c1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{c1SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalC1Name());
                     removeAssignment(c1SlipHead);
-                    layoutSlip.setSignalC1Name(c1SlipField.getText().trim());
+                    layoutSlip.setSignalC1Name(signalHeadName);
                 }
             } else if (assigned != B1) {
 // need to figure out what to do in this case.
             }
         }
         if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            signalHeadName = NamedBean.normalizeUserName(c2SlipField.getText());
             if ((c2SlipHead != null) && setC2SlipHead.isSelected()) {
                 if (isHeadOnPanel(c2SlipHead)
                         && (c2SlipHead != getHeadFromName(layoutSlip.getSignalB2Name()))) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                    new Object[]{c2SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
                     if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                        placeC2Slip(c2SlipField.getText().trim());
+                        placeC2Slip(signalHeadName);
                     } else {
-                        placeD2Slip(c2SlipField.getText().trim());
+                        placeD2Slip(signalHeadName);
                     }
                     removeAssignment(c2SlipHead);
-                    layoutSlip.setSignalC2Name(c2SlipField.getText().trim());
+                    layoutSlip.setSignalC2Name(signalHeadName);
                     needRedraw = true;
                 }
             } else if (c2SlipHead != null) {
@@ -12754,13 +12826,13 @@ public class LayoutEditorTools {
                             && isHeadAssignedAnywhere(c2SlipHead)) {
                         JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                                 java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                        new Object[]{c2SlipField.getText().trim()}),
+                                        new Object[]{signalHeadName}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
                         removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
                         removeAssignment(c2SlipHead);
-                        layoutSlip.setSignalC2Name(c2SlipField.getText().trim());
+                        layoutSlip.setSignalC2Name(signalHeadName);
                     }
                 } else if (assigned != B2) {
                     // need to figure out what to do in this case.
@@ -12777,23 +12849,25 @@ public class LayoutEditorTools {
                 c2SlipHead = null;
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d1SlipField.getText());
         if (setD1SlipHead.isSelected()) {
             if (isHeadOnPanel(d1SlipHead)
                     && (d1SlipHead != getHeadFromName(layoutSlip.getSignalC1Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d1SlipField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalD1Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeD1Slip(d1SlipField.getText().trim());
+                    placeD1Slip(signalHeadName);
                 } else {
-                    placeC1Slip(d1SlipField.getText().trim());
+                    placeC1Slip(signalHeadName);
                 }
                 removeAssignment(d1SlipHead);
-                layoutSlip.setSignalD1Name(d1SlipField.getText().trim());
+                layoutSlip.setSignalD1Name(signalHeadName);
                 needRedraw = true;
             }
         } else {
@@ -12803,35 +12877,37 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d1SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalD1Name());
                     removeAssignment(d1SlipHead);
-                    layoutSlip.setSignalD1Name(d1SlipField.getText().trim());
+                    layoutSlip.setSignalD1Name(signalHeadName);
                 }
             } else if (assigned != C1) {
 // need to figure out what to do in this case.
             }
         }
+
+        signalHeadName = NamedBean.normalizeUserName(d2SlipField.getText());
         if ((d2SlipHead != null) && setD2SlipHead.isSelected()) {
             if (isHeadOnPanel(d2SlipHead)
                     && (d2SlipHead != getHeadFromName(layoutSlip.getSignalC2Name()))) {
                 JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{d2SlipField.getText().trim()}),
+                                new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
                 if (layoutSlip.getContinuingSense() == Turnout.CLOSED) {
-                    placeD2Slip(d2SlipField.getText().trim());
+                    placeD2Slip(signalHeadName);
                 } else {
-                    placeC2Slip(d2SlipField.getText().trim());
+                    placeC2Slip(signalHeadName);
                 }
                 removeAssignment(d2SlipHead);
-                layoutSlip.setSignalD2Name(d2SlipField.getText().trim());
+                layoutSlip.setSignalD2Name(signalHeadName);
                 needRedraw = true;
             }
         } else if (d2SlipHead != null) {
@@ -12841,13 +12917,13 @@ public class LayoutEditorTools {
                         && isHeadAssignedAnywhere(d2SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                    new Object[]{d2SlipField.getText().trim()}),
+                                    new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
                     removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
                     removeAssignment(d2SlipHead);
-                    layoutSlip.setSignalD2Name(d2SlipField.getText().trim());
+                    layoutSlip.setSignalD2Name(signalHeadName);
                 }
             } else if (assigned != C2) {
 // need to figure out what to do in this case.
