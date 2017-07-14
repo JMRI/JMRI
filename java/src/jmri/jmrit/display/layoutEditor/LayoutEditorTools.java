@@ -215,6 +215,8 @@ public class LayoutEditorTools {
     private JButton setSignalsCancel = null;
 
     private LayoutTurnout layoutTurnout = null;
+    private double placeSignalDirectionDEG = 0.0;
+
     private boolean layoutTurnoutHorizontal = false;
     private boolean layoutTurnoutVertical = false;
     private boolean layoutTurnoutThroatLeft = false;
@@ -1153,9 +1155,17 @@ public class LayoutEditorTools {
         }
         return result;
     }
-    public SignalHead getSignalHeadFromEntry(JTextField signalName, boolean requireEntry, JmriJFrame frame) {
-        String str = signalName.getText().trim();
-        return getSignalHeadFromEntry(signalName, requireEntry, frame);
+    public SignalHead getSignalHeadFromEntry(JTextField signalNameTextField, boolean requireEntry, JmriJFrame frame) {
+        String signalName = NamedBean.normalizeUserName(signalNameTextField.getText());
+        SignalHead result = getSignalHeadFromEntry(signalName, requireEntry, frame);
+        if (result != null) {
+            String uname = result.getUserName();
+            if ((uname == null) || (uname.equals("")) || !uname.equals(signalName)) {
+                signalName = signalName.toUpperCase();
+                signalNameTextField.setText(signalName);
+            }
+        }
+        return result;
     }
 
     public SignalHead getSignalHeadFromEntry(String signalName, boolean requireEntry, JmriJFrame frame) {
@@ -2370,6 +2380,9 @@ public class LayoutEditorTools {
         } else {
             point2 = layoutEditor.getCoords(track2.getConnect1(), track2.getType1());
         }
+
+        placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(point2, point1));
+
         double delX = point1.getX() - point2.getX();
         double delY = point1.getY() - point2.getY();
         trackVertical = false;
@@ -3664,29 +3677,33 @@ public class LayoutEditorTools {
             null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JCheckBox setAHead = new JCheckBox(rb.getString("PlaceHead"));
-    private JCheckBox setupALogic = new JCheckBox(rb.getString("SetLogic"));
     private JCheckBox setBHead = new JCheckBox(rb.getString("PlaceHead"));
-    private JCheckBox setupBLogic = new JCheckBox(rb.getString("SetLogic"));
     private JCheckBox setCHead = new JCheckBox(rb.getString("PlaceHead"));
-    private JCheckBox setupCLogic = new JCheckBox(rb.getString("SetLogic"));
     private JCheckBox setDHead = new JCheckBox(rb.getString("PlaceHead"));
+
+    private JCheckBox setupALogic = new JCheckBox(rb.getString("SetLogic"));
+    private JCheckBox setupBLogic = new JCheckBox(rb.getString("SetLogic"));
+    private JCheckBox setupCLogic = new JCheckBox(rb.getString("SetLogic"));
     private JCheckBox setupDLogic = new JCheckBox(rb.getString("SetLogic"));
+
     private JButton getSavedXingSignalHeads = null;
     private JButton changeXingSignalIcon = null;
     private JButton setXingSignalsDone = null;
     private JButton setXingSignalsCancel = null;
-    //private TrackSegment xingTrackA = null;
-    //private TrackSegment xingTrackB = null;
-    //private TrackSegment xingTrackC = null;
-    //private TrackSegment xingTrackD = null;
+
     private boolean levelXingACHorizontal = false;
     private boolean levelXingACVertical = false;
+
     private boolean levelXingALeft = false;
     private boolean levelXingAUp = false;
+
     private boolean levelXingBUp = false;
     private boolean levelXingBLeft = false;
+
     private boolean xingFromMenu = false;
+
     private LevelXing levelXing = null;
+
     private SignalHead aHead = null;
     private SignalHead bHead = null;
     private SignalHead cHead = null;
@@ -4174,10 +4191,7 @@ public class LayoutEditorTools {
                 }
             }
         }
-        //if (levelXing.getConnectA()!=null) xingTrackA = ((TrackSegment)levelXing.getConnectA());
-        //if (levelXing.getConnectB()!=null) xingTrackB = ((TrackSegment)levelXing.getConnectB());
-        //if (levelXing.getConnectC()!=null) xingTrackC = ((TrackSegment)levelXing.getConnectC());
-        //if (levelXing.getConnectD()!=null) xingTrackD = ((TrackSegment)levelXing.getConnectD());
+
         double delX = levelXing.getCoordsA().getX() - levelXing.getCoordsC().getX();
         double delY = levelXing.getCoordsA().getY() - levelXing.getCoordsC().getY();
         levelXingACHorizontal = false;
@@ -4232,24 +4246,24 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsA();
+        Point2D pointA = levelXing.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
         if (levelXingACHorizontal && levelXingALeft) {
             setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
+                    (int) (pointA.getX() - testIcon.getIconWidth()),
+                    (int) (pointA.getY() + 4));
         } else if (levelXingACHorizontal && (!levelXingALeft)) {
             setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
+                    (int) (pointA.getX()),
+                    (int) (pointA.getY() - 4 - testIcon.getIconHeight()));
         } else if (levelXingACVertical && levelXingAUp) {
             setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
+                    (int) (pointA.getX() - 2 - testIcon.getIconWidth()),
+                    (int) (pointA.getY() - testIcon.getIconHeight()));
         } else if (levelXingACVertical && (!levelXingAUp)) {
             setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+                    (int) (pointA.getX() + 4),
+                    (int) (pointA.getY() + 2));
         }
     }
 
@@ -4257,24 +4271,24 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsB();
+        Point2D pointB = levelXing.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
         if (levelXingACVertical && levelXingBLeft) {
             setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
+                    (int) (pointB.getX() - testIcon.getIconWidth()),
+                    (int) (pointB.getY() + 4));
         } else if (levelXingACVertical && (!levelXingBLeft)) {
             setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
+                    (int) (pointB.getX()),
+                    (int) (pointB.getY() - 4 - testIcon.getIconHeight()));
         } else if (levelXingACHorizontal && levelXingBUp) {
             setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
+                    (int) (pointB.getX() - 2 - testIcon.getIconWidth()),
+                    (int) (pointB.getY() - testIcon.getIconHeight()));
         } else if (levelXingACHorizontal && (!levelXingBUp)) {
             setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+                    (int) (pointB.getX() + 4),
+                    (int) (pointB.getY() + 2));
         }
     }
 
@@ -4282,24 +4296,24 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsC();
+        Point2D pointC = levelXing.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
         if (levelXingACHorizontal && (!levelXingALeft)) {
             setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
+                    (int) (pointC.getX() - testIcon.getIconWidth()),
+                    (int) (pointC.getY() + 4));
         } else if (levelXingACHorizontal && levelXingALeft) {
             setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
+                    (int) (pointC.getX()),
+                    (int) (pointC.getY() - 4 - testIcon.getIconHeight()));
         } else if (levelXingACVertical && (!levelXingAUp)) {
             setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
+                    (int) (pointC.getX() - 2 - testIcon.getIconWidth()),
+                    (int) (pointC.getY() - testIcon.getIconHeight()));
         } else if (levelXingACVertical && levelXingAUp) {
             setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+                    (int) (pointC.getX() + 4),
+                    (int) (pointC.getY() + 2));
         }
     }
 
@@ -4307,24 +4321,24 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D p = levelXing.getCoordsD();
+        Point2D pointD = levelXing.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
         if (levelXingACVertical && (!levelXingBLeft)) {
             setSignalHeadOnPanel(2, signalHeadName,
-                    (int) (p.getX() - testIcon.getIconWidth()),
-                    (int) (p.getY() + 4));
+                    (int) (pointD.getX() - testIcon.getIconWidth()),
+                    (int) (pointD.getY() + 4));
         } else if (levelXingACVertical && levelXingBLeft) {
             setSignalHeadOnPanel(0, signalHeadName,
-                    (int) (p.getX()),
-                    (int) (p.getY() - 4 - testIcon.getIconHeight()));
+                    (int) (pointD.getX()),
+                    (int) (pointD.getY() - 4 - testIcon.getIconHeight()));
         } else if (levelXingACHorizontal && (!levelXingBUp)) {
             setSignalHeadOnPanel(1, signalHeadName,
-                    (int) (p.getX() - 2 - testIcon.getIconWidth()),
-                    (int) (p.getY() - testIcon.getIconHeight()));
+                    (int) (pointD.getX() - 2 - testIcon.getIconWidth()),
+                    (int) (pointD.getY() - testIcon.getIconHeight()));
         } else if (levelXingACHorizontal && levelXingBUp) {
             setSignalHeadOnPanel(3, signalHeadName,
-                    (int) (p.getX() + 4),
-                    (int) (p.getY() + 2));
+                    (int) (pointD.getX() + 4),
+                    (int) (pointD.getY() + 2));
         }
     }
 
