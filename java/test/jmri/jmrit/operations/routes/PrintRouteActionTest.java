@@ -1,22 +1,26 @@
-package jmri.jmrit.symbolicprog;
+package jmri.jmrit.operations.routes;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class IndexedEnumVariableValueTest {
+public class PrintRouteActionTest {
 
     @Test
     public void testCTor() {
-        IndexedEnumVariableValue t = new IndexedEnumVariableValue();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Route r = new Route("Test Route","Test ID");
+        PrintRouteAction t = new PrintRouteAction("Test Action",true,r);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +37,6 @@ public class IndexedEnumVariableValueTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndexedEnumVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRouteActionTest.class.getName());
 
 }

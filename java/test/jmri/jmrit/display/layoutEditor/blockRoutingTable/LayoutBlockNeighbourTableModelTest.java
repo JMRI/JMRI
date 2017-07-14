@@ -1,4 +1,4 @@
-package jmri.jmrit.symbolicprog;
+package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,16 +7,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class IndexedVariableValueTest {
+public class LayoutBlockNeighbourTableModelTest {
 
     @Test
     public void testCTor() {
-        IndexedVariableValue t = new IndexedVariableValue();
+        LayoutBlock  b = new LayoutBlock("test","test");
+        LayoutBlockNeighbourTableModel t = new LayoutBlockNeighbourTableModel(false,b);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +35,6 @@ public class IndexedVariableValueTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndexedVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModelTest.class.getName());
 
 }

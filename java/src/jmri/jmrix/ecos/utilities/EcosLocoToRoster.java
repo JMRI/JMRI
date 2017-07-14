@@ -43,7 +43,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrix.ecos.EcosListener;
@@ -69,7 +68,6 @@ public class EcosLocoToRoster implements EcosListener {
     int _ecosObjectInt;
     Label _statusLabel = null;
     CvTableModel cvModel = null;
-    IndexedCvTableModel iCvModel = null;
     Programmer mProgrammer;
     JLabel progStatus;
 //    Programmer pProg;
@@ -452,7 +450,7 @@ public class EcosLocoToRoster implements EcosListener {
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
 
-        re.writeFile(null, null, null);
+        re.writeFile(null, null);
 
         Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
@@ -571,9 +569,7 @@ public class EcosLocoToRoster implements EcosListener {
 
         mProgrammer = null;
         cvModel = new CvTableModel(progStatus, mProgrammer);
-        iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
-        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"},
-                cvModel, iCvModel);
+        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"}, cvModel);
         resetModel = new ResetTableModel(progStatus, mProgrammer);
         storeloco();
         filename = "programmers" + File.separator + "Basic.xml";
@@ -585,7 +581,7 @@ public class EcosLocoToRoster implements EcosListener {
             variableModel.findVar("Speed Step Mode").setIntValue(1);
         }
 
-        re.writeFile(cvModel, iCvModel, variableModel);
+        re.writeFile(cvModel, variableModel);
         getFunctionDetails(0);
         JOptionPane.showMessageDialog(frame, Bundle.getMessage("LocoAddedJDialog"));
         waitingForComplete = true;
@@ -924,13 +920,6 @@ public class EcosLocoToRoster implements EcosListener {
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
-        // load reset from decoder tree
-        if (!variableModel.piCv().equals("")) {
-            resetModel.setPiCv(variableModel.piCv());
-        }
-        if (!variableModel.siCv().equals("")) {
-            resetModel.setSiCv(variableModel.siCv());
-        }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         // load function names
