@@ -3934,20 +3934,20 @@ public class LayoutEditorTools {
         }
 
         // place or update signals as requested
-        String aNewSignalName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
+        String signalName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
         if ((aHead != null) && setAHead.isSelected()) {
             if (isHeadOnPanel(aHead)
                     && (aHead != getHeadFromName(levelXing.getSignalAName()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{aNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalAName());
                 placeXingA();
                 removeAssignment(aHead);
-                levelXing.setSignalAName(aNewSignalName);
+                levelXing.setSignalAName(signalName);
                 needRedraw = true;
             }
         } else if ((aHead != null)
@@ -3958,13 +3958,13 @@ public class LayoutEditorTools {
             if (isHeadOnPanel(aHead)) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError13"),
-                                new Object[]{aNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalAName());
                 removeAssignment(aHead);
-                levelXing.setSignalAName(aNewSignalName);
+                levelXing.setSignalAName(signalName);
             }
         } else if ((aHead != null)
                 && ((aHead == getHeadFromName(levelXing.getSignalBName()))
@@ -3975,20 +3975,20 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(levelXing.getSignalAName());
             levelXing.setSignalAName("");
         }
-        String bNewSignalName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
+        signalName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
         if ((bHead != null) && setBHead.isSelected()) {
             if (isHeadOnPanel(bHead)
                     && (bHead != getHeadFromName(levelXing.getSignalBName()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{bNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalBName());
                 placeXingB();
                 removeAssignment(bHead);
-                levelXing.setSignalBName(bNewSignalName);
+                levelXing.setSignalBName(signalName);
                 needRedraw = true;
             }
         } else if ((bHead != null)
@@ -3999,13 +3999,13 @@ public class LayoutEditorTools {
             if (isHeadOnPanel(bHead)) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError13"),
-                                new Object[]{bNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalBName());
                 removeAssignment(bHead);
-                levelXing.setSignalBName(bNewSignalName);
+                levelXing.setSignalBName(signalName);
             }
         } else if ((bHead != null)
                 && ((bHead == getHeadFromName(levelXing.getSignalAName()))
@@ -4016,20 +4016,20 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(levelXing.getSignalBName());
             levelXing.setSignalBName("");
         }
-        String cNewSignalName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
+        signalName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
         if ((cHead != null) && setCHead.isSelected()) {
             if (isHeadOnPanel(cHead)
                     && (cHead != getHeadFromName(levelXing.getSignalCName()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{cNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalCName());
                 placeXingC();
                 removeAssignment(cHead);
-                levelXing.setSignalCName(cNewSignalName);
+                levelXing.setSignalCName(signalName);
                 needRedraw = true;
             }
         } else if ((cHead != null)
@@ -4040,13 +4040,13 @@ public class LayoutEditorTools {
             if (isHeadOnPanel(cHead)) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError13"),
-                                new Object[]{cNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalCName());
                 removeAssignment(cHead);
-                levelXing.setSignalCName(cNewSignalName);
+                levelXing.setSignalCName(signalName);
             }
         } else if ((cHead != null)
                 && ((cHead == getHeadFromName(levelXing.getSignalBName()))
@@ -4057,20 +4057,20 @@ public class LayoutEditorTools {
             removeSignalHeadFromPanel(levelXing.getSignalCName());
             levelXing.setSignalCName("");
         }
-        String dNewSignalName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
+        signalName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
         if ((dHead != null) && setDHead.isSelected()) {
             if (isHeadOnPanel(dHead)
                     && (dHead != getHeadFromName(levelXing.getSignalDName()))) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                                new Object[]{dNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalDName());
                 placeXingD();
                 removeAssignment(dHead);
-                levelXing.setSignalDName(dNewSignalName);
+                levelXing.setSignalDName(signalName);
                 needRedraw = true;
             }
         } else if ((dHead != null)
@@ -4081,13 +4081,13 @@ public class LayoutEditorTools {
             if (isHeadOnPanel(dHead)) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError13"),
-                                new Object[]{dNewSignalName}),
+                                new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 removeSignalHeadFromPanel(levelXing.getSignalDName());
                 removeAssignment(dHead);
-                levelXing.setSignalDName(dNewSignalName);
+                levelXing.setSignalDName(signalName);
             }
         } else if ((dHead != null)
                 && ((dHead == getHeadFromName(levelXing.getSignalBName()))
@@ -5970,7 +5970,6 @@ public class LayoutEditorTools {
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
      *  provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
-
     private void addNearSensorToLogic(String name) {
         if ((name == null) || name.equals("")) {
             return;
@@ -6079,6 +6078,7 @@ public class LayoutEditorTools {
     private SignalHead b3WayHead = null;    // saved in C1 of Turnout A - at diverging A
     private SignalHead c3WayHead = null;    // saved in B1 of Turnout B - at continuing
     private SignalHead d3WayHead = null;    // saved in C1 of Turnout B - at diverging B
+
     private boolean layoutTurnoutAHorizontal = false;
     private boolean layoutTurnoutAVertical = false;
     private boolean layoutTurnoutBHorizontal = false;
@@ -9494,10 +9494,9 @@ public class LayoutEditorTools {
     }
 
     private boolean getTurnoutMastInformation() {
-        String str = "";
         turnout = null;
         layoutTurnout = null;
-        str = turnoutMastNameField.getText();
+        String str = NamedBean.normalizeUserName(turnoutMastNameField.getText());
         if ((str == null) || (str.equals(""))) {
             JOptionPane.showMessageDialog(setSignalsFrame, rb.getString("SignalsError1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9534,7 +9533,7 @@ public class LayoutEditorTools {
         return true;
     }
 
-    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is the unusual error condition")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equality is the unusual error condition")
     private void placingBlock(PositionableIcon icon, boolean right, double fromPoint, Object obj, Point2D p) {
         if (obj instanceof TrackSegment) {
             TrackSegment t = (TrackSegment) obj;
@@ -9796,15 +9795,14 @@ public class LayoutEditorTools {
                     return false;
                 }
 
-                LayoutSlip x = null;
                 int foundCount = 0;
                 // make two block tests first
-                for (int i = 0; (i < layoutEditor.slipList.size()); i++) {
-                    x = layoutEditor.slipList.get(i);
+                for (LayoutSlip x : layoutEditor.slipList) {
                     LayoutBlock xA = null;
                     LayoutBlock xB = null;
                     LayoutBlock xC = null;
                     LayoutBlock xD = null;
+
                     LayoutBlock xAC = x.getLayoutBlock();
                     if (x.getConnectA() != null) {
                         xA = ((TrackSegment) x.getConnectA()).getLayoutBlock();
@@ -9831,8 +9829,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (int i = 0; (i < layoutEditor.slipList.size()); i++) {
-                        x = layoutEditor.slipList.get(i);
+                    for (LayoutSlip x : layoutEditor.slipList) {
                         if (slipBlockA == x.getLayoutBlock()) {
                             layoutSlip = x;
                             foundCount++;
@@ -11827,11 +11824,9 @@ public class LayoutEditorTools {
                 if (slipSensorBlockA == null) {
                     return false;
                 }
-                LayoutSlip x = null;
-                int foundCount = 0;
 
-                for (int i = 0; (i < layoutEditor.slipList.size()); i++) {
-                    x = layoutEditor.slipList.get(i);
+                int foundCount = 0;
+                for (LayoutSlip x : layoutEditor.slipList) {
                     LayoutBlock xA = null;
                     LayoutBlock xB = null;
                     LayoutBlock xC = null;
@@ -11862,8 +11857,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (int i = 0; (i < layoutEditor.slipList.size()); i++) {
-                        x = layoutEditor.slipList.get(i);
+                    for (LayoutSlip x : layoutEditor.slipList) {
                         if (slipSensorBlockA == x.getLayoutBlock()) {
                             layoutSlip = x;
                             foundCount++;
