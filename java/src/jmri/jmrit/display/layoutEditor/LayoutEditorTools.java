@@ -1928,8 +1928,6 @@ public class LayoutEditorTools {
 	private TrackSegment eastTrack = null;
 	private TrackSegment westTrack = null;
 
-	private boolean trackHorizontal = false;
-	private boolean trackVertical = false;
 	private boolean boundaryFromMenu = false;
 
 	private PositionablePoint boundary = null;
@@ -2281,10 +2279,8 @@ public class LayoutEditorTools {
 
 		double delX = point1.getX() - point2.getX();
 		double delY = point1.getY() - point2.getY();
-		trackVertical = false;
-		trackHorizontal = false;
+
 		if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
-			trackHorizontal = true;
 			if (delX > 0.0) {
 				eastTrack = track1;
 				westTrack = track2;
@@ -2294,7 +2290,6 @@ public class LayoutEditorTools {
 			}
 		}
 		if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
-			trackVertical = true;
 			if (delY > 0.0) {
 				eastTrack = track1;	 // south
 				westTrack = track2;	 // north
@@ -2469,11 +2464,6 @@ public class LayoutEditorTools {
 		} else {
 			block1IDComboBox.getEditor().setItem(boundary.getConnect1().getLayoutBlock().getID());
 			block2IDComboBox.getEditor().setItem(boundary.getConnect2().getLayoutBlock().getID());
-		}
-		if (p.getConnect1Dir() == jmri.Path.EAST || p.getConnect1Dir() == jmri.Path.WEST) {
-			trackHorizontal = true;
-		} else if (p.getConnect1Dir() == jmri.Path.NORTH || p.getConnect1Dir() == jmri.Path.SOUTH) {
-			trackVertical = true;
 		}
 		boundaryFromMenu = true;
 
@@ -3523,15 +3513,6 @@ public class LayoutEditorTools {
 	private JButton setXingSignalsDone = null;
 	private JButton setXingSignalsCancel = null;
 
-	private boolean levelXingACHorizontal = false;
-	private boolean levelXingACVertical = false;
-
-	private boolean levelXingALeft = false;
-	private boolean levelXingAUp = false;
-
-	private boolean levelXingBUp = false;
-	private boolean levelXingBLeft = false;
-
 	private boolean xingFromMenu = false;
 
 	private LevelXing levelXing = null;
@@ -4028,31 +4009,6 @@ public class LayoutEditorTools {
 		Point2D pointC = levelXing.getCoordsC();
 		placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(pointC, pointA));
 
-		double delX = pointA.getX() - pointC.getX();
-		double delY = pointA.getY() - pointC.getY();
-		levelXingACHorizontal = false;
-		levelXingACVertical = false;
-		levelXingALeft = false;
-		levelXingAUp = false;
-		levelXingBUp = false;
-		levelXingBLeft = false;
-		if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
-			levelXingACHorizontal = true;
-			if (delX < 0.0) {
-				levelXingALeft = true;
-			}
-			if (levelXing.getCoordsB().getY() < levelXing.getCoordsD().getY()) {
-				levelXingBUp = true;
-			}
-		} else if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
-			levelXingACVertical = true;
-			if (delY < 0.0) {
-				levelXingAUp = true;
-			}
-			if (levelXing.getCoordsB().getX() < levelXing.getCoordsD().getX()) {
-				levelXingBLeft = true;
-			}
-		}
 		return true;
 	}
 
@@ -4368,6 +4324,7 @@ public class LayoutEditorTools {
 			MultiIconEditor theEditor, JFrame theFrame) {
 		turnout1ComboBox.getEditor().setItem(to.getTurnoutName());
 		turnout2ComboBox.getEditor().setItem(linkedTurnoutName);
+
 		a1TToTSignalHeadComboBox.getEditor().setItem("");
 		a2TToTSignalHeadComboBox.getEditor().setItem("");
 		b1TToTSignalHeadComboBox.getEditor().setItem("");
@@ -4376,6 +4333,7 @@ public class LayoutEditorTools {
 		c2TToTSignalHeadComboBox.getEditor().setItem("");
 		d1TToTSignalHeadComboBox.getEditor().setItem("");
 		d2TToTSignalHeadComboBox.getEditor().setItem("");
+
 		setSignalsAtTToTTurnouts(theEditor, theFrame);
 	}
 
