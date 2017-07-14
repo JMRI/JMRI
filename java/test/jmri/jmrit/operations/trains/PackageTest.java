@@ -62,6 +62,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditBuildOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainLoadOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainRoadOptionsActionTest.class));
         return suite;
     }
 
