@@ -109,13 +109,11 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      * @param station Station to which this Section belongs
      */
     public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
-        NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
-        central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput, station);
+        central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
 
-        field = new TurnoutFieldSection(layoutTO, station);
+        field = new TurnoutFieldSection(layoutTO);
 
         central.initializeLamps(tm.provideTurnout(layoutTO));        
         field.initializeState(tm.provideTurnout(layoutTO));        
@@ -145,7 +143,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
     public void indicationComplete(CodeGroupTwoBits value) { central.indicationComplete(value); }   
     
     static class TurnoutCentralSection implements CentralSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
-        public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
+        public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -155,8 +153,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
             hNormalInput = hm.getNamedBeanHandle(normalInput, sm.provideSensor(normalInput));
             hReversedInput = hm.getNamedBeanHandle(reversedInput, sm.provideSensor(reversedInput));
-            
-            this.station = station;
         }
         
         State state = State.DARK_INCONSISTENT;
@@ -169,8 +165,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         List<Lock> locks;
         public void addLocks(List<Lock> locks) { this.locks = locks; }
-
-        Station station;
 
         enum State {
             SHOWING_NORMAL,
@@ -252,7 +246,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         } 
     }
     
-    static class TurnoutFieldSection implements FieldSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
+    class TurnoutFieldSection implements FieldSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
 
         /**
          * Defines intended (commanded by central) field for this state.
@@ -264,12 +258,10 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
          */
         CodeGroupTwoBits lastIndicationValue = CODE_NEITHER;
     
-        public TurnoutFieldSection(String layoutTO, Station station) {
+        public TurnoutFieldSection(String layoutTO) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-
-            this.station = station;
                     
             hLayoutTO = hm.getNamedBeanHandle(layoutTO, tm.provideTurnout(layoutTO));
         
@@ -280,8 +272,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         List<Lock> locks;
         public void addLocks(List<Lock> locks) { this.locks = locks; }
-
-        Station station;
 
         /** 
          * Initially, align with what's in the field

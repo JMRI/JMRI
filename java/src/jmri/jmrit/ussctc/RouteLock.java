@@ -39,8 +39,11 @@ public class RouteLock implements Lock {
         SignalHeadManager sm = InstanceManager.getDefault(SignalHeadManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
-        
+        for (String s : array) {
+            if (sm.getSignalHead(s) != null) {
+                list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+            }
+        }
         this.beans = null;
     }
 
@@ -53,7 +56,11 @@ public class RouteLock implements Lock {
         SignalHeadManager sm = InstanceManager.getDefault(SignalHeadManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+        for (String s : array) {
+           if (sm.getSignalHead(s) != null) {
+                list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+            }
+        }
         
         this.beans = new ArrayList<>();
         for (BeanSetting bean : beans) this.beans.add(bean);
