@@ -38,9 +38,25 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
         // separately tested
+        lastSender = reply;
     }
 
+    jmri.jmrix.easydcc.EasyDccListener lastSender;
+
     // test control member functions
+
+    /**
+     * forward a message to the listeners, e.g. test receipt
+     */
+    protected void sendTestMessage(EasyDccMessage m) {
+        // forward a test message to Listeners
+        if (log.isDebugEnabled()) {
+            log.debug("sendTestMessage    [" + m + "]");
+        }
+        notifyMessage(m, null);
+        return;
+     }
+
     /**
      * forward a message to the listeners, e.g. test receipt
      */
@@ -55,7 +71,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 
     protected void sendTestReply(EasyDccReply m) {
         // forward a test message to Listeners
-        notifyReply(m, null);
+        notifyReply(m, lastSender);
         return;
     }
 

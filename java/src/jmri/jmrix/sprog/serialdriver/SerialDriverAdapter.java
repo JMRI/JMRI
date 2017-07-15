@@ -38,7 +38,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.baudRate = 9600;
-        this.getSystemConnectionMemo().setUserName("SPROG Programmer");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogProgrammerTitle"));
         // create the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
@@ -198,8 +198,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     /**
-     * set up all of the other objects to operate with an Sprog command station
-     * connected to this port
+     * Set up all of the other objects to operate with an Sprog command station
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -215,7 +215,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             jmri.jmrix.sprog.ActiveFlag.setActive();            
         }
         
-        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals("Powered On")) {
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
             } catch (jmri.JmriException e) {

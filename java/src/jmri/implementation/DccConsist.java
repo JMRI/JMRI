@@ -67,6 +67,10 @@ public class DccConsist implements Consist, ProgListener {
     // Clean Up local Storage.
     @Override
     public void dispose() {
+        if(ConsistList == null) { 
+           // already disposed;
+           return;
+        }
         for (int i = (ConsistList.size() - 1); i >= 0; i--) {
             DccLocoAddress loco = ConsistList.get(i);
             if (log.isDebugEnabled()) {

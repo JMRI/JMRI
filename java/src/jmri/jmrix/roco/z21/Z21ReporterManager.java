@@ -22,7 +22,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      * Create a new Z21ReporterManager
      * @param memo an instance of Z21SystemConnectionMemo this manager 
      *             is associated with.
-     *
      */
 @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
             justification = "False positive from findbugs.  The Value may not be null if there is another railcom manager installed")

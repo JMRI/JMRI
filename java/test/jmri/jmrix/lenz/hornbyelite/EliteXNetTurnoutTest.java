@@ -21,14 +21,12 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "52 05 8A DD",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "52 05 8B DC",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     // Test the XNetTurnout message sequence.

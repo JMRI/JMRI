@@ -131,7 +131,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     protected NamedBean getByUserName(String name) {
-        return senManager.getByUserName(name);
+        return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
     @Override
@@ -525,7 +525,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         return jmri.jmrit.beantable.SensorTableAction.class.getName();
     }
 
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+//    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");

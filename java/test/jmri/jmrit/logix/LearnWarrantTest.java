@@ -72,12 +72,8 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
-        frame.setTrainInfo("99");
-        JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
-        }, "Found address");
-        jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
-        Assert.assertEquals("address=99", 99, address.getNumber());
+        frame.setAddress("99");
+        flushAWT();
 
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
@@ -99,19 +95,12 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Stop"));
 
         // change address and run
-        frame.setTrainInfo("111");
-        JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
-        }, "Found address");
-        address = frame._speedUtil.getDccAddress();
-        Assert.assertEquals("address=111", 111, address.getNumber());
-        
+        frame.setAddress("111");
         sensor.setState(Sensor.INACTIVE);
 
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
-        flushAWT();
 
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -121,7 +110,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         sensor = runtimes(route);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return (warrant.getThrottle()==null);
         }, "Wait for run to end");
         String msg = w.getRunModeMessage();
@@ -141,7 +130,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("Warrant Table save", tableFrame);
 
         // passed test - cleanup.  Do it here so failure leaves traces.
-        TestHelper.disposeWindow(frame, this);
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
@@ -153,7 +141,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         flushAWT();
         // confirm one message logged
-//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
