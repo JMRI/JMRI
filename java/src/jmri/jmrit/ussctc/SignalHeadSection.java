@@ -2,6 +2,8 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 import java.util.*;
+import java.beans.*;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Drive a signal section on a USS CTC panel.
@@ -106,10 +108,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     NamedBeanHandle<Sensor> hRightInput;
         
     // coding used locally to ensure consistency
-    private final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
-    private final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
-    private final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
-    private final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
+    static final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
+    static final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
+    static final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
+    static final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
     
     // States to track changes at the Code Machine end
     enum Machine {
@@ -125,7 +127,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     
     Station station;
     public Station getStation() { return station;}
-    
+    public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
+
     List<Lock> locks;
     public void addLocks(List<Lock> locks) { this.locks = locks; }
 
@@ -377,7 +380,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
 
     CodeGroupThreeBits lastIndication = CODE_OFF;
-    
+    void setLastIndication(CodeGroupThreeBits v) { 
+        CodeGroupThreeBits old = lastIndication;
+        lastIndication = v;
+        firePropertyChange("LastIndication", old, lastIndication);
+    }
+    CodeGroupThreeBits getLastIndication() { return lastIndication; }
+
     /**
      * Process values received from the field unit.
      */
@@ -415,6 +424,23 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             log.debug("  SignalHead change without change in Indication");
         }
     }
-    
+
+    final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class.getName());
 }
