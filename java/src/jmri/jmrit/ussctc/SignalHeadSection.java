@@ -74,9 +74,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         this.station = station;
         
-        // initialize lamps to follow layout state to all off - you don't know anything
+        // initialize lamps to follow layout state to STOP
         tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
-        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.THROWN);
         tm.provideTurnout(rightIndicator).setCommandedState(Turnout.CLOSED);
         // hold everything
         setListHeldState(hRightHeads, true);
@@ -225,7 +225,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
 
     public static int MOVEMENT_DELAY = 5000;
-    
+
+    boolean deferIndication = false; // when set, don't indicate on layout change
+                                     // because something else will ensure it later
+
     /**
      * Code arrives in field. Sets the signals on the layout.
      */
@@ -237,13 +240,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
-        if (! checkLockPermitted() ) {
-            // lock sets stop
-            lastIndication = CODE_STOP;
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
-            log.debug("Layout signals set LEFT");
-        } else if (value == CODE_LEFT && checkLockPermitted(leftwardLocks)) {
+        if (value == CODE_LEFT && checkLockPermitted(leftwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
@@ -417,7 +414,17 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     } 
 
     void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
-        if (getCurrentIndication() != lastIndication) {
+        CodeGroupThreeBits current = getCurrentIndication();
+        // as a modeling thought, if we're dropping to stop, set held right now
+        if (current == CODE_STOP && current != lastIndication && ! deferIndication ) {
+            deferIndication = true;
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            deferIndication = false;
+        }
+
+        // if there was a change, need to send indication back to central
+        if (current != lastIndication && ! deferIndication) {
             log.debug("  SignalHead change resulted in changed Indication, driving update");
             station.requestIndicationStart();
         } else {
