@@ -264,6 +264,5 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
+
 }
-
-

@@ -28,7 +28,6 @@ import jmri.LocoAddress;
 import jmri.beans.ArbitraryBean;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -1287,11 +1286,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * as the actual XML creation is done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
-     * @param iCvModel      indexed CV contents to include in file
      * @param variableModel Variable contents to include in file
      *
      */
-    public void writeFile(CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel) {
+    public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
         LocoFile df = new LocoFile();
 
         // do I/O
@@ -1307,7 +1305,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             changeDateUpdated();
 
             // and finally write the file
-            df.writeFile(f, cvModel, iCvModel, variableModel, this);
+            df.writeFile(f, cvModel, variableModel, this);
 
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
@@ -1344,9 +1342,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *
      * @param varModel the variable model to load
      * @param cvModel  CV contents to load
-     * @param iCvModel Indexed CV contents to load
      */
-    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel) {
         if (cvModel == null) {
             log.error("loadCvModel must be given a non-null argument");
             return;
@@ -1360,7 +1357,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
             }
 
-            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
             try {

@@ -215,6 +215,7 @@ public class RosterSpeedProfile {
         if (iSpeedStep<=0) {
             return 0.0f;
         }
+        // Note there may be zero values interspersed in the tree
         if (speeds.containsKey(iSpeedStep)) {
             float speed = speeds.get(iSpeedStep).getForwardSpeed();
             if (speed>0.0f) {
@@ -230,7 +231,10 @@ public class RosterSpeedProfile {
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
         while (entry != null && higher<=0.0f) {
             highStep = entry.getKey();
-            higher = entry.getValue().getForwardSpeed();
+            float value = entry.getValue().getForwardSpeed();
+            if (value > 0.0f) {
+                higher = value;
+            }
             entry = speeds.higherEntry(highStep);
         }
         boolean nothingHigher = (higher<=0.0f);
@@ -238,13 +242,16 @@ public class RosterSpeedProfile {
         entry = speeds.lowerEntry(lowStep);
         while (entry != null && lower<=0.0f) {
             lowStep = entry.getKey();;
-            lower = entry.getValue().getForwardSpeed();
+            float value = entry.getValue().getForwardSpeed();
+            if (value > 0.0f) {
+                lower = value;
+            }
             entry = speeds.lowerEntry(lowStep);
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
-                return -1.0f;       // no forward speeds at all
+                return 0.0f;       // no forward speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -279,24 +286,31 @@ public class RosterSpeedProfile {
         float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
+        // Note there may be zero values interspersed in the tree
 
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
         while (entry != null && higher<=0.0f) {
             highStep = entry.getKey();
-            higher = entry.getValue().getReverseSpeed();
+            float value = entry.getValue().getReverseSpeed();
+            if (value > 0.0f) {
+                higher = value;
+            }
             entry = speeds.higherEntry(highStep);
         }
         boolean nothingHigher = (higher<=0.0f);
         entry = speeds.lowerEntry(lowStep);
         while (entry != null && lower<=0.0f) {
            lowStep = entry.getKey();
-           lower = entry.getValue().getReverseSpeed();
-           entry = speeds.lowerEntry(highStep);
+           float value = entry.getValue().getReverseSpeed();
+           if (value > 0.0f) {
+               lower = value;
+           }
+           entry = speeds.lowerEntry(lowStep);
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
-                return -1.0f;       // no reverse speeds at all
+                return 0.0f;       // no reverse speeds at all
             }
             return higher*iSpeedStep/highStep;
         }
@@ -321,6 +335,10 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
+        if (spd <= 0.0f) {
+            log.error("Speed not available to compute duration of travel");
+            return 0.0f;
+        }
         return (distance / spd);
     }
 
@@ -334,6 +352,10 @@ public class RosterSpeedProfile {
             spd = getForwardSpeed(speedStep);
         } else {
             spd = getReverseSpeed(speedStep);
+        }
+        if (spd <= 0.0f) {
+            log.error("Speed not available to compute distance travelled");
+            return 0.0f;
         }
         return Math.abs(spd * duration);
     }
@@ -798,7 +820,7 @@ public class RosterSpeedProfile {
                 String reverse = spd.getChild("reverse").getText();
                 setSpeed(Integer.parseInt(step), Float.parseFloat(forward), Float.parseFloat(reverse));
             } catch (Exception ex) {
-                log.error("Not loaded");
+                log.error("Not loaded {}", ex.toString());
             }
         }
     }
@@ -854,40 +876,70 @@ public class RosterSpeedProfile {
             log.warn("There is no speedprofile entries for [{}]",this.getRosterEntry().getId());
             return(0.0f);
         }
-                     // search through table until end or the entry is greater than
-                     // what we are looking for. This leaves the previous lower value in key. and slower
+        // search through table until end or the entry is greater than
+        // what we are looking for. This leaves the previous lower value in key. and slower
+        // Note there may be zero values interspersed in the tree
         if (isForward) {
             fasterKey=entry.getKey();
             fasterValue = entry.getValue().getForwardSpeed();
             while (entry != null && entry.getValue().getForwardSpeed() < speed) {
                 slowerKey = entry.getKey();
-                slowerValue = entry.getValue().getForwardSpeed();
+                float value = entry.getValue().getForwardSpeed();
+                if (value > 0.0f) {
+                    slowerValue = value;
+                }
                 entry = speeds.higherEntry(slowerKey);
                 if (entry != null) {
                     fasterKey = entry.getKey();
-                    fasterValue = entry.getValue().getForwardSpeed();
+                    value = entry.getValue().getForwardSpeed();
+                    if (value > 0.0f) {
+                        fasterValue = value;
+                    }
                 }
             }
-                     } else {
+        } else {
             fasterKey=entry.getKey();
             fasterValue = entry.getValue().getReverseSpeed();
             while (entry != null && entry.getValue().getReverseSpeed() < speed) {
-                slowerKey = entry.getKey();
-                slowerValue = entry.getValue().getReverseSpeed();
-                entry = speeds.higherEntry(slowerKey);
-                if (entry != null) {
-                    fasterKey = entry.getKey();
-                    fasterValue = entry.getValue().getReverseSpeed();
-                             }
+               slowerKey = entry.getKey();
+               float value = entry.getValue().getReverseSpeed();
+               if (value > 0.0f) {
+                   slowerValue = value;
+               }
+               entry = speeds.higherEntry(slowerKey);
+               if (entry != null) {
+                   fasterKey = entry.getKey();
+                   value = entry.getValue().getReverseSpeed();
+                   if (value > 0.0f) {
+                       fasterValue = value;
+                   }
+               }
             }
         }
+        if (log.isDebugEnabled()) log.debug("slowerKey={}, fasterKey={} for speed={}", slowerKey, fasterKey, speed);
         if (entry == null) {
             // faster does not exists use slower...
-            return slowerKey / 1000;
-                     }
+            if (slowerValue <= 0.0f) { // neither does slower
+                return(0.0f);
+            }
+            //return slowerKey / 1000;
+            // extrapolate instead
+            float key = slowerKey * speed / slowerValue ;
+            if (key < 1000.0f) {
+                return key / 1000.0f;
+            } else {
+                return 1.0f;
+            }
+        }
         if (slowerValue == speed || fasterValue <= slowerValue) {
             return slowerKey / 1000;
-                     }
+        }
+        if (slowerValue <= 0.0f) {  // no entry had a slower speed, therefore key is invalid
+            slowerKey = 0;
+            if (fasterValue <= 0.0f) {  // neither is there a faster speed
+                return(0.0f);
+            }
+        }
         // we need to interpolate
         float ratio = (speed - slowerValue) / (fasterValue - slowerValue);
         float setting = (slowerKey + ((fasterKey - slowerKey) * ratio))/1000.0f;

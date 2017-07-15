@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * opening JMRI or saving the panel file, when connected to an Ecos. It
  * currently serves no other function. The ecos preferences are stored under the
  * connection configuration
- * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
  */

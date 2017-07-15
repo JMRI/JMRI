@@ -285,6 +285,12 @@
 	<label>
 		<text>   </text>
 	</label>
+	<label>
+		<text>Reserved value same as none.</text>
+	</label>
+	<label>
+		<text>   </text>
+	</label>
     <row>
 		<column>
 			<display item="Dual function F0F" format="checkbox"/>

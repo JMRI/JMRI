@@ -212,5 +212,3 @@ public class XpaMessage implements jmri.jmrix.Message {
     private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
-
-

@@ -6,20 +6,22 @@ import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 
 /**
  * Frame for user input of Dcc4Pc messages
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Kevin Dickerson Copyright (C) 2015
  */
-public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {
+public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
-
+    javax.swing.JCheckBox childBoardBox = new javax.swing.JCheckBox("Child Board");
     public PacketGenPanel() {
         super();
     }
@@ -41,8 +43,11 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             packetTextField.setMaximumSize(new Dimension(packetTextField
                     .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
+            childBoardBox.setSelected(false);
+                    
             add(jLabel1);
             add(packetTextField);
+            add(childBoardBox);
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -64,12 +69,10 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         return "Send DCC4PC command";
     }
 
-    @Override
+    /*@Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
-
-        //memo.getTrafficController().addDcc4PcListener(this);
-    }
+    }*/
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
@@ -79,18 +82,12 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             return;
         }
         Dcc4PcMessage m = new Dcc4PcMessage(text);
+        m.setForChildBoard(childBoardBox.isSelected());
         memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
-
-        /*Dcc4PcMessage m = new Dcc4PcMessage(packetTextField.getText().length());
-         for (int i = 0; i < packetTextField.getText().length(); i++)
-         m.setElement(i, packetTextField.getText().charAt(i));
-
-         memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, this);*/
     }
 
     public void hexStringToByteArray(String s) {
         s = s.substring(2);
-        System.out.println(s);
         int len = s.length();
         byte[] data = new byte[len / 2];
         int loc = 0;
@@ -98,12 +95,10 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         for (int i = 0; i < data.length; i++) {
             int val = (byte) ((Character.digit(s.charAt(loc), 16) << 4)
                     + Character.digit(s.charAt(loc + 1), 16));
-            System.out.println("i " + i + " " + val);
             m.setElement(i, val);
             loc = loc + 2;
         }
-        //Dcc4PcMessage m = new Dcc4PcMessage(len);
-
+        m.setForChildBoard(childBoardBox.isSelected());
         memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
     }
 
