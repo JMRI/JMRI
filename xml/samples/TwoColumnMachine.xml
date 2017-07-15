@@ -178,11 +178,20 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="12:28 AM">
+    <memory value="9:45 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
+    </memory>
+    <memory>
+      <systemName>IMUSS CTC:CODELINE:1:LOG</systemName>
+    </memory>
+    <memory>
+      <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
+    </memory>
+    <memory>
+      <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
     </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -318,9 +327,8 @@
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jul 14 19:05:59 PDT 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
   <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="937" y="319" height="801" width="594" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
-    <positionablelabel x="0" y="0" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="198" y="23" height="788" width="393" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
+    <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
       <icon url="program:resources/icons/USS/background/uss-15.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -362,15 +370,15 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="65" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="45" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/track/block/block.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="122" y="97" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="119" y="96" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/track/block/block.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -392,9 +400,9 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="122" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="119" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/track/block/block.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -404,9 +412,9 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="178" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="194" y="120" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/track/block/block.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -488,37 +496,37 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <turnouticon turnout="CTC 3 Layout" x="91" y="96" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="CTC 3 Layout" x="82" y="96" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <tooltip>CTC 3 Layout (IT19)</tooltip>
       <icons>
-        <closed url="program:resources/icons/USS/track/turnout/left/east/os-l-e-closed.gif" degrees="0" scale="1.0">
+        <closed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </closed>
-        <thrown url="program:resources/icons/USS/track/turnout/left/east/os-l-e-thrown.gif" degrees="0" scale="1.0">
+        <thrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </thrown>
-        <unknown url="program:resources/icons/USS/track/turnout/left/east/os-l-e-unknown.gif" degrees="0" scale="1.0">
+        <unknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-red.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </unknown>
-        <inconsistent url="program:resources/icons/USS/track/turnout/left/east/os-l-e-inconsistent.gif" degrees="0" scale="1.0">
+        <inconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </inconsistent>
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="CTC 5 Layout" x="142" y="96" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="CTC 5 Layout" x="155" y="96" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <tooltip>CTC 5 Layout (IT29)</tooltip>
       <icons>
-        <closed url="program:resources/icons/USS/track/turnout/right/west/os-r-w-closed.gif" degrees="0" scale="1.0">
+        <closed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </closed>
-        <thrown url="program:resources/icons/USS/track/turnout/right/west/os-r-w-thrown.gif" degrees="0" scale="1.0">
+        <thrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </thrown>
-        <unknown url="program:resources/icons/USS/track/turnout/right/west/os-r-w-unknown.gif" degrees="0" scale="1.0">
+        <unknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </unknown>
-        <inconsistent url="program:resources/icons/USS/track/turnout/right/west/os-r-w-inconsistent.gif" degrees="0" scale="1.0">
+        <inconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-black.gif" degrees="180" scale="1.0">
           <rotation>0</rotation>
         </inconsistent>
       </icons>
@@ -848,7 +856,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <signalheadicon signalhead="4 lower" x="48" y="137" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 lower" x="48" y="134" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>4 lower</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -878,7 +886,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 upper" x="61" y="137" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 upper" x="61" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>4 upper</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -908,7 +916,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 main" x="119" y="111" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 main" x="112" y="107" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>4 main</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -938,7 +946,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 siding" x="118" y="87" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 siding" x="113" y="82" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>4 siding</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -968,7 +976,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="6 main" x="134" y="132" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="6 main" x="135" y="130" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>6 main</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -998,7 +1006,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="6 siding" x="127" y="111" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="6 siding" x="136" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>6 siding</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -1028,7 +1036,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="6 upper" x="187" y="108" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="6 upper" x="187" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>6 upper</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -1058,7 +1066,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="6 lower" x="202" y="109" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="6 lower" x="202" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>6 lower</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
@@ -1088,7 +1096,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <sensoricon sensor="CTC 4 Code" x="92" y="581" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="CTC 4 Code" x="92" y="581" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>CTC 4 Code (IS16)</tooltip>
       <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1104,7 +1112,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="CTC 6 Code" x="158" y="579" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="CTC 6 Code" x="158" y="579" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>CTC 6 Code (IS26)</tooltip>
       <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1120,7 +1128,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 1" x="72" y="118" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 1" x="58" y="116" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 1 (IS1)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1136,7 +1144,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 2" x="97" y="118" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 2" x="92" y="100" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 2 (IS2)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1152,7 +1160,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 3" x="129" y="119" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 3" x="129" y="118" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 3 (IS3)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1168,7 +1176,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 4" x="128" y="94" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 4" x="130" y="92" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 4 (IS4)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1184,7 +1192,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 5" x="162" y="117" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 5" x="166" y="101" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 5 (IS5)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1200,7 +1208,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC 6" x="187" y="118" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC 6" x="201" y="116" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>TC 6 (IS6)</tooltip>
       <active url="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1216,69 +1224,45 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
+    <positionablelabel x="40" y="66" level="2" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Icon</tooltip>
+      <icon url="program:resources/icons/whiteSquare100.png" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="140" y="66" level="2" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Icon</tooltip>
+      <icon url="program:resources/icons/whiteSquare100.png" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <memoryicon memory="IMUSS CTC:SIGNALHEADSECTION:1:LOG" x="136" y="625" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <tooltip>IMUSS CTC:SIGNALHEADSECTION:1:LOG</tooltip>
+    </memoryicon>
+    <memoryicon memory="IMUSS CTC:CODELINE:1:LOG" x="136" y="644" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <tooltip>IMUSS CTC:CODELINE:1:LOG</tooltip>
+    </memoryicon>
+    <memoryicon memory="IMUSS CTC:LOCK:1:LOG" x="137" y="664" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <tooltip>IMUSS CTC:LOCK:1:LOG</tooltip>
+    </memoryicon>
   </paneleditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Fri Jul 14 23:52:25 PDT 2017</date>
+      <date>Sat Jul 15 09:38:03 PDT 2017</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Jul 14 23:52:26 PDT 2017</date>
+      <date>Sat Jul 15 09:38:05 PDT 2017</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/xml/samples/TwoColumnMachine.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Jul 14 23:32:29 PDT 2017</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Jul 14 23:32:31 PDT 2017</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/xml/samples/TwoColumnMachine.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Jul 14 19:50:14 PDT 2017</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jul 14 19:50:15 PDT 2017</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/xml/samples/TwoColumnMachine.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Fri Jul 14 19:05:59 PDT 2017</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Fri Jul 14 19:19:59 PDT 2017</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Jul 14 20:20:57 PDT 2017</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Jul 14 23:34:52 PDT 2017</date>
-          <filename />
-        </operation>
-      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Jul 15 00:28:32 PDT 2017</date>
+      <date>Sat Jul 15 09:45:54 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.9.1ish+jake+20170715T0652Z+Rec0d96d749 on Sat Jul 15 00:28:32 PDT 2017-->
+  <!--Written by JMRI version 4.9.1ish+jake+20170715T1637Z+R95309b2310 on Sat Jul 15 09:45:54 PDT 2017-->
 </layout-config>
