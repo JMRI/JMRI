@@ -1867,6 +1867,7 @@ public class LayoutEditorTools {
                 point2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
             }
         }
+
         double delX = point1.getX() - point2.getX();
         double delY = point1.getY() - point2.getY();
         if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
@@ -2291,8 +2292,7 @@ public class LayoutEditorTools {
                 eastTrack = track2;
                 westTrack = track1;
             }
-        }
-        if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
+        } else if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
             if (delY > 0.0) {
                 eastTrack = track1;	 // south
                 westTrack = track2;	 // north
