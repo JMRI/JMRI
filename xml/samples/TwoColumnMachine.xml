@@ -174,23 +174,29 @@
       <userName>TC 6</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITBELL</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITCODE LINE</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>ITCTC 5 LAYOUT</systemName>
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="9:45 AM">
+    <memory value="9:51 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
     </memory>
-    <memory>
+    <memory value="Something">
       <systemName>IMUSS CTC:CODELINE:1:LOG</systemName>
     </memory>
-    <memory>
+    <memory value="Ant mor e">
       <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
     </memory>
-    <memory>
+    <memory value="Test">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
     </memory>
   </memories>
@@ -1236,33 +1242,67 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <memoryicon memory="IMUSS CTC:SIGNALHEADSECTION:1:LOG" x="136" y="625" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="IMUSS CTC:SIGNALHEADSECTION:1:LOG" x="136" y="625" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>IMUSS CTC:SIGNALHEADSECTION:1:LOG</tooltip>
     </memoryicon>
-    <memoryicon memory="IMUSS CTC:CODELINE:1:LOG" x="136" y="644" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="IMUSS CTC:CODELINE:1:LOG" x="136" y="644" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>IMUSS CTC:CODELINE:1:LOG</tooltip>
     </memoryicon>
-    <memoryicon memory="IMUSS CTC:LOCK:1:LOG" x="137" y="664" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="IMUSS CTC:LOCK:1:LOG" x="137" y="664" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>IMUSS CTC:LOCK:1:LOG</tooltip>
     </memoryicon>
+    <turnouticon turnout="ITCODE LINE" x="250" y="678" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>ITCODE LINE</tooltip>
+      <icons>
+        <closed url="program:resources/icons/USS/sensor/dark.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/sensor/white-on.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="ITBELL" x="280" y="671" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>ITBELL</tooltip>
+      <icons>
+        <closed url="program:resources/icons/transparentSquare.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/throttles/BellOn.png" degrees="0" scale="0.25">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/transparentSquare.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/transparentSquare.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="ISNOBELL" x="312" y="671" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Bell Defeat</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
   </paneleditor>
-  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <filehistory>
-    <operation>
-      <type>app</type>
-      <date>Sat Jul 15 09:38:03 PDT 2017</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Jul 15 09:38:05 PDT 2017</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/xml/samples/TwoColumnMachine.xml</filename>
-    </operation>
-    <operation>
-      <type>Store</type>
-      <date>Sat Jul 15 09:45:54 PDT 2017</date>
-      <filename />
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 4.9.1ish+jake+20170715T1637Z+R95309b2310 on Sat Jul 15 09:45:54 PDT 2017-->
+  <!--Written by JMRI version 4.9.1ish+jake+20170715T1646Z+R95309b2310 on Sat Jul 15 09:51:50 PDT 2017-->
 </layout-config>
