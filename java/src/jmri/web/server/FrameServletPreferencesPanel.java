@@ -293,7 +293,7 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
 
     @Override
     public String getPreferencesItemText() {
-        return Bundle.getMessage("TitleDelayPanel");
+        return Bundle.getMessage("PreferencesItemTitle");
     }
 
     @Override
@@ -342,6 +342,11 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
 
+    }
+
+    @Override
+    public int getSortOrder() {
+        return 1110;
     }
 
     @Override

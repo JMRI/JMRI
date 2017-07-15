@@ -661,6 +661,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // Nothing to do since ProfileManager preferences are saved immediately
     }
 
+    @Override
+    public int getSortOrder() {
+        return 1000;
+    }
+
     public void dispose() {
         ProfileManager.getDefault().removePropertyChangeListener((PropertyChangeListener) profilesTbl.getModel());
     }
@@ -756,7 +761,6 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
      }
      }
      */
-
     private class SearchPathSelectionListener implements ListSelectionListener {
 
         @Override
