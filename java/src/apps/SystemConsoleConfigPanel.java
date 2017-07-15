@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.FontComboUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Allow certain elements of the System Console to be configured.
@@ -34,6 +35,7 @@ import jmri.util.swing.FontComboUtil;
  *
  * @author Matthew Harris copyright (c) 2010, 2011
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel {
 
     private static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");

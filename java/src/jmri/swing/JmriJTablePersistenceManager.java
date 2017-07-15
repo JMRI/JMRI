@@ -38,12 +38,15 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Default implementation of {@link JTablePersistenceManager}.
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class JmriJTablePersistenceManager extends AbstractPreferencesManager implements JTablePersistenceManager, PropertyChangeListener {
 
     protected final HashMap<String, JTableListener> listeners = new HashMap<>();

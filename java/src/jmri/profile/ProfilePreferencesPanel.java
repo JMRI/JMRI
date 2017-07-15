@@ -50,6 +50,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +60,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);

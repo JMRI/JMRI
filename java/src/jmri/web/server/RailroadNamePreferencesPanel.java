@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
+@ServiceProvider(service = PreferencesPanel.class)
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JTextField railroadName;

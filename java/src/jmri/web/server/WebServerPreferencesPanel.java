@@ -26,7 +26,9 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
+import org.openide.util.lookup.ServiceProvider;
 
+@ServiceProvider(service = PreferencesPanel.class)
 public class WebServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JSpinner port;

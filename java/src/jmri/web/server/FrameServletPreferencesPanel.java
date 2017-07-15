@@ -41,11 +41,13 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class FrameServletPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     /**

@@ -1,5 +1,8 @@
 package jmri.jmrix.merg;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid connection types for MERG
  * <hr>
@@ -16,6 +19,7 @@ package jmri.jmrix.merg;
  *
  * @author Matthew Harris Copyright (c) 2011
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MERG = "MERG";

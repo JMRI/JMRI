@@ -18,6 +18,7 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure the Default File Locations
@@ -28,6 +29,7 @@ import jmri.util.FileUtil;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
