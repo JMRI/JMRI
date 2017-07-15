@@ -41,45 +41,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private void setGUI() {
     }
 
-    /**
-     * set the local prefs to match the GUI Local prefs are independent from the
-     * singleton instance prefs.
-     *
-     * @return true if set, false if values are unacceptable.
-     */
-    private boolean setValues() {
-        boolean didSet = true;
-        preferences.setRailRoadName(railroadName.getText());
-        return didSet;
-    }
-
-    public void storeValues() {
-        if (setValues()) {
-            preferences.save();
-
-            if (parentFrame != null) {
-                parentFrame.dispose();
-            }
-        }
-
-    }
-
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        if (setValues()) {
-            preferences.setIsDirty(true);
-        }
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            getTopLevelAncestor().setVisible(false);
-        }
-    }
-
     private JPanel rrNamePanel() {
         JPanel panel = new JPanel();
         railroadName = new JTextField(preferences.getRailRoadName());
@@ -127,7 +88,8 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        this.storeValues();
+        this.preferences.setRailRoadName(railroadName.getText());
+        this.preferences.save();
     }
 
     @Override
