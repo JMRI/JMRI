@@ -52,7 +52,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
-         back to the screen when the programing screen when we recieve 
+         back to the screen when the programing screen when we receive
          something from the command station */
         progListener = p;
         value = val;

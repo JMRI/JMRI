@@ -129,24 +129,24 @@ public class XNetLight extends AbstractLight implements XNetListener {
     @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (InternalState == OFFSENT) {
             // If an OFF was sent, we want to check for Communications
             // errors before we try to do anything else.
             if (l.isCommErrorMessage()) {
                 /* this is a communications error */
-                log.error("Communications error occured - message recieved was: "
+                log.error("Communications error occurred - message received was: "
                         + l);
                 sendOffMessage();
                 return;
             } else if (l.isCSBusyMessage()) {
                 /* this is a communications error */
-                log.error("Command station busy - message recieved was: " + l);
+                log.error("Command station busy - message received was: " + l);
                 sendOffMessage();
                 return;
             } else if (l.isOkMessage()) {
-                /* the command was successfully recieved */
+                /* the command was successfully received */
                 synchronized (this) {
                     //mOldState=mState;
                     InternalState = IDLE;
@@ -157,17 +157,17 @@ public class XNetLight extends AbstractLight implements XNetListener {
                 // errors before we try to do anything else.
                 if (l.isCommErrorMessage()) {
                     /* this is a communications error */
-                    log.error("Communications error occured - message recieved was: "
+                    log.error("Communications error occurred - message received was: "
                             + l);
                     setState(mState);
                     return;
                 } else if (l.isCSBusyMessage()) {
                     /* this is a communications error */
-                    log.error("Command station busy - message recieved was: " + l);
+                    log.error("Command station busy - message received was: " + l);
                     setState(mState);
                     return;
                 } else if (l.isOkMessage()) {
-                    /* the command was successfully recieved */
+                    /* the command was successfully received */
                     sendOffMessage();
                 }
                 return;

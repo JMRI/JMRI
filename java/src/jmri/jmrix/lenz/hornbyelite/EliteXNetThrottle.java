@@ -114,7 +114,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // First, we want to see if this throttle is waiting for a message
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle - recieved message ");
+            log.debug("Throttle - received message ");
         }
         if (requestState == THROTTLEIDLE) {
             if (log.isDebugEnabled()) {

@@ -131,7 +131,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;

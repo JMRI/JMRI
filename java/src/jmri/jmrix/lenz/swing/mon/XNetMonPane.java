@@ -17,16 +17,12 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListener {
 
-    final java.util.ResourceBundle rb
-            = java.util.ResourceBundle.
-            getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
     protected XNetTrafficController tc = null;
     protected XNetSystemConnectionMemo memo = null;
 
     @Override
     public String getTitle() {
-        return (rb.getString("XNetMonFrameTitle"));
+        return (Bundle.getMessage("XNetMonFrameTitle"));
     }
 
     @Override
@@ -94,16 +90,13 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
         }
     }
 
-
     /**
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
-            super(java.util.ResourceBundle.
-                    getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle").
-                    getString("XNetMonFrameTitle"), XNetMonPane.class.getName());
+            super(Bundle.getMessage("XNetMonFrameTitle"), XNetMonPane.class.getName());
             setContext(jmri.InstanceManager.
                     getDefault(XNetSystemConnectionMemo.class));
         }

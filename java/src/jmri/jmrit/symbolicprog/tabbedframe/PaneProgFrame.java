@@ -875,7 +875,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             l = Roster.getDefault().matchingList(null, null, null, null, null, null, Bundle.getMessage("LabelNewDecoder"));
             x--;
             if (x == 0) {
-                log.error("We have tried to remove all the entries, however an error has occured which has resulted in the entries not being deleted correctly");
+                log.error("We have tried to remove all the entries, however an error has occurred which has resulted in the entries not being deleted correctly");
                 l = new ArrayList<>();
             }
         }

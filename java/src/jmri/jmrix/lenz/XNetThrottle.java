@@ -445,7 +445,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString());
+            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
         }
         if (requestState == THROTTLEIDLE) {
             if (log.isDebugEnabled()) {
@@ -490,14 +490,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 if (log.isDebugEnabled()) {
                     log.debug("Last Command processed successfully.");
                 }
-                // Since we recieved an "ok",  we want to make sure 
+                // Since we received an "ok",  we want to make sure
                 // "isAvailable reflects we are in control
                 setIsAvailable(true);
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.debug("Communications error occured - message recieved was: " + l);
+                log.debug("Communications error occurred - message received was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
@@ -664,7 +664,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.debug("Communications error occured - message received was: " + l);
+                log.debug("Communications error occurred - message received was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */

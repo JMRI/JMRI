@@ -5,17 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager.
- * <P>
+ * Implement turnout manager for Lenz (XPresssNet) connections.
+ * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
-
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 
     protected XNetTrafficController tc = null;
 
@@ -46,7 +44,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -105,7 +103,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      */
     @Override
     public String getClosedText() {
-        return rbt.getString("TurnoutStateClosed");
+        return Bundle.getMessage("TurnoutStateClosed");
     }
 
     /**
@@ -115,7 +113,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      */
     @Override
     public String getThrownText() {
-        return rbt.getString("TurnoutStateThrown");
+        return Bundle.getMessage("TurnoutStateThrown");
     }
 
     // listen for the messages to the LI100/LI101

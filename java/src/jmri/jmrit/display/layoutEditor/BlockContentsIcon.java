@@ -83,7 +83,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
             getBlock().setDirection(dirA);
         }
         if (getBlock().getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occured
+            //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);

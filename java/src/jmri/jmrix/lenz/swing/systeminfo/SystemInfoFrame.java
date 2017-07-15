@@ -202,7 +202,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else {
-            CSType.setText(Bundle.getMessage("CSTypeUNKNOWN"));
+            CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }
     }
 

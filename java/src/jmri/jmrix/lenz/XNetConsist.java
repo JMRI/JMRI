@@ -445,7 +445,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {
-            // we're waiting for a reply, so examine what we recieved
+            // we're waiting for a reply, so examine what we received
             String text;
             if (l.isOkMessage()) {
                 if (_state == ADDREQUESTSENTSTATE) {

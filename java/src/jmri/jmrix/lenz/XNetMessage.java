@@ -262,7 +262,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Generate a message to recieve the feedback information for an upper or
+     * Generate a message to receive the feedback information for an upper or
      * lower nibble of the feedback address in question
      */
     public static XNetMessage getFeedbackRequestMsg(int pNumber,

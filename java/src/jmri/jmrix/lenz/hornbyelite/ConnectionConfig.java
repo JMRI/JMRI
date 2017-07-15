@@ -14,15 +14,15 @@ package jmri.jmrix.lenz.hornbyelite;
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Ctor for an object being created during load process.
+     * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -39,4 +39,5 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
             adapter = new EliteAdapter();
         }
     }
+
 }

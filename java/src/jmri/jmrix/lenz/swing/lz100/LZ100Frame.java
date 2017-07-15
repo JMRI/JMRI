@@ -16,7 +16,6 @@ import javax.swing.JToggleButton;
   */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
-    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this("LZ100 Configuration Utility", memo);
     }

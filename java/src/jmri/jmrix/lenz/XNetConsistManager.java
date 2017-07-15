@@ -159,7 +159,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     // of the stack, then we can quit. Otherwise,
                     // we just request the next address.
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in SEARCHREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in SEARCHREQUESTSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -200,7 +200,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUSEARCHSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in MUSEARCHSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUSEARCHSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -230,7 +230,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUINFOREQUESTSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in MUINFOREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUINFOREQUESTSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
                         CurrentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
@@ -240,7 +240,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case DHADDRESS1INFO:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in DHADDRESS1INFO state.  Message is: " + l.toString());
+                        log.debug("Message Received in DHADDRESS1INFO state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         DccLocoAddress firstMember = new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99);
@@ -278,7 +278,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case DHADDRESS2INFO:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in DHADDRESS2INFO state.  Message is: " + l.toString());
+                        log.debug("Message Received in DHADDRESS2INFO state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         CurrentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
@@ -291,7 +291,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                 case IDLE:
                 default:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in default(IDLE) state.  Message is: " + l.toString());
+                        log.debug("Message Received in default(IDLE) state.  Message is: " + l.toString());
                     }
             }
         }

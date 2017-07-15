@@ -187,7 +187,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
             } else if (l.getElement(1) == XNetConstants.LI101_REQUEST_BAUD) {
                 // The third element is the encoded Baud rate
                 speedBox.setSelectedIndex(l.getElement(2) - 1);
-                status.setText("Baud rate" + validSpeeds[l.getElement(2) - 1] + "recieved from LI101");
+                status.setText("Baud rate" + validSpeeds[l.getElement(2) - 1] + "received from LI101");
             }
         }
     }

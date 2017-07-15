@@ -866,13 +866,13 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringErrorPCtoLI(){
         XNetReply r = new XNetReply("01 01 00");
-        Assert.assertEquals("Monitor String","Error occured between the interface and the PC",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Error occurred between the interface and the PC",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorLItoCS(){
         XNetReply r = new XNetReply("01 02 03");
-        Assert.assertEquals("Monitor String","Error occured between the interface and the command station.",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Error occurred between the interface and the command station.",r.toMonitorString());
     }
 
     @Test
@@ -1096,7 +1096,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIVersionReply(){
         XNetReply r = new XNetReply("02 01 36 34");
-        Assert.assertEquals("Monitor String","LI10x hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
+        Assert.assertEquals("Monitor String","LI10x Hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
     }
 
     @Test
