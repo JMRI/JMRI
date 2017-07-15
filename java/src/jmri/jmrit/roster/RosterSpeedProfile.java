@@ -28,6 +28,9 @@ public class RosterSpeedProfile {
 
     float overRunTimeReverse = 0.0f;
     float overRunTimeForward = 0.0f;
+    
+    boolean _hasForwardSpeeds = false;
+    boolean _hasReverseSpeeds = false;
 
     public RosterSpeedProfile(RosterEntry re) {
         _re = re;
@@ -60,7 +63,14 @@ public class RosterSpeedProfile {
     public void deleteStep(Integer step) {
         speeds.remove(step);
     }
+    
+    public boolean hasForwardSpeeds() {
+        return _hasForwardSpeeds;
+    }
 
+    public boolean hasReverseSpeeds() {
+        return _hasReverseSpeeds;
+    }
 
     /* for speed conversions */
     static public final float MMStoMPH = 0.00223694f;
@@ -185,9 +195,20 @@ public class RosterSpeedProfile {
         SpeedStep ss = speeds.get(speedStep);
         ss.setForwardSpeed(forward);
         ss.setReverseSpeed(reverse);
+        if (forward > 0.0f) {
+            _hasForwardSpeeds = true;            
+        }
+        if (reverse > 0.0f) {
+            _hasReverseSpeeds = true;            
+        }
     }
 
     public void setForwardSpeed(float speedStep, float forward) {
+        if (forward > 0.0f) {
+            _hasForwardSpeeds = true;            
+        } else {
+            return;
+        }
         int iSpeedStep = Math.round(speedStep * 1000);
         if (!speeds.containsKey(iSpeedStep)) {
             speeds.put(iSpeedStep, new SpeedStep());
@@ -197,6 +218,11 @@ public class RosterSpeedProfile {
     }
 
     public void setReverseSpeed(float speedStep, float reverse) {
+        if (reverse > 0.0f) {
+            _hasReverseSpeeds = true;            
+        } else {
+            return;
+        }
         int iSpeedStep = Math.round(speedStep * 1000);
         if (!speeds.containsKey(iSpeedStep)) {
             speeds.put(iSpeedStep, new SpeedStep());
@@ -212,7 +238,7 @@ public class RosterSpeedProfile {
     */
     public float getForwardSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
-        if (iSpeedStep<=0) {
+        if (iSpeedStep<=0 || !_hasForwardSpeeds) {
             return 0.0f;
         }
         // Note there may be zero values interspersed in the tree
@@ -272,7 +298,7 @@ public class RosterSpeedProfile {
     */
     public float getReverseSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
-        if (iSpeedStep<=0) {
+        if (iSpeedStep<=0 || !_hasReverseSpeeds) {
             return 0.0f;
         }
         if (speeds.containsKey(iSpeedStep)) {
@@ -818,7 +844,15 @@ public class RosterSpeedProfile {
                 String step = spd.getChild("step").getText();
                 String forward = spd.getChild("forward").getText();
                 String reverse = spd.getChild("reverse").getText();
-                setSpeed(Integer.parseInt(step), Float.parseFloat(forward), Float.parseFloat(reverse));
+                float forwardSpeed = Float.parseFloat(forward);
+                if (forwardSpeed > 0.0f) {
+                    _hasForwardSpeeds = true;
+                }
+                float reverseSpeed = Float.parseFloat(reverse);
+                if (reverseSpeed > 0.0f) {
+                    _hasReverseSpeeds = true;
+                }
+                setSpeed(Integer.parseInt(step), forwardSpeed, reverseSpeed);
             } catch (Exception ex) {
                 log.error("Not loaded {}", ex.toString());
             }
@@ -867,6 +901,9 @@ public class RosterSpeedProfile {
      * @return throttle setting
      */
     public float getThrottleSetting(float speed, boolean isForward) {
+        if ((isForward && !_hasForwardSpeeds) || (!isForward && !_hasReverseSpeeds)) {
+            return 0.0f;
+        }
         int slowerKey = 0;
         float slowerValue = 0;
         float fasterKey = 0;
@@ -961,13 +998,6 @@ public class RosterSpeedProfile {
             speed = getForwardSpeed(speedStep);
         } else {
             speed = getReverseSpeed(speedStep);
-        }
-        if (speed<=0) {
-            if (isForward) {
-                speed = getReverseSpeed(speedStep);
-            } else {
-                speed = getForwardSpeed(speedStep);
-            }
         }
         return speed;
     }

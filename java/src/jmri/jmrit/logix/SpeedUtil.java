@@ -325,16 +325,19 @@ public class SpeedUtil {
      * @return track speed in mm/ms
      */
     protected float getTrackSpeed(float throttleSetting, boolean isForward) {
+        float speed = 0.0f;
         RosterSpeedProfile speedProfile = getSpeedProfile();
         // Note SpeedProfile uses milliseconds per second.
-        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;
-        boolean byFactor = false;
-        if (speed < 0.0f) {
-            speed = throttleSetting *_signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
-            byFactor = true;
+        speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
+        if (speed <= 0.0f) {
+            float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
+            speed = throttleSetting * factor;
+            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
+                    throttleSetting, speed, factor, _rosterId);
+        } else {
+            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, SpeedProfile. train= {}",
+                    throttleSetting, speed, _rosterId);            
         }
-        if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by {}. train= {}",
-                    throttleSetting, speed, (byFactor?"factor":"profile"), _rosterId);
         return speed;
     }
 

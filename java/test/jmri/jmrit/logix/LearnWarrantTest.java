@@ -143,15 +143,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        TestHelper.disposeWindow(panel, this);
-
-        // Dialog has popped up, so handle that. First, locate it.
-//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-//        TestHelper.disposeWindow(dialogList.get(0), this);
-
-        flushAWT();
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
