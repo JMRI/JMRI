@@ -36,7 +36,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
     int topBoxIndex; // index to insert extra stuff
     static final int topStrutWidth = 20;
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+//    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public RosterGroupTableFrame(RosterGroupTableModel model, String helpTarget) {
 
@@ -97,7 +97,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Hook to allow sub-types to install more items in GUI
+     * Hook to allow sub-types to install more items in GUI.
      */
     void extras() {
     }
@@ -124,7 +124,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts
-     * etc
+     * etc.
      *
      */
     protected void addToTopBox(Component comp) {
@@ -144,4 +144,5 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         dataScroll = null;
         super.dispose();
     }
+
 }

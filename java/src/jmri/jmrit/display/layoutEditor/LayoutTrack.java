@@ -1,10 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +87,24 @@ public abstract class LayoutTrack {
 
     public static void setDefaultTrackColor(Color color) {
         defaultTrackColor = color;
+    }
+
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock b, boolean forceTrack) {
+        Color result = defaultTrackColor;
+        if (b != null) {
+            if (forceTrack) {
+                result = b.getBlockTrackColor();
+            } else {
+                result = b.getBlockColor();
+            }
+        }
+        g2.setColor(result);
+        return result;
+    }
+
+    // optional prameter forceTrack = false
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock b) {
+        return setColorForTrackBlock(g2, b, false);
     }
 
     /**

@@ -32,7 +32,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super("XPressNet System Information");
+        super(Bundle.getMessage("XPressNetSystemInformationTitle"));
         tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new GridLayout(0, 2));
 
@@ -42,16 +42,16 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
         getContentPane().add(CSSoftwareVersion);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("StatusLabel")));
+        getContentPane().add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
         getContentPane().add(CSStatus);
 
         getContentPane().add(new JLabel(Bundle.getMessage("InterfaceLabel")));
         getContentPane().add(LIType);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("LIHardwareVersionLabel")));
+        getContentPane().add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
         getContentPane().add(LIHardwareVersion);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("LISoftwareVersionLabel")));
+        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
         getContentPane().add(LISoftwareVersion);
 
         getContentPane().add(getSystemInfoButton);
@@ -103,7 +103,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     JLabel LISoftwareVersion = new JLabel("");
 
     JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
 
     //Send Information request to LI100/LI101
     void getSystemInfo() {

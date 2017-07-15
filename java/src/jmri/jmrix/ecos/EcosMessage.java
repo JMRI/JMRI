@@ -5,7 +5,6 @@ package jmri.jmrix.ecos;
  * Encodes a message to an Ecos command station.
  * <P>
  * The {@link EcosReply} class handles the response from the command station.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
@@ -40,5 +39,5 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         EcosMessage m = new EcosMessage();
         return m;
     }
-}
 
+}

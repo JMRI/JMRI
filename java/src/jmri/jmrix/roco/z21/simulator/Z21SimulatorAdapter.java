@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated z21 system.
- *
+ * <p>
  * Currently, the z21Simulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
- *
+ * <p>
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
@@ -41,8 +41,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     }
 
     /**
-     * set up all of the other objects to operate with a z21Simulator connected
-     * to this port
+     * Set up all of the other objects to operate with a z21Simulator connected
+     * to this port.
      */
     @Override
     public void configure() {
@@ -303,6 +303,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     }
 
     // utility functions
+
     private XNetMessage getXNetMessage(Z21Message m) {
         if(m==null) throw new java.lang.IllegalArgumentException();
         XNetMessage xnm = new XNetMessage(m.getLength()-4);
@@ -322,7 +323,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         }
         return(r);
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(Z21SimulatorAdapter.class.getName());
 
