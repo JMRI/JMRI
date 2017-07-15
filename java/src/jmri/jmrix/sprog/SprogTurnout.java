@@ -21,10 +21,12 @@ public class SprogTurnout extends AbstractTurnout {
     private SprogSystemConnectionMemo _memo = null;
 
     /**
+     * Create a SPROG Turnout object.
+     * <p>
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
      */
-    public SprogTurnout(int number,SprogSystemConnectionMemo memo) {
+    public SprogTurnout(int number, SprogSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "T" + number);
         _number = number;
         _memo = memo;
@@ -34,7 +36,9 @@ public class SprogTurnout extends AbstractTurnout {
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * Handle a request to change state by sending a formatted DCC packet.
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
@@ -119,5 +123,3 @@ public class SprogTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SprogTurnout.class.getName());
 
 }
-
-

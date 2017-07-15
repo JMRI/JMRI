@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   QsiComponentFactoryTest.class
 })
 /**
  * Tests for the jmri.jmrix.qsi.swing package

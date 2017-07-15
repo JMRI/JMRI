@@ -80,7 +80,7 @@
       ask (through the InstanceManager) the NamedBeanHandlerManager to give you a 
       NamedBeanHandle:
       <pre><code>
-      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBean(name, sensor);
+      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
       </code></pre> 
       where <code>name</code> is the String name that the user provided, either a 
       system name or user name, and <code>sensor</code> is the particular <code>Sensor</code> object

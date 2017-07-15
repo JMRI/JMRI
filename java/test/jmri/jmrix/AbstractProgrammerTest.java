@@ -104,6 +104,7 @@ public class AbstractProgrammerTest extends TestCase {
                 abstractprogrammer.registerFromCV(cv1); // should assert
                 Assert.fail("did not throw as expected for cv = " + cv1);
             } catch (Exception e) {
+                jmri.util.JUnitAppender.assertWarnMessage("Unhandled register from cv:  "+cv1);
             }
         }
     }

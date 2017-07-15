@@ -1,14 +1,30 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractCellEditor; // for iconLabel
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -20,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
@@ -43,6 +60,7 @@ import org.slf4j.LoggerFactory;
  * Based on SignalHeadTableAction.java
  *
  * @author Dave Duchamp Copyright (C) 2004
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class LightTableAction extends AbstractTableAction {
 
@@ -67,6 +85,8 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     protected LightManager lightManager = InstanceManager.getNullableDefault(jmri.LightManager.class);
+    // for icon state col
+    protected boolean _graphicState = false; // updated from prefs
 
     @Override
     public void setManager(Manager man) {
@@ -75,10 +95,13 @@ public class LightTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Lights
+     * of Lights.
      */
     @Override
     protected void createModel() {
+        // load graphic state column display preference
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
+
         m = new BeanTableDataModel() {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
@@ -116,6 +139,8 @@ public class LightTableAction extends AbstractTableAction {
                 }
                 if (col == ENABLECOL) {
                     return Boolean.class;
+                } else if (col == VALUECOL && _graphicState) {
+                    return JLabel.class; // use an image to show light state
                 } else {
                     return super.getColumnClass(col);
                 }
@@ -242,6 +267,14 @@ public class LightTableAction extends AbstractTableAction {
                         boolean v = l.getEnabled();
                         l.setEnabled(!v);
                         break;
+                    case VALUECOL:
+                        if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
+                            Light ll = (Light) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                            clickOn(ll);
+                            fireTableRowsUpdated(row, row);
+                            break;
+                        }
+                        //$FALL-THROUGH$
                     default:
                         super.setValueAt(value, row, col);
                         break;
@@ -277,7 +310,7 @@ public class LightTableAction extends AbstractTableAction {
 
             @Override
             public NamedBean getByUserName(String name) {
-                return lightManager.getByUserName(name);
+                return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
             @Override
@@ -313,7 +346,144 @@ public class LightTableAction extends AbstractTableAction {
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameLight");
             }
-        };
+
+            /**
+             * Customize the light table Value (State) column to show an appropriate graphic for the light state
+             * if _graphicState = true, or (default) just show the localized state text
+             * when the TableDataModel is being called from ListedTableAction.
+             *
+             * @param table a JTable of Lights
+             */
+            @Override
+            protected void configValueColumn(JTable table) {
+                // have the value column hold a JPanel (icon)
+                //setColumnToHoldButton(table, VALUECOL, new JLabel("123456")); // for small round icon, but cannot be converted to JButton
+                // add extras, override BeanTableDataModel
+                log.debug("Light configValueColumn (I am {})", super.toString());
+                if (_graphicState) { // load icons, only once
+                    table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // editor
+                    table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
+                } else {
+                    super.configValueColumn(table); // classic text style state indication
+                }
+            }
+
+            /**
+             * Visualize state in table as a graphic, customized for Lights (2 states + ... for transitioning).
+             * Renderer and Editor are identical, as the cell contents are not actually edited,
+             * only used to toggle state using {@link #clickOn(NamedBean)}.
+             * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
+             * @see jmri.jmrit.beantable.BlockTableAction#createModel()
+             * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
+             */
+            class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+                protected JLabel label;
+                protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+                protected char beanTypeChar = 'L'; // for Light
+                protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
+                protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
+                protected BufferedImage onImage;
+                protected BufferedImage offImage;
+                protected ImageIcon onIcon;
+                protected ImageIcon offIcon;
+                protected int iconHeight = -1;
+
+                @Override
+                public Component getTableCellRendererComponent(
+                        JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                @Override
+                public Component getTableCellEditorComponent(
+                        JTable table, Object value, boolean isSelected,
+                        int row, int column) {
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                public JLabel updateLabel(String value, int row) {
+                    if (iconHeight > 0) { // if necessary, increase row height;
+                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Lights
+                    }
+                    if (value.equals(Bundle.getMessage("LightStateOff")) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
+                    } else if (value.equals(Bundle.getMessage("LightStateOn")) && onIcon != null) {
+                        label = new JLabel(onIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("onIcon set");
+                    } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
+                        label = new JLabel("X", JLabel.CENTER); // centered text alignment
+                        label.setForeground(Color.red);
+                        log.debug("Light state inconsistent");
+                        iconHeight = 0;
+                    } else if (value.equals(Bundle.getMessage("LightStateIntermediate"))) {
+                        label = new JLabel("...", JLabel.CENTER); // centered text alignment
+                        log.debug("Light state in transition");
+                        iconHeight = 0;
+                    } else { // failed to load icon
+                        label = new JLabel(value, JLabel.CENTER); // centered text alignment
+                        log.warn("Error reading icons for LightTable");
+                        iconHeight = 0;
+                    }
+                    label.setToolTipText(value);
+                    label.addMouseListener (new MouseAdapter ()
+                    {
+                        @Override
+                        public final void mousePressed (MouseEvent evt)
+                        {
+                            log.debug("Clicked on icon in row {}", row);
+                            stopCellEditing();
+                        }
+                    });
+                    return label;
+                }
+
+                @Override
+                public Object getCellEditorValue() {
+                    log.debug("getCellEditorValue, me = {})", this.toString());
+                    return this.toString();
+                }
+
+                /**
+                 * Read and buffer graphics. Only called once for this table.
+                 * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+                 */
+                protected void loadIcons() {
+                    try {
+                        onImage = ImageIO.read(new File(onIconPath));
+                        offImage = ImageIO.read(new File(offIconPath));
+                    } catch (IOException ex) {
+                        log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
+                    }
+                    log.debug("Success reading images");
+                    int imageWidth = onImage.getWidth();
+                    int imageHeight = onImage.getHeight();
+                    // scale icons 50% to fit in table rows
+                    Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    onIcon = new ImageIcon(smallOnImage);
+                    offIcon = new ImageIcon(smallOffImage);
+                    iconHeight = onIcon.getIconHeight();
+                }
+
+            } // end of ImageIconRenderer class
+
+        }; // end of custom data model
+
     }
 
     @Override

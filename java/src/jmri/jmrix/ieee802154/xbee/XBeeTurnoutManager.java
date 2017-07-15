@@ -77,6 +77,8 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * Validate system name for the current hardware configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     * @param systemName Xbee id format with pins
+     * @return true for valid formatted name
      */
     public boolean validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null

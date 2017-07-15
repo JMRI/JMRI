@@ -62,7 +62,7 @@ public class SerialTurnout extends AbstractTurnout {
         tSystemName = systemName;
         _memo = memo;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        tBit = _memo.getBitFromSystemName(systemName);
     }
 
     /**
@@ -128,7 +128,7 @@ public class SerialTurnout extends AbstractTurnout {
         // if a Pulse Timer is running, ignore the call
         if (!mPulseTimerOn) {
             if (tNode == null) {
-                tNode = (SerialNode) SerialAddress.getNodeFromSystemName(tSystemName,_memo.getTrafficController());
+                tNode = (SerialNode) _memo.getNodeFromSystemName(tSystemName,_memo.getTrafficController());
                 if (tNode == null) {
                     // node does not exist, ignore call
                     log.error("Trying to set a C/MRI turnout that doesn't exist: " + tSystemName + " - ignored");

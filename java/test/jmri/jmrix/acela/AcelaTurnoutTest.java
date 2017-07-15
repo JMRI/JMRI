@@ -29,7 +29,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 //        Assert.assertEquals("closed message","52 05 88 00",
 //                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
 //	Assert.assertTrue("closed message sent", tcis.outbound.size()>0);
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
 
     }
 
@@ -39,7 +38,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 //        Assert.assertEquals("thrown message","52 05 89 00",
 //                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
 //	Assert.assertTrue("thrown message sent", tcis.outbound.size()>0);
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Test

@@ -1136,6 +1136,8 @@
 
 <mapID target="manual.DecoderPro.Main_Menu_System" url="manual/DecoderPro/Main_Menu.shtml#System"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SortByTrack" url="package/jmri/jmrit/operations/Operations.shtml#SortByTrack"/>
+
 <mapID target="html.doc.Technical.XmlEditors" url="html/doc/Technical/XmlEditors.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_Clock" url="manual/DecoderPro3/Main_LocoNet.shtml#Clock"/>
@@ -1879,6 +1881,8 @@
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_setCars" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_setCars.shtml"/>
+
+<mapID target="html.doc.Technical.Names_programmers" url="html/doc/Technical/Names.shtml#programmers"/>
 
 <mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_pane_include" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#pane_include"/>
 
@@ -2827,6 +2831,8 @@
 <mapID target="html.hardware.ecos.index_limitations" url="html/hardware/ecos/index.shtml#limitations"/>
 
 <mapID target="html.hardware.nce.NCE_names" url="html/hardware/nce/NCE.shtml#names"/>
+
+<mapID target="html.tools.scripting.FAQ_newJython" url="html/tools/scripting/FAQ.shtml#newJython"/>
 
 <mapID target="html.doc.Technical.JUnit_Write4NewPackage" url="html/doc/Technical/JUnit.shtml#Write4NewPackage"/>
 

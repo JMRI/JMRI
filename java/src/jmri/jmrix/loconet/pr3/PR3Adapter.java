@@ -1,12 +1,13 @@
 package jmri.jmrix.loconet.pr3;
 
-import gnu.io.SerialPort;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
@@ -24,10 +25,14 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Always use flow control, not considered a user-settable option
+     * Sets up the serial port characteristics.  Always uses flow control, which is
+     * not considered a user-settable option.  Sets the PR3 for the appropriate
+     * operating mode, based on the selected "command station type".
+     * 
+     * @param activeSerialPort - the port to be configured
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validBaudNumber().length; i++) {
@@ -126,6 +131,8 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     /**
      * Get an array of valid baud rates.
+     * 
+     * @return String[] containing the single valid baud rate, "57,600".
      */
     @Override
     public String[] validBaudRates() {
@@ -135,6 +142,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
+     * @return int[] containing the single valud baud rate, 57600.
      */
     @Override
     public int[] validBaudNumber() {
@@ -142,8 +150,14 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
+    
     /**
-     * The PR3 can be used in numerous modes, so handle that
+     * The PR3 can be used as a "Standalone Programmer", or with various LocoNet 
+     * command stations, or as an interface to a "Standalone LocoNet".  Provide those
+     * options.
+     * 
+     * @return an array of strings containing the various command station names and
+     *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length + 2];

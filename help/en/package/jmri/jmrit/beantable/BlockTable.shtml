@@ -53,7 +53,8 @@
       attributes.</p>
 
       <h2>Columns in the Block Table</h2>
-
+      (You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a column title)
       <ul>
         <li>
           <p><b>System Name</b> - The System Name of the Block.
@@ -135,7 +136,9 @@
 
         <li>
           <p><b>State</b> Shows the current state of the block,
-          Occupied or UnOccupied</p>
+          Occupied or UnOccupied.<br>
+          Choose between textual and graphic display in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+          </p>
         </li>
 
         <li>
@@ -211,8 +214,9 @@
           <p>The global value is set via the <b>Speeds</b>
           menu.</p>
         </li>
-      </ul><a name="addBlock" id="addBlock"></a>
+      </ul>
 
+      <a name="addBlock" id="addBlock"></a>
       <h2>Adding a new Block</h2>
 
       <p>To add a new Block, see <a href=

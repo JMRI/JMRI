@@ -49,7 +49,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public void setSort(int sort) {
         _sort = sort;
         updateList();
-        fireTableStructureChanged();
+        //fireTableStructureChanged();
         initTable();
         if (_table.getRowSorter() != null) {
             _table.getRowSorter().setSortKeys(null);
@@ -246,7 +246,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             // update property change
             removePropertyChangeTrainSchedules();
             addPropertyChangeTrainSchedules();
-            fireTableStructureChanged();
+            //fireTableStructureChanged();
             initTable();
         } else if (e.getPropertyName().equals(TrainSchedule.SCHEDULE_CHANGED_PROPERTY)) {
             fireTableDataChanged();

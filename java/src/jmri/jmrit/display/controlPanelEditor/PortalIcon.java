@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.catalog.NamedIcon;
@@ -37,7 +38,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text 
+        setPopupUtility(null);        // no text
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -74,9 +75,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return super.finishClone(pos);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     protected void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " put icon key= \"" + name + "\" icon= " + ic);
@@ -87,9 +85,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _iconMap.put(name, icon);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setArrowOrientatuon(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setArrowOrientatuon regular=" + set + " from " + _regular);
@@ -97,9 +92,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _regular = set;
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setHideArrows(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setHideArrows hide=" + set + " from " + _hide);
@@ -199,7 +191,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                     setStatus(HIDDEN);
                     return;
                 }
-                switch (((Integer) e.getNewValue()).intValue()) {
+                switch (((Integer) e.getNewValue())) {
                     case Portal.UNKNOWN:
                         setStatus(HIDDEN);
                         break;
@@ -210,7 +202,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                         setStatus(FROM_ARROW);
                         break;
                     default:
-                        log.warn("Unhandled portal value: {}", ((Integer) e.getNewValue()).intValue());
+                        log.warn("Unhandled portal value: {}", ((Integer)e.getNewValue()) );
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
@@ -252,20 +244,28 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                 return this;
             }
         }.init(this, lockItem));
-        popup.add(lockItem);
+        JMenuItem jmi = popup.add(lockItem);
+        jmi.setEnabled(false);
     }
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-        edit.add("x = " + getX());
-        edit.add("y = " + getY());
+
+        JMenuItem jmi = edit.add("x = " + getX());
+        jmi.setEnabled(false);
+
+        jmi = edit.add("y = " + getY());
+        jmi.setEnabled(false);
+
         edit.add(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
     }
 
     private void setDisplayLevelMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add("level= " + getDisplayLevel());
+        JMenuItem jmi = edit.add("level= " + getDisplayLevel());
+        jmi.setEnabled(false);
+
         edit.add(CoordinateEdit.getLevelEditAction(this));
         popup.add(edit);
     }
@@ -285,7 +285,8 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
-        popup.add(getNameString());
+        JMenuItem jmi = popup.add(getNameString());
+        jmi.setEnabled(false);
         setPositionableMenu(popup);
         if (isPositionable()) {
             setShowCoordinatesMenu(popup);

@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    ConnectionConfigXmlTest.class
+    ConnectionConfigXmlTest.class,
+    ZTC611XNetTurnoutManagerXmlTest.class
 })
 
 /**

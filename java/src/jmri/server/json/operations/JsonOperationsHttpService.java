@@ -74,7 +74,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         switch (type) {
             case CARS:
                 return this.getCars(locale);
@@ -91,7 +91,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }
     }
 
-    public JsonNode getCars(Locale locale) {
+    public ArrayNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         CarManager.instance().getByIdList().forEach((rs) -> {
             root.add(this.utilities.getCar(locale, rs.getId()));
@@ -99,7 +99,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return root;
     }
 
-    public JsonNode getEngines(Locale locale) {
+    public ArrayNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         EngineManager.instance().getByIdList().forEach((rs) -> {
             root.add(this.utilities.getEngine(locale, rs.getId()));
@@ -107,7 +107,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return root;
     }
 
-    public JsonNode getLocations(Locale locale) throws JsonException {
+    public ArrayNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (Location location : LocationManager.instance().getLocationsByIdList()) {
             root.add(this.utilities.getLocation(locale, location.getId()));

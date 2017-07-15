@@ -1,0 +1,85 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/notification/notification.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/notification/notification.js#L82" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Notification</code>
+<div><span class="hint">service in module <code ng:non-bindable="">patternfly.notification</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-notification-notification-page"><p>Notification service used to notify user about important events in the application.</p>
+<h4 id="description_configuring-the-service">Configuring the service</h4>
+<p>You can configure the service with: setDelay, setVerbose and setPersist.</p>
+<h5 id="description_configuring-the-service_notificationssetdelay">Notifications.setDelay</h5>
+<p>Set the delay after which the notification is dismissed. The argument of this method expects miliseconds. Default
+delay is 5000 ms.</p>
+<h5 id="description_configuring-the-service_notificationssetverbose">Notifications.setVerbose</h5>
+<p>Set the verbose mode to on (default) or off. During the verbose mode, each notification is printed in the console,
+too. This is done using the default angular.js $log service.</p>
+<h5 id="description_configuring-the-service_notificationssetpersist">Notifications.setPersist</h5>
+<p>Sets persist option for particular modes. Notification with persistent mode won&#39;t be dismissed after delay, but has
+to be closed manually with the close button. By default, the &quot;error&quot; and &quot;httpError&quot; modes are set to persistent.
+The input is an object in format {mode: persistValue}.</p>
+<h4 id="description_configuration-example">Configuration Example</h4>
+<pre><code class="lang-js">angular.module(&#39;myApp&#39;, []).config(function (NotificationsProvider) {
+  NotificationsProvider.setDelay(10000).setVerbose(false).setPersist({&#39;error&#39;: true, &#39;httpError&#39;: true, &#39;warn&#39;: true});
+});
+</code></pre>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/ng.$rootScope">$rootScope</a></code>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-notification-notification-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.notification" source-edit-deps="angular.js script.js" source-edit-html="index.html-45" source-edit-css="" source-edit-js="script.js-46" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-45" ng-html-wrap-loaded="patternfly.notification angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-45">
+    <div ng-controller="NotificationDemoCtrl">
+      <pf-notification-list></pf-notification-list>
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="message">Message:</label>
+          <div class="col-sm-10">
+           <input type="text" class="form-control" ng-model="message" id="message"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="type">Type:</label>
+          <div class="col-sm-10">
+           <select pf-select ng-model="type" id="type" ng-options="o as o for o in types"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+           <button ng-click="notify()">Add notification</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-46"></pre>
+<script type="text/ng-template" id="script.js-46">
+    angular.module( 'patternfly.notification' ).controller( 'NotificationDemoCtrl', function( $scope, Notifications ) {
+
+      var typeMap = { 'Info': Notifications.info,
+                      'Success': Notifications.success,
+                      'Warning': Notifications.warn,
+                      'Danger': Notifications.error };
+
+      $scope.types = Object.keys(typeMap);
+
+      $scope.type = $scope.types[0];
+      $scope.message = 'Default notification message.';
+
+      $scope.notify = function () {
+        typeMap[$scope.type]($scope.message);
+      }
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.notification" ng-set-html="index.html-45" ng-eval-javascript="script.js-46"></div>
+</div></div>
+</div>

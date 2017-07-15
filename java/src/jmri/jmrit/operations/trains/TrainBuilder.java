@@ -275,12 +275,12 @@ public class TrainBuilder extends TrainCommon {
                 // if a location is skipped, no car drops or pick ups
             } else if (_train.skipsLocation(rl.getId())) {
                 addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocSkippedMaxTrain"),
-                        new Object[]{rl.getName(), _train.getName(), rl.getMaxTrainLength(),
+                        new Object[]{rl.getId(), rl.getName(), _train.getName(), rl.getMaxTrainLength(),
                                 Setup.getLengthUnit().toLowerCase()}));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
                 addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocNoDropsOrPickups"),
-                        new Object[]{rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase()}));
+                        new Object[]{rl.getId(), rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase()}));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else {
                 // we're going to use this location, so initialize the location
@@ -289,32 +289,32 @@ public class TrainBuilder extends TrainCommon {
                 // show the type of moves allowed at this location
                 if (location.isStaging() && rl.isPickUpAllowed() && rl == _train.getTrainDepartsRouteLocation()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDeparts"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()}));
                 } else if (location.isStaging() &&
                         rl.isDropAllowed() &&
                         rl == _train.getTrainTerminatesRouteLocation()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTerminates"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves()}));
                 } else if (rl == _train.getTrainTerminatesRouteLocation() &&
                         rl.isDropAllowed() &&
                         rl.isPickUpAllowed()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminatesMoves"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves()}));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()}));
                 } else if (!rl.isDropAllowed()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()}));
                 } else if (rl == _train.getTrainTerminatesRouteLocation()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminates"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves()}));
                 } else {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
-                            new Object[]{rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+                            new Object[]{rl.getId(), rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()}));
                 }
             }
@@ -1665,7 +1665,8 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 if (!car.getPickupScheduleId().equals(Car.NONE)) {
-                    if (car.getPickupScheduleId().equals(TrainManager.instance().getTrainScheduleActiveId())) {
+                    if (TrainManager.instance().getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
+                            car.getPickupScheduleId().equals(TrainManager.instance().getTrainScheduleActiveId())) {
                         car.setPickupScheduleId(Car.NONE);
                     } else {
                         TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(car.getPickupScheduleId());
@@ -3687,6 +3688,8 @@ public class TrainBuilder extends TrainCommon {
      * Checks all of the cars on an interchange track and returns the oldest
      * (FIFO) or newest (LIFO) car residing on that track. Note high priority
      * cars will be serviced first, then low.
+     * 
+     * Also see checkCarOrder(Car car).
      *
      * @param car the car being pulled from the interchange track
      * @return The FIFO car at this interchange
@@ -3695,6 +3698,8 @@ public class TrainBuilder extends TrainCommon {
         if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
             return car;
         }
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
+                new Object[]{car.toString(), car.getTrack().getTrackType(), car.getTrackName(), car.getTrack().getServiceOrder()}));
         log.debug(
                 "Get {} car ({}) from {} ({}), last moved date: {}", // NOI18N
                 car.getTrack().getServiceOrder(), car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
@@ -4070,7 +4075,7 @@ public class TrainBuilder extends TrainCommon {
             }
             if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchingLocation"),
-                        new Object[]{rld.getName(),}));
+                        new Object[]{rld.getName(), rld.getId()}));
             } else {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildRouteNoDropLocation"),
                         new Object[]{_train.getRoute().getName(), rld.getId(), rld.getName()}));

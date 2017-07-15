@@ -51,6 +51,10 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     // Clean Up local storage
     @Override
     public void dispose() {
+        if(ConsistList == null) {
+           // already disposed;
+           return;
+        }
         if (ConsistList.size() > 0) {
             // kill this consist
             DccLocoAddress locoAddress = ConsistList.get(0);

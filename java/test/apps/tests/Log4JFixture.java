@@ -15,7 +15,9 @@ public class Log4JFixture {
     public static void setUp() {
         // always init logging if needed
         initLogging();
-        //
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitely set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
         try {
             JUnitAppender.start();
         } catch (Throwable e) {

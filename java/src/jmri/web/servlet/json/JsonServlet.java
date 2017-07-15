@@ -149,7 +149,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGetList(type, request.getLocale()));
+                                array.addAll(service.doGetList(type, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;

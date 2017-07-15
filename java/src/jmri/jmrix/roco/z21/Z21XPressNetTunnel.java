@@ -12,11 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
- * Interface between z21 messages and an XPressNet stream.</P>
- * <P>
+ * Interface between z21 messages and an XPressNet stream.
+ * <p>
  * Parts of this code are derived from the
- * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.</P>
+ * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
  * @author	Paul Bender Copyright (C) 2014
  */
@@ -31,8 +30,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     private Z21SystemConnectionMemo _memo = null;
     private Thread sourceThread;
 
-    /*
-     * build a new XPressNet tunnel.
+    /**
+     * Build a new XPressNet tunnel.
      */
     public Z21XPressNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
@@ -76,12 +75,17 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         log.debug("Simulator Thread Started");
         for (;;) {
             XNetMessage m = readMessage();
-            message(m);
+            if(m != null) {
+               // don't forward a null message.
+               message(m);
+            }
         }
     }
 
-    // readMessage reads one incoming message from the buffer
-    // and sets outputBufferEmpty to true.
+    /**
+     * Read one incoming message from the buffer and set
+     * outputBufferEmpty to true.
+     */
     private XNetMessage readMessage() {
         XNetMessage msg = null;
         try {
@@ -95,9 +99,9 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @returns filled message
@@ -127,11 +131,10 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
-     *
      */
     private byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];
@@ -145,6 +148,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     }
 
     // Z21Listener interface methods.
+
     /**
      * Member function that will be invoked by a z21Interface implementation to
      * forward a z21 message from the layout.
@@ -185,6 +189,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     }
 
     // XNetListener Interface methods.
+
     /**
      * Member function that will be invoked by a XNetInterface implementation to
      * forward a XNet message from the layout.
@@ -224,14 +229,18 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // we don't do anything with timeouts.
     }
 
-    // package protected method to retrieve the stream port 
-    // controller associated with this tunnel.
+    /**
+     * Package protected method to retrieve the stream port controller
+     * associated with this tunnel.
+     */
     jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
        return xsc;
     }
 
-    // package protected method to set the stream port
-    // controller associated with this tunnel.
+    /**
+     * Package protected method to set the stream port controller
+     * associated with this tunnel.
+     */
     void setStreamPortController(jmri.jmrix.lenz.XNetStreamPortController x){
         xsc = x;
 
@@ -243,7 +252,6 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         //jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
         //jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
     }
-
 
     public void dispose(){
        if(xsc != null){

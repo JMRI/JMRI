@@ -41,7 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetThrottleTest.class));
-        suite.addTest(new TestSuite(XNetConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
@@ -56,7 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.li100f.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.li101.PackageTest.class));
         suite.addTest(jmri.jmrix.lenz.liusb.PackageTest.suite());
-        suite.addTest(jmri.jmrix.lenz.xntcp.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.xntcp.PackageTest.class));
         suite.addTest(jmri.jmrix.lenz.liusbserver.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.liusbethernet.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.PackageTest.suite());

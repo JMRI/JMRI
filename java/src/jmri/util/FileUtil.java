@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Set;
 import java.util.jar.JarFile;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -51,11 +53,10 @@ public final class FileUtil {
     static public final char SEPARATOR = '/'; // NOI18N
 
     /**
-     * The types of locations to use when falling back on default locations in {@link #findURL(java.lang.String, java.lang.String...)
-     * }.
+     * The types of locations to use when falling back on default locations in
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      */
     static public enum Location {
-
         INSTALLED, USER, ALL, NONE
     }
 
@@ -115,6 +116,55 @@ public final class FileUtil {
      */
     static public URL getURL(URI uri) {
         return FileUtilSupport.getDefault().getURL(uri);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within both the user and installed file locations.
+     *
+     * @param name the name of the file to find
+     * @param root the relative path to a directory in either or both of the
+     *             user or installed file locations; use a single period
+     *             character to refer to the root of the user or installed file
+     *             locations
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; or
+     *                                  if the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..)
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
+        return FileUtilSupport.getDefault().findFiles(name, root);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within the specified location.
+     *
+     * @param name     the name of the file to find
+     * @param root     the relative path to a directory in either or both of the
+     *                 user or installed file locations; use a single period
+     *                 character to refer to the root of the location
+     * @param location the location to search within
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; if
+     *                                  the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..); or if the location is
+     *                                  {@link Location#NONE}
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
+        return FileUtilSupport.getDefault().findFiles(name, root, location);
     }
 
     /**
@@ -532,13 +582,16 @@ public final class FileUtil {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
-     * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link #PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link #PROFILE} directory</li></ol>
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to

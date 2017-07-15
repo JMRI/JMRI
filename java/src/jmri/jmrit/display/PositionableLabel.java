@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,7 +162,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * Delayed setDisplayLevel for DnD
+     * Delayed setDisplayLevel for DnD.
+     *
+     * @param l the level to set
      */
     public void setLevel(int l) {
         _displayLevel = l;
@@ -542,7 +545,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * For item popups in Panel Editor
+     * For item popups in Panel Editor.
+     *
+     * @param pos    the container
+     * @param name   the name
+     * @param table  true if creating a table; false otherwise
+     * @param editor the associated editor
      */
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
         if (editor != null) {
@@ -589,12 +597,13 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public jmri.util.JmriJFrame _paletteFrame;
 
+    //
+    // ********** Methods for Item Popups in Control Panel editor *******************
+    //
     /**
-     * ********** Methods for Item Popups in Control Panel editor
-     * *******************
-     */
-    /**
-     * For item popups in Control Panel Editor
+     * Create a palette window.
+     *
+     * @param title the name of the palette
      */
     protected void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
@@ -736,7 +745,10 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * Create an image of icon with text overlaid
+     * Create an image of icon with overlaid text.
+     * @param text the text to overlay
+     * @param ic the icon containing the image
+     * @return the icon overlaying text on ic
      */
     protected NamedIcon makeTextOverlaidIcon(String text, NamedIcon ic) {
         String url = ic.getURL();
@@ -919,7 +931,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * Check if the component is still displayed, and should be stored.
+     *
+     * @return true if active; false otherwise
      */
     public boolean isActive() {
         return active;
@@ -980,6 +994,12 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.paintComponent(g);
         } else {
             Graphics2D gr = (Graphics2D) g.create();
+
+            // set antialiasing hint for macOS and Windows
+            // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+            if (SystemType.isMacOSX() || SystemType.isWindows()) {
+                gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            }
 
             switch (_popupUtil.getOrientation()) {
                 case PositionablePopupUtil.VERTICAL_UP:

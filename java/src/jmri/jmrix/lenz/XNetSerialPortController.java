@@ -1,10 +1,10 @@
 package jmri.jmrix.lenz;
 
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
 /**
  * Abstract base for classes representing a XNet communications port
@@ -25,6 +25,10 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
         super(new XNetSystemConnectionMemo());
         //option2Name = "Buffer";
         //options.put(option2Name, new Option("Check Buffer : ", validOption2));
+    }
+
+    public XNetSerialPortController(XNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     // base class. Implementations will provide InputStream and OutputStream

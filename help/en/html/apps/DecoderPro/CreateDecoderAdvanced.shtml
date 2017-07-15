@@ -614,8 +614,9 @@ selects the different algorithm needed here.
         &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
-          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
-          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory address.</li>
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory decoder address.</li>
+          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
+          <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
       </ul>
       <p>
         Note that this only works for
@@ -624,7 +625,31 @@ selects the different algorithm needed here.
         track).
       </p>
 
-      <a name="indexedcap" id="indexedcap"></a></a>
+      Note an element:
+      <pre style="font-family: monospace;">
+        &lt;variable &#8230; item="Short Address" &#8230;&gt;
+            &#8230;
+        &lt;/variable&gt;</pre>
+      or:
+      <pre style="font-family: monospace;">
+        &lt;variable &#8230; item="Long Address" &#8230;&gt;
+            &#8230;
+        &lt;/variable&gt;</pre>
+      is required so the Ops Mode programmer has an address to use.
+      Either form functions identically.
+      The "Address Type" parameter is the only way to specify whether the address is 9-bit or 11-bit.
+      <p>For a working example, see the
+      <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml"
+      target="_blank">xml/decoders/ESU_SwitchPilot.xml</a> file.
+      In the case of this example decoder, the address is stored in CVs 1 and 9 as per
+      <a href=
+      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
+            target="_blank">
+      NMRA standard 9.2.2</a>.
+      </p>
+
+      <a name="indexedcap" id="indexedcap"></a>
       <h4>Indexed CV Access</h4>
       To access indexed CVs, include this
       capability element:
@@ -688,7 +713,7 @@ selects the different algorithm needed here.
       <p>Long addresses can be accessed via "splitVal" type, as in
       the following example:</p>
       <pre style="font-family: monospace;">
-    &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
+    &lt;variable CV="1" item="Short Address" default="1" minOut="1"&gt;
         &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
     &lt;/variable&gt;
@@ -826,7 +851,7 @@ selects the different algorithm needed here.
       Care must be exercised when attempting to match against product ID in include or
       exclude attributes. The product ID is not matched against any value read from the
       decoder during
-      <a href="#id">identification<a>
+      <a href="#id">identification</a>
       but against the productID attribute specified in the decoder definition.
       This can particularly be a problem if the productID attribute has multiple values.
         For example:

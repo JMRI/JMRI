@@ -76,7 +76,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setShowAll(boolean showAll) {
         _showAll = showAll;
         updateList();
-        fireTableStructureChanged();
+        //fireTableStructureChanged();
         initTable();
     }
 
@@ -401,7 +401,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     train.build();
                 }
             });
-            build.setName("Build Train"); // NOI18N
+            build.setName("Build Train (train.getName())"); // NOI18N
             build.start();
             // print build report, print manifest, run or open file
         } else {
@@ -413,7 +413,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             } else if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
                 train.runFile();
             } else {
-                train.printManifestIfBuilt();
+                if (!train.printManifestIfBuilt()) {
+                    log.debug("Manifest file for train ({}) not found", train.getName());
+                    int result = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
+                            new Object[]{train.getName()}), Bundle.getMessage("TrainManifestFileError"),
+                            JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        train.setModified(true);
+                        if (!train.printManifestIfBuilt()) {
+                            log.error("Not able to create manifest for train ({})", train.getName());
+                        }
+                    }
+                }
             }
         }
     }

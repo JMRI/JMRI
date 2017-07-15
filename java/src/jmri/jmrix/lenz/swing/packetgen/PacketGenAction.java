@@ -1,7 +1,5 @@
 /**
- * PacketGenAction.java
- *
- * Description: Swing action to create and register a XpressNet PacketGenFrame
+ * Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -37,6 +35,8 @@ public class PacketGenAction extends AbstractXPressNetAction {
         // connect to the TrafficController
         f.connect(_memo.getXNetTrafficController());
     }
+
     private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+
 }
 

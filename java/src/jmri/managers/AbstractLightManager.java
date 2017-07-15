@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public abstract class AbstractLightManager extends AbstractManager
-        implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
+        implements LightManager, java.beans.PropertyChangeListener {
 
     public AbstractLightManager() {
         super();
