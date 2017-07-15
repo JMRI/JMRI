@@ -8,7 +8,7 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     SprogSystemConnectionMemo _memo = null;
@@ -22,6 +22,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     // Sprog-specific methods
+
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
@@ -36,7 +37,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used; convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SprogTurnoutManager instance() {

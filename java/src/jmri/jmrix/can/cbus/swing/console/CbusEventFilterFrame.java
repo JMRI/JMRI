@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame to control an instance of CBUS filter to filter events
+ * Frame to control an instance of CBUS filter to filter events.
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
@@ -28,7 +28,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     private CbusConsolePane _console = null;
 
     /**
-     * Creates a new instance of CbusFilterFrame
+     * Create a new instance of CbusFilterFrame.
      */
     public CbusEventFilterFrame(CbusConsolePane console) {
         super();
@@ -47,7 +47,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     }
 
     protected String title() {
-        return "CBUS EventFilter";
+        return Bundle.getMessage("EventFilterTitle");
     }
 
     protected void init() {
@@ -70,7 +70,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
             // Pane to hold a filter
             filterPanes[i] = new CbusEventFilterPanel(this, i);
             filterPanes[i].setBorder(BorderFactory.createTitledBorder(
-                    BorderFactory.createEtchedBorder(), "Filter " + (i + 1)));
+                    BorderFactory.createEtchedBorder(), Bundle.getMessage("EventFilterTitleX", (i + 1))));
             filterPanes[i].initComponents(i);
             getContentPane().add(filterPanes[i]);
         }

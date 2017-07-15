@@ -57,7 +57,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Store in InstanceManager with proper ID for later retrieval as a generic
-     * system
+     * system.
      */
     public void register() {
         log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
@@ -65,8 +65,8 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Provides access to the system prefix string. This was previously called
-     * the "System letter"
+     * Provide access to the system prefix string.
+     * This was previously called the "System letter".
      *
      * @return System prefix
      */
@@ -104,8 +104,8 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Provides access to the system user name string. This was previously fixed
-     * at configuration time.
+     * Provide access to the system user name string.
+     * This was previously fixed at configuration time.
      *
      * @return User name
      */

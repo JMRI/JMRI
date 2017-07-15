@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter representing a Z21 communication port Note: This connection uses UDP
- * for communication.
+ * Adapter representing a Z21 communication port.
  * <p>
+ * Note: This connection uses UDP for communication.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010,2011,2014

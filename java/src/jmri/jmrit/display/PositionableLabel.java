@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -993,6 +994,12 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.paintComponent(g);
         } else {
             Graphics2D gr = (Graphics2D) g.create();
+
+            // set antialiasing hint for macOS and Windows
+            // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+            if (SystemType.isMacOSX() || SystemType.isWindows()) {
+                gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            }
 
             switch (_popupUtil.getOrientation()) {
                 case PositionablePopupUtil.VERTICAL_UP:

@@ -43,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure C/MRI nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
 
         details.add(b);
 

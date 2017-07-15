@@ -157,10 +157,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (block == null) {
             //not found, create a new jmri.Block
             String s = "";
-            boolean found = true;
 
             //create a unique system name
-            while (found) {
+            for (boolean found = true; found;) {
                 s = "IB" + jmriblknum;
                 jmriblknum++;
                 block = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(s);
