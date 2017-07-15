@@ -864,7 +864,6 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
             <scope>compile</scope>
-            <optional>true</optional><!-- only needed to compile, not to run -->
         </dependency>
     </dependencies>
 
