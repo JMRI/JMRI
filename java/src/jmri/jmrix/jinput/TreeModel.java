@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * constructor is still active.
  *
  * @author Bob Jacobsen Copyright 2008, 2010
-  */
+ */
 public final class TreeModel extends DefaultTreeModel {
 
     private TreeModel() {
@@ -44,7 +44,7 @@ public final class TreeModel extends DefaultTreeModel {
         // load initial USB objects
         boolean pass = loadSystem();
 
-        // If you don't call loadSystem, the following line was 
+        // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         // start the USB gathering
@@ -79,7 +79,9 @@ public final class TreeModel extends DefaultTreeModel {
 
     /**
      * Provide access to the model. There's only one, because access to the USB
-     * subsystem is required
+     * subsystem is required.
+     *
+     * @return the default instance of the TreeModel; creating it if necessary
      */
     static public TreeModel instance() {
         if (instanceValue == null) {
@@ -116,15 +118,15 @@ public final class TreeModel extends DefaultTreeModel {
                     EventQueue queue = controllers[i].getEventQueue();
 
                     // Create an event object to pass down to get populated with the information.
-                    // The underlying system may not hold the data in a JInput friendly way, 
+                    // The underlying system may not hold the data in a JInput friendly way,
                     // so it only gets converted when asked for.
                     Event event = new Event();
 
-                    // Now we read from the queue until it's empty. 
-                    // The 3 main things from the event are a time stamp 
-                    // (it's in nanos, so it should be accurate, 
-                    // but only relative to other events. 
-                    // It's purpose is for knowing the order events happened in. 
+                    // Now we read from the queue until it's empty.
+                    // The 3 main things from the event are a time stamp
+                    // (it's in nanos, so it should be accurate,
+                    // but only relative to other events.
+                    // It's purpose is for knowing the order events happened in.
                     // Then we can get the component that this event relates to, and the new value.
                     while (queue.getNextEvent(event)) {
                         Component comp = event.getComponent();
@@ -226,7 +228,7 @@ public final class TreeModel extends DefaultTreeModel {
             ca = null;
             return false;
         }
-        
+
         for (int i = 0; i < ca.length; i++) {
             // Get this controllers components (buttons and axis)
             Component[] components = ca[i].getComponents();
@@ -249,7 +251,7 @@ public final class TreeModel extends DefaultTreeModel {
                 dNode.setValue(0.0f);
             }
         }
-        
+
         return true;
     }
 

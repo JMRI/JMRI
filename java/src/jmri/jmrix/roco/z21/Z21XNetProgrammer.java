@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Lenz XpressNet.
- * <P>
+ * Z21 Programmer support for Lenz XpressNet.
+ * <p>
  * The read operation state sequence is:
  * <UL>
  * <LI>Send Register Mode / Paged mode /Direct Mode read request
@@ -79,7 +79,9 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         }
     }
 
-    // programming interface
+    /**
+     * Programming interface.
+     */
     @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)

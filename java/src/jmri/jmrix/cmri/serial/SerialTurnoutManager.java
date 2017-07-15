@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -61,7 +62,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         String conflict = "";
         conflict = _memo.isOutputBitFree(nAddress, bitNum);
         if ((!conflict.equals("")) && (!conflict.equals(sName))) {
-            log.error(sName + " assignment conflict with " + conflict + ".");
+            log.error("{} assignment conflict with {}.", sName, conflict);
             notifyTurnoutCreationError(conflict, bitNum);
             return (null);
         }
@@ -72,7 +73,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!_memo.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
@@ -81,15 +82,17 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to notify user of Turnout creation error.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, "ERROR - The output bit, "
-                + bitNum + ", is currently assigned to " + conflict + ". Turnout can not be "
-                + "created as you specified.", "C/MRI Assignment Conflict",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
+                Bundle.getMessage("ErrorAssignLine2T"),
+                Bundle.getMessage("ErrorAssignTitle"),
+                JOptionPane.INFORMATION_MESSAGE, null);
     }
 
     /**
      * Get from the user, the number of addressed bits used to control a
-     * turnout. Normally this is 1, and the default routine returns 1
+     * turnout.
+     * <p>
+     * Normally this is 1, and the default routine returns 1
      * automatically. Turnout Managers for systems that can handle multiple
      * control bits should override this method with one which asks the user to
      * specify the number of control bits. If the user specifies more than one
@@ -106,7 +109,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // ask user how many bits should control the turnout - 1 or 2
         int iNum = selectNumberOfControlBits();
-        if (iNum == javax.swing.JOptionPane.CLOSED_OPTION) {
+        if (iNum == JOptionPane.CLOSED_OPTION) {
             /* user cancelled without selecting an option */
             iNum = 1;
             log.warn("User cancelled without selecting number of output bits. Defaulting to 1.");
@@ -129,7 +132,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             String conflict = "";
             conflict = _memo.isOutputBitFree(nAddress, bitNum);
             if (!conflict.equals("")) {
-                log.error("Assignment conflict with " + conflict + ". Turnout not created.");
+                log.error("Assignment conflict with {}. Turnout not created.", conflict);
                 notifySecondBitConflict(conflict, bitNum);
                 return (0);
             }
@@ -140,7 +143,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Get from the user, the type of output to be used bits to control a
-     * turnout. Normally this is 0 for 'steady state' control, and the default
+     * turnout.
+     * <p>
+     * Normally this is 0 for 'steady state' control, and the default
      * routine returns 0 automatically. Turnout Managers for systems that can
      * handle pulsed control as well as steady state control should override
      * this method with one which asks the user to specify the type of control
@@ -153,7 +158,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
         //   'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
-        if (iType == javax.swing.JOptionPane.CLOSED_OPTION) {
+        if (iType == JOptionPane.CLOSED_OPTION) {
             /* user cancelled without selecting an output type */
             iType = 0;
             log.warn("User cancelled without selecting output type. Defaulting to 'steady state'.");
@@ -164,47 +169,52 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to allow user to specify one or two output bits for turnout
-     * control Note: This method returns 1 or 2 if the user selected, or 0 if
-     * the user cancelled without selecting.
+     * control.
+     *
+     * @return 1 or 2 if the user selected, or 0 if the user cancelled without selecting.
      */
     public int selectNumberOfControlBits() {
         int iNum = 0;
-        iNum = javax.swing.JOptionPane.showOptionDialog(null,
-                "How many C/MRI output bits should be used to control this turnout?",
-                "C/MRI Turnout Question", javax.swing.JOptionPane.DEFAULT_OPTION,
-                javax.swing.JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"Use 1 bit", "Use 2 bits"}, "Use 1 bit");
+        iNum = JOptionPane.showOptionDialog(null,
+                Bundle.getMessage("QuestionBitsDialog"),
+                Bundle.getMessage("CmriTurnoutTitle"), JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, new String[]{Bundle.getMessage("BitOption1"), Bundle.getMessage("BitOption2")}, Bundle.getMessage("BitOption1"));
         return iNum;
     }
 
     /**
      * Public method to allow user to specify pulsed or steady state for two
-     * output bits for turnout control Note: This method returns 1 for steady
-     * state or 2 for pulsed if the user selected, or 0 if the user cancelled
-     * without selecting.
+     * output bits for turnout control.
+     *
+     * @return 1 for steady state or 2 for pulsed if the user selected,
+     * or 0 if the user cancelled without selecting.
      */
     public int selectOutputType() {
         int iType = 0;
-        iType = javax.swing.JOptionPane.showOptionDialog(null,
-                "Should the C/MRI output bit(s) be 'steady state' or 'pulsed'?",
-                "C/MRI Output Bits Question", javax.swing.JOptionPane.DEFAULT_OPTION,
-                javax.swing.JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"Steady State Output", "Pulsed Output"}, "Steady State Output");
+        iType = JOptionPane.showOptionDialog(null,
+                Bundle.getMessage("QuestionPulsedDialog"),
+                Bundle.getMessage("CmriBitsTitle"), JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, new String[]{Bundle.getMessage("PulsedOptionSteady"), Bundle.getMessage("PulsedOptionPulsed")},
+                Bundle.getMessage("PulsedOptionSteady"));
         return iType;
     }
 
     /**
      * Public method to notify user when the second bit of a proposed two output
-     * bit turnout has a conflict with another assigned bit
+     * bit turnout has a conflict with another assigned bit.
      */
     public void notifySecondBitConflict(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, "The second output bit, " + bitNum
-                + ", is currently assigned to " + conflict + ". Turnout cannot be created as "
-                + "you specified.", "C/MRI Assignment Conflict",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +
+                Bundle.getMessage("ErrorAssignLine2X", Bundle.getMessage("BeanNameTurnout")),
+                Bundle.getMessage("ErrorAssignTitle"),
+                JOptionPane.INFORMATION_MESSAGE, null);
     }
 
-    //Turnout format is more than a simple format.
+    /**
+     * Turnout format is more than a simple format.
+     */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -229,7 +239,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             //Address format passed is in the form node:address
             seperator = curAddress.indexOf(":");
             nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-            bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            // check for non-numerical chars
+            try {
+                bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignFormat2", curAddress) + "\n" +
+                        Bundle.getMessage("ErrorAssignFormatHelp"),
+                        Bundle.getMessage("ErrorAssignTitle"),
+                        JOptionPane.INFORMATION_MESSAGE, null);
+                throw new JmriException("Part 2 of " + curAddress + " is not an integer");
+            }
             tmpSName = _memo.makeSystemName("T", nAddress, bitNum);
         } else if (curAddress.contains("B") || (curAddress.contains("b"))) {
             curAddress = curAddress.toUpperCase();
@@ -249,7 +268,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 //We do this to simply check that the value passed is a number!
                 Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
+                // show dialog to user
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignFormat", curAddress) + "\n" +
+                        Bundle.getMessage("ErrorAssignFormatHelp"),
+                        Bundle.getMessage("ErrorAssignTitle"),
+                        JOptionPane.INFORMATION_MESSAGE, null);
+                throw new JmriException("Address " + curAddress + " is not an integer");
             }
             tmpSName = prefix + "T" + curAddress;
             bitNum = _memo.getBitFromSystemName(tmpSName);
@@ -262,7 +286,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nAddress = 0;
 
     /**
-     * A method that returns the next valid free turnout hardware address
+     * Return the next valid free turnout hardware address.
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -314,5 +338,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-

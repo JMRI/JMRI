@@ -83,7 +83,7 @@ public class SCWarrant extends Warrant {
         }
         if (_runMode == MODE_LEARN) {
             abortWarrant("notifyThrottleFound: No LEARN mode for SCWarrant");
-            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, getSpeedUtil());
+            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             firePropertyChange("throttleFail", null, Bundle.getMessage("noThrottle"));
             return;
         }
@@ -115,7 +115,7 @@ public class SCWarrant extends Warrant {
                     aspect = ((SignalMast) _nextSignal).getAspect();
                 }
             }
-            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, getSpeedUtil().getSpeed(),signal,aspect);
+            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, _engineer.getSpeed(),signal,aspect);
         }
     }
 
@@ -300,7 +300,7 @@ public class SCWarrant extends Warrant {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }
-        if (getSpeedUtil().getSpeed() == SPEED_STOP) {
+        if (_engineer.getSpeed() == SPEED_STOP) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }

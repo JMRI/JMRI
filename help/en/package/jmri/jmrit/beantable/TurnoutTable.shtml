@@ -354,6 +354,14 @@
         "Thrown". When Sensor 2 is "Active", the turnout is known
         to be "Closed" (normal).</dd>
 
+        <dt>DELAYED</dt>
+
+        <dd>When something tells the Turnout to change, 
+        it immediately starts the operation and goes to
+        the INCONSISTENT state to reflect that the points
+        are moving.  After a few seconds delay, the
+        operation completes and the final state is reported.</dd>
+
         <dt>MONITORING</dt>
 
         <dd>Default for LocoNet Turnouts (and probably XpressNet

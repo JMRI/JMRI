@@ -9,7 +9,7 @@ import java.awt.Frame;
  * Typically used by some component that wants to display a pane (for example,
  * in an independent JmriJFrame or as part of a paned interface) to do some more
  * stuff. Rather than have the component build it's own window, etc it invokes
- * one of these, so that the position and display of that component can
+ * one of these, so that the position and display of that component can be
  * controlled.
  * <p>
  * Any {@link JmriAbstractAction} that uses the show() method will have its

@@ -113,8 +113,8 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     /**
-     * set up all of the other objects to operate with an ECOS command station
-     * connected to this port
+     * Set up all of the other objects to operate with a Marklin command station
+     * connected to this port.
      */
     @Override
     public void configure() {

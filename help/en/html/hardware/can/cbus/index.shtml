@@ -158,7 +158,7 @@
 
       <h2>JMRI MERG CBUS Tools</h2><img src=
       "../images/MERG_Menu.png" alt="MERG menu" align="right"
-      height="132" width="227">
+      height="134" width="188">
 
       <p>The MERG menu contains 5 tools:</p>
 
@@ -175,17 +175,17 @@
         "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
         Event Capture Tool</a></li>
 
-        <li>Event Table</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
+        Event Table</a></li>
 
         <li><a href=
-        "../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
         Node Config Tool</a></li>
-      </ul><a name="documentation" id="documentation"></a>
-
+      </ul>
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
-
       <ul>
         <li>Naming of CBUS inputs and outputs is described <a href=
         "Names.shtml">here</a>.</li>
@@ -195,7 +195,16 @@
 
         <li><a href="../index.shtml">Main CAN Support Help page</a>
         including links to more tools.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <h3>Third Party/Support</h3>
+      <ul>
+        <li><a href="http://www.merg.org.uk/merg_resources/cbus-dcc.php">
+        The Model Electronic Railway Group MERG-DCC help page</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

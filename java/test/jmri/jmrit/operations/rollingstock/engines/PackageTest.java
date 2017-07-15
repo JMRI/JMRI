@@ -44,6 +44,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEnginesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEngineRosterActionTest.class));
         return suite;
     }
 
