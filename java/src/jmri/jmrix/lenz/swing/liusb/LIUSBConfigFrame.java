@@ -35,7 +35,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("Xpressnet address: "));
+        pane0.add(new JLabel("XpressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
