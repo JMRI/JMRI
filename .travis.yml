@@ -11,6 +11,7 @@ before_install:
   # install graphviz on macOS
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
+  - export MAVEN_OPTS=-Xmx1536m
 
 install:
   - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
