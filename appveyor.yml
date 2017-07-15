@@ -11,8 +11,7 @@ install:
 build: off
 
 environment:
-  global:
-    - MAVEN_OPTS: "-Xmx1536M"
+  - MAVEN_OPTS: "-Xmx1536M"
 
 before_test:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
