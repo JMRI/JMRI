@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
@@ -47,15 +46,14 @@ public class PaneProgPaneTest {
             }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         log.debug("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
-        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null) {
             @Override
             public JPanel newColumn(Element e, boolean a, Element el) {
                 colCount++;
@@ -81,14 +79,13 @@ public class PaneProgPaneTest {
             }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
-        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null) {
             @Override
             public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) {
                 varCount++;
@@ -113,9 +110,8 @@ public class PaneProgPaneTest {
             }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -138,7 +134,7 @@ public class PaneProgPaneTest {
         log.debug("Two elements loaded");
 
         // test by invoking
-        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
         assertEquals("variable list length", 2, pane.varList.size());
         assertEquals("1st variable index ", Integer.valueOf(1), pane.varList.get(0));
         assertEquals("2nd variable index ", Integer.valueOf(0), pane.varList.get(1));
@@ -163,9 +159,8 @@ public class PaneProgPaneTest {
         };
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -183,7 +178,7 @@ public class PaneProgPaneTest {
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
 
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
 
         p.resetCv(2, 20);
         p.resetCv(3, 30);
@@ -219,9 +214,8 @@ public class PaneProgPaneTest {
             }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -242,8 +236,7 @@ public class PaneProgPaneTest {
         varModel.setRow(1, el1);
         log.debug("Two elements loaded");
 
-//        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
 
         p.resetCv(2, -1);
         p.resetCv(3, -1);
@@ -280,9 +273,8 @@ public class PaneProgPaneTest {
             }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
 
         // have to add a couple of defined variables
         int row = 0;
@@ -320,7 +312,7 @@ public class PaneProgPaneTest {
                 .addContent(new Element("decVal"));
         varModel.setRow(row++, el3);
 
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
 
         // start actual testing
         Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true, false));

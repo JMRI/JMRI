@@ -761,9 +761,9 @@
             <version>${openlcb.version}</version>
         </dependency>
         <dependency>
-            <groupId>ch.ntb</groupId>
-            <artifactId>usb</artifactId>
-            <version>0.5.7</version>
+            <groupId>org.usb4java</groupId>
+            <artifactId>usb4java-javax</artifactId>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>net.jcip</groupId>
