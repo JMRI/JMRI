@@ -89,7 +89,9 @@ mostly-likely-right one when coding.
       javax.swing.SwingUtilities.invokeAndWait(r); these should be
       migrated to the newer JMRI-specific methods as time is
       available to keep our code just a tiny bit cleaner and more
-      flexible.) <!--#include virtual="/Footer" --></p>
+      flexible.) 
+      
+      <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
