@@ -1870,7 +1870,7 @@ public class LayoutEditorTools {
 
         double delX = point1.getX() - point2.getX();
         double delY = point1.getY() - point2.getY();
-        if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
+        if (Math.abs(delX) > Math.abs(delY)) {
             // track is Horizontal
             if (delX > 0.0) {
                 return false;
@@ -2284,7 +2284,7 @@ public class LayoutEditorTools {
         double delX = point1.getX() - point2.getX();
         double delY = point1.getY() - point2.getY();
 
-        if (Math.abs(delX) > 2.0 * Math.abs(delY)) {
+        if (Math.abs(delX) >= Math.abs(delY)) {
             if (delX > 0.0) {
                 eastTrack = track1;
                 westTrack = track2;
@@ -2292,23 +2292,13 @@ public class LayoutEditorTools {
                 eastTrack = track2;
                 westTrack = track1;
             }
-        } else if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
+        } else {
             if (delY > 0.0) {
                 eastTrack = track1;	 // south
                 westTrack = track2;	 // north
             } else {
                 eastTrack = track2;	 // south
                 westTrack = track1;	 // north
-            }
-        }
-        if (eastTrack == null) {
-            // did not meet the horizontal or vertical test, assume horizontal
-            if (delX > 0.0) {
-                eastTrack = track1;
-                westTrack = track2;
-            } else {
-                eastTrack = track2;
-                westTrack = track1;
             }
         }
         return true;
