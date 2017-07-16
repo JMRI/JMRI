@@ -23,7 +23,7 @@ public class Z21XNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager 
     /**
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface.
-     * Z21 XPressNet supports 14,28 and 128 speed step modes.
+     * Z21 XpressNet supports 14,28 and 128 speed step modes.
      */
     @Override
     public int supportedSpeedModes() {

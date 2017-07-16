@@ -20,8 +20,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
-     * command station
-     *
+     * command station.
      */
     public XNetConsistManager(XNetSystemConnectionMemo systemMemo) {
         super();
@@ -32,7 +31,6 @@ public class XNetConsistManager extends AbstractConsistManager {
 
     /**
      * This implementation does command station consists, so return true.
-     *
      */
     @Override
     public boolean isCommandStationConsistPossible() {
@@ -42,8 +40,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     /**
      * Does a CS consist require a separate consist address? CS consist
      * addresses are assigned by the command station, so no consist address is
-     * needed, so return false
-     *
+     * needed, so return false.
      */
     @Override
     public boolean csConsistNeedsSeperateAddress() {
@@ -51,7 +48,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     }
 
     /**
-     * Add a new XNetConsist with the given address to consistTable/consistList
+     * Add a new XNetConsist with the given address to consistTable/consistList.
      */
     @Override
     public Consist addConsist(DccLocoAddress address) {
@@ -85,7 +82,9 @@ public class XNetConsistManager extends AbstractConsistManager {
         return !requestingUpdate;
     }
 
-    // Internal class to read consists from the command station
+    /**
+     * Internal class to read consists from the Command Station.
+     */
     private class XNetConsistReader implements Runnable, XNetListener {
 
         // Storage for addresses
@@ -159,7 +158,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     // of the stack, then we can quit. Otherwise,
                     // we just request the next address.
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in SEARCHREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in SEARCHREQUESTSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -200,7 +199,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUSEARCHSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in MUSEARCHSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUSEARCHSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -230,7 +229,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUINFOREQUESTSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in MUINFOREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUINFOREQUESTSENT state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
                         CurrentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
@@ -240,7 +239,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case DHADDRESS1INFO:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in DHADDRESS1INFO state.  Message is: " + l.toString());
+                        log.debug("Message Received in DHADDRESS1INFO state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         DccLocoAddress firstMember = new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99);
@@ -278,7 +277,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case DHADDRESS2INFO:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in DHADDRESS2INFO state.  Message is: " + l.toString());
+                        log.debug("Message Received in DHADDRESS2INFO state.  Message is: " + l.toString());
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         CurrentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
@@ -291,17 +290,21 @@ public class XNetConsistManager extends AbstractConsistManager {
                 case IDLE:
                 default:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in default(IDLE) state.  Message is: " + l.toString());
+                        log.debug("Message Received in default(IDLE) state.  Message is: " + l.toString());
                     }
             }
         }
 
-        // Listener for messages to the command station
+        /**
+         * Listener for messages to the command station.
+         */
         @Override
         public void message(XNetMessage l) {
         }
 
-        // Handle a timeout notification
+        /**
+         * Handle a timeout notification.
+         */
         @Override
         public void notifyTimeout(XNetMessage msg) {
             if (log.isDebugEnabled()) {
@@ -309,5 +312,6 @@ public class XNetConsistManager extends AbstractConsistManager {
             }
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
 }

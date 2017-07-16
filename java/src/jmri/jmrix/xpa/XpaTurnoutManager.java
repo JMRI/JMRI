@@ -3,7 +3,7 @@ package jmri.jmrix.xpa;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for Xpa+Modem connections to XPressNet Based
+ * Implement turnout manager for Xpa+Modem connections to XpressNet Based
  * systems.
  * <p>
  * System names are "PTnnn", where nnn is the turnout number without padding.

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,16 +32,14 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     JButton nextButton = new JButton("Next Entry");
     JButton previousButton = new JButton("Previous Entry");
-    JButton deleteButton = new JButton("Delete Entry");
-    JButton refreshButton = new JButton("Refresh");
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton refreshButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JLabel CurrentStatus = new JLabel(" ");
 
     JTextField adrTextField = new javax.swing.JTextField(4);
 
     StackMonDataModel stackModel = null;
     javax.swing.JTable stackTable = null;
-
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.stackmon.StackMonBundle");
 
     private boolean _getAll = false; // flag to know if get all or 
     // get next/previous was pressed
@@ -65,7 +62,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // Change the text on the nextButton according to the resource 
         // bundle
-        nextButton.setText(rb.getString("NextButtonLabel"));
+        nextButton.setText(Bundle.getMessage("NextButtonLabel"));
 
         // Set the nextButton to visible
         nextButton.setVisible(true);
@@ -80,7 +77,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // Change the text on the previousButton according to the resource 
         // bundle
-        previousButton.setText(rb.getString("PreviousButtonLabel"));
+        previousButton.setText(Bundle.getMessage("PreviousButtonLabel"));
 
         // set the previous button to visible.
         previousButton.setVisible(true);
@@ -91,7 +88,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // Change the text on the deleteButton according to the resource 
         // bundle
-        deleteButton.setText(rb.getString("DeleteButtonLabel"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
 
         // add listener object to remove the current entry
         deleteButton.addActionListener(new ActionListener() {
@@ -114,7 +111,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // Change the text on the nextButton according to the resource 
         // bundle
-        refreshButton.setText(rb.getString("RefreshButtonLabel"));
+        refreshButton.setText(Bundle.getMessage("RefreshButtonLabel"));
 
         // Set the nextButton to visible
         refreshButton.setVisible(true);
@@ -123,7 +120,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         adrTextField.setVisible(true);
 
         // general GUI config
-        setTitle(rb.getString("StackMonitorTitle"));
+        setTitle(Bundle.getMessage("StackMonitorTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -263,7 +260,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // The XNet Listener Interface
-    // We need to be able to recieve information from the command station
+    // We need to be able to receive information from the command station
     @Override
     public void message(XNetReply r) {
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
@@ -271,9 +268,9 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             Integer intAddress = Integer.valueOf(address);
             switch (r.getElement(1)) {
                 case XNetConstants.LOCO_SEARCH_RESPONSE_N:
-                    CurrentStatus.setText(rb.getString("SearchNormal"));
+                    CurrentStatus.setText(Bundle.getMessage("SearchNormal"));
                     adrTextField.setText("" + address);
-                    stackModel.updateData(intAddress, rb.getString("SearchNormal"));
+                    stackModel.updateData(intAddress, Bundle.getMessage("SearchNormal"));
                     // Request Address Status
                     // requestStatus();
                     // requestFunctionStatus();
@@ -282,9 +279,9 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
-                    CurrentStatus.setText(rb.getString("SearchDH"));
+                    CurrentStatus.setText(Bundle.getMessage("SearchDH"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
-                    stackModel.updateData(intAddress, rb.getString("SearchDH"));
+                    stackModel.updateData(intAddress, Bundle.getMessage("SearchDH"));
                     // Request Address Status
                     // requestStatus();
                     // requestFunctionStatus();
@@ -293,9 +290,9 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
-                    CurrentStatus.setText(rb.getString("SearchMUBase"));
+                    CurrentStatus.setText(Bundle.getMessage("SearchMUBase"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
-                    stackModel.updateData(intAddress, rb.getString("SearchMUBase"));
+                    stackModel.updateData(intAddress, Bundle.getMessage("SearchMUBase"));
                     // Request Address Status
                     // requestStatus();
                     // requestFunctionStatus();
@@ -304,9 +301,9 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
-                    CurrentStatus.setText(rb.getString("SearchMU"));
+                    CurrentStatus.setText(Bundle.getMessage("SearchMU"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
-                    stackModel.updateData(intAddress, rb.getString("SearchMU"));
+                    stackModel.updateData(intAddress, Bundle.getMessage("SearchMU"));
                     // Request Address Status
                     // requestStatus();
                     // requestFunctionStatus();
@@ -315,7 +312,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_NO_RESULT:
-                    CurrentStatus.setText(rb.getString("SearchFail"));
+                    CurrentStatus.setText(Bundle.getMessage("SearchFail"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
                     if (_getAll) {
                         _getAll = false;  //finished getting all entries

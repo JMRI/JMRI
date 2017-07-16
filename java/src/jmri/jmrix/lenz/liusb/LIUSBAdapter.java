@@ -22,7 +22,7 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
+ * Provide access to XpressNet via a LIUSB on an FTDI Virtual Comm Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author Paul Bender Copyright (C) 2005-2010
@@ -38,7 +38,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
