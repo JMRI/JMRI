@@ -73,7 +73,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
-            // deligate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
         }
         return null;
@@ -94,7 +94,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            return true;
         }
         if (_xnettunnel!=null) {
-            // deligate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
         }
         return false; // nothing, by default
@@ -113,7 +113,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T) getReporterManager();
         }
         if (_xnettunnel!=null) {
-            // delegate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
         }
         return null; // nothing, by default
@@ -138,7 +138,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
-        // add an XPressNet Tunnel.
+        // add an XpressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
 
         // set up the Reporter Manager

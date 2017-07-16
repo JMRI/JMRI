@@ -30,6 +30,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
@@ -99,7 +102,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
     }
 
-    public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) {
+    public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) throws JsonException {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
             group = null;
@@ -149,8 +152,16 @@ public class JsonRosterHttpService extends JsonHttpService {
      * @param locale the client's Locale
      * @param entry  A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
+     * @throws jmri.server.json.JsonException if an error needs to be reported
+     *                                        to the user
      */
-    public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry) {
+    public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry) throws JsonException {
+        String entryPath;
+        try {
+            entryPath = "/" + JsonRoster.ROSTER + "/" + URLEncoder.encode(entry.getId(), StandardCharsets.UTF_8.toString()) + "/";
+        } catch (UnsupportedEncodingException ex) {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnencodeable", JsonRoster.ROSTER_ENTRY, entry.getId(), NAME));
+        }
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, JsonRoster.ROSTER_ENTRY);
         ObjectNode data = root.putObject(DATA);
@@ -166,10 +177,10 @@ public class JsonRosterHttpService extends JsonHttpService {
         data.put(COMMENT, entry.getComment());
         data.put(MAX_SPD_PCT, Integer.toString(entry.getMaxSpeedPCT()));
         data.put(IMAGE, (entry.getImagePath() != null)
-                ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + IMAGE
+                ? entryPath + IMAGE
                 : null);
         data.put(ICON, (entry.getIconPath() != null)
-                ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + ICON
+                ? entryPath + ICON
                 : null);
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
         data.put(JsonRoster.DATE_MODIFIED, (entry.getDateModified() != null)
@@ -182,10 +193,10 @@ public class JsonRosterHttpService extends JsonHttpService {
             label.put(LABEL, entry.getFunctionLabel(i));
             label.put(LOCKABLE, entry.getFunctionLockable(i));
             label.put(ICON, (entry.getFunctionImage(i) != null)
-                    ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + F + i + "/" + ICON
+                    ? entryPath + F + i + "/" + ICON
                     : null);
             label.put(SELECTED_ICON, (entry.getFunctionSelectedImage(i) != null)
-                    ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + F + i + "/" + SELECTED_ICON
+                    ? entryPath + F + i + "/" + SELECTED_ICON
                     : null);
             labels.add(label);
         }

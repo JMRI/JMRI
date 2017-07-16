@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * Handle configuring an XPressNet layout connection via a LIUSB Server.
+ * Handle configuring an XpressNet layout connection via a LIUSB Server.
  * <P>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *

@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
@@ -25,8 +24,8 @@ public class LZV100Action extends AbstractXPressNetAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create an LZV100Frame
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lzv100.LZV100Bundle");
-        LZV100Frame f = new LZV100Frame(rb.getString("LZV100Config"), _memo);
+        LZV100Frame f = new LZV100Frame(Bundle.getMessage("LZV100Config"), _memo);
         f.setVisible(true);
     }
+
 }

@@ -258,7 +258,7 @@ public class XNetMessageTest{
 
        // both thrown and close generates an error message.
        m = XNetMessage.getTurnoutCommandMsg(5,true,true,false);
-       jmri.util.JUnitAppender.assertErrorMessage("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+       jmri.util.JUnitAppender.assertErrorMessage("XpressNet turnout logic can't handle both THROWN and CLOSED yet");
     }
 
     @Test
@@ -614,7 +614,7 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringDisolveDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getDisolveDoubleHeaderMsg(1234);
-       Assert.assertEquals("Monitor String","Double Header Request: Disolve Double Header that includes mobile decoder 1234",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Double Header Request: Dissolve Double Header that includes mobile decoder 1234",m.toMonitorString());
     }
 
     @Test

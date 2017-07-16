@@ -40,7 +40,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
           // the address sent byte the Z21 is one less than what JMRI's 
-          // XPressNet code (and lenz systems) expect.
+          // XpressNet code (and lenz systems) expect.
           address = address + 1; 
           if(log.isDebugEnabled()) {
                log.debug("message has address: {}",address);
@@ -57,7 +57,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
              ((Z21XNetTurnout) getBySystemName(s)).message(l);
           }
         } else {
-          super.message(l); // the the XPressNetTurnoutManager code 
+          super.message(l); // the the XpressNetTurnoutManager code
                             // handle any other replies.
         }
     }

@@ -83,5 +83,4 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
-
 }

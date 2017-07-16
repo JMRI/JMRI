@@ -175,7 +175,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 reply=getHardwareVersionReply();
                 break;
              case 0x0040:
-                // XPressNet tunnel message.
+                // XpressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
                 log.debug("Received XNet Message: {}",  m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);

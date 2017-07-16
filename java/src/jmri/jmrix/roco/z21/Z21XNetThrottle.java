@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a z21 XpressnetNet
+ * An implementation of DccThrottle with code specific to a z21 XpressNet
  * connection.
  *
  * @author Paul Bender (C) 2015
@@ -208,7 +208,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
 
-    // The Z21 Doesn't support the XPressNet directed emergency stop
+    // The Z21 Doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -255,7 +255,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                 sendQueuedMessage();
            } 
         } else {
-            // let the standard XPressNet Throttle have a chance to look 
+            // let the standard XpressNet Throttle have a chance to look
             // at the message.
             super.message(l);
         }
