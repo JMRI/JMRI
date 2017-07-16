@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated z21 XPressNet sub-system.
+ * <p>
  * This shares some code with the XPressNet simulator, but it's 
  * not a derived class because it isn't a real connection.
  *
@@ -60,7 +61,7 @@ public class Z21XNetSimulatorAdapter {
                         break;
                     case XNetConstants.SERVICE_MODE_CSRESULT:
                     default:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply=notSupportedReply();
                 }
                 break;
@@ -108,7 +109,7 @@ public class Z21XNetSimulatorAdapter {
                         locoPosition = (locoPosition +1) %19;
                         break;
                      case XNetConstants.LOCO_SPEED_27:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply = notSupportedReply();
                         break;
                      case XNetConstants.LOCO_SPEED_28:
@@ -229,7 +230,7 @@ public class Z21XNetSimulatorAdapter {
                      case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
                      case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
                      default:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply = notSupportedReply();
                         break;
                 }
@@ -336,7 +337,7 @@ public class Z21XNetSimulatorAdapter {
             case XNetConstants.OPS_MODE_PROG_REQ:
             case XNetConstants.LOCO_DOUBLEHEAD:
             default:
-                log.debug("Unsupoorted requested received: {}", m.toString());
+                log.debug("Unsupported requested received: {}", m.toString());
                 reply=notSupportedReply();
         }
         log.debug("generated reply {}",reply);
@@ -344,7 +345,10 @@ public class Z21XNetSimulatorAdapter {
     }
 
     // We have a few canned response messages.
-    // Create an Unsupported XNetReply message
+
+    /**
+     * Create an Unsupported XNetReply message.
+     */
     private XNetReply notSupportedReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -354,7 +358,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create an OK XNetReply message
+    /**
+     * Create an OK XNetReply message.
+     */
     private XNetReply okReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.LI_MESSAGE_RESPONSE_HEADER);
@@ -364,7 +370,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a "Normal Operations Resumed" message
+    /**
+     * Create a "Normal Operations Resumed" message.
+     */
     private XNetReply normalOpsReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -374,7 +382,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a broadcast "Everything Off" reply
+    /**
+     * Create a broadcast "Everything Off" reply.
+     */
     private XNetReply everythingOffReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -384,7 +394,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a broadcast "Emergecy Stop" reply
+    /**
+     * Create a broadcast "Emergecy Stop" reply.
+     */
     private XNetReply emergencyStopReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
@@ -393,8 +405,10 @@ public class Z21XNetSimulatorAdapter {
         r.setParity();
         return r;
     }
-   
-    // Create a reply to a request for the XPressNet Version
+
+    /**
+     * Create a reply to a request for the XPressNet Version.
+     */
     private XNetReply xNetVersionReply(){
         XNetReply reply=new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
@@ -406,7 +420,9 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    // Create a reply to a request for the Command Station Status
+    /**
+     * Create a reply to a request for the Command Station Status.
+     */
     private XNetReply csStatusReply(){
         XNetReply reply=new XNetReply();
         reply.setOpCode(XNetConstants.CS_REQUEST_RESPONSE);
@@ -417,7 +433,9 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    // create a LAN_X_TURNOUT_INFO reply
+    /**
+     * Create a LAN_X_TURNOUT_INFO reply.
+     */
     private XNetReply lanXTurnoutInfoReply(int FAdr_MSB,int FAdr_LSB,boolean thrown){
         XNetReply reply=new XNetReply();
         reply.setOpCode(Z21Constants.LAN_X_TURNOUT_INFO);

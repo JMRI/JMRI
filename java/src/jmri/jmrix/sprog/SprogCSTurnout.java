@@ -41,7 +41,7 @@ public class SprogCSTurnout extends AbstractTurnout {
     /**
      * Handle a request to change state by sending a formatted DCC packet.
      *
-     * @param s
+     * @param s commanded state to set
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {

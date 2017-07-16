@@ -100,5 +100,3 @@ public class XpaPowerManager implements PowerManager, XpaListener {
     }
 
 }
-
-

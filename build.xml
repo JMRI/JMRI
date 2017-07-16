@@ -159,7 +159,6 @@
     -->
     <path id="runtime.class.path">
         <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
-        <pathelement location="${libdir}/ch.ntb.usb.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/javacsv.jar"/>
@@ -210,6 +209,16 @@
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/jhidrawplugin.jar"/>
         <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-linux-arm.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86_64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86_64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86_64.jar"/>
+        <pathelement location="${libdir}/usb-api-1.0.2.jar"/>
+        <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
+        <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
