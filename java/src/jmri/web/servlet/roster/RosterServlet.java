@@ -429,9 +429,9 @@ public class RosterServlet extends HttpServlet {
                     this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
-                ServletUtil.getInstance().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getDefault().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else if (type.equals("throttle")) {
-                ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getDefault().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else {
                 // don't know what to do
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -457,7 +457,7 @@ public class RosterServlet extends HttpServlet {
      * @throws java.io.IOException if communications is cut with client
      */
     protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter) throws IOException {
-        ServletUtil.getInstance().setNonCachingHeaders(response);
+        ServletUtil.getDefault().setNonCachingHeaders(response);
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
@@ -544,12 +544,12 @@ public class RosterServlet extends HttpServlet {
                         FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
                         String.format(request.getLocale(),
                                 Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                                ServletUtil.getInstance().getRailroadName(false),
+                                ServletUtil.getDefault().getRailroadName(false),
                                 Bundle.getMessage(request.getLocale(), "RosterTitle")
                         ),
-                        ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                        ServletUtil.getInstance().getRailroadName(false),
-                        ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                        ServletUtil.getDefault().getNavBar(request.getLocale(), request.getContextPath()),
+                        ServletUtil.getDefault().getRailroadName(false),
+                        ServletUtil.getDefault().getFooter(request.getLocale(), request.getContextPath()),
                         group
                 ));
                 break;
