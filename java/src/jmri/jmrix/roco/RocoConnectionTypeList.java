@@ -10,7 +10,7 @@ package jmri.jmrix.roco;
  */
 public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-    public static final String ROCO = "Roco";
+    public static final String ROCO = "Roco"; // NOI18N
 
     @Override
     public String[] getAvailableProtocolClasses() {

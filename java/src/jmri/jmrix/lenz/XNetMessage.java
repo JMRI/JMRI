@@ -1450,19 +1450,19 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             break;
                         case 2:
                             text = Bundle.getMessage("XNetMessageRequestLIBaud",
-                                   Bundle.getMessage("LIBaud38400"));
+                                   Bundle.getMessage("Baud38400"));
                             break;
                         case 3:
                             text = Bundle.getMessage("XNetMessageRequestLIBaud",
-                                   Bundle.getMessage("LIBaud57600"));
+                                   Bundle.getMessage("Baud57600"));
                             break;
                         case 4:
                             text = Bundle.getMessage("XNetMessageRequestLIBaud",
-                                   Bundle.getMessage("LIBaud115200"));
+                                   Bundle.getMessage("Baud115200"));
                             break;
                         default:
                             text = Bundle.getMessage("XNetMessageRequestLIBaud",
-                                   Bundle.getMessage("LIBaudOther"));
+                                   Bundle.getMessage("BaudOther"));
                     }
                     break;
                 default:

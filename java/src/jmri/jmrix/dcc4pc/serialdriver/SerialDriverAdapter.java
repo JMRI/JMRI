@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
-        option1Name = "Programmer";
+        option1Name = "Programmer"; // NOI18N
         options.put(option1Name, new Option("Programmer : ", validOption1()));
         setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }

@@ -40,4 +40,3 @@ public class EliteXNetSystemConnectionMemo extends XNetSystemConnectionMemo {
     private final static Logger log = LoggerFactory.getLogger(EliteXNetSystemConnectionMemo.class.getName());
 
 }
-

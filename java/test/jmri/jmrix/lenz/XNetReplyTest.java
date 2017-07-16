@@ -1108,24 +1108,24 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIBaud1Reply(){
         XNetReply r = new XNetReply("F2 02 01 F1");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19200bps (default)",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19,200 bps (default)",r.toMonitorString());
     }
     @Test
     public void testToMonitorStringLIBaud2Reply(){
         XNetReply r = new XNetReply("F2 02 02 F2");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38400bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38,400 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud3Reply(){
         XNetReply r = new XNetReply("F2 02 03 F1");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57600bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57,600 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud4Reply(){
         XNetReply r = new XNetReply("F2 02 04 F4");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115200bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115,200 bps",r.toMonitorString());
     }
 
     @Test

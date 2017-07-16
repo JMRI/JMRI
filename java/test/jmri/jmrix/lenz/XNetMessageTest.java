@@ -1494,25 +1494,25 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringLISpeedRequestMessage(){
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
-       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19200bps (default)",m.toMonitorString());
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19,200 bps (default)",m.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLISpeedRequestMessage2(){
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(2);
-       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 38400bps",m.toMonitorString());
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 38,400 bps",m.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLISpeedRequestMessage3(){
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(3);
-       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 57600bps",m.toMonitorString());
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 57,600 bps",m.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLISpeedRequestMessage4(){
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(4);
-       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 115200bps",m.toMonitorString());
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 115,200 bps",m.toMonitorString());
     }
 
     @Test

@@ -728,19 +728,19 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             break;
                         case 2:
                             text = Bundle.getMessage("XNetReplyLIBaud",
-                                   Bundle.getMessage("LIBaud38400"));
+                                   Bundle.getMessage("Baud38400"));
                             break;
                         case 3:
                             text = Bundle.getMessage("XNetReplyLIBaud",
-                                   Bundle.getMessage("LIBaud57600"));
+                                   Bundle.getMessage("Baud57600"));
                             break;
                         case 4:
                             text = Bundle.getMessage("XNetReplyLIBaud",
-                                   Bundle.getMessage("LIBaud115200"));
+                                   Bundle.getMessage("Baud115200"));
                             break;
                         default:
                             text = Bundle.getMessage("XNetReplyLIBaud",
-                                   Bundle.getMessage("LIBaudOther"));
+                                   Bundle.getMessage("BaudOther"));
                     }
                     break;
                 default:

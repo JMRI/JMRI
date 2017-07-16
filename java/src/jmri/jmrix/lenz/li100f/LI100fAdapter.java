@@ -23,18 +23,18 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LI100 on an attached serial comm port.
+ * Provide access to XpressNet via a LI100F on an attached serial comm port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
  */
-public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class LI100fAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
-    public LI100Adapter() {
+    public LI100fAdapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("LI100F connection uses : ", validOption1));
+        option1Name = "FlowControl"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLI100F")), validOption1));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
@@ -84,11 +84,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
-            }
+            // report additional status
+            log.debug(" port flow control shows {} ",
+                    (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
                 @Override
@@ -96,60 +94,38 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             return;
                     }
                 }
@@ -209,8 +185,8 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * set up all of the other objects to operate with a LI100 connected to this
-     * port
+     * Set up all of the other objects to operate with a LI100 connected to this
+     * port.
      */
     @Override
     public void configure() {
@@ -254,7 +230,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -289,34 +265,34 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * Option 1 controls flow control option
+     * option1 controls flow control option.
      */
     public String option1Name() {
-        return "LI100F connection uses ";
+        return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLI100F"));
     }
 
     public String[] validOption1() {
         return Arrays.copyOf(validOption1, validOption1.length);
     }
 
-    protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("LIBaud19200")};
     protected int[] validSpeedValues = new int[]{9600, 19200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     private boolean opened = false;
     InputStream serialStream = null;
 
     @Deprecated
-    static public LI100Adapter instance() {
+    static public LI100fAdapter instance() {
         if (mInstance == null) {
-            mInstance = new LI100Adapter();
+            mInstance = new LI100fAdapter();
         }
         return mInstance;
     }
-    volatile static LI100Adapter mInstance = null;
+    volatile static LI100fAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100fAdapter.class.getName());
 
 }

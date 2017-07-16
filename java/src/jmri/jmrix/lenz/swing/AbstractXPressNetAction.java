@@ -11,7 +11,6 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * Abstract action to create and register a swing object for XpressNet systems.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2016 
  */
@@ -31,7 +30,7 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
      *
-     * @return the SystemConnectionMemo or null if not bound.
+     * @return the SystemConnectionMemo or null if not bound
      */
     @CheckForNull
     @Override
