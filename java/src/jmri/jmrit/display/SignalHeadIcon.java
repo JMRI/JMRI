@@ -141,9 +141,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Place icon by its bean state name key found in
-     * jmri.NamedBeanBundle.properties Place icon by its localized bean state
-     * name
+     * Place icon by its localized bean state name.
+     *
+     * @param state the localized state
+     * @param icon  the icon to place
      */
     public void setIcon(String state, NamedIcon icon) {
         if (log.isDebugEnabled()) {
@@ -156,7 +157,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Get current appearance of the head
+     * Get current appearance of the head.
      *
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
      */
@@ -496,7 +497,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
-            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap 
+            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap
             if (log.isDebugEnabled()) {
                 log.debug("key= " + entry.getKey() + ", localKey= " + name
                         + ", newIcon= " + icon + ", oldIcon= " + oldIcon);
@@ -569,8 +570,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * This was added in so that the layout editor can handle the mouseclicked
-     * when zoomed in
+     * Handle mouse clicks when no modifier keys are pressed. Mouse clicks with
+     * modifier keys pressed can be processed by the containing component.
+     *
+     * @param e the mouse click event
      */
     public void performMouseClicked(java.awt.event.MouseEvent e) {
         if (e.isMetaDown() || e.isAltDown()) {

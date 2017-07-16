@@ -310,7 +310,7 @@ public class LightTableAction extends AbstractTableAction {
 
             @Override
             public NamedBean getByUserName(String name) {
-                return lightManager.getByUserName(name);
+                return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
             @Override

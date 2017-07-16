@@ -1,9 +1,9 @@
 package jmri.jmrix.roco;
 
 /**
- * Returns a list of valid Roco Connection Types Note that most Roco options are
- * Lenz options (RocoNet is XPressNet).
- * <P>
+ * Returns a list of valid Roco Connection Types.
+ * Note that most Roco options are Lenz options (RocoNet is XPressNet).
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  *

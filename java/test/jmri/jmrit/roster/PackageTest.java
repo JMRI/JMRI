@@ -43,6 +43,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(RosterMediaPaneTest.class));
         suite.addTest(new JUnit4TestAdapter(RosterRecorderTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.roster.rostergroup.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(DeleteRosterItemActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ExportRosterItemActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(FullBackupExportActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(FullBackupImportActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ImportRosterItemActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PrintRosterActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PrintRosterEntryTest.class));
+        suite.addTest(new JUnit4TestAdapter(UpdateDecoderDefinitionActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterSpeedProfileTest.class));
         return suite;
     }
 

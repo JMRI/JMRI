@@ -20,7 +20,7 @@ public class OpenLcbMenu extends JMenu {
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuItemCAN");
+            title = rb.getString("MenuItemCAN"); // would expect this to be MenuItemOpenLCB
         }
 
         setText(title);

@@ -16,7 +16,7 @@ import java.awt.GraphicsEnvironment;
  **/
 
 public class Dcc4PcMenuTest {
-        
+
    private Dcc4PcSystemConnectionMemo memo = null;
 
    @Test

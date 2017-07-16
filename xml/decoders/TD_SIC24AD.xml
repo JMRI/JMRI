@@ -20,6 +20,7 @@
   <!-- Version 1.3 correct input 5 primary address 11/4/10-->
   <!-- Version 1.4 added cell address reference 11/14/10-->
   <!-- Version 1.5 update decoder-config xmlns 08/07/13-->
+  <!-- Version 1.6 correct Input 5 toggle, was labeled same as input 1 toggle and did not fuction correctly 06/12/17-->
   <decoder>
     <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way">
       <model model="SIC24AD" lowVersionID="10"/>
@@ -3710,7 +3711,7 @@
           <display item="Primary Address 5" tooltip="Determines the input address"/>
         </column>
         <column>
-          <display item="Tog P1" format="checkbox" tooltip="Toggles the state close/throw, only for switch type"/>
+          <display item="Tog P5" format="checkbox" tooltip="Toggles the state close/throw, only for switch type"/>
         </column>
         <column>
           <label>

@@ -26,6 +26,3 @@ public interface CanInterface {
      */
     void sendCanMessage(CanMessage m, CanListener l);
 }
-
-
-

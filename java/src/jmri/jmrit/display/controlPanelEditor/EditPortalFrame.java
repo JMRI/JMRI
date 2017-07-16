@@ -407,7 +407,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     /**
-     * Called after click on portal icon moved recheck block connections
+     * Called after click on portal icon moved recheck block connections.
+     *
+     * @param icon  the icon to check
+     * @param moved true if moved; false otherwise
+     * @return true if no changes to connections; false otherwise
      */
     protected boolean checkPortalIconForUpdate(PortalIcon icon, boolean moved) {
         Portal portal = icon.getPortal();
@@ -462,7 +466,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 msg = iconIntersectsBlock(icon, _adjacentBlock);
                 if (msg == null) {
                     _portalList.setSelectedValue(portal, true);
-                    return true;  // no change  in connection                        
+                    return true;  // no change  in connection
                 }
             }
             if (_adjacentBlock == null) {
@@ -501,6 +505,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _portalList.dataChange();
         return true;
     }
+
     /*
      * If icon is on the home block, find another intersecting block
      */
@@ -574,9 +579,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 block.getDisplayName(), icon.getNameString());
     }
 
-    /**
-     * ******************** DnD ****************************
-     */
+    //////////////////////////// DnD ////////////////////////////
     protected JPanel makeDndIconPanel() {
         _dndPanel = new JPanel();
 

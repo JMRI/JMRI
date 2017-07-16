@@ -2,7 +2,7 @@ package jmri.jmrix.marklin;
 
 
 /**
- * Encodes a message to an Marklin command station.
+ * Encodes a message to a Marklin command station.
  * <P>
  * The {@link MarklinReply} class handles the response from the command station.
  * <P>
@@ -286,5 +286,3 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return new MarklinMessage();
     }
 }
-
-
