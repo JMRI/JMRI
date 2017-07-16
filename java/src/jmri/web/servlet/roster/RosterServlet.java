@@ -390,7 +390,6 @@ public class RosterServlet extends HttpServlet {
             }
             idOffset = 2;
         }
-        log.error("Processing roster entry \"{}\" from \"{}\"", pathInfo[idOffset], request.getRequestURI());
         String id = URLDecoder.decode(pathInfo[idOffset], UTF8);
         if (pathInfo.length > (1 + idOffset)) {
             type = pathInfo[pathInfo.length - 1];
