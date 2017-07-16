@@ -1,6 +1,3 @@
-/**
- * XnTcpXNetPacketizer.java
- */
 package jmri.jmrix.lenz.xntcp;
 
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -66,6 +63,8 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 
             ((XnTcpAdapter) controller).xnTcpSetPendingPackets(-1);
             log.debug("XnTcpNetPacketizer: received end of packet");
+        } catch (java.io.InterruptedIOException ex) {
+            return;
         } catch (java.io.IOException ex) {
             ((XnTcpAdapter) controller).xnTcpError();
             throw ex;

@@ -26,7 +26,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<DCCppReply> replyQueue;
+    LinkedList<DCCppReply> replyQueue = new LinkedList<DCCppReply>(); // Init before Rx and Tx
+                
     Thread txThread;
     String inString;
     String remoteAddress;
@@ -53,6 +54,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     public void run() {
         
         try {
+            txThread = new Thread(new ClientTxHandler(this));
+            txThread.setDaemon(true);
+            txThread.setPriority(Thread.MAX_PRIORITY);
+            txThread.setName("ClientTxHandler:" + remoteAddress);
+
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
             
@@ -60,10 +66,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             memo.getDCCppTrafficController().addDCCppListener(~0, this);
             //DCCppTrafficController.instance().addDCCppListener(~0, this);
             
-            txThread = new Thread(new ClientTxHandler(this));
-            txThread.setDaemon(true);
-            txThread.setPriority(Thread.MAX_PRIORITY);
-            txThread.setName("ClientTxHandler:" + remoteAddress);
             txThread.start();
             
             while (!isInterrupted()) {
@@ -166,8 +168,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 outBuf = new StringBuffer(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
                 outStream.write(outBuf.toString().getBytes());
-                
-                replyQueue = new LinkedList<DCCppReply>(); // Should this be in the other thread?
                 
                 while (!isInterrupted()) {
                     msg = null;

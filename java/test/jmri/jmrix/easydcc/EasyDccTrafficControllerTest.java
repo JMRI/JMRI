@@ -21,17 +21,6 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Test
     public void testSendThenRcvReply() throws Exception {
         EasyDccTrafficController c = (EasyDccTrafficController)tc;
-        /*EasyDccTrafficController c = new EasyDccTrafficController() {
-            // skip timeout message
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
-            }
-
-            public void receiveLoop() {
-            }
-
-            protected void portWarn(Exception e) {
-            }
-        };*/
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
