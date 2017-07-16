@@ -4,7 +4,7 @@ import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21TrafficController;
 
 /**
- * Frame for user input of XpressNet messages.
+ * Frame for user input of XPressNet messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2002
  */

@@ -35,7 +35,7 @@ public class SystemInfoActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SystemInfoAction action = new SystemInfoAction("Xpressnet System Information",memo);
+        SystemInfoAction action = new SystemInfoAction("XPressNet System Information", memo);
         action.actionPerformed(null);
         // wait for frame with the value of "XPressNet System Information 
         // in title, case insensitive

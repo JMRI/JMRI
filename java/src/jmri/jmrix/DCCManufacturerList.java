@@ -106,7 +106,7 @@ public class DCCManufacturerList {
         } else if (a == 'W') {
             return "Wangrow";
         } else if (a == 'X') {
-            return "XpressNet";
+            return "XPressNet";
         } else if (a == 'Z') {
             return "Zimo";
         }
@@ -173,7 +173,7 @@ public class DCCManufacturerList {
             return 'V';
         } else if (a.equals("Wangrow")) {
             return 'W';
-        } else if (a.equals("XpressNet")) {
+        } else if (a.equals("XPressNet")) {
             return 'X';
         } else if (a.equals("Zimo")) {
             return 'Z';

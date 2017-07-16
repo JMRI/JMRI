@@ -32,6 +32,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected String prefix = null;
 
     // XNet-specific methods
+
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -40,7 +41,9 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return t;
     }
 
-    // listen for turnouts, creating them as needed
+    /**
+     * Listen for turnouts, creating them as needed.
+     */
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {

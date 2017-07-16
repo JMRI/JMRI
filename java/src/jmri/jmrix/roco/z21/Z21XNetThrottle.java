@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a z21 XpressnetNet
+ * An implementation of DccThrottle with code specific to a z21 XPressNet
  * connection.
  *
  * @author Paul Bender (C) 2015
@@ -46,7 +46,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet messages to set the state of locomotive direction and
+     * Send the XPressNet messages to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4.
      */
     @Override
@@ -71,7 +71,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F5, F6, F7, F8.
+     * Send the XPressNet message to set the state of functions F5, F6, F7, F8.
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -92,7 +92,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F9, F10, F11,
+     * Send the XPressNet message to set the state of functions F9, F10, F11,
      * F12.
      */
     @Override
@@ -114,7 +114,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F13, F14, F15,
+     * Send the XPressNet message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20.
      */
     @Override
@@ -147,7 +147,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         queueMessage(msg7, THROTTLEFUNCSENT);
     }
     /**
-     * Send the XpressNet message to set the state of functions F21, F22, F23,
+     * Send the XPressNet message to set the state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28.
      */
     @Override

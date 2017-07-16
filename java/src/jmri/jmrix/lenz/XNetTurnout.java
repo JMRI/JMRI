@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description: extend jmri.AbstractTurnout for XNet layouts
+ * Extend jmri.AbstractTurnout for XNet layouts
  * <P>
  * Turnout opperation on XPressNet based systems goes through the following
  * sequence:
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  * <P>
  * NOTE: Some XPressNet Command stations take no action when the message
- * generated durring the third step is received
+ * generated durring the third step is received.
  * <P>
  * Valid response messages are command station dependent, but there are 4
  * possibilities:
@@ -100,7 +100,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * NOTE: For LZ100 and LZV100 command stations prior to version 3.2, it may be
  * necessary to poll for the feedback response data.
- * </P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  */
@@ -150,7 +150,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
     }
 
-    //Set the mode information for XPressNet Turnouts.
+    /**
+     * Set the mode information for XPressNet Turnouts.
+     */
     synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
         // if it hasn't been done already, create static arrays to hold
         // the Lenz specific feedback information.
@@ -185,8 +187,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         return mNumber;
     }
 
-    // Set the Commanded State.   This method overides setCommandedState in
-    // the Abstract Turnout class.
+    /**
+     * Set the Commanded State.
+     * This method overides setCommandedState in the Abstract Turnout class.
+     */
     @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
@@ -207,7 +211,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
-    // Handle a request to change state by sending an XPressNet command
+    /**
+     * Handle a request to change state by sending an XPressNet command.
+     */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         if (s != _mClosed && s != _mThrown) {
@@ -243,10 +249,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * request an update on status by sending an XPressNet message
+     * Request an update on status by sending an XPressNet message.
      */
     public void requestUpdateFromLayout() {
-        // To do this, we send an XpressNet Accessory Decoder Information
+        // To do this, we send an XPressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts
         // with feedback, but the address passed is translated as though it
@@ -283,12 +289,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * initmessage is a package proteceted class which allows the Manger to send
+     * Package protected class which allows the Manger to send
      * a feedback message at initilization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
-     *
-     *
      */
     synchronized void initmessage(XNetReply l) {
         int oldState = internalState;
@@ -296,9 +300,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         internalState = oldState;
     }
 
-
-    /*
-     *  Handle an incoming message from the XPressNet
+    /**
+     * Handle an incoming message from the XPressNet.
      */
     @Override
     synchronized public void message(XNetReply l) {
@@ -341,12 +344,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     synchronized public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -359,15 +366,14 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
-    /*
+    /**
      *  With Direct Mode feedback, if we see ANY valid response to our
      *  request, we ask the command station to stop sending information
      *  to the stationary decoder.
      *  <p>
-     *  No effort is made to interpret feedback when using direct mode
+     *  No effort is made to interpret feedback when using direct mode.
      *
      *  @param l an {@link XNetReply} message
-     *
      */
     synchronized private void handleDirectModeFeedback(XNetReply l) {
         /* If commanded state does not equal known state, we are
@@ -429,16 +435,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-    /*
+    /**
      *  With Monitoring Mode feedback, if we see a feedback message, we
      *  interpret that message and use it to display our feedback.
-     *  <P>
+     *  <p>
      *  After we send a request to operate a turnout, We ask the command
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.
      *
      *  @param l an {@link XNetReply} message
-     *
      */
     synchronized private void handleMonitoringModeFeedback(XNetReply l) {
         /* In Monitoring Mode, We have two cases to check if CommandedState
@@ -499,17 +504,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-
-    /*
+    /**
      *  With Exact Mode feedback, if we see a feedback message, we
      *  interpret that message and use it to display our feedback.
-     *  <P>
+     *  <p>
      *  After we send a request to operate a turnout, We ask the command
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.
      *
      *  @param l an {@link XNetReply} message
-     *
      */
     @SuppressWarnings("unused")
     synchronized private void handleExactModeFeedback(XNetReply reply) {
@@ -604,7 +607,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-    /* Send an "Off" message to the decoder for this output  */
+    /**
+     * Send an "Off" message to the decoder for this output.
+     */
     protected synchronized void sendOffMessage() {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
@@ -634,14 +639,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         tc.sendHighPriorityXNetMessage(msg, this);
     }
 
-
     protected XNetMessage getOffMessage(){
          return ( XNetMessage.getTurnoutCommandMsg(mNumber,
                 getCommandedState() == _mClosed,
                 getCommandedState() == _mThrown,
                 false) );
     }
-
 
     class offTask extends java.util.TimerTask {
 
@@ -668,9 +671,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-    /*
-     * parse the feedback message, and set the status of the turnout
-     * accordingly
+    /**
+     * Parse the feedback message, and set the status of the turnout
+     * accordingly.
      *
      * @param l - feedback broadcast message
      * @param startByte - first Byte of message to check
@@ -746,8 +749,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         return (-1);
     }
 
-
-    /*
+    /**
      * Determine if this feedback message says the turnout has completed
      * it's motion or not.  Returns true for mostion complete, false
      * otherwise.
@@ -800,7 +802,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         super.dispose();
     }
 
-    // Internal class to use for listening to state changes
+    /**
+     * Internal class to use for listening to state changes.
+     */
     private static class XNetTurnoutStateListener implements java.beans.PropertyChangeListener {
 
         XNetTurnout _turnout = null;
@@ -809,12 +813,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             _turnout = turnout;
         }
 
-        /*
+        /**
          * If we're  not using DIRECT feedback mode, we need to listen for
          * state changes to know when to send an OFF message after we set the
-         * known state
+         * known state.
          * If we're using DIRECT mode, all of this is handled from the
-         * XPressNet Messages
+         * XPressNet Messages.
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {

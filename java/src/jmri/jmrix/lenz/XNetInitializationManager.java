@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for XPressNet. It
- * adds the appropriate Managers via the Initialization Manager based on the
- * Command Station Type.
+ * This class performs Command Station dependent initialization for XPressNet.
+ * It adds the appropriate Managers via the Initialization Manager based on
+ * the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public XNetInitializationManager(XNetSystemConnectionMemo memo) {

@@ -114,7 +114,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 findInterfaces();
             }
             if ((ind = hostNameVector.indexOf(outName)) < 0) {
-                throw (new IOException("XpressNet/TCP interface " + outName + " not found"));
+                throw (new IOException("XPressNet/TCP interface " + outName + " not found"));
             }
             // Interface card found. Get the relevantIP number and port
             m_HostName = HostAddressVector.get(ind).ipNumber;

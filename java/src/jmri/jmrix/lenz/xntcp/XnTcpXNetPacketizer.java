@@ -46,7 +46,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
             while (i < msg.maxSize()) {
                 // Read a byte
                 char1 = istream.read();
-                // Was the communication closed by the XpressNet/Tcp interface, or lost?
+                // Was the communication closed by the XPressNet/Tcp interface, or lost?
                 if (char1 < 0) {
                     // We cannot communicate anymore!
                     ((XnTcpAdapter) controller).xnTcpError();
@@ -55,7 +55,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
                 // Store the byte.
                 msg.setElement(i++, (byte) char1 & 0xFF);
                 log.debug("XnTcpNetPacketizer: received " + Integer.toHexString(char1 & 0xff));
-                // If the XpressNet packet is completed, exit the loop
+                // If the XPressNet packet is completed, exit the loop
                 if (endOfMessage(msg)) {
                     break;
                 }

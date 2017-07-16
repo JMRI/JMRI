@@ -93,6 +93,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
+     *
      * @return true to allow us to trigger an ops mode read
      */
     @Override
@@ -168,7 +169,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public synchronized void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

@@ -1042,55 +1042,55 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringErrorNotOperated(){
         XNetReply r = new XNetReply("E1 81 60");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorInUse(){
         XNetReply r = new XNetReply("E1 82 63");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorAlreadyDH(){
         XNetReply r = new XNetReply("E1 83 62");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorNonZeroSpeed(){
         XNetReply r = new XNetReply("E1 84 65");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorLocoNotMUed(){
         XNetReply r = new XNetReply("E1 85 64");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive not in a MU",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Locomotive not in a MU",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorAddressNotMUBase(){
         XNetReply r = new XNetReply("E1 86 67");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive address not a multi-unit base address",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: Locomotive address not a multi-unit base address",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorCanNotDelete(){
         XNetReply r = new XNetReply("E1 87 66");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: It is not possible to delete the locomotive",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: It is not possible to delete the locomotive",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorCSStackFull(){
         XNetReply r = new XNetReply("E1 88 69");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: The Command Station Stack is Full",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: The Command Station Stack is Full",r.toMonitorString());
     }
  
    @Test
     public void testToMonitorStringDHErrorOther(){
         XNetReply r = new XNetReply("E1 89 69");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: 9",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet MU+DH error: 9",r.toMonitorString());
     }
 
     @Test

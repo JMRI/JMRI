@@ -239,7 +239,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         // (02/2017) Yes it does... using the <s> command or possibly
         // some others.  TODO: Plumb this in... IFF it is needed.
         
-        // To do this, we send an XpressNet Accessory Decoder Information
+        // To do this, we send an XPressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts
         // with feedback, but the address passed is translated as though it

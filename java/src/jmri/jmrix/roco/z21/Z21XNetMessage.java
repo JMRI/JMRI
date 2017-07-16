@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 
 /**
- * Represents a single command or response on the XpressNet.
+ * Represents a single command or response on the XPressNet.
  * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of

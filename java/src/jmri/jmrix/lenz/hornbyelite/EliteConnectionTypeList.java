@@ -1,8 +1,8 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ * Returns a list of valid lenz XPressNet Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *

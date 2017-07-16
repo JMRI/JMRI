@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a XpressnetNet
+ * An implementation of DccThrottle with code specific to a XPressNet
  * connection on the Hornby Elite
  *
  * @author Paul Bender (C) 2008-2009
@@ -39,7 +39,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the Momentary state of locomotive
+     * Send the XPressNet message to set the Momentary state of locomotive
      * functions F0, F1, F2, F3, F4
      */
     @Override
@@ -51,7 +51,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F5,
+     * Send the XPressNet message to set the momentary state of functions F5,
      * F6, F7, F8
      */
     @Override
@@ -63,7 +63,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F9,
+     * Send the XPressNet message to set the momentary state of functions F9,
      * F10, F11, F12
      */
     @Override
@@ -75,7 +75,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F13,
+     * Send the XPressNet message to set the momentary state of functions F13,
      * F14, F15, F16, F17, F18, F19, F20
      */
     @Override
@@ -87,7 +87,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F21,
+     * Send the XPressNet message to set the momentary state of functions F21,
      * F22, F23, F24, F25, F26, F27, F28
      */
     @Override

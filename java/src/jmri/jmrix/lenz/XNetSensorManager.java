@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the XPressNet specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "XSnnn", where nnn is the sensor number without padding.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
  */
@@ -37,6 +37,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // XPressNet specific methods
+
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new XNetSensor(systemName, userName, tc);
@@ -91,12 +92,16 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -176,5 +181,3 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class.getName());
 
 }
-
-

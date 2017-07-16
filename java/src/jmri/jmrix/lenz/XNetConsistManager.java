@@ -20,8 +20,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
-     * command station
-     *
+     * command station.
      */
     public XNetConsistManager(XNetSystemConnectionMemo systemMemo) {
         super();
@@ -32,7 +31,6 @@ public class XNetConsistManager extends AbstractConsistManager {
 
     /**
      * This implementation does command station consists, so return true.
-     *
      */
     @Override
     public boolean isCommandStationConsistPossible() {
@@ -42,8 +40,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     /**
      * Does a CS consist require a separate consist address? CS consist
      * addresses are assigned by the command station, so no consist address is
-     * needed, so return false
-     *
+     * needed, so return false.
      */
     @Override
     public boolean csConsistNeedsSeperateAddress() {
@@ -51,7 +48,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     }
 
     /**
-     * Add a new XNetConsist with the given address to consistTable/consistList
+     * Add a new XNetConsist with the given address to consistTable/consistList.
      */
     @Override
     public Consist addConsist(DccLocoAddress address) {
@@ -85,7 +82,9 @@ public class XNetConsistManager extends AbstractConsistManager {
         return !requestingUpdate;
     }
 
-    // Internal class to read consists from the command station
+    /**
+     * Internal class to read consists from the Command Station.
+     */
     private class XNetConsistReader implements Runnable, XNetListener {
 
         // Storage for addresses
@@ -296,12 +295,16 @@ public class XNetConsistManager extends AbstractConsistManager {
             }
         }
 
-        // Listener for messages to the command station
+        /**
+         * Listener for messages to the command station.
+         */
         @Override
         public void message(XNetMessage l) {
         }
 
-        // Handle a timeout notification
+        /**
+         * Handle a timeout notification.
+         */
         @Override
         public void notifyTimeout(XNetMessage msg) {
             if (log.isDebugEnabled()) {
@@ -309,5 +312,6 @@ public class XNetConsistManager extends AbstractConsistManager {
             }
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
 }

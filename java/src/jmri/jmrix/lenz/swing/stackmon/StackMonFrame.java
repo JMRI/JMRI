@@ -32,8 +32,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     JButton nextButton = new JButton("Next Entry");
     JButton previousButton = new JButton("Previous Entry");
-    JButton deleteButton = new JButton("Delete Entry");
-    JButton refreshButton = new JButton("Refresh");
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton refreshButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JLabel CurrentStatus = new JLabel(" ");
 
     JTextField adrTextField = new javax.swing.JTextField(4);

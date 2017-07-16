@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Lenz XpressNet.
+ * Programmer support for Lenz XPressNet.
  * <P>
  * The read operation state sequence is:
  * <UL>

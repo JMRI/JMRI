@@ -49,7 +49,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     }
 
-    JToggleButton closeButton = new JToggleButton("Close");
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
 
     @Override
     public void dispose() {

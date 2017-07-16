@@ -2,10 +2,8 @@ package jmri.jmrix.lenz;
 
 /**
  * Abstract Configuration for an XPressNet Serial Connection
- * <P>
  *
  * @author Paul Bender Copyright (C) 2010
-  *
  */
 abstract public class AbstractXNetSerialConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

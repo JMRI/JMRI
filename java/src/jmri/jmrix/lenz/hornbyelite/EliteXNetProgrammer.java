@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Hornby Elite implementationn of XpressNet.
+ * Programmer support for Hornby Elite implementationn of XPressNet.
  * <P>
  * The read operation state sequence is:
  * <UL>

@@ -145,7 +145,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XpressNet connection, so panel won't function");
+            log.warn("No XPressNet connection, so panel won't function");
         }
 
     }

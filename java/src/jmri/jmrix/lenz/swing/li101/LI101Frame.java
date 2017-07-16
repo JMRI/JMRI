@@ -35,7 +35,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("XpressNet address: "));
+        pane0.add(new JLabel("XPressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -55,7 +55,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // Initilize the Combo Boxes
         addrBox.setVisible(true);
-        addrBox.setToolTipText("Select the XpressNet address");
+        addrBox.setToolTipText("Select the XPressNet address");
         for (int i = 0; i < validXNetAddresses.length; i++) {
             addrBox.addItem(validXNetAddresses[i]);
         }
@@ -117,7 +117,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XpressNet connection, so panel won't function");
+            log.warn("No XPressNet connection, so panel won't function");
         }
 
     }
@@ -131,7 +131,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     JToggleButton readSettingsButton = new JToggleButton("Read from LI101");
     JToggleButton writeSettingsButton = new JToggleButton("Write to LI101");
-    JToggleButton closeButton = new JToggleButton("Close");
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
     JToggleButton resetButton = new JToggleButton("Reset to Factory Defaults");
 
     protected String[] validXNetAddresses = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""};

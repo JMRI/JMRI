@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame displaying Version information for Xpressnet hardware.
+ * Frame displaying Version information for XPressNet hardware.
  * <P>
  * This is a utility for reading the software version and type of the command
  * station, and, the Hardware and software versions of your XPressNet Computer
