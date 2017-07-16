@@ -18,17 +18,19 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
-import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,7 +163,6 @@ public class TabbedPreferences extends AppConfigBase {
         Set<PreferencesPanel> delayed = new HashSet<>();
 
         // add preference panels registered with the Instance Manager
-
         for (PreferencesPanel panel : InstanceManager.getList(jmri.swing.PreferencesPanel.class)) {
             if (panel instanceof PreferencesSubPanel) {
                 String parent = ((PreferencesSubPanel) panel).getParentClassName();
@@ -231,7 +232,9 @@ public class TabbedPreferences extends AppConfigBase {
 
     // package only - for TabbedPreferencesFrame
     boolean isDirty() {
-        for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+        // if not for the debug statements, this method could be the one line:
+        // return this.getPreferencesPanels().values.stream().anyMatch((panel) -> (panel.isDirty()));
+        return this.getPreferencesPanels().values().stream().map((panel) -> {
             // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
@@ -239,11 +242,8 @@ public class TabbedPreferences extends AppConfigBase {
                         (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
                         (panel.isDirty()) ? "dirty" : "clean");
             }
-            if (panel.isDirty()) {
-                return true;
-            }
-        }
-        return false;
+            return panel;
+        }).anyMatch((panel) -> (panel.isDirty()));
     }
 
     // package only - for TabbedPreferencesFrame
@@ -390,6 +390,35 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(save);
     }
 
+    public boolean isPreferencesValid() {
+        return this.getPreferencesPanels().values().stream().allMatch((panel) -> (panel.isPreferencesValid()));
+    }
+
+    @Override
+    public void savePressed(boolean restartRequired) {
+        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+        if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+            for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+                if (!panel.isPreferencesValid()) {
+                    switch (JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                            Bundle.getMessage("InvalidPreferencesTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE)) {
+                        case JOptionPane.YES_OPTION:
+                            // abort save and return to broken preferences
+                            this.gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                            return;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                }
+            }
+        }
+        super.savePressed(restartRequired);
+    }
+
     static class PreferencesCatItems implements java.io.Serializable {
 
         /*
@@ -420,7 +449,7 @@ public class TabbedPreferences extends AppConfigBase {
             TabDetailsArray.add(tab);
             JScrollPane scroller = new JScrollPane(tab.getPanel());
             scroller.setBorder(BorderFactory.createEmptyBorder());
-            ThreadingUtil.runOnGUI( ()->{ 
+            ThreadingUtil.runOnGUI(() -> {
 
                 tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
 
@@ -430,7 +459,7 @@ public class TabbedPreferences extends AppConfigBase {
                         return;
                     }
                 }
-            } );
+            });
         }
 
         String getPrefItem() {
@@ -522,10 +551,10 @@ public class TabbedPreferences extends AppConfigBase {
                     p.add(t, BorderLayout.NORTH);
                 }
                 p.add(item, BorderLayout.CENTER);
-                ThreadingUtil.runOnGUI( ()->{ 
+                ThreadingUtil.runOnGUI(() -> {
                     tabPanel.setLayout(new BorderLayout());
                     tabPanel.add(p, BorderLayout.CENTER);
-                } );
+                });
             }
 
             String getToolTip() {
