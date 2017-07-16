@@ -109,9 +109,9 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     break;
             }
         });
-        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+        InstanceManager.getList(SystemConnectionMemo.class).forEach((memo) -> {
             memo.addPropertyChangeListener(this.memoListener);
-        }
+        });
     }
 
     // remove connection's record
@@ -168,11 +168,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     /**
      * Load into InstanceManager
      *
+     * @param profile the profile to configure against
      * @return an exception that can be passed to the user or null if no errors
      *         occur
      */
     @CheckForNull
-    public InitializationException configure() {
+    public InitializationException configure(Profile profile) {
         InitializationException error = null;
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
@@ -222,16 +223,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 }
             }
         }
-        if (connList.size() > 1) {
-            for (SystemConnectionMemo memo : connList) {
-                if (memo instanceof InternalSystemConnectionMemo) {
-                    if (defaults.values().stream().allMatch((userName) -> {
-                        return userName.equals(memo.getUserName());
-                    })) {
-                        error = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "ManagerDefaultSelector.AllInternal"), Bundle.getMessage("ManagerDefaultSelector.AllInternal"));
-                    }
-                }
-            }
+        if (!this.isPreferencesValid(profile, connList)) {
+            error = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "ManagerDefaultSelector.AllInternal"), Bundle.getMessage("ManagerDefaultSelector.AllInternal"));
         }
         return error;
     }
@@ -265,7 +258,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             } catch (BackingStoreException ex) {
                 log.info("Unable to read preferences for Default Selector.");
             }
-            InitializationException ex = this.configure();
+            InitializationException ex = this.configure(profile);
             InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((manager) -> {
                 manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
             });
@@ -288,6 +281,29 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences for Default Selector.", ex);
         }
+    }
+
+    private boolean isPreferencesValid(Profile profile, List<SystemConnectionMemo> connections) {
+        boolean hasExternalConnections = false;
+        boolean usesExternalConnections = true;
+        if (connections.size() > 1) {
+            for (SystemConnectionMemo memo : connections) {
+                if (memo instanceof InternalSystemConnectionMemo) {
+                    if (defaults.values().stream().allMatch((userName) -> {
+                        return userName.equals(memo.getUserName());
+                    })) {
+                        usesExternalConnections = false;
+                    }
+                } else {
+                    hasExternalConnections = true;
+                }
+            }
+        }
+        return hasExternalConnections ? usesExternalConnections : true;
+    }
+
+    public boolean isPreferencesValid(Profile profile) {
+        return this.isPreferencesValid(profile, InstanceManager.getList(SystemConnectionMemo.class));
     }
 
     public static class Item {
