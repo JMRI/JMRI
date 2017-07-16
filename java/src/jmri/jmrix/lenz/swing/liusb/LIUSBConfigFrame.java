@@ -35,7 +35,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("XPressNet address: "));
+        pane0.add(new JLabel("XpressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -49,7 +49,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         // Initilize the Combo Boxes
         addrBox.setVisible(true);
-        addrBox.setToolTipText("Select the XPressNet address");
+        addrBox.setToolTipText("Select the XpressNet address");
         for (int i = 0; i < validXNetAddresses.length; i++) {
             addrBox.addItem(validXNetAddresses[i]);
         }
@@ -104,7 +104,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XPressNet connection, so panel won't function");
+            log.warn("No XpressNet connection, so panel won't function");
         }
 
     }

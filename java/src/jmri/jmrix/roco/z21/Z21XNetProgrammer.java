@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Z21 Programmer support for Lenz XPressNet.
+ * Z21 Programmer support for Lenz XpressNet.
  * <p>
  * The read operation state sequence is:
  * <UL>

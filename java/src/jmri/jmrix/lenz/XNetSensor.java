@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
+ * Extend jmri.AbstractSensor for XpressNet layouts.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  */
@@ -84,11 +84,11 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * Request an update on status by sending an XPressNet message.
+     * Request an update on status by sending an XpressNet message.
      */
     @Override
     public void requestUpdateFromLayout() {
-        // To do this, we send an XPressNet Accessory Decoder Information
+        // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts 
         // with feedback, but the address passed is translated as though it 

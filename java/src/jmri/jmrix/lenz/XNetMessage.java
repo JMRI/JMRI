@@ -255,7 +255,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
         // we don't know how to command both states right now!
         if (pClose & pThrow) {
-            log.error("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+            log.error("XpressNet turnout logic can't handle both THROWN and CLOSED yet");
         }
         // store and send
         l.setElement(1, hiadr);

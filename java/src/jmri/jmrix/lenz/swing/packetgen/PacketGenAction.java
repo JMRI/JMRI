@@ -1,5 +1,5 @@
 /**
- * Swing action to create and register a XPressNet PacketGenFrame
+ * Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -18,7 +18,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
     }
 
     public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Generate XPressNet message", memo);
+        this("Generate XpressNet message", memo);
     }
 
     @Override

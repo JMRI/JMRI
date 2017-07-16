@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Frame displaying the LI101 configuration utility
  *
  * This is a configuration utility for the LI101. It allows the user to set the
- * XPressNet Address and the port speed used to communicate with the LI101.
+ * XpressNet Address and the port speed used to communicate with the LI101.
  *
  * @author Paul Bender Copyright (C) 2003-2010
   */
@@ -35,7 +35,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("XPressNet address: "));
+        pane0.add(new JLabel("XpressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -55,7 +55,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // Initilize the Combo Boxes
         addrBox.setVisible(true);
-        addrBox.setToolTipText("Select the XPressNet address");
+        addrBox.setToolTipText("Select the XpressNet address");
         for (int i = 0; i < validXNetAddresses.length; i++) {
             addrBox.addItem(validXNetAddresses[i]);
         }
@@ -117,7 +117,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XPressNet connection, so panel won't function");
+            log.warn("No XpressNet connection, so panel won't function");
         }
 
     }

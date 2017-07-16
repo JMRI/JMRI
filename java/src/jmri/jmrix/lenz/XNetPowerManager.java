@@ -27,7 +27,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         return userName;
     }
 
-    String userName = Bundle.getMessage("MenuXPressNet");
+    String userName = Bundle.getMessage("MenuXpressNet");
 
     int power = UNKNOWN;
 

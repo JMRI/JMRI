@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a z21 XPressNet
+ * An implementation of DccThrottle with code specific to a z21 XpressNet
  * connection.
  *
  * @author Paul Bender (C) 2015
@@ -46,7 +46,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XPressNet messages to set the state of locomotive direction and
+     * Send the XpressNet messages to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4.
      */
     @Override
@@ -71,7 +71,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F5, F6, F7, F8.
+     * Send the XpressNet message to set the state of functions F5, F6, F7, F8.
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -92,7 +92,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F9, F10, F11,
+     * Send the XpressNet message to set the state of functions F9, F10, F11,
      * F12.
      */
     @Override
@@ -114,7 +114,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F13, F14, F15,
+     * Send the XpressNet message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20.
      */
     @Override
@@ -147,7 +147,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         queueMessage(msg7, THROTTLEFUNCSENT);
     }
     /**
-     * Send the XPressNet message to set the state of functions F21, F22, F23,
+     * Send the XpressNet message to set the state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28.
      */
     @Override
@@ -208,7 +208,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
 
-    // The Z21 Doesn't support the XPressNet directed emergency stop
+    // The Z21 Doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -255,7 +255,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                 sendQueuedMessage();
            } 
         } else {
-            // let the standard XPressNet Throttle have a chance to look 
+            // let the standard XpressNet Throttle have a chance to look
             // at the message.
             super.message(l);
         }

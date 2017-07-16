@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to XPressNet via a XnTcp interface attached on the Ethernet
+ * Provide access to XpressNet via a XnTcp interface attached on the Ethernet
  * port.
  *
  * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by
@@ -92,7 +92,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
     @Override
     public void connect() throws Exception {
-        // Connect to the choosen XPressNet/TCP interface
+        // Connect to the choosen XpressNet/TCP interface
         int ind;
         // Retrieve XnTcp interface name from Option1
         if (getOptionState(option1Name) != null) {
@@ -114,7 +114,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 findInterfaces();
             }
             if ((ind = hostNameVector.indexOf(outName)) < 0) {
-                throw (new IOException("XPressNet/TCP interface " + outName + " not found"));
+                throw (new IOException("XpressNet/TCP interface " + outName + " not found"));
             }
             // Interface card found. Get the relevantIP number and port
             m_HostName = HostAddressVector.get(ind).ipNumber;

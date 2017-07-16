@@ -73,7 +73,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Test
     public void testGetUserName() {
-        Assert.assertEquals("User Name","XPressNet",pm.getUserName());
+        Assert.assertEquals("User Name","XpressNet",pm.getUserName());
     }
 
     @Test

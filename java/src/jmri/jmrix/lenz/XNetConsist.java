@@ -2,7 +2,7 @@
  * XNetConsist.java
  *
  * This is the Consist definition for a consist on an XPresNet system. it uses
- * the XPressNet specific commands to build a consist.
+ * the XpressNet specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2004-2010
  */
@@ -461,10 +461,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 }
                 _state = IDLESTATE;
             } else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
-                text = "XPressNet MU+DH error: ";
+                text = "XpressNet MU+DH error: ";
                 switch (l.getElement(1)) {
                     case 0x81:
-                        text = text + "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+                        text = text + "Selected Locomotive has not been operated by this XpressNet device or address 0 selected";
                         log.error(text);
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
@@ -472,7 +472,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                                 | ConsistListener.LOCO_NOT_OPERATED);
                         break;
                     case 0x82:
-                        text = text + "Selected Locomotive is being operated by another XPressNet device";
+                        text = text + "Selected Locomotive is being operated by another XpressNet device";
                         log.error(text);
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
@@ -562,7 +562,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * For this application, we also set the speed setting to 0, which 
      * also establishes control over the locomotive in the consist.
      *
-     * @param t an XNetThrottle (XPressNet) throttle
+     * @param t an XNetThrottle (XpressNet) throttle
      * @param isForward the boolean value representing the desired
      * direction
      */
@@ -583,7 +583,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * For this application, we also set the speed setting to 0, which 
      * also establishes control over the locomotive in the consist.
      *
-     * @param t an XNetThrottle (XPressNet) throttle
+     * @param t an XNetThrottle (XpressNet) throttle
      * @param isForward the boolean value representing the desired
      * direction
      */

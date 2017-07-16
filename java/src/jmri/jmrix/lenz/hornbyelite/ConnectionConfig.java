@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 /**
- * Handle configuring an XPressNet layout connection via the built in USB port
+ * Handle configuring an XpressNet layout connection via the built in USB port
  * on the Hornby Elite.
  * <P>
  * This uses the {@link EliteAdapter} class to do the actual connection.
@@ -30,7 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
 
     @Override
     public String name() {
-        return "Hornby Elite USB port";
+        return Bundle.getMessage("HornbyElitePortTitle");
     }
 
     @Override

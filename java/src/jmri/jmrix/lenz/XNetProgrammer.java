@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Convert the jmri.Programmer interface into commands for the Lenz XPressNet
+ * Convert the jmri.Programmer interface into commands for the Lenz XpressNet
  * <P>
  * The read operation state sequence is:
  * <UL>

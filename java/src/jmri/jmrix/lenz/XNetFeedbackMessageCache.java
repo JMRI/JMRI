@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement a feedback message cache for XPressNet sensors and turnouts.
+ * Implement a feedback message cache for XpressNet sensors and turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
   */

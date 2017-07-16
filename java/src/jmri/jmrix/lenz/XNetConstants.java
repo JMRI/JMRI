@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz;
 
 /**
- * Constants to represent values seen in XPressNet traffic.
+ * Constants to represent values seen in XpressNet traffic.
  * <p>
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -152,7 +152,7 @@ public final class XNetConstants {
     public final static int LOCO_DH_AVAILABLE = 0x04;
     public final static int LOCO_DH_NOT_AVAILABLE = 0x05;
 
-    /* XPressNet MU or DH Error Message */
+    /* XpressNet MU or DH Error Message */
     public final static int LOCO_MU_DH_ERROR = 0xE1;
 
     /* Commands send from the computer to the command station */
@@ -348,7 +348,7 @@ public final class XNetConstants {
     /* Now, we have a response indicating what was sent was OK */
     public final static int LI_MESSAGE_RESPONSE_SEND_SUCCESS = 0x04;
     /* and a message indicating the LI10x doesn't have a timeslot on the 
-     XPressNet (possibly too many devices connected) */
+     XpressNet (possibly too many devices connected) */
     public final static int LI_MESSAGE_RESPONSE_TIMESLOT_ERROR = 0x05;
     /* Last, there is an error for an LI10x buffer overflow */
     public final static int LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW = 0x06;

@@ -38,7 +38,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                 // parse message type
                 int addr = l.getTurnoutMsgAddr(i);    // Acc. Address 1 on 
                 // Hornby reads as 
-                // XPressNet address 2
+                // XpressNet address 2
                 // in the message.
                 if (addr >= 0) {
                     if (log.isDebugEnabled()) {

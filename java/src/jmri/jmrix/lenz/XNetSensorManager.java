@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the XPressNet specific Sensor implementation.
+ * Manage the XpressNet specific Sensor implementation.
  * <p>
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
@@ -36,7 +36,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    // XPressNet specific methods
+    // XpressNet specific methods
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {

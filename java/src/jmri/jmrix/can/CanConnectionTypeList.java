@@ -1,7 +1,7 @@
 package jmri.jmrix.can;
 
 /**
- * Returns a list of valid lenz XPressNet Connection Types
+ * Returns a list of valid lenz XpressNet Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

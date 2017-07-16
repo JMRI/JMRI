@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode programing interface for XPressNet Currently only Byte
- * mode is implemented, though XPressNet also supports bit mode writes for POM
+ * Provides an Ops mode programing interface for XpressNet Currently only Byte
+ * mode is implemented, though XpressNet also supports bit mode writes for POM
  *
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2003-2010
@@ -65,7 +65,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
+         currently sent back to us via the XpressNet */
         p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
     }
 
@@ -75,7 +75,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
+         currently sent back to us via the XpressNet */
         p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
     }
 

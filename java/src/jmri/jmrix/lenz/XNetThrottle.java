@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a XPressNet
+ * An implementation of DccThrottle with code specific to a XpressNet
  * connection.
  *
  * @author Paul Bender (C) 2002-2010
@@ -84,7 +84,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the state of locomotive direction and
+     * Send the XpressNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4.
      */
     @Override
@@ -96,7 +96,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F5, F6, F7, F8.
+     * Send the XpressNet message to set the state of functions F5, F6, F7, F8.
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -107,7 +107,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F9, F10, F11,
+     * Send the XpressNet message to set the state of functions F9, F10, F11,
      * F12.
      */
     @Override
@@ -119,7 +119,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F13, F14, F15,
+     * Send the XpressNet message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20.
      */
     @Override
@@ -136,7 +136,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the state of functions F21, F22, F23,
+     * Send the XpressNet message to set the state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28.
      */
     @Override
@@ -153,7 +153,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the Momentary state of locomotive
+     * Send the XpressNet message to set the Momentary state of locomotive
      * functions F0, F1, F2, F3, F4.
      */
     @Override
@@ -172,7 +172,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the momentary state of functions F5,
+     * Send the XpressNet message to set the momentary state of functions F5,
      * F6, F7, F8.
      */
     @Override
@@ -191,7 +191,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the momentary state of functions F9,
+     * Send the XpressNet message to set the momentary state of functions F9,
      * F10, F11, F12.
      */
     @Override
@@ -210,7 +210,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the momentary state of functions F13,
+     * Send the XpressNet message to set the momentary state of functions F13,
      * F14, F15, F16, F17, F18, F19, F20.
      */
     @Override
@@ -235,7 +235,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Send the XPressNet message to set the momentary state of functions F21,
+     * Send the XpressNet message to set the momentary state of functions F21,
      * F22, F23, F24, F25, F26, F27, F28.
      */
     @Override
@@ -294,7 +294,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Since XPressNet has a seperate Opcode for emergency stop,
+     * Since XpressNet has a seperate Opcode for emergency stop,
      * we're setting this up as a seperate protected function.
      */
     protected void sendEmergencyStop() {

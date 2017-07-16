@@ -42,7 +42,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /* According to the specification, DCC++ has a maximum timing 
      interval of 500 milliseconds durring normal communications */
-    // TODO: Note this timing interval is actually an XPressNet thing...
+    // TODO: Note this timing interval is actually an XpressNet thing...
     // Need to find out what DCC++'s equivalent is.
     static protected final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
     static private int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?

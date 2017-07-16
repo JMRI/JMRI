@@ -52,7 +52,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     /**
-     * XPressNet based systems DO NOT use the Dispatch Function.
+     * XpressNet based systems DO NOT use the Dispatch Function.
      */
     @Override
     public boolean hasDispatchFunction() {
@@ -60,7 +60,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     /**
-     * XPressNet based systems can have multiple throttles for the same 
+     * XpressNet based systems can have multiple throttles for the same
      * device.
      */
     @Override
@@ -101,7 +101,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface XPressNet supports
+     * possible modes specifed by the DccThrottle interface XpressNet supports
      * 14,27,28 and 128 speed step modes
      */
     @Override
@@ -154,7 +154,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             if(!(t instanceof XNetThrottle)) {
-               throw new IllegalArgumentException("Attempt to dispose non-XPressNet Throttle");
+               throw new IllegalArgumentException("Attempt to dispose non-XpressNet Throttle");
             }
             XNetThrottle lnt = (XNetThrottle) t;
             lnt.throttleDispose();

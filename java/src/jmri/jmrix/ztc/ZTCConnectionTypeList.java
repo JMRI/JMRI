@@ -2,7 +2,7 @@ package jmri.jmrix.ztc;
 
 /**
  * Returns a list of valid ZTC Connection Types.  Note that
- * most ZTC Connection types are Lenz (ZTC uses XPressNet )
+ * most ZTC Connection types are Lenz (ZTC uses XpressNet )
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

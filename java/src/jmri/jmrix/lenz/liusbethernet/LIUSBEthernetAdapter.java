@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to XPressNet via a the Lenz LIUSBEthernet. NOTES: By default,
+ * Provide access to XpressNet via a the Lenz LIUSBEthernet. NOTES: By default,
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
@@ -140,7 +140,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      */
     @Override
     public void autoConfigure() {
-        log.info("Configuring XPressNet interface via JmDNS");
+        log.info("Configuring XpressNet interface via JmDNS");
         if (getHostName().equals(DEFAULT_IP_ADDRESS)) {
             setHostName(""); // reset the hostname to none.
         }

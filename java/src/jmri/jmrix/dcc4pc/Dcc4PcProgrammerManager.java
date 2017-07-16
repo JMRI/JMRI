@@ -7,7 +7,7 @@ import jmri.managers.DefaultProgrammerManager;
 
 /**
  * DCC4PC Programmer acts as a proxy for ops mode programming. Extend
- * DefaultProgrammerManager to provide ops mode programmers on XPressNet
+ * DefaultProgrammerManager to provide ops mode programmers on XpressNet
  *
  * @see jmri.ProgrammerManager
  * @author Kevin Dickerson Copyright (C) 2012
@@ -36,7 +36,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * XPressNet command station does provide Ops Mode We should make this
+     * XpressNet command station does provide Ops Mode We should make this
      * return false based on what command station we're using but for now, we'll
      * return true
      */

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
- * a Lenz Command Station, on an XPressNet network.
+ * a Lenz Command Station, on an XpressNet network.
  *
  * @author Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
  */
@@ -37,7 +37,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Set the CS Type based on an XPressNet Message.
+     * Set the CS Type based on an XpressNet Message.
      */
     public void setCommandStationType(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -70,7 +70,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Set the CS Software Version based on an XPressNet Message.
+     * Set the CS Software Version based on an XpressNet Message.
      */
     public void setCommandStationSoftwareVersion(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -97,7 +97,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * XPressNet command station does provide Ops Mode. We should make this
+     * XpressNet command station does provide Ops Mode. We should make this
      * return false based on what command station we're using but for now, we'll
      * return true.
      */
@@ -149,7 +149,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * We need to calculate the locomotive address when doing the translations
-     * back to text. XPressNet Messages will have these as two elements, which
+     * back to text. XpressNet Messages will have these as two elements, which
      * need to get translated back into a single address by reversing the
      * formulas used to calculate them in the first place.
      *
@@ -214,7 +214,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return Bundle.getMessage("MenuXPressNet");
+            return Bundle.getMessage("MenuXpressNet");
         }
         return adaptermemo.getUserName();
     }

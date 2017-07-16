@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Light Object for XPressNet.
+ * Implementation of the Light Object for XpressNet.
  * NOTE: This is a simplification of the XNetTurnout class.
  * <p>
  * Based in part on SerialLight.java
@@ -122,7 +122,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     }
 
     /**
-     * Handle an incoming message from the XPressNet.
+     * Handle an incoming message from the XpressNet.
      * NOTE: We aren't registered as a listener, so This is only triggered
      * when we send out a message
      */

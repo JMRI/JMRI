@@ -18,7 +18,7 @@ import purejavacomm.UnsupportedCommOperationException;
 /**
  * Implements SerialPortAdapter for a modem connected to an XPA.
  * <p>
- * This connects an XPA+Modem connected to an XPressNet based command station
+ * This connects an XPA+Modem connected to an XpressNet based command station
  * via a serial com port. Normally controlled by the SerialDriverFrame class.
  * <p>
  * The current implementation only handles the 9,600 baud rate. It uses the
@@ -107,7 +107,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
     /**
      * set up all of the other objects to operate with an XPA+Modem Connected to
-     * an XPressNet based command station connected to this port
+     * an XpressNet based command station connected to this port
      */
     @Override
     public void configure() {

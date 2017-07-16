@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.swing;
 import javax.swing.JMenu;
 
 /**
- * Create a menu containing the XPressNet specific tools
+ * Create a menu containing the XpressNet specific tools
  *
  * @author Paul Bender Copyright 2003,2010
  */
@@ -21,7 +21,7 @@ public class XNetMenu extends JMenu {
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(Bundle.getMessage("MenuXPressNet"));
+            setText(Bundle.getMessage("MenuXpressNet"));
         }
 
         add(new jmri.jmrix.lenz.swing.mon.XNetMonAction());

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Frame for user input of XPressNet messages
+ * Frame for user input of XpressNet messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2002
   */

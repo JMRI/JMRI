@@ -97,14 +97,14 @@ public class Z21Reply extends AbstractMRReply {
                                (getElementBCD(11))*10000;
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
-               return Bundle.getMessage("Z21XPressNetTunnelReply", getXNetReply().toMonitorString());
+               return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            default:
         }
 
         return toString();
     }
 
-    // handle XPressNet replies tunneled in Z21 messages
+    // handle XpressNet replies tunneled in Z21 messages
     boolean isXPressNetTunnelMessage() {
         return (getOpCode() == 0x0040);
     }
@@ -119,7 +119,7 @@ public class Z21Reply extends AbstractMRReply {
             }
             if(( xnr.getElement(0) & 0x0F ) > ( xnr.getNumDataElements()+2) ){
                // there is at least one message from the Z21 that can be sent 
-               // with fewer bytes than the XPressNet payload indicates it 
+               // with fewer bytes than the XpressNet payload indicates it
                // should have.  Pad those messages with 0x00 bytes.
                for(i=i-4;i<((xnr.getElement(0)&0x0F)+2);i++){
                   xnr.setElement(i,0x00);
