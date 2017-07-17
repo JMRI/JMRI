@@ -50,7 +50,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetEngineMovesActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintEngineRosterAction.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintEngineRosterActionTest.class));
         return suite;
     }
 
