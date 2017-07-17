@@ -432,9 +432,11 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    new Thread(() -> {
+                    Thread t = new Thread(() -> {
                         olcbCanInterface.initialize();
-                    }).start();
+                    });
+                    t.setName("olcbCanInterface.initialize");
+                    t.start();
                     timer.stop();
                 }
             };

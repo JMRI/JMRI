@@ -21,7 +21,7 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via a LI100 on an attached serial comm port.
+ * Provide access to XpressNet via a LI100 on an attached serial comm port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -38,7 +38,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);

@@ -116,6 +116,7 @@ kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br>
     </ul>
 <li>If you're running under Netbeans or Eclipse, there are simple menu commands to do this.
 </ul>
+
     <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

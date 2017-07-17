@@ -2,7 +2,6 @@ package jmri.jmrit.decoderdefn;
 
 import javax.swing.JLabel;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import org.junit.Assert;
@@ -95,10 +94,8 @@ public class DecoderFileTest extends TestCase {
         // this test should probably be done in terms of a test class instead of the real one...
         JLabel progStatus = new JLabel(" OK ");
         CvTableModel cvModel = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         VariableTableModel variableModel = new VariableTableModel(progStatus,
-                new String[]{"Name", "Value"},
-                cvModel, icvModel);
+                new String[]{"Name", "Value"}, cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                 "family", "filename", 16, 16, null);
 
@@ -258,10 +255,8 @@ public class DecoderFileTest extends TestCase {
         // this test should probably be done in terms of a test class instead of the real one...
         JLabel progStatus = new JLabel(" OK ");
         CvTableModel cvModel = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         VariableTableModel variableModel = new VariableTableModel(progStatus,
-                new String[]{"Name", "Value"},
-                cvModel, icvModel);
+                new String[]{"Name", "Value"}, cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                 "family", "filename", 16, 3, null);
 
@@ -275,10 +270,8 @@ public class DecoderFileTest extends TestCase {
         // this test should probably be done in terms of a test class instead of the real one...
         JLabel progStatus = new JLabel(" OK ");
         CvTableModel cvModel = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         VariableTableModel variableModel = new VariableTableModel(progStatus,
-                new String[]{"Name", "Value"},
-                cvModel, icvModel);
+                new String[]{"Name", "Value"}, cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                 "family", "filename", 3, 16, null);
 

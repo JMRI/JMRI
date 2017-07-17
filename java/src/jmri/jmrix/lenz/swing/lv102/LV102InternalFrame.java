@@ -671,7 +671,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         @Override
         public void programmingOpReply(int value, int status) {
             if (log.isDebugEnabled()) {
-                log.debug("Programming Operation reply recieved, value is " + value + " ,status is " + status);
+                log.debug("Programming Operation reply received, value is " + value + " ,status is " + status);
             }
             if (status == ProgListener.ProgrammerBusy) {
                 synchronized (CurrentStatus) {

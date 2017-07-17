@@ -692,7 +692,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * to the roster otherwise this causes a problem with the roster list.
      */
     void checkLocoList(String[] ecoslines) {
-        log.info("Checking loco list");
+        log.debug("Checking loco list");
         String loco;
         for (int i = 0; i < ecoslines.length; i++) {
             loco = ecoslines[i];
@@ -717,14 +717,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 }
             }
             if (nomatch) {
-                //System.out.println("We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]);
+                //We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]
                 log.debug("Loco not found so need to remove from register");
                 if (getByEcosObject(jmrilist[i]).getRosterId() != null) {
                     final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
                     final Roster _roster = Roster.getDefault();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute(p.getRosterAttribute());
-                    re.writeFile(null, null, null);
+                    re.writeFile(null, null);
                     Roster.getDefault().writeRoster();
                     if (p.getRemoveLocoFromJMRI() == EcosPreferences.YES) {
                         _roster.removeEntry(re);

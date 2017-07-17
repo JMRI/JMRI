@@ -146,6 +146,8 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     }
 
     public void setEcosDescription(String description) {
+        if (description.startsWith("\"")) description = description.substring(1, description.length());
+        if (description.endsWith("\"")) description = description.substring(0, description.length() - 1);
         String oldValue = _ecosDescription;
         _ecosDescription = description;
         firePropertyChange("name", oldValue, _ecosDescription); // NOI18N

@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for XPressNet. It
- * adds the appropriate Managers via the Initialization Manager based on the
- * Command Station Type.
+ * This class performs Command Station dependent initialization for XpressNet.
+ * It adds the appropriate Managers via the Initialization Manager based on
+ * the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public XNetInitializationManager(XNetSystemConnectionMemo memo) {
@@ -50,7 +50,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
             jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
         } else if (CSSoftwareVersion < 3.0) {
-            log.error("Command Station does not support XPressNet Version 3 Command Set");
+            log.error("Command Station does not support XpressNet Version 3 Command Set");
         } else {
             /* First, we load things that should work on all systems */
             jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
@@ -135,7 +135,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("XPressNet Initialization Complete");
+            log.debug("XpressNet Initialization Complete");
         }
     }
 

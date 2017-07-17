@@ -38,7 +38,7 @@ public class PacketGenActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PacketGenAction action = new PacketGenAction("Generate XPressNet message",memo);
+        PacketGenAction action = new PacketGenAction("Generate XpressNet message",memo);
         action.actionPerformed(null);
         // wait for frame with the value of PacketGenFrameTitle (from the 
         // resource bundle ) in title, case insensitive

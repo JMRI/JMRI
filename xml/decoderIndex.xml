@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.1ish+heap+20170628T0032Z+Rc41093b on Wed Jun 28 10:32:47 AEST 2017-->
-  <decoderIndex version="818">
+  <!--Written by JMRI version 4.7.8ish+jake+20170711T2319Z+R0a4f3f64c1 on Tue Jul 11 16:19:47 PDT 2017-->
+  <decoderIndex version="820">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -22681,13 +22681,15 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
-        <model model="WOW Diesel 121 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="3" highVersionID="3" productID="171">
-          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+        <model model="WOW Diesel 121 SS3" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="3" highVersionID="3" productID="171">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
+          <output name="7" label="Pnk/Pur" connection="plug" />
+          <output name="8" label="Grn/Brn" connection="plug" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -22743,13 +22745,15 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
-        <model model="WOW Diesel 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
+        <model model="WOW Diesel 121 SS4" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
           <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />

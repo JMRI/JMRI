@@ -26,7 +26,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for XPressNet
+     * Returns the system letter for DCC++
      */
     @Override
     public String getSystemPrefix() {

@@ -18,7 +18,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
     }
 
     public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Generate XPressNet message", memo);
+        this("Generate XpressNet message", memo);
     }
 
     @Override

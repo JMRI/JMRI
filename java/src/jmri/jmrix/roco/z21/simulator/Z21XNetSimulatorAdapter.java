@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to a simulated z21 XPressNet sub-system.
+ * Provide access to a simulated z21 XpressNet sub-system.
  * <p>
- * This shares some code with the XPressNet simulator, but it's 
+ * This shares some code with the XpressNet simulator, but it's
  * not a derived class because it isn't a real connection.
  *
  * @author	Paul Bender, Copyright (C) 2015
@@ -194,34 +194,34 @@ public class Z21XNetSimulatorAdapter {
                         reply.setParity();         // set the parity correctly.
                         break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP1:
-                        // XPressNet set Function Group 1.
+                        // XpressNet set Function Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP2:
-                        // XPressNet set Function Group 2. 
+                        // XpressNet set Function Group 2.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP3:
-                        // XPressNet set Function Group 3.
+                        // XpressNet set Function Group 3.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP4:
-                        // XPressNet set Function Group 4.
+                        // XpressNet set Function Group 4.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP5:
-                        // XPressNet set Function Group 5.
+                        // XpressNet set Function Group 5.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group1:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group2:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group3:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group4:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group5:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                           reply = okReply();
                           break;
@@ -246,7 +246,7 @@ public class Z21XNetSimulatorAdapter {
                 reply = okReply();
                 break;
            case XNetConstants.ACC_OPER_REQ:
-                log.debug("Accessory Operations Request Received");
+                log.debug("Accessory Operations Request received");
                 reply = okReply();
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
@@ -407,7 +407,7 @@ public class Z21XNetSimulatorAdapter {
     }
 
     /**
-     * Create a reply to a request for the XPressNet Version.
+     * Create a reply to a request for the XpressNet Version.
      */
     private XNetReply xNetVersionReply(){
         XNetReply reply=new XNetReply();

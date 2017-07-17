@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Frame displaying the LI101 configuration utility
  *
  * This is a configuration utility for the LI101. It allows the user to set the
- * XPressNet Address and the port speed used to communicate with the LI101.
+ * XpressNet Address and the port speed used to communicate with the LI101.
  *
  * @author Paul Bender Copyright (C) 2003-2010
   */
@@ -35,7 +35,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("Xpressnet address: "));
+        pane0.add(new JLabel("XpressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -131,7 +131,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     JToggleButton readSettingsButton = new JToggleButton("Read from LI101");
     JToggleButton writeSettingsButton = new JToggleButton("Write to LI101");
-    JToggleButton closeButton = new JToggleButton("Close");
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
     JToggleButton resetButton = new JToggleButton("Reset to Factory Defaults");
 
     protected String[] validXNetAddresses = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""};
@@ -187,7 +187,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
             } else if (l.getElement(1) == XNetConstants.LI101_REQUEST_BAUD) {
                 // The third element is the encoded Baud rate
                 speedBox.setSelectedIndex(l.getElement(2) - 1);
-                status.setText("Baud rate" + validSpeeds[l.getElement(2) - 1] + "recieved from LI101");
+                status.setText("Baud rate" + validSpeeds[l.getElement(2) - 1] + "received from LI101");
             }
         }
     }

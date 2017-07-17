@@ -574,6 +574,22 @@ the condition doesn't come true in a reasonable length of time.
 </code>
 </pre>
 
+      <p>
+      Please make sure your unit tests clean up after themselves!
+      They should not leave any threads running. Any threads they
+      start should have either terminated normally by the end of the test
+      (don't let them just time out and crash later during some other test!)
+      or you should add code to terminate them.
+      <p>
+      You can check whether you've left any threads running by
+      editing the <code>java/test/apps/tests/Log4JFixture.java</code>
+      and finding a line like:
+<code><pre>
+        // checkThreads(false);  // true means stop on 1st extra thread
+</pre></code>
+      Uncomment that, compile and run your tests.  It will report 
+      any threads you've left running.
+      
       <h3><a id="io" name="io"></a>Testing I/O</h3>Some test
       environments don't automatically flush I/O operations such as
       streams during testing. If you're testing something that does
