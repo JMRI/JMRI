@@ -9,23 +9,23 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainEditFrame;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PrintTrainsActionTest {
+public class TrainManifestOptionActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainsTableFrame ttf = new TrainsTableFrame();
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Trains Action");
-        PrintTrainsAction t = new PrintTrainsAction("Test Action",jf,true,ttf);
+        Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+        TrainEditFrame tef = new TrainEditFrame(train1);
+        TrainManifestOptionAction t = new TrainManifestOptionAction("Test Action",tef);
         Assert.assertNotNull("exists",t);
-        ttf.dispose();
-        jf.dispose();
+        tef.dispose();
     }
 
     // The minimal setup for log4J
@@ -41,6 +41,6 @@ public class PrintTrainsActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionActionTest.class.getName());
 
 }
