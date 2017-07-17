@@ -4,7 +4,7 @@ package jmri.jmrix.lenz;
  * Represents a single response from the XPressNet.
  *
  * @author Paul Bender Copyright (C) 2004
-  *
+ *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
@@ -622,7 +622,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * @return the value returned by the DCC system associated with a 
-     * service mode reply
+     * service mode reply.
      * return -1 if not a service mode message.
      */
     public int getServiceModeCVValue() {
@@ -634,7 +634,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return True if the message is an error message indicating
+     * @return true if the message is an error message indicating
      * we should retransmit.
      */
     @Override
@@ -645,7 +645,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return true of the message is an unsollicited message
+     * @return true if the message is an unsollicited message
      */
     @Override
     public boolean isUnsolicited() {
@@ -666,7 +666,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * @return a string representation of the reply suitable for display in the
-     * XPressNet monitor
+     * XPressNet monitor.
      */
     public String toMonitorString(){
         String text;
@@ -906,16 +906,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // Loco Information Response Messages
         } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
             if (getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-                text = "Locomotive F13-F28 Momentary Status: "; // TODO I18N
+                text = Bundle.getMessage("XNetReplyLocoStatus13Label");
                 // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
                 int element3 = getElement(2);
                 // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
                 int element4 = getElement(3);
                 text += parseFunctionHighMomentaryStatus(element3, element4);
             } else {
-                text = "Locomotive Information Response: Normal Unit ";
+                text = Bundle.getMessage("XNetReplyLocoNormalLabel");
                 text
-                        += parseSpeedandDirection(getElement(1),
+                        += parseSpeedAndDirection(getElement(1),
                                 getElement(2)) + " ";
                 // message byte 4, contains F0,F1,F2,F3,F4
                 int element3 = getElement(3);
@@ -928,16 +928,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 // This message is a Hornby addition to the protocol
                 // indicating the speed and direction of a locomoitve
                 // controlled by the elite's built in throttles
-                text = "Elite Speed/Direction Information: Locomotive ";
+                text = Bundle.getMessage("XNetReplyLocoEliteSLabel") + " ";
                 text += LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
                 text
-                        += parseSpeedandDirection(getElement(4),
+                        += " " + parseSpeedAndDirection(getElement(4),
                                 getElement(5)) + " ";
             } else if (getElement(1) == 0xF9) {
                 // This message is a Hornby addition to the protocol
                 // indicating the function on/off status of a locomoitve
                 // controlled by the elite's built in throttles
-                text = "Elite Function Information: Locomotive ";
+                text = Bundle.getMessage("XNetReplyLocoEliteFLabel") + " ";
                 text += LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
                 // message byte 5, contains F0,F1,F2,F3,F4
                 int element4 = getElement(4);
@@ -946,9 +946,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text += parseFunctionStatus(element4, element5);
             } else {
                 text
-                        = "Locomotive Information Response: Locomotive in Multiple Unit ";
+                        = Bundle.getMessage("XNetReplyLocoMULabel") + " ";
                 text
-                        += parseSpeedandDirection(getElement(1),
+                        += parseSpeedAndDirection(getElement(1),
                                 getElement(2)) + " ";
                 // message byte 4, contains F0,F1,F2,F3,F4
                 int element3 = getElement(3);
@@ -957,52 +957,50 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text += parseFunctionStatus(element3, element4);
             }
         } else if (getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
-            text = "Locomotive Information Response: Multi Unit Base Address";
+            text = Bundle.getMessage("XNetReplyLocoMUBaseLabel") + " ";
             text
-                    += parseSpeedandDirection(getElement(1), getElement(2)) + " ";
+                    += parseSpeedAndDirection(getElement(1), getElement(2)) + " ";
         } else if (getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
-            text
-                    = "Locomotive Information Response: Locomotive in Double Header ";
-            text
-                    += parseSpeedandDirection(getElement(1), getElement(2)) + " ";
+            text = Bundle.getMessage("XNetReplyLocoDHLabel") + " ";
+            text += parseSpeedAndDirection(getElement(1), getElement(2)) + " ";
             // message byte 4, contains F0,F1,F2,F3,F4
             int element3 = getElement(3);
             // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
             int element4 = getElement(4);
             text += parseFunctionStatus(element3, element4);
-            text += " Second Locomotive in Double Header is: ";
+            text += " " + Bundle.getMessage("XNetReplyLoco2DHLabel") + " ";
             text += LenzCommandStation.calcLocoAddress(getElement(5), getElement(6));
         } else if (getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-            text = "Locomotive Information Response: ";
+            text = Bundle.getMessage("XNetReplyLocoLabel") + " ";
             switch (getElement(1)) {
                 case XNetConstants.LOCO_SEARCH_RESPONSE_N:
-                    text += "Search Response, Normal Locomotive: ";
+                    text += Bundle.getMessage("XNetReplySearchNormalLabel") + " ";
                     text += getThrottleMsgAddr();
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
-                    text += "Search Response, Loco in Double Header: ";
+                    text += Bundle.getMessage("XNetReplySearchDHLabel") + " ";
                     text += getThrottleMsgAddr();
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
-                    text += "Search Response, MU Base Address: ";
+                    text += Bundle.getMessage("XNetReplySearchMUBaseLabel") + " ";
                     text += getThrottleMsgAddr();
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
-                    text += "Search Response, Loco in MU: ";
+                    text += Bundle.getMessage("XNetReplySearchMULabel") + " ";
                     text += getThrottleMsgAddr();
                     break;
                 case XNetConstants.LOCO_SEARCH_NO_RESULT:
-                    text += "Search Response, Search failed for: ";
+                    text += Bundle.getMessage("XNetReplySearchFailedLabel") + " ";
                     text += getThrottleMsgAddr();
                     break;
                 case XNetConstants.LOCO_NOT_AVAILABLE:
-                    text += "Locomotive ";
+                    text += Bundle.getMessage("rsType") + " ";
                     text += getThrottleMsgAddr();
-                    text += " is being operated by another device.";
+                    text += Bundle.getMessage("XNetReplyLocoOperated");
                     break;
                 case XNetConstants.LOCO_FUNCTION_STATUS: {
-                    text += "Locomotive ";
-                    text += " Function Status: ";
+                    text += Bundle.getMessage("rsType") + " "; // "Locomotive", key in NBBundle, shared with Operations
+                    text += Bundle.getMessage("XNetReplyFStatusLabel") + " ";
                     // message byte 3, contains F0,F1,F2,F3,F4
                     int element3 = getElement(2);
                     // message byte 4, contains F12,F11,F10,F9,F8,F7,F6,F5
@@ -1011,8 +1009,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     break;
                 }
                 case XNetConstants.LOCO_FUNCTION_STATUS_HIGH: {
-                    text += "Locomotive ";
-                    text += "F13-F28 Status: ";
+                    text += Bundle.getMessage("rsType") + " ";
+                    text += Bundle.getMessage("XNetReplyF13StatusLabel") + " ";
                     // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
                     int element3 = getElement(2);
                     // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
@@ -1025,78 +1023,85 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             }
             // Feedback Response Messages
         } else if (isFeedbackBroadcastMessage()) {
-            text = "Feedback Response:";
+            text = Bundle.getMessage("XNetReplyFeedbackLabel");
             int numDataBytes = getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
                 switch (getFeedbackMessageType(i)) {
                     case 0:
-                        text = text + "Turnout with out Feedback "
-                                + " Turnout: " + getTurnoutMsgAddr(i) + " State: ";
+                        text = text + Bundle.getMessage("TurnoutWoFeedback")
+                                + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                                + " " + getTurnoutMsgAddr(i) + " "
+                                + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "; // "State: "
                         if ((getElement(i + 1) & 0x03) == 0x00) {
-                            text = text + "Not Operated";
+                            text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
                         } else if ((getElement(i + 1) & 0x03) == 0x01) {
-                            text = text + "Thrown Left";
+                            text = text + Bundle.getMessage("XNetReplyThrownLeft");
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
-                            text = text + "Thrown Right";
+                            text = text + Bundle.getMessage("XNetReplyThrownRight");
                         } else {
-                            text = text + "<Invalid>";
+                            text = text + Bundle.getMessage("XNetReplyInvalid");
                         }
-                        text = text + "; Turnout: " + (getTurnoutMsgAddr(i) + 1)
-                                + " State: ";
+                        text = text + "; " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                                + " " + (getTurnoutMsgAddr(i) + 1) + " "
+                                + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "; // "State: "
                         if ((getElement(i + 1) & 0x0C) == 0x00) {
-                            text = text + "Not Operated";
+                            text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
                         } else if ((getElement(i + 1) & 0x0C) == 0x04) {
-                            text = text + "Thrown Left";
+                            text = text + Bundle.getMessage("XNetReplyThrownLeft");
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
-                            text = text + "Thrown Right";
+                            text = text + Bundle.getMessage("XNetReplyThrownRight");
                         } else {
-                            text = text + "<Invalid>";
+                            text = text + Bundle.getMessage("XNetReplyInvalid");
                         }
                         break;
                     case 1:
-                        text = text + "Turnout with Feedback "
-                                + " Turnout: " + getTurnoutMsgAddr(i) + " State: ";
+                        text = text + Bundle.getMessage("TurnoutWFeedback")
+                                + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                                + " " + getTurnoutMsgAddr(i) + " "
+                                + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x03) == 0x00) {
-                            text = text + "Not Operated";
+                            text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
                         } else if ((getElement(i + 1) & 0x03) == 0x01) {
-                            text = text + "Thrown Left";
+                            text = text + Bundle.getMessage("XNetReplyThrownLeft");
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
-                            text = text + "Thrown Right";
+                            text = text + Bundle.getMessage("XNetReplyThrownRight");
                         } else {
-                            text = text + "<Invalid>";
+                            text = text + Bundle.getMessage("XNetReplyInvalid");
                         }
-                        text = text + "; Turnout: " + (getTurnoutMsgAddr() + 1)
-                                + " State: ";
+                        text = text + "; " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                                + " " + (getTurnoutMsgAddr() + 1)
+                                + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x0C) == 0x00) {
-                            text = text + "Not Operated";
+                            text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
                         } else if ((getElement(i + 1) & 0x0C) == 0x04) {
-                            text = text + "Thrown Left";
+                            text = text + Bundle.getMessage("XNetReplyThrownLeft");
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
-                            text = text + "Thrown Right";
+                            text = text + Bundle.getMessage("XNetReplyThrownRight");
                         } else {
-                            text = text + "<Invalid>";
+                            text = text + Bundle.getMessage("XNetReplyInvalid");
                         }
                         break;
                     case 2:
-                        text = text + "Feedback Encoder "
-                                + "Base Address: " + (getFeedbackEncoderMsgAddr(i) + 1);
+                        text = text + Bundle.getMessage("XNetReplyFeedbackEncoder") + " "
+                                + (getFeedbackEncoderMsgAddr(i) + 1);
                         boolean highnibble = ((getElement(i + 1) & 0x10) == 0x10);
-                        text = text + " Contact: " + (highnibble ? 5 : 1);
-                        text
-                                = text + " State: "
-                                + (((getElement(i + 1) & 0x01) == 0x01) ? "On;" : "Off;");
-                        text = text + " Contact: " + (highnibble ? 6 : 2);
-                        text
-                                = text + " State: "
-                                + (((getElement(i + 1) & 0x02) == 0x02) ? "On;" : "Off;");
-                        text = text + " Contact: " + (highnibble ? 7 : 3);
-                        text
-                                = text + " State: "
-                                + (((getElement(i + 1) & 0x04) == 0x04) ? "On;" : "Off;");
-                        text = text + " Contact: " + (highnibble ? 8 : 4);
-                        text
-                                = text + " State: "
-                                + (((getElement(i + 1) & 0x08) == 0x08) ? "On;" : "Off;");
+                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 5 : 1);
+
+                        text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+                                + (((getElement(i + 1) & 0x01) == 0x01) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
+                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 6 : 2);
+
+                        text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+                                + (((getElement(i + 1) & 0x02) == 0x02) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
+                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 7 : 3);
+
+                        text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+                                + (((getElement(i + 1) & 0x04) == 0x04) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
+                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 8 : 4);
+
+                        text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+                                + (((getElement(i + 1) & 0x08) == 0x08) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
+                        text = text + ";";
                         break;
                     default:
                         text = text + getElement(i) + " " + getElement(i + 1);
@@ -1116,13 +1121,13 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element2 contains the data byte including the step mode and
      * availability information 
      */
-    private String parseSpeedandDirection(int element1, int element2) {
+    private String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
         int speedVal = 0;
         if ((element2 & 0x80) == 0x80) {
-            text += "Direction Forward,";
+            text += Bundle.getMessage("Forward") + ",";
         } else {
-            text += "Direction Reverse,";
+            text += Bundle.getMessage("Reverse") + ",";
         }
 
         if ((element1 & 0x04) == 0x04) {
@@ -1135,7 +1140,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 speedVal = 0;
             }
-            text += "128 Speed Step Mode,";
+            text += Bundle.getMessage("SpeedStepModeX", 128) + ",";
         } else if ((element1 & 0x02) == 0x02) {
             // We're in 28 speed step mode
             // We have to re-arange the bits, since bit 4 is the LSB,
@@ -1148,7 +1153,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 speedVal = 0;
             }
-            text += "28 Speed Step Mode,";
+            text += Bundle.getMessage("SpeedStepModeX", 28) + ",";
         } else if ((element1 & 0x01) == 0x01) {
             // We're in 27 speed step mode
             // We have to re-arange the bits, since bit 4 is the LSB,
@@ -1161,7 +1166,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 speedVal = 0;
             }
-            text += "27 Speed Step Mode,";
+            text += Bundle.getMessage("SpeedStepModeX", 27) + ",";
         } else {
             // Assume we're in 14 speed step mode.
             speedVal = (element2 & 0x0F);
@@ -1170,21 +1175,21 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 speedVal = 0;
             }
-            text += "14 Speed Step Mode,";
+            text += Bundle.getMessage("SpeedStepModeX", 14) + ",";
         }
 
-        text += "Speed Step " + speedVal + ". ";
+        text += Bundle.getMessage("SpeedStepLabel") + " " + speedVal + ". ";
 
         if ((element1 & 0x08) == 0x08) {
-            text += " Address in use by another device.";
+            text += " " + Bundle.getMessage("XNetReplyAddressInUse");
         } else {
-            text += " Address is Free for Operation.";
+            text += " " + Bundle.getMessage("XNetReplyAddressFree");
         }
         return (text);
     }
 
     /**
-     * Parse the status of functions.
+     * Parse the status of functions F0-F12.
      *
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
@@ -1260,7 +1265,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Parse the status of functions functions F13-F28.
+     * Parse the status of functions F13-F28.
      *
      * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
      * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
@@ -1350,7 +1355,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (text);
     }
     /**
-     * Parse the Momentary sytatus of functions.
+     * Parse the Momentary status of functions.
      *
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
@@ -1358,69 +1363,69 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
-            text += "F0 Momentary ";
+            text += "F0 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F0 Continuous ";
+            text += "F0 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x01) != 0) {
-            text += "F1 Momentary ";
+            text += "F1 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F1 Continuous ";
+            text += "F1 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F2 Momentary ";
+            text += "F2 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F2 Continuous ";
+            text += "F2 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F3 Momentary ";
+            text += "F3 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F3 Continuous ";
+            text += "F3 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F4 Momentary ";
+            text += "F4 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F4 Continuous ";
+            text += "F4 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F5 Momentary ";
+            text += "F5 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F5 Continuous ";
+            text += "F5 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F6 Momentary ";
+            text += "F6 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F6 Continuous ";
+            text += "F6 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F7 Momentary ";
+            text += "F7 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F7 Continuous ";
+            text += "F7 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F8 Momentary ";
+            text += "F8 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F8 Continuous ";
+            text += "F8 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F9 Momentary ";
+            text += "F9 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F9 Continuous ";
+            text += "F9 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F10 Momentary ";
+            text += "F10 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F10 Continuous ";
+            text += "F10 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F11 Momentary ";
+            text += "F11 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F11 Continuous ";
+            text += "F11 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F12 Momentary ";
+            text += "F12 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F12 Continuous ";
+            text += "F12 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         return (text);
     }
@@ -1434,84 +1439,84 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionHighMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x01) != 0) {
-            text += "F13 Momentary ";
+            text += "F13 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F13 Continuous ";
+            text += "F13 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F14 Momentary ";
+            text += "F14 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F14 Continuous ";
+            text += "F14 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F15 Momentary ";
+            text += "F15 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F15 Continuous ";
+            text += "F15 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F16 Momentary ";
+            text += "F16 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F16 Continuous ";
+            text += "F16 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x10) != 0) {
-            text += "F17 Momentary ";
+            text += "F17 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F17 Continuous ";
+            text += "F17 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x20) != 0) {
-            text += "F18 Momentary ";
+            text += "F18 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F18 Continuous ";
+            text += "F18 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x40) != 0) {
-            text += "F19 Momentary ";
+            text += "F19 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F19 Continuous ";
+            text += "F19 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element3 & 0x80) != 0) {
-            text += "F20 Momentary ";
+            text += "F20 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F20 Continuous ";
+            text += "F20 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F21 Momentary ";
+            text += "F21 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F21 Continuous ";
+            text += "F21 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F22 Momentary ";
+            text += "F22 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F22 Continuous ";
+            text += "F22 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F23 Momentary ";
+            text += "F23 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F23 Continuous ";
+            text += "F23 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F24 Momentary ";
+            text += "F24 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F24 Continuous ";
+            text += "F24 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F25 Momentary ";
+            text += "F25 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F25 Continuous ";
+            text += "F25 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F26 Momentary ";
+            text += "F26 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F26 Continuous ";
+            text += "F26 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F27 Momentary ";
+            text += "F27 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F27 Continuous ";
+            text += "F27 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F28 Momentary ";
+            text += "F28 " + Bundle.getMessage("FunctionMomentary") + " ";
         } else {
-            text += "F28 Continuous ";
+            text += "F28 " + Bundle.getMessage("FunctionContinuous") + " ";
         }
         return (text);
     }

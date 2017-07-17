@@ -34,7 +34,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         super(len);
         if (len > 15 ) {  // only check upper bound. Lower bound checked in
                           // super call.
-            log.error("Invalid length in ctor: " + len);
+            log.error("Invalid length in ctor: {}", len);
             throw new IllegalArgumentException("Invalid length in ctor: " + len);
         }
         setBinary(true);
@@ -97,7 +97,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     @Override
     public void setOpCode(int i) {
         if (i > 0xF || i < 0) {
-            log.error("Opcode invalid: " + i);
+            log.error("Opcode invalid: {}", i);
         }
         setElement(0, ((i * 16) & 0xF0) | ((getNumDataElements() - 2) & 0xF));
     }
@@ -921,7 +921,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-
     /**
      * Generate a Function Group Two Operation Request message.
      *
@@ -1427,7 +1426,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
    /**
-    * Generate text translations of messages for use in the XPressNet monitor.
+    * Generate text translations of messages for use in the XpressNet monitor.
     *
     * @return representation of the XNetMessage as a string.
     */
@@ -1588,25 +1587,26 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.LOCO_OPER_REQ) {
             text = "Mobile Decoder Operations Request: ";
             int speed;
+            String direction;
             switch (getElement(1)) {
                 case XNetConstants.LOCO_SPEED_14:
-                    text = text
-                            + "Set Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Speed Step "
-                            + (getElement(4) & 0x0f) + " and direction ";
                     if ((getElement(4) & 0x80) != 0) {
-                        text += "Forward";
+                        direction = Bundle.getMessage("Forward");
                     } else {
-                        text += "Reverse";
+                        direction = Bundle.getMessage("Reverse");
                     }
-                    text += " In 14 speed step mode.";
+                    text = text
+                            + Bundle.getMessage("XNetMessageSetSpeed",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
+                            + " " + (getElement(4) & 0x0f)
+                            + " " + Bundle.getMessage("XNetMessageSetDirection", direction);
+                    text += " " + Bundle.getMessage("SpeedStepModeX", 14) + ".";
                     break;
                 case XNetConstants.LOCO_SPEED_27:
                     text = text
-                            + "Set Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Speed Step ";
+                            + Bundle.getMessage("XNetMessageSetSpeed",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
+                            + " ";
                     speed
                             = (((getElement(4) & 0x10) >> 4)
                             + ((getElement(4) & 0x0F) << 1));
@@ -1615,17 +1615,17 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     }
                     text += speed;
                     if ((getElement(4) & 0x80) != 0) {
-                        text += " and direction Forward";
+                        text += " " + Bundle.getMessage("XNetMessageSetDirection", Bundle.getMessage("Forward"));
                     } else {
-                        text += " and direction Reverse";
+                        text += " " + Bundle.getMessage("XNetMessageSetDirection", Bundle.getMessage("Reverse"));
                     }
-                    text += " In 27 speed step mode.";
+                    text += " " + Bundle.getMessage("SpeedStepModeX", 27) + ".";
                     break;
                 case XNetConstants.LOCO_SPEED_28:
                     text = text
-                            + "Set Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Speed Step ";
+                            + Bundle.getMessage("XNetMessageSetSpeed",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
+                            + " ";
                     speed
                             = (((getElement(4) & 0x10) >> 4)
                             + ((getElement(4) & 0x0F) << 1));
@@ -1634,28 +1634,28 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     }
                     text += speed;
                     if ((getElement(4) & 0x80) != 0) {
-                        text += " and direction Forward";
+                        text += " " + Bundle.getMessage("XNetMessageSetDirection", Bundle.getMessage("Forward"));
                     } else {
-                        text += " and direction Reverse";
+                        text += " " + Bundle.getMessage("XNetMessageSetDirection", Bundle.getMessage("Reverse"));
                     }
-                    text += " In 28 speed step mode.";
+                    text += " " + Bundle.getMessage("SpeedStepModeX", 28) + ".";
                     break;
                 case XNetConstants.LOCO_SPEED_128:
-                    text = text
-                            + "Set Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Speed Step "
-                            + (getElement(4) & 0x7F) + " and direction ";
                     if ((getElement(4) & 0x80) != 0) {
-                        text += "Forward";
+                        direction = Bundle.getMessage("Forward");
                     } else {
-                        text += "Reverse";
+                        direction = Bundle.getMessage("Reverse");
                     }
-                    text += " In 128 speed step mode.";
+                    text = text
+                            + Bundle.getMessage("XNetMessageSetSpeed",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
+                            + " "
+                            + (getElement(4) & 0x7F) + " " + Bundle.getMessage("XNetMessageSetDirection", direction);
+                    text += " " + Bundle.getMessage("SpeedStepModeX", 128) + ".";
                     break;
                 case XNetConstants.LOCO_SET_FUNC_GROUP1: {
                     text = text
-                            + "Set Function Group 1 for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupX", 1) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x10) != 0) {
@@ -1687,7 +1687,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_GROUP2: {
                     text = text
-                            + "Set Function Group 2 for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupX", 2) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
@@ -1714,7 +1714,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_GROUP3: {
                     text = text
-                            + "Set Function Group 3 for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupX", 3) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
@@ -1741,7 +1741,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_GROUP4: {
                     text = text
-                            + "Set Function Group 4 for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupX", 4) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
@@ -1788,7 +1788,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_GROUP5: {
                     text = text
-                            + "Set Function Group 5 for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupX", 5) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
@@ -1835,7 +1835,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_Group1: {
                     text = text
-                            + "Set Function Group 1 Momentary Status for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupXMomentary", 1) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x10) == 0) {
@@ -1867,7 +1867,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_Group2: {
                     text = text
-                            + "Set Function Group 2 Momentary Status for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupXMomentary", 2) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
@@ -1894,7 +1894,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_Group3: {
                     text = text
-                            + "Set Function Group 3 Momentary Status for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupXMomentary", 3) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
@@ -1921,7 +1921,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_Group4: {
                     text = text
-                            + "Set Function Group 4 Momentary Status for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupXMomentary", 4) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
@@ -1968,7 +1968,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 }
                 case XNetConstants.LOCO_SET_FUNC_Group5: {
                     text = text
-                            + "Set Function Group 5 Momentary Status for address: "
+                            + Bundle.getMessage("XNetMessageSetFunctionGroupXMomentary", 5) + " "
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {

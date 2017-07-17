@@ -121,10 +121,10 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                         setIsAvailable(false);
                         // Set the speed step mode and availabliity
                         // from byte 5
-                        parseSpeedandAvailability(l.getElement(4));
+                        parseSpeedAndAvailability(l.getElement(4));
                         // Parse the speed step and direction from
                         // byte 6.
-                        parseSpeedandDirection(l.getElement(5));
+                        parseSpeedAndDirection(l.getElement(5));
                     }
                 } else if (l.getElement(1) == 0xF9) {
                     /* This is a Hornby Elite specific response
