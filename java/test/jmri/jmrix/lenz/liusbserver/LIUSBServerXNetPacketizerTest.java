@@ -57,11 +57,4 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
         };
     }
 
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
-    }
-
 }

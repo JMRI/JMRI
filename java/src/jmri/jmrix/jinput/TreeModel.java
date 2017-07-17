@@ -48,11 +48,12 @@ public final class TreeModel extends DefaultTreeModel {
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         // start the USB gathering
-        Runner r = new Runner();
-        r.setName("TreeModel loader");
-        r.start();
+        runner = new Runner();
+        runner.setName("jinput.TreeModel loader");
+        runner.start();
     }
-
+    Runner runner;
+    
     /**
      * Add a node to the tree if it doesn't already exist
      *
@@ -90,6 +91,13 @@ public final class TreeModel extends DefaultTreeModel {
         return instanceValue;
     }
 
+    // intended for test routines only
+    void terminateThreads() throws InterruptedException {
+        if (runner == null) return;
+        runner.interrupt();
+        runner.join();
+    }
+    
     static private TreeModel instanceValue = null;
 
     class Runner extends Thread {

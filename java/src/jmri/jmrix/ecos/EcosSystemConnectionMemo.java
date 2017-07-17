@@ -67,11 +67,11 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.ecos.EcosDccThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
-        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
-        jmri.InstanceManager.setSensorManager(sensorManager);
-
         reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
         jmri.InstanceManager.setReporterManager(reporterManager);
+        
+        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
+        jmri.InstanceManager.setSensorManager(sensorManager);
         
         jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
 

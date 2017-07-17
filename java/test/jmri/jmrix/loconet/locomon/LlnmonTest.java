@@ -6181,6 +6181,7 @@ public class LlnmonTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        lnsm.dispose();
         apps.tests.Log4JFixture.tearDown();
     }
 

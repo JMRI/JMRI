@@ -24,7 +24,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
     BufferedReader inStream;
     OutputStream outStream;
     final LinkedList<LocoNetMessage> msgQueue = new LinkedList<>();
-    Thread txThread;
+    volatile Thread txThread;
     String inString;
     String remoteAddress;
     LocoNetMessage lastSentMessage;
@@ -52,7 +52,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
             txThread.setPriority(Thread.MAX_PRIORITY);
-            txThread.setName("ClientTxHandler:" + remoteAddress);
+            txThread.setName("ClientTxHandler: " + remoteAddress);
             txThread.start();
 
             while (!isInterrupted()) {
@@ -125,7 +125,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             log.debug("ClientRxHandler: IO Exception: ", ex);
         }
         LnTrafficController.instance().removeLocoNetListener(~0, this);
-        txThread.interrupt();
+        if (txThread != null) txThread.interrupt();
 
         txThread = null;
         inStream = null;
@@ -220,5 +220,16 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
     }
 
+    /**
+     * Kill this thread, usually for testing purposes
+     */
+    void dispose() {
+        try {
+            this.interrupt();
+            this.join();
+        } catch (InterruptedException ex) {
+            log.warn("dispose() interrupted");
+        }
+    }
     private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
 }

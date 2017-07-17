@@ -37,6 +37,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
 
         // start thread to notify controller when data is available
         rcvNotice = new Thread(new rcvCheck(input, control));
+        rcvNotice.setName("SPROG rcvCheck thread");
         rcvNotice.start();
 
     }

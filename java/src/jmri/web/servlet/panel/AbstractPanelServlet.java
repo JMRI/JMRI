@@ -12,6 +12,8 @@ import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -23,7 +25,6 @@ import jmri.jmrit.display.Editor;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import org.jdom2.Attribute;
@@ -87,9 +88,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
             return;
         }
         if (request.getParameter(JSON.NAME) != null) {
-            String panelName = StringUtil.unescapeString(request.getParameter(JSON.NAME));
+            String panelName = URLDecoder.decode(request.getParameter(JSON.NAME), UTF8);
             if (getEditor(panelName) != null) {
-                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName)); // NOI18N
+                response.sendRedirect("/panel/" + URLEncoder.encode(panelName, UTF8)); // NOI18N
             } else {
                 response.sendRedirect("/panel/"); // NOI18N
             }
@@ -97,7 +98,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
             listPanels(request, response);
         } else {
             String[] path = request.getRequestURI().split("/"); // NOI18N
-            String panelName = StringUtil.unescapeString(path[path.length - 1]);
+            String panelName = URLDecoder.decode(path[path.length - 1], UTF8);
             if ("png".equals(request.getParameter("format"))) {
                 BufferedImage panel = getPanelImage(panelName);
                 if (panel == null) {

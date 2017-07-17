@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -58,15 +59,23 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
         return LnConstants.OPC_GPOFF
                 == controller.outbound.elementAt(index).getOpCode();
     }
-
+    
     // setup a default interface
     @Before
     @Override
     public void setUp() {
         controller = new LocoNetInterfaceScaffold();
-        p = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+        p = pwr = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+    }
+
+    @After
+    public void tearDown() {
+        pwr.dispose();
+        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
+    LnPowerManager pwr;
 
 }

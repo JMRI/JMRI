@@ -3,6 +3,7 @@ package jmri.web.servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import jmri.web.server.WebServerPreferences;
  */
 public class ServletUtil {
 
-    public static final String UTF8 = "UTF-8"; // NOI18N
+    public static final String UTF8 = StandardCharsets.UTF_8.toString(); // NOI18N
     // media types
     public static final String APPLICATION_JAVASCRIPT = "application/javascript"; // NOI18N
     public static final String APPLICATION_JSON = "application/json"; // NOI18N
