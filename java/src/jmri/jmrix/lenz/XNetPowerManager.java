@@ -1,11 +1,9 @@
 /**
- * XNetPowerManager.java
- *
- * Description: PowerManager implementation for controlling layout power
+ * PowerManager implementation for controlling layout power
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
-  */
+ */
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -29,7 +27,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         return userName;
     }
 
-    String userName = "XPressNet";
+    String userName = Bundle.getMessage("MenuXpressNet");
 
     int power = UNKNOWN;
 
@@ -44,7 +42,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
             // send EMERGENCY_OFF
             tc.sendXNetMessage(XNetMessage.getEmergencyOffMsg(), this);
         }
-        firePropertyChange("Power", null, null);
+        firePropertyChange("Power", null, null); // NOI18N
     }
 
     @Override
@@ -89,7 +87,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     @Override
     public void message(XNetReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message recieved: " + m.toString());
+            log.debug("Message received: " + m.toString());
         }
         // First, we check for a "normal operations resumed message"
         // This indicates the power to the track is ON
@@ -146,12 +144,16 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -163,6 +165,3 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
 
 }
-
-
-

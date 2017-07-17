@@ -77,7 +77,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            // TODO prevent further execution, ruturn error flag
+            // TODO prevent further execution, return error flag
             throw new JmriException("Hardware Address should be passed in the form 'Module:port'");
         }
 
@@ -100,7 +100,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             log.error("Port number must be between 1 and 16");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            // TODO prevent further execution, ruturn error flag
+            // TODO prevent further execution, return error flag
             throw new JmriException("Port number must be between 1 and 16");
         }
         StringBuilder sb = new StringBuilder();
@@ -260,4 +260,5 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
+
 }

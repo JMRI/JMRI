@@ -69,7 +69,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public String getCurrentPortName() {
         if (mPort == null) {
             if (getPortNames() == null) {
-                //This shouldn't happen but in the tests for some reason this happens
+                // This shouldn't happen in normal operation
+                // but in the tests this can happen if the receive thread has been interrupted
                 log.error("Port names returned as null");
                 return null;
             }

@@ -71,6 +71,27 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
        super.connect();
     }
 
+    /**
+     * Terminate service thread
+     *<p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThread() {
+        threadStopRequest = true;
+        if (socket != null) socket.close();
+        if (sourceThread != null) {
+            sourceThread.interrupt();
+            try {
+                sourceThread.join();
+            } catch (InterruptedException ie){
+                // interrupted durring cleanup.
+            }
+        }
+    }
+    
+    volatile boolean threadStopRequest;
+    volatile DatagramSocket socket;
+    
     @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,
@@ -79,8 +100,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         // try connecting to the server
         try (DatagramSocket s = new DatagramSocket(COMMUNICATION_UDP_PORT)) {
 
+            socket = s; // save for later close()
             log.debug("socket created, starting loop");
-            while(true){
+            while(!threadStopRequest){
                 log.debug("simulation loop");
                 // the server waits for a client to connect, then echos the data sent back.
                 byte[] input=new byte[100]; // input from network
@@ -90,7 +112,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     DatagramPacket receivePacket = new DatagramPacket(input,100);
                     // and wait for the data to arrive.
                     s.receive(receivePacket);
-
+                    if (threadStopRequest) return;
+                    
                     Z21Message msg = new Z21Message(receivePacket.getLength());
                     for(int i=0;i< receivePacket.getLength();i++)
                         msg.setElement(i,receivePacket.getData()[i]);
@@ -121,8 +144,12 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     }
 
                 } catch (Exception ex3) {
-                    log.debug("IO Exception" );
-                    ex3.printStackTrace();
+                    if (!threadStopRequest) {
+                        log.debug("IO Exception" );
+                        ex3.printStackTrace();
+                    } else {
+                        return;
+                    }
                 }
                 log.debug("Client Disconnect");
             }
@@ -148,7 +175,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 reply=getHardwareVersionReply();
                 break;
              case 0x0040:
-                // XPressNet tunnel message.
+                // XpressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
                 log.debug("Received XNet Message: {}",  m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);

@@ -22,6 +22,7 @@ public class EngineRosterMenuTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         EngineRosterMenu t = new EngineRosterMenu("test menu",1,etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

@@ -866,13 +866,13 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringErrorPCtoLI(){
         XNetReply r = new XNetReply("01 01 00");
-        Assert.assertEquals("Monitor String","Error occured between the interface and the PC",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Error occurred between the interface and the PC",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorLItoCS(){
         XNetReply r = new XNetReply("01 02 03");
-        Assert.assertEquals("Monitor String","Error occured between the interface and the command station.",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Error occurred between the interface and the command station.",r.toMonitorString());
     }
 
     @Test
@@ -1012,19 +1012,19 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSNotSupported(){
         XNetReply r = new XNetReply("61 82 E3");
-        Assert.assertEquals("Monitor String","XPressNet Instruction not supported by Command Station",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet Instruction not supported by Command Station",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorNotOperated(){
         XNetReply r = new XNetReply("61 83 E2");
-        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive has not been operated by this XpressNet device or address 0 selected",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorInUse(){
         XNetReply r = new XNetReply("61 84 E5");
-        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive is being operated by another XpressNet device",r.toMonitorString());
     }
 
     @Test
@@ -1042,13 +1042,13 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringErrorNotOperated(){
         XNetReply r = new XNetReply("E1 81 60");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive has not been operated by this XpressNet device or address 0 selected",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorInUse(){
         XNetReply r = new XNetReply("E1 82 63");
-        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive is being operated by another XpressNet device",r.toMonitorString());
     }
 
     @Test
@@ -1096,7 +1096,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIVersionReply(){
         XNetReply r = new XNetReply("02 01 36 34");
-        Assert.assertEquals("Monitor String","LI10x hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
+        Assert.assertEquals("Monitor String","LI10x Hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
     }
 
     @Test
@@ -1198,7 +1198,7 @@ public class XNetReplyTest {
         Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Search failed for: 260",r.toMonitorString());
     }
 
-    // the following are invalid by the XPressNet Standard, but we want to
+    // the following are invalid by the XpressNet Standard, but we want to
     // to make sure the code prints out the message contents.
     @Test
     public void testToMonitorStringInvalidLIMessage(){

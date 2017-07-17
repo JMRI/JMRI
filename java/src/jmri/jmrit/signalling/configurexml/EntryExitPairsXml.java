@@ -229,7 +229,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         try {
                             eep.addNXDestination(source, dest, panel, id);
                         } catch (java.lang.NullPointerException e) {
-                            log.error("An error occured while trying to add a point");
+                            log.error("An error occurred while trying to add a point");
                         }
                         if ((destinationList.get(j).getAttribute("uniDirection") != null) && (destinationList.get(j).getAttribute("uniDirection").getValue().equals("no"))) {
                             eep.setUniDirection(source, panel, dest, false);
