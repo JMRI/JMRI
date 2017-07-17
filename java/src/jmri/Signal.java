@@ -1,7 +1,7 @@
 package jmri;
 
 /**
- * Represent a single signal, either in {@link SignalHead} or {@SignalMast} form.
+ * Represent a single signal, either in {@link SignalHead} or {@link SignalMast} form.
  * <P>
  * This interface defines two bound parameters:
  * <DL>
@@ -24,9 +24,9 @@ package jmri;
  *
  * The following can be relied on:
  * <ul>
- * <li>isCleared() && isAtStop() is false: they are disjoint.
- * <li>isAtStop() && isShowingRestricting() is false: they are disjoint.
- * <li>isShowingRestricting() && isCleared() is false: they are disjoint.
+ * <li>isCleared() &amp;&amp; isAtStop() is false: they are disjoint.
+ * <li>isAtStop() &amp;&amp; isShowingRestricting() is false: they are disjoint.
+ * <li>isShowingRestricting() &amp;&amp; isCleared() is false: they are disjoint.
  * <li>isAtStop() || isShowingRestricting() || isCleared() is usually true, but it can be false; 
  *                   the three methods do not cover all cases
  * </ul>
