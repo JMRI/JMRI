@@ -5,20 +5,28 @@ import jmri.*;
 import java.util.*;
 
 /**
- * Implements a traffic lock.
+ * Models a traffic relay.
  * <p>
- * A signal can't be set if a route (set of turnout settings) is present
- * and the far-end signal is set against. Each lock object handles one route.
+ * A traffic relay has three states, representing a section of track is 
+ * allocated to traffic in one direction, the other, or neither.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
-public class TrafficLock implements Lock {
+public class TrafficRelay {
 
+    enum State {
+        Left,
+        Right,
+        Neither }
+
+    // logging to locks now, as related
+    static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
+        
     /**
      * @param signal SignalHeadSection at far end of this route
      * @param direction Setting that, if present in the far SignalHeadSection, means to lock
      */
-    public TrafficLock(SignalHeadSection signal, CodeGroupThreeBits direction) {
+    public TrafficRelay(SignalHeadSection signal, CodeGroupThreeBits direction) {
         this.farSignal = signal;
         this.direction = direction;
         beans = null;
@@ -28,10 +36,11 @@ public class TrafficLock implements Lock {
      * @param signal SignalHeadSection at far end of this route
      * @param direction Setting that, if present in the far SignalHeadSection, means to lock
      */
-    public TrafficLock(SignalHeadSection signal, CodeGroupThreeBits direction, BeanSetting[] beans) {
+    public TrafficRelay(SignalHeadSection signal, CodeGroupThreeBits direction, BeanSetting[] beans) {
         this.farSignal = signal;
         this.direction = direction;
         this.beans = beans;
+        System.out.println("bean count "+beans.length);
     }
 
     SignalHeadSection farSignal;
@@ -39,7 +48,7 @@ public class TrafficLock implements Lock {
     BeanSetting[] beans;
     
     /**
-     * Test the lock conditions
+     * Test for new condition
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear() {

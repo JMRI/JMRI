@@ -20,7 +20,7 @@ public class OccupancyLock implements Lock {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSensor(s)));
+        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.provideSensor(s)));
     }
 
     public OccupancyLock(String sensor) {
