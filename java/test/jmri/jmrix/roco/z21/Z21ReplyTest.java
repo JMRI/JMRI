@@ -53,15 +53,15 @@ public class Z21ReplyTest {
         Assert.assertEquals("5th byte BCD", Integer.valueOf(34), m.getElementBCD(5));
     }
 
-    // Test XPressNet Tunnel related methods.
+    // Test XpressNet Tunnel related methods.
     @Test
     public void tunnelXPressNet(){
         byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Z21Reply m = new Z21Reply(msg,7);
-        Assert.assertTrue("XPressNet Tunnel Message",m.isXPressNetTunnelMessage());
+        Assert.assertTrue("XpressNet Tunnel Message",m.isXPressNetTunnelMessage());
         byte msg1[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         m = new Z21Reply(msg1,17);
-        Assert.assertFalse("Not XPressNet Tunnel Message",m.isXPressNetTunnelMessage());
+        Assert.assertFalse("Not XpressNet Tunnel Message",m.isXPressNetTunnelMessage());
     }
 
     @Test
@@ -78,20 +78,20 @@ public class Z21ReplyTest {
     public void getNullXPressNetReply(){
         byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         Z21Reply m = new Z21Reply(msg,17);
-        Assert.assertNull("non-XNetTunnel XPressNet Reply",m.getXNetReply());
+        Assert.assertNull("non-XNetTunnel XpressNet Reply",m.getXNetReply());
     }
 
     @Test
     public void MonitorStringXPressNetReply(){
         byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Z21Reply m = new Z21Reply(msg,7);
-        Assert.assertEquals("Monitor String","XPressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
     }
 
     @Test
     public void getXPressNetThrottleReply(){
         // this test comes from a user log, where the last byte in the 
-        // Z21 message incorrectly became the first byte of the XPressNet Reply.
+        // Z21 message incorrectly became the first byte of the XpressNet Reply.
         byte msg[]={(byte)0x0E,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0xEF,(byte)0x00,(byte)0x03,(byte)0x04,(byte)0x80,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x78};
         Z21Reply m = new Z21Reply(msg,14);
         jmri.jmrix.lenz.XNetReply x = m.getXNetReply();

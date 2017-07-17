@@ -14,25 +14,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame displaying Version information for Xpressnet hardware.
+ * Frame displaying Version information for XpressNet hardware.
  * <P>
  * This is a utility for reading the software version and type of the command
- * station, and, the Hardware and software versions of your XPressNet Computer
+ * station, and, the Hardware and software versions of your XpressNet Computer
  * Interface.
  * <P>
  * Some of this code may be moved to facilitate automatic enabling of features
- * that are not available on all XPressNet Command Stations (as an example, the
+ * that are not available on all XpressNet Command Stations (as an example, the
  * fact that you can't program using the computer on a Commander or Compact)
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(Bundle.getMessage("XPressNetSystemInformationTitle"));
+        super(Bundle.getMessage("XpressNetSystemInformationTitle"));
         tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new GridLayout(0, 2));
 
@@ -62,7 +62,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         // and prep for display
         pack();
 
-        // initilize the display values with what the LenzCommandStation 
+        // initialize the display values with what the LenzCommandStation
         // class already knows.
         setCSVersionDisplay();
 
@@ -88,7 +88,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XPressNet connection, panel won't function");
+            log.warn("No XpressNet connection, panel won't function");
         }
 
     }
@@ -202,7 +202,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else {
-            CSType.setText(Bundle.getMessage("CSTypeUNKNOWN"));
+            CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }
     }
 

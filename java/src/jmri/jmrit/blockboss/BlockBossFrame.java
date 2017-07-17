@@ -710,8 +710,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 return;
             }
         } catch (Exception e) {
-            log.error("An error occured creating the boss logic " + e.toString());
-            JOptionPane.showMessageDialog(this, "An error occured creating the Simple Signal Logic\nPlease check the console log for more information");
+            log.error("An error occurred creating the boss logic " + e.toString());
+            JOptionPane.showMessageDialog(this, "An error occurred creating the Simple Signal Logic\nPlease check the console log for more information");
         }
     }
 

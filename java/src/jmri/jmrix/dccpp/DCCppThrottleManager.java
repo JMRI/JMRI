@@ -113,7 +113,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface XPressNet supports
+     * possible modes specifed by the DccThrottle interface DCC++ supports
      * 14,27,28 and 128 speed step modes
      */
     @Override

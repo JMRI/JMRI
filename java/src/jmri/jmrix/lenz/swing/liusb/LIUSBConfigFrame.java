@@ -35,7 +35,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("Xpressnet address: "));
+        pane0.add(new JLabel("XpressNet address: "));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -117,7 +117,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
     JToggleButton readSettingsButton = new JToggleButton("Read from LIUSB");
     JToggleButton writeSettingsButton = new JToggleButton("Write to LIUSB");
-    JToggleButton closeButton = new JToggleButton("Close");
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
     JToggleButton resetButton = new JToggleButton("Reset to Factory Defaults");
 
     protected String[] validXNetAddresses = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""};

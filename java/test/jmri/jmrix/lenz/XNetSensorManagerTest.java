@@ -54,7 +54,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testXNetMessages() {
         // send messages for feedbak encoder 22
-        // notify the XPressNet that somebody else changed it...
+        // notify the XpressNet that somebody else changed it...
         XNetReply m1 = new XNetReply();
         m1.setElement(0, 0x42);     // Opcode for feedback response
         m1.setElement(1, 0x02);     // The feedback encoder address

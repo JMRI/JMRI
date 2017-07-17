@@ -25,11 +25,6 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             super(p);
         }
 
-        public void stop() {
-            xmtThread.stop();
-            rcvThread.stop();
-        }
-
         // methods removed for testing
         @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -210,6 +205,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         tc=null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

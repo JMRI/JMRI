@@ -18,6 +18,7 @@ public class ClientRxHandlerTest {
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
