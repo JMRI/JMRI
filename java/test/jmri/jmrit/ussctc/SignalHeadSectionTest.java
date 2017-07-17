@@ -4,6 +4,7 @@ import org.junit.*;
 
 import jmri.util.*;
 import jmri.*;
+import java.beans.*;
 
 import java.util.*;
 
@@ -38,6 +39,44 @@ public class SignalHeadSectionTest {
                          "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
                         station);
         Assert.assertEquals("SignalHeadSection [\"IH1\", \"IH2\"],[\"IH3\"]", s.toString());
+    }
+
+    boolean listened;
+    
+    @Test
+    public void testListener() {
+        final SignalHeadSection s = new SignalHeadSection(new ArrayList<String>(), new ArrayList<String>(),   // empty
+                        "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R", 
+                         "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
+                        station);
+                        
+        s.setLastIndication(CodeGroupThreeBits.Triple001);
+
+        listened = false;
+        PropertyChangeListener p = new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+                listened = true;
+                Assert.assertEquals("LastIndication", e.getPropertyName());
+                Assert.assertEquals(CodeGroupThreeBits.Triple001, e.getOldValue());
+                Assert.assertEquals(CodeGroupThreeBits.Triple100, e.getNewValue());
+                Assert.assertEquals(s, e.getSource());
+            }
+        };
+        s.addPropertyChangeListener(p);
+        Assert.assertTrue(! listened);
+        
+        s.setLastIndication(CodeGroupThreeBits.Triple100);
+        
+        Assert.assertTrue(listened);
+
+        listened = false;
+        s.removePropertyChangeListener(p);
+
+        s.setLastIndication(CodeGroupThreeBits.Triple100);
+        
+        Assert.assertTrue(!listened);
+        
+        
     }
 
     @Test
