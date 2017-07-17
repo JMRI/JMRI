@@ -27,8 +27,6 @@
     <div id="mainContent">
       <h1>JMRI: Application Preferences</h1>
 
-<!-- this is really just a stub of a page so far. -->
-
       This page discusses the how the main 
       <a href="AppStructure.shtml">JMRI applications</a>
       store and retrieve their preferences.
@@ -41,7 +39,7 @@
       For information on how JMRI initializes its connections to the layout,  
       see the <a href="SystemStructure.shtml">JMRI External System Connection Structure</a> page.
       
-      <p>
+      <p>This is just a stub of a page, which we'll slowly be building out.
 
 <h4>Concepts</h4>
     <ul>
@@ -89,7 +87,7 @@ total 16
 -rw-r--r--  1 jake  staff   511 Jul 17 11:54 user-interface.xml.1.bak
 </pre>
 
-Note that there are two properties files with content:
+In addition to creating the directory structure, there are two files with content:
 <pre style="font-family: monospace;">
 % cat /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/profile.properties
 #JMRI Preferences version 4.9.1ish+jake+20170717T1854Z+R262cbf5596
