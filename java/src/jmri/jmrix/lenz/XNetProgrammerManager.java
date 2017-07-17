@@ -22,9 +22,9 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * XPressNet command station does provide Ops Mode We should make this
-     * return false based on what command station we're using but for now, we'll
-     * return true
+     * XPressNet command station does provide Ops Mode.
+     * @return we should make this return false based on what command station
+     * we're using but for now, we'll return true
      */
     @Override
     public boolean isAddressedModePossible() {
@@ -40,6 +40,5 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
+
 }
-
-

@@ -31,7 +31,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 
     static private final int RETURNSENT = 3;
 
-    // save the last XPressNet message for retransmission after a 
+    // save the last XpressNet message for retransmission after a
     // communication error..
     private XNetMessage lastRequestMessage = null;
 

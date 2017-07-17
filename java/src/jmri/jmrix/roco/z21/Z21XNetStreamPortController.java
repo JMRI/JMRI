@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
- * Override default XPressNet classes to use z21 specific versions.
+ * Override default XpressNet classes to use z21 specific versions.
  *
  * @author	Paul Bender Copyright (C) 2004,2010,2014
  */

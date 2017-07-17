@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to XPressNet via a ZTC611 connected via an FTDI virtual comm
+ * Provide access to XpressNet via a ZTC611 connected via an FTDI virtual comm
  * port.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -36,7 +36,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);

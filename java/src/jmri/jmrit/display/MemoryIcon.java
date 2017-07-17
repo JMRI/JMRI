@@ -596,7 +596,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             flipRosterIcon = true;
         }
         if (getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occured
+            //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);

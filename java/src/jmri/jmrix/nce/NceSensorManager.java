@@ -55,6 +55,15 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void dispose() {
         stopPolling = true;  // tell polling thread to go away
+        Thread thread = pollThread;
+        if (thread != null) {
+            try {
+                thread.interrupt();
+                thread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            }
+        }
         tc.removeNceListener(listener);
         super.dispose();
     }
@@ -86,8 +95,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private static final int MAXAIU = 63;
     private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
-    Thread pollThread;
-    boolean stopPolling = false;
+    volatile Thread pollThread;
+    volatile boolean stopPolling = false;
     NceListener listener;
 
     // polling parameters and variables
@@ -227,6 +236,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(pollTimeout);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         }
                     }
                     int delay = shortCycleInterval;
@@ -246,6 +256,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(delay);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         } finally {
                             awaitingDelay = false;
                         }

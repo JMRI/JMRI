@@ -49,7 +49,7 @@ import java.util.Vector;
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  * @author Pete Cressman Copyright (C) 2009
  */
-public interface SignalMast extends NamedBean {
+public interface SignalMast extends NamedBean {  // to eventually be Signal
 
     /**
      * Set aspect to a valid name in the current signal system definition.

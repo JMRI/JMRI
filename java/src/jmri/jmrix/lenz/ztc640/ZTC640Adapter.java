@@ -22,7 +22,7 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via a ZTC640 connected via an FTDI virtual comm
+ * Provide access to XpressNet via a ZTC640 connected via an FTDI virtual comm
  * port. Normally controlled by the lenz.ztc640.ZTC640Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -38,7 +38,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);

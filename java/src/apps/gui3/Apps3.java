@@ -327,7 +327,7 @@ public abstract class Apps3 extends AppsBase {
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
-                    // notify user of change only if migration occured
+                    // notify user of change only if migration occurred
                     // TODO: a real migration message
                     JOptionPane.showMessageDialog(sp,
                             Bundle.getMessage("ConfigMigratedToProfile"),

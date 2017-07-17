@@ -112,6 +112,11 @@
       </dl>
  -->
 
+      There's a page with a worked example (not yet present), 
+      and a separate page describing the 
+      <a href="Conventions.shtml">naming conventions</a> used in the example, in case
+      you find that these will save you some work on the setup.
+      
       <h3>Standalone Tools</h3>
 
       These can be created from the USS menu under Tools in 
