@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.operations.rollingstock.engines;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,15 +14,17 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportCarRosterActionTest {
+public class PrintEngineRosterActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
+        EnginesTableFrame etf = new EnginesTableFrame();
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Engine Roster Test Frame");
+        PrintEngineRosterAction t = new PrintEngineRosterAction("Test Action",jf,true,etf);
         Assert.assertNotNull("exists",t);
-        ctf.dispose();
+        etf.dispose();
+        jf.dispose();
     }
 
     // The minimal setup for log4J
@@ -38,6 +40,6 @@ public class ExportCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterActionTest.class.getName());
 
 }

@@ -1,28 +1,27 @@
-package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.logix;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportCarRosterActionTest {
+public class EngineerTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
+        Warrant warrant = new Warrant("IW0", "AllTestWarrant");
+        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
+        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
+        jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
+        Engineer t = new Engineer(warrant,throttle);
         Assert.assertNotNull("exists",t);
-        ctf.dispose();
     }
 
     // The minimal setup for log4J
@@ -38,6 +37,6 @@ public class ExportCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineerTest.class.getName());
 
 }

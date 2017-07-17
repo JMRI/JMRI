@@ -14,15 +14,14 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportCarRosterActionTest {
+public class ImportCarRosterActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Import Car Roster Frame");
+        ImportCarRosterAction t = new ImportCarRosterAction("Test Action",jf);
         Assert.assertNotNull("exists",t);
-        ctf.dispose();
     }
 
     // The minimal setup for log4J
@@ -38,6 +37,6 @@ public class ExportCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportCarRosterActionTest.class.getName());
 
 }
