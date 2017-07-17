@@ -22,6 +22,7 @@ public class ExportCarRosterActionTest {
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
         Assert.assertNotNull("exists",t);
+        ctf.dispose();
     }
 
     // The minimal setup for log4J

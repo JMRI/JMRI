@@ -23,6 +23,8 @@ public class PrintEngineRosterActionTest {
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Engine Roster Test Frame");
         PrintEngineRosterAction t = new PrintEngineRosterAction("Test Action",jf,true,etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
+        jf.dispose();
     }
 
     // The minimal setup for log4J

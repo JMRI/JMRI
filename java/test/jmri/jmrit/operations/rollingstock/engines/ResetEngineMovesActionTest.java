@@ -22,6 +22,7 @@ public class ResetEngineMovesActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         ResetEngineMovesAction t = new ResetEngineMovesAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

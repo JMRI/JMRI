@@ -22,6 +22,7 @@ public class DeleteEngineRosterActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         DeleteEngineRosterAction t = new DeleteEngineRosterAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

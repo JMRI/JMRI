@@ -22,6 +22,7 @@ public class ImportEngineActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         ImportEngineAction t = new ImportEngineAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

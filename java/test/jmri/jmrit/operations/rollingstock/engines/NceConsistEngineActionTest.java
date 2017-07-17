@@ -22,6 +22,7 @@ public class NceConsistEngineActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         NceConsistEngineAction t = new NceConsistEngineAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

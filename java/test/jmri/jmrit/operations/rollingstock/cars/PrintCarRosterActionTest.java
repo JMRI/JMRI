@@ -23,6 +23,7 @@ public class PrintCarRosterActionTest {
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Car Roster Frame");
         PrintCarRosterAction t = new PrintCarRosterAction("Test Action",jf,true,ctf);
         Assert.assertNotNull("exists",t);
+        ctf.dispose();
     }
 
     // The minimal setup for log4J
