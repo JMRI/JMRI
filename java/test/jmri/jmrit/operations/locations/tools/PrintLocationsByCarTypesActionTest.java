@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.LocationEditFrame;
 
 /**
  *
