@@ -18,7 +18,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
     // member declarations
     XpaSystemConnectionMemo memo = null;
 
-    // Drop down box and button to set XPressNet address
+    // Drop down box and button to set XpressNet address
     javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
     javax.swing.JButton setAddr = new javax.swing.JButton();
 

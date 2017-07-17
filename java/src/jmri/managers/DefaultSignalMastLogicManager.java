@@ -199,7 +199,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             try {
                 sml.useLayoutEditor(false, mast);
             } catch (jmri.JmriException e) {
-                log.error("Error occured while trying to disable layout editor use " + e);
+                log.error("Error occurred while trying to disable layout editor use " + e);
             }
         }
     }

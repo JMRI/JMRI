@@ -1,8 +1,7 @@
 package jmri.jmrix.lenz;
 
 /**
- * interface for XNetPortController objects.
- * <p>
+ * Interface for XNetPortController objects.
  *
  * @author Paul Bender Copyright (C) 2010
   */
@@ -22,7 +21,7 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
     public boolean okToSend();
 
     /**
-     * We need a way to say if the output buffer is empty or not
+     * We need a way to say if the output buffer is empty or not.
      */
     public void setOutputBufferEmpty(boolean s);
 
@@ -35,27 +34,19 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
     public boolean hasTimeSlot();
 
     /**
-     * <p>
      * Set a variable indicating whether or not the command station is 
      * providing a timeslot.
-     * </p>
      * <p>
      * This method should be called with the paramter set to false if  
      * a "Command Station No Longer Providing a timeslot for communications"
      * (01 05 04) is received.
-     * </p>
      * <p>
      * This method should be called with the parameter set to true if
      * a "Command Station is providing a timeslot for communications again."
      * (01 07 06) is received.
-     * </p>
      * 
      * @param timeslot true if a timeslot is being sent, false otherwise.
      */
     public void setTimeSlot(boolean timeslot);
 
-
 }
-
-
-

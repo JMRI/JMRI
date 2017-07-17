@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import jmri.jmrix.JmrixConfigPane;
 
 /**
- * Handle configuring an XPressNet layout connection via a XnTcp adapter.
+ * Handle configuring an XpressNet layout connection via a XnTcp adapter.
  * <P>
  * This uses the {@link XnTcpAdapter} class to do the actual connection.
  *

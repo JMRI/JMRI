@@ -22,6 +22,7 @@ public class ExportEngineRosterActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         ExportEngineRosterAction t = new ExportEngineRosterAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J

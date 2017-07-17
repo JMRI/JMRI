@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents a single command or response on the XpressNet.
+ * Represents a single command or response on the XPressNet.
  * <P>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
@@ -108,7 +108,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Get a String representation of the op code in hex
+     * Get a String representation of the op code in hex.
      */
     @Override
     public String getOpCodeHex() {
@@ -116,7 +116,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * check whether the message has a valid parity
+     * Check whether the message has a valid parity.
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -143,30 +143,30 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Get an integer representation of a BCD value
+     * Get an integer representation of a BCD value.
      */
     public Integer getElementBCD(int n) {
         return Integer.decode(Integer.toHexString(getElement(n)));
     }
 
     /**
-     * return the message length
+     * Get the message length.
      */
     public int length() {
         return _nDataChars;
     }
 
     /**
-     * changing the default number of retries for an XPressNet message
+     * Set the default number of retries for an XPressNet message.
      *
-     * @param t number of retries to attempt.
+     * @param t number of retries to attempt
      */
     static public void setXNetMessageRetries(int t) {
         _nRetries = t;
     }
 
     /**
-     * changing the default timeout for an XPressNet message
+     * Set the default timeout for an XPressNet message.
      *
      * @param t Timeout in milliseconds
      */
@@ -174,8 +174,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         XNetMessageTimeout = t;
     }
 
-
-    /*
+    /**
      * Most messages are sent with a reply expected, but
      * we have a few that we treat as though the reply is always
      * a broadcast message, because the reply usually comes to us 
@@ -188,22 +187,26 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     private boolean broadcastReply = false;
 
-    // Tell the traffic controller we expect this
-    // message to have a broadcast reply.
+    /**
+     * Tell the traffic controller we expect this
+     * message to have a broadcast reply.
+     */
     void setBroadcastReply() {
         broadcastReply = true;
     }
 
     // decode messages of a particular form
     // create messages of a particular form
-    /*
-     * Encapsilate an NMRA DCC packet in an XPressNet message.
-     * 
+
+    /**
+     * Encapsulate an NMRA DCC packet in an XPressNet message.
+     * <p>
      * On Current (v3.5) Lenz command stations, the Operations Mode
      *     Programming Request is implemented by sending a packet directly
      *     to the rails.  This packet is not checked by the XPressNet
      *     protocol, and is just the track packet with an added header
      *     byte.
+     *     <p>
      *     NOTE: Lenz does not say this will work for anything but 5
      *     byte packets.
      */
@@ -223,8 +226,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * control code.  These are used in multiple places within the code, 
      * so they appear here. 
      */
+
     /**
-     * Generate a message to change turnout state
+     * Generate a message to change turnout state.
      */
     public static XNetMessage getTurnoutCommandMsg(int pNumber, boolean pClose,
             boolean pThrow, boolean pOn) {
@@ -251,7 +255,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
         // we don't know how to command both states right now!
         if (pClose & pThrow) {
-            log.error("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+            log.error("XpressNet turnout logic can't handle both THROWN and CLOSED yet");
         }
         // store and send
         l.setElement(1, hiadr);
@@ -262,8 +266,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Generate a message to recieve the feedback information for an upper or
-     * lower nibble of the feedback address in question
+     * Generate a message to receive the feedback information for an upper or
+     * lower nibble of the feedback address in question.
      */
     public static XNetMessage getFeedbackRequestMsg(int pNumber,
             boolean pLowerNibble) {
@@ -289,6 +293,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /* 
      * Next, we have some messages related to sending programing commands.
      */
+
     public static XNetMessage getServiceModeResultsMsg() {
         XNetMessage m = new XNetMessage(3);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -498,11 +503,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * and tearing down a consist or a double header.
      */
 
-    /*
-     * Build a Double Header
+    /**
+     * Build a Double Header.
      *
-     * @param address1 is the first address in the consist
-     * @param address2 is the second address in the consist.
+     * @param address1 the first address in the consist
+     * @param address2 the second address in the consist.
      */
     public static XNetMessage getBuildDoubleHeaderMsg(int address1, int address2) {
         XNetMessage msg = new XNetMessage(7);
@@ -516,10 +521,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Dissolve a Double Header
+    /**
+     * Dissolve a Double Header.
      *
-     * @param address is one of the two addresses in the Double Header 
+     * @param address one of the two addresses in the Double Header
      */
     public static XNetMessage getDisolveDoubleHeaderMsg(int address) {
         // All we have to do is call getBuildDoubleHeaderMsg with the 
@@ -527,11 +532,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (getBuildDoubleHeaderMsg(address, 0));
     }
 
-    /*
-     * Add a Single address to a specified Advanced consist
+    /**
+     * Add a Single address to a specified Advanced consist.
      *
-     * @param consist is the consist address (1-99)
-     * @param address is the locomotive address to add.
+     * @param consist the consist address (1-99)
+     * @param address the locomotive address to add.
      * @param isNormalDir tells us if the locomotive is going forward when 
      * the consist is going forward.
      */
@@ -551,11 +556,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Remove a Single address to a specified Advanced consist
+    /**
+     * Remove a Single address to a specified Advanced consist.
      *
-     * @param consist is the consist address (1-99)
-     * @param address is the locomotive address to remove
+     * @param consist the consist address (1-99)
+     * @param address the locomotive address to remove
      */
     public static XNetMessage getRemoveLocoFromConsistMsg(int consist, int address) {
         XNetMessage msg = new XNetMessage(6);
@@ -574,10 +579,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * and manipulation of the Command Station Database
      */
 
-    /*
+    /**
      * Given a locomotive address, search the database for the next 
      * member. (if the Address is zero start at the begining of the 
-     * database)
+     * database).
+     *
      * @param address is the locomotive address
      * @param searchForward indicates to search the database Forward if 
      * true, or backwards if False 
@@ -596,13 +602,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
+    /**
      * Given a consist address, search the database for the next Consist 
      * address.
-     * @param address is the consist address (in the range 1-99)
-     * If the Address is zero start at the begining of the database
+     *
+     * @param address is the consist address (in the range 1-99).
+     * If the Address is zero start at the beginning of the database.
      * @param searchForward indicates to search the database Forward if 
-     * true, or backwards if False 
+     * true, or backwards if false
      */
     public static XNetMessage getDBSearchMsgConsistAddress(int address, boolean searchForward) {
         XNetMessage msg = new XNetMessage(4);
@@ -617,12 +624,13 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
+    /**
      * Given a consist and a locomotive address, search the database for 
      * the next Locomotive in the consist.
-     * @param consist is the consist address (1-99)
+     *
+     * @param consist the consist address (1-99).
      * If the Consist Address is zero start at the begining of the database
-     * @param address is the locomotive address
+     * @param address the locomotive address.
      * If the Address is zero start at the begining of the consist
      * @param searchForward indicates to search the database Forward if 
      * true, or backwards if False 
@@ -642,9 +650,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Given a locomotive address, delete it from the database 
-     * @param address is the locomotive address
+    /**
+     * Given a locomotive address, delete it from the database .
+     *
+     * @param address the locomotive address
      */
     public static XNetMessage getDeleteAddressOnStackMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
@@ -656,9 +665,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Given a locomotive address, request its status 
-     * @param address is the locomotive address
+    /**
+     * Given a locomotive address, request its status .
+     *
+     * @param address the locomotive address
      */
     public static XNetMessage getLocomotiveInfoRequestMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
@@ -670,9 +680,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Given a locomotive address, request the function state (momentary status) 
-     * @param address is the locomotive address
+    /**
+     * Given a locomotive address, request the function state (momentary status).
+     *
+     * @param address the locomotive address
      */
     public static XNetMessage getLocomotiveFunctionStatusMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
@@ -683,12 +694,13 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         msg.setParity();
         return (msg);
     }
-    /*
+
+    /**
      * Given a locomotive address, request the function on/off state 
      * for functions 13-28
-     * @param address is the locomotive address
+     *
+     * @param address the locomotive address
      */
-
     public static XNetMessage getLocomotiveFunctionHighOnStatusMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0, XNetConstants.LOCO_STATUS_REQ);
@@ -699,10 +711,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
+    /**
      * Given a locomotive address, request the function state (momentary status)
-     * for high functions (functions 13-28) 
-     * @param address is the locomotive address
+     * for high functions (functions 13-28).
+     *
+     * @param address the locomotive address
      */
     public static XNetMessage getLocomotiveFunctionHighMomStatusMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
@@ -714,10 +727,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-
     /*
-     * Generate an emergency stop for the specified address
-     * @param address is the locomotive address
+     * Generate an emergency stop for the specified address.
+     *
+     * @param address the locomotive address
      */
     public static XNetMessage getAddressedEmergencyStop(int address) {
         XNetMessage msg = new XNetMessage(4);
@@ -732,10 +745,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Speed and Direction Request message
-     * @param address is the locomotive address
-     * @param speedStepMode is the speedstep mode see @jmri.DccThrottle 
+    /**
+     * Generate a Speed and Direction Request message.
+     *
+     * @param address the locomotive address
+     * @param speedStepMode the speedstep mode see @jmri.DccThrottle
      *                       for possible values.
      * @param speed a normalized speed value (a floating point number between 0 
      *              and 1).  A negative value indicates emergency stop.
@@ -817,9 +831,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
 
-    /*
-     * Generate a Function Group One Operation Request message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group One Operation Request message.
+     *
+     * @param address the locomotive address
      * @param f0 is true if f0 is on, false if f0 is off
      * @param f1 is true if f1 is on, false if f1 is off
      * @param f2 is true if f2 is on, false if f2 is off
@@ -861,9 +876,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group One Set Momentary Functions message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group One Set Momentary Functions message.
+     *
+     * @param address the locomotive address
      * @param f0 is true if f0 is momentary
      * @param f1 is true if f1 is momentary
      * @param f2 is true if f2 is momentary
@@ -906,9 +922,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
 
-    /*
-     * Generate a Function Group Two Operation Request message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Two Operation Request message.
+     *
+     * @param address the locomotive address
      * @param f5 is true if f5 is on, false if f5 is off
      * @param f6 is true if f6 is on, false if f6 is off
      * @param f7 is true if f7 is on, false if f7 is off
@@ -945,9 +962,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Two Set Momentary Functions message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Two Set Momentary Functions message.
+     *
+     * @param address the locomotive address
      * @param f5 is true if f5 is momentary
      * @param f6 is true if f6 is momentary
      * @param f7 is true if f7 is momentary
@@ -984,10 +1002,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-
-    /*
-     * Generate a Function Group Three Operation Request message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Three Operation Request message.
+     *
+     * @param address the locomotive address
      * @param f9 is true if f9 is on, false if f9 is off
      * @param f10 is true if f10 is on, false if f10 is off
      * @param f11 is true if f11 is on, false if f11 is off
@@ -1024,9 +1042,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Three Set Momentary Functions message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Three Set Momentary Functions message.
+     *
+     * @param address the locomotive address
      * @param f9 is true if f9 is momentary
      * @param f10 is true if f10 is momentary
      * @param f11 is true if f11 is momentary
@@ -1063,9 +1082,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Four Operation Request message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Four Operation Request message.
+     *
+     * @param address the locomotive address
      * @param f13 is true if f13 is on, false if f13 is off
      * @param f14 is true if f14 is on, false if f14 is off
      * @param f15 is true if f15 is on, false if f15 is off
@@ -1122,9 +1142,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Four Set Momentary Function message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Four Set Momentary Function message.
+     *
+     * @param address the locomotive address
      * @param f13 is true if f13 is Momentary
      * @param f14 is true if f14 is Momentary
      * @param f15 is true if f15 is Momentary
@@ -1181,9 +1202,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Five Operation Request message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Five Operation Request message.
+     *
+     * @param address the locomotive address
      * @param f21 is true if f21 is on, false if f21 is off
      * @param f22 is true if f22 is on, false if f22 is off
      * @param f23 is true if f23 is on, false if f23 is off
@@ -1240,9 +1262,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Generate a Function Group Five Set Momentary Function message
-     * @param address is the locomotive address
+    /**
+     * Generate a Function Group Five Set Momentary Function message.
+     *
+     * @param address the locomotive address
      * @param f21 is true if f21 is momentary
      * @param f22 is true if f22 is momentary
      * @param f23 is true if f23 is momentary
@@ -1299,8 +1322,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /*
-     * Build a Resume operations Message
+    /**
+     * Build a Resume operations Message.
      */
     public static XNetMessage getResumeOperationsMsg() {
         XNetMessage msg = new XNetMessage(3);
@@ -1310,8 +1333,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /*
-     * Build an Emergency Off Message
+    /**
+     * Build an Emergency Off Message.
      */
     public static XNetMessage getEmergencyOffMsg() {
         XNetMessage msg = new XNetMessage(3);
@@ -1323,8 +1346,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     /**
      * Generate the message to request the Command Station Hardware/Software
-     * Version
-     *
+     * Version.
      */
     public static XNetMessage getCSVersionRequestMessage() {
         XNetMessage msg = new XNetMessage(3);
@@ -1335,8 +1357,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Generate the message to request the Command Station Status
-     *
+     * Generate the message to request the Command Station Status.
      */
     public static XNetMessage getCSStatusRequestMessage() {
         XNetMessage msg = new XNetMessage(3);
@@ -1349,7 +1370,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /**
      * Generate the message to set the Command Station to Auto or Manual restart
      * mode.
-     *
      */
     public static XNetMessage getCSAutoStartMessage(boolean autoMode) {
         XNetMessage msg = new XNetMessage(4);
@@ -1366,8 +1386,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     /**
      * Generate the message to request the Computer Interface Hardware/Software
-     * Version
-     *
+     * Version.
      */
     public static XNetMessage getLIVersionRequestMessage() {
         XNetMessage msg = new XNetMessage(2);
@@ -1377,11 +1396,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Generate the message to set or request the Computer Interface Address
+     * Generate the message to set or request the Computer Interface Address.
      *
      * @param address Interface address (0-31). Send invalid address to request
      *                the address (32-255).
-     *
      */
     public static XNetMessage getLIAddressRequestMsg(int address) {
         XNetMessage msg = new XNetMessage(4);
@@ -1393,12 +1411,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Generate the message to set or request the Computer Interface speed
+     * Generate the message to set or request the Computer Interface speed.
      *
      * @param speed 1 is 19,200bps, 2 is 38,400bps, 3 is 57,600bps, 4 is
      *              115,200bps. Send invalid speed to request the current
      *              setting.
-     *
      */
     public static XNetMessage getLISpeedRequestMsg(int speed) {
         XNetMessage msg = new XNetMessage(4);
@@ -2101,10 +2118,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return text;
    }
 
-
     // initialize logging    
     private final static Logger log = LoggerFactory.getLogger(XNetMessage.class.getName());
 
 }
-
-

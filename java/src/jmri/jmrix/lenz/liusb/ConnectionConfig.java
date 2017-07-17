@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.liusb;
 import jmri.util.SystemType;
 
 /**
- * Handle configuring an XPressNet layout connection via a Lenz LIUSBadapter.
+ * Handle configuring an XpressNet layout connection via a Lenz LIUSBadapter.
  * <P>
  * This uses the {@link LIUSBAdapter} class to do the actual connection.
  *

@@ -100,7 +100,9 @@ public class JUnitUtil {
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self currently ignored
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
