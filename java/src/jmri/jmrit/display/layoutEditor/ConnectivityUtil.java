@@ -67,23 +67,43 @@ public class ConnectivityUtil {
     private LayoutBlock prevLayoutBlock = null;
 
     /**
-     * Provides a list of LayoutTurnouts in a specified Block (block), in order,
-     * beginning at the connection to the specified previous Block (prevBlock)
-     * and continuing to the specified next Block (nextBlock). Also compiles a
-     * companion list of how the turnout should be set for the specified
-     * connectivity. The companion list can be accessed by
-     * "getTurnoutSettingList" immediately after this method returns. If both
-     * the previous Block or the next Block are specified, follows the
-     * connectivity and returns only those turnouts needed for the transit of
-     * this block. If either are not present (null), returns all turnouts in
-     * this block, with settings to enter/exit to whatever block is specified,
-     * and other settings set to CLOSED. Returns an empty list if a connectivity
-     * anomaly is discovered--specified blocks are not connected.
+     * Provide a list of LayoutTurnouts in the specified Block, in order,
+     * beginning at the connection to the specified previous Block and
+     * continuing to the specified next Block. Also compiles a companion list of
+     * how the turnout should be set for the specified connectivity. The
+     * companion list can be accessed by "getTurnoutSettingList" immediately
+     * after this method returns.
+     *
+     * @param currBlock the block to list LayoutTurnouts in
+     * @param prevBlock the previous block
+     * @param nextBlock the following block
+     * @return the list of all turnouts in the block if prevBlock or nextBlock
+     *         are null or the list of all turnouts required to transit
+     *         currBlock between prevBlock and nextBlock; returns an empty list
+     *         if prevBlock and nextBlock are not null and are not connected
      */
     public ArrayList<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock) {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
+    /**
+     * Provide a list of LayoutTurnouts in the specified Block, in order,
+     * beginning at the connection to the specified previous Block and
+     * continuing to the specified next Block. Also compiles a companion list of
+     * how the turnout should be set for the specified connectivity. The
+     * companion list can be accessed by "getTurnoutSettingList" immediately
+     * after this method returns.
+     *
+     * @param currBlock the block to list LayoutTurnouts in
+     * @param prevBlock the previous block
+     * @param nextBlock the following block
+     * @param suppress  true to prevent errors from being logged; false
+     *                  otherwise
+     * @return the list of all turnouts in the block if prevBlock or nextBlock
+     *         are null or the list of all turnouts required to transit
+     *         currBlock between prevBlock and nextBlock; returns an empty list
+     *         if prevBlock and nextBlock are not null and are not connected
+     */
     public ArrayList<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock, boolean suppress) {
         turnoutConnectivity = true;
         ArrayList<LayoutTurnout> list = new ArrayList<>();
@@ -99,14 +119,14 @@ public class ConnectivityUtil {
         if ((prevLayoutBlock == null) || (nextLayoutBlock == null)) {
             // special search with partial information - not as good, order not assured
             ArrayList<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(currLayoutBlock);
-            for (LayoutTurnout lt : allTurnouts) {
-                list.add(lt);
+            list.addAll(allTurnouts);
+            allTurnouts.forEach((lt) -> {
                 if (lt instanceof LayoutSlip) {
                     companion.add(((LayoutSlip) lt).getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress));
                 } else {
                     companion.add(lt.getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress));
                 }
-            }   // for (LayoutTurnout ltx : allTurnouts)
+            }); // for (LayoutTurnout ltx : allTurnouts)
             return list;
         }
 
@@ -477,16 +497,22 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns a list of turnout settings (as Integer Objects) to accomplish the
-     * transition through the Block specified in 'getTurnoutList'. Settings and
+     * Get list of turnout settings to accomplish the transition through the
+     * Block specified in
+     * {@link #getTurnoutList(jmri.Block, jmri.Block, jmri.Block)}. Settings and
      * Turnouts are in sync by position in the returned list.
+     *
+     * @return turnout settings as integers
      */
     public ArrayList<Integer> getTurnoutSettingList() {
         return companion;
     }
 
     /**
-     * Returns a list of all Blocks connected to a specified Block
+     * Get a list of all Blocks connected to a specified Block.
+     *
+     * @param block the block to get connections for
+     * @return connected blocks or an empty list if none
      */
     public ArrayList<Block> getConnectedBlocks(Block block) {
         ArrayList<Block> list = new ArrayList<>();
@@ -504,8 +530,10 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns a list of all anchor point boundaries involving the specified
-     * Block
+     * Get a list of all anchor point boundaries involving the specified Block.
+     *
+     * @param block the block to get anchor point boundaries for
+     * @return a list of anchor point boundaries
      */
     public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
         ArrayList<PositionablePoint> list = new ArrayList<>();
@@ -524,16 +552,19 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns a list of all levelXings involving the specified Block. To be
-     * returned, a levelXing must have all its four connections and all blocks
-     * must be assigned. If any connection is missing, or if a block assignmnet
-     * is missing, an error message is printed and the level crossing is not
-     * added to the list.
+     * Get a list of all LevelXings involving the specified Block. To be listed,
+     * a LevelXing must have all its four connections and all blocks must be
+     * assigned. If any connection is missing, or if a block assignment is
+     * missing, an error message is printed and the level crossing is not added
+     * to the list.
+     *
+     * @param block the block to check
+     * @return a list of all complete LevelXings
      */
     public ArrayList<LevelXing> getLevelCrossingsThisBlock(Block block) {
         ArrayList<LevelXing> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        for (LevelXing x : layoutEditor.xingList) {
+        layoutEditor.xingList.forEach((x) -> {
             boolean found = false;
             if ((x.getLayoutBlockAC() == lBlock) || (x.getLayoutBlockBD() == lBlock)) {
                 found = true;
@@ -557,20 +588,21 @@ public class ConnectivityUtil {
                     log.error("Missing connection or block assignment at Level Crossing in Block " + block.getUserName());
                 }
             }
-        }
+        });
         return list;
     }
 
-    //Need to search through code to find out where this is being used
-    // <Section.java:1807>
     /**
-     * Returns a list of all layout turnouts involving the specified Block
+     * Get a list of all layout turnouts involving the specified Block.
+     *
+     * @param block the Block to get layout turnouts for
+     * @return the list of associated layout turnouts or an empty list if none
      */
     public ArrayList<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {
         ArrayList<LayoutTurnout> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         String lBlockName = block.getUserName();
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
+        layoutEditor.turnoutList.forEach((t) -> {
             if ((t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName))
                     || (t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName))) {
                 list.add(t);
@@ -583,8 +615,8 @@ public class ConnectivityUtil {
             } else if ((t.getConnectD() != null) && (((TrackSegment) t.getConnectD()).getLayoutBlock() == lBlock)) {
                 list.add(t);
             }
-        }
-        for (LayoutSlip ls : layoutEditor.slipList) {
+        });
+        layoutEditor.slipList.forEach((ls) -> {
             if (ls.getBlockName().equals(lBlockName)) {
                 list.add(ls);
             } else if ((ls.getConnectA() != null) && (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lBlock)) {
@@ -596,37 +628,40 @@ public class ConnectivityUtil {
             } else if ((ls.getConnectD() != null) && (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lBlock)) {
                 list.add(ls);
             }
+        });
+        if (log.isTraceEnabled()) {
+            StringBuilder txt = new StringBuilder("Turnouts for Block ");
+            txt.append(block.getUserName()).append(" - ");
+            for (int k = 0; k < list.size(); k++) {
+                if (k > 0) {
+                    txt.append(", ");
+                }
+                if ((list.get(k)).getTurnout() != null) {
+                    txt.append((list.get(k)).getTurnout().getSystemName());
+                } else {
+                    txt.append("???");
+                }
+            }
+            log.error(txt.toString());
         }
-// djd debugging - lists turnouts for a block
-// debugging code - comment out when not debugging something involving this method
-//      String txt = "Turnouts for Block "+block.getUserName()+" - ";
-//      for (int k = 0; k<list.size(); k++) {
-//          if (k>0) txt = txt+", ";
-//          if ( (list.get(k)).getTurnout()!=null)
-//              txt = txt+(list.get(k)).getTurnout().getSystemName();
-//          else txt = txt+"???";
-//      }
-//      log.error(txt);
-// end debugging code
         return list;
     }
 
     /**
-     * Returns 'true' if specified Layout Turnout has required signal heads.
-     * Returns 'false' if one or more of the required signals are missing.
+     * Check if specified LayoutTurnout has required signals.
+     *
+     * @param t the LayoutTurnout to check
+     * @return true if specified LayoutTurnout has required signal heads; false
+     *         otherwise
      */
     public boolean layoutTurnoutHasRequiredSignals(LayoutTurnout t) {
         switch (t.getLinkType()) {
             case LayoutTurnout.NO_LINK:
                 if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
-                    if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                    return (t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                             && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                            && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                            && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
                 } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
                     if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                             && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().equals(""))
@@ -647,36 +682,20 @@ public class ConnectivityUtil {
                     }
                     return false;
                 } else {
-                    if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                    return (t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                             && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                             && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
-                            && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                            && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""));
                 }
             case LayoutTurnout.FIRST_3_WAY:
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
             case LayoutTurnout.SECOND_3_WAY:
-                if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
             case LayoutTurnout.THROAT_TO_THROAT:
-                if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
             default:
                 break;
         }
