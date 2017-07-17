@@ -14,13 +14,14 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportCarRosterActionTest {
+public class PrintCarRosterActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Car Roster Frame");
+        PrintCarRosterAction t = new PrintCarRosterAction("Test Action",jf,true,ctf);
         Assert.assertNotNull("exists",t);
         ctf.dispose();
     }
@@ -38,6 +39,6 @@ public class ExportCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterActionTest.class.getName());
 
 }
