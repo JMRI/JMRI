@@ -66,8 +66,6 @@ public class ConnectivityUtil {
     private LayoutBlock nextLayoutBlock = null;
     private LayoutBlock prevLayoutBlock = null;
 
-    private boolean logInfoFor_trackSegmentLeadsTo = log.isDebugEnabled();
-
     /**
      * Provides a list of LayoutTurnouts in a specified Block (block), in order,
      * beginning at the connection to the specified previous Block (prevBlock)
@@ -88,8 +86,8 @@ public class ConnectivityUtil {
 
     public ArrayList<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock, boolean suppress) {
         turnoutConnectivity = true;
-        ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
-        companion = new ArrayList<Integer>();
+        ArrayList<LayoutTurnout> list = new ArrayList<>();
+        companion = new ArrayList<>();
         // initialize
         currLayoutBlock = layoutBlockManager.getByUserName(currBlock.getUserName());
         if (prevBlock != null) {
@@ -104,16 +102,16 @@ public class ConnectivityUtil {
             for (LayoutTurnout lt : allTurnouts) {
                 list.add(lt);
                 if (lt instanceof LayoutSlip) {
-                    companion.add(Integer.valueOf(((LayoutSlip) lt).getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress)));
+                    companion.add(((LayoutSlip) lt).getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress));
                 } else {
-                    companion.add(Integer.valueOf(lt.getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress)));
+                    companion.add(lt.getConnectivityStateForLayoutBlocks(currLayoutBlock, prevLayoutBlock, nextLayoutBlock, suppress));
                 }
             }   // for (LayoutTurnout ltx : allTurnouts)
             return list;
         }
 
         ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
-        int cType = 0;
+        int cType;
         // initialize the connectivity search, processing a turnout in this block if it is present
         boolean notFound = true;
         for (int i = 0; (i < cList.size()) && notFound; i++) {
@@ -177,7 +175,7 @@ public class ConnectivityUtil {
                     default:
                         break;
                 }
-                companion.add(Integer.valueOf(setting));
+                companion.add(setting);
                 notFound = false;
             } else if ((lc.getBlock1() == currLayoutBlock) && (lc.getBlock2() == prevLayoutBlock)) {
                 // no turnout  or level crossing at the beginning of this block
@@ -227,7 +225,7 @@ public class ConnectivityUtil {
         }
         // search connectivity for turnouts by following TrackSegments to end of Block
         while (tr != null) {
-            Object cObject = null;
+            Object cObject;
             // identify next connection
             if ((tr.getConnect1() == prevConnectObject) && (tr.getType1() == prevConnectType)) {
                 cType = tr.getType2();
@@ -297,24 +295,24 @@ public class ConnectivityUtil {
                             } else if (lt.getLayoutBlockB() == nextLayoutBlock) {
                                 // exits Block at B
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = null;
                             } else if ((lt.getLayoutBlockC() == nextLayoutBlock) && (tType != LayoutTurnout.LH_XOVER)) {
                                 // exits Block at C, either Double or RH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = null;
                             } else if (lt.getLayoutBlockB() == currLayoutBlock) {
                                 // block continues at B
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = (TrackSegment) lt.getConnectB();
                                 prevConnectType = LayoutTrack.TURNOUT_B;
                                 prevConnectObject = cObject;
                             } else if ((lt.getLayoutBlockC() == currLayoutBlock) && (tType != LayoutTurnout.LH_XOVER)) {
                                 // block continues at C, either Double or RH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = (TrackSegment) lt.getConnectC();
                                 prevConnectType = LayoutTrack.TURNOUT_C;
                                 prevConnectObject = cObject;
@@ -336,24 +334,24 @@ public class ConnectivityUtil {
                             } else if (lt.getLayoutBlock() == nextLayoutBlock) {
                                 // exits Block at A
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = null;
                             } else if ((lt.getLayoutBlockD() == nextLayoutBlock) && (tType != LayoutTurnout.RH_XOVER)) {
                                 // exits Block at D, either Double or LH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = null;
                             } else if (lt.getLayoutBlock() == currLayoutBlock) {
                                 // block continues at A
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = (TrackSegment) lt.getConnectA();
                                 prevConnectType = LayoutTrack.TURNOUT_A;
                                 prevConnectObject = cObject;
                             } else if ((lt.getLayoutBlockD() == currLayoutBlock) && (tType != LayoutTurnout.RH_XOVER)) {
                                 // block continues at D, either Double or LH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = (TrackSegment) lt.getConnectD();
                                 prevConnectType = LayoutTrack.TURNOUT_D;
                                 prevConnectObject = cObject;
@@ -375,24 +373,24 @@ public class ConnectivityUtil {
                             } else if (lt.getLayoutBlockD() == nextLayoutBlock) {
                                 // exits Block at D
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = null;
                             } else if ((lt.getLayoutBlock() == nextLayoutBlock) && (tType != LayoutTurnout.LH_XOVER)) {
                                 // exits Block at A, either Double or RH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = null;
                             } else if (lt.getLayoutBlockD() == currLayoutBlock) {
                                 // block continues at D
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = (TrackSegment) lt.getConnectD();
                                 prevConnectType = LayoutTrack.TURNOUT_D;
                                 prevConnectObject = cObject;
                             } else if ((lt.getLayoutBlock() == currLayoutBlock) && (tType != LayoutTurnout.LH_XOVER)) {
                                 // block continues at A, either Double or RH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = (TrackSegment) lt.getConnectA();
                                 prevConnectType = LayoutTrack.TURNOUT_A;
                                 prevConnectObject = cObject;
@@ -414,24 +412,24 @@ public class ConnectivityUtil {
                             } else if (lt.getLayoutBlockC() == nextLayoutBlock) {
                                 // exits Block at C
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = null;
                             } else if ((lt.getLayoutBlockB() == nextLayoutBlock) && (tType != LayoutTurnout.RH_XOVER)) {
                                 // exits Block at B, either Double or LH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = null;
                             } else if (lt.getLayoutBlockC() == currLayoutBlock) {
                                 // block continues at C
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.CLOSED));
+                                companion.add(Turnout.CLOSED);
                                 tr = (TrackSegment) lt.getConnectC();
                                 prevConnectType = LayoutTrack.TURNOUT_C;
                                 prevConnectObject = cObject;
                             } else if ((lt.getLayoutBlockB() == currLayoutBlock) && (tType != LayoutTurnout.RH_XOVER)) {
                                 // block continues at B, either Double or LH
                                 list.add((LayoutTurnout) cObject);
-                                companion.add(Integer.valueOf(Turnout.THROWN));
+                                companion.add(Turnout.THROWN);
                                 tr = (TrackSegment) lt.getConnectB();
                                 prevConnectType = LayoutTrack.TURNOUT_B;
                                 prevConnectObject = cObject;
@@ -491,7 +489,7 @@ public class ConnectivityUtil {
      * Returns a list of all Blocks connected to a specified Block
      */
     public ArrayList<Block> getConnectedBlocks(Block block) {
-        ArrayList<Block> list = new ArrayList<Block>();
+        ArrayList<Block> list = new ArrayList<>();
         currLayoutBlock = layoutBlockManager.getByUserName(block.getUserName());
         ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         for (int i = 0; i < cList.size(); i++) {
@@ -510,7 +508,7 @@ public class ConnectivityUtil {
      * Block
      */
     public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
-        ArrayList<PositionablePoint> list = new ArrayList<PositionablePoint>();
+        ArrayList<PositionablePoint> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         for (PositionablePoint p : layoutEditor.pointList) {
             if ((p.getConnect2() != null) && (p.getConnect1() != null)) {
@@ -533,7 +531,7 @@ public class ConnectivityUtil {
      * added to the list.
      */
     public ArrayList<LevelXing> getLevelCrossingsThisBlock(Block block) {
-        ArrayList<LevelXing> list = new ArrayList<LevelXing>();
+        ArrayList<LevelXing> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         for (LevelXing x : layoutEditor.xingList) {
             boolean found = false;
@@ -569,7 +567,7 @@ public class ConnectivityUtil {
      * Returns a list of all layout turnouts involving the specified Block
      */
     public ArrayList<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {
-        ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
+        ArrayList<LayoutTurnout> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         String lBlockName = block.getUserName();
         for (LayoutTurnout t : layoutEditor.turnoutList) {
@@ -618,66 +616,69 @@ public class ConnectivityUtil {
      * Returns 'false' if one or more of the required signals are missing.
      */
     public boolean layoutTurnoutHasRequiredSignals(LayoutTurnout t) {
-        if (t.getLinkType() == LayoutTurnout.NO_LINK) {
-            if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                    || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+        switch (t.getLinkType()) {
+            case LayoutTurnout.NO_LINK:
+                if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
+                        || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+                    if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                            && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                            && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                    if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                            && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().equals(""))
+                            && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                            && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
+                            && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))
+                            && (t.getSignalD2Name() != null) && (!t.getSignalD2Name().equals(""))) {
+
+                        if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                            return true;
+                        }
+                        if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                            if ((t.getSignalB2Name() != null) && (!t.getSignalB2Name().equals(""))
+                                    && (t.getSignalC2Name() != null) && (!t.getSignalC2Name().equals(""))) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                } else {
+                    if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
+                            && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                            && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
+                            && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            case LayoutTurnout.FIRST_3_WAY:
                 if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                         && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
                     return true;
                 } else {
                     return false;
                 }
-            } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
-                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))
-                        && (t.getSignalD2Name() != null) && (!t.getSignalD2Name().equals(""))) {
-
-                    if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
-                        return true;
-                    }
-                    if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
-                        if ((t.getSignalB2Name() != null) && (!t.getSignalB2Name().equals(""))
-                                && (t.getSignalC2Name() != null) && (!t.getSignalC2Name().equals(""))) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            } else {
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
-                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))) {
+            case LayoutTurnout.SECOND_3_WAY:
+                if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
                     return true;
                 } else {
                     return false;
                 }
-            }
-        } else if (t.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
-            if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (t.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
-            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
-                return true;
-            } else {
-                return false;
-            }
+            case LayoutTurnout.THROAT_TO_THROAT:
+                if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            default:
+                break;
         }
         return false;
     }
@@ -746,7 +747,7 @@ public class ConnectivityUtil {
         }
     }
 
-    //Signalmasts are only valid or requited on the boundary to a block.
+    //Signalmasts are only valid or required on the boundary to a block.
     public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
         String[] turnoutBlocks = t.getBlockBoundaries();
         boolean valid = true;
@@ -984,48 +985,51 @@ public class ConnectivityUtil {
                 return false;
             }
         } else if (mode == BlockBossLogic.FACING) {
-            if (where == DIVERGING) {
-                if (((bbLogic.getWatchedSensor2() != null) && (bbLogic.getWatchedSensor2()).equals(name))
-                        || ((bbLogic.getWatchedSensor2Alt() != null) && (bbLogic.getWatchedSensor2Alt()).equals(name))) {
-                    bbLogic.retain();
-                    bbLogic.start();
-                    return true;
-                }
-                if (bbLogic.getWatchedSensor2() == null) {
-                    bbLogic.setWatchedSensor2(name);
-                } else if (bbLogic.getWatchedSensor2Alt() == null) {
-                    bbLogic.setWatchedSensor2Alt(name);
-                } else {
+            switch (where) {
+                case DIVERGING:
+                    if (((bbLogic.getWatchedSensor2() != null) && (bbLogic.getWatchedSensor2()).equals(name))
+                            || ((bbLogic.getWatchedSensor2Alt() != null) && (bbLogic.getWatchedSensor2Alt()).equals(name))) {
+                        bbLogic.retain();
+                        bbLogic.start();
+                        return true;
+                    }
+                    if (bbLogic.getWatchedSensor2() == null) {
+                        bbLogic.setWatchedSensor2(name);
+                    } else if (bbLogic.getWatchedSensor2Alt() == null) {
+                        bbLogic.setWatchedSensor2Alt(name);
+                    } else {
+                        log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
+                                + " because there is no room in the facing SSL diverging part.");
+                        bbLogic.retain();
+                        bbLogic.start();
+                        return false;
+                    }
+                    break;
+                case CONTINUING:
+                    if (((bbLogic.getWatchedSensor1() != null) && (bbLogic.getWatchedSensor1()).equals(name))
+                            || ((bbLogic.getWatchedSensor1Alt() != null) && (bbLogic.getWatchedSensor1Alt()).equals(name))) {
+                        bbLogic.retain();
+                        bbLogic.start();
+                        return true;
+                    }
+                    if (bbLogic.getWatchedSensor1() == null) {
+                        bbLogic.setWatchedSensor1(name);
+                    } else if (bbLogic.getWatchedSensor1Alt() == null) {
+                        bbLogic.setWatchedSensor1Alt(name);
+                    } else {
+                        log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
+                                + " because there is no room in the facing SSL continuing part.");
+                        bbLogic.retain();
+                        bbLogic.start();
+                        return false;
+                    }
+                    break;
+                default:
                     log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
-                            + " because there is no room in the facing SSL diverging part.");
+                            + "because 'where' to place the sensor was not correctly designated.");
                     bbLogic.retain();
                     bbLogic.start();
                     return false;
-                }
-            } else if (where == CONTINUING) {
-                if (((bbLogic.getWatchedSensor1() != null) && (bbLogic.getWatchedSensor1()).equals(name))
-                        || ((bbLogic.getWatchedSensor1Alt() != null) && (bbLogic.getWatchedSensor1Alt()).equals(name))) {
-                    bbLogic.retain();
-                    bbLogic.start();
-                    return true;
-                }
-                if (bbLogic.getWatchedSensor1() == null) {
-                    bbLogic.setWatchedSensor1(name);
-                } else if (bbLogic.getWatchedSensor1Alt() == null) {
-                    bbLogic.setWatchedSensor1Alt(name);
-                } else {
-                    log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
-                            + " because there is no room in the facing SSL continuing part.");
-                    bbLogic.retain();
-                    bbLogic.start();
-                    return false;
-                }
-            } else {
-                log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
-                        + "because 'where' to place the sensor was not correctly designated.");
-                bbLogic.retain();
-                bbLogic.start();
-                return false;
             }
         } else {
             log.error("SSL has not been set up for signal head " + sh.getSystemName()
@@ -1037,10 +1041,10 @@ public class ConnectivityUtil {
         return true;
     }
 
-    /*
-     * Revoves the specified sensors ('names') from the SSL for the specified signal head if
-     *      any of the sensors is currently in the SSL.
-     * Returns 'false' if an error was found, and issues a message to the error log.
+    /**
+     * Revoves the specified sensors ('names') from the SSL for the specified
+     * signal head if any of the sensors is currently in the SSL. Returns
+     * 'false' if an error was found, and issues a message to the error log.
      * Returns 'true' if no error, whether any sensors were found or not.
      */
     public boolean removeSensorsFromSignalHeadLogic(ArrayList<String> names, SignalHead sh) {
@@ -1174,83 +1178,96 @@ public class ConnectivityUtil {
                             || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))) {
                         // Standard turnout - node type A
                         if (((LayoutTurnout) cNode).getContinuingSense() == Turnout.CLOSED) {
-                            if (cNodeState == 0) {
-                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
-                                pType = LayoutTrack.TURNOUT_B;
-                            } else if (cNodeState == 1) {
-                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
-                                pType = LayoutTrack.TURNOUT_C;
-                            } else {
-                                log.error("Bad cNodeState argument when searching track-std. normal");
-                                return null;
+                            switch (cNodeState) {
+                                case 0:
+                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
+                                    pType = LayoutTrack.TURNOUT_B;
+                                    break;
+                                case 1:
+                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
+                                    pType = LayoutTrack.TURNOUT_C;
+                                    break;
+                                default:
+                                    log.error("Bad cNodeState argument when searching track-std. normal");
+                                    return null;
                             }
                         } else {
-                            if (cNodeState == 0) {
-                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
-                                pType = LayoutTrack.TURNOUT_C;
-                            } else if (cNodeState == 1) {
-                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
-                                pType = LayoutTrack.TURNOUT_B;
-                            } else {
-                                log.error("Bad cNodeState argument when searching track-std reversed");
-                                return null;
+                            switch (cNodeState) {
+                                case 0:
+                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
+                                    pType = LayoutTrack.TURNOUT_C;
+                                    break;
+                                case 1:
+                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
+                                    pType = LayoutTrack.TURNOUT_B;
+                                    break;
+                                default:
+                                    log.error("Bad cNodeState argument when searching track-std reversed");
+                                    return null;
                             }
                         }
                     } else {
                         // linked turnout - node type A
                         LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(((LayoutTurnout) cNode).getLinkedTurnoutName());
                         if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-                            if (cNodeState == 0) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                }
-                            } else if (cNodeState == 1) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                }
-                            } else {
-                                log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT");
-                                return null;
+                            switch (cNodeState) {
+                                case 0:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    }
+                                    break;
+                                case 1:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    }
+                                    break;
+                                default:
+                                    log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT");
+                                    return null;
                             }
                             pObject = lto;
                         } else if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.FIRST_3_WAY) {
-                            if (cNodeState == 0) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                }
-                                pObject = lto;
-                            } else if (cNodeState == 1) {
-                                if (((LayoutTurnout) cNode).getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                } else {
-                                    tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                }
-                            } else if (cNodeState == 2) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                }
-                                pObject = lto;
-                            } else {
-                                log.error("Bad cNodeState argument when searching track - FIRST_3_WAY");
-                                return null;
+                            switch (cNodeState) {
+                                case 0:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    }
+                                    pObject = lto;
+                                    break;
+                                case 1:
+                                    if (((LayoutTurnout) cNode).getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    } else {
+                                        tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    }
+                                    break;
+                                case 2:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    }
+                                    pObject = lto;
+                                    break;
+                                default:
+                                    log.error("Bad cNodeState argument when searching track - FIRST_3_WAY");
+                                    return null;
                             }
                         }
                     }
@@ -1258,21 +1275,24 @@ public class ConnectivityUtil {
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
                     // crossover turnout - node type A
-                    if (cNodeState == 0) {
-                        tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
-                        pType = LayoutTrack.TURNOUT_B;
-                    } else if (cNodeState == 1) {
-                        if ((cNodeType == LayoutTrack.TURNOUT_A)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
-                            pType = LayoutTrack.TURNOUT_C;
-                        } else {
-                            log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                    switch (cNodeState) {
+                        case 0:
+                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
+                            pType = LayoutTrack.TURNOUT_B;
+                            break;
+                        case 1:
+                            if ((cNodeType == LayoutTrack.TURNOUT_A)
+                                    && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
+                                pType = LayoutTrack.TURNOUT_C;
+                            } else {
+                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                return null;
+                            }
+                            break;
+                        default:
+                            log.error("Bad cNodeState argument when searching track- XOVER A");
                             return null;
-                        }
-                    } else {
-                        log.error("Bad cNodeState argument when searching track- XOVER A");
-                        return null;
                     }
                 }
                 break;
@@ -1292,25 +1312,28 @@ public class ConnectivityUtil {
                             tTrack = (TrackSegment) (lto.getConnectA());
                             pType = LayoutTrack.TURNOUT_A;
                         } else if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-                            if (cNodeState == 0) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                }
-                            } else if (cNodeState == 1) {
-                                if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                    tTrack = (TrackSegment) lto.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                } else {
-                                    tTrack = (TrackSegment) lto.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                }
-                            } else {
-                                log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT - 2");
-                                return null;
+                            switch (cNodeState) {
+                                case 0:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    }
+                                    break;
+                                case 1:
+                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                    } else {
+                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        pType = LayoutTrack.TURNOUT_B;
+                                    }
+                                    break;
+                                default:
+                                    log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT - 2");
+                                    return null;
                             }
                         }
                         pObject = lto;
@@ -1318,30 +1341,33 @@ public class ConnectivityUtil {
                 } else if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                    if (cNodeState == 0) {
-                        if (cNodeType == LayoutTrack.TURNOUT_B) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
-                            pType = LayoutTrack.TURNOUT_A;
-                        } else if (cNodeType == LayoutTrack.TURNOUT_C) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectD();
-                            pType = LayoutTrack.TURNOUT_D;
-                        }
-                    } else if (cNodeState == 1) {
-                        if ((cNodeType == LayoutTrack.TURNOUT_C)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
-                            pType = LayoutTrack.TURNOUT_A;
-                        } else if ((cNodeType == LayoutTrack.TURNOUT_B)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectD();
-                            pType = LayoutTrack.TURNOUT_D;
-                        } else {
-                            log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                    switch (cNodeState) {
+                        case 0:
+                            if (cNodeType == LayoutTrack.TURNOUT_B) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
+                                pType = LayoutTrack.TURNOUT_A;
+                            } else if (cNodeType == LayoutTrack.TURNOUT_C) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectD();
+                                pType = LayoutTrack.TURNOUT_D;
+                            }
+                            break;
+                        case 1:
+                            if ((cNodeType == LayoutTrack.TURNOUT_C)
+                                    && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
+                                pType = LayoutTrack.TURNOUT_A;
+                            } else if ((cNodeType == LayoutTrack.TURNOUT_B)
+                                    && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectD();
+                                pType = LayoutTrack.TURNOUT_D;
+                            } else {
+                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                return null;
+                            }
+                            break;
+                        default:
+                            log.error("Bad cNodeState argument when searching track - XOVER B or C");
                             return null;
-                        }
-                    } else {
-                        log.error("Bad cNodeState argument when searching track - XOVER B or C");
-                        return null;
                     }
                 }
                 break;
@@ -1349,20 +1375,23 @@ public class ConnectivityUtil {
                 if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                    if (cNodeState == 0) {
-                        tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
-                        pType = LayoutTrack.TURNOUT_C;
-                    } else if (cNodeState == 1) {
-                        if (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)) {
-                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
-                            pType = LayoutTrack.TURNOUT_B;
-                        } else {
-                            log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                    switch (cNodeState) {
+                        case 0:
+                            tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
+                            pType = LayoutTrack.TURNOUT_C;
+                            break;
+                        case 1:
+                            if (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+                                tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
+                                pType = LayoutTrack.TURNOUT_B;
+                            } else {
+                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                return null;
+                            }
+                            break;
+                        default:
+                            log.error("Bad cNodeState argument when searching track - XOVER D");
                             return null;
-                        }
-                    } else {
-                        log.error("Bad cNodeState argument when searching track - XOVER D");
-                        return null;
                     }
                 } else {
                     log.error("Bad traak node type - TURNOUT_D, but not a crossover turnout");
@@ -1434,8 +1463,8 @@ public class ConnectivityUtil {
 
         // follow track to anchor block boundary, turnout, or level crossing
         boolean hasNode = false;
-        Object tObject = null;
-        int tType = 0;
+        Object tObject;
+        int tType;
         if (tTrack == null) {
             log.error("Error tTrack is null!");
             return null;
@@ -2125,7 +2154,7 @@ public class ConnectivityUtil {
                 }
             }
         }
-        return (Integer.valueOf(setting));
+        return (setting);
     }
 
     /**
@@ -2143,16 +2172,16 @@ public class ConnectivityUtil {
         TrackSegment curTS = tsg;
         Object curObj = ob;
 
-        if (logInfoFor_trackSegmentLeadsTo) {
+        if (log.isDebugEnabled()) {
             log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
-        ArrayList<TrackSegment> posTS = new ArrayList<TrackSegment>();
-        ArrayList<Object> posOB = new ArrayList<Object>();
+        ArrayList<TrackSegment> posTS = new ArrayList<>();
+        ArrayList<Object> posOB = new ArrayList<>();
 
-        int conType = 0;
-        Object conObj = null;
+        int conType;
+        Object conObj;
 
         // follow track to all exit points outside this block
         while (curTS != null) {
@@ -2173,21 +2202,23 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    log.error("Connectivity error when following track " + curTS.getID() + " in Block " + currLayoutBlock.getUserName());
-                    log.error(objectToNameOrIDString(curObj) + " not connected to " + curTS.getID()
-                            + " (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")");
+                    log.error("Connectivity error when following track {} in Block ", curTS.getID(), currLayoutBlock.getUserName());
+                    log.error("{} not connected to {} (connects: {} & {})",
+                            objectToNameOrIDString(curObj),
+                            curTS.getID(),
+                            curTS.getConnect1Name(),
+                            curTS.getConnect2Name());
                     return false;
                 }
 
-                if (logInfoFor_trackSegmentLeadsTo) {
-                    String con_type = connectionTypeToString(conType);
-
-                    log.info("In block " + currLayoutBlock.getUserName()
-                            + ", going from " + objectToNameOrIDString(conObj)
-                            + " thru " + curTS.getID()
-                            + //" (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
-                            " to " + objectToNameOrIDString(curObj)
-                            + " (conType: " + con_type + "), nextLayoutBlock: " + nextLayoutBlock.getID());
+                if (log.isDebugEnabled()) {
+                    log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
+                            currLayoutBlock.getUserName(),
+                            objectToNameOrIDString(conObj),
+                            curTS.getID(),
+                            objectToNameOrIDString(curObj),
+                            connectionTypeToString(conType),
+                            nextLayoutBlock.getID());
                 }
 
                 // follow track according to next destination type
@@ -2196,7 +2227,7 @@ public class ConnectivityUtil {
                     // reached anchor point or end bumper
                     if (((PositionablePoint) conObj).getType() == PositionablePoint.END_BUMPER) {
                         // end of line without reaching 'nextLayoutBlock'
-                        if (logInfoFor_trackSegmentLeadsTo) {
+                        if (log.isDebugEnabled()) {
                             log.info("end of line without reaching {}", nextLayoutBlock.getID());
                         }
                         curTS = null;
@@ -2454,14 +2485,15 @@ public class ConnectivityUtil {
                                         posTS.add((TrackSegment) ls.getConnectA());
                                         posOB.add(conObj);
                                     }
-                                } else //if connect A is in this block...
-                                if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == currLayoutBlock) {
-                                    curTS = (TrackSegment) ls.getConnectA();
-                                } else {
-                                    log.debug("{} not connected to {} (connections: {} & {})",
-                                            currLayoutBlock.getUserName(), ls.getName(),
-                                            objectToNameOrIDString(ls.getConnectA()),
-                                            objectToNameOrIDString(ls.getConnectB()));
+                                } else { //if connect A is in this block...
+                                    if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == currLayoutBlock) {
+                                        curTS = (TrackSegment) ls.getConnectA();
+                                    } else {
+                                        log.debug("{} not connected to {} (connections: {} & {})",
+                                                currLayoutBlock.getUserName(), ls.getName(),
+                                                objectToNameOrIDString(ls.getConnectA()),
+                                                objectToNameOrIDString(ls.getConnectB()));
+                                    }
                                 }
                                 break;
                             case LayoutTrack.SLIP_D:
@@ -2528,7 +2560,7 @@ public class ConnectivityUtil {
     }
 
     private String objectToNameOrIDString(Object obj) {
-        String result = "";
+        String result;
         try {
             result = ((AbstractNamedBean) obj).getDisplayName();
         } catch (Exception ex1) {
@@ -2592,7 +2624,7 @@ public class ConnectivityUtil {
     }
 
     public ArrayList<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock currLayoutBlock) {
-        ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
+        ArrayList<LayoutTurnout> list = new ArrayList<>();
         for (LayoutTurnout lt : layoutEditor.turnoutList) {
             if ((lt.getLayoutBlock() == currLayoutBlock) || (lt.getLayoutBlockB() == currLayoutBlock)
                     || (lt.getLayoutBlockC() == currLayoutBlock) || (lt.getLayoutBlockD() == currLayoutBlock)) {
