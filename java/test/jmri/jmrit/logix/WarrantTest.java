@@ -195,21 +195,21 @@ public class WarrantTest {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #2.");
         }, "Train starts to move after 2nd command");
-        jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sWest.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sSouth.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
