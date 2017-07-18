@@ -15,11 +15,6 @@ import java.util.*;
 public class CodeLine {
 
     /**
-     * Nobody can build anonymous object
-     */
-    private CodeLine() {}
-    
-    /**
      * Create and configure 
      *
      * @param startTO  Name for turnout that starts operation on the layout
@@ -44,14 +39,14 @@ public class CodeLine {
         hOutput4TO = hm.getNamedBeanHandle(output4TO, tm.provideTurnout(output4TO));
     }
 
-    Memory logMemory = null;
+    final Memory logMemory;
 
-    NamedBeanHandle<Turnout> hStartTO;
+    final NamedBeanHandle<Turnout> hStartTO;
 
-    NamedBeanHandle<Turnout> hOutput1TO;
-    NamedBeanHandle<Turnout> hOutput2TO;
-    NamedBeanHandle<Turnout> hOutput3TO;
-    NamedBeanHandle<Turnout> hOutput4TO;
+    final NamedBeanHandle<Turnout> hOutput1TO;
+    final NamedBeanHandle<Turnout> hOutput2TO;
+    final NamedBeanHandle<Turnout> hOutput3TO;
+    final NamedBeanHandle<Turnout> hOutput4TO;
     
     public static int START_PULSE_LENGTH = 500; // mSec
     public static int CODE_SEND_DELAY = 2500; // mSec
