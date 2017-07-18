@@ -14,14 +14,13 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JmriJFrameTest {
+public class JLogoutputFrameTest {
 
     @Test
-    public void testCTor() {
+    public void testGetInstance() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        JLogoutputFrame t = JLogoutputFrame.getInstance();
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +36,6 @@ public class JmriJFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JLogoutputFrameTest.class.getName());
 
 }
