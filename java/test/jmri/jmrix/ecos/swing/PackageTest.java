@@ -34,6 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.statusframe.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosComponentFactoryTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         return suite;
     }

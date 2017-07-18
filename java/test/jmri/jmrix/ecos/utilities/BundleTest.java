@@ -1,4 +1,4 @@
-package jmri.jmrix.ecos.swing;
+package jmri.jmrix.ecos.utilities;
 
 import java.util.Locale;
 
