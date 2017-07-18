@@ -462,7 +462,11 @@ abstract public class AbstractMRTrafficController {
 
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         //log.debug("Timeout mCurrentState: {}", mCurrentState);
-        log.warn("Timeout on reply to message: {} consecutive timeouts = {}", msg.toString(), timeouts);
+        String[] packages = this.getClass().getName().split("\\.");
+        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"");
+
+        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg.toString(), timeouts, name);
         timeouts++;
         timeoutFlag = true;
         flushReceiveChars = true;

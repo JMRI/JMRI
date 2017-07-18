@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Mark Underwood Copyright(C) 2015
  */
-public class DCCppPacketizerTest extends DCCppTrafficControllerTest{
+public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
 
     /**
      * Local test class to make DCCppPacketizer more felicitous to test
