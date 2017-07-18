@@ -375,13 +375,23 @@ public final class MathUtil {
     }
 
     /**
+     * calculate the relative difference (+/-180) between two angles
+     * @param a the first angle
+     * @param b the second angle
+     * @return the relative difference between the two angles
+     */
+    public static double diffAngleDEG(double a, double b) {
+        return wrapPM180(a - b);
+    }
+
+    /**
      * calculate the absolute difference (0-180) between two angles
      * @param a the first angle
      * @param b the second angle
      * @return the absolute difference between the two angles
      */
-    public static double diffAngleDEG(double a, double b) {
-        return Math.abs(wrapPM180(a - b));
+    public static double absDiffAngleDEG(double a, double b) {
+        return Math.abs(diffAngleDEG(a, b));
     }
 
     /**
