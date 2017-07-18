@@ -34,21 +34,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Records and executes a desired set of defaults for the JMRI InstanceManager
- * and ProxyManagers
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * and ProxyManagers.
+ * <p>
+ * Provided that a connection provides a default, this verifies, unless the
+ * per-profile property {@code jmri-managers.allInternalDefaults} is
+ * {@code true}, that a non-Internal connection (other than type None in the
+ * preferences window) is the default for at least one type of manager.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
- * @author Randall Wood Copyright (C) 2015
+ * @author Randall Wood Copyright (C) 2015, 2017
  * @since 2.9.4
+ * @see jmri.jmrix.SystemConnectionMemo#provides(java.lang.Class)
  */
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
@@ -297,39 +293,57 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         if (this.allInternalDefaultsValid) {
             return true;
         }
-        boolean hasExternalConnections = false;
-        boolean usesExternalConnections = true;
-        // list of defaults to ignore because no external connection provides them
-        Map<Class<?>, Set<String>> notProvided = new HashMap<>();
-        Set<String> externalUserNames = new HashSet<>();
+        boolean usesExternalConnections = false;
+        // list of defaults to check that an external connection is providing
+        Map<Class<?>, Set<SystemConnectionMemo>> providing = new HashMap<>();
+        // list of all external providers
+        Set<SystemConnectionMemo> providers = new HashSet<>();
         if (connections.size() > 1) {
             connections.stream().filter((memo) -> (!(memo instanceof InternalSystemConnectionMemo))).forEachOrdered((memo) -> {
-                externalUserNames.add(memo.getUserName());
-                defaults.keySet().stream().filter((cls) -> (!memo.provides(cls))).forEachOrdered((cls) -> {
-                    Set<String> notProviding = notProvided.get(cls);
-                    if (notProviding == null) {
-                        notProviding = new HashSet<>();
+                // populate providers by adding all external connections that provide at least one default
+                for (Class<?> cls : defaults.keySet()) {
+                    if (memo.provides(cls)) {
+                        providers.add(memo);
+                        break;
                     }
-                    notProviding.add(memo.getUserName());
-                    notProvided.put(cls, notProviding);
-                });
+                }
             });
-            for (SystemConnectionMemo memo : connections) {
-                if (memo instanceof InternalSystemConnectionMemo) {
-                    if (defaults.keySet().stream().filter((clazz) -> {
-                        Set<String> notProviding = notProvided.get(clazz);
-                        return (notProviding == null || notProviding.size() != externalUserNames.size());
-                    }).allMatch((cls) -> {
+            // if there are no external providers, no further checks are needed
+            if (providers.size() >= 1) {
+                // build a list of defaults provided by external connections
+                providers.stream().forEach((memo) -> {
+                    defaults.keySet().stream().filter((cls) -> (memo.provides(cls))).forEachOrdered((cls) -> {
+                        Set<SystemConnectionMemo> provides = providing.getOrDefault(cls, new HashSet<>());
+                        provides.add(memo);
+                        providing.put(cls, provides);
+                    });
+                });
+                if (log.isDebugEnabled()) {
+                    // avoid unneeded overhead of looping through providers
+                    providing.forEach((cls, clsProviders) -> {
+                        log.debug("{} is provided by:", cls.getName());
+                        clsProviders.forEach((provider) -> {
+                            log.debug("    {}", provider.getUserName());
+                        });
+                    });
+                }
+                for (SystemConnectionMemo memo : providers) {
+                    if (providing.keySet().stream().filter((cls) -> {
+                        Set<SystemConnectionMemo> provides = providing.get(cls);
+                        log.debug("{} is provided by {} out of {} connections", cls.getName(), provides.size(), providers.size());
+                        return (provides.size() > 0);
+                    }).anyMatch((cls) -> {
+                        log.debug("{} has an external default", cls);
                         return defaults.get(cls).equals(memo.getUserName());
                     })) {
-                        usesExternalConnections = false;
+                        usesExternalConnections = true;
+                        // no need to check further
+                        break;
                     }
-                } else {
-                    hasExternalConnections = true;
                 }
             }
         }
-        return hasExternalConnections ? usesExternalConnections : true;
+        return providers.size() >= 1 ? usesExternalConnections : true;
     }
 
     public boolean isPreferencesValid(Profile profile) {
