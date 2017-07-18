@@ -6,7 +6,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   BundleTest.class
+   BundleTest.class,
+   UsbBrowserActionTest.class,
+   UsbBrowserFrameTest.class,
+   UsbBrowserPanelTest.class,
+   UsbBrowserStartupActionFactoryTest.class,
 })
 /**
  * Tests for the jmri.util.usb package
