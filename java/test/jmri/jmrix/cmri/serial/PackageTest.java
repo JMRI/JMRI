@@ -39,7 +39,8 @@ import org.slf4j.LoggerFactory;
    SerialTurnoutTest.class,
    SerialLightTest.class,
    SerialLightManagerTest.class,
-   SerialSensorTest.class
+   SerialSensorTest.class,
+   BundleTest.class
 })
 
 public class PackageTest{
