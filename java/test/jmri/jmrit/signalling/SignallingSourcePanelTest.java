@@ -1,4 +1,4 @@
-package jmri.util;
+package jmri.jmrit.signalling;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +14,14 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JmriJFrameTest {
+public class SignallingSourcePanelTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        jmri.SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        SignallingSourcePanel t = new SignallingSourcePanel(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)"));
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -29,6 +29,7 @@ public class JmriJFrameTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultSignalMastManager();
     }
 
     @After
@@ -37,6 +38,6 @@ public class JmriJFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignallingSourcePanelTest.class.getName());
 
 }

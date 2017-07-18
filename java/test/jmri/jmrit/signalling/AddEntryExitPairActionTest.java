@@ -1,4 +1,4 @@
-package jmri.util;
+package jmri.jmrit.signalling;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -9,19 +9,21 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JmriJFrameTest {
+public class AddEntryExitPairActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        LayoutEditor e = new LayoutEditor();
+        AddEntryExitPairAction t = new AddEntryExitPairAction("Test Action",e);
         Assert.assertNotNull("exists",t);
-        t.dispose();
+        e.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +39,6 @@ public class JmriJFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairActionTest.class.getName());
 
 }

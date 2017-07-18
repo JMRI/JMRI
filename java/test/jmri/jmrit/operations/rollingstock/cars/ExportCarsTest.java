@@ -1,27 +1,27 @@
-package jmri.util;
+package jmri.jmrit.operations.rollingstock.cars;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
+import java.util.List;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JmriJFrameTest {
+public class ExportCarsTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        CarManager manager = CarManager.instance();
+        List<RollingStock> carList = manager.getByIdList();
+        ExportCars t = new ExportCars(carList);
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +37,6 @@ public class JmriJFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class.getName());
 
 }
