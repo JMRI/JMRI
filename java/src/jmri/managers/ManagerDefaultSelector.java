@@ -102,6 +102,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                             log.debug("First real system added, reset defaults");
                             String name = list.get(1).getUserName();
                             removeConnectionAsDefault(name);
+                            for (Item item : knownManagers) {
+                                if (memo.provides(item.managerClass)) {
+                                    this.setDefault(item.managerClass, memo.getUserName());
+                                }
+                            }
                         }
                         memo.addPropertyChangeListener(this.memoListener);
                     }
