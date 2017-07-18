@@ -21,6 +21,7 @@ public class JmriJFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame t = new JmriJFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

@@ -32,7 +32,6 @@ public class TrafficLock implements Lock {
         this.farSignal = signal;
         this.direction = direction;
         this.beans = beans;
-        System.out.println("bean count "+beans.length);
     }
 
     SignalHeadSection farSignal;
@@ -52,7 +51,7 @@ public class TrafficLock implements Lock {
             }
         }
 
-        if (farSignal.lastIndication == direction || farSignal.timeRunning ) {
+        if (farSignal.getLastIndication() == direction || farSignal.isRunningTime() ) {
                 InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
                     .setValue("Traffic locked to "+farSignal.getName());
                 return false;
