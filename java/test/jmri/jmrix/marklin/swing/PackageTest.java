@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.marklin.swing.packetgen.PackageTest.class,
     jmri.jmrix.marklin.swing.monitor.PackageTest.class,
     MarklinComponentFactoryTest.class,
-    MarklinMenuTest.class
+    MarklinMenuTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin.swing package.

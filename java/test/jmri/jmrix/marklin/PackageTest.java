@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
    MarklinThrottleTest.class,
    MarklinTurnoutManagerTest.class,
    MarklinTurnoutTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package

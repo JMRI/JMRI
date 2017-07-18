@@ -48,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 
