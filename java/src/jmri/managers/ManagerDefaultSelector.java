@@ -4,8 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.CheckForNull;
@@ -51,6 +54,9 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     public final HashMap<Class<?>, String> defaults = new HashMap<>();
     private PropertyChangeListener memoListener;
+    private boolean allInternalDefaultsValid = false;
+    public final static String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
+    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class);
 
     public ManagerDefaultSelector() {
         memoListener = (PropertyChangeEvent e) -> {
@@ -244,10 +250,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
-            Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
+            Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true); // NOI18N
+            Preferences defaultsPreferences = preferences.node("defaults");
             try {
-                for (String name : settings.keys()) {
-                    String connection = settings.get(name, null);
+                for (String name : defaultsPreferences.keys()) {
+                    String connection = defaultsPreferences.get(name, null);
                     Class<?> cls = this.classForName(name);
                     log.debug("Loading default {} for {}", connection, name);
                     if (cls != null) {
@@ -255,6 +262,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.debug("Loaded default {} for {}", connection, cls);
                     }
                 }
+                this.allInternalDefaultsValid = preferences.getBoolean(ALL_INTERNAL_DEFAULTS, this.allInternalDefaultsValid);
             } catch (BackingStoreException ex) {
                 log.info("Unable to read preferences for Default Selector.");
             }
@@ -272,25 +280,47 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     @Override
     public void savePreferences(Profile profile) {
-        Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
+        Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true); // NOI18N
+        Preferences defaultsPreferences = preferences.node("defaults");
         try {
             this.defaults.keySet().stream().forEach((cls) -> {
-                settings.put(this.nameForClass(cls), this.defaults.get(cls));
+                defaultsPreferences.put(this.nameForClass(cls), this.defaults.get(cls));
             });
-            settings.sync();
+            preferences.putBoolean(ALL_INTERNAL_DEFAULTS, this.allInternalDefaultsValid);
+            preferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences for Default Selector.", ex);
         }
     }
 
     private boolean isPreferencesValid(Profile profile, List<SystemConnectionMemo> connections) {
+        if (this.allInternalDefaultsValid) {
+            return true;
+        }
         boolean hasExternalConnections = false;
         boolean usesExternalConnections = true;
+        // list of defaults to ignore because no external connection provides them
+        Map<Class<?>, Set<String>> notProvided = new HashMap<>();
+        Set<String> externalUserNames = new HashSet<>();
         if (connections.size() > 1) {
+            connections.stream().filter((memo) -> (!(memo instanceof InternalSystemConnectionMemo))).forEachOrdered((memo) -> {
+                externalUserNames.add(memo.getUserName());
+                defaults.keySet().stream().filter((cls) -> (!memo.provides(cls))).forEachOrdered((cls) -> {
+                    Set<String> notProviding = notProvided.get(cls);
+                    if (notProviding == null) {
+                        notProviding = new HashSet<>();
+                    }
+                    notProviding.add(memo.getUserName());
+                    notProvided.put(cls, notProviding);
+                });
+            });
             for (SystemConnectionMemo memo : connections) {
                 if (memo instanceof InternalSystemConnectionMemo) {
-                    if (defaults.values().stream().allMatch((userName) -> {
-                        return userName.equals(memo.getUserName());
+                    if (defaults.keySet().stream().filter((clazz) -> {
+                        Set<String> notProviding = notProvided.get(clazz);
+                        return (notProviding == null || notProviding.size() != externalUserNames.size());
+                    }).allMatch((cls) -> {
+                        return defaults.get(cls).equals(memo.getUserName());
                     })) {
                         usesExternalConnections = false;
                     }
@@ -330,5 +360,25 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class);
+    /**
+     * Check if having all defaults assigned to internal connections should be
+     * considered is valid in the presence of an external System Connection.
+     *
+     * @return true if having all internal defaults should be valid; false
+     *         otherwise
+     */
+    public boolean isAllInternalDefaultsValid() {
+        return allInternalDefaultsValid;
+    }
+
+    /**
+     * Set if having all defaults assigned to internal connections should be
+     * considered is valid in the presence of an external System Connection.
+     *
+     * @param isAllInternalDefaultsValid true if having all internal defaults
+     *                                   should be valid; false otherwise
+     */
+    public void setAllInternalDefaultsValid(boolean isAllInternalDefaultsValid) {
+        this.allInternalDefaultsValid = isAllInternalDefaultsValid;
+    }
 }
