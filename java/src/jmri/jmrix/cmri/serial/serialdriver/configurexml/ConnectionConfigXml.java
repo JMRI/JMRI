@@ -10,6 +10,8 @@ import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting the
@@ -151,11 +153,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     StringTokenizer nodes = new StringTokenizer(pseq," ,");
                     SerialTrafficController tcPL = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
                     SerialNode plNode = (SerialNode) tcPL.getNode(0);
-                   
                     while(nodes.hasMoreTokens())
                     {
                       tcPL.cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
                     }
+//                    log.info("Poll List = "+tcPL.cmriNetPollList);
                  }
             }
         } 
@@ -163,7 +165,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         // Load the node specific parameters
         // ---------------------------------
 //        int pollListSize = SerialTrafficController.instance().cmriNetPollList.size();
-//        int nextPollPos = pollListSize+1;        
+        int pollListSize = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().cmriNetPollList.size();
+        int nextPollPos = pollListSize+1;        
         
         List<Element> l = shared.getChildren("node");
         for (int i = 0; i < l.size(); i++) {
@@ -180,7 +183,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
             String slb = findParmValue(n, "locsearchlightbits");
             String ctl = findParmValue(n, "cardtypelocation");
-
+            String opts = "";  //c2
+            
             // create node (they register themselves)
             SerialNode node = new SerialNode(addr, type,((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController());
             node.setNumBitsPerCard(bpc);
@@ -188,6 +192,53 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             node.setNum2LSearchLights(num2l);
             node.setPulseWidth(pulseWidth);
 
+            // --------------------------------------------------------------------
+            // From the loaded poll list, assign the poll list position to the node
+            // --------------------------------------------------------------------
+            int pls = 0;
+            boolean assigned = false;
+            if(pollListSize > 0)
+            {
+                for (pls=0; pls<pollListSize; pls++)
+                {
+                 if (((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().cmriNetPollList.get(pls) == node.getNodeAddress())
+                 {
+                  node.setPollListPosition(pls+1);
+                  assigned = true;
+                 }
+                }
+                if (!assigned)
+                 node.setPollListPosition(nextPollPos++); 
+           }
+
+           // CMRInet Options   //c2
+           //----------------
+           if (findParmValue(n,"cmrinetoptions") != null)
+           {
+               opts = findParmValue(n,"cmrinetoptions"); 
+           // Convert and load the  value into the node options array
+               for  (int j = 0; j<SerialNode.NUMCMRINETOPTS; j++)
+               {
+                node.setCMRInetOpts(j, (opts.charAt(j)-'0') );
+               }
+ //              log.info("Node "+node.nodeAddress+" NET Options Read = "+opts);
+
+            }
+           else
+            // This must be the first time the nodes were loaded into a cpNode
+            // supported version.  Set the Auto Poll option to avoid confusion
+            // with installed configurations.
+           {
+               for  (int j = 0; j<SerialNode.NUMCMRINETOPTS; j++)
+               {
+                node.setCMRInetOpts(j,0);
+               }
+               node.setOptNet_AUTOPOLL(1);
+ //              log.info("Node "+node.nodeAddress+" AUTO POLL Set ");
+              
+           }
+            
+            
             for (int j = 0; j < slb.length(); j++) {
                 node.setLocSearchLightBits(j, (slb.charAt(j) - '0'));
             }
@@ -195,7 +246,31 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             for (int j = 0; j < ctl.length(); j++) {
                 node.setCardTypeLocation(j, (ctl.charAt(j) - '0'));
             }
-
+            
+            if (type==node.CPNODE || type==node.CPMEGA)  //c2
+            {   
+                // cpNode Options
+                //---------------
+                if (findParmValue(n,"cpnodeoptions") != null)
+                {
+                   opts = findParmValue(n,"cpnodeoptions"); 
+                // Convert and load the  value into the node options array
+                   for  (int j = 0; j<SerialNode.NUMCPNODEOPTS; j++)
+                   {
+                    node.setcpnodeOpts(j, (opts.charAt(j)-'0') );
+                   }
+                }
+               
+ //             log.info("Node "+node.nodeAddress+" NODE Options Read = "+opts);            
+           }
+            
+          if (findParmValue(n,"cmrinodedesc") != null) 
+           {node.setcmriNodeDesc(findParmValue(n,"cmrinodedesc"));}
+          else
+           {
+ //              log.info("No Description - Node "+addr);
+           }
+                          
             // Trigger initialization of this Node to reflect these parameters
             ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
