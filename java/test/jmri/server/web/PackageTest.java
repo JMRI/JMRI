@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
     jmri.server.web.app.PackageTest.class,
     jmri.server.web.spi.PackageTest.class,
     AbstractWebServerConfigurationTest.class,
-    DefaultWebServerConfigurationTest.class
+    DefaultWebServerConfigurationTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }
