@@ -21,6 +21,7 @@ public class UsbBrowserFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         UsbBrowserFrame t = new UsbBrowserFrame();
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitAppender.assertError("Unable to get root USB hub.");
         t.dispose();
     }
 

@@ -18,6 +18,7 @@ public class UsbBrowserPanelTest {
     public void testCTor() {
         UsbBrowserPanel t = new UsbBrowserPanel();
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitAppender.assertError("Unable to get root USB hub.");
     }
 
     // The minimal setup for log4J
