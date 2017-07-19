@@ -1274,7 +1274,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
@@ -1434,7 +1434,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
@@ -1460,7 +1460,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
@@ -1486,8 +1486,8 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
