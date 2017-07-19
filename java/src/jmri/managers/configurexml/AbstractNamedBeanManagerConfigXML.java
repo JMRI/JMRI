@@ -3,7 +3,11 @@ package jmri.managers.configurexml;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
+import jmri.Manager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -101,7 +105,13 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
-     * Get the user name from an Element defining a NamedBean.
+     * Service method to load a user name, check it for validity, and if need be notify 
+     * about errors.
+     * <p>
+     * The name can be empty, but if present, has to be valid.
+     * <p>
+     * There's no check to make sure the name corresponds to an existing bean, as sometimes
+     * this is used to check validity before creating the bean.
      * <ul>
      * <li>Before 2.9.6, this was stored as an attribute
      * <li>Starting in 2.9.6, this was stored as both attribute and element
@@ -111,7 +121,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param elem The existing Element
      * @return the user name of bean or null
      */
-    protected String getUserName(Element elem) {
+    protected String getUserName(@Nonnull Element elem) {
         if (elem.getChild("userName") != null) {
             return elem.getChild("userName").getText();
         }
@@ -122,7 +132,11 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
-     * Get the system name from an Element defining a NamedBean
+     * Service method to load a system name.
+     * <p>
+     * There's no check to make sure the name corresponds to an existing bean, as sometimes
+     * this is used to check validity before creating the bean. Validity (format) checks
+     * are deferred to later, see {@link #checkNameNormalization}.
      * <ul>
      * <li>Before 2.9.6, this was stored as an attribute
      * <li>Starting in 2.9.6, this was stored as both attribute and element
@@ -132,7 +146,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param elem The existing Element
      * @return the system name or null if not defined
      */
-    protected String getSystemName(Element elem) {
+    protected String getSystemName(@Nonnull Element elem) {
         if (elem.getChild("systemName") != null) {
             return elem.getChild("systemName").getText();
         }
@@ -172,6 +186,58 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
                 log.warn("User name \"{}\" already exists as system name \"{}\"", normalizedUserName, bean.getSystemName());
             }
         }
+    }
+
+    /**
+     * Service method to load a reference to a NamedBean by name, check it for validity, and if need be notify 
+     * about errors.
+     * <p>
+     * The name can be empty (method returns null), but if present, has to resolve to an existing bean.
+     * @param name System name, User name, empty string or null
+     * @param type A reference to the desired type, typically the name of the various being loaded, e.g. a Sensor reference
+     * @param m Manager used to check name for validity and existence
+     */
+    public <T extends NamedBean> T checkedNamedBeanReference(@Nonnull String name, @Nonnull T type, @Nonnull Manager m) {
+        if (name == null) return null;
+        if (name.equals("")) return null;
+        NamedBean nb = m.getNamedBean(name);
+        if (nb == null) return null;
+        return (T)nb;
+    }
+
+    /**
+     * Service method to load a NamedBeanHandle to a NamedBean by name, check it for validity, and if need be notify 
+     * about errors.
+     * <p>
+     * The name can be empty (method returns null), but if present, has to resolve to an existing bean.
+     * @param name System name, User name, empty string or null
+     * @param type A reference to the desired type, typically the name of the various being loaded, e.g. a Sensor reference
+     * @param m Manager used to check name for validity and existence
+     */
+    public <T extends NamedBean> NamedBeanHandle<T> checkedNamedBeanHandle(@Nonnull String name, @Nonnull T type, @Nonnull Manager m) {
+        if (name == null) return null;
+        if (name.equals("")) return null;
+        NamedBean nb = m.getNamedBean(name);
+        if (nb == null) return null;
+        return InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, (T)nb);
+    }
+
+    /**
+     * Service method to reference to a NamedBean by name, and if need be notify 
+     * about errors.
+     * <p>
+     * The name can be empty (method returns null), but if present, has to resolve to an existing bean.
+     * or new).
+     * @param name System name, User name, empty string or null
+     * @param type A reference to the desired type, typically the name of the various being loaded, e.g. a Sensor reference; may have null value, but has to be typed
+     * @param m Manager used to check name for validity and existence
+     */
+    public <T extends NamedBean> String checkedNamedBeanName(@Nonnull String name, T type, @Nonnull Manager m) {
+        if (name == null) return null;
+        if (name.equals("")) return null;
+        NamedBean nb = m.getNamedBean(name);
+        if (nb == null) return null;
+        return name;
     }
 
     /**

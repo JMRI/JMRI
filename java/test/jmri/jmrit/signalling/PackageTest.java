@@ -37,6 +37,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingGuiToolsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AddEntryExitPairActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AddEntryExitPairPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourcePanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingPanelTest.class));
         return suite;
     }
 

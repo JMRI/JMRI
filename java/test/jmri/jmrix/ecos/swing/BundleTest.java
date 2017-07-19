@@ -48,4 +48,5 @@ public class BundleTest  {
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
 
+
 }

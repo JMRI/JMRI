@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
    LnTcpServerActionTest.class,
    LnTcpServerFrameTest.class,
    LnTcpDriverAdapterTest.class,
-   ClientRxHandlerTest.class
+   ClientRxHandlerTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.

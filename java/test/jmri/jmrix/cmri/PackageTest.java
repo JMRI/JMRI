@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    CMRIMenuTest.class,
    jmri.jmrix.cmri.serial.PackageTest.class,
    jmri.jmrix.cmri.swing.PackageTest.class,
-   CMRIConnectionTypeListTest.class
+   CMRIConnectionTypeListTest.class,
+   BundleTest.class
 })
 
 /**

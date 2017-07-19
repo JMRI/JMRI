@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SpeedoComponentFactoryTest.class
+   SpeedoComponentFactoryTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.bachrus.swing package
