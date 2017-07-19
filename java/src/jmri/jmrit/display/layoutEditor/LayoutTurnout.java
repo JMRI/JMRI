@@ -2751,11 +2751,11 @@ public class LayoutTurnout extends LayoutTrack {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        blockNameComboBox.getEditor().setItem(blockName);
+        blockNameComboBox.setText(blockName);
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-            blockBNameComboBox.getEditor().setItem(blockBName);
-            blockCNameComboBox.getEditor().setItem(blockCName);
-            blockDNameComboBox.getEditor().setItem(blockDName);
+            blockBNameComboBox.setText(blockBName);
+            blockCNameComboBox.setText(blockCName);
+            blockDNameComboBox.setText(blockDName);
         }
         firstTurnoutComboBox.setSelectedItem(turnoutName);
 
@@ -2935,7 +2935,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 namedTurnout = null;
                 turnoutName = "";
-                firstTurnoutComboBox.getEditor().setItem("");
+                firstTurnoutComboBox.setText("");
             }
             needRedraw = true;
         }

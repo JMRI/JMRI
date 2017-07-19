@@ -875,9 +875,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 if (sensorName.length() > 0) {
                     //update the block sensor ComboBox
-                    blockSensorComboBox.getEditor().setItem(sensorName);
+                    blockSensorComboBox.setText(sensorName);
                 } else {
-                    blockSensorComboBox.getEditor().setItem("");
+                    blockSensorComboBox.setText("");
                 }
             }
         });
@@ -2015,11 +2015,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //          "       "  if false, valid text == green, invalid text == yellow background
     //
     public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
-        inComboBox.setEditable(true);
-        inComboBox.getEditor().setItem("");
-        inComboBox.setSelectedIndex(-1);
         inComboBox.setEnabled(inEnable);
+        inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
+        inComboBox.setText("");
+        inComboBox.setSelectedIndex(-1);
     }   //setupComboBox
 
     /**
@@ -8252,7 +8252,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
+                    blockSensorComboBox.setText(b.getOccupancySensorName());
                 }
             }
             newTrack.updateBlockInfo();
@@ -8295,7 +8295,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
+                    blockSensorComboBox.setText(b.getOccupancySensorName());
                 }
             }
         }
@@ -8353,7 +8353,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
+                    blockSensorComboBox.setText(b.getOccupancySensorName());
                 }
             }
         }
@@ -8365,11 +8365,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setTurnout(turnoutName);
 
             if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                turnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
+                turnoutNameComboBox.setText(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnout("");
-            turnoutNameComboBox.getEditor().setItem("");
+            turnoutNameComboBox.setText("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
         turnoutName = extraTurnoutNameComboBox.getDisplayName();
@@ -8379,11 +8379,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setTurnoutB(turnoutName);
 
             if (o.getTurnoutB().getSystemName().equals(turnoutName.toUpperCase())) {
-                extraTurnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
+                extraTurnoutNameComboBox.setText(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnoutB("");
-            extraTurnoutNameComboBox.getEditor().setItem("");
+            extraTurnoutNameComboBox.setText("");
             extraTurnoutNameComboBox.setSelectedIndex(-1);
         }
     }   //addLayoutSlip
@@ -8440,7 +8440,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
+                    blockSensorComboBox.setText(b.getOccupancySensorName());
                 }
             }
         }
@@ -8456,11 +8456,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setTurnout(turnoutName);
 
             if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                turnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
+                turnoutNameComboBox.setText(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnout("");
-            turnoutNameComboBox.getEditor().setItem("");
+            turnoutNameComboBox.setText("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
 
@@ -9664,12 +9664,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (l.getSensor() != null) {
             if ((l.getNamedSensor().getName() == null)
                     || (!(l.getNamedSensor().getName().equals(newName)))) {
-                sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
+                sensorComboBox.setText(l.getNamedSensor().getName());
             }
         }
 
         //...because this is called regardless of the code above
-        sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
+        sensorComboBox.setText(l.getNamedSensor().getName());
 
         setNextLocation(l);
         setDirty(true);
@@ -9697,7 +9697,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             /*if (mHead == null)
                mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(newName);
                else */
-            signalHeadComboBox.getEditor().setItem(newName);
+            signalHeadComboBox.setText(newName);
         }
 
         if (mHead == null) {
@@ -9791,7 +9791,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (!newName.equals("")) {
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class
             ).getSignalMast(newName);
-            signalMastComboBox.getEditor().setItem(newName);
+            signalMastComboBox.setText(newName);
         }
 
         if (mMast == null) {
@@ -9915,7 +9915,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if ((uname == null) || (!(uname.equals(memoryName)))) {
                 //put the system name in the memory field
-                textMemoryComboBox.getEditor().setItem(xMemory.getSystemName());
+                textMemoryComboBox.setText(xMemory.getSystemName());
             }
         }
         setNextLocation(l);
@@ -9944,7 +9944,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if ((uname == null) || (!(uname.equals(newName)))) {
                 //put the system name in the memory field
-                blockContentsComboBox.getEditor().setItem(xMemory.getSystemName());
+                blockContentsComboBox.setText(xMemory.getSystemName());
             }
         }
         setNextLocation(l);

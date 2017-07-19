@@ -1363,8 +1363,8 @@ public class LevelXing extends LayoutTrack {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        block1NameComboBox.getEditor().setItem(blockNameAC);
-        block2NameComboBox.getEditor().setItem(blockNameBD);
+        block1NameComboBox.setText(blockNameAC);
+        block2NameComboBox.setText(blockNameBD);
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1396,7 +1396,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1NameComboBox.getEditor().setItem("");
+                    block1NameComboBox.setText("");
                     block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1442,7 +1442,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2NameComboBox.getEditor().setItem("");
+                    block2NameComboBox.setText("");
                     block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1483,7 +1483,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1NameComboBox.getEditor().setItem("");
+                    block1NameComboBox.setText("");
                     block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1511,7 +1511,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2NameComboBox.getEditor().setItem("");
+                    block2NameComboBox.setText("");
                     block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
