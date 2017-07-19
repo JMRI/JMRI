@@ -1694,32 +1694,32 @@ public class LevelXing extends LayoutTrack {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsA();
 
+        pt = getCoordsA();
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsB();
 
+        pt = getCoordsB();
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsC();
 
+        pt = getCoordsC();
         if (getConnectC() == null) {
-            g2.setColor(Color.magenta);
+            g2.setColor(Color.red);
         } else {
-            g2.setColor(Color.blue);
+            g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsD();
 
+        pt = getCoordsD();
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {

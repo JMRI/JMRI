@@ -686,10 +686,11 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(throatContinuingSignalHeadComboBox.getDisplayName());
-        Point2D coordsA = layoutTurnout.getCoordsA();
-
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutTurnout.getCoordsA();
         Point2D delta = new Point2D.Double(+shift, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -700,9 +701,11 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(throatDivergingSignalHeadComboBox.getDisplayName());
-        Point2D coordsA = layoutTurnout.getCoordsA();
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutTurnout.getCoordsA();
         Point2D delta = new Point2D.Double(-shift, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -712,21 +715,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout.getCoordsB();
         Point2D coordsC = layoutTurnout.getCoordsC();
         Point2D coordsCenter = layoutTurnout.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
         double shiftX = 0.0;
         if (diffDirDEG < 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, bDirDEG);
-        Point2D where = MathUtil.subtract(coordsB, delta);
+        Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
     }
 
@@ -734,21 +739,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout.getCoordsB();
         Point2D coordsC = layoutTurnout.getCoordsC();
         Point2D coordsCenter = layoutTurnout.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
         double shiftX = 0.0;
         if (diffDirDEG >= 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, cDirDEG);
-        Point2D where = MathUtil.subtract(coordsC, delta);
+        Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
@@ -2369,10 +2376,12 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(eastBoundSignalHeadComboBox.getDisplayName());
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
-        Point2D delta = new Point2D.Double(0.0, +shift);
-        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coords = boundary.getCoords();
+        Point2D delta = new Point2D.Double(0.0, +shift);
+
+        delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coords, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
     }
@@ -2382,10 +2391,12 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(westBoundSignalHeadComboBox.getDisplayName());
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth());
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coords = boundary.getCoords();
+
         Point2D delta = new Point2D.Double(0.0, -shift);
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
-        Point2D coords = boundary.getCoords();
         Point2D where = MathUtil.add(coords, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
     }
@@ -3208,10 +3219,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a1ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutTurnout.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -3221,10 +3234,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsA = layoutTurnout.getCoordsA();
         String signalHeadName = NamedBean.normalizeUserName(a2ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutTurnout.getCoordsA();
         Point2D delta = new Point2D.Double(-2.0 * shift, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -3234,10 +3249,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b1ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutTurnout.getCoordsB();
         Point2D delta = new Point2D.Double(-shift, -shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -3247,10 +3264,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsB = layoutTurnout.getCoordsB();
         String signalHeadName = NamedBean.normalizeUserName(b2ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutTurnout.getCoordsB();
         Point2D delta = new Point2D.Double(+shift, -shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -3260,10 +3279,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c1ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsC = layoutTurnout.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -3273,10 +3294,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsC = layoutTurnout.getCoordsC();
         String signalHeadName = NamedBean.normalizeUserName(c2ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsC = layoutTurnout.getCoordsC();
         Point2D delta = new Point2D.Double(+2.0 * shift, -shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -3286,10 +3309,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d1ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsD = layoutTurnout.getCoordsD();
         Point2D delta = new Point2D.Double(+shift, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsD, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -3299,10 +3324,12 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
-        Point2D coordsD = layoutTurnout.getCoordsD();
         String signalHeadName = NamedBean.normalizeUserName(d2ComboBox.getDisplayName());
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsD = layoutTurnout.getCoordsD();
         Point2D delta = new Point2D.Double(-shift, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsD, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -4055,14 +4082,17 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = NamedBean.normalizeUserName(aSignalHeadComboBox.getDisplayName());
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = levelXing.getCoordsA();
         Point2D coordsB = levelXing.getCoordsB();
         Point2D coordsD = levelXing.getCoordsD();
+
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsD));
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
-        Point2D delta = new Point2D.Double(shift * Math.cos(Math.toRadians(diffDirDEG)), +shift);
+        //Point2D delta = new Point2D.Double(shift * Math.cos(Math.toRadians(diffDirDEG)), +shift);
+        Point2D delta = new Point2D.Double(0.0, +shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsA, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG + 180.0, signalHeadName, where);
@@ -4072,14 +4102,17 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = levelXing.getCoordsB();
         Point2D coordsD = levelXing.getCoordsD();
-        String signalHeadName = NamedBean.normalizeUserName(bSignalHeadComboBox.getDisplayName());
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsD));
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
-        Point2D delta = new Point2D.Double(shift * -Math.cos(Math.toRadians(diffDirDEG)), -shift);
+        //Point2D delta = new Point2D.Double(-shift * Math.cos(Math.toRadians(diffDirDEG)), -shift);
+        Point2D delta = new Point2D.Double(0.0, -shift);
+
         delta = MathUtil.rotateDEG(delta, directionDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(directionDEG, signalHeadName, where);
@@ -4089,14 +4122,18 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = levelXing.getCoordsB();
         Point2D coordsC = levelXing.getCoordsC();
         Point2D coordsD = levelXing.getCoordsD();
-        String signalHeadName = NamedBean.normalizeUserName(cSignalHeadComboBox.getDisplayName());
+
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsB));
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG);
-        Point2D delta = new Point2D.Double(shift * -Math.cos(Math.toRadians(diffDirDEG)), -shift);
+        //Point2D delta = new Point2D.Double(-shift * Math.cos(Math.toRadians(diffDirDEG)), -shift);
+        Point2D delta = new Point2D.Double(0.0, -shift);
+
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
         Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(placeSignalDirectionDEG, signalHeadName, where);
@@ -4106,13 +4143,16 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        String signalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = levelXing.getCoordsB();
         Point2D coordsD = levelXing.getCoordsD();
-        String signalHeadName = NamedBean.normalizeUserName(dSignalHeadComboBox.getDisplayName());
+
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsB));
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
-        Point2D delta = new Point2D.Double(shift * -Math.cos(Math.toRadians(diffDirDEG)), -shift);
+        Point2D delta = new Point2D.Double(-shift * Math.cos(Math.toRadians(diffDirDEG)), -shift);
+
         delta = MathUtil.rotateDEG(delta, directionDEG);
         Point2D where = MathUtil.add(coordsD, delta);
         setSignalHeadOnPanel(directionDEG, signalHeadName, where);
@@ -5227,12 +5267,14 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout1.getCoordsB();
         Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
-        Point2D delta = new Point2D.Double(-shift, -shift);
+        Point2D delta = new Point2D.Double(0.0, -shift);
+
         delta = MathUtil.rotateDEG(delta, bDirDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
@@ -5242,12 +5284,14 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout1.getCoordsB();
         Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
-        Point2D delta = new Point2D.Double(+shift, -shift);
+        Point2D delta = new Point2D.Double(2.0 * shift, -shift);
+
         delta = MathUtil.rotateDEG(delta, bDirDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
@@ -5257,21 +5301,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout1.getCoordsB();
         Point2D coordsC = layoutTurnout1.getCoordsC();
         Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
         double shiftX = 0.0;
         if (diffDirDEG >= 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, cDirDEG);
-        Point2D where = MathUtil.subtract(coordsC, delta);
+        Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
@@ -5279,21 +5325,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout1.getCoordsB();
         Point2D coordsC = layoutTurnout1.getCoordsC();
         Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
-        double shiftX = -shift;
+        double shiftX = 2.0 * shift;
         if (diffDirDEG >= 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, cDirDEG);
-        Point2D where = MathUtil.subtract(coordsC, delta);
+        Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
@@ -5301,12 +5349,14 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout2.getCoordsB();
         Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
-        Point2D delta = new Point2D.Double(-shift, -shift);
+        Point2D delta = new Point2D.Double(0.0, -shift);
+
         delta = MathUtil.rotateDEG(delta, bDirDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
@@ -5316,12 +5366,14 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout2.getCoordsB();
         Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
-        Point2D delta = new Point2D.Double(+shift, -shift);
+        Point2D delta = new Point2D.Double(2.0 * shift, -shift);
+
         delta = MathUtil.rotateDEG(delta, bDirDEG);
         Point2D where = MathUtil.add(coordsB, delta);
         setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
@@ -5331,21 +5383,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout2.getCoordsB();
         Point2D coordsC = layoutTurnout2.getCoordsC();
         Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
         double shiftX = 0.0;
         if (diffDirDEG >= 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, cDirDEG);
-        Point2D where = MathUtil.subtract(coordsC, delta);
+        Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
@@ -5353,21 +5407,23 @@ public class LayoutEditorTools {
         if (testIcon == null) {
             testIcon = signalIconEditor.getIcon(0);
         }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
         Point2D coordsB = layoutTurnout2.getCoordsB();
         Point2D coordsC = layoutTurnout2.getCoordsC();
         Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
 
-        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
         double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
-        double shiftX = -shift;
+        double shiftX = 2.0 * shift;
         if (diffDirDEG >= 0.0) {
-            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+            shiftX += shift * Math.cos(Math.toRadians(diffDirDEG));
         }
-        Point2D delta = new Point2D.Double(shiftX, shift);
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
         delta = MathUtil.rotateDEG(delta, cDirDEG);
-        Point2D where = MathUtil.subtract(coordsC, delta);
+        Point2D where = MathUtil.add(coordsC, delta);
         setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
