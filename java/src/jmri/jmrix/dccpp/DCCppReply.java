@@ -983,7 +983,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * so they appear here.
      */
 
-    // NOTE: Methods below here are holdovers from XPressNet implementation
+    // NOTE: Methods below here are holdovers from XpressNet implementation
     // They should be removed when/if possible.
 
 

@@ -25,9 +25,9 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
     @Override
     public String getTitle() {
         if (memo != null) {
-            return memo.getUserName() + " Command Monitor";
+            return Bundle.getMessage("MonitorXTitle", memo.getUserName());
         }
-        return "CS2 Command Monitor";
+        return Bundle.getMessage("MarklinMonitorTitle");
     }
 
     @Override
@@ -90,7 +90,7 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
     static public class Default extends jmri.jmrix.marklin.swing.MarklinNamedPaneAction {
 
         public Default() {
-            super("CS2 Command Monitor",
+            super(Bundle.getMessage("MarklinMonitorTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MarklinMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(MarklinSystemConnectionMemo.class));

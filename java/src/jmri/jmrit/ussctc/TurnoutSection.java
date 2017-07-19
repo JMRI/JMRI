@@ -43,6 +43,9 @@ import java.util.*;
  * state "Showing 10 Normal" as ShowN
  * state "Showing 01 Reversed" as ShowR
  * state "Showing 00 Off" as ShowOff
+ *
+ * note bottom of ShowOff : At startup, indicator lights match layout turnout state
+ *
  * [*] --> ShowN : CLOSED at startup
  * [*] --> ShowR : THROWN at startup
  * [*] --> ShowOff : Unknown at startup
@@ -106,46 +109,16 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      * @param station Station to which this Section belongs
      */
     public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
-        NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
-        central.addStation(station);
 
         field = new TurnoutFieldSection(layoutTO);
-        field.addStation(station);
 
-        // initialize lamps to follow layout state
-        if (tm.provideTurnout(layoutTO).getKnownState()==Turnout.THROWN) {
-            tm.provideTurnout(normalIndicator).setCommandedState(Turnout.CLOSED);
-            tm.provideTurnout(reversedIndicator).setCommandedState(Turnout.THROWN);
-            central.state = State.SHOWING_REVERSED;
-        } else if (tm.provideTurnout(layoutTO).getKnownState()==Turnout.CLOSED) {
-            tm.provideTurnout(normalIndicator).setCommandedState(Turnout.THROWN);
-            tm.provideTurnout(reversedIndicator).setCommandedState(Turnout.CLOSED);
-            central.state = State.SHOWING_NORMAL;
-        } else {
-            tm.provideTurnout(normalIndicator).setCommandedState(Turnout.CLOSED);
-            tm.provideTurnout(reversedIndicator).setCommandedState(Turnout.CLOSED);
-            central.state = State.DARK_UNABLE;
-        }
+        central.initializeLamps(tm.provideTurnout(layoutTO));        
+        field.initializeState(tm.provideTurnout(layoutTO)); 
         
-    }
-
-    // TODO - make sure state is properly implemented throughout for locking. Are these the right DARK states?
-    enum State {
-        SHOWING_NORMAL,
-        SHOWING_REVERSED,
-        /**
-         * Command has gone to layout, no verification of move has come back yet; both indicators OFF
-         */
-        DARK_WAITING_REPLY,
-        /**
-         * A lock has forbidden move; both indicators OFF
-         */
-        DARK_UNABLE
-        
+        this.station = station;       
     }
     
     public void addLocks(List<Lock> locks) { 
@@ -153,6 +126,10 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         field.addLocks(locks); 
     }
     
+    Station station;
+    public Station getStation() { return station; }
+    public String getName() { return "TO for "+field.hLayoutTO.getBean().getDisplayName(); }
+
     // coding used locally to ensure consistency
     static final CodeGroupTwoBits CODE_CLOSED = CodeGroupTwoBits.Double10;
     static final CodeGroupTwoBits CODE_THROWN = CodeGroupTwoBits.Double01;
@@ -166,8 +143,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
     public CodeGroupTwoBits indicationStart() { return field.indicationStart(); }
     @Override
     public void indicationComplete(CodeGroupTwoBits value) { central.indicationComplete(value); }   
-
-
     
     static class TurnoutCentralSection implements CentralSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
         public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
@@ -182,7 +157,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
             hReversedInput = hm.getNamedBeanHandle(reversedInput, sm.provideSensor(reversedInput));
         }
         
-        State state = State.DARK_UNABLE;
+        State state = State.DARK_INCONSISTENT;
     
         NamedBeanHandle<Turnout> hNormalIndicator;
         NamedBeanHandle<Turnout> hReversedIndicator;
@@ -193,9 +168,36 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         List<Lock> locks;
         public void addLocks(List<Lock> locks) { this.locks = locks; }
 
-        Station station;
-        public void addStation(Station station) { this.station = station; }
+        enum State {
+            SHOWING_NORMAL,
+            SHOWING_REVERSED,
+            /**
+             * Command has gone to layout, no verification of move has come back yet; both indicators OFF
+             */
+            DARK_WAITING_REPLY,
+            /**
+             * A lock has forbidden move or turnout inconsistent; both indicators OFF
+             */
+            DARK_INCONSISTENT
+        }
 
+        void initializeLamps(Turnout to) {
+            // initialize lamps to follow layout state
+            if (to.getKnownState()==Turnout.THROWN) {
+                hNormalIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hReversedIndicator.getBean().setCommandedState(Turnout.THROWN);
+                state = State.SHOWING_REVERSED;
+            } else if (to.getKnownState()==Turnout.CLOSED) {
+                hNormalIndicator.getBean().setCommandedState(Turnout.THROWN);
+                hReversedIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                state = State.SHOWING_NORMAL;
+            } else {
+                hNormalIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hReversedIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                state = State.DARK_INCONSISTENT;
+            }
+        }
+        
         /**
          * Start of sending code operation:
          * <ul>
@@ -209,9 +211,9 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
             // Set the indicators based on current and requested state
             if (   (state == State.SHOWING_NORMAL && hNormalInput.getBean().getKnownState()==Sensor.ACTIVE)
                 || (state == State.SHOWING_REVERSED && hReversedInput.getBean().getKnownState()==Sensor.ACTIVE) ) {
-                log.debug("No turnout change requested");
+                log.debug("No turnout change requested, lamps left on");
             } else {
-                log.debug("Turnout change requested");
+                log.debug("Turnout change requested, turn lamps off");
                 // have to turn off
                 hNormalIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 hReversedIndicator.getBean().setCommandedState(Turnout.CLOSED);
@@ -241,19 +243,28 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
             } else if (value == CODE_NEITHER) {
                 hNormalIndicator.getBean().setCommandedState(Turnout.CLOSED);
                 hReversedIndicator.getBean().setCommandedState(Turnout.CLOSED);
-                state = State.DARK_UNABLE;
+                state = State.DARK_INCONSISTENT;
             } else log.error("Got code not recognized: {}", value);
         } 
     }
     
-    static class TurnoutFieldSection implements FieldSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
+    class TurnoutFieldSection implements FieldSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
+
+        /**
+         * Defines intended (commanded by central) field for this state.
+         */
         CodeGroupTwoBits lastCodeValue = CODE_NEITHER;
+    
+        /**
+         * Last indication actually sent
+         */
+        CodeGroupTwoBits lastIndicationValue = CODE_NEITHER;
     
         public TurnoutFieldSection(String layoutTO) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        
+                    
             hLayoutTO = hm.getNamedBeanHandle(layoutTO, tm.provideTurnout(layoutTO));
         
             tm.provideTurnout(layoutTO).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
@@ -264,9 +275,21 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         List<Lock> locks;
         public void addLocks(List<Lock> locks) { this.locks = locks; }
 
-        Station station;
-        public void addStation(Station station) { this.station = station; }
-
+        /** 
+         * Initially, align with what's in the field
+         */
+        void initializeState(Turnout to) {
+            if (to.getCommandedState() == Turnout.CLOSED) {
+                lastCodeValue = CODE_CLOSED;
+            } else if (to.getCommandedState() == Turnout.THROWN) {
+                lastCodeValue = CODE_THROWN;
+            } else {
+                lastCodeValue = CODE_NEITHER;
+            }
+            
+            lastIndicationValue = lastCodeValue;
+        }
+        
         /**
          * Notification that code has arrived in the field. Sets the turnout on the layout.
          */
@@ -295,11 +318,10 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
                     log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
                     // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
                     // from motion run above
-                    // But we have to handle the case of re-commanding back to the current turnout state
-                    if ( (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() == Turnout.CLOSED)
-                            || (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() == Turnout.THROWN) ) {
+                    // But we have to handle the case of e.g. re-commanding back to the current turnout state
+                    if ( lastIndicationValue != getCurrentIndication() ) {
                     
-                        log.debug("    Start indication due to aligned with last request");
+                        log.debug("    Last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
                         jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
                 
                     }
@@ -309,10 +331,9 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
                 // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
                 // from motion run above
                 // But we have to handle the case of re-commanding back to the current turnout state
-                if ( (value == CODE_CLOSED && hLayoutTO.getBean().getKnownState() == Turnout.CLOSED)
-                        || (value == CODE_THROWN && hLayoutTO.getBean().getKnownState() == Turnout.THROWN) ) {
+                if ( lastIndicationValue != getCurrentIndication() ) {
                 
-                    log.debug("    Start indication due to aligned with last request");
+                        log.debug("    Locked, but last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
                     jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
                 
                 }
@@ -324,14 +345,20 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
          */
         @Override
         public CodeGroupTwoBits indicationStart() {
+            lastIndicationValue = getCurrentIndication();
+            return lastIndicationValue;
+        }
+        
+        public CodeGroupTwoBits getCurrentIndication() {
             if (hLayoutTO.getBean().getKnownState() == Turnout.CLOSED && lastCodeValue == CODE_CLOSED ) {
                 return CODE_CLOSED;
             } else if (hLayoutTO.getBean().getKnownState() == Turnout.THROWN  && lastCodeValue == CODE_THROWN) {
                 return CODE_THROWN;
-            } else 
+            } else {
                 return CODE_NEITHER;
+            }
         }
-
+        
         void layoutTurnoutChanged(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState") && !e.getNewValue().equals(e.getOldValue()) ) {
                 log.debug("Turnout changed from {} to {}, so requestIndicationStart", e.getOldValue(), e.getNewValue());

@@ -278,8 +278,7 @@ public class QualifierAdderTest extends TestCase {
         model = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                cvtable,
-                new IndexedCvTableModel(new JLabel(""), p)
+                cvtable
         );
 
         // create a JDOM tree with just some elements

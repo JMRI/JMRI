@@ -20,7 +20,7 @@ public class OccupancyLock implements Lock {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSensor(s)));
+        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.provideSensor(s)));
     }
 
     public OccupancyLock(String sensor) {
@@ -34,8 +34,13 @@ public class OccupancyLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear() {
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         for (NamedBeanHandle<Sensor> handle : list) {
-            if (handle.getBean().getState() != Sensor.INACTIVE) return false;
+            if (handle.getBean().getState() != Sensor.INACTIVE) {
+                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
+                    .setValue("Locked due to occupancy: "+handle.getBean().getDisplayName());
+                return false;
+            }
         }
         return true;
     }

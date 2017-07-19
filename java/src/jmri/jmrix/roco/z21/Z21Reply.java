@@ -4,8 +4,8 @@ import jmri.jmrix.AbstractMRReply;
 import java.lang.StringBuilder;
 
 /**
- * class for replies in the z21/Z21 protocol.
- * <P>
+ * Class for replies in the z21/Z21 protocol.
+ * <p>
  * Replies are of the format: 2 bytes length 2 bytes opcode n bytes data
  * <p>
  * numeric data is sent in little endian format.
@@ -16,7 +16,9 @@ import java.lang.StringBuilder;
  */
 public class Z21Reply extends AbstractMRReply {
 
-    // create a new one
+    /**
+     *  Create a new one.
+     */
     public Z21Reply() {
         super();
         setBinary(true);
@@ -43,9 +45,8 @@ public class Z21Reply extends AbstractMRReply {
         _nDataChars = Math.max(_nDataChars, n + 1);
     }
 
-
     /**
-     * Get an integer representation of a BCD value
+     * Get an integer representation of a BCD value.
      *
      * @param n byte in message to convert
      * @return Integer value of BCD byte.
@@ -86,7 +87,7 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0010:
                int serialNo = getElement(4) + (getElement(5) << 8) +
                      (getElement(6) << 16) + (getElement(7) << 24);
-               return Bundle.getMessage("Z21ReplyStringSerialNo",serialNo);
+               return Bundle.getMessage("Z21ReplyStringSerialNo", serialNo);
            case 0x001A:
                int hwversion = getElement(4) + (getElement(5) << 8) +
                          (getElement(6) << 16 ) + (getElement(7) << 24 );
@@ -94,16 +95,16 @@ public class Z21Reply extends AbstractMRReply {
                                (getElementBCD(9))+
                                (getElementBCD(10)*100)+
                                (getElementBCD(11))*10000;
-               return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion),swversion);
+               return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
-               return Bundle.getMessage("Z21XPressNetTunnelReply",getXNetReply().toMonitorString());
+               return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            default:
         }
 
         return toString();
     }
 
-    // handle XPressNet replies tunneled in Z21 messages
+    // handle XpressNet replies tunneled in Z21 messages
     boolean isXPressNetTunnelMessage() {
         return (getOpCode() == 0x0040);
     }
@@ -118,7 +119,7 @@ public class Z21Reply extends AbstractMRReply {
             }
             if(( xnr.getElement(0) & 0x0F ) > ( xnr.getNumDataElements()+2) ){
                // there is at least one message from the Z21 that can be sent 
-               // with fewer bytes than the XPressNet payload indicates it 
+               // with fewer bytes than the XpressNet payload indicates it
                // should have.  Pad those messages with 0x00 bytes.
                for(i=i-4;i<((xnr.getElement(0)&0x0F)+2);i++){
                   xnr.setElement(i,0x00);
@@ -133,7 +134,7 @@ public class Z21Reply extends AbstractMRReply {
         return (getOpCode() == 0x0088);
     }
 
-    /*
+    /**
      * @return the number of RailCom entries in this message.
      *         the returned value is in the 0 to 19 range.
      */
@@ -147,7 +148,7 @@ public class Z21Reply extends AbstractMRReply {
         return (((getLength() - 4)/13));
     } 
 
-    /*
+    /**
      * Get a locomotive address from an entry in a railcom message.
      *
      * @param n the entry to get the address from.
@@ -159,7 +160,7 @@ public class Z21Reply extends AbstractMRReply {
          return new jmri.DccLocoAddress(address,address>=100);
     }
 
-    /*
+    /**
      * Get the receive counter from an entry in a railcom message.
      *
      * @param n the entry to get the address from.
@@ -174,7 +175,7 @@ public class Z21Reply extends AbstractMRReply {
          return rcvcount;
     }
 
-    /*
+    /**
      * Get the error counter from an entry in a railcom message.
      *
      * @param n the entry to get the address from.
@@ -189,7 +190,7 @@ public class Z21Reply extends AbstractMRReply {
          return errorcount;
     }
 
-    /*
+    /**
      * Get the speed value from an entry in a railcom message.
      *
      * @param n the entry to get the address from.
@@ -200,7 +201,7 @@ public class Z21Reply extends AbstractMRReply {
          return (0xff&(getElement(offset)));
     }
 
-    /*
+    /**
      * Get the options value from an entry in a railcom message.
      *
      * @param n the entry to get the address from.
@@ -211,7 +212,7 @@ public class Z21Reply extends AbstractMRReply {
          return (0xff&(getElement(offset)));
     }
 
-    /*
+    /**
      * Get the Temperature value from an entry in a railcom message.
      *
      * @param n the entry to get the address from.

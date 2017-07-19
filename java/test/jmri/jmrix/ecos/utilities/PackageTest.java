@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
     RosterToEcosTest.class,
     RemoveObjectFromEcosTest.class,
     GetEcosObjectNumberTest.class,
-    EcosLocoToRosterTest.class
+    EcosLocoToRosterTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.ecos.utilities package.

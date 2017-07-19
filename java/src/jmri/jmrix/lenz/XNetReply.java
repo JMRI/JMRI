@@ -1,9 +1,7 @@
 package jmri.jmrix.lenz;
 
-
 /**
- * Represents a single response from the XpressNet.
- * <P>
+ * Represents a single response from the XPressNet.
  *
  * @author Paul Bender Copyright (C) 2004
   *
@@ -57,13 +55,15 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /* Get the opcode as a string in hex format */
+    /**
+     * Get the opcode as a string in hex format.
+     */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(this.getOpCode());
     }
 
     /**
-     * check whether the message has a valid parity
+     * Check whether the message has a valid parity.
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -90,7 +90,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Get an integer representation of a BCD value
+     * Get an integer representation of a BCD value.
      *
      * @param n byte in message to convert
      * @return Integer value of BCD byte.
@@ -99,26 +99,26 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return Integer.decode(Integer.toHexString(getElement(n)));
     }
 
-    /* 
+    /**
      * skipPrefix is not used at this point in time, but is 
-     *  defined as abstract in AbstractMRReply 
+     * defined as abstract in AbstractMRReply
      */
     @Override
     protected int skipPrefix(int index) {
         return -1;
     }
 
-    // decode messages of a particular form 
+    // decode messages of a particular form
+
     /* 
      * The next group of routines are used by Feedback and/or turnout 
      * control code.  These are used in multiple places within the code, 
      * so they appear here. 
      */
+
     /**
-     * <p>
      * If this is a feedback response message for a turnout, return the address.
      * Otherwise return -1.
-     * </p>
      *
      * @return the integer address or -1 if not a turnout message
      */
@@ -162,11 +162,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * If this is a feedback broadcast message and the specified startbyte is
      * the address byte of an addres byte data byte pair for a turnout, return
      * the address. Otherwise return -1.
-     * </p>
      *
      * @param startByte address byte of the address byte/data byte pair.
      * @return the integer address or -1 if not a turnout message
@@ -211,10 +209,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * Parse the feedback message for a turnout, and return the status for the
-     * even or odd half of the nibble (upper or lower part)
-     * </p>
+     * even or odd half of the nibble (upper or lower part).
      *
      * @param turnout <ul>
      * <li>0 for the even turnout associated with the pair. This is the upper
@@ -223,7 +219,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * half of the data nibble asociated with the pair </li>
      * </ul>
      * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
-     *
      */
     public int getTurnoutStatus(int turnout) {
         if (this.isFeedbackMessage()) {
@@ -266,11 +261,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * Parse the specified address byte/data byte pair in a feedback broadcast
      * message and see if it is for a turnout. If it is, return the status for
      * the even or odd half of the nibble (upper or lower part)
-     * </p>
      *
      * @param startByte address byte of the address byte/data byte pair.
      * @param turnout   <ul>
@@ -280,7 +273,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * half of the data nibble asociated with the pair </li>
      * </ul>
      * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
-     *
      */
     public int getTurnoutStatus(int startByte, int turnout) {
         if (this.isFeedbackBroadcastMessage()) {
@@ -345,11 +337,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * If this is a feedback broadcast message and the specified startByte is
      * the address byte of an address byte/data byte pair for a feedback
      * encoder, return the address. Otherwise return -1.
-     * </p>
      *
      * @param startByte address byte of the address byte data byte pair.
      * @return the integer address or -1 if not a feedback message
@@ -385,10 +375,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * Extract the feedback message type from a feedback message this is the
      * middle two bits of the upper byte of the second data byte.
-     * </p>
      *
      * @return message type, values are:
      * <ul>
@@ -408,14 +396,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * <p>
      * Extract the feedback message type from the data byte of associated with
      * the specified address byte specified by startByte.
-     * </p>
      * <p>
      * The return value is the middle two bits of the upper byte of the data
      * byte of an address byte/data byte pair.
-     * </p>
      *
      * @param startByte The address byte for this addres byte data byte pair.
      * @return message type, values are:
@@ -438,6 +423,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /* 
      * Next we have a few throttle related messages
      */
+
     /**
      * If this is a throttle-type message, return address. Otherwise return -1.
      * Note we only identify the command now; the reponse to a request for
@@ -503,8 +489,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * checking specific, generic, response messages.
      */
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the OK message (01 04 05)
      */
     public boolean isOkMessage() {
@@ -512,8 +498,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 && this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
     }
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the timeslot restored message (01 07 06)
      */
     public boolean isTimeSlotRestored() {
@@ -521,9 +507,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 && this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED);
     }
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
-     * if an XPressNet Message is the command staiton no longer provideing a
+    /**
+     * In the interest of code reuse, the following function checks to see
+     * if an XPressNet Message is the Command Station no longer provideing a
      * timeslot message (01 05 04)
      */
     public boolean isTimeSlotRevoked() {
@@ -531,8 +517,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 && this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR);
     }
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the Command Station Busy message (61 81 e3)
      */
     public boolean isCSBusyMessage() {
@@ -541,8 +527,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the Command Station Transfer Error 
      * message (61 80 e1)
      */
@@ -551,8 +537,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 && this.getElement(1) == XNetConstants.CS_TRANSFER_ERROR);
     }
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is a communications error message.
      * the errors handeled are:
      *  01 01 00  -- Error between interface and the PC
@@ -571,13 +557,13 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || this.isTimeSlotErrorMessage());
     }
 
-    /* 
-     * In the interest of code reuse, The following function checks to see 
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is a communications error message.
-     * the errors handeled are:
+     * The errors handled are:
      *  01 05 04  -- Timeslot Error
-     *      01 07 06  -- Timeslot Restored 
-     *      01 08 09  -- Data sent while there is no Timeslot
+     *  01 07 06  -- Timeslot Restored
+     *  01 08 09  -- Data sent while there is no Timeslot
      */
     public boolean isTimeSlotErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -587,7 +573,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
 
-    /*
+    /**
      * Is this message a service mode response?
      */
     public boolean isServiceModeResponse() {
@@ -599,7 +585,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || getElement(1) == XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE));
     }
 
-    /*
+    /**
      * Is this message a register or paged mode programming response?
      */
     public boolean isPagedModeResponse() {
@@ -607,7 +593,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 && getElement(1) == XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE);
     }
 
-    /*
+    /**
      * Is this message a direct CV mode programming response?
      */
     public boolean isDirectModeResponse() {
@@ -618,7 +604,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 3)));
     }
 
-    /*
+    /**
      * @return the CV value associated with a service mode reply
      * return -1 if not a service mode message.
      */
@@ -634,7 +620,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (cv);
     }
 
-    /*
+    /**
      * @return the value returned by the DCC system associated with a 
      * service mode reply
      * return -1 if not a service mode message.
@@ -647,8 +633,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (value);
     }
 
-    /*
-     * Return True if the message is an error message indicating 
+    /**
+     * @return True if the message is an error message indicating
      * we should retransmit.
      */
     @Override
@@ -658,8 +644,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || this.isCSTransferError());
     }
 
-    /*
-     * Return true of the message is an unsolicited message
+    /**
+     * @return true of the message is an unsollicited message
      */
     @Override
     public boolean isUnsolicited() {
@@ -680,7 +666,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * @return a string representation of the reply suitable for display in the
-     * XPressNet monitor.
+     * XPressNet monitor
      */
     public String toMonitorString(){
         String text;
@@ -920,7 +906,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // Loco Information Response Messages
         } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
             if (getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-                text = "Locomotive F13-F28 Momentary Status: ";
+                text = "Locomotive F13-F28 Momentary Status: "; // TODO I18N
                 // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
                 int element3 = getElement(2);
                 // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
@@ -1122,10 +1108,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return text;
     }
 
-    /* parse the speed step and the direction information for a locomotive
-     * element1 contains the speed step mode designation and 
+    /**
+     * Parse the speed step and the direction information for a locomotive.
+     *
+     * @param element1 contains the speed step mode designation and
      * availability information
-     * element2 contains the data byte including the step mode and 
+     * @param element2 contains the data byte including the step mode and
      * availability information 
      */
     private String parseSpeedandDirection(int element1, int element2) {
@@ -1195,9 +1183,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (text);
     }
 
-    /* Parse the status of functions.
-     * element3 contains the data byte including F0,F1,F2,F3,F4
-     * element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+    /**
+     * Parse the status of functions.
+     *
+     * @param element3 contains the data byte including F0,F1,F2,F3,F4
+     * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
      */
     private String parseFunctionStatus(int element3, int element4) {
         String text = "";
@@ -1269,9 +1259,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (text);
     }
 
-    /* Parse the status of functions functions F13-F28.
-     * element3 contains F20,F19,F18,F17,F16,F15,F14,F13
-     * element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+    /**
+     * Parse the status of functions functions F13-F28.
+     *
+     * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
+     * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
      */
     private String parseFunctionHighStatus(int element3, int element4) {
         String text = "";
@@ -1357,11 +1349,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         }
         return (text);
     }
-    /* Parse the Momentary sytatus of functions.
-     * element3 contains the data byte including F0,F1,F2,F3,F4
-     * element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+    /**
+     * Parse the Momentary sytatus of functions.
+     *
+     * @param element3 contains the data byte including F0,F1,F2,F3,F4
+     * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
      */
-
     private String parseFunctionMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
@@ -1432,9 +1425,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (text);
     }
 
-    /* Parse the Momentary sytatus of functions F13-F28.
-     * element3 contains F20,F19,F18,F17,F16,F15,F14,F13
-     * element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+    /**
+     * Parse the Momentary sytatus of functions F13-F28.
+     *
+     * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
+     * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
      */
     private String parseFunctionHighMomentaryStatus(int element3, int element4) {
         String text = "";
@@ -1522,5 +1517,3 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-

@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.li100;
 
 /**
- * Handle configuring an XPressNet layout connection via a Lenz LI100 or LI101
+ * Handle configuring an XpressNet layout connection via a Lenz LI100 or LI101
  * adapter.
  * <P>
  * This uses the {@link LI100Adapter} class to do the actual connection.

@@ -41,7 +41,6 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
 import jmri.jmrit.symbolicprog.DccAddressVarHandler;
 import jmri.jmrit.symbolicprog.EnumVariableValue;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
@@ -171,7 +170,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         re.setDecoderFamily(decoderFile.getFamily());
                         re.setDecoderModel(decoderFile.getModel());
                         re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
-                        //re.writeFile(cvModel, iCvModel, variableModel );
                         // note that we're leaving the filename null
                         // add the new roster entry to the in-memory roster
                         Roster.getDefault().addEntry(re);
@@ -393,7 +391,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     JPanel rosterPanel = null;//new JPanel();
     jmri.Programmer mProgrammer;
     CvTableModel cvModel = null;
-    IndexedCvTableModel iCvModel = null;
     VariableTableModel variableModel;
     DccAddressPanel dccAddressPanel;
     Element modelElem = null;
@@ -444,10 +441,8 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
 
         cvModel = new CvTableModel(statusLabel, mProgrammer);
-        iCvModel = new IndexedCvTableModel(statusLabel, mProgrammer);
 
-        variableModel = new VariableTableModel(statusLabel, new String[]{"Name", "Value"},
-                cvModel, iCvModel);
+        variableModel = new VariableTableModel(statusLabel, new String[]{"Name", "Value"}, cvModel);
         if (decoderFile != null) {
             Element decoderRoot = null;
             try {
@@ -504,7 +499,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             List<Element> paneList = base.getChildren("pane"); // NOI18N
             log.debug("will process {} pane definitions", paneList.size()); // NOI18N
             String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(0), "name");
-            progPane = new ThisProgPane(this, name, paneList.get(0), cvModel, iCvModel, variableModel, modelElem);
+            progPane = new ThisProgPane(this, name, paneList.get(0), cvModel, variableModel, modelElem);
 
             progPane.setVariableValue("Short Address", cv1); // NOI18N
             progPane.setVariableValue("Long Address", longAddress); // NOI18N
@@ -618,7 +613,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         synchronized (this) {
             re.setDccAddress("" + address);  // NOI18N
             re.setLongAddress(!shortAddr);
-            re.writeFile(cvModel, iCvModel, variableModel);
+            re.writeFile(cvModel, variableModel);
 
             // mark this as a success
             variableModel.setFileDirty(false);
@@ -673,8 +668,8 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     class ThisProgPane extends PaneProgPane {
 
-        public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
-            super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
+        public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
+            super(parent, name, pane, cvModel, varModel, modelElem, re);
             bottom.remove(readChangesButton);
             bottom.remove(writeChangesButton);
             writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite")); // NOI18N

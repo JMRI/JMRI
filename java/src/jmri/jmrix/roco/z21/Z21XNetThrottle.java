@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a z21 XpressnetNet
+ * An implementation of DccThrottle with code specific to a z21 XpressNet
  * connection.
  *
  * @author Paul Bender (C) 2015
@@ -30,8 +30,10 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         super(memo,address,controller);
     }
 
-    // sendStatusInformation sends a request to get the speed,direction
-    // and function status from the command station
+    /**
+     * Send a request to get the speed, direction and function status from
+     * the command station.
+     */
     @Override
     synchronized protected void sendStatusInformationRequest() {
         /* Send the request for status */
@@ -45,7 +47,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     /**
      * Send the XpressNet messages to set the state of locomotive direction and
-     * functions F0, F1, F2, F3, F4
+     * functions F0, F1, F2, F3, F4.
      */
     @Override
     protected void sendFunctionGroup1() {
@@ -69,7 +71,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F5, F6, F7, F8
+     * Send the XpressNet message to set the state of functions F5, F6, F7, F8.
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -91,7 +93,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     /**
      * Send the XpressNet message to set the state of functions F9, F10, F11,
-     * F12
+     * F12.
      */
     @Override
     protected void sendFunctionGroup3() {
@@ -113,7 +115,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     /**
      * Send the XpressNet message to set the state of functions F13, F14, F15,
-     * F16, F17, F18, F19, F20
+     * F16, F17, F18, F19, F20.
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -146,7 +148,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
     /**
      * Send the XpressNet message to set the state of functions F21, F22, F23,
-     * F24, F25, F26, F27, F28
+     * F24, F25, F26, F27, F28.
      */
     @Override
     protected void sendFunctionGroup5() {
@@ -206,7 +208,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
 
-    // The Z21 Doesn't support the XPressNet directed emergency stop
+    // The Z21 Doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -214,7 +216,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
        setSpeedSetting(0);
     }
 
-    // Handle incoming messages for This throttle.
+    // Handle incoming messages for this throttle.
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) 
@@ -253,7 +255,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                 sendQueuedMessage();
            } 
         } else {
-            // let the standard XPressNet Throttle have a chance to look 
+            // let the standard XpressNet Throttle have a chance to look
             // at the message.
             super.message(l);
         }
@@ -261,4 +263,5 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     // register for notification
     private final static Logger log = LoggerFactory.getLogger(Z21XNetThrottle.class.getName());
+
 }

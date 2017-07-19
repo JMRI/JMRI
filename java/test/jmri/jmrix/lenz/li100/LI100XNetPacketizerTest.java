@@ -24,11 +24,4 @@ public class LI100XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
         };
     }
 
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
-    }
-
 }

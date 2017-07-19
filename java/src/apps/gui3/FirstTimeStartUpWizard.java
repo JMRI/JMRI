@@ -279,7 +279,7 @@ public class FirstTimeStartUpWizard {
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
                     JOptionPane.showMessageDialog(null,
-                            "An error occured while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
+                            "An error occurred while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
                             "Error Opening Connection",
                             JOptionPane.ERROR_MESSAGE);
                     return;

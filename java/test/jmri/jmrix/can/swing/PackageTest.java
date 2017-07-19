@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.can.swing.monitor.PackageTest.class,
     jmri.jmrix.can.swing.send.PackageTest.class,
     CanMenuTest.class,
-    CanComponentFactoryTest.class
+    CanComponentFactoryTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.swing.monitor package.

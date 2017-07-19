@@ -39,8 +39,11 @@ public class RouteLock implements Lock {
         SignalHeadManager sm = InstanceManager.getDefault(SignalHeadManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
-        
+        for (String s : array) {
+            if (sm.getSignalHead(s) != null) {
+                list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+            }
+        }
         this.beans = null;
     }
 
@@ -53,7 +56,11 @@ public class RouteLock implements Lock {
         SignalHeadManager sm = InstanceManager.getDefault(SignalHeadManager.class);
 
         list = new ArrayList<>();
-        for (String s : array) list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+        for (String s : array) {
+           if (sm.getSignalHead(s) != null) {
+                list.add(hm.getNamedBeanHandle(s, sm.getSignalHead(s)));
+            }
+        }
         
         this.beans = new ArrayList<>();
         for (BeanSetting bean : beans) this.beans.add(bean);
@@ -75,6 +82,7 @@ public class RouteLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear() {
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
@@ -83,7 +91,11 @@ public class RouteLock implements Lock {
         }
         
         for (NamedBeanHandle<SignalHead> handle : list) {
-            if ( isSignalClear(handle) ) return false;
+            if ( isSignalClear(handle) ) {
+                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
+                    .setValue("Locked due to route including signal "+handle.getBean().getDisplayName());
+                return false;
+            }
         }
         return true;
     }

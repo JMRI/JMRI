@@ -15,11 +15,6 @@ import java.util.*;
 public class CodeLine {
 
     /**
-     * Nobody can build anonymous object
-     */
-    private CodeLine() {}
-    
-    /**
      * Create and configure 
      *
      * @param startTO  Name for turnout that starts operation on the layout
@@ -44,17 +39,18 @@ public class CodeLine {
         hOutput4TO = hm.getNamedBeanHandle(output4TO, tm.provideTurnout(output4TO));
     }
 
-    Memory logMemory = null;
+    final Memory logMemory;
 
-    NamedBeanHandle<Turnout> hStartTO;
+    final NamedBeanHandle<Turnout> hStartTO;
 
-    NamedBeanHandle<Turnout> hOutput1TO;
-    NamedBeanHandle<Turnout> hOutput2TO;
-    NamedBeanHandle<Turnout> hOutput3TO;
-    NamedBeanHandle<Turnout> hOutput4TO;
+    final NamedBeanHandle<Turnout> hOutput1TO;
+    final NamedBeanHandle<Turnout> hOutput2TO;
+    final NamedBeanHandle<Turnout> hOutput3TO;
+    final NamedBeanHandle<Turnout> hOutput4TO;
     
     public static int START_PULSE_LENGTH = 500; // mSec
     public static int CODE_SEND_DELAY = 2500; // mSec
+    public static int INTER_INDICATION_DELAY = 500; // mSec
     
     volatile Deque<Station> codeQueue = new ArrayDeque<>();
     volatile Deque<Station> indicationQueue = new ArrayDeque<>();
@@ -62,7 +58,7 @@ public class CodeLine {
     volatile boolean active = false;
     
     synchronized void endAndCheckNext() {
-        if (!active) log.error("endAndCheckNext with active false", new Exception("traceback"));
+        if (!active) log.error("endAndCheckNext with active false");
         active = false;
         checkForWork();
     }
@@ -71,15 +67,19 @@ public class CodeLine {
         log.debug("checkForWork with active == {}", active);
         if (active) return;
         active = true;
-        Station station;
-        station = indicationQueue.pollFirst();
-        if (station != null) {
-            startSendIndication(station);
+        
+        // indications have priority over code sends
+        final Station indicatorStation = indicationQueue.pollFirst();
+        if (indicatorStation != null) {
+            // go inactive for just a bit between indication cycles
+            jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
+                    startSendIndication(indicatorStation);
+                }, INTER_INDICATION_DELAY);
             return;
         }
-        station = codeQueue.pollFirst();
-        if (station != null) {
-            startSendCode(station);
+        Station codeStation = codeQueue.pollFirst();
+        if (codeStation != null) {
+            startSendCode(codeStation);
             return;
         }
         active = false;
@@ -91,7 +91,7 @@ public class CodeLine {
      * Request processing of an indication from the field
      */
     synchronized void requestSendCode(Station station) {
-        log.debug("requestSendCode queued");
+        log.debug("requestSendCode queued from {}", station.toString());
         // remove if present
         while (codeQueue.contains(station)) {
             codeQueue.remove(station);
@@ -105,34 +105,33 @@ public class CodeLine {
         final Station s = station;
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");
         logMemory.setValue("Sending Code: Station "+station.getName());
+        startExternalCodeLine();
+        
+        // Wait time for sequence complete, then proceed to end of code send
+        // ToDo: Allow an input to end this too
+        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
+                    s.codeValueDelivered();
+                    // and see if anything else needs to be done
+                    log.debug("end of codeValueDelivered");
+                    endAndCheckNext();
+                }, CODE_SEND_DELAY);
+    }
+    
+    void startExternalCodeLine() {
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer().schedule(new TimerTask() { // turn that off
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 hStartTO.getBean().setCommandedState(Turnout.CLOSED);
             }
         }, START_PULSE_LENGTH);
-        
-        
-        // now, for testing purposes, we wait time for sequence complete
-        new Timer().schedule(new TimerTask() { // turn that off
-            @Override
-            public void run() {
-                jmri.util.ThreadingUtil.runOnGUI( ()->{
-                    s.codeValueDelivered();
-                    // and see if anything else needs to be done
-                    log.debug("end of codeValueDelivered");
-                    endAndCheckNext();
-                } );
-            }
-        }, CODE_SEND_DELAY);
     }
     
     /**
      * Request processing of an indication from the field
      */
     synchronized void requestIndicationStart(Station station) {
-        log.debug("requestIndicationStart queued");
+        log.debug("requestIndicationStart queued from {}", station.toString());
         // remove if present
         while (indicationQueue.contains(station)) {
             indicationQueue.remove(station);
@@ -151,28 +150,17 @@ public class CodeLine {
     
         log.debug("Tell hardware to start sending indication");
         logMemory.setValue("Receiving Indication: Station "+station.getName());
-        hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer().schedule(new TimerTask() { // turn that off
-            @Override
-            public void run() {
-                hStartTO.getBean().setCommandedState(Turnout.CLOSED);
-            }
-        }, START_PULSE_LENGTH);
+        startExternalCodeLine();
         
-        
-        // now, for testing purposes, we wait time for sequence complete
-        new Timer().schedule(new TimerTask() { // turn that off
-            @Override
-            public void run() {
-                jmri.util.ThreadingUtil.runOnGUI( ()->{
+        // Wait time for sequence complete, then proceed to end of indication send
+        // ToDo: Allow an input to end this too
+        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
                     log.debug("hardware delay done, receiving indication");
                     s.indicationComplete();
                     log.debug("end of indicationComplete");
                     // and see if anything else needs to be done
                     endAndCheckNext();
-                } );
-            }
-        }, CODE_SEND_DELAY);
+                }, CODE_SEND_DELAY);
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());

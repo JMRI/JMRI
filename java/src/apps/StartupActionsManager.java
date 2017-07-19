@@ -107,7 +107,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     }
                 }
             } catch (NullPointerException ex) {
-                // ignore - this indicates migration has not occured
+                // ignore - this indicates migration has not occurred
                 log.debug("No element to read");
             }
             if (perform) {

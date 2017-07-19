@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.liusbethernet;
 import javax.swing.JPanel;
 
 /**
- * Handle configuring an XPressNet layout connection via a LIUSBEthernet.
+ * Handle configuring an XpressNet layout connection via a LIUSBEthernet.
  * <P>
  * This uses the {@link LIUSBEthernetAdapter} class to do the actual connection.
  *

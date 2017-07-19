@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.pr2;
 
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.SlotManager;
 import jmri.PowerManager;
@@ -124,7 +126,6 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
     }
 
-
     // setup a default interface
     @Before
     @Override
@@ -135,9 +136,17 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         memo.configureManagers();
         jmri.InstanceManager.setThrottleManager(memo.getPr2ThrottleManager());
         memo.getPr2ThrottleManager().requestThrottleSetup(new jmri.DccLocoAddress(3,false),true);
-        p = new LnPr2PowerManager(memo);
+        p = pwr = memo.get(jmri.PowerManager.class);
+    }
+
+    @After
+    public void tearDown() {
+        pwr.dispose();
+        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
+    LnPowerManager pwr;
 
 }

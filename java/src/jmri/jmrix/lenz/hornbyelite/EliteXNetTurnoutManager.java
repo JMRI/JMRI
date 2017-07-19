@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
   */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
-
     public EliteXNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller, String prefix) {
         super(controller, prefix);
     }
@@ -32,7 +30,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     @Override
     public void message(jmri.jmrix.lenz.XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -40,7 +38,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                 // parse message type
                 int addr = l.getTurnoutMsgAddr(i);    // Acc. Address 1 on 
                 // Hornby reads as 
-                // XPressNet address 2
+                // XpressNet address 2
                 // in the message.
                 if (addr >= 0) {
                     if (log.isDebugEnabled()) {
@@ -85,5 +83,3 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
 
 }
-
-

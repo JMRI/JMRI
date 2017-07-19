@@ -184,5 +184,3 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     boolean _isExtended;
     boolean _isRtr;
 }
-
-

@@ -40,13 +40,16 @@ public class PackageTest extends TestCase {
         // new classes last
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CombinedLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.OccupancyLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.RouteLockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TrafficLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TimeLockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.StationTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeLineTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CodeButtonTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.PhysicalBellTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.VetoedBellTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TrafficRelayTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.MaintainerCallSectionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TrackCircuitSectionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutSectionTest.class));

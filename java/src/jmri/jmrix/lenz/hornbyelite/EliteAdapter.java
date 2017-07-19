@@ -22,7 +22,7 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via the Hornby Elite's built in USB port.
+ * Provide access to XpressNet via the Hornby Elite's built in USB port.
  * Normally controlled by the lenz.hornbyelite.EliteFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -32,10 +32,10 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("Elite connection uses : ", validOption1));
-        option2Name = "Buffer";
-        options.put(option2Name, new Option("Check Buffer : ", validOption2));
+        option1Name = Bundle.getMessage("FlowControlTitle");
+        options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
+        option2Name = Bundle.getMessage("BufferTitle");
+        options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
         setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
@@ -44,7 +44,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -213,8 +213,8 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * set up all of the other objects to operate with the Hornby Elite
-     * connected to this port
+     * Set up all of the other objects to operate with the Hornby Elite
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -230,6 +230,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     // base class methods for the XNetSerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -258,7 +259,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -295,7 +296,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * Option 1 controls flow control option
+     * validOption1 controls flow control option.
      */
     /*public String option1Name() { return "Elite connection uses "; }
      public String[] validOption1() { return Arrays.copyOf(validOption1, validOption1.length); }*/
@@ -303,14 +304,14 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"no flow control", "hardware flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;
 
     
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used. Convert to JMRI multi-system support structure.
      */
     @Deprecated
     static public EliteAdapter instance() {

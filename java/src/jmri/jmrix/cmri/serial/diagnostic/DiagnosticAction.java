@@ -21,7 +21,7 @@ public class DiagnosticAction extends AbstractAction {
     }
 
     public DiagnosticAction(CMRISystemConnectionMemo memo) {
-        this("Run C/MRI Diagnostic",memo);
+        this(Bundle.getMessage("MenuItemDiagnostics"),memo);
     }
 
     @Override

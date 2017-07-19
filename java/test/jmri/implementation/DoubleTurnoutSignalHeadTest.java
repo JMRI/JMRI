@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * @author Paul Bender Copyright (C) 2017	
  * @author Balazs Racz Copyright (C) 2017
  */
-public class DoubleTurnoutSignalHeadTest {
+public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
     interface MockablePropertyChangeListener {
         void onChange(String property, Object newValue);
@@ -192,6 +192,12 @@ public class DoubleTurnoutSignalHeadTest {
         waitForTimer();
         verifyNoMoreInteractions(l.m);
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance()); // hasn't changed
+    }    
+    
+    @Override
+    public SignalHead getHeadToTest() {
+        createHead();
+        return mHead;
     }
 
     // The minimal setup for log4J
