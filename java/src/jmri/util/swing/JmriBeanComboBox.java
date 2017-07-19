@@ -293,8 +293,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     /**
      * Set the text from the editor for this JmriBeanComboBox
-     *
-     * @return the text
+     * 
+     * @param text the text to set
      */
     public void setText(String text) {
         getEditor().setItem(text);
