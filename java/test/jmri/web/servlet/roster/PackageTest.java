@@ -6,7 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    RosterServletTest.class
+    RosterServletTest.class,
+    FileMetaTest.class,
+    MultipartRequestHandlerTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.web.servlet.roster tree
