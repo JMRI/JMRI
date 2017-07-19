@@ -17,11 +17,11 @@ import java.awt.GraphicsEnvironment;
 public class UsbBrowserFrameTest {
 
     @Test
+    @Ignore("we probably need to mock the USB library to obtain consistent results.")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         UsbBrowserFrame t = new UsbBrowserFrame();
         Assert.assertNotNull("exists",t);
-        jmri.util.JUnitAppender.assertError("Unable to get root USB hub.");
         t.dispose();
     }
 
