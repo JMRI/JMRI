@@ -1,7 +1,9 @@
 package jmri.jmrit.roster.swing;
 
 import apps.startup.AbstractStartupActionFactory;
+import apps.startup.StartupActionFactory;
 import java.util.Locale;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link apps.startup.StartupActionFactory} for the
@@ -9,6 +11,7 @@ import java.util.Locale;
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class RosterFrameStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

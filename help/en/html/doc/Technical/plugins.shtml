@@ -37,7 +37,7 @@
       </p>
       <ul>
         <li><a href="#script">Script JMRI</a></li>
-        <li><a href="#service">Implement a Service Loader</a></li>
+        <li><a href="#service">Implement a Service Provider</a></li>
         <li><a href="#jmriPlugin">Override jmri.JmriPlugin</a></li>
       </ul>
 
@@ -72,7 +72,7 @@
         </li>
       </ul>
 
-      <h2 id="service">Implement a Service Loader</h2>
+      <h2 id="service">Implement a Service Provider</h2>
 
       <p>Java contains a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
         that allows classes implementing a specific API to provide a service to

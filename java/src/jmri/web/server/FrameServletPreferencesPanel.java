@@ -41,11 +41,13 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class FrameServletPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     /**
@@ -291,7 +293,7 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
 
     @Override
     public String getPreferencesItemText() {
-        return Bundle.getMessage("TitleDelayPanel");
+        return Bundle.getMessage("PreferencesItemTitle");
     }
 
     @Override
@@ -340,6 +342,11 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
 
+    }
+
+    @Override
+    public int getSortOrder() {
+        return 1110;
     }
 
     @Override
