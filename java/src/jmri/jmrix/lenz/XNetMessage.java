@@ -46,7 +46,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /**
      * Create a new object, that is a copy of an existing message.
      *
-     * @param message existing message.
+     * @param message an existing XpressNet message
      */
     public XNetMessage(XNetMessage message) {
         super(message);
@@ -241,14 +241,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         // The MSB of the upper nibble is required to be set on
         // The rest of the upper nibble should be zeros.
         // The MSB of the lower nibble says weather or not the
-        // accessory line should be "on" or off
+        // accessory line should be "on" or "off"
         if (!pOn) {
             loadr |= 0x80;
         } else {
             loadr |= 0x88;
         }
         // If we are sending a "throw" command, we set the LSB of the 
-        // lower nibble on, otherwise, we leave it off.
+        // lower nibble on, otherwise, we leave it "off".
         if (pThrow) {
             loadr |= 0x01;
         }
@@ -830,7 +830,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-
     /**
      * Generate a Function Group One Operation Request message.
      *
@@ -939,7 +938,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP2);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
+        // set to the upper byte of the DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
         // set to the lower byte of the DCC address
         // Now, we need to figure out what to send in element 3
@@ -1333,7 +1332,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Build an Emergency Off Message.
+     * Build an EmergencyOff Message.
      */
     public static XNetMessage getEmergencyOffMsg() {
         XNetMessage msg = new XNetMessage(3);
@@ -1607,6 +1606,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + Bundle.getMessage("XNetMessageSetSpeed",
                             LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
                             + " ";
+                    log.debug("" + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))); // address printed as: "1234" = OK
+                    log.debug(text); // address printed as: "1,234" = WRONG
                     speed
                             = (((getElement(4) & 0x10) >> 4)
                             + ((getElement(4) & 0x0F) << 1));
@@ -1659,29 +1660,29 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x10) != 0) {
-                        text += "F0 on ";
+                        text += "F0 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F0 off ";
+                        text += "F0 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x01) != 0) {
-                        text += "F1 on ";
+                        text += "F1 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F1 off ";
+                        text += "F1 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x02) != 0) {
-                        text += "F2 on ";
+                        text += "F2 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F2 off ";
+                        text += "F2 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x04) != 0) {
-                        text += "F3 on ";
+                        text += "F3 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F3 off ";
+                        text += "F3 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x08) != 0) {
-                        text += "F4 on ";
+                        text += "F4 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F4 off ";
+                        text += "F4 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     break;
                 }
@@ -1691,24 +1692,24 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
-                        text += "F5 on ";
+                        text += "F5 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F5 off ";
+                        text += "F5 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x02) != 0) {
-                        text += "F6 on ";
+                        text += "F6 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F6 off ";
+                        text += "F6 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x04) != 0) {
-                        text += "F7 on ";
+                        text += "F7 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F7 off ";
+                        text += "F7 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x08) != 0) {
-                        text += "F8 on ";
+                        text += "F8 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F8 off ";
+                        text += "F8 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     break;
                 }
@@ -1718,24 +1719,24 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
-                        text += "F9 on ";
+                        text += "F9 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F9 off ";
+                        text += "F9 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x02) != 0) {
-                        text += "F10 on ";
+                        text += "F10 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F10 off ";
+                        text += "F10 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x04) != 0) {
-                        text += "F11 on ";
+                        text += "F11 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F11 off ";
+                        text += "F11 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x08) != 0) {
-                        text += "F12 on ";
+                        text += "F12 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F12 off ";
+                        text += "F12 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     break;
                 }
@@ -1745,44 +1746,44 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
-                        text += "F13 on ";
+                        text += "F13 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F13 off ";
+                        text += "F13 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x02) != 0) {
-                        text += "F14 on ";
+                        text += "F14 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F14 off ";
+                        text += "F14 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x04) != 0) {
-                        text += "F15 on ";
+                        text += "F15 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F15 off ";
+                        text += "F15 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x08) != 0) {
-                        text += "F16 on ";
+                        text += "F16 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F16 off ";
+                        text += "F16 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x10) != 0) {
-                        text += "F17 on ";
+                        text += "F17 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F17 off ";
+                        text += "F17 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x20) != 0) {
-                        text += "F18 on ";
+                        text += "F18 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F18 off ";
+                        text += "F18 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x40) != 0) {
-                        text += "F19 on ";
+                        text += "F19 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F19 off ";
+                        text += "F19 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x80) != 0) {
-                        text += "F20 on ";
+                        text += "F20 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F20 off ";
+                        text += "F20 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     break;
                 }
@@ -1792,44 +1793,44 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) != 0) {
-                        text += "F21 on ";
+                        text += "F21 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F21 off ";
+                        text += "F21 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x02) != 0) {
-                        text += "F22 on ";
+                        text += "F22 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F22 off ";
+                        text += "F22 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x04) != 0) {
-                        text += "F23 on ";
+                        text += "F23 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F23 off ";
+                        text += "F23 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x08) != 0) {
-                        text += "F24 on ";
+                        text += "F24 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F24 off ";
+                        text += "F24 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x10) != 0) {
-                        text += "F25 on ";
+                        text += "F25 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F25 off ";
+                        text += "F25 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x20) != 0) {
-                        text += "F26 on ";
+                        text += "F26 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F26 off ";
+                        text += "F26 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x40) != 0) {
-                        text += "F27 on ";
+                        text += "F27 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F27 off ";
+                        text += "F27 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     if ((element4 & 0x80) != 0) {
-                        text += "F28 on ";
+                        text += "F28 " + Bundle.getMessage("PowerStateOn") + "; ";
                     } else {
-                        text += "F28 off ";
+                        text += "F28 " + Bundle.getMessage("PowerStateOff") + "; ";
                     }
                     break;
                 }
@@ -1839,29 +1840,29 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x10) == 0) {
-                        text += "F0 continuous ";
+                        text += "F0 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F0 momentary ";
+                        text += "F0 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x01) == 0) {
-                        text += "F1 continuous ";
+                        text += "F1 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F1 momentary ";
+                        text += "F1 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x02) == 0) {
-                        text += "F2 continuous ";
+                        text += "F2 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F2 momentary ";
+                        text += "F2 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x04) == 0) {
-                        text += "F3 continuous ";
+                        text += "F3 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F3 momentary ";
+                        text += "F3 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x08) == 0) {
-                        text += "F4 continuous ";
+                        text += "F4 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F4 momentary ";
+                        text += "F4 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     break;
                 }
@@ -1871,24 +1872,24 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
-                        text += "F5 continuous ";
+                        text += "F5 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F5 momentary ";
+                        text += "F5 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x02) == 0) {
-                        text += "F6 continuous ";
+                        text += "F6 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F6 momentary ";
+                        text += "F6 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x04) == 0) {
-                        text += "F7 continuous ";
+                        text += "F7 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F7 momentary ";
+                        text += "F7 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x08) == 0) {
-                        text += "F8 continuous ";
+                        text += "F8 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F8 momentary ";
+                        text += "F8 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     break;
                 }
@@ -1898,24 +1899,24 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
-                        text += "F9 continuous ";
+                        text += "F9 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F9 momentary ";
+                        text += "F9 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x02) == 0) {
-                        text += "F10 continuous ";
+                        text += "F10 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F10 momentary ";
+                        text += "F10 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x04) == 0) {
-                        text += "F11 continuous ";
+                        text += "F11 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F11 momentary ";
+                        text += "F11 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x08) == 0) {
-                        text += "F12 continuous ";
+                        text += "F12 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F12 momentary ";
+                        text += "F12 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     break;
                 }
@@ -1925,44 +1926,44 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
-                        text += "F13 continuous ";
+                        text += "F13 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F13 momentary ";
+                        text += "F13 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x02) == 0) {
-                        text += "F14 continuous ";
+                        text += "F14 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F14 momentary ";
+                        text += "F14 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x04) == 0) {
-                        text += "F15 continuous ";
+                        text += "F15 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F15 momentary ";
+                        text += "F15 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x08) == 0) {
-                        text += "F16 continuous ";
+                        text += "F16 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F16 momentary ";
+                        text += "F16 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x10) == 0) {
-                        text += "F17 continuous ";
+                        text += "F17 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F17 momentary ";
+                        text += "F17 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x20) == 0) {
-                        text += "F18 continuous ";
+                        text += "F18 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F18 momentary ";
+                        text += "F18 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x40) == 0) {
-                        text += "F19 continuous ";
+                        text += "F19 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F19 momentary ";
+                        text += "F19 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x80) == 0) {
-                        text += "F20 continuous ";
+                        text += "F20 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F20 momentary ";
+                        text += "F20 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     break;
                 }
@@ -1972,44 +1973,44 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                     int element4 = getElement(4);
                     if ((element4 & 0x01) == 0) {
-                        text += "F21 continuous ";
+                        text += "F21 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F21 momentary ";
+                        text += "F21 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x02) == 0) {
-                        text += "F22 continuous ";
+                        text += "F22 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F22 momentary ";
+                        text += "F22 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x04) == 0) {
-                        text += "F23 continuous ";
+                        text += "F23 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F23 momentary ";
+                        text += "F23 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x08) == 0) {
-                        text += "F24 continuous ";
+                        text += "F24 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F24 momentary ";
+                        text += "F24 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x10) == 0) {
-                        text += "F25 continuous ";
+                        text += "F25 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F25 momentary ";
+                        text += "F25 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x20) == 0) {
-                        text += "F26 continuous ";
+                        text += "F26 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F26 momentary ";
+                        text += "F26 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x40) == 0) {
-                        text += "F27 continuous ";
+                        text += "F27 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F27 momentary ";
+                        text += "F27 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     if ((element4 & 0x80) == 0) {
-                        text += "F28 continuous ";
+                        text += "F28 " + Bundle.getMessage("FunctionContinuous") + "; ";
                     } else {
-                        text += "F28 momentary ";
+                        text += "F28 " + Bundle.getMessage("FunctionMomentary") + "; ";
                     }
                     break;
                 }

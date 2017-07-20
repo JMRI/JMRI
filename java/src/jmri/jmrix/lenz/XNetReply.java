@@ -491,7 +491,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the OK message (01 04 05)
+     * if an XPressNet Message is the OK message (01 04 05).
      */
     public boolean isOkMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -500,7 +500,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the timeslot restored message (01 07 06)
+     * if an XPressNet Message is the timeslot restored message (01 07 06).
      */
     public boolean isTimeSlotRestored() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -510,7 +510,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the Command Station no longer provideing a
-     * timeslot message (01 05 04)
+     * timeslot message (01 05 04).
      */
     public boolean isTimeSlotRevoked() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -519,7 +519,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the Command Station Busy message (61 81 e3)
+     * if an XPressNet Message is the Command Station Busy message (61 81 e3).
      */
     public boolean isCSBusyMessage() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -530,7 +530,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is the Command Station Transfer Error 
-     * message (61 80 e1)
+     * message (61 80 e1).
      */
     public boolean isCSTransferError() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -540,7 +540,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is a communications error message.
-     * the errors handeled are:
+     * The errors handled are:
      *  01 01 00  -- Error between interface and the PC
      *  01 02 03  -- Error between interface and the Command Station
      *  01 03 02  -- Unknown Communications Error
@@ -750,16 +750,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else if (getElement(0) == XNetConstants.CS_INFO) {
             switch (getElement(1)) {
                 case XNetConstants.BC_NORMAL_OPERATIONS:
-                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed");
+                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed") + ";";
                     break;
                 case XNetConstants.BC_EVERYTHING_OFF:
-                    text = Bundle.getMessage("XNetReplyBCEverythingOff");
+                    text = Bundle.getMessage("XNetReplyBCEverythingOff") + ";";
                     break;
                 case XNetConstants.BC_SERVICE_MODE_ENTRY:
-                    text = Bundle.getMessage("XNetReplyBCServiceEntry");
+                    text = Bundle.getMessage("XNetReplyBCServiceEntry") + ";";
                     break;
                 case XNetConstants.PROG_SHORT_CIRCUIT:
-                    text = Bundle.getMessage("XNetReplyServiceModeShort");
+                    text = Bundle.getMessage("XNetReplyServiceModeShort") + ";";
                     break;
                 case XNetConstants.PROG_BYTE_NOT_FOUND:
                     text = Bundle.getMessage("XNetReplyServiceModeDataByteNotFound");
@@ -833,36 +833,35 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 text = toString();
             }
-            //}
  /* We want to look at responses to specific requests made to the Command Station */
         } else if (getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
             if (getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
-                text = Bundle.getMessage("XNetReplyCSStatus");
+                text = Bundle.getMessage("XNetReplyCSStatus") + " ";
                 int statusByte = getElement(2);
                 if ((statusByte & 0x01) == 0x01) {
                     // Command station is in Emergency Off Mode
-                    text += Bundle.getMessage("XNetCSStatusEmergencyOff");
+                    text += Bundle.getMessage("XNetCSStatusEmergencyOff") + "; ";
                 }
                 if ((statusByte & 0x02) == 0x02) {
                     // Command station is in Emergency Stop Mode
-                    text += Bundle.getMessage("XNetCSStatusEmergencyStop");
+                    text += Bundle.getMessage("XNetCSStatusEmergencyStop") + "; ";
                 }
                 if ((statusByte & 0x08) == 0x08) {
                     // Command station is in Service Mode
-                    text += Bundle.getMessage("XNetCSStatusServiceMode");
+                    text += Bundle.getMessage("XNetCSStatusServiceMode") + "; ";
                 }
                 if ((statusByte & 0x40) == 0x40) {
                     // Command station is in Power Up Mode
-                    text += Bundle.getMessage("XNetCSStatusPoweringUp");
+                    text += Bundle.getMessage("XNetCSStatusPoweringUp") + "; ";
                 }
                 if ((statusByte & 0x04) == 0x04) {
-                    text += Bundle.getMessage("XNetCSStatusPowerModeAuto");
+                    text += Bundle.getMessage("XNetCSStatusPowerModeAuto") + "; ";
                 } else {
-                    text += Bundle.getMessage("XNetCSStatusPowerModeManual");
+                    text += Bundle.getMessage("XNetCSStatusPowerModeManual") + "; ";
                 }
                 if ((statusByte & 0x80) == 0x80) {
                     // Command station has a experienced a ram check error
-                    text += Bundle.getMessage("XNetCSStatusRamCheck");
+                    text += Bundle.getMessage("XNetCSStatusRamCheck") + "";
                 }
             } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
                 /* This is a Software version response for XPressNet
@@ -906,14 +905,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // Loco Information Response Messages
         } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
             if (getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-                text = Bundle.getMessage("XNetReplyLocoStatus13Label");
+                text = Bundle.getMessage("XNetReplyLocoStatus13Label") + " ";
                 // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
                 int element3 = getElement(2);
                 // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
                 int element4 = getElement(3);
                 text += parseFunctionHighMomentaryStatus(element3, element4);
             } else {
-                text = Bundle.getMessage("XNetReplyLocoNormalLabel");
+                text = Bundle.getMessage("XNetReplyLocoNormalLabel") + ",";
                 text
                         += parseSpeedAndDirection(getElement(1),
                                 getElement(2)) + " ";
@@ -931,14 +930,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text = Bundle.getMessage("XNetReplyLocoEliteSLabel") + " ";
                 text += LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
                 text
-                        += " " + parseSpeedAndDirection(getElement(4),
+                        += "," + parseSpeedAndDirection(getElement(4),
                                 getElement(5)) + " ";
             } else if (getElement(1) == 0xF9) {
                 // This message is a Hornby addition to the protocol
                 // indicating the function on/off status of a locomoitve
                 // controlled by the elite's built in throttles
                 text = Bundle.getMessage("XNetReplyLocoEliteFLabel") + " ";
-                text += LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                text += LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
                 // message byte 5, contains F0,F1,F2,F3,F4
                 int element4 = getElement(4);
                 // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
@@ -946,10 +945,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text += parseFunctionStatus(element4, element5);
             } else {
                 text
-                        = Bundle.getMessage("XNetReplyLocoMULabel") + " ";
+                        = Bundle.getMessage("XNetReplyLocoMULabel") + ",";
                 text
                         += parseSpeedAndDirection(getElement(1),
-                                getElement(2)) + " ";
+                                getElement(2)) + "";
                 // message byte 4, contains F0,F1,F2,F3,F4
                 int element3 = getElement(3);
                 // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
@@ -957,11 +956,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text += parseFunctionStatus(element3, element4);
             }
         } else if (getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
-            text = Bundle.getMessage("XNetReplyLocoMUBaseLabel") + " ";
+            text = Bundle.getMessage("XNetReplyLocoMUBaseLabel") + ",";
             text
                     += parseSpeedAndDirection(getElement(1), getElement(2)) + " ";
         } else if (getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
-            text = Bundle.getMessage("XNetReplyLocoDHLabel") + " ";
+            text = Bundle.getMessage("XNetReplyLocoDHLabel") + ",";
             text += parseSpeedAndDirection(getElement(1), getElement(2)) + " ";
             // message byte 4, contains F0,F1,F2,F3,F4
             int element3 = getElement(3);
@@ -995,7 +994,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     break;
                 case XNetConstants.LOCO_NOT_AVAILABLE:
                     text += Bundle.getMessage("rsType") + " ";
-                    text += getThrottleMsgAddr();
+                    text += getThrottleMsgAddr() + " ";
                     text += Bundle.getMessage("XNetReplyLocoOperated");
                     break;
                 case XNetConstants.LOCO_FUNCTION_STATUS: {
@@ -1023,7 +1022,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             }
             // Feedback Response Messages
         } else if (isFeedbackBroadcastMessage()) {
-            text = Bundle.getMessage("XNetReplyFeedbackLabel");
+            text = Bundle.getMessage("XNetReplyFeedbackLabel") + " ";
             int numDataBytes = getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
                 switch (getFeedbackMessageType(i)) {
@@ -1057,7 +1056,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     case 1:
                         text = text + Bundle.getMessage("TurnoutWFeedback")
                                 + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-                                + " " + getTurnoutMsgAddr(i) + " "
+                                + "" + getTurnoutMsgAddr(i) + " "
                                 + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x03) == 0x00) {
                             text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
@@ -1069,7 +1068,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + Bundle.getMessage("XNetReplyInvalid");
                         }
                         text = text + "; " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-                                + " " + (getTurnoutMsgAddr() + 1)
+                                + " " + (getTurnoutMsgAddr() + 1) + " "
                                 + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x0C) == 0x00) {
                             text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
@@ -1089,19 +1088,19 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
                         text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
                                 + (((getElement(i + 1) & 0x01) == 0x01) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
-                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 6 : 2);
+                        text = text + "; " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 6 : 2);
 
                         text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
                                 + (((getElement(i + 1) & 0x02) == 0x02) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
-                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 7 : 3);
+                        text = text + "; " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 7 : 3);
 
                         text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
                                 + (((getElement(i + 1) & 0x04) == 0x04) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
-                        text = text + " " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 8 : 4);
+                        text = text + "; " + Bundle.getMessage("XNetReplyContactLabel") + " " + (highnibble ? 8 : 4);
 
                         text = text + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
                                 + (((getElement(i + 1) & 0x08) == 0x08) ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
-                        text = text + ";";
+                        text = text + "; ";
                         break;
                     default:
                         text = text + getElement(i) + " " + getElement(i + 1);
@@ -1181,9 +1180,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         text += Bundle.getMessage("SpeedStepLabel") + " " + speedVal + ". ";
 
         if ((element1 & 0x08) == 0x08) {
-            text += " " + Bundle.getMessage("XNetReplyAddressInUse");
+            text += "" + Bundle.getMessage("XNetReplyAddressInUse");
         } else {
-            text += " " + Bundle.getMessage("XNetReplyAddressFree");
+            text += "" + Bundle.getMessage("XNetReplyAddressFree");
         }
         return (text);
     }
@@ -1197,69 +1196,69 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
-            text += "F0 on ";
+            text += "F0 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F0 off ";
+            text += "F0 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x01) != 0) {
-            text += "F1 on ";
+            text += "F1 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F1 off ";
+            text += "F1 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F2 on ";
+            text += "F2 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F2 off ";
+            text += "F2 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F3 on ";
+            text += "F3 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F3 off ";
+            text += "F3 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F4 on ";
+            text += "F4 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F4 off ";
+            text += "F4 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F5 on ";
+            text += "F5 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F5 off ";
+            text += "F5 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F6 on ";
+            text += "F6 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F6 off ";
+            text += "F6 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F7 on ";
+            text += "F7 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F7 off ";
+            text += "F7 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F8 on ";
+            text += "F8 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F8 off ";
+            text += "F8 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F9 on ";
+            text += "F9 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F9 off ";
+            text += "F9 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F10 on ";
+            text += "F10 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F10 off ";
+            text += "F10 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F11 on ";
+            text += "F11 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F11 off ";
+            text += "F11 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F12 on ";
+            text += "F12 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F12 off ";
+            text += "F12 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         return (text);
     }
@@ -1273,84 +1272,84 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionHighStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x01) != 0) {
-            text += "F13 on ";
+            text += "F13 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F13 off ";
+            text += "F13 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F14 on ";
+            text += "F14 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F14 off ";
+            text += "F14 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F15 on ";
+            text += "F15 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F15 off ";
+            text += "F15 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F16 on ";
+            text += "F16 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F16 off ";
+            text += "F16 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x10) != 0) {
-            text += "F17 on ";
+            text += "F17 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F17 off ";
+            text += "F17 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x20) != 0) {
-            text += "F18 on ";
+            text += "F18 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F18 off ";
+            text += "F18 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x40) != 0) {
-            text += "F19 on ";
+            text += "F19 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F19 off ";
+            text += "F19 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element3 & 0x80) != 0) {
-            text += "F20 on ";
+            text += "F20 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F20 off ";
+            text += "F20 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F21 on ";
+            text += "F21 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F21 off ";
+            text += "F21 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F22 on ";
+            text += "F22 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F22 off ";
+            text += "F22 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F23 on ";
+            text += "F23 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F23 off ";
+            text += "F23 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F24 on ";
+            text += "F24 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F24 off ";
+            text += "F24 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F25 on ";
+            text += "F25 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F25 off ";
+            text += "F25 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F26 on ";
+            text += "F26 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F26 off ";
+            text += "F26 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F27 on ";
+            text += "F27 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F27 off ";
+            text += "F27 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F28 on ";
+            text += "F28 " + Bundle.getMessage("PowerStateOn") + "; ";
         } else {
-            text += "F28 off ";
+            text += "F28 " + Bundle.getMessage("PowerStateOff") + "; ";
         }
         return (text);
     }
@@ -1363,69 +1362,69 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
-            text += "F0 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F0 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F0 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F0 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x01) != 0) {
-            text += "F1 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F1 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F1 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F1 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F2 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F2 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F2 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F2 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F3 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F3 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F3 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F3 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F4 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F4 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F4 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F4 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F5 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F5 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F5 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F5 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F6 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F6 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F6 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F6 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F7 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F7 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F7 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F7 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F8 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F8 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F8 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F8 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F9 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F9 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F9 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F9 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F10 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F10 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F10 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F10 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F11 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F11 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F11 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F11 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F12 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F12 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F12 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F12 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         return (text);
     }
@@ -1439,84 +1438,84 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private String parseFunctionHighMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x01) != 0) {
-            text += "F13 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F13 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F13 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F13 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x02) != 0) {
-            text += "F14 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F14 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F14 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F14 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x04) != 0) {
-            text += "F15 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F15 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F15 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F15 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x08) != 0) {
-            text += "F16 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F16 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F16 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F16 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x10) != 0) {
-            text += "F17 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F17 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F17 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F17 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x20) != 0) {
-            text += "F18 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F18 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F18 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F18 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x40) != 0) {
-            text += "F19 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F19 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F19 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F19 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element3 & 0x80) != 0) {
-            text += "F20 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F20 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F20 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F20 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x01) != 0) {
-            text += "F21 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F21 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F21 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F21 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x02) != 0) {
-            text += "F22 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F22 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F22 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F22 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x04) != 0) {
-            text += "F23 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F23 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F23 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F23 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x08) != 0) {
-            text += "F24 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F24 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F24 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F24 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x10) != 0) {
-            text += "F25 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F25 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F25 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F25 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x20) != 0) {
-            text += "F26 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F26 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F26 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F26 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x40) != 0) {
-            text += "F27 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F27 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F27 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F27 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         if ((element4 & 0x80) != 0) {
-            text += "F28 " + Bundle.getMessage("FunctionMomentary") + " ";
+            text += "F28 " + Bundle.getMessage("FunctionMomentary") + "; ";
         } else {
-            text += "F28 " + Bundle.getMessage("FunctionContinuous") + " ";
+            text += "F28 " + Bundle.getMessage("FunctionContinuous") + "; ";
         }
         return (text);
     }
