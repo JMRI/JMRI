@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
-        suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.spjfile.PackageTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
