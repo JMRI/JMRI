@@ -911,7 +911,7 @@ public class TrackSegment extends LayoutTrack {
             dashedBox.setSelectedIndex(solidIndex);
         }
         hiddenBox.setSelected(hidden);
-        blockNameComboBox.getEditor().setItem(blockName);
+        blockNameComboBox.setText(blockName);
 
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

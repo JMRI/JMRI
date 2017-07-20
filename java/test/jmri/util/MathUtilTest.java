@@ -173,7 +173,7 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= +limits) {t -= limits;}
             while (t < 0.0) {t += limits;};
-            double c = MathUtil.normalizeAngle(a);
+            double c = MathUtil.normalizeAngleDEG(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
@@ -195,8 +195,7 @@ public class MathUtilTest extends TestCase {
                 double t = a - b;
                 while (t >= theMax) {t -= theRange;}
                 while (t < theMin) {t += theRange;}
-                if (t < 0.0) { t = -t;};
-                double c = MathUtil.diffAngle(a, b);
+                double c = MathUtil.diffAngleDEG(a, b);
                 Assert.assertEquals(t, c, tolerance);
                 passed = (math.fabs(t - c) <= tolerance);
                 if (!passed) {
@@ -208,6 +207,33 @@ public class MathUtilTest extends TestCase {
             }
         }
         Assert.assertEquals("Double diffAngle is good", true, passed);
+    }
+
+    @Test
+    public void testDouble_absDiffAngle() {
+        boolean passed = true;    // assume success (optimist!)
+
+        double theLimits = 180.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.3 * theLimits; a < +3.3 * theLimits; a += theLimits / 15.0) {
+            for (double b = -3.3 * theLimits; b < +3.3 * theLimits; b += theLimits / 15.0) {
+                double t = a - b;
+                while (t >= theMax) {t -= theRange;}
+                while (t < theMin) {t += theRange;}
+                if (t < 0.0) { t = -t;};
+                double c = MathUtil.absDiffAngleDEG(a, b);
+                Assert.assertEquals(t, c, tolerance);
+                passed = (math.fabs(t - c) <= tolerance);
+                if (!passed) {
+                    break;
+                }
+            }
+            if (!passed) {
+                break;
+            }
+        }
+        Assert.assertEquals("Double absDiffAngle is good", true, passed);
     }
 
     @Test
