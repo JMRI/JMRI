@@ -69,7 +69,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     // state info
     int mNeededMode;
 
-    public void setNeededMode(int pMode) {
+    public final void setNeededMode(int pMode) {
         mNeededMode = pMode;
     }
 
@@ -97,7 +97,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         return _isBinary;
     }
 
-    public void setBinary(boolean b) {
+    public final void setBinary(boolean b) {
         _isBinary = b;
     }
 
@@ -114,7 +114,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     static protected final int LONG_TIMEOUT = 60000;  // e.g. for programming options
     int mTimeout;  // in milliseconds
 
-    public void setTimeout(int t) {
+    public final void setTimeout(int t) {
         mTimeout = t;
     }
 
@@ -126,7 +126,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      isn't ready for them. */
     private int mRetries = 0; // number of retries, default = 0;
 
-    public void setRetries(int i) {
+    public final void setRetries(int i) {
         mRetries = i;
     }
 

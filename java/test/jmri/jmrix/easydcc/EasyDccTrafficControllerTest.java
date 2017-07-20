@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
@@ -18,9 +20,11 @@ import org.junit.Test;
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficControllerTest.class);
+
     @Test
     public void testSendThenRcvReply() throws Exception {
-        c = (EasyDccTrafficController)tc;
+        c = (EasyDccTrafficController) tc;
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -38,16 +42,16 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         c.sendEasyDccMessage(m, l);
 
         ostream.flush();
-        JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
-		// test the result of sending
+        JUnitUtil.waitFor(() -> {
+            return tostream.available() == 4;
+        }, "total length");
 
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-
 
         // now send reply
         tistream.write('P');
@@ -56,7 +60,9 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         // drive the mechanism
         c.handleOneIncomingReply();
 
-        JUnitUtil.waitFor(()->{return rcvdReply != null;}, "reply received");
+        JUnitUtil.waitFor(() -> {
+            return rcvdReply != null;
+        }, "reply received");
 
         Assert.assertTrue("reply received ", rcvdReply != null);
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
@@ -141,20 +147,23 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     DataInputStream istream;  // so the traffic controller can read from this
 
     EasyDccTrafficController c;
-    
+
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         c = null;
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         tc = new EasyDccTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
-        if (c!=null) c.terminateThreads();
+        if (c != null) {
+            c.terminateThreads();
+        }
         apps.tests.Log4JFixture.tearDown();
     }
 
