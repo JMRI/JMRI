@@ -307,7 +307,8 @@
                 <configuration>
                     <excludes>
                         <!-- ignore until #3340 is merged -->
-                        <exclude>jmri.jmrix.nce.**.Nce*</exclude>
+                        <exclude>jmri.jmrix.nce.Nce*</exclude>
+                        <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore until #2601 is resolved -->
@@ -525,12 +526,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.28</minimum>
+                                            <minimum>0.30</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.50</minimum>
+                                            <minimum>0.70</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
