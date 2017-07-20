@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class DestinationPointsTest {
 
     @Test
+    @Ignore("needs more setup")
     public void testCTor() {
         LayoutBlock f = new LayoutBlock("test1","Facing Block");
         LayoutBlock p1 = new LayoutBlock("test2","Protecting Block 1");
@@ -26,6 +27,8 @@ public class DestinationPointsTest {
         blockList.add(p1);
         blockList.add(p2);
         PointDetails ptd = new PointDetails(f,blockList);
+        jmri.SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
+        ptd.setSignalMast(sm);
         Source s = new Source(ptd);
         DestinationPoints t = new DestinationPoints(ptd,"test",s);
         Assert.assertNotNull("exists",t);
@@ -36,6 +39,7 @@ public class DestinationPointsTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultSignalMastManager();
     }
 
     @After
