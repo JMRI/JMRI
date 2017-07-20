@@ -48,6 +48,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     int lastInstruction = -1;
 
     final static int GETINFO = 0x00;
+    final static int BOARDRESET = 0x09;
 
     Dcc4PcTrafficController tc;
     Dcc4PcSystemConnectionMemo memo;
@@ -90,10 +91,6 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             //Only add the board id if it doesn't already exist
             if (!boards.contains(board)) {
                 boards.add(board);
-                //request the status of all inputs on this board
-                /*Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{0x0B, (byte) board, (byte) 0x90});
-                log.debug(m.toString());
-                tc.sendDcc4PcMessage(m, this);*/
             }
         }
     }
@@ -260,6 +257,11 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Reply details sm: " + r.toHexString());
+        }
+        
+        if(r.getNumDataElements()==0 && r.getElement(0) == 0x00) {
+            //Simple acknowledgement reply, no further action required
+            return;
         }
 
         if (!stopPolling) {
@@ -547,10 +549,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         for (int board : activeBoards.keySet()) {
             //Send a reset prior to the starting of polling.
             Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(board);
-            //m.setForChildBoard(true);
-            m.setTimeout(10); //We do not expect a reply to the reset message
-            log.debug(m.toString());
-            lastInstruction = 0x09;
+            m.setTimeout(100);
             tc.sendDcc4PcMessage(m, this);
         }
         while (!stopPolling) {
@@ -643,7 +642,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (init) {
             buildActiveRCReaders(lastAddressUsed + 1);
         }
-        if (lastInstruction == 0x09) {
+        if (lastInstruction == BOARDRESET) {
             log.debug("Last message was to send a reset " + lastAddressUsed);
         }
         if (!stopPolling) {
@@ -823,7 +822,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         public int processPacket(Dcc4PcReply r, int packetType, int packetTypeCmd, int currentByteLocation) {
 
             //int packetType;
-            int dccpacketlength = 0;
+            int dccpacketlength;
             if (packetType == 0x02) {
                 dccpacketlength = (r.getElement(currentByteLocation) - 0x40) + 1;
             } else {
