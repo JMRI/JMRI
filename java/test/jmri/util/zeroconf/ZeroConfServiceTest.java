@@ -34,6 +34,7 @@ public class ZeroConfServiceTest {
     @Before
     public void setUp() throws Exception {
         Log4JFixture.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

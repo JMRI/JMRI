@@ -532,7 +532,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                 } catch (RuntimeException ex) {
-                    log.error("An error occured while setting the route");
+                    log.error("An error occurred while setting the route");
                     ex.printStackTrace();
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);

@@ -396,5 +396,5 @@
 		<enumChoice choice="Nathan K5LA Horn Stop" value="305"/>
 	</enumChoiceGroup>
 	<enumChoice choice="Whistle Rotate" value="527" />
-	<enumChoice choice="None" value="669" />
+	<enumChoice choice="None" value="65535" />
 </enumVal>

@@ -103,9 +103,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     addLine(fileOut, AT + train.getExpectedArrivalTime(rl));
                 }
                 if (rl == train.getRoute().getDepartsRouteLocation()) {
-                    addLine(fileOut, DT + train.getDepartureTime());
+                    addLine(fileOut, DT + train.getFormatedDepartureTime());
                 } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                    addLine(fileOut, DTR + rl.getDepartureTime());
+                    addLine(fileOut, DTR + rl.getFormatedDepartureTime());
                 } else {
                     addLine(fileOut, EDT + train.getExpectedDepartureTime(rl));
                 }

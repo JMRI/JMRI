@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ConfigToolActionTest.class,
-    ConfigToolPaneTest.class
+    ConfigToolPaneTest.class,
+    BundleTest.class
 })
 
 /**

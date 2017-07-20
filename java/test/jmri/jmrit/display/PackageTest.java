@@ -73,6 +73,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(MemoryInputIconTest.class));
         suite.addTest(new JUnit4TestAdapter(PositionableJComponentTest.class));
         suite.addTest(new JUnit4TestAdapter(PositionableJPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ToolTipTest.class));
+        suite.addTest(new JUnit4TestAdapter(PanelMenuTest.class));
         return suite;
     }
 

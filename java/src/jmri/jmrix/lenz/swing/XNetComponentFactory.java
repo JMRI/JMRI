@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.swing;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
- * Provide access to Swing components for the XPressNet subsystem.
+ * Provide access to Swing components for the XpressNet subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2010

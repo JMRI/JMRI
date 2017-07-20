@@ -65,6 +65,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             Element elem = new Element("sensor")
                     .setAttribute("inverted", inverted);
             elem.addContent(new Element("systemName").addContent(sname));
+
+            // store common part
+            storeCommon(s, elem);
+
             log.debug("store sensor " + sname);
             if (s.useDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
@@ -80,9 +84,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                // store the sensor's value for pull resistance.
                elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
             }
-
-            // store common part
-            storeCommon(s, elem);
 
             sensors.addContent(elem);
 

@@ -58,7 +58,7 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Provides a method to reserve System Names and prefixes at creation
+     * Reserve System Names and prefixes at creation.
      */
     private static void initialise() {
         log.debug("initialise called");
@@ -85,7 +85,7 @@ abstract public class SystemConnectionMemo {
         return true;
     }
 
-    //This should probably throwing an exception
+    //This should probably be throwing an exception
     private synchronized static boolean addSystemPrefix(String systemPrefix) {
         if (sysPrefixes.contains(systemPrefix)) {
             return false;
@@ -114,7 +114,7 @@ abstract public class SystemConnectionMemo {
 
     /**
      * Store in InstanceManager with proper ID for later retrieval as a generic
-     * system
+     * system.
      */
     public void register() {
         log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
@@ -136,8 +136,8 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the system prefix string. This was previously called
-     * the "System letter"
+     * Provide access to the system prefix string.
+     * This was previously called the "System letter".
      *
      * @return System prefix
      */
@@ -177,8 +177,8 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the system user name string. This was previously fixed
-     * at configuration time.
+     * Provide access to the system user name string.
+     * This was previously fixed at configuration time.
      *
      * @return User name
      */
@@ -276,7 +276,7 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Trigger the notification of all PropertyChangeListeners
+     * Trigger the notification of all PropertyChangeListeners.
      *
      * @param property The property name
      * @param oldValue The property's old value
@@ -348,4 +348,5 @@ abstract public class SystemConnectionMemo {
     private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
+
 }

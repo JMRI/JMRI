@@ -43,7 +43,7 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
 
         if (log.isDebugEnabled()) {
-            log.debug("XPressNet Initialization Complete");
+            log.debug("XpressNet Initialization Complete");
         }
     }
 

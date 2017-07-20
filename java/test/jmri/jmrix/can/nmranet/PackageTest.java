@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
      jmri.jmrix.can.nmranet.configurexml.PackageTest.class,
      jmri.jmrix.can.nmranet.swing.PackageTest.class,
-     jmri.jmrix.can.nmranet.NmraConfigurationManagerTest.class
+     jmri.jmrix.can.nmranet.NmraConfigurationManagerTest.class,
+     BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.nmranet.configurexml package.

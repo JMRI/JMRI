@@ -498,4 +498,5 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
+
 }

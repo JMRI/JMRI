@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: ECoS User Preferences</title><!-- Style -->
+  <title>JMRI: ECoS Preferences</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,43 +22,48 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: ECoS User Preferences</h1>The ECoS Preferences
-      allows you to control the way that the Ecos interacts with
-      JMRI for different features:
+      <h1>JMRI: ECoS Preferences</h1>
+      The ECoS User Preferences allows you to control the way
+      that the ECoS interacts with JMRI for different features:
 
-      <h2>Roster</h2><b>Add Locos to the Ecos</b><br>
+      <h2>Roster</h2>
+      <b>Add Locos to the ECoS</b><br>
       When a new roster entry is created in JMRI, this option
       allows you to set whether the loco should be added to the
-      Ecos.
+      ECoS.
 
-      <p><b>Remove Locos from the Ecos</b><br>
+      <p><b>Remove Locos from the ECoS</b>
+        <br>
       When a roster entry is deleted in JMRI, this option allows
-      you to set whether the loco should be deleted from the Ecos
+      you to set whether the loco should be deleted from the ECoS
       or not.</p>
 
       <p><b>Add Locos to JMRI Roster</b><br>
-      When JMRI detects that a new loco has been added in the Ecos
+      When JMRI detects that a new loco has been added in the ECoS
       Database, this option allows you to set whether the loco
       should be added into the roster or not.</p>
 
       <p><b>Remove Locos from JMRI Roster</b><br>
-      When JMRI detect that a loco has been removed from the Ecos
+      When JMRI detect that a loco has been removed from the ECoS
       Database, this option allows you to set whether the loco
       should be deleted from the roster or not. Note: Currently if
-      a loco has been removed from the Ecos when it is not
+      a loco has been removed from the ECoS when it is not
       connected to JMRI, this removal is not detected.</p>
 
-      <p><b>Ecos Loco Description Format</b><br></p>
+      <p><b>ECoS Loco Description Template</b><br>
+      Enter a combination of plain text and one or more of the
+      special field-codes shown below this field to use as a template
+      for display of Loco information.</p>
 
       <h2>Throttle</h2><b>Temporary Locos</b><br>
-      The Ecos requires an entry in its database before it is
+      The ECoS requires an entry in its database before it is
       possible to control a loco. When you select either a roster
       entry or enter in an address of loco in the address box of a
-      throttle and that addresses doesn't already exist in the Ecos
+      throttle and that addresses doesn't already exist in the ECoS
       database, JMRI will automatically create an entry to match
       with a description of "Created By JMRI". When JMRI is
       shutdown, these temporary locos can either be left on the
-      Ecos or removed. This setting allows you set how this works.
+      ECoS or removed. This setting allows you set how this works.
 
       <p><b>Loss of Control</b><br>
       If another controller has exclusive control over a loco, then
@@ -70,22 +75,23 @@
       take over, never force a controlled take over or to always
       prompt.</p>
 
-      <h2>Turnouts</h2><b>Remove Turnouts from the Ecos</b><br>
+      <h2>Turnouts</h2><b>Remove Turnouts from the ECoS</b><br>
       If a turnout is removed from the turnout table in JMRI, this
       determines whether the turnout should be deleted from the
-      Ecos.
+      ECoS.
 
       <p><b>Add Turnouts to JMRI</b><br>
       If JMRI receives a notification that a turnout or accessory
-      has been added to the Ecos while JMRI is running, this
+      has been added to the ECoS while JMRI is running, this
       setting determines how JMRI should react.<br>
       Note: That this does not prevent JMRI from populating the
       turnout table when the application is first opened.</p>
 
       <p><b>Remove Turnouts from JMRI</b><br>
       If JMRI receives a notification that a turnout or accessory
-      has been removed from the Ecos, this setting determines how
-      JMRI should react. <!--#include virtual="/Footer" --></p>
+      has been removed from the ECoS, this setting determines how
+      JMRI should react.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

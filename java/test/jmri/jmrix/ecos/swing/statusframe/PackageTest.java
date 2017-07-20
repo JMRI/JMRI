@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    StatusPanelTest.class
+    StatusPanelTest.class,
+    BundleTest.class
 })
 
 /**

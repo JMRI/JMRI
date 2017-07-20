@@ -91,9 +91,9 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             if (!boards.contains(board)) {
                 boards.add(board);
                 //request the status of all inputs on this board
-                Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{0x0B, (byte) board, (byte) 0x90});
+                /*Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{0x0B, (byte) board, (byte) 0x90});
                 log.debug(m.toString());
-                tc.sendDcc4PcMessage(m, this);
+                tc.sendDcc4PcMessage(m, this);*/
             }
         }
     }

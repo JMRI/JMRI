@@ -54,6 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CbusThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CbusTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CbusTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

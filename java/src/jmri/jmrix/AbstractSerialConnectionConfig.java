@@ -90,7 +90,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -99,7 +99,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -112,7 +112,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -121,7 +121,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -362,18 +362,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (baudList.length > 1) {
-            baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+            baudBox.setToolTipText(Bundle.getMessage("TipBaudRateMatch"));
             baudBox.setEnabled(true);
         } else {
-            baudBox.setToolTipText("The baud rate is fixed for this protocol");
+            baudBox.setToolTipText(Bundle.getMessage("TipBaudRateFixed"));
             baudBox.setEnabled(false);
         }
 
         NUMOPTIONS = NUMOPTIONS + options.size();
 
-        portBoxLabel = new JLabel("Serial port: ");
+        portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
 
-        baudBoxLabel = new JLabel("Baud rate:");
+        baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);

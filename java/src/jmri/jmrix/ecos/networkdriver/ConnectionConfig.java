@@ -26,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "ECOS via network";
+        return Bundle.getMessage("EcosViaNetworkConnection");
     }
 
     /**

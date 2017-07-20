@@ -15,13 +15,11 @@ public class CanMenu extends JMenu {
     public CanMenu(CanSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
         String title;
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuItemCAN");
+            title = Bundle.getMessage("MenuItemCAN");
         }
 
         setText(title);
@@ -32,7 +30,7 @@ public class CanMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 

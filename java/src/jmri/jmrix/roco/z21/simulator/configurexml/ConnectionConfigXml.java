@@ -5,10 +5,11 @@ import jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapter;
 
 /**
  * Handle XML persistence of layout connections by persisting the
- Z21SimulatorAdapter (and connections). Note this is named as the XML version
- of a ConnectionConfig object, but it's actually persisting the
- Z21SimulatorAdapter.
- <P>
+ * Z21SimulatorAdapter (and connections).
+ * <p>
+ * Note this is named as the XML version of a ConnectionConfig object,
+ * but it's actually persisting the Z21SimulatorAdapter.
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.

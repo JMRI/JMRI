@@ -8,7 +8,6 @@ import purejavacomm.SerialPort;
 
 /**
  * Abstract base for classes representing a XNet communications port
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010
@@ -76,7 +75,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     }
 
     /**
-     * Indiciate the command station is currently providing a timeslot to this
+     * Indicate whether the Command Station is currently providing a timeslot to this
      * port controller.
      *
      * @return true if the command station is currently providing a timeslot.
@@ -87,20 +86,16 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     }
     
     /**
-     * <p>
      * Set a variable indicating whether or not the command station is
      * providing a timeslot.
-     * </p>
      * <p>
      * This method should be called with the paramter set to false if
      * a "Command Station No Longer Providing a timeslot for communications"
      * (01 05 04) is received.
-     * </p>
      * <p>
      * This method should be called with the parameter set to true if
      * a "Command Station is providing a timeslot for communications again."
      * (01 07 06) is received.
-     * </p>
      *
      * @param timeslot true if a timeslot is being sent, false otherwise.
      */
@@ -111,9 +106,9 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 
 
     /**
-     * we need a way to say if the output buffer is empty or full this should
-     * only be set to false by external processes
-     *
+     * We need a way to say if the output buffer is empty or full.
+     * <p>
+     * This should only be set to false by external processes.
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
@@ -122,7 +117,9 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 
 
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
-     was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
+     was used for the "check buffer status when sending" If this is still set
+     in a configuration file, we need to handle it, but we are not writing it
+     to new configuration files. */
     /*public String getCurrentOption2Setting() {
      if(getOptionState(option2Name)==null) return("no");
      else return getOptionState(option2Name);
@@ -130,7 +127,9 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     protected String[] validOption2 = new String[]{"yes", "no"};
     private boolean checkBuffer = false;
 
-    /* Allow derived classes to set the private checkBuffer value */
+    /**
+     * Allow derived classes to set the private checkBuffer value
+     */
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;
     }
@@ -143,6 +142,3 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     private final static Logger log = LoggerFactory.getLogger(XNetSerialPortController.class.getName());
 
 }
-
-
-

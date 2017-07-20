@@ -37,6 +37,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CatalogTreeModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DefaultCatalogTreeManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CatalogTreeNodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NamedIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DirectorySearcherTest.class));
         return suite;
     }
 

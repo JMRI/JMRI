@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController implements Z21Interface {
@@ -64,29 +64,36 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         return null;
     }
 
-    /*
+    /**
      * enterProgMode() and enterNormalMode() return any message that
      * needs to be returned to the command station to change modes.
      *
-     * If no message is needed, you may return null.
+     * @see #enterNormalMode()
+     * @return if no message is needed, you may return null.
      *
      * If the programmerIdle() function returns true, enterNormalMode() is
      * called after a timeout while in IDLESTATE during programming to
      * return the system to normal mode.
-     *
      */
     @Override
     protected Z21Message enterProgMode() {
         return null;
     }
 
+    /**
+     * enterProgMode() and enterNormalMode() return any message that
+     * needs to be returned to the command station to change modes.
+     *
+     * @see #enterProgMode()
+     * @return if no message is needed, you may return null.
+     */
     @Override
     protected Z21Message enterNormalMode() {
         return null;
     }
 
     /**
-     * Actually transmits the next message to the port
+     * Actually transmits the next message to the port.
      */
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION", "UW_UNCOND_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
@@ -265,7 +272,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      */
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
@@ -293,6 +300,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             rcvException = true;
             return;
         }
+        if (threadStopRequest) return;
+        
         // create the reply from the received data.
         Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 
@@ -358,6 +367,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            if (threadStopRequest) return;
                         }
                     }
                     // update state, and notify to continue
@@ -437,6 +447,20 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             // set the controller to null, even if terminate fails.
             controller = null;
         }
+    }
+
+    /**
+     * Terminate the receive and transmit threads.
+     *<p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStopRequest = true;
+        // ensure socket closed to end pending operations
+        if ( controller!=null && ((Z21Adapter) controller).getSocket()!=null) ((Z21Adapter) controller).getSocket().close();
+        
+        // usual stop process
+        super.terminateThreads();
     }
 
     // The methods to implement the Z21Interface
