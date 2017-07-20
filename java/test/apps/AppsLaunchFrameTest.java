@@ -33,6 +33,7 @@ public class AppsLaunchFrameTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initConnectionConfigManager();
     }
 
     @After
