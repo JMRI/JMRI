@@ -31,6 +31,8 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Records and executes a desired set of defaults for the JMRI InstanceManager
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
  * @since 2.9.4
  * @see jmri.jmrix.SystemConnectionMemo#provides(java.lang.Class)
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     public final HashMap<Class<?>, String> defaults = new HashMap<>();

@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid lenz XpressNet Connection Types.
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.lenz.hornbyelite;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class EliteConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String HORNBY = "Hornby";
