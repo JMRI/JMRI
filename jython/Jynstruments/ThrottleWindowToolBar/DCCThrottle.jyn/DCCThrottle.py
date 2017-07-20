@@ -66,9 +66,8 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     def notifyFailedThrottleRequest(self, locoAddress, reason):
         print "Couldn't get throttle for "+locoAddress+" : "+reason
         self.masterThrottle = None
-
     
-#AddressListener part: to listen for address changes in address panel (release, acquired)
+    #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):
         pass
 
