@@ -820,6 +820,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.digi</groupId>
+            <artifactId>android-sdk</artifactId>
+            <version>5.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.digi</groupId>
+            <artifactId>android-sdk-addon</artifactId>
+            <version>3</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.purejavacomm</groupId>
             <artifactId>purejavacomm</artifactId>
             <version>1.0.1.RELEASE</version>
