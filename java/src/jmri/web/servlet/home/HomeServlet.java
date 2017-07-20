@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
@@ -21,6 +22,7 @@ import jmri.web.servlet.ServletUtil;
             "/index.html", // redirect to default since ~ 1 FEB 2014
             "/prefs/index.html" // some WiThrottle clients require this URL to show web services
         })
+@ServiceProvider(service = HttpServlet.class)
 public class HomeServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

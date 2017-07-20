@@ -2,6 +2,10 @@ package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
@@ -18,10 +22,10 @@ import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
     // member declarations
-    javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    javax.swing.JButton sendButton = new javax.swing.JButton();
-    javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
-    javax.swing.JCheckBox childBoardBox = new javax.swing.JCheckBox("Child Board");
+    JLabel jLabel1 = new JLabel();
+    JButton sendButton = new JButton();
+    JTextField packetTextField = new JTextField(20);
+    JCheckBox childBoardBox = new JCheckBox("Child Board");
     public PacketGenPanel() {
         super();
     }
@@ -68,11 +72,6 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     public String getTitle() {
         return "Send DCC4PC command";
     }
-
-    /*@Override
-    public void initComponents(Dcc4PcSystemConnectionMemo memo) {
-        super.initComponents(memo);
-    }*/
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 

@@ -17,6 +17,7 @@ import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.JmriPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
@@ -25,6 +26,7 @@ import jmri.util.swing.JmriPanel;
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.5
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
