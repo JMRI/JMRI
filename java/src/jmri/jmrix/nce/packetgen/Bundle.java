@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.Bundle {
+public class Bundle extends jmri.jmrix.nce.Bundle {
 
     @Nullable
     private static final String name = "jmri.jmrix.nce.packetgen.NcePacketGenBundle"; // NOI18N
