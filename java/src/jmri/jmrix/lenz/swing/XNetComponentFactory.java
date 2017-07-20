@@ -28,3 +28,4 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new XNetMenu(memo);
     }
 }
+

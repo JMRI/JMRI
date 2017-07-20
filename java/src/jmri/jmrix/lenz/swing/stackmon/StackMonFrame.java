@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    JButton nextButton = new JButton("Next Entry");
-    JButton previousButton = new JButton("Previous Entry");
+    JButton nextButton = new JButton(Bundle.getMessage("NextButtonLabel"));
+    JButton previousButton = new JButton(Bundle.getMessage("PreviousButtonLabel"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton refreshButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JLabel CurrentStatus = new JLabel(" ");
@@ -177,8 +177,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         }
     }
 
-    /*
-     *  Request ALL entries
+    /**
+     * Request ALL entries.
      */
     private void getAllEntries() {
         stackModel.clearData();
@@ -186,8 +186,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         getNextEntry();
     }
 
-    /*
-     *  Request the next entry
+    /**
+     *  Request the next entry.
      */
     private void getNextEntry() {
         int address = 0;
@@ -198,16 +198,16 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         tc.sendXNetMessage(msg, this);
     }
 
-    /*
-     *  Request the next entry
+    /**
+     * Request the next entry.
      */
     private void getNextEntry(int address) {
         XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address, true);
         tc.sendXNetMessage(msg, this);
     }
 
-    /*
-     * Request the previous entry
+    /**
+     * Request the previous entry.
      */
     private void getPreviousEntry() {
         int address = 0;
@@ -218,8 +218,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         tc.sendXNetMessage(msg, this);
     }
 
-    /* 
-     * Remove the current entry
+    /**
+     * Remove the current entry.
      */
     private void deleteEntry() {
         int address = 0;
@@ -230,8 +230,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         }
     }
 
-    /*
-     * Request the status of the current address
+    /**
+     * Request the status of the current address.
      */
     @SuppressWarnings("unused")
 @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
@@ -244,7 +244,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         }
     }
 
-    /*
+    /**
      * Request the momentary/continuous status of functions for the 
      * current address.
      */
@@ -260,7 +260,10 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // The XNet Listener Interface
-    // We need to be able to receive information from the command station
+
+    /**
+     * Receive information from the command station.
+     */
     @Override
     public void message(XNetReply r) {
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {

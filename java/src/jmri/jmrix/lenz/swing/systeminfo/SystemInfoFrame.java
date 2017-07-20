@@ -32,7 +32,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(Bundle.getMessage("XpressNetSystemInformationTitle"));
+        super(Bundle.getMessage("SystemInfoFrameTitle"));
         tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new GridLayout(0, 2));
 
@@ -97,7 +97,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
     JLabel CSType = new JLabel("                ");
     JLabel CSSoftwareVersion = new JLabel("");
-    JLabel CSStatus = new JLabel("Unknown");
+    JLabel CSStatus = new JLabel(Bundle.getMessage("BeanStateUnknown"));
     JLabel LIType = new JLabel("       ");
     JLabel LIHardwareVersion = new JLabel("");
     JLabel LISoftwareVersion = new JLabel("");

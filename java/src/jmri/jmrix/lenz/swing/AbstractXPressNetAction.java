@@ -24,7 +24,7 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     public AbstractXPressNetAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LI101 Configuration Manager", memo);
+        this(Bundle.getMessage("MenuItemLI101ConfigurationManager"), memo);
     }
 
     /**

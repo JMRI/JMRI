@@ -638,9 +638,9 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         railComBox.setSelectedIndex(2);
         railComModeBox.setSelectedIndex(2);
         synchronized (CurrentStatus) {
-            CurrentStatus.setText(Bundle.getMessage("LV102StatusOK"));
+            CurrentStatus.setText(Bundle.getMessage("StatusOK"));
             if (log.isDebugEnabled()) {
-                log.debug("Current Status: " + Bundle.getMessage("LV102StatusOK"));
+                log.debug("Current Status: OK");
             }
         }
     }

@@ -22,7 +22,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     @Override
     public String getTitle() {
-        return (Bundle.getMessage("XNetMonFrameTitle"));
+        return (Bundle.getMessage("MenuItemXNetCommandMonitor"));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
-            super(Bundle.getMessage("XNetMonFrameTitle"), XNetMonPane.class.getName());
+            super(Bundle.getMessage("MenuItemXNetCommandMonitor"), XNetMonPane.class.getName());
             setContext(jmri.InstanceManager.
                     getDefault(XNetSystemConnectionMemo.class));
         }

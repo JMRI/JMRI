@@ -44,7 +44,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        setTitle(Bundle.getMessage("LZ100Command"));
+        setTitle(Bundle.getMessage("CommandConfigTitle"));
 
         JPanel pane4 = new JPanel();
         pane4.add(new JLabel(Bundle.getMessage("LZ100StartMode")));
@@ -180,7 +180,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
              resetting the command station 
              */
             if (status.getText().equals(Bundle.getMessage("LZ100StatusSetMode"))) {
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             }
             if (resetMode == OFFSENT) {
                 XNetMessage msgon = XNetMessage.getFunctionGroup1OpsMsg(0, false, false, false, false, true);
@@ -205,12 +205,12 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
                 isAutoMode.setSelected(true);
                 isManualMode.setSelected(false);
                 autoMode = true;
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             } else {
                 isAutoMode.setSelected(false);
                 isManualMode.setSelected(true);
                 autoMode = false;
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             }
         }
     }

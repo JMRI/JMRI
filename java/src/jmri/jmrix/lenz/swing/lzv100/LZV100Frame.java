@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 /**
- * Frame displaying the LZV100 configuration utility
+ * Frame displaying the LZV100 configuration utility.
  *
  * This is a container for holding the LZV100 configuration utility. The actuall
  * configuration utility consists of two parts:
@@ -21,7 +21,7 @@ import javax.swing.JToggleButton;
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
     public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LZV100 Configuration Utility", memo);
+        this(Bundle.getMessage("MenuItemLZV100ConfigurationManager"), memo);
     }
 
     public LZV100Frame(String FrameName, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
