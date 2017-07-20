@@ -820,15 +820,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.digi</groupId>
-            <artifactId>android-sdk</artifactId>
-            <version>5.11</version>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.digi</groupId>
-            <artifactId>android-sdk-addon</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>com.github.purejavacomm</groupId>
