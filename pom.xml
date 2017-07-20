@@ -21,6 +21,7 @@
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.14</openlcb.version>
+        <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -856,9 +857,25 @@
             <scope>test</scope>
         </dependency>
         -->
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
+        <!--
+        Repository hosting NetBeans modules, especially APIs.
+        Versions are based on IDE releases, e.g.: RELEASE691
+        To create your own repository, use: nbm:populate-repository
+        -->
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
+        </repository>
         <!--
         Repository hosting libraries not available through maven.org
         -->

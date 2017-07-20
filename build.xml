@@ -251,6 +251,7 @@
         <pathelement location="${libdir}/byte-buddy-1.6.14.jar"/>
         <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
     </path>
 
     <!-- path to run regular executables -->

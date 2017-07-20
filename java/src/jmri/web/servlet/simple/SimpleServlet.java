@@ -28,6 +28,8 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * WebSocket servlet for JMRI Simple service protocol.
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "SimpleServlet",
         urlPatterns = {"/simple"})
+@ServiceProvider(service = HttpServlet.class)
 public class SimpleServlet extends WebSocketServlet {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
