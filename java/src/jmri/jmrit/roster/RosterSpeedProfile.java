@@ -274,6 +274,8 @@ public class RosterSpeedProfile {
             }
             entry = speeds.lowerEntry(lowStep);
         }
+        if (log.isDebugEnabled()) log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}", 
+                lowStep, lower, highStep, higher, iSpeedStep);
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
@@ -333,6 +335,8 @@ public class RosterSpeedProfile {
            }
            entry = speeds.lowerEntry(lowStep);
         }
+        if (log.isDebugEnabled()) log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}", 
+                lowStep, lower, highStep, higher, iSpeedStep);
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
                 log.error("Nothing in speed Profile");
@@ -896,7 +900,7 @@ public class RosterSpeedProfile {
 
     /**
      * Get the throttle setting to achieve a track speed
-     * @param speed desired track speed in mms
+     * @param speed desired track speed in mm/sec
      * @param isForward direction
      * @return throttle setting
      */
@@ -953,7 +957,8 @@ public class RosterSpeedProfile {
                }
             }
         }
-        if (log.isDebugEnabled()) log.debug("slowerKey={}, fasterKey={} for speed={}", slowerKey, fasterKey, speed);
+        if (log.isDebugEnabled()) log.debug("slowerKey={}, slowerValue={} fasterKey={} fasterValue={} for speed={}", 
+                slowerKey, slowerValue, fasterKey, fasterValue, speed);
         if (entry == null) {
             // faster does not exists use slower...
             if (slowerValue <= 0.0f) { // neither does slower

@@ -74,11 +74,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ThrottleSetting ts = _commands.get(_idxCurrentCommand);
             _runOnET = _setRunOnET;     // OK to set here
             long time = ts.getTime();
-            synchronized (this) {
-                if (_speedUtil.getSpeedSetting() > 0.0f) {
-                    time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
-                }                
-            }
             String command = ts.getCommand().toUpperCase();
             if (log.isDebugEnabled()) log.debug("Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}. Warrant {}",
                     _idxCurrentCommand+1, ts.getBeanDisplayName(), _warrant.getCurrentBlockName(), time, command, _warrant.getDisplayName());
@@ -90,10 +85,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             if (cmdBlockIdx < _warrant.getCurrentOrderIndex() || (command.equals("NOOP") && (cmdBlockIdx <= _warrant.getCurrentOrderIndex()))) {
                 // Train advancing too fast, need to process commands more quickly,
-                // allowing half second for whistle toots etc.
+                // allow some time for whistle toots etc.
                 if (log.isDebugEnabled()) log.debug("Train reached block \"{}\" before et={}ms . Warrant {}",
                         ts.getBeanDisplayName(), time, _warrant.getDisplayName());
-                time = Math.min(time, 250); // 1/4 sec per command should be enough for toots etc.
+                time = Math.min(time, 100); // 1/10 sec per command should be enough for toots etc.
             }
             if (_abort) {
                 break;
@@ -101,6 +96,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // actual playback total elapsed time is "ts.getTime()" before record time.
             // current block at playback may also be before current block at record
             synchronized (this) {
+                if (!Warrant.Normal.equals(_speedType)) {
+                    time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+                }                
                 try {
                     if (time > 0) {
                         wait(time);
@@ -123,12 +121,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 // commands are ahead of current train position
                 // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notifyAll() to free the wait
-                if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}",
-                        _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
-                ThreadingUtil.runOnLayoutEventually(() -> {
-                    _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
-                });
                 synchronized (this) {
+                    if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}",
+                            _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
+                    ThreadingUtil.runOnLayoutEventually(() -> {
+                        _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
+                    });
                     try {
                         _waitForSync = true;
                         wait();

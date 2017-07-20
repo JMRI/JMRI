@@ -73,6 +73,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Iterator <java.util.Map.Entry <String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator(); 
         while (iter.hasNext()) {
             java.util.Map.Entry <String, RosterSpeedProfile> entry = iter.next();
+            MergePrompt.validateSpeedProfile(entry.getValue(), entry.getKey());  // clean up
             _mergeCandidates.put(entry.getKey(), new Boolean(true));
         }
         return  true;

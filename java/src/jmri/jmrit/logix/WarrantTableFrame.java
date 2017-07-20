@@ -98,6 +98,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             WarrantTableFrame newInstance = InstanceManager.setDefault(WarrantTableFrame.class, new WarrantTableFrame());
             try {
                 newInstance.initComponents();
+                if (log.isDebugEnabled()) log.debug("newInstance");
             } catch (Exception ex) {
                 log.error("Unable to initilize Warrant Table Frame", ex);
             }
@@ -138,6 +139,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     @Override
     public void initComponents() throws Exception {
 
+        if (log.isDebugEnabled()) log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??
         JTable table = new JTable(_model);
         ComboBoxCellEditor comboEd;

@@ -44,7 +44,7 @@ public class SpeedUtil {
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap; 
 
-    public static float SCALE_FACTOR = 140; // divided by _scale, gives a rough correction for track speed
+    public static float SCALE_FACTOR = 55; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil(Warrant war) {
         if (war !=null) {
@@ -109,6 +109,8 @@ public class SpeedUtil {
             setTrainId(null);   // set _rosterId
             _dccAddress = null;           
            return false;
+        } else if (id.equals(_rosterId)){
+            return true;
         }
         _rosterEntry = Roster.getDefault().entryFromTitle(id);
         if (_rosterEntry == null) {
@@ -192,6 +194,7 @@ public class SpeedUtil {
                     }
                 }
             }
+            MergePrompt.validateSpeedProfile(_speedProfile, _rosterId);
         }
         _newRosterId = false;
 
@@ -199,6 +202,17 @@ public class SpeedUtil {
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
+    }
+    
+    protected boolean profileHasSpeedInfo(boolean isForward) {
+        if (_sessionProfile==null) {
+            makeSpeedTree();
+        }
+        if (isForward) {
+            return _speedProfile.hasForwardSpeeds();            
+        } else {
+            return _speedProfile.hasReverseSpeeds();            
+        }
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
@@ -254,8 +268,8 @@ public class SpeedUtil {
     /**
      * Modify a throttle setting to match a speed name type
      * Modification is done according to the interpretation of the speed name
-     * @param tSpeed throttle speed (current)
-     * @param sType speed name
+     * @param tSpeed throttle setting (current)
+     * @param sType speed type name
      * @param isForward direction of travel
      * @return modified throttle setting
      */
@@ -318,11 +332,14 @@ public class SpeedUtil {
 
     /**
      * Get the track speed in millimeters per millisecond (= meters/sec)
+     * If SpeedProfile has no speed information an estimate is given using the WarrantPreferences
+     * throttleFactor.
+     * NOTE:  Call profileHasSpeedInfo() first to determine if a reliable speed is known.
      * for a given throttle setting and direction. 
      * SpeedProfile returns 0 if it has no speed information
      * @param throttleSetting throttle setting
      * @param isForward direction
-     * @return track speed in mm/ms
+     * @return track speed in millimeters/millisecond (not mm/sec)
      */
     protected float getTrackSpeed(float throttleSetting, boolean isForward) {
         float speed = 0.0f;
@@ -365,17 +382,36 @@ public class SpeedUtil {
         return getTrackSpeed(throttleSetting, isForward) * time;
     }
 
+    /**
+     * Get time needed to travel a distance
+     * @param throttleSetting Throttle setting
+     * @param distance in millimeters
+     * @param isForward direction
+     * @return time in milliseconds
+     */
     protected float getTimeForDistance(float throttleSetting, float distance, boolean isForward) {
         float speed = getTrackSpeed(throttleSetting, isForward);
+        if (distance < 0.0f) {
+            return 0.0f;
+        }
         return (distance/speed);
     }
 
-    protected RampData rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType, boolean isForward) {
+    /**
+     * Get ramp length needed to change speed using the WarrantPreference deltas for 
+     * throttle increment and time increment
+     * @param curSetting current throttle setting
+     * @param curSpeedType current speed type
+     * @param toSpeedType Speed type change
+     * @param isForward direction
+     * @return distance in millimeters
+     */
+    protected RampData rampLengthForSpeedChange(float curSetting, String curSpeedType, String toSpeedType, boolean isForward) {
         if (curSpeedType.equals(toSpeedType)) {
             return new RampData(0.0f, 0);
         }
-        float fromSpeed = modifySpeed(curSpeed, curSpeedType, isForward);
-        float toSpeed = modifySpeed(curSpeed, toSpeedType, isForward);
+        float fromSpeed = modifySpeed(curSetting, curSpeedType, isForward);
+        float toSpeed = modifySpeed(curSetting, toSpeedType, isForward);
         if (toSpeed > fromSpeed) {
             float tmp = fromSpeed;
             fromSpeed = toSpeed;
@@ -451,6 +487,7 @@ public class SpeedUtil {
                 aveSpeed = totalLength / _timeAtSpeed;
                 aveSpeed *= 1000;   // SpeedProfile is mm/sec
                 speed = totalLength / elpsedTime;
+                speed *= 1000;
                 aveThrottle = _settingsTravelled / _timeAtSpeed;
                 // throttle setting should be a step increment
                 aveThrottle = _stepIncrement * Math.round(aveThrottle/_stepIncrement);

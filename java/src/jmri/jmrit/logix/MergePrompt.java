@@ -177,7 +177,7 @@ public class MergePrompt extends JDialog {
         }
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane pane = new JScrollPane(table);
-        int barWidth = pane.getVerticalScrollBar().getPreferredSize().width;
+        int barWidth = 5+pane.getVerticalScrollBar().getPreferredSize().width;
         tablewidth += barWidth;
         pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
         panel.add(pane);
@@ -242,6 +242,79 @@ public class MergePrompt extends JDialog {
             model.speedArray.remove(entry);
             model.profile.deleteStep(entry.getKey());
             model.fireTableDataChanged();
+        }
+    }
+
+    /**
+     * Check that non zero value are ascending for both forward and reverse speeds.
+     * Omit anomalies.
+     * @param speedProfile speedProfile
+     * @param id roster id
+     */
+    static protected void validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
+        // do forward speeds, then reverse
+        TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
+        float lastForward = 0;
+        Integer lastKey = Integer.valueOf(0);
+        Iterator<Map.Entry<Integer, SpeedStep>> iter = rosterTree.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<Integer, SpeedStep> entry = iter.next(); 
+            float forward = entry.getValue().getForwardSpeed();
+            Integer key = entry.getKey();
+            if (forward > 0.0f) {
+                if (forward < lastForward) {  // anomaly - remove bad entry
+                    while (iter.hasNext()) {
+                        Map.Entry<Integer, SpeedStep> nextEntry = iter.next();
+                        float nextForward = nextEntry.getValue().getForwardSpeed();
+                        if (nextForward > 0.0f) {
+                            if (nextForward > lastForward) {    // remove forward
+                                log.info("Remove anomaly key={}, forward={} from profile {}", key, forward, id);
+                                speedProfile.setForwardSpeed(key, 0.0f);
+                                forward = nextForward;
+                                key = nextEntry.getKey();
+                            } else {    // remove lastForward
+                                speedProfile.setForwardSpeed(lastKey, 0.0f);
+                                log.info("Remove anomaly key={}, forward={} from profile {}", lastKey, lastForward, id);
+                            }
+                            break;
+                        }
+                    }
+                }
+                lastForward = forward;
+                lastKey = key;
+            }
+        }
+
+        rosterTree = speedProfile.getProfileSpeeds();
+        float lastReverse = 0;
+        lastKey = Integer.valueOf(0);
+        iter = rosterTree.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<Integer, SpeedStep> entry = iter.next(); 
+            float reverse = entry.getValue().getReverseSpeed();
+            Integer key = entry.getKey();
+            if (reverse > 0.0f) {
+                if (reverse < lastReverse) {  // anomaly - remove bad entry
+                    while (iter.hasNext()) {
+                        Map.Entry<Integer, SpeedStep> nextEntry = iter.next();
+                        float nextreverse = nextEntry.getValue().getReverseSpeed();
+                        if (nextreverse > 0.0f) {
+                            if (nextreverse > lastReverse) {    // remove reverse
+                                log.info("Remove anomaly key={}, reverse={} from profile {}", key, reverse, id);
+                                speedProfile.setReverseSpeed(key, 0.0f);
+                                reverse = nextreverse;
+                                key = nextEntry.getKey();
+                            } else {    // remove lastReverse
+                                speedProfile.setReverseSpeed(lastKey, 0.0f);
+                                log.info("Remove anomaly key={}, reverse={} from profile{}", lastKey, lastReverse, id);
+                            }
+                            break;
+                        }
+                    }
+                }
+                lastReverse = reverse;
+                lastKey = key;
+            }           
         }
     }
 

@@ -750,7 +750,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
-            String msg = Bundle.getMessage("noThrottle", (throttle!=null?throttle.getClass():getDisplayName()));
+            String msg = Bundle.getMessage("noThrottle", getDisplayName());
             abortWarrant(msg);
             firePropertyChange("throttleFail", null, msg);
             return;
@@ -1486,14 +1486,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_engineer != null) {
             _engineer.clearWaitForSync();
         }
-        _idxLastOrder = _idxCurrentOrder;            
-        _idxCurrentOrder = activeIdx;
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
         block._entryTime = System.currentTimeMillis();
         if (_runMode == MODE_RUN) {
             _speedUtil.enteredBlock(_idxCurrentOrder, activeIdx);               
         }
+        _idxLastOrder = _idxCurrentOrder;            
+        _idxCurrentOrder = activeIdx;
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
         // Do signals, speed etc.
         if (_idxCurrentOrder < _orders.size() - 1) {

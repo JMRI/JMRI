@@ -1311,15 +1311,57 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             comp.setBackground(Color.white);
         }
         if (tooltip != null) {
-            panel.setToolTipText(tooltip);
-            comp.setToolTipText(Bundle.getMessage(tooltip));
-            l.setToolTipText(Bundle.getMessage(tooltip));
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
+            l.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
         return panel;
     }
 
+    /**
+     * Puts label message to the Left, 2nd component (button) to the right
+     *
+     * @param vertical Label orientation true = above, false = left
+     * @param comp     Component to put into JPanel
+     * @param label    Bundle keyword for label message
+     * @param tooltip  Bundle keyword for tooltip message
+     * @return Panel containing Component
+     */
+    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, String label, String tooltip) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        JLabel l = new JLabel(Bundle.getMessage(label));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(l);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(Box.createHorizontalGlue());
+
+//        comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
+//        comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
+        panel.add(comp);
+        if (comp instanceof JTextField || comp instanceof JComboBox) {
+            comp.setBackground(Color.white);
+        }
+        button.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        panel.add(button);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        
+        if (tooltip != null) {
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            button.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
+            l.setToolTipText(tipText);
+        }
+        panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
+        panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
+        return panel;        
+    }
     /**
      * Puts label message to the Right
      *
@@ -1347,8 +1389,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         if (tooltip != null) {
-            panel.setToolTipText(tooltip);
-            comp.setToolTipText(Bundle.getMessage(tooltip));
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
