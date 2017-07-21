@@ -10278,18 +10278,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
+        setLayoutDimensions(windowW, windowH, x, y, panelW, panelH, false);
+    }
+    public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH, boolean merge) {
         windowWidth = windowW;
         windowHeight = windowH;
         setSize(windowWidth, windowHeight);
 
-        Rectangle2D panelBounds = calculateMinimumLayoutBounds();
+        if (merge) {
+            Rectangle2D panelBounds = calculateMinimumLayoutBounds();
 
-        upperLeftX = Math.min(x, (int) panelBounds.getX());
-        upperLeftY = Math.min(y, (int) panelBounds.getY());
+            upperLeftX = Math.min(x, (int) panelBounds.getX());
+            upperLeftY = Math.min(y, (int) panelBounds.getY());
+
+            panelWidth = Math.max(panelW, (int) panelBounds.getWidth());
+            panelHeight = Math.max(panelH, (int) panelBounds.getHeight());
+        } else {
+            upperLeftX = x;
+            upperLeftY = y;
+
+            panelWidth = panelW;
+            panelHeight = panelH;
+        }
         setLocation(upperLeftX, upperLeftY);
-
-        panelWidth = Math.max(panelW, (int) panelBounds.getWidth());
-        panelHeight = Math.max(panelH, (int) panelBounds.getHeight());
         setTargetPanelSize(panelWidth, panelHeight);
 
         log.debug("setLayoutDimensions Position - " + upperLeftX + ","
