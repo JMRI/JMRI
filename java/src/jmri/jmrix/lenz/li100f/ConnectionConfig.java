@@ -8,7 +8,7 @@ package jmri.jmrix.lenz.li100f;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
   *
- * @see LI100Adapter
+ * @see LI100fAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
