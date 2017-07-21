@@ -83,7 +83,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JComboBox cardSizeBox; 
     protected javax.swing.JComboBox cardSize8Box; 
     protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+rbx.getString("LabelCardSize"));
-    protected javax.swing.JLabel onBoardBytesText = new javax.swing.JLabel(rbx.getString("LabelOnBoardBytes"));
+    protected javax.swing.JLabel onBoardBytesText = new javax.swing.JLabel(rbx.getString("LabelOnBoardBytes")+ " 3 Input Bytes, 6 Output Bytes");
 	
     protected javax.swing.JButton addNodeButton = new javax.swing.JButton(rbx.getString("ButtonAdd"));
     protected javax.swing.JButton editNodeButton = new javax.swing.JButton(rbx.getString("ButtonEdit"));
@@ -99,7 +99,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JPanel panel2  = new JPanel();
     protected javax.swing.JPanel panel2a = new JPanel();
     protected javax.swing.JPanel panel2b = new JPanel();  //c2
-    protected javax.swing.JPanel panel2c = new JPanel();  //c2
+    protected javax.swing.JPanel panel2c = new JPanel();  //c2 IOX config
     protected javax.swing.JPanel panelnodeDescBox = new JPanel();   //c2 node desctipion box
     protected javax.swing.JPanel panelnodeDesc= new JPanel();  //c2 node description
     protected javax.swing.JPanel panelnetOpt = new JPanel();  //c2 CMRInet options
@@ -159,12 +159,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
      private CMRISystemConnectionMemo _memo = null;
 
-   
-//    public NodeConfigManagerFrame() 
-//    {
-//        super();
-//        curFrame = this;
-//    }
     /**
      * Constructor method
      */
@@ -835,8 +829,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         for (int i = 0; i<64 ; i++) {
             cardType[i] = rbx.getString("CardTypeNone");
         }
+        
+        //cpMega onboard bytes held in a separate array and will be copied
+        //to CardArray.
         for (int i = 0; i<16 ; i++) {
-            onBoardType[i] = rbx.getString("CardTypeNone"); //cpMega onboard bytes
+            onBoardType[i] = rbx.getString("CardTypeNone");                                 
         }
         
         for (int i = 0; i<48 ; i++) {
@@ -850,7 +847,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             cpnodeOpts[i] = 0;
          }
         nodeDescText = "";
-
     }
     /** 
      *  Initialize the node configuration window
@@ -880,9 +876,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");       //c2 
+        
     //-------------------------------------------------------------
-    //  Hide the menu item until we are ready to release the cpMega
-    //    nodeTypeBox.addItem("CPMEGA");
+    //  Hide the menu item until we are ready to release the cpMega    
+        nodeTypeBox.addItem("CPMEGA");    
     //-------------------------------------------------------------                                
         
         /**
@@ -910,7 +907,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true); 
                             panelnodeOpt.setVisible(false);
                             nodeType = SerialNode.SMINI;
-                            
+                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 3 Input, 6 Output");
                     }
                     else if (s.equals("USIC_SUSIC")) 
                     {
@@ -927,13 +924,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true);
                             panelnodeOpt.setVisible(false);
                             nodeType = SerialNode.USIC_SUSIC;
+                            onBoardBytesText.setText("  ");
                     }
                     else if (s.equals("CPNODE"))   //c2
                     {
                             panel2.setVisible(false);
                             panel2a.setVisible(false);
-                            panel2b.setVisible(false); // true
-                            panel2c.setVisible(true); 
+                            panel2b.setVisible(true); 
+                            panel2c.setVisible(false);   // IOX bytes
                             cardSizeText.setVisible(true);
                             cardSizeBox.setVisible(false);
                             cardSize8Box.setVisible(true);
@@ -943,14 +941,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true);
                             panelnodeOpt.setVisible(true);
                             nodeType = SerialNode.CPNODE;
-                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 2 Bytes");			
+                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 2 Bytes");
                    }
                     else if (s.equals("CPMEGA"))   //c2
                     {
                             panel2.setVisible(false);
                             panel2a.setVisible(false);
                             panel2b.setVisible(true);
-                            panel2c.setVisible(true); 
+                            panel2c.setVisible(true);   // IOX bytes
                             cardSizeText.setVisible(true);
                             cardSizeBox.setVisible(false);
                             cardSize8Box.setVisible(true);
@@ -960,7 +958,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true);
                             panelnodeOpt.setVisible(true);
                             nodeType = SerialNode.CPMEGA;
-                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 6 Bytes");			
+                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 8 Bytes");
                     }
              /**
               *   Here add code for other types of nodes
@@ -972,9 +970,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
               */
               resetNotes();
             }
-	});
+	});                
+        nodeTypeBox.setToolTipText(rbx.getString("TipNodeType")); 
         
-        nodeTypeBox.setToolTipText(rbx.getString("TipNodeType"));        
         JPanel panel12 = new JPanel();
         panel12.setLayout(new FlowLayout());
         panel12.add(new JLabel(rbx.getString("LabelDelay")+" "));
@@ -1022,10 +1020,17 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         pulseWidthField.setToolTipText(rbx.getString("TipPulseWidth"));
         pulseWidthField.setText("500");       
         panel13.add(new JLabel(rbx.getString("LabelMilliseconds")));
-                
+
+        JPanel panel14 = new JPanel();        
+        panel14.add(onBoardBytesText);
+        panel14.setVisible(true);
+        
+        // Load the top half of the common window
+        //---------------------------------------
         panel1.add(panel11);
         panel1.add(panel12);
 	panel1.add(panel13);
+	panel1.add(panel14);
         contentPane.add(panel1);			
 		
         /**
@@ -1081,6 +1086,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartE")));
         panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartF")));
         panel2a.add(panel2a1);
+        
         TableModel searchlightConfigModel = new SearchlightConfigModel();
         JTable searchlightConfigTable = new JTable(searchlightConfigModel);
         searchlightConfigTable.setRowSelectionAllowed(false);
@@ -1095,21 +1101,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel2.setVisible(false);
 		
 	/**
-         * Set up CPMEGA onboard byte configurations
-         * -----------------------------------------
+         * Set up CPMEGA on board byte I/O assignments
+         * ------------------------------------------
          */
-        /*
-        JPanel panel15 = new JPanel();        
-        panel15.add(onBoardBytesText);
-        panel15.setVisible(true);
-        panel2c.add(panel15, BorderLayout.LINE_START);
-        contentPane.add(panel2c);			
-        
-        JPanel panel2b2 = new JPanel();        
-        panel2b2.setLayout(new BoxLayout(panel2b2, BoxLayout.Y_AXIS));
-        panel2b2.add(new JLabel("Assign Onboard Bytes"));
-
-        panel2c.add(panel2b2);
+        JPanel panel2b3 = new JPanel();        
+        panel2b3.setLayout(new BoxLayout(panel2b3, BoxLayout.Y_AXIS));
+        panel2b3.add(new JLabel("Assign Onboard Bytes"));
+        panel2c.add(panel2b3);
         
         TableModel osnodeConfigModel = new OSnodeConfigModel();
         JTable osnodeConfigTable = new JTable(osnodeConfigModel);
@@ -1123,8 +1121,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         
         TableColumnModel osnodePortModel = osnodeConfigTable.getColumnModel();
         TableColumn x11Column = osnodePortModel.getColumn(OSnodeConfigModel.CARDNUM_COLUMN);
-        x11Column.setMinWidth(70);
-        x11Column.setMaxWidth(100);
+        x11Column.setMinWidth(50);
+        x11Column.setMaxWidth(90);
         TableColumn x21Column = osnodePortModel.getColumn(OSnodeConfigModel.CARDTYPE_COLUMN);
         x21Column.setCellEditor(new DefaultCellEditor(osnodeTypeCombo));
         x21Column.setResizable(false);
@@ -1133,19 +1131,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		
         JScrollPane osnodeScrollPane = new JScrollPane(osnodeConfigTable);
         panel2c.add(osnodeScrollPane,BorderLayout.CENTER);
-        contentPane.add(panel2b);
-        panel2c.setVisible(false); 
-        */
+        contentPane.add(panel2c); 
+        panel2.setVisible(false); 
+       
         /**
-         * Set up CPNODE/CPMEGA IOX port assignment table
-         * ---------------------------------------
-         */
-        JPanel panel14 = new JPanel();        
-        panel14.add(onBoardBytesText);
-        panel14.setVisible(true);
-        panel2c.add(panel14, BorderLayout.LINE_START);
-        contentPane.add(panel2c);			
-        
+         * Set up I/O Expander (IOX) port assignments
+         * ------------------------------------------
+         */        
         JPanel panel2b1 = new JPanel();        
         panel2b1.setLayout(new BoxLayout(panel2b1, BoxLayout.Y_AXIS));
         panel2b1.add(new JLabel("Assign IOX Ports"));
@@ -1164,7 +1156,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         
         TableColumnModel cpnodePortModel = cpnodeConfigTable.getColumnModel();
         TableColumn x1Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARDNUM_COLUMN);
-        x1Column.setMinWidth(50);
+        x1Column.setMinWidth(70);
         x1Column.setMaxWidth(100);
         TableColumn x2Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARDTYPE_COLUMN);
         x2Column.setCellEditor(new DefaultCellEditor(cpnodeTypeCombo));
@@ -1177,7 +1169,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel2b);
         panel2b.setVisible(false); 
 
-        
         /**
          * node Description field - all node types have this field
          * -------------------------------------------------------
@@ -1508,6 +1499,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 nodeTypeBox.setSelectedItem("SMINI");
                 bitsPerCard = 24;
                 cardSizeBox.setSelectedItem(rbx.getString("CardSize24"));
+		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 3 Input Bytes, 6 Output Bytes");			
                 // set up the searchlight arrays
                 num2LSearchLights = 0;
                 for (int i=0;i<48;i++) {
@@ -1537,6 +1529,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 if (bitsPerCard==32) {
                 cardSizeBox.setSelectedItem(rbx.getString("CardSize32"));
                 }
+		onBoardBytesText.setText("  ");			
 
             break;
             //-------   
@@ -1546,7 +1539,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		nodeTypeBox.setSelectedItem("CPNODE");
                 bitsPerCard = 8;
                 cardSize8Box.setSelectedItem(rbx.getString("CardSize8"));
-		onBoardBytesText.setText(onBoardBytesText.getText()+" 2 Bytes");			
+		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 2 Bytes");			
                 
                 // --------------
                 // cpNode Options
@@ -1564,7 +1557,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		nodeTypeBox.setSelectedItem("CPMEGA");
                 bitsPerCard = 8;
                 cardSize8Box.setSelectedItem(rbx.getString("CardSize8"));
-		onBoardBytesText.setText(onBoardBytesText.getText()+" 8 Bytes");
+		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 8 Bytes");
                 
                 // --------------
                 // cpMega Options
@@ -1648,7 +1641,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         else if (nodeType==SerialNode.CPMEGA) {
             panel2c.setVisible(true);
-            panel2b.setVisible(true);
+            panel2b.setVisible(false);
         }
         		
     }
@@ -2007,7 +2000,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 
                 // Set the node option bits.  Some are moved from the CMRInet options
                 //-------------------------------------------------------------------
-                curNode.setOptNet_AUTOPOLL(1);  // Default node to be polled
+                curNode.setOptNet_AUTOPOLL(cbx_cmrinetopt_AUTOPOLL.isSelected() ? 1 : 0);
 
                 curNode.setOptNode_SENDEOT(cbx_cpnodeopt_SENDEOT.isSelected() ? 1 : 0);
                 curNode.setOptNode_USECMRIX(cbx_cmrinetopt_USECMRIX.isSelected() ? 1 : 0); // Copy from CMRInet
@@ -2388,11 +2381,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         {
             if (c==0)
             {
-                return Integer.toString(r);
+                return "       "+Integer.toString(r);
             }
             else if (c==1) 
             {
-                return cardType[r];
+                return "  "+cardType[r];
             }
             return "";
         }
@@ -2409,7 +2402,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int TYPE_COLUMN = 1;
     }
     private String[] cardConfigColumnNames = {rbx.getString("HeadingCardAddress"),
-                                              rbx.getString("HeadingCardType")};
+                                              " "+rbx.getString("HeadingCardType")};
     private String[] cardType = new String[64];
     private String[] onBoardType = new String[16];
 	

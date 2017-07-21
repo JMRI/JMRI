@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 
- * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016
+ * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016, 2017
 
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
@@ -86,6 +86,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
             }
             n.addContent(makeParameter("cardtypelocation", "" + value));
+//            log.info("Node "+node.nodeAddress+" Card Type Written = "+value);
 
             // CMRInet Options  c2
             //-----------------
@@ -94,7 +95,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     value = value + Integer.toHexString((node.getCMRInetOpts(i)&0xF));
             }     
                 n.addContent(makeParameter("cmrinetoptions",""+value.toUpperCase()));
-  //          log.info("Node "+node.nodeAddress+" NET Options Written = "+value);
+//            log.info("Node "+node.nodeAddress+" NET Options Written = "+value);
                
             // cpNode Options  Classic CMRI nodes do not have options
             //-------------------------------------------------------
@@ -105,7 +106,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     value = value + Integer.toHexString((node.getcpnodeOpts(i)&0xF));
                 }           
                 n.addContent(makeParameter("cpnodeoptions",""+value.toUpperCase()));
- //               log.info("Node "+node.nodeAddress+" NODE Options Written = "+value);
+//                log.info("Node "+node.nodeAddress+" NODE Options Written = "+value);
             }
             
             // node description c2

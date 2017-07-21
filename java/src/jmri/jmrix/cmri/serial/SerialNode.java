@@ -59,6 +59,12 @@ public class SerialNode extends AbstractNode {
     public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type
     public static final int CPNODE = 3;         // cpNode Control Point (Arduino) node type  c2
     public static final int CPMEGA = 4;         // Open Source Node (OSN)  e.g Mega2560 R3 c2
+    
+    public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
+    public static final int NDP_USICSUSIC32 = 88; // 'X' USIC/SUSIC 32 bit cards
+    public static final int NDP_SMINI       = 77; // 'M' SMINI      24 bit cards
+    public static final int NDP_CPNODE      = 67; // 'C' CPNODE      8 bit cards
+    public static final int NDP_CPMEGA      = 79; // 'O' CPMEGA      8 bit cards
 
     public static final byte INPUT_CARD = 1;    // USIC/SUSIC input card type for specifying location
     public static final byte OUTPUT_CARD = 2;   // USIC/SUSIC output card type for specifying location
@@ -875,16 +881,16 @@ public class SerialNode extends AbstractNode {
 */
         switch(nodeType)  //c2
         {
-            case SMINI:       initBytes[0] = 77;  // 'M'
+            case SMINI:       initBytes[0] = NDP_SMINI;  // 'M'
             break;
          
-            case USIC_SUSIC:  if (bitsPerCard==24) initBytes[0] = 78;   // 'N'
+            case USIC_SUSIC:  if (bitsPerCard==24) initBytes[0] = NDP_USICSUSIC24;   // 'N'
                                else 
-                                if (bitsPerCard==32) initBytes[0] = 88; // 'X'
+                                if (bitsPerCard==32) initBytes[0] = NDP_USICSUSIC32; // 'X'
             break;
-            case CPNODE:      initBytes[0] = 67;  // 'C'   c2
+            case CPNODE:      initBytes[0] = NDP_CPNODE;  // 'C'   c2
             break;
-            case CPMEGA:      initBytes[0] = 79;  // 'O'   c2
+            case CPMEGA:      initBytes[0] = NDP_CPMEGA;  // 'O'   c2
             break;
             
             default: ;
