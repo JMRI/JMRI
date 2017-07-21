@@ -1,13 +1,11 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
 /**
@@ -51,7 +49,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public void setComment(String comment) {
         String old = this.comment;
-        if (comment == null || comment.isEmpty() || comment.trim().length() < 1 ) {
+        if (comment == null || comment.isEmpty() || comment.trim().length() < 1) {
             this.comment = null;
         } else {
             this.comment = comment;
@@ -90,8 +88,8 @@ public abstract class AbstractNamedBean implements NamedBean {
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
     final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    final Hashtable<PropertyChangeListener, String> register = new Hashtable<>();
-    final Hashtable<PropertyChangeListener, String> listenerRefs = new Hashtable<>();
+    final HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -124,13 +122,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        Enumeration<PropertyChangeListener> en = register.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            if (register.get(l).equals(name)) {
-                list.add(l);
-            }
-        }
+        register.keySet().stream().filter((l) -> (register.get(l).equals(name))).forEachOrdered((l) -> {
+            list.add(l);
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
@@ -141,13 +135,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
     @Override
@@ -191,10 +179,11 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
-        if (s != null)
+        if (s != null) {
             mUserName = NamedBean.normalizeUserName(s);
-        else
+        } else {
             mUserName = null;
+        }
         firePropertyChange("UserName", old, mUserName);
     }
 
@@ -217,24 +206,27 @@ public abstract class AbstractNamedBean implements NamedBean {
             pcs.removePropertyChangeListener(l);
             register.remove(l);
             listenerRefs.remove(l);
-       }
+        }
     }
 
     @Override
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
-            case UNKNOWN: return Bundle.getMessage("BeanStateUnknown");
-            case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");
-            default: return Bundle.getMessage("BeanStateUnexpected", state);
+            case UNKNOWN:
+                return Bundle.getMessage("BeanStateUnknown");
+            case INCONSISTENT:
+                return Bundle.getMessage("BeanStateInconsistent");
+            default:
+                return Bundle.getMessage("BeanStateUnexpected", state);
         }
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-        public void setProperty(String key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         parameters.put(key, value);
     }
@@ -243,7 +235,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public Object getProperty(String key) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.get(key);
     }
@@ -252,7 +244,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.keySet();
     }
