@@ -1,25 +1,21 @@
-package jmri.jmrix.nce.macro;
+package jmri.jmrix.nce.packetgen;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    NceMacroEditPanelTest.class,
-    NceMacroGenPanelTest.class,
-    NceMacroBackupTest.class,
-    NceMacroRestoreTest.class,
-    BundleTest.class
+   NcePacketGenPanelTest.class
 })
-
 /**
- * Tests for the jmri.jmrix.nce.macro package
+ * Tests for the jmri.jmrix.nce.packetgen package.
  *
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2017
  */
-public class PackageTest{
+public class PackageTest {
 
     // Main entry point
     static public void main(String[] args) {
