@@ -1,23 +1,34 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
+import javax.swing.JPanel;
+>>>>>>> JMRI/master
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+<<<<<<< HEAD
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 
+=======
+>>>>>>> JMRI/master
 
 /**
  * Frame for Adding new Nodes
@@ -36,8 +47,8 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Constructor method
      *
-     * @param tc, the XBeeTrafficController assocaiated with this connection.
-     * @param source, the NodeConfigFrame that started this add.
+     * @param tc the XBeeTrafficController associated with this connection.
+     * @param source the NodeConfigFrame that started this add.
      */
     public AddNodeFrame(XBeeTrafficController tc,NodeConfigFrame source) {
         super(tc);

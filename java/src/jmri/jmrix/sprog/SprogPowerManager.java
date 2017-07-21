@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractMessage;
  * PowerManager implementation for controlling SPROG layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         implements PowerManager, SprogListener {
 
@@ -51,9 +51,9 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         firePropertyChange("Power", null, null);
     }
 
-    /*
-     * Used to update power state after service mode programming operation
-     * without sending a message to the SPROG
+    /**
+     * Update power state after service mode programming operation
+     * without sending a message to the SPROG.
      */
     public void notePowerState(int v) {
         power = v;
@@ -65,7 +65,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         return power;
     }
 
+<<<<<<< HEAD
     // to free resources when no longer used
+=======
+    /**
+     * Free resources when no longer used.
+     */
+>>>>>>> JMRI/master
     @Override
     public void dispose() throws JmriException {
         trafficController.removeSprogListener(this);
@@ -78,7 +84,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         }
     }
 
+<<<<<<< HEAD
     // to listen for status changes from Sprog system
+=======
+    /**
+     * Listen for status changes from Sprog system.
+     */
+>>>>>>> JMRI/master
     @Override
     public void notifyReply(SprogReply m) {
         if (waiting) {
@@ -107,9 +119,6 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         } else {
             this.notifyReply((SprogReply) m);
         }
-
     }
 
 }
-
-

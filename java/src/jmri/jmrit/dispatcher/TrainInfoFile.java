@@ -356,6 +356,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         }
         // Sort the resulting array
 <<<<<<< HEAD
+<<<<<<< HEAD
         if ((sp != null) && sp.length > 1) {
             jmri.util.StringUtil.sort(sbox);
         }
@@ -367,10 +368,15 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 // end djd debugging
         return sbox;
 =======
+=======
+>>>>>>> JMRI/master
         names.sort((s1, s2) -> {
             return s1.compareTo(s2);
         });
         return names.toArray(new String[names.size()]);
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
     }
 

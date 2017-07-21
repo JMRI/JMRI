@@ -42,7 +42,7 @@ import jmri.Light;
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public abstract class AbstractLight extends AbstractNamedBean
-        implements Light, java.io.Serializable {
+        implements Light {
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);

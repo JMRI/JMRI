@@ -26,7 +26,11 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
 <<<<<<< HEAD
+<<<<<<< HEAD
  // TODO: Figure out what these options are, and should be.
+=======
+        // TODO: Figure out what these options are, and should be.
+>>>>>>> JMRI/master
 =======
         // TODO: Figure out what these options are, and should be.
 >>>>>>> JMRI/master
@@ -53,6 +57,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
         // do the common manager config
 <<<<<<< HEAD
+<<<<<<< HEAD
 
  new DCCppInitializationManager(this.getSystemConnectionMemo());
 
@@ -60,6 +65,15 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         packets.startThreads();
     }
 
+=======
+        
+        new DCCppInitializationManager(this.getSystemConnectionMemo());
+        
+        // start operation
+        packets.startThreads();
+    }
+    
+>>>>>>> JMRI/master
 =======
         
         new DCCppInitializationManager(this.getSystemConnectionMemo());
@@ -77,7 +91,11 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     // private control members
     private boolean opened = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -87,6 +105,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         log.debug("configureOption1: " + value);
         setCommandStationType(value);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     @Override
@@ -101,6 +120,14 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     
 >>>>>>> JMRI/master
     @Override
+=======
+    
+    @Override
+    public void setOutputBufferEmpty(boolean s) {
+    }
+    
+    @Override
+>>>>>>> JMRI/master
     public boolean okToSend() { return true; }
     
     private final static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapter.class.getName());

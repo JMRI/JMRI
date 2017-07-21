@@ -17,9 +17,11 @@ import java.awt.GraphicsEnvironment;
 public class TreeModelTest {
 
     @Test
-    public void testInstance() {
+    public void testInstance() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", TreeModel.instance());
+        // then kill the thread
+        TreeModel.instance().terminateThreads();
     }
 
     @Before

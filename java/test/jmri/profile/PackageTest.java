@@ -1,6 +1,7 @@
 package jmri.profile;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -53,6 +54,8 @@ public class PackageTest extends TestCase {
     }
 
 =======
+=======
+>>>>>>> JMRI/master
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -68,7 +71,16 @@ import org.junit.runners.Suite;
     ProfileManagerTest.class,
     ProfilePreferencesPanelTest.class,
     ProfileTableModelTest.class,
+<<<<<<< HEAD
     SearchPathTableModelTest.class
+})
+public class PackageTest {
+>>>>>>> JMRI/master
+=======
+    SearchPathTableModelTest.class,
+    ProfileConfigurationTest.class,
+    ProfilePropertiesTest.class,
+    NullProfileTest.class
 })
 public class PackageTest {
 >>>>>>> JMRI/master

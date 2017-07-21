@@ -5,8 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+=======
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+>>>>>>> JMRI/master
 
 /**
  *
@@ -33,6 +38,10 @@ public class AbstractRailComReporterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
     private final static Logger log = LoggerFactory.getLogger(AbstractRailComReporterTest.class.getName());
+=======
+    //private final static Logger log = LoggerFactory.getLogger(AbstractRailComReporterTest.class.getName());
+>>>>>>> JMRI/master
 
 }

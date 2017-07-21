@@ -59,7 +59,11 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
      public boolean okToSend() {
+=======
+    public boolean okToSend() {
+>>>>>>> JMRI/master
 =======
     public boolean okToSend() {
 >>>>>>> JMRI/master
@@ -110,15 +114,21 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
 <<<<<<< HEAD
+<<<<<<< HEAD
                 @Override
                 public void run() {
                     // If the timer times out, send a request for status
                     DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
 =======
+=======
+>>>>>>> JMRI/master
                     @Override
                     public void run() {
                         // If the timer times out, send a request for status
                         DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                             .sendDCCppMessage(
                                               jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(),

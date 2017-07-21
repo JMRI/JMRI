@@ -36,12 +36,17 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.serialdriver.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.qsimon.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.qsi.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(QsiSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(QsiPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.swing.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(QSIConnectionTypeListTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new JUnit4TestAdapter(QSIMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(QsiProgrammerTest.class));
+>>>>>>> JMRI/master
 
         return suite;
     }

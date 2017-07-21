@@ -35,4 +35,5 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetLightManagerXml.class.getName());
+
 }

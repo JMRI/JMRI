@@ -23,10 +23,12 @@ import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox eStopCB;
@@ -177,7 +179,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
-        JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelPort"));
         label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
         SPPanel.add(label);
@@ -213,7 +215,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
 
-        turnoutCB = new JCheckBox(Bundle.getMessage("LabelTurnout"));
+        turnoutCB = new JCheckBox(Bundle.getMessage("Turnouts"));
         turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
         panel.add(turnoutCB);
 

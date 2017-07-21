@@ -7,7 +7,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 <<<<<<< HEAD
+<<<<<<< HEAD
    DebugThrottleManagerTest.class
+=======
+   DebugThrottleManagerTest.class,
+   DebugThrottleTest.class
+>>>>>>> JMRI/master
 =======
    DebugThrottleManagerTest.class,
    DebugThrottleTest.class

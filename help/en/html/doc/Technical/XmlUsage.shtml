@@ -46,11 +46,16 @@
       "/xml/DTD">xml/DTD</a> directories.</p>
 
       <p>JMRI writes all files to reference schema using URLs such
-      as "http://jmri.org/xml/schema/layout.xsd". When read by the
+      as "http://jmri.org/xml/schema/layout-2-9-6.xsd". When read by the
       program this will automatically be handled properly by a
       custom resolver. When read by e.g. a web browser, the browser
       can get the schema from the main JMRI web servers when
-      needed.</p>
+      needed. For more information on how JMRI uses XML Schema,
+      particularly how we control and version changes, 
+      see our
+      <a href="XmlSchema.shtml">page on XML Schema usage</a>
+      and
+      <a href="XmlSchemaExamples.shtml">associated set of examples</a>.</p>
 
       <p>The DTDs were located from DOCTYPE definition statements
       in the XML files. For historical reasons, these can be in

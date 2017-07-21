@@ -44,7 +44,6 @@ import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
 import jmri.jmrit.symbolicprog.FnMapPanel;
 import jmri.jmrit.symbolicprog.FnMapPanelESU;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.PrintCvAction;
 import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
@@ -183,7 +182,6 @@ public class PaneProgPane extends javax.swing.JPanel
     static final String LAST_GRIDY = "last_gridy";
 
     protected CvTableModel _cvModel;
-    IndexedCvTableModel _indexedCvModel;
     protected VariableTableModel _varModel;
     protected PaneContainer container;
     protected RosterEntry rosterEntry;
@@ -214,8 +212,8 @@ public class PaneProgPane extends javax.swing.JPanel
     public PaneProgPane() {
     }
 
-    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
-        this(parent, name, pane, cvModel, icvModel, varModel, modelElem, pRosterEntry, false);
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+        this(parent, name, pane, cvModel, varModel, modelElem, pRosterEntry, false);
     }
 
     /**
@@ -226,8 +224,6 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param pane         The JDOM Element for the pane definition
      * @param cvModel      Already existing TableModel containing the CV
      *                     definitions
-     * @param icvModel     Already existing TableModel containing the Indexed CV
-     *                     definitions
      * @param varModel     Already existing TableModel containing the variable
      *                     definitions
      * @param modelElem    "model" element from the Decoder Index, used to check
@@ -235,12 +231,11 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param pRosterEntry The current roster entry, used to get sound labels.
      * @param isProgPane   True if the pane is a default programmer pane
      */
-    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry, boolean isProgPane) {
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry, boolean isProgPane) {
 
         container = parent;
         mName = name;
         _cvModel = cvModel;
-        _indexedCvModel = icvModel;
         _varModel = varModel;
         rosterEntry = pRosterEntry;
 
@@ -293,7 +288,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         // explain why pane is empty
-        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) {
+        if (cvList.isEmpty() && varList.isEmpty() && isProgPane) {
             JPanel pe = new JPanel();
             pe.setLayout(new BoxLayout(pe, BoxLayout.Y_AXIS));
             int line = 1;
@@ -532,15 +527,6 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     protected TreeSet<Integer> cvList = new TreeSet<>(); //  TreeSet is iterated in order
     protected Iterator<Integer> cvListIterator;
-    /**
-     * This remembers the indexed CVs on this pane for the Read/Write sheet
-     * operation. They are stored as a list of Integer objects, each of which is
-     * the index of the indexed CV in the VariableTable. This is done so that we
-     * can read/write them as a variable. So far (sic), the only use of this is
-     * for the IndexedCvTable rep.
-     */
-    List<Integer> indexedCvList = new ArrayList<>();
-    int indexedCvListIndex;
 
     protected JToggleButton readChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
     protected JToggleButton readAllButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
@@ -633,8 +619,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("readPane starts with "
                     + varList.size() + " vars, "
-                    + cvList.size() + " cvs "
-                    + indexedCvList.size() + " indexed cvs");
+                    + cvList.size() + " cvs ");
         }
         prepReadPane(true);
         return nextRead();
@@ -673,7 +658,6 @@ public class PaneProgPane extends javax.swing.JPanel
         setToRead(justChanges, true);
         varListIndex = 0;
         cvListIterator = cvList.iterator();
-        indexedCvListIndex = 0;
     }
 
     /**
@@ -690,8 +674,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("readAllPane starts with "
                     + varList.size() + " vars, "
-                    + cvList.size() + " cvs "
-                    + indexedCvList.size() + " indexed cvs");
+                    + cvList.size() + " cvs ");
         }
         prepReadPane(false);
         // start operation
@@ -736,19 +719,6 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     cv.setToRead(startProcess);
-                }
-            }
-
-            for (int i = 0; i < indexedCvList.size(); i++) {
-                CvValue icv = _indexedCvModel.getCvByRow(i);
-                if (justChanges) {
-                    if (VariableValue.considerChanged(icv)) {
-                        icv.setToRead(startProcess);
-                    } else {
-                        icv.setToRead(false);
-                    }
-                } else {
-                    icv.setToRead(startProcess);
                 }
             }
         }
@@ -797,20 +767,6 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     cv.setToWrite(startProcess);
-                }
-            }
-
-            log.debug("about to start setToWrite of indexedCvList");
-            for (int i = 0; i < indexedCvList.size(); i++) {
-                CvValue icv = _indexedCvModel.getCvByRow(i);
-                if (justChanges) {
-                    if (VariableValue.considerChanged(icv)) {
-                        icv.setToWrite(startProcess);
-                    } else {
-                        icv.setToWrite(false);
-                    }
-                } else {
-                    icv.setToWrite(startProcess);
                 }
             }
         }
@@ -922,6 +878,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
         // found no CVs needing read, try indexed CVs
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
@@ -961,6 +918,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true; // only make one request at a time!
             }
         }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextRead found nothing to do");
@@ -1013,6 +972,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
         // found no CVs needing read, try indexed CVs
         while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex);
@@ -1048,6 +1008,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true; // only make one request at a time!
             }
         }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextConfirm found nothing to do");
@@ -1118,8 +1080,6 @@ public class PaneProgPane extends javax.swing.JPanel
         varListIndex = 0;
 
         cvListIterator = cvList.iterator();
-
-        indexedCvListIndex = 0;
         log.debug("end prepWritePane");
     }
 
@@ -1175,6 +1135,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
         while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex);
@@ -1211,6 +1172,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true; // only make one request at a time!
             }
         }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextWrite found nothing to do");
@@ -1259,8 +1222,6 @@ public class PaneProgPane extends javax.swing.JPanel
         varListIndex = 0;
 
         cvListIterator = cvList.iterator();
-
-        indexedCvListIndex = 0;
     }
 
     /**
@@ -1276,8 +1237,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("confirmPane starts with "
                     + varList.size() + " vars, "
-                    + cvList.size() + " cvs "
-                    + indexedCvList.size() + " indexed cvs");
+                    + cvList.size() + " cvs ");
         }
         prepConfirmPane(true);
         return nextConfirm();
@@ -1298,8 +1258,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("confirmAllPane starts with "
                     + varList.size() + " vars, "
-                    + cvList.size() + " cvs "
-                    + indexedCvList.size() + " indexed cvs");
+                    + cvList.size() + " cvs ");
         }
         prepConfirmPane(false);
         // start operation
@@ -1309,7 +1268,6 @@ public class PaneProgPane extends javax.swing.JPanel
     // reference to variable being programmed (or null if none)
     VariableValue _programmingVar = null;
     CvValue _programmingCV = null;
-    VariableValue _programmingIndexedCV = null;
     boolean _read = true;
 
     // busy during read, write operations
@@ -1343,7 +1301,7 @@ public class PaneProgPane extends javax.swing.JPanel
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event & condition
-        if (_programmingVar == null && _programmingCV == null && _programmingIndexedCV == null) {
+        if (_programmingVar == null && _programmingCV == null ) {
             log.warn("unexpected propertChange: " + e);
             return;
         } else if (log.isDebugEnabled()) {
@@ -1388,6 +1346,7 @@ public class PaneProgPane extends javax.swing.JPanel
             //    }
             //}
             replyWhileProgrammingCV();
+<<<<<<< HEAD
         } else if (e.getSource() == _programmingIndexedCV
                 && e.getPropertyName().equals("Busy")
                 && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -1400,6 +1359,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
             replyWhileProgrammingIndxCV();
+=======
+>>>>>>> JMRI/master
         } else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) {
                 log.debug("ignoring change of Busy " + e.getNewValue()
@@ -1426,17 +1387,6 @@ public class PaneProgPane extends javax.swing.JPanel
         // remove existing listener
         _programmingCV.removePropertyChangeListener(this);
         _programmingCV = null;
-        // restart the operation
-        restartProgramming();
-    }
-
-    public void replyWhileProgrammingIndxCV() {
-        if (log.isDebugEnabled()) {
-            log.debug("correct event for programming Indexed CV, restart operation");
-        }
-        // remove existing listener
-        _programmingIndexedCV.removePropertyChangeListener(this);
-        _programmingIndexedCV = null;
         // restart the operation
         restartProgramming();
     }
@@ -1474,8 +1424,6 @@ public class PaneProgPane extends javax.swing.JPanel
         varListIndex = varList.size();
 
         cvListIterator = null;
-
-        indexedCvListIndex = indexedCvList.size();
         log.debug("end stopProgramming");
     }
 
@@ -1530,6 +1478,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
                 JTable indxcvTable = new JTable(_indexedCvModel);
@@ -1558,6 +1507,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -1746,6 +1697,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
                 JTable indxcvTable = new JTable(_indexedCvModel);
@@ -1774,6 +1726,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -1899,6 +1853,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
                 JTable indxcvTable = new JTable(_indexedCvModel);
@@ -1927,6 +1882,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -2255,6 +2212,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
                 JTable indxcvTable = new JTable(_indexedCvModel);
@@ -2283,6 +2241,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -2867,20 +2827,14 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_programmingCV != null) {
             _programmingCV.removePropertyChangeListener(this);
         }
-        if (_programmingIndexedCV != null) {
-            _programmingIndexedCV.removePropertyChangeListener(this);
-        }
 
         _programmingVar = null;
         _programmingCV = null;
-        _programmingIndexedCV = null;
 
         varList.clear();
         varList = null;
         cvList.clear();
         cvList = null;
-        indexedCvList.clear();
-        indexedCvList = null;
 
         // dispose of any panels
         for (int i = 0; i < panelList.size(); i++) {
@@ -2908,7 +2862,6 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // these are disposed elsewhere
         _cvModel = null;
-        _indexedCvModel = null;
         _varModel = null;
     }
 
@@ -2926,7 +2879,6 @@ public class PaneProgPane extends javax.swing.JPanel
         if (varList.isEmpty() && cvList.isEmpty()) {
             return;
         }
-        // future work needed here to print indexed CVs
 
         // Define column widths for name and value output.
         // Make col 2 slightly larger than col 1 and reduce both to allow for

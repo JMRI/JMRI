@@ -32,6 +32,10 @@ public class ConfigBaseStationFrameTest {
 
         ConfigBaseStationFrame t = new ConfigBaseStationFrame(new DCCppSensorManager(tc,memo.getSystemPrefix()),new DCCppTurnoutManager(tc,memo.getSystemPrefix()),tc);
         Assert.assertNotNull("exists",t);
+<<<<<<< HEAD
+=======
+        t.dispose();
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J

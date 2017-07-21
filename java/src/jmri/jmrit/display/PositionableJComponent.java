@@ -62,9 +62,15 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * *************** Positionable methods *********************
      */
+=======
+    //
+    // *************** Positionable methods *********************
+    //
+>>>>>>> JMRI/master
 =======
     //
     // *************** Positionable methods *********************
@@ -249,9 +255,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
+=======
+>>>>>>> JMRI/master
 =======
 >>>>>>> JMRI/master
     @Override

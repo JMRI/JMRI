@@ -35,7 +35,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -67,7 +67,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Sensors
+     * of Sensors.
      */
     @Override
     protected void createModel() {
@@ -104,7 +104,7 @@ public class SensorTableAction extends AbstractTableAction {
 
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSensor"));
-            //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
             ActionListener okListener = new ActionListener() {
@@ -170,7 +170,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         if (numberOfSensors >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", numberOfSensors),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
@@ -178,7 +178,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysName.getText();
+        String curAddress = sysName.getText().trim();
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -200,10 +200,10 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
 
-            String user = userName.getText();
+            String user = userName.getText().trim();
             if ((x != 0) && user != null && !user.equals("")) {
                 user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
@@ -421,7 +421,11 @@ public class SensorTableAction extends AbstractTableAction {
                 showDebounceChanged();
             }
         });
+<<<<<<< HEAD
         f.addToBottomBox(showPullUpBox, systemPrefix); 
+=======
+        f.addToBottomBox(showPullUpBox, systemPrefix);
+>>>>>>> JMRI/master
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
         showPullUpBox.addActionListener(new ActionListener() {
             @Override

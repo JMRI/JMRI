@@ -332,11 +332,20 @@ public class FileUtilTest {
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+<<<<<<< HEAD
         JUnitUtil.resetInstanceManager();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
 <<<<<<< HEAD
 =======
+        JUnitUtil.waitFor(() -> {
+            return this.programTestFile.exists();
+        }, "Create program test file");
+>>>>>>> JMRI/master
+=======
+        JUnitUtil.resetProfileManager();
+        this.programTestFile = new File(UUID.randomUUID().toString());
+        this.programTestFile.createNewFile();
         JUnitUtil.waitFor(() -> {
             return this.programTestFile.exists();
         }, "Create program test file");

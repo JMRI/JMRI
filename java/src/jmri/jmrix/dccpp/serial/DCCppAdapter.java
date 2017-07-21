@@ -1,16 +1,13 @@
 package jmri.jmrix.dccpp.serial;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
@@ -18,10 +15,17 @@ import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Comm Port.
- * Normally controlled by the lenz.liusb.LIUSBFrame class.
+ * Provide access to DCC++ via a FTDI Virtual Comm Port. Normally controlled by
+ * the lenz.liusb.LIUSBFrame class.
  *
  * @author Mark Underwood Copyright (C) 2015
  *
@@ -50,7 +54,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             // try to set it for DCC++
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -90,15 +94,21 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
 =======
+=======
+>>>>>>> JMRI/master
                     @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                         case SerialPortEvent.DATA_AVAILABLE:
                             if (log.isDebugEnabled()) {
@@ -201,10 +211,16 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             
             opened = true;
+<<<<<<< HEAD
             
         } catch (gnu.io.NoSuchPortException p) {
+=======
+
+        } catch (NoSuchPortException p) {
+
+>>>>>>> JMRI/master
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -214,14 +230,18 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     
     /**
-     * set up all of the other objects to operate with a DCC++ Device connected to this
-     * port
+     * set up all of the other objects to operate with a DCC++ Device connected
+     * to this port
      */
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
 <<<<<<< HEAD
+<<<<<<< HEAD
  DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+=======
+        DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+>>>>>>> JMRI/master
 =======
         DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
 >>>>>>> JMRI/master
@@ -243,11 +263,19 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return new BufferedReader(new InputStreamReader(serialStream));
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     @Override
     public DataInputStream getInputStream() {
  //log.error("Not Using DataInputStream version anymore!");
      //return(null);
+=======
+    
+    @Override
+    public DataInputStream getInputStream() {
+        //log.error("Not Using DataInputStream version anymore!");
+        //return(null);
+>>>>>>> JMRI/master
 =======
     
     @Override
@@ -266,7 +294,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return null;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -291,7 +323,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     /**
      * Local method to do specific configuration
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -308,7 +340,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
         activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master
@@ -340,7 +376,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     
     @Deprecated
 <<<<<<< HEAD
+<<<<<<< HEAD
  static public DCCppAdapter instance() {
+=======
+    static public DCCppAdapter instance() {
+>>>>>>> JMRI/master
 =======
     static public DCCppAdapter instance() {
 >>>>>>> JMRI/master

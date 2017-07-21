@@ -405,7 +405,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-green.gif",
                         "off");
-            } else if (w.hasRouteSet() && w.isAllocated()) {
+            } else if (/*w.hasRouteSet() &&*/ w.isAllocated()) {
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                         "occupied");
@@ -477,6 +477,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         Bundle.getMessage("completeAllocate",
                                 w.getDisplayName()), myGreen, false);
             } else {
+                w.deAllocate();
                 _frame.setStatusText(msg, myGold, false);
                 msg = null;
             }
@@ -490,7 +491,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case SET_COLUMN:
-            msg = w.setRoute(0, null);
+            msg = w.setRoute(1, null);
             if (msg == null) {
                 _frame.setStatusText(
                         Bundle.getMessage("pathsSet", w.getDisplayName()),
@@ -531,12 +532,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     }
                     w.controlRunTrain(s);
-                } else if (setting.equals(WarrantTableFrame.abort)) {
-                    w.deAllocate();
-                } else if (mode == Warrant.MODE_NONE) {
-                    msg = Bundle.getMessage("NotRunning", w.getDisplayName());
-                } else {
-                    getValueAt(row, col);
                 }
             }
             break;

@@ -185,9 +185,15 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * ****** popup AbstractAction.actionPerformed method overrides ********
      */
+=======
+    //
+    // ****** popup AbstractAction.actionPerformed method overrides ********
+    //
+>>>>>>> JMRI/master
 =======
     //
     // ****** popup AbstractAction.actionPerformed method overrides ********
@@ -233,11 +239,16 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.makeIconPanel(false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         ActionListener addIconAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
                 updateLight();
             }
+=======
+        ActionListener addIconAction = (ActionEvent a) -> {
+            updateLight();
+>>>>>>> JMRI/master
 =======
         ActionListener addIconAction = (ActionEvent a) -> {
             updateLight();
@@ -304,7 +315,10 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      * @param e the mouse click
      */
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+=======
+>>>>>>> JMRI/master
 =======
 >>>>>>> JMRI/master
     @Override

@@ -34,17 +34,12 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
-    public CvValue(String num, String cvName, String piCv, int piVal, String siCv, int siVal, String iCv, Programmer pProgrammer) {
+    public CvValue(String num, String cvName, Programmer pProgrammer) {
         _num = num;
         _cvName = cvName;
         if (cvName == null) {
             log.error("cvName == null in ctor num: " + num); // NOI18N
         }
-        _piCv = piCv;
-        _piVal = piVal;
-        _siCv = siCv;
-        _siVal = siVal;
-        _iCv = iCv;
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
         _defaultColor = _tableEntry.getBackground();
@@ -53,8 +48,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     @Override
     public String toString() {
-        return "CvValue _num=" + _num + " _cvName=" + _cvName + " _piCv=" + _piCv + " _siCv=" + _siCv
-                + " _iCv=" + _iCv;
+        return "CvValue _num=" + _num + " _cvName=" + _cvName;
     }
 
     void setProgrammer(Programmer p) {
@@ -70,41 +64,6 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _cvName;
     }
     private String _cvName = "";
-
-    @Deprecated // since 3.7.1
-    public String piCv() {
-        return _piCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _piCv;
-
-    @Deprecated // since 3.7.1
-    public int piVal() {
-        return _piVal;
-    }
-    @Deprecated // since 3.7.1
-    private int _piVal;
-
-    @Deprecated // since 3.7.1
-    public String siCv() {
-        return _siCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _siCv;
-
-    @Deprecated // since 3.7.1
-    public int siVal() {
-        return _siVal;
-    }
-    @Deprecated // since 3.7.1
-    private int _siVal;
-
-    @Deprecated // since 3.7.1
-    public String iCv() {
-        return _iCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _iCv;
 
     private JLabel _status = null;
 
@@ -389,6 +348,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 }
 
                 log.warn("Exception during CV read: " + e); // NOI18N
+<<<<<<< HEAD
                 setBusy(false);
             }
         } else {
@@ -467,6 +427,8 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     new Object[]{e.toString()}));
                 }
                 log.warn("Exception during IndexedCV read: " + e); // NOI18N
+=======
+>>>>>>> JMRI/master
                 setBusy(false);
             }
         } else {
@@ -550,6 +512,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
             log.error("No programmer available!"); // NOI18N
+<<<<<<< HEAD
         }
     }
 
@@ -674,6 +637,8 @@ public class CvValue extends AbstractValue implements ProgListener {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
             log.error("No programmer available!"); // NOI18N
+=======
+>>>>>>> JMRI/master
         }
     }
 

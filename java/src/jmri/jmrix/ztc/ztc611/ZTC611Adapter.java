@@ -1,10 +1,20 @@
 package jmri.jmrix.ztc.ztc611;
 
+<<<<<<< HEAD
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+=======
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
+>>>>>>> JMRI/master
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,7 +28,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
  * Provide access to XPressNet via a ZTC611 connected via an FTDI virtual comm
+=======
+ * Provide access to XpressNet via a ZTC611 connected via an FTDI virtual comm
+>>>>>>> JMRI/master
  * port.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -34,7 +48,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
 
     @Override
     public String openPort(String portName, String appName) {
+<<<<<<< HEAD
         // open the port in XPressNet mode, check ability to set moderators
+=======
+        // open the port in XpressNet mode, check ability to set moderators
+>>>>>>> JMRI/master
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -46,7 +64,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
             // try to set it for XNet
             try {
                 setSerialPort();
+<<<<<<< HEAD
             } catch (gnu.io.UnsupportedCommOperationException e) {
+=======
+            } catch (UnsupportedCommOperationException e) {
+>>>>>>> JMRI/master
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -187,7 +209,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
 
             opened = true;
 
+<<<<<<< HEAD
         } catch (gnu.io.NoSuchPortException p) {
+=======
+        } catch (NoSuchPortException p) {
+>>>>>>> JMRI/master
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
             log.error("IO exception while opening port " + portName + " trace follows: " + ex);
@@ -197,7 +223,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
             log.error("Too Many Listeners exception while opening port " + portName + " trace follows: " + tmlex);
             tmlex.printStackTrace();
             return "Too Many Listeners Exception while opening port " + portName + ": " + tmlex;
+<<<<<<< HEAD
         } catch (gnu.io.UnsupportedCommOperationException ucex) {
+=======
+        } catch (UnsupportedCommOperationException ucex) {
+>>>>>>> JMRI/master
             log.error("unsupported Comm Operation exception while opening port " + portName + " trace follows: " + ucex);
             ucex.printStackTrace();
             return "Unsupported Comm Exception while opening port " + portName + ": " + ucex;
@@ -253,10 +283,17 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
     /**
      * Local method to do specific configuration.
      *
+<<<<<<< HEAD
      * @throws gnu.io.UnsupportedCommOperationException if there is an error
      *                                                  configuring the port
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+=======
+     * @throws UnsupportedCommOperationException if there is an error
+     *                                                  configuring the port
+     */
+    protected void setSerialPort() throws UnsupportedCommOperationException {
+>>>>>>> JMRI/master
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {

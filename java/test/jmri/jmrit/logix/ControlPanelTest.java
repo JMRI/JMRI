@@ -1,14 +1,24 @@
 package jmri.jmrit.logix;
 
+<<<<<<< HEAD
+=======
+import java.awt.GraphicsEnvironment;
+>>>>>>> JMRI/master
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+<<<<<<< HEAD
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+=======
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+>>>>>>> JMRI/master
 
 /**
  *
@@ -22,6 +32,10 @@ public class ControlPanelTest {
         LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
         ControlPanel t = new ControlPanel(f);
         Assert.assertNotNull("exists",t);
+<<<<<<< HEAD
+=======
+        f.dispose();
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J

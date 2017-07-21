@@ -14,6 +14,10 @@ import org.junit.runners.Suite;
    SprogVersionTest.class,
    SprogVersionQueryTest.class,
    SprogHexFileTest.class,
+<<<<<<< HEAD
+=======
+   BundleTest.class
+>>>>>>> JMRI/master
 })
 /**
  * Tests for the jmri.jmrix.sprog.update package

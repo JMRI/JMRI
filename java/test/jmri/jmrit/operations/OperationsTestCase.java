@@ -1,6 +1,10 @@
 package jmri.jmrit.operations;
 
 import java.util.Locale;
+<<<<<<< HEAD
+=======
+import jmri.util.JUnitOperationsUtil;
+>>>>>>> JMRI/master
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
 import junit.framework.TestCase;
@@ -34,6 +38,10 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
+<<<<<<< HEAD
+=======
+        JUnitUtil.resetProfileManager();
+>>>>>>> JMRI/master
         JUnitOperationsUtil.resetOperationsManager();
     }
 

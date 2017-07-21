@@ -204,6 +204,10 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
         notification when that happens.</li>
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        <a id="labels" name="labels"></a>
+>>>>>>> JMRI/master
 =======
         <a id="labels" name="labels"></a>
 >>>>>>> JMRI/master
@@ -212,7 +216,12 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
           <ul>
             <li>"WIP" - this is a "blue flag" indicating Work In Progress - 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 something is needed before this can be merged in.
+=======
+                something is needed before this can be merged in. Place it on
+                a PR so that maintainers don't have to read the entire thread before doing the merge.
+>>>>>>> JMRI/master
 =======
                 something is needed before this can be merged in. Place it on
                 a PR so that maintainers don't have to read the entire thread before doing the merge.
@@ -225,8 +234,11 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
                 released JMRI code itself.
             <li>"Cleanup" - a change that improves the code, but doesn't really affect JMRI users directly
 <<<<<<< HEAD
+<<<<<<< HEAD
             <li>"! Support" - A support request. The "!" is to move it to the top of alphabetic lists.
 =======
+=======
+>>>>>>> JMRI/master
             <li>"Support Request" - A request for help figuring something out, typically found in the Issues section.
                                 Typically these items are closed if resolved, 
                                 or become "Enhancement" or "Bug" items.
@@ -235,6 +247,9 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
             <li>"Duplicate", "Invalid", "Won't Fix" - items that have (typically) been closed
                                 without action.  Issues and PRs never go away, but these
                                 labels mark them as not intended for further consideration.
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
           </ul>
         

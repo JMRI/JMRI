@@ -1,13 +1,17 @@
 package jmri.jmrix.roco;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
- * Returns a list of valid Roco Connection Types Note that most Roco options are
- * Lenz options (RocoNet is XPressNet).
- * <P>
+ * Returns a list of valid Roco Connection Types.
+ * Note that most Roco options are Lenz options (RocoNet is XpressNet).
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ROCO = "Roco";

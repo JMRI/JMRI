@@ -246,7 +246,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
+<<<<<<< HEAD
             result = (null != result) ? result.trim() : "";
+=======
+            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+>>>>>>> JMRI/master
 
             b = getNamedBean();
         } else {
@@ -270,7 +274,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
+<<<<<<< HEAD
             result = (null != result) ? result.trim() : "";
+=======
+            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+>>>>>>> JMRI/master
 
             b = getNamedBean();
         } else {
@@ -283,6 +291,29 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   //getDisplayName
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the text from the editor for this JmriBeanComboBox
+     *
+     * @return the text
+     */
+    public String getText() {
+        return getEditor().getItem().toString();
+    }   // getText
+
+    /**
+     * Set the text from the editor for this JmriBeanComboBox
+     * 
+     * @param text the text to set
+     */
+    public void setText(String text) {
+        getEditor().setItem(text);
+        setSelectedBeanByName(text);
+        validateText();
+    }   // setText
+
+    /**
+>>>>>>> JMRI/master
      * Get the display order of the combobox.
      *
      * @return the display order of this combobox
@@ -440,7 +471,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         jmri.Manager uDaManager = getManager();
 
         String comboBoxText = getEditor().getItem().toString();
+<<<<<<< HEAD
         comboBoxText = (null != comboBoxText) ? comboBoxText.trim() : "";
+=======
+        comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
+>>>>>>> JMRI/master
 
         //try user name
         result = uDaManager.getBeanByUserName(comboBoxText);
@@ -464,8 +499,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
 
+<<<<<<< HEAD
             if (found) {    //if we found it there then…
                 //walk the namedBeanList…
+=======
+            if (found) {    //if we found it there then...
+                //walk the namedBeanList...
+>>>>>>> JMRI/master
                 List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
 
                 for (NamedBean namedBean : namedBeanList) {
@@ -486,6 +526,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         return result;
+<<<<<<< HEAD
+=======
+
+>>>>>>> JMRI/master
     }   //getBean
 
     public enum DisplayOptions {
@@ -545,6 +589,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     public void dispose() {
         _manager.removePropertyChangeListener(this);
+
     }
 
     static class beanSelectionManager implements KeySelectionManager {
@@ -601,5 +646,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class
+            .getName());
 }

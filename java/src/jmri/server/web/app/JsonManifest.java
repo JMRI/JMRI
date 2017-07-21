@@ -13,6 +13,10 @@ import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
 import jmri.util.FileUtil;
+<<<<<<< HEAD
+=======
+import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +25,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
+<<<<<<< HEAD
+=======
+@ServiceProvider(service = WebManifest.class)
+>>>>>>> JMRI/master
 public class JsonManifest implements WebManifest {
 
     private boolean initialized = false;
@@ -110,7 +118,11 @@ public class JsonManifest implements WebManifest {
                         }
                         if (when != null && !when.isEmpty()) {
                             try {
+<<<<<<< HEAD
                             this.routes.add(new AngularRoute(when, template, controller, redirection));
+=======
+                                this.routes.add(new AngularRoute(when, template, controller, redirection));
+>>>>>>> JMRI/master
                             } catch (NullPointerException | IllegalArgumentException ex) {
                                 log.error("Unable to add route for {}", when);
                             }

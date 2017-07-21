@@ -120,9 +120,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         }
     }
 
-    /**
-     * Delayed setDisplayLevel for DnD
-     */
     public void setLevel(int l) {
         _displayLevel = l;
     }
@@ -287,9 +284,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return setEditIconMenu(popup);
     }
 
-    /**
-     * Utility
-     */
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
         if (editor != null) {
             _iconEditor = editor;
@@ -335,7 +329,8 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * @return true if this object is still displayed, and should be stored;
+     *         false otherwise
      */
     public boolean isActive() {
         return active;

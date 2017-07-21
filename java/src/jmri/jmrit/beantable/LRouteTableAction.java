@@ -636,7 +636,11 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
+<<<<<<< HEAD
                 //boolean negated = variable.isNegated(); 
+=======
+                //boolean negated = variable.isNegated();
+>>>>>>> JMRI/master
                 int type;
                 switch (testState) {
                     case Conditional.TYPE_SENSOR_ACTIVE:
@@ -963,7 +967,7 @@ public class LRouteTableAction extends AbstractTableAction {
             updateButton.setToolTipText(rbx.getString("UpdateHint"));
             updateButton.setName("UpdateButton");
 
-            // Cancel button  
+            // Cancel button
             pb.add(cancelButton);
             cancelButton.addActionListener(this::cancelPressed);
             cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
@@ -1435,7 +1439,7 @@ public class LRouteTableAction extends AbstractTableAction {
             if (name == null || name.length() == 0) {
                 name = elt.getSysName();
             }
-            int state = elt.getState();    // actionData 
+            int state = elt.getState();    // actionData
             int actionType = 0;
             String params = "";
             switch (elt.getType()) {
@@ -1789,7 +1793,6 @@ public class LRouteTableAction extends AbstractTableAction {
         Conditional c = _conditionalManager.getBySystemName(cSystemName);
         if (c != null) {
             logix.deleteConditional(cSystemName);
-            _conditionalManager.deleteConditional(c);
             return true;
         }
         return false;
@@ -1867,7 +1870,7 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            // throw without creating any 
+            // throw without creating any
             throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(varList);
@@ -1919,7 +1922,7 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            // throw without creating any 
+            // throw without creating any
             throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(triggerList);

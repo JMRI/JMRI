@@ -29,6 +29,10 @@ import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
+<<<<<<< HEAD
+=======
+import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
@@ -43,6 +47,7 @@ import jmri.util.swing.SwingSettings;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  * @since 2.9.5 (Previously in jmri package)
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     public static final int MAX_TOOLTIP_TIME = 3600;
@@ -80,7 +85,10 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doClickSelection(p = new JPanel());
         add(p);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> JMRI/master
         doGraphicState(p = new JPanel());
         add(p);
 >>>>>>> JMRI/master
@@ -99,7 +107,10 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> JMRI/master
     void doGraphicState(JPanel panel) {
         panel.setLayout(new FlowLayout());
         graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));

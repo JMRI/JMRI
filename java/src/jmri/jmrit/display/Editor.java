@@ -818,9 +818,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Control whether target panel items are controlling layout items.
      * <p>
 <<<<<<< HEAD
+<<<<<<< HEAD
      * Does this by invoking the {@link Positionable#setControlling} function
      * of each item on the target panel. This also controls the relevant
      * pop-up menu items.
+=======
+     * Does this by invoking the {@link Positionable#setControlling} function of
+     * each item on the target panel. This also controls the relevant pop-up
+     * menu items.
+>>>>>>> JMRI/master
 =======
      * Does this by invoking the {@link Positionable#setControlling} function of
      * each item on the target panel. This also controls the relevant pop-up
@@ -1148,14 +1154,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
+        JMenuItem jmi = null;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
-            edit.add("x = " + pm.getOriginalX());
-            edit.add("y = " + pm.getOriginalY());
+
+            jmi = edit.add("x = " + pm.getOriginalX());
+            jmi.setEnabled(false);
+
+            jmi = edit.add("y = " + pm.getOriginalY());
+            jmi.setEnabled(false);
+
             edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            edit.add("x = " + p.getX());
-            edit.add("y = " + p.getY());
+            jmi = edit.add("x = " + p.getX());
+            jmi.setEnabled(false);
+
+            jmi = edit.add("y = " + p.getY());
+            jmi.setEnabled(false);
+
             edit.add(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
@@ -1351,7 +1367,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
+        JMenuItem jmi = edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
+        jmi.setEnabled(false);
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
@@ -2624,7 +2641,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _contents.clear();
         }
         removeAll();
-        super.dispose();
+        this.dispose();
     }
 
     /*
@@ -2784,7 +2801,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             rect = p.getBounds(rect);
             if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
-                double rad = p.getDegrees() * Math.PI / 180.0;
+                double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
                 double[] pt = new double[2];
                 // bit shift to avoid Findbugs paranoia

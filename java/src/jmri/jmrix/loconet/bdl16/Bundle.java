@@ -25,7 +25,11 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @Nullable
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String name = null;// NOI18N
+=======
+    private static final String name = "jmri.jmrix.loconet.bdl16.BDL16x"; // NOI18N
+>>>>>>> JMRI/master
 =======
     private static final String name = "jmri.jmrix.loconet.bdl16.BDL16x"; // NOI18N
 >>>>>>> JMRI/master

@@ -75,9 +75,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         if (b == null) {
                             log.error("Null block during store - sname = " + sname);
                         } else {
-                            Element elem = new Element("block")
-                                    .setAttribute("systemName", sname);
+                            Element elem = new Element("block");
                             elem.addContent(new Element("systemName").addContent(sname));
+                            
+                            // As a work-around for backward compatibility, store systemName as attribute.
+                            // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                            elem.setAttribute("systemName", sname);
+                            
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
                             String uname = b.getUserName();
                             if ((uname != null) && (!uname.equals(""))) {
@@ -111,9 +115,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         if (uname == null) {
                             uname = "";
                         }
-                        Element elem = new Element("block")
-                                .setAttribute("systemName", sname);
+                        Element elem = new Element("block");
                         elem.addContent(new Element("systemName").addContent(sname));
+                            
+                        // As a work-around for backward compatibility, store systemName as attribute.
+                        // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                        elem.setAttribute("systemName", sname);
+                            
                         if (log.isDebugEnabled()) {
                             log.debug("second store Block " + sname + ":" + uname);
                         }
@@ -248,10 +256,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      *                                                     XMl
      */
     public void loadBlock(Element element) throws JmriConfigureXmlException {
+<<<<<<< HEAD
         if (element.getAttribute("systemName") == null) {
             log.warn("unexpected null in systemName " + element + " " + element.getAttributes());
             return;
         }
+=======
+>>>>>>> JMRI/master
         String sysName = getSystemName(element);
         String userName = getUserName(element);
         if (log.isDebugEnabled()) {

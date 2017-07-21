@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
    SpeedoMenuTest.class,
    SpeedoConsoleActionTest.class,
    SpeedoConsoleFrameTest.class,
+<<<<<<< HEAD
+=======
+   BundleTest.class
+>>>>>>> JMRI/master
 })
 
 /**

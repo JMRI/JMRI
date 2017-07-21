@@ -34,6 +34,10 @@ public class DefaultSignalMastLogicTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicTest.class.getName());
+=======
+    //private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicTest.class.getName());
+>>>>>>> JMRI/master
 
 }

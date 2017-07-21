@@ -27,6 +27,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  String base_station = "Unknown";
  String code_build = "Unknown";
 
@@ -72,6 +73,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
  
 
 =======
+=======
+>>>>>>> JMRI/master
         String base_station = "Unknown";
         String code_build = "Unknown";
         
@@ -116,6 +119,9 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
         
         
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         if (log.isDebugEnabled()) {
             log.debug("DCC++ Initialization Complete");

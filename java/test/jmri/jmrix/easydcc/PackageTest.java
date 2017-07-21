@@ -40,8 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccPowerManagerTest.class));
-        suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
@@ -54,12 +54,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new JUnit4TestAdapter(EasyDccCommandStationTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccOpsModeProgrammerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
 
         return suite;

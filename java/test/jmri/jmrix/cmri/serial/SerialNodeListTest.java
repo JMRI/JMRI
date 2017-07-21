@@ -14,13 +14,20 @@ public class SerialNodeListTest {
 
     @Test
     public void testCtor() {
+<<<<<<< HEAD
         SerialNodeList s = new SerialNodeList();       
+=======
+        new SerialNodeList();       
+>>>>>>> JMRI/master
     }
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold stcs = null;
+<<<<<<< HEAD
     private SerialNode n0 = null;
     private SerialNode n1 = null;
+=======
+>>>>>>> JMRI/master
     private SerialNode n2 = null;
     
     // The minimal setup for log4J
@@ -33,8 +40,13 @@ public class SerialNodeListTest {
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(stcs);
 
+<<<<<<< HEAD
         n0 = new SerialNode(stcs);
         n1 = new SerialNode(1, SerialNode.SMINI,stcs);
+=======
+        new SerialNode(stcs);
+        new SerialNode(1, SerialNode.SMINI,stcs);
+>>>>>>> JMRI/master
         n2 = new SerialNode(2, SerialNode.USIC_SUSIC,stcs);
         n2.setNumBitsPerCard(24);
         n2.setCardTypeByAddress(0, SerialNode.INPUT_CARD);

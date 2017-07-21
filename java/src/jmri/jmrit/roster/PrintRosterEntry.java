@@ -18,7 +18,6 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
@@ -51,7 +50,11 @@ public class PrintRosterEntry implements PaneContainer {
      *
      * @param rosterEntry Roster item, either as a selection or object
      * @param parent window over which this dialog will be centered
+<<<<<<< HEAD
      * @param filename xml file name for the user's Roster entry
+=======
+     * @param filename xml file name for programmer used in printing.
+>>>>>>> JMRI/master
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;
@@ -85,10 +88,13 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         CvTableModel cvModel = new CvTableModel(progStatus, mProgrammer);
-        IndexedCvTableModel iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
 
+<<<<<<< HEAD
         VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"},
                 cvModel, iCvModel); // NOI18N
+=======
+        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
+>>>>>>> JMRI/master
 
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
@@ -137,12 +143,6 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-        if (!variableModel.piCv().equals("")) {
-            resetModel.setPiCv(variableModel.piCv());
-        }
-        if (!variableModel.siCv().equals("")) {
-            resetModel.setSiCv(variableModel.siCv());
-        }
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         @SuppressWarnings("unchecked")
@@ -160,7 +160,11 @@ public class PrintRosterEntry implements PaneContainer {
             } else {
                 log.debug("Did not find name element in pane");
             }
+<<<<<<< HEAD
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
+=======
+            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, d.getModelElement(), _rosterEntry);
+>>>>>>> JMRI/master
             // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 278)
             _paneList.add(p);
             log.debug("_paneList size = {}", _paneList.size());

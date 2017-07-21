@@ -29,6 +29,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableModelTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableFrameTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

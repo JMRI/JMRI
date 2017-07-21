@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+<<<<<<< HEAD
 public class NmraConsistManagerTest {
 
     @Test
@@ -29,6 +30,23 @@ public class NmraConsistManagerTest {
 
     @After
     public void tearDown() {
+=======
+public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        cm = new NmraConsistManager();
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        cm = null;
+>>>>>>> JMRI/master
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

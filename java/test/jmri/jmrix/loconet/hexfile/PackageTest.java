@@ -32,6 +32,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(LnHexFilePortTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoNetSystemConnectionMemoTest.class));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LnHexFileActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LnSensorManagerTest.class));
+>>>>>>> JMRI/master
 =======
         suite.addTest(new junit.framework.JUnit4TestAdapter(LnHexFileActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LnSensorManagerTest.class));

@@ -35,8 +35,13 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Primary ctor.
      *
+<<<<<<< HEAD
      * @param lowTO  lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
+=======
+     * @param lowTO    lower-numbered Turnout reference
+     * @param highTO   higher-numbered Turnout reference
+>>>>>>> JMRI/master
      * @param userName user name for mast
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO,
@@ -69,9 +74,15 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name and user name.
      *
+<<<<<<< HEAD
      * @param sname system name for mast
      * @param lowTO  lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
+=======
+     * @param sname    system name for mast
+     * @param lowTO    lower-numbered Turnout reference
+     * @param highTO   higher-numbered Turnout reference
+>>>>>>> JMRI/master
      * @param userName user name for mast
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO,
@@ -88,7 +99,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name.
      *
+<<<<<<< HEAD
      * @param sname system name for mast
+=======
+     * @param sname  system name for mast
+>>>>>>> JMRI/master
      * @param lowTO  lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
@@ -105,7 +120,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Compatibility ctor.
      *
+<<<<<<< HEAD
      * @param pNumber number (address) of low turnout
+=======
+     * @param pNumber  number (address) of low turnout
+>>>>>>> JMRI/master
      * @param userName name to use for this signal head
      */
     public SE8cSignalHead(int pNumber, String userName) {
@@ -184,10 +203,18 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Type-specific routine to handle output to the layout hardware.
+<<<<<<< HEAD
      * Implemented to handle a request to change state by sending a LocoNet command.
      * <p>
      * Does not notify listeners of changes; that's done elsewhere. Should consider
      * the following variables to determine what to send:
+=======
+     * Implemented to handle a request to change state by sending a LocoNet
+     * command.
+     * <p>
+     * Does not notify listeners of changes; that's done elsewhere. Should
+     * consider the following variables to determine what to send:
+>>>>>>> JMRI/master
      * <ul>
      * <li>mAppearance
      * <li>mLit
@@ -202,7 +229,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
                 && ((mAppearance == FLASHGREEN)
                 || (mAppearance == FLASHYELLOW)
                 || (mAppearance == FLASHRED))) {
-            // flash says to make output dark; 
+            // flash says to make output dark;
             // flashing-but-lit is handled below
             highTurnout.getBean().setCommandedState(Turnout.CLOSED);
         } else {
@@ -224,8 +251,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
                     highTurnout.getBean().setCommandedState(Turnout.CLOSED);
                     break;
                 default:
-                    log.error("Invalid state request: " + mAppearance);
-                    return;
+                    log.error("Invalid state request: {}", mAppearance);
             }
         }
     }
@@ -244,6 +270,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     @Override
     boolean isTurnoutUsed(Turnout t) {
+<<<<<<< HEAD
         if (getLow() != null && t.equals(getLow().getBean())) {
             return true;
         }
@@ -284,6 +311,10 @@ public class SE8cSignalHead extends DefaultSignalHead {
                     }
                 }
         );
+=======
+        return (getLow() != null && t.equals(getLow().getBean()))
+                || (getHigh() != null && t.equals(getHigh().getBean()));
+>>>>>>> JMRI/master
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());

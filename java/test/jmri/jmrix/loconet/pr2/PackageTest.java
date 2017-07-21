@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
    LnPr2PacketizerTest.class,
    PR2AdapterTest.class,
 <<<<<<< HEAD
+<<<<<<< HEAD
    PR2SystemConnectionMemoTest.class
+=======
+   PR2SystemConnectionMemoTest.class,
+   LnPr2PowerManagerTest.class
+>>>>>>> JMRI/master
 =======
    PR2SystemConnectionMemoTest.class,
    LnPr2PowerManagerTest.class

@@ -559,11 +559,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                     new Dimension(150, _sysNametext.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
 <<<<<<< HEAD
+<<<<<<< HEAD
             _addTableButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     addToTable();
                 }
+=======
+            _addTableButton.addActionListener((ActionEvent a) -> {
+                addToTable();
+>>>>>>> JMRI/master
 =======
             _addTableButton.addActionListener((ActionEvent a) -> {
                 addToTable();
@@ -598,6 +603,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (changeIcon) {
             _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
 <<<<<<< HEAD
+<<<<<<< HEAD
             _changeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
@@ -611,6 +617,15 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 public void actionPerformed(ActionEvent a) {
                     closeCatalog();
                 }
+=======
+            _changeButton.addActionListener((ActionEvent a) -> {
+                addCatalog();
+            });
+            p.add(_changeButton);
+            _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
+            _closeButton.addActionListener((ActionEvent a) -> {
+                closeCatalog();
+>>>>>>> JMRI/master
 =======
             _changeButton.addActionListener((ActionEvent a) -> {
                 addCatalog();

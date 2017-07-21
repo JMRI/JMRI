@@ -52,7 +52,11 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         if (log.isDebugEnabled()) {
+<<<<<<< HEAD
             log.debug("XPressNet Initialization Complete");
+=======
+            log.debug("XpressNet Initialization Complete");
+>>>>>>> JMRI/master
         }
     }
 

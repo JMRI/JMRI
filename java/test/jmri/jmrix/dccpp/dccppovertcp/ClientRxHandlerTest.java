@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ClientRxHandlerTest {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -24,7 +28,11 @@ public class ClientRxHandlerTest {
         Assert.assertNotNull("exists",t);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -35,7 +43,11 @@ public class ClientRxHandlerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -45,7 +57,11 @@ public class ClientRxHandlerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master

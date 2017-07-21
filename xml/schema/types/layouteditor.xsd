@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -113,6 +111,7 @@
       <xs:attribute name="blueBackground" type="xs:integer"/>
       <xs:attribute name="autoblkgenerate" type="yesNoType" default="yes"/>
       <xs:attribute name="gridSize" type="xs:integer"/>
+      <xs:attribute name="gridSize2nd" type="xs:integer"/>
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
       <xs:attribute name="zoom" type="xs:float" default="1.0"/>

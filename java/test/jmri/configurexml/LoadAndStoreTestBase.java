@@ -113,8 +113,12 @@ public class LoadAndStoreTestBase {
                         new FileInputStream(outFile)));
         String inLine;
         String outLine;
+        String nextIn;
+        String nextOut;
         int count = 0;
-        while ((inLine = inFileStream.readLine()) != null && (outLine = outFileStream.readLine()) != null) {
+        inLine = inFileStream.readLine();
+        outLine = outFileStream.readLine();
+        while ( (nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
             count++;
             if (!inLine.startsWith("  <!--Written by JMRI version")
                     && !inLine.startsWith("  <timebase") // time changes from timezone to timezone
@@ -123,7 +127,8 @@ public class LoadAndStoreTestBase {
                     && !inLine.startsWith("    <major") // version changes over time
                     && !inLine.startsWith("    <minor") // version changes over time
                     && !inLine.startsWith("<?xml-stylesheet") // Linux seems to put attributes in different order
-                    && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies
+                    && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies - old format
+                    && !(inLine.contains("<memory value") && nextIn.contains("IMCURRENTTIME")) // time varies - new format
                     && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
                 if (!inLine.equals(outLine)) {
                     log.error("match failed in testLoadStoreCurrent line " + count);
@@ -133,6 +138,8 @@ public class LoadAndStoreTestBase {
                 }
                 Assert.assertEquals(inLine, outLine);
             }
+            inLine = nextIn;
+            outLine = nextOut;
         }
         inFileStream.close();
         outFileStream.close();

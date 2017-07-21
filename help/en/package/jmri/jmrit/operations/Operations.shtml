@@ -1416,6 +1416,11 @@
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under
    tools in the <a href="#Trains">Trains</a> window.
+   <p>
+   This option also makes backup copies of any switch list that you create.  They are stored in a 
+   directory called "switchListBackups" located in the "operations" directory. A separate directory
+   is created for each location's switch list that you create.
+   </p>
 
    <h4>Enable Value Fields and Identification Tag Fields</h4>
 
@@ -1575,6 +1580,7 @@
     using when building your trains.
    </p>
 
+   <a name="SortByTrack" id="SortByTrack"></a>
    <p>
     The next option is "Sort by Track". The program when creating a train Manifest normally lists
     the cars in the order they need to be placed into the train for proper blocking. The normal
@@ -1836,10 +1842,16 @@
    trains, and higher numbered tracks are printed first for Eastbound and Southbound trains. Use any
    blocking order number greater than zero when using this feature.
 
+   <p>Note that this feature controls the set outs for a location. Car pick ups at a location
+    are blocked by their next destination and then alphabetically by track name or by the track blocking
+    order at the destination if one was created for that destination.</p>
+
    <p>The "Reset" button returns the blocking order to the original defaults which is an
     alphabetical listing of tracks at a location. The "Set Order" button gives each track a unique
     order number, and will also reorder existing order numbers if there are any that aren't unique.
     The "Up" and "Down" buttons in the table require unique track blocking numbers for them to work.</p>
+    
+    <p>This feature is disabled if the option to show <a href="#SortByTrack">Sort by Track</a> is enabled.</p>
 
    <a name="ShowTrainsServicingThisLocation" id="ShowTrainsServicingThisLocation"></a>
    <h4>Show Trains Servicing this Location</h4>
@@ -3432,7 +3444,10 @@
    <p>The "Routes" window shows for every route created the id, name, comment, shortest route
     length, longest route length, and status of the route. If there's a problem with the route, the
     status will be reported as "Error". If the route hasn't been assigned to a train, the status for
-    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
+    the route is reported as "Orphan". If a route has been assigned to a train or trains, and one of
+    the trains is built, the status becomes "Train Built". You can not modify a route that is
+    assigned to a built train. Reset or terminate a built train if you want to modify the route. Use
+    the "Edit" button to modify a route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -4316,6 +4331,10 @@
     Pickup) when building trains. You can also add or change the days of the week by using the "Edit
     Timetable" window found under "Tools". You can change the order by dragging the column with your
     mouse pointer. Press the "Save" button to complete your changes.</p>
+
+   <p>When the "None" radio button is selected, cars with a scheduled pick up day will not be
+    serviced. The "Any" radio button allows you to service all cars, even ones those that have a
+    scheduled pick up day.</p>
 
    <p>
     There are four buttons labeled "Build", "Print/Preview", "Print Switch Lists/Update Switch

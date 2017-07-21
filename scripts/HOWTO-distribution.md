@@ -69,9 +69,15 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by (details in the update-HOWTO.sh comments):
 ```
+<<<<<<< HEAD
   ./scripts/update-HOWTO.sh 4.7.3 4.7.4 4.7.5
 ```
 (and then manually update that line above to be last version, this version, next version)
+=======
+  ./scripts/update-HOWTO.sh 4.7.7 4.7.8 4.7.9
+```
+(and then manually update that line above to be last version release, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5)
+>>>>>>> JMRI/master
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
@@ -176,13 +182,22 @@ We roll some general code maintenance items into the release process.  They can 
 ```    
         cd (local web copy)/releasenotes
         git pull 
+<<<<<<< HEAD
         cp jmri4.7.3.shtml jmri4.7.4.shtml
+=======
+        cp jmri4.7.7.shtml jmri4.7.8.shtml
+>>>>>>> JMRI/master
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old
             remove old-version change notes
+<<<<<<< HEAD
         git add jmri4.7.4.shtml
         git commit -m"start new 4.7.4 release note" jmri4.7.4.shtml
+=======
+        git add jmri4.7.8.shtml
+        git commit -m"start new 4.7.8 release note" jmri4.7.8.shtml
+>>>>>>> JMRI/master
         PR-and-merge (or direct push) and pull back.
         cd (local JMRI copy)
 ```
@@ -217,6 +232,7 @@ where the date at the end should be the date (and optionally time) of the last r
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
+<<<<<<< HEAD
 The release-4.7.3 branch has been created. 
 
 From now on, please document your changes in the [jmri4.7.4.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.7.4.shtml) release note file.
@@ -224,6 +240,15 @@ From now on, please document your changes in the [jmri4.7.4.shtml](https://githu
 Maintainers, please set the 4.7.4 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.3/)
+=======
+The release-4.7.8 branch has been created. 
+
+From now on, please document your changes in the [jmri4.9.1.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.9.1.shtml) release note file.
+
+Maintainers, please set the 4.9.1 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+
+Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.8/)
+>>>>>>> JMRI/master
 ````
 
 ================================================================================
@@ -261,7 +286,11 @@ If you're building locally:
 - Get the release in your local work directory
 
 ```
+<<<<<<< HEAD
     git checkout release-4.7.3
+=======
+    git checkout release-4.7.8
+>>>>>>> JMRI/master
 ```
 
 - edit release.properties to say release.official=true (last line)
@@ -296,11 +325,19 @@ If you're building locally:
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://jmri.tagadab.com/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
+<<<<<<< HEAD
 - Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.7.3 files available":
 
 First JMRI 4.7.3 files are available in the usual way at:
 
 http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.3
+=======
+- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.7.8 files available":
+
+First JMRI 4.7.8 files are available in the usual way at:
+
+http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.8
+>>>>>>> JMRI/master
 
 Feedback appreciated. I would like to release this later today or tomorrow morning. 
 
@@ -317,7 +354,11 @@ If anybody wants to add a change from here on in, they should
 
    - One to master, as usual
    
+<<<<<<< HEAD
    - One to the release branch e.g. "release-4.7.3".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+=======
+   - One to the release branch e.g. "release-4.7.8".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+>>>>>>> JMRI/master
    
   Merging the PR to the master makes those changes available on further developments forever; the one on the release, if accepted, includes the change and kicks off new runs of the various CI and build jobs.
 
@@ -348,6 +389,7 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
 
 (replace "user" below with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
 
+<<<<<<< HEAD
  - (The "./testrelease 4.7.3" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
@@ -355,6 +397,15 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
     curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.7.3/ws/dist/release/*zip*/release.zip"
         (use the following instead if building on second Jenkins server)
     curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.3/ws/dist/release/*zip*/release.zip"
+=======
+ - (The "./testrelease 4.7.8" local script on shell.sf.net does the following steps, except for the edit, of course)
+```
+    ssh user,jmri@shell.sf.net create
+    ssh user,jmri@shell.sf.net
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.7.8/ws/dist/release/*zip*/release.zip"
+        (use the following instead if building on second Jenkins server)
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.8/ws/dist/release/*zip*/release.zip"
+>>>>>>> JMRI/master
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -385,6 +436,11 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
 ## Create GitHub Release and upload files
 
 This puts the right tag on the branch, then removes the branch.  
+<<<<<<< HEAD
+=======
+
+Note on file names:  Our filenames are generated with proper [semantic versioning](http://semver.org) in which the `.R202c9ee` indicates build meta-data, specifically the hash for the tag point.  But the GitHub binary-file release system changes the '+' to a '.', so our scripts below do that too.  A request for support was filed with GitHub on this in early June 2017.
+>>>>>>> JMRI/master
 
 Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
@@ -401,27 +457,41 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
 - Fill out form:
 
-   - "tag version field" gets vN.N.N (e.g. leading lower-case "v")
-   - @ branch: select the release-n.n.n release branch
+   - "tag version field" gets v4.7.8 (e.g. leading lower-case "v")
+   - @ branch: select the release-4.7.8 release branch
 ```
-"Release title" field gets "Test/Prod Release N.N.N"
+"Release title" field gets "Test/Prod Release 4.7.8"
 ```
    - Description content (the testrelease script above proposed this!):
 ```    
+<<<<<<< HEAD
 [Release notes](http://jmri.org/releasenotes/jmri4.7.3.shtml)
+=======
+[Release notes](http://jmri.org/releasenotes/jmri4.7.8.shtml)
+>>>>>>> JMRI/master
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
+<<<<<<< HEAD
 [JMRI.4.7.3+R202c9ee.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.dmg) | c4ca7d32789de60a1764cc0c50cf2b73e2357ecd8e407a79b2c229193487858f
 [JMRI.4.7.3+R202c9ee.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.exe) | 4fe5b78e96444939bf9933ad2c0d486a36ec40a472b2dcf1de30c8ffe6edb03b
 [JMRI.4.7.3+R202c9ee.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.tgz) | 87a1cf58c3c39a47cdc22a29ce24469051ee4ae559b804df66dbbe274e520e47
+=======
+[JMRI.4.7.8.R583bddd.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.8/JMRI.4.7.8.R583bddd.dmg) | 688b6da8a2e66ad77ef6499d34381e82eb4eba88ad37477de6b24a11906cdf21
+[JMRI.4.7.8.R583bddd.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.8/JMRI.4.7.8.R583bddd.exe) | 071d54f1ce97b8bf701567a0c44f63104462f7966bcc5319112f320cf133da8c
+[JMRI.4.7.8.R583bddd.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.8/JMRI.4.7.8.R583bddd.tgz) | 804a8b715cb11983cad287fb58356644f36482ec2f02563f83ecbaff63f3f07e
+>>>>>>> JMRI/master
 ```
 
-- Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
+- Attach files by selecting them or dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
+<<<<<<< HEAD
 curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.3/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+=======
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.7.8/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+>>>>>>> JMRI/master
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
@@ -435,9 +505,15 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
+<<<<<<< HEAD
 github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.dmg 
 github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.exe 
 github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.tgz 
+=======
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.8 -n "JMRI.4.7.8+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.8/workspace/dist/release/JMRI.4.7.8+Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.8 -n "JMRI.4.7.8+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.8+Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.8 -n "JMRI.4.7.8+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.7.8+Rd144052.tgz 
+>>>>>>> JMRI/master
 ```
     
 - Click "Publish Release"
@@ -487,7 +563,11 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". Add the next release milestone (created above) to it.
 
+<<<<<<< HEAD
 - Confirm that the tag for the current release (release-4.7.3) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
+=======
+- Confirm that the tag for the current release (release-4.7.8) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
+>>>>>>> JMRI/master
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
@@ -517,7 +597,31 @@ If you don't, a bunch of Windows users are likely to whine
 
 - Mail announcement to jmriusers@yahoogroups.com
 
+<<<<<<< HEAD
     Subject is "Test version 4.7.3 of JMRI/DecoderPro is available for download" or "JMRI 4.8 is available for download"
+=======
+    Subject is "Test version 4.7.8 of JMRI/DecoderPro is available for download" or "JMRI 4.8 is available for download"
+
+    Content:
+    
+Test version 4.7.8 of JMRI/DecoderPro is available for download.
+
+This is the next in a series of test releases that will culminate in a production release, hopefully in June 2017.
+
+There have been a lot of updates in this version, so it should be considered experimental.
+
+If you use JMRI on Linux or Mac and are updating from an earlier version, there’s a necessary migration step. (Not needed on Windows) Please see the release note for details: <http://jmri.org/releasenotes/jmri4.7.8.shtml#migration>
+
+For more information on the issues, new features and bug fixes in 4.7.8 please see the release note:
+<http://jmri.org/releasenotes/jmri4.7.8.shtml>
+
+Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
+<http://jmri.org/Copyright.html>
+
+The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
+<http://jmri.org/releasenotes/jmri4.7.8.shtml>
+
+>>>>>>> JMRI/master
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 

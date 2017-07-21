@@ -64,7 +64,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         ep = epref;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel buttonPanel = new JPanel();
-        JButton updateButton = new JButton("Update");
+        JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
 
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -72,13 +72,14 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
                 updateButtonPressed();
             }
         });
+        updateButton.setToolTipText(Bundle.getMessage("UpdateEcosPrefsToolTip"));
         buttonPanel.add(updateButton);
 
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JTabbedPane tab = new JTabbedPane();
-        tab.add(rosterTab(), "Roster");
-        tab.add(throttleTab(), "Throttle");
-        tab.add(turnoutTab(), java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts"));
+        tab.add(rosterTab(), Bundle.getMessage("RosterTitle"));
+        tab.add(throttleTab(), Bundle.getMessage("ThrottleTitle"));
+        tab.add(turnoutTab(), Bundle.getMessage("Turnouts"));
 
         add(tab);
         add(buttonPanel);
@@ -150,7 +151,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         turnouttabpanel.setLayout(new BoxLayout(turnouttabpanel, BoxLayout.Y_AXIS));
 
         JPanel _removeTurnoutsEcosPanel = new JPanel();
-        JLabel _removeTurnoutsEcosLabel = new JLabel("Remove Turnouts From the ECoS");
+        JLabel _removeTurnoutsEcosLabel = new JLabel(Bundle.getMessage("RemoveTurnoutsEPref"));
         _removeTurnoutsEcos = new JComboBox<String>();
         _removeTurnoutsEcosPanel.add(_removeTurnoutsEcosLabel);
         initializeChoiceCombo(_removeTurnoutsEcos);
@@ -161,7 +162,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         turnouttabpanel.add(_removeTurnoutsEcosPanel);
 
         JPanel _addTurnoutsJMRIPanel = new JPanel();
-        JLabel _addTurnoutsJMRILabel = new JLabel("Add Turnouts to JMRI");
+        JLabel _addTurnoutsJMRILabel = new JLabel(Bundle.getMessage("AddTurnoutsJPref"));
         _addTurnoutsJmri = new JComboBox<String>();
         _addTurnoutsJMRIPanel.add(_addTurnoutsJMRILabel);
         initializeChoiceCombo(_addTurnoutsJmri);
@@ -172,7 +173,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         turnouttabpanel.add(_addTurnoutsJMRIPanel);
 
         JPanel _removeTurnoutsJMRIPanel = new JPanel();
-        JLabel _removeTurnoutsJMRILabel = new JLabel("Remove Turnouts from JMRI");
+        JLabel _removeTurnoutsJMRILabel = new JLabel(Bundle.getMessage("RemoveTurnoutsJPref"));
         _removeTurnoutsJmri = new JComboBox<String>();
         _removeTurnoutsJMRIPanel.add(_removeTurnoutsJMRILabel);
         initializeChoiceCombo(_removeTurnoutsJmri);
@@ -189,12 +190,12 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
         rostertabpanel.setLayout(new BoxLayout(rostertabpanel, BoxLayout.Y_AXIS));
 
-        JLabel _rosterLabel = new JLabel("These option control the Syncronisation of the JMRI Roster Database and the ECOS Database");
+        JLabel _rosterLabel = new JLabel(Bundle.getMessage("RosterPrefToolTip"));
         _rosterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         rostertabpanel.add(_rosterLabel);
 
         JPanel _locomaster = new JPanel();
-        JLabel _masterLocoLabel = new JLabel("Resolve conflicts between JMRI and the ECOS");
+        JLabel _masterLocoLabel = new JLabel(Bundle.getMessage("RosterPrefLabel"));
         _masterLocoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         _locomaster.add(_masterLocoLabel);
         _masterControl = new JComboBox<String>();
@@ -207,7 +208,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         rostertabpanel.add(_locomaster);
 
         JPanel _addlocoecospanel = new JPanel();
-        JLabel _addLocosEcosLabel = new JLabel("Add Locos to the ECoS");
+        JLabel _addLocosEcosLabel = new JLabel(Bundle.getMessage("AddLocosEPref"));
         _addLocoEcos = new JComboBox<String>();
         _addlocoecospanel.add(_addLocosEcosLabel);
         initializeChoiceCombo(_addLocoEcos);
@@ -226,7 +227,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
          //_removeLocosEcos.setEnabled(false);
          rostertabpanel.add(_removeLocosEcos);*/
         JPanel _removelocosecospanel = new JPanel();
-        JLabel _removeLocosEcosLabel = new JLabel("Remove Locos from the ECoS");
+        JLabel _removeLocosEcosLabel = new JLabel(Bundle.getMessage("RemoveLocosEPref"));
         _removeLocosEcos = new JComboBox<String>();
         _removelocosecospanel.add(_removeLocosEcosLabel);
         initializeChoiceCombo(_removeLocosEcos);
@@ -241,7 +242,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
          //_addLocosJmri.setEnabled(false);
          rostertabpanel.add(_addLocosJmri);*/
         JPanel _addlocosjmripanel = new JPanel();
-        JLabel _addLocoJmriLabel = new JLabel("Add Locos to JMRI Roster");
+        JLabel _addLocoJmriLabel = new JLabel(Bundle.getMessage("AddLocosJPref"));
         _addLocoJmri = new JComboBox<String>();
         _addlocosjmripanel.add(_addLocoJmriLabel);
         initializeChoiceCombo(_addLocoJmri);
@@ -256,7 +257,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
          _removeLocosJmri.setEnabled(false);
          rostertabpanel.add(_removeLocosJmri);*/
         JPanel _removelocosjmripanel = new JPanel();
-        JLabel _removeLocosJmriLabel = new JLabel("Remove Locos from JMRI Roster");
+        JLabel _removeLocosJmriLabel = new JLabel(Bundle.getMessage("RemoveLocosJPref"));
         _removeLocosJmri = new JComboBox<String>();
         _removelocosjmripanel.add(_removeLocosJmriLabel);
         initializeChoiceCombo(_removeLocosJmri);
@@ -267,28 +268,29 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         rostertabpanel.add(_removelocosjmripanel);
 
         JPanel ecosAttributeSuffix = new JPanel();
-        JLabel _ecosAttSufLabel = new JLabel("Ecos Roster Attribute Suffix");
+        JLabel _ecosAttSufLabel = new JLabel(Bundle.getMessage("EcosRosterSuffixLabel"));
         ecosAttributeSuffix.add(_ecosAttSufLabel);
         _ecosAttSufText = new JTextField(10);
-        _ecosAttSufText.setToolTipText("If multiple Ecos Connections are used, then each one must have a unique suffix assigned");
+        _ecosAttSufText.setToolTipText(Bundle.getMessage("EcosRosterSuffixToolTip"));
         _ecosAttSufText.setText(ep.getRosterAttributeSuffix());
         ecosAttributeSuffix.add(_ecosAttSufText);
         rostertabpanel.add(ecosAttributeSuffix);
 
         JPanel ecosDescriptionPanel = new JPanel();
 
-        JLabel _ecosDesLabel = new JLabel("Ecos Loco Description Format");
+        JLabel _ecosDesLabel = new JLabel(Bundle.getMessage("EcosLocoDescrLabel"));
         ecosDescriptionPanel.add(_ecosDesLabel);
 
         _ecosDescription = new JTextField(20);
         _ecosDescription.setText(ep.getEcosLocoDescription());
+        _ecosDescription.setToolTipText(Bundle.getMessage("EcosLocoDescrToolTip"));
         ecosDescriptionPanel.add(_ecosDescription);
 
         rostertabpanel.add(ecosDescriptionPanel);
 
-        JLabel _descriptionformat = new JLabel("%i - Roster Id, %r - Road Name, %n - Road Number, %m - Manufacturer");
+        JLabel _descriptionformat = new JLabel(Bundle.getMessage("EcosTagsHelp1"));
         rostertabpanel.add(_descriptionformat);
-        JLabel _descriptionformat2 = new JLabel("%o - Owner, %l - Model, %c - Comment");
+        JLabel _descriptionformat2 = new JLabel(Bundle.getMessage("EcosTagsHelp2"));
         rostertabpanel.add(_descriptionformat2);
 
         return rostertabpanel;
@@ -298,15 +300,15 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
         throttletabpanel.setLayout(new BoxLayout(throttletabpanel, BoxLayout.Y_AXIS));
 
-        JLabel _throttleLabel = new JLabel("This option control what happens to a loco on the ECoS Database that has been specifically created to enable a throttle to be used");
+        JLabel _throttleLabel = new JLabel(Bundle.getMessage("EcosTempLocoHelp"));
         _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(_throttleLabel);
         /*_throttleLabel = new JLabel("specifically created to enable a throttle to be used");
          throttletabpanel.add(_throttleLabel);*/
         _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        _adhocLocoEcosAsk = new JRadioButton("Always ask when quiting JMRI");
-        _adhocLocoEcosLeave = new JRadioButton("Always leave the Loco in the Ecos Database");
-        _adhocLocoEcosRemove = new JRadioButton("Always remove the Loco from the Ecos Database");
+        _adhocLocoEcosAsk = new JRadioButton(Bundle.getMessage("ButtonAlwaysAsk"));
+        _adhocLocoEcosLeave = new JRadioButton(Bundle.getMessage("ButtonAlwaysLeave"));
+        _adhocLocoEcosRemove = new JRadioButton(Bundle.getMessage("ButtonAlwaysRemove"));
         switch (ep.getAdhocLocoFromEcos()) {
             case 0:
                 _adhocLocoEcosAsk.setSelected(true);
@@ -338,12 +340,12 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
          throttletabpanel.add(_adhocLocoEcosLeave);
          throttletabpanel.add(_adhocLocoEcosRemove);*/
         throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-        _throttleLabel = new JLabel("If JMRI can not get control of a loco, this sets how JMRI should react.");
+        _throttleLabel = new JLabel(Bundle.getMessage("EcosControlLocoHelp"));
         _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(_throttleLabel);
-        _forceControlLocoEcosAsk = new JRadioButton("Always ask when attempting to take control of a loco");
-        _forceControlLocoEcosNever = new JRadioButton("Never force control of a Loco");
-        _forceControlLocoEcosAlways = new JRadioButton("Always force control of a Loco");
+        _forceControlLocoEcosAsk = new JRadioButton(Bundle.getMessage("ButtonControlAlwaysAsk"));
+        _forceControlLocoEcosNever = new JRadioButton(Bundle.getMessage("ButtonControlNeverForce"));
+        _forceControlLocoEcosAlways = new JRadioButton(Bundle.getMessage("ButtonControlAlwaysForce"));
         switch (ep.getForceControlFromEcos()) {
             case 0x00:
                 _forceControlLocoEcosAsk.setSelected(true);
@@ -383,8 +385,8 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
          throttletabpanel.add(_defaultprotocolpanel);*/
         throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         _locoControl = new ButtonGroup();
-        _locoControlNormal = new JRadioButton("Always gracefully gain control");
-        _locoControlForce = new JRadioButton("Always force loco control");
+        _locoControlNormal = new JRadioButton(Bundle.getMessage("ButtonControlAlwaysGain"));
+        _locoControlForce = new JRadioButton(Bundle.getMessage("ButtonControlAlwaysForce"));
         _locoControl.add(_locoControlNormal);
         _locoControl.add(_locoControlForce);
         if (ep.getLocoControl()) {
@@ -392,7 +394,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         } else {
             _locoControlNormal.setSelected(true);
         }
-        JLabel _locoControlLabel = new JLabel("How should JMRI attempt to take contol of a loco?");
+        JLabel _locoControlLabel = new JLabel(Bundle.getMessage("EcosTakeControlHelp"));
         JPanel locoControlGroup = new JPanel();
         locoControlGroup.add(_locoControlLabel);
         locoControlGroup.setLayout(new BoxLayout(locoControlGroup, BoxLayout.Y_AXIS));
@@ -402,7 +404,6 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         throttletabpanel.add(locoControlGroup);
 
         return throttletabpanel;
-
     }
 
     private void updateButtonPressed() {
@@ -445,7 +446,12 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         updateButtonPressed = false;
     }
 
-    String[] masterControlTypes = {"NOSYNC", "WARNING", "JMRI", "ECoS"};
+    /**
+     * Options in the ECoS Sync prefs drop down.
+     * <p>
+     * Keep masterControlTypes array identical to {@link jmri.jmrix.ecos.EcosPreferences#setLocoMaster(String)}
+     */
+    String[] masterControlTypes = {Bundle.getMessage("NOSYNC"), Bundle.getMessage("WARNING"), "JMRI", "ECoS"};
     int[] masterControlCode = {0x00, 0x01, 0x02, 0x03};
     int numTypes = 4;  // number of entries in the above arrays
 
@@ -467,10 +473,11 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
     private int getMasterControlType(JComboBox<String> masterBox) {
         return masterControlCode[masterBox.getSelectedIndex()];
-
     }
 
-    String[] choiceTypes = {"Always Ask", "No", "Yes"};
+    String[] choiceTypes = {Bundle.getMessage("DeleteAsk"),
+            Bundle.getMessage("ButtonNo"),
+            Bundle.getMessage("ButtonYes")};
     int[] masterChoiceCode = {0x00, 0x01, 0x02};
     int numChoiceTypes = 3;  // number of entries in the above arrays
 
@@ -492,7 +499,6 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
     private int getChoiceType(JComboBox<String> masterBox) {
         return masterChoiceCode[masterBox.getSelectedIndex()];
-
     }
 
     // String[] ecosProtocolTypes = {"DCC14","DCC28", "DCC128", "MM14", "MM27", "MM28", "SX32", "MMFKT"};
@@ -519,12 +525,12 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
      }*/
     @Override
     public String getPreferencesItem() {
-        return "ECOS"; // NOI18N
+        return "ECoS"; // NOI18N
     }
 
     @Override
     public String getPreferencesItemText() {
-        return "ECOS Preferences"; // TODO: I18N
+        return Bundle.getMessage("MenuItemECoSPrefs");
     }
 
     @Override

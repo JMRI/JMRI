@@ -22,11 +22,13 @@ import jmri.util.prefs.InitializationException;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
     public static final String FONT_SIZE = "fontSize";
@@ -89,11 +91,19 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
+>>>>>>> JMRI/master
 =======
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
 >>>>>>> JMRI/master
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
+            
             Locale.setDefault(this.getLocale());
+            javax.swing.JComponent.setDefaultLocale(this.getLocale());
+            javax.swing.JOptionPane.setDefaultLocale(this.getLocale());
+           
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
@@ -134,6 +144,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
+>>>>>>> JMRI/master
 =======
         preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
 >>>>>>> JMRI/master
@@ -276,7 +290,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> JMRI/master
      * @return the graphicTableState
      */
     public boolean isGraphicTableState() {

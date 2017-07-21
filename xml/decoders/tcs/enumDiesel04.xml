@@ -417,5 +417,8 @@
 		<enumChoice choice="Windshield Wiper" value="1389"/>
 	</enumChoiceGroup>
 	<enumChoice choice="None " value="65535"/>
+<<<<<<< HEAD
 	<enumChoice choice="None" value="1568"/>
+=======
+>>>>>>> JMRI/master
 </enumVal>

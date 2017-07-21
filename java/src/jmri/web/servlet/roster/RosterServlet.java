@@ -30,7 +30,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+<<<<<<< HEAD
 import java.net.URLDecoder;
+=======
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+>>>>>>> JMRI/master
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,13 +51,14 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
 import jmri.server.json.roster.JsonRosterServiceFactory;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide roster data to HTTP clients.
@@ -71,6 +78,7 @@ import org.slf4j.LoggerFactory;
             "/roster", // default
             "/prefs/roster.xml", // redirect to /roster?format=xml since ~ 9 Apr 2012
         })
+@ServiceProvider(service = HttpServlet.class)
 public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;
@@ -164,7 +172,11 @@ public class RosterServlet extends HttpServlet {
             try {
                 out = new FileOutputStream(fileTemp);
                 fileContent = fm.getContent();
+<<<<<<< HEAD
                 int read = 0;
+=======
+                int read;
+>>>>>>> JMRI/master
                 final byte[] bytes = new byte[1024];
                 while ((read = fileContent.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
@@ -194,7 +206,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
                         fileTemp.delete(); //get rid of temp file 
+=======
+                        fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     } else {
                         fileNew.delete(); //delete the old file
                         if (fileTemp.renameTo(fileNew)) {
@@ -205,7 +221,11 @@ public class RosterServlet extends HttpServlet {
                             String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                             log.error(m);
                             msgList.add(m);
+<<<<<<< HEAD
                             fileTemp.delete(); //get rid of temp file 
+=======
+                            fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                         }
                     }
                 } else {
@@ -217,19 +237,31 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
                         fileTemp.delete(); //get rid of temp file 
+=======
+                        fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     }
 
                 }
             } else {
+<<<<<<< HEAD
                 RosterEntry reTemp = null; // create a temp rosterentry to check, based on uploaded file
+=======
+                RosterEntry reTemp; // create a temp rosterentry to check, based on uploaded file
+>>>>>>> JMRI/master
                 try {
                     reTemp = RosterEntry.fromFile(new File(tempFolderName + fm.getFileName()));
                 } catch (JDOMException e) { //handle XML failures
                     String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidXML"), fm.getFileName(), e.getMessage());
                     log.error(m);
                     msgList.add(m);
+<<<<<<< HEAD
                     fileTemp.delete(); //get rid of temp file 
+=======
+                    fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     break;
                 }
                 RosterEntry reOld = Roster.getDefault().getEntryForId(reTemp.getId()); //get existing entry if found
@@ -238,7 +270,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
                         fileTemp.delete(); //get rid of temp file 
+=======
+                        fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     } else { //replace specified
                         Roster.getDefault().removeEntry(reOld); //remove the old entry from roster
                         reTemp.updateFile(); //saves XML file to roster folder and makes backup
@@ -247,7 +283,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryReplaced"), fm.getFileName(), reTemp.getDisplayName());
                         log.debug(m);
                         msgList.add(m);
+<<<<<<< HEAD
                         fileTemp.delete(); //get rid of temp file 
+=======
+                        fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     }
                 } else {
                     fileTemp.renameTo(fileNew); //move the file to proper location
@@ -264,7 +304,10 @@ public class RosterServlet extends HttpServlet {
 
         //respond with a json list of messages from the upload attempts
         response.setContentType("application/json");
+<<<<<<< HEAD
         ObjectMapper mapper = new ObjectMapper();
+=======
+>>>>>>> JMRI/master
         mapper.writeValue(response.getOutputStream(), msgList);
     }
 
@@ -379,17 +422,17 @@ public class RosterServlet extends HttpServlet {
      * @throws java.io.IOException if communications is cut with client
      */
     protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String[] pathInfo = request.getPathInfo().substring(1).split("/");
-        int idOffset = 0;
+        String[] pathInfo = request.getRequestURI().substring(1).split("/");
+        int idOffset = 1;
         String type = null;
-        if (pathInfo[0].equals("entry")) {
-            if (pathInfo.length == 1) {
+        if (pathInfo[1].equals("entry")) {
+            if (pathInfo.length == 2) {
                 // path must be /roster/<id> or /roster/entry/<id>
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
-            idOffset = 1;
+            idOffset = 2;
         }
-        String id = pathInfo[idOffset];
+        String id = URLDecoder.decode(pathInfo[idOffset], UTF8);
         if (pathInfo.length > (1 + idOffset)) {
             type = pathInfo[pathInfo.length - 1];
         }
@@ -428,9 +471,9 @@ public class RosterServlet extends HttpServlet {
                     this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
-                ServletUtil.getInstance().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getDefault().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else if (type.equals("throttle")) {
-                ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getDefault().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else {
                 // don't know what to do
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -456,7 +499,7 @@ public class RosterServlet extends HttpServlet {
      * @throws java.io.IOException if communications is cut with client
      */
     protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter) throws IOException {
-        ServletUtil.getInstance().setNonCachingHeaders(response);
+        ServletUtil.getDefault().setNonCachingHeaders(response);
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
@@ -471,7 +514,11 @@ public class RosterServlet extends HttpServlet {
                 JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class).orElseGet(() -> {
                     return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
                 });
-                response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
+                try {
+                    response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
+                } catch (JsonException ex) {
+                    response.sendError(ex.getCode(), mapper.writeValueAsString(ex.getJsonMessage()));
+                }
                 break;
             case JSON.XML:
                 response.setContentType(UTF8_APPLICATION_XML);
@@ -502,28 +549,32 @@ public class RosterServlet extends HttpServlet {
                         (!filter.path(NAME).isMissingNode()) ? filter.path(NAME).asText() : null,
                         group
                 );
-                entries.stream().forEach((entry) -> {
-                    // NOTE: changing the following order will break JavaScript and HTML code
-                    builder.append(String.format(request.getLocale(), row,
-                            entry.getId(),
-                            entry.getRoadName(),
-                            entry.getRoadNumber(),
-                            entry.getMfg(),
-                            entry.getModel(),
-                            entry.getOwner(),
-                            entry.getDccAddress(),
-                            entry.getDecoderModel(),
-                            entry.getDecoderFamily(),
-                            entry.getDecoderComment(),
-                            entry.getComment(),
-                            entry.getURL(),
-                            entry.getMaxSpeedPCT(),
-                            entry.getFileName(),
-                            StringUtil.escapeString(entry.getId())
-                    // get function buttons in a formatting loop
-                    // get attributes in a formatting loop
-                    ));
-                });
+                for (RosterEntry entry : entries) {
+                    try {
+                        // NOTE: changing the following order will break JavaScript and HTML code
+                        builder.append(String.format(request.getLocale(), row,
+                                entry.getId(),
+                                entry.getRoadName(),
+                                entry.getRoadNumber(),
+                                entry.getMfg(),
+                                entry.getModel(),
+                                entry.getOwner(),
+                                entry.getDccAddress(),
+                                entry.getDecoderModel(),
+                                entry.getDecoderFamily(),
+                                entry.getDecoderComment(),
+                                entry.getComment(),
+                                entry.getURL(),
+                                entry.getMaxSpeedPCT(),
+                                entry.getFileName(),
+                                URLEncoder.encode(entry.getId(), UTF8)
+                        // get function buttons in a formatting loop
+                        // get attributes in a formatting loop
+                        ));
+                    } catch (UnsupportedEncodingException ex) {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode entry Id in UTF-8."); // NOI18N
+                    }
+                }
                 response.getWriter().print(builder.toString());
                 break;
             default:
@@ -535,12 +586,12 @@ public class RosterServlet extends HttpServlet {
                         FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
                         String.format(request.getLocale(),
                                 Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                                ServletUtil.getInstance().getRailroadName(false),
+                                ServletUtil.getDefault().getRailroadName(false),
                                 Bundle.getMessage(request.getLocale(), "RosterTitle")
                         ),
-                        ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                        ServletUtil.getInstance().getRailroadName(false),
-                        ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                        ServletUtil.getDefault().getNavBar(request.getLocale(), request.getContextPath()),
+                        ServletUtil.getDefault().getRailroadName(false),
+                        ServletUtil.getDefault().getFooter(request.getLocale(), request.getContextPath()),
                         group
                 ));
                 break;

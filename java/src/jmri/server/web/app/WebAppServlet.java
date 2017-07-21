@@ -29,6 +29,10 @@ import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
+import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 
 /**
  * Dynamic content for the Angular JMRI web application.
@@ -40,6 +44,10 @@ import org.slf4j.LoggerFactory;
     "/app/script",
     "/app/about"
 })
+<<<<<<< HEAD
+=======
+@ServiceProvider(service = HttpServlet.class)
+>>>>>>> JMRI/master
 public class WebAppServlet extends HttpServlet {
 
     private final static Logger log = LoggerFactory.getLogger(WebAppServlet.class);

@@ -6,7 +6,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+<<<<<<< HEAD
    SpeedoComponentFactoryTest.class
+=======
+   SpeedoComponentFactoryTest.class,
+   BundleTest.class
+>>>>>>> JMRI/master
 })
 /**
  * Tests for the jmri.jmrix.bachrus.swing package

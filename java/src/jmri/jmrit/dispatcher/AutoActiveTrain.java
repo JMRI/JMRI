@@ -49,8 +49,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * Main constructor method
      * @param at active train
+=======
+     * Create an AutoActiveTrain.
+     *
+     * @param at the train to automate
+>>>>>>> JMRI/master
 =======
      * Create an AutoActiveTrain.
      *
@@ -226,7 +232,12 @@ public class AutoActiveTrain implements ThrottleListener {
      * Initialize new Auto Active Train or get a new throttle after WORKING Sets
      * up the DCC address and initiates creation of a throttle to run the train.
 <<<<<<< HEAD
+<<<<<<< HEAD
      * @return false if bad details or throttle failed 
+=======
+     *
+     * @return true if initialized; false otherwise
+>>>>>>> JMRI/master
 =======
      *
      * @return true if initialized; false otherwise
@@ -376,9 +387,15 @@ public class AutoActiveTrain implements ThrottleListener {
     //
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * Notification methods Handle notification of change in state and occupancy
      * of Sections and Blocks to track the train around the Transit
      * @param as allocation section
+=======
+     * Handle notification of changes in section state.
+     *
+     * @param as the allocated that changed
+>>>>>>> JMRI/master
 =======
      * Handle notification of changes in section state.
      *
@@ -672,8 +689,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 });
 <<<<<<< HEAD
+<<<<<<< HEAD
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(), 
                   sm.getAspect(), as.getSectionName());
+=======
+                log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
+                        sm.getAspect(), as.getSectionName());
+>>>>>>> JMRI/master
 =======
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
                         sm.getAspect(), as.getSectionName());
@@ -683,7 +705,11 @@ public class AutoActiveTrain implements ThrottleListener {
             else {
                 log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
 <<<<<<< HEAD
+<<<<<<< HEAD
                   as.getSectionName());
+=======
+                        as.getSectionName());
+>>>>>>> JMRI/master
 =======
                         as.getSectionName());
 >>>>>>> JMRI/master
@@ -751,7 +777,11 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD) {
 <<<<<<< HEAD
+<<<<<<< HEAD
          //set speed using signalHeads
+=======
+            //set speed using signalHeads
+>>>>>>> JMRI/master
 =======
             //set speed using signalHeads
 >>>>>>> JMRI/master
@@ -948,6 +978,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stopSensor.addPropertyChangeListener(_stopSensorListener
                         = new java.beans.PropertyChangeListener() {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             @Override
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 if (e.getPropertyName().equals("KnownState")) {
@@ -956,6 +987,8 @@ public class AutoActiveTrain implements ThrottleListener {
                             }
                         });
 =======
+=======
+>>>>>>> JMRI/master
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("KnownState")) {
@@ -963,6 +996,9 @@ public class AutoActiveTrain implements ThrottleListener {
                         }
                     }
                 });
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                 _stoppingBySensor = true;
             }
@@ -1283,15 +1319,21 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * Pauses the auto active train for a specified number of fast clock minutes
      * Pausing operation is performed in a separate thread
      * @param fastMinutes number of fast minutes to pause
      * @return null if already pausing, new thread doing the pause if not paused
 =======
+=======
+>>>>>>> JMRI/master
      * Pause the auto active train for a specified number of fast clock minutes.
      *
      * @param fastMinutes the number of minutes to pause the train
      * @return the thread waiting on the pause or null if already paused
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
      */
     public Thread pauseTrain(int fastMinutes) {
@@ -1372,14 +1414,20 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * A runnable that executes a pause train for a specified number of Fast
          * Clock minutes
          * @param fastMinutes number of fast minutes to pause
 =======
+=======
+>>>>>>> JMRI/master
          * Create a PauseTrain
          *
          * @param fastMinutes the number of fast clock minutes to pause the
          *                    train
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
          */
         public PauseTrain(int fastMinutes) {
@@ -1422,15 +1470,21 @@ public class AutoActiveTrain implements ThrottleListener {
                         = new java.beans.PropertyChangeListener() {
                     @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 _fastMinutes--;
                             }
                         });
 =======
+=======
+>>>>>>> JMRI/master
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         _fastMinutes--;
                     }
                 });
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                 // wait for fast minutes to tick away
                 waitNow = true;
@@ -1618,8 +1672,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * Flag from user's control Note: Halt here invokes immediate stop.
          * @param halt true for immediate stop
+=======
+         * Flag from user's control.
+         *
+         * @param halt true to immediately stop the train; false otherwise
+>>>>>>> JMRI/master
 =======
          * Flag from user's control.
          *
@@ -1635,9 +1695,15 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * set the train speed directly, bypassing ramping, 
          * Input is float speed (0.0 - 1.0)
          * @param speed 0.0 to 1.0
+=======
+         * Set the train speed directly, bypassing ramping.
+         *
+         * @param speed 0.0 (stop) to 1.0 (full)
+>>>>>>> JMRI/master
 =======
          * Set the train speed directly, bypassing ramping.
          *
@@ -1653,8 +1719,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * Allow user to test if train is moving or stopped
          * @return true if speed not zero
+=======
+         * Check if train is moving or stopped.
+         *
+         * @return true if stopped; false otherwise
+>>>>>>> JMRI/master
 =======
          * Check if train is moving or stopped.
          *
@@ -1670,8 +1742,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * Allow user to test if train is moving at its current requested speed
          * @return true if at target speed
+=======
+         * Check if train is moving at its current requested speed.
+         *
+         * @return true if at requested speed; false otherwise
+>>>>>>> JMRI/master
 =======
          * Check if train is moving at its current requested speed.
          *

@@ -50,6 +50,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
         if (l.isTurnoutReply()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
      // parse message type
      int addr = l.getTOIDInt();
      if (addr >= 0) {
@@ -73,6 +74,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      }
  }
 =======
+=======
+>>>>>>> JMRI/master
             // parse message type
             int addr = l.getTOIDInt();
             if (addr >= 0) {
@@ -95,6 +98,9 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 }
             }
         }
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
     }
     

@@ -74,7 +74,11 @@ abstract public class AbstractDCCppInitializationManager {
             
             //Send Information request to the Base Station
 <<<<<<< HEAD
+<<<<<<< HEAD
      //First, we need to send a request for the Command Station
+=======
+            //First, we need to send a request for the Command Station
+>>>>>>> JMRI/master
 =======
             //First, we need to send a request for the Command Station
 >>>>>>> JMRI/master
@@ -87,6 +91,7 @@ abstract public class AbstractDCCppInitializationManager {
         protected javax.swing.Timer setupInitTimer() {
             // Initialize and start initilization timeout timer.
             javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
+<<<<<<< HEAD
 <<<<<<< HEAD
                     new java.awt.event.ActionListener() {
                         @Override
@@ -102,6 +107,8 @@ abstract public class AbstractDCCppInitializationManager {
                                 }
                     });
 =======
+=======
+>>>>>>> JMRI/master
                                                              new java.awt.event.ActionListener() {
                                                                  @Override
                                                                  public void actionPerformed(
@@ -115,13 +122,20 @@ abstract public class AbstractDCCppInitializationManager {
                                                                      finish();
                                                                  }
                                                              });
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
             retVal.setInitialDelay(getInitTimeout());
             retVal.start();
             return retVal;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master
@@ -152,6 +166,7 @@ abstract public class AbstractDCCppInitializationManager {
             // Check to see if this is a response with the Command Station 
             // Version Info
 <<<<<<< HEAD
+<<<<<<< HEAD
      if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
   log.debug("Version Info Received: {}", l.toString());
@@ -163,12 +178,19 @@ abstract public class AbstractDCCppInitializationManager {
 =======
             if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
+=======
+            if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
+                // This is the Command Station Software Version Response
+>>>>>>> JMRI/master
                 log.debug("Version Info Received: {}", l.toString());
                 systemMemo.getDCCppTrafficController()
                     .getCommandStation()
                     .setCommandStationInfo(l);
                 finish();
             }
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         }
         

@@ -80,10 +80,17 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
+<<<<<<< HEAD
      * Handles classes that have moved to a new package or been superceded.
      *
      * @param name name of the moved or superceded class
      * @return name of the class in newer package or of superseding class
+=======
+     * Handles ConfigureXml classes that have moved to a new package or been superceded.
+     *
+     * @param name name of the moved or superceded ConfigureXml class
+     * @return name of the ConfigureXml class in newer package or of superseding class
+>>>>>>> JMRI/master
      */
     static public String currentClassName(String name) {
         if (!classMigrationBundle.containsKey(name)) {

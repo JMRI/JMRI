@@ -78,6 +78,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         }
 
         if (f == null) {
+<<<<<<< HEAD
             f = new TabbedPreferencesFrame() {};
             Runnable r = new Runnable() {
                 @Override
@@ -86,17 +87,25 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                         setWait(true);
                         while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
                             Thread.sleep(50);
+=======
+            f = new TabbedPreferencesFrame();
+            new Thread(() -> {
+                final Object waiter = new Object();
+                try {
+                    setWait(true);
+                    while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                        synchronized (waiter) {
+                            waiter.wait(50);
+>>>>>>> JMRI/master
                         }
-                        SwingUtilities.updateComponentTreeUI(f);
-                        showPreferences();
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                        setWait(false);
                     }
+                    SwingUtilities.updateComponentTreeUI(f);
+                    showPreferences();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    setWait(false);
                 }
-            };
-            Thread thr = new Thread(r);
-            thr.start();
+            }).start();
         } else {
             showPreferences();
         }

@@ -17,12 +17,20 @@ public class LocoStatsFunc implements LocoNetListener {
     public LocoStatsFunc(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         updatePending = false;
+<<<<<<< HEAD
+=======
+        need2ndUpdate = false;
+>>>>>>> JMRI/master
         ifaceStatus = null;
         if (memo != null) {
             this.memo.getLnTrafficController().addLocoNetListener(0, this);
         }
     }
     private boolean updatePending;
+<<<<<<< HEAD
+=======
+    private boolean need2ndUpdate;
+>>>>>>> JMRI/master
     private Object ifaceStatus;
     
     /**
@@ -30,6 +38,11 @@ public class LocoStatsFunc implements LocoNetListener {
      */
     public void sendLocoNetInterfaceStatusQueryMessage() {
         updatePending = true;
+<<<<<<< HEAD
+=======
+        need2ndUpdate = false;  // assume that we do not need a second query
+
+>>>>>>> JMRI/master
         log.debug("Sent a LocoNet interface status query");
         sendQuery();
     }
@@ -55,7 +68,12 @@ public class LocoStatsFunc implements LocoNetListener {
                 && (msg.getElement(3) == 0x50)
                 && (msg.getElement(4) == 0x01)
                 && ((msg.getElement(5) & 0xF0) == 0x0)
+<<<<<<< HEAD
                 && ((msg.getElement(10) & 0xF0) == 0x0)) {
+=======
+                && ((msg.getElement(10) & 0xF0) == 0x0)
+                && updatePending) {
+>>>>>>> JMRI/master
             // LocoBuffer II form
             int[] data = msg.getPeerXfrData();
             ifaceStatus = new LocoBufferIIStatus(
@@ -71,7 +89,14 @@ public class LocoStatsFunc implements LocoNetListener {
                 && (msg.getElement(1) == 0x10)
                 && (msg.getElement(2) == 0x22)
                 && (msg.getElement(3) == 0x22)
+<<<<<<< HEAD
                 && (msg.getElement(4) == 0x01)) {  // Digitrax form, check PR2/PR3 or MS100/PR3 mode
+=======
+                && (msg.getElement(4) == 0x01)
+                && ((msg.getElement(5) & 0x70) == 0x0)
+                && ((msg.getElement(10) & 0x70) == 0x0)
+                && updatePending) {  // Digitrax form, check PR2/PR3 or MS100/PR3 mode
+>>>>>>> JMRI/master
 
             if ((msg.getElement(8) & 0x20) == 0) {
                 // PR2 format
@@ -85,8 +110,18 @@ public class LocoStatsFunc implements LocoNetListener {
                 );
                 log.debug("Got a LocoNet interface status reply: PR2 mode");
                 if (updatePending) {
+<<<<<<< HEAD
                     updatePending = false;
                     sendQuery();
+=======
+                    if (need2ndUpdate == false) {
+                        need2ndUpdate = true;
+                        sendQuery();   // get info for MS100 mode, too
+                    } else {
+                        need2ndUpdate = false;
+                        updatePending = false;
+                    }
+>>>>>>> JMRI/master
                 }
 
             } else {
@@ -99,12 +134,23 @@ public class LocoStatsFunc implements LocoNetListener {
                 );
                 log.debug("Got a LocoNet interface status reply: PR3 MS100 mode");
                 if (updatePending) {
+<<<<<<< HEAD
                     updatePending = false;
                     sendQuery();
+=======
+                    if (need2ndUpdate == false) {
+                        need2ndUpdate = true;
+                        sendQuery();   // get info for PR2 mode, too
+                    } else {
+                        need2ndUpdate = false;
+                        updatePending = false;
+                    }
+>>>>>>> JMRI/master
                 }
             }
             updateListeners();
 
+<<<<<<< HEAD
         } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
             // raw mode
 <<<<<<< HEAD
@@ -122,6 +168,17 @@ public class LocoStatsFunc implements LocoNetListener {
             }
 =======
 //            try {
+=======
+        } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER) && 
+                (msg.getElement(1) == 0x10) &&
+                updatePending) {
+            // Raw mode format
+            // Accept only the first OPC_PEER_XFER of length 0x10 after a request.  
+            // This assumes that the interface device will be the first response 
+            // after the request, and that the reply will be a "typical" OPC_PEER_XFER
+            // message, and not one of the "alternate" forms with different overall 
+            // length..
+>>>>>>> JMRI/master
             int[] data = msg.getPeerXfrData();
             ifaceStatus = new RawStatus(data[0], data[1], data[2], data[3],
                     data[4], data[5], data[6], data[7]
@@ -130,9 +187,12 @@ public class LocoStatsFunc implements LocoNetListener {
             updatePending = false;
             updateListeners();
             log.debug("Got a LocoNet interface status reply: Raw mode");
+<<<<<<< HEAD
 //            } catch (Exception e) {
 //                log.error("Error parsing update: " + msg);
 //            }
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         }
     }

@@ -5,8 +5,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+=======
+>>>>>>> JMRI/master
 
 /**
  *
@@ -16,7 +19,10 @@ public class SerialLightManagerTest {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
+<<<<<<< HEAD
     private SerialNode n = null;
+=======
+>>>>>>> JMRI/master
 
     @Test
     public void testCTor() {
@@ -33,7 +39,11 @@ public class SerialLightManagerTest {
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
+<<<<<<< HEAD
         n = new SerialNode(0, SerialNode.SMINI,tcis);
+=======
+        new SerialNode(0, SerialNode.SMINI,tcis);
+>>>>>>> JMRI/master
     }
 
     @After
@@ -42,6 +52,9 @@ public class SerialLightManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
     private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());
 
+=======
+>>>>>>> JMRI/master
 }

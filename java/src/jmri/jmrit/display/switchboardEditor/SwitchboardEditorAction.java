@@ -29,7 +29,11 @@ public class SwitchboardEditorAction extends AbstractAction {
         }
         SwitchboardEditor frame = new SwitchboardEditor(name);
         jmri.jmrit.display.PanelMenu.instance().addEditorPanel(frame);
+<<<<<<< HEAD
         frame.setLocation(20, 20);
+=======
+        frame.setLocation(570, 20); // position Editor
+>>>>>>> JMRI/master
 
         frame.setTitle();
         frame.initView();

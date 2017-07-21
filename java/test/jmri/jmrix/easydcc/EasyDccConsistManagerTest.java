@@ -3,30 +3,27 @@
  *
  * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2017
  */
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EasyDccConsistManagerTest extends TestCase {
+public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase{
 
-    public void testCtor() {
-        EasyDccConsistManager m = new EasyDccConsistManager();
-        Assert.assertNotNull(m);
-    }
+    private EasyDccTrafficControlScaffold t = null;
 
     // test the initilization loop
+    @Test
     public void testInitSequence() {
-        EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
-        new EasyDccListenerScaffold();
-        EasyDccConsistManager m = new EasyDccConsistManager();
+        EasyDccConsistManager m = (EasyDccConsistManager)cm;
         // we need to call requestUpdateFromLayout() to trigger the 
         // init sequence.
         m.requestUpdateFromLayout();
@@ -103,29 +100,21 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public EasyDccConsistManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccConsistManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccConsistManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
+<<<<<<< HEAD
     @Override
     protected void setUp() {
+=======
+    @Before
+    @Override
+    public void setUp() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.setUp();
+        t = new EasyDccTrafficControlScaffold();
+        cm = new EasyDccConsistManager();
     }
 
+<<<<<<< HEAD
     @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
@@ -189,6 +178,13 @@ public class EasyDccConsistManagerTest extends TestCase {
             return cmdListeners.size();
         }
 
+=======
+    @After
+    @Override
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+        cm = null;
+>>>>>>> JMRI/master
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());

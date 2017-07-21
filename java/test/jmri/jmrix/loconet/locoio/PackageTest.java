@@ -31,6 +31,11 @@ public class PackageTest extends TestCase {
         suite.addTest(LocoIOTableModelTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIODataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

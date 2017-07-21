@@ -35,8 +35,13 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
 
     protected int[] commandStationTypes = {
 <<<<<<< HEAD
+<<<<<<< HEAD
  DCCppConstants.DCCPP_UNO_1_0,
  DCCppConstants.DCCPP_ARDUINO_1_1
+=======
+        DCCppConstants.DCCPP_UNO_1_0,
+        DCCppConstants.DCCPP_ARDUINO_1_1
+>>>>>>> JMRI/master
 =======
         DCCppConstants.DCCPP_UNO_1_0,
         DCCppConstants.DCCPP_ARDUINO_1_1
@@ -59,6 +64,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      */
     public void setCommandStationType(String name) {
 <<<<<<< HEAD
+<<<<<<< HEAD
  for (int i = 0; i < commandStationNames.length; i++) {
      if (commandStationNames[i].matches(name)) {
   commandStationType = i;
@@ -72,10 +78,19 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
             if (commandStationNames[i].matches(name)) {
                 commandStationType = i;
                 return;
+=======
+        for (int i = 0; i < commandStationNames.length; i++) {
+            if (commandStationNames[i].matches(name)) {
+                commandStationType = i;
+                return;
+>>>>>>> JMRI/master
             }
         }
         log.error("CommandStation Type not found: {}", name);
         commandStationType = 0;
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
     }
     

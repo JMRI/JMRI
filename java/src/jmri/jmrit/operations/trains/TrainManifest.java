@@ -243,7 +243,7 @@ public class TrainManifest extends TrainCommon {
                         if (train.isShowArrivalAndDepartureTimesEnabled()) {
                             if (rl == train.getRoute().getDepartsRouteLocation()) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{train.getDepartureTime()});
+                                        .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                             } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});

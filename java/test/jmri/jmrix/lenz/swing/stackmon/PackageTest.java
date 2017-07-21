@@ -12,7 +12,12 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     StackMonFrameTest.class,
     StackMonActionTest.class,
+<<<<<<< HEAD
     StackMonDataModelTest.class
+=======
+    StackMonDataModelTest.class,
+    BundleTest.class
+>>>>>>> JMRI/master
 })
 public class PackageTest {
 }

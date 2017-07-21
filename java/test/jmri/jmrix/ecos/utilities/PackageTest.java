@@ -11,10 +11,16 @@ import org.slf4j.LoggerFactory;
     RosterToEcosTest.class,
     RemoveObjectFromEcosTest.class,
 <<<<<<< HEAD
+<<<<<<< HEAD
     GetEcosObjectNumberTest.class
 =======
     GetEcosObjectNumberTest.class,
     EcosLocoToRosterTest.class
+>>>>>>> JMRI/master
+=======
+    GetEcosObjectNumberTest.class,
+    EcosLocoToRosterTest.class,
+    BundleTest.class
 >>>>>>> JMRI/master
 })
 /**

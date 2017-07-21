@@ -11,12 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the SE8cSignalHead implmentation
+ * Tests for the SE8cSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
-public class SE8cSignalHeadTest {
+public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCtor1() {
@@ -138,6 +138,7 @@ public class SE8cSignalHeadTest {
 
     }
 
+<<<<<<< HEAD
     @Test
     public void testStateFollowingCtor1() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
@@ -150,6 +151,15 @@ public class SE8cSignalHeadTest {
 
         // s2 should follow s1
         SE8cSignalHead s2 = new SE8cSignalHead(
+=======
+    // from here down is testing infrastructure
+
+    @Override
+    public SignalHead getHeadToTest() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        return new SE8cSignalHead(
+>>>>>>> JMRI/master
                 new NamedBeanHandle<Turnout>("11", it11),
                 new NamedBeanHandle<Turnout>("12", it12)
         );
@@ -180,6 +190,7 @@ public class SE8cSignalHeadTest {
                 new NamedBeanHandle<Turnout>("12", it12),
                 "user name"
         );
+<<<<<<< HEAD
 
         // s2 should follow s1
         SE8cSignalHead s2 = new SE8cSignalHead(
@@ -263,9 +274,9 @@ public class SE8cSignalHeadTest {
         s1.setAppearance(SignalHead.DARK);
         Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
 
+=======
+>>>>>>> JMRI/master
     }
-
-    // from here down is testing infrastructure
 
     // The minimal setup for log4J/JUnit4
     @Before

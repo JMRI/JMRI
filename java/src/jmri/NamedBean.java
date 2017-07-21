@@ -15,12 +15,17 @@ import javax.annotation.Nonnull;
  * Each object has two types of names:<p>
  * The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
+<<<<<<< HEAD
  * (for example LocoNet or NCE) and address within that system. It must 
+=======
+ * (for example LocoNet or NCE) and address within that system. It must
+>>>>>>> JMRI/master
  * be present and unique across the JMRI instance.
  * <p>
  * The "user" name is optional. It's free form text except for two restrictions:
  * <ul>
  * <li>It can't be the empty string "".  (A non-existant user name is coded as a null)
+<<<<<<< HEAD
  * <li>And eventually, we may insist on normalizing user names to a specific form, 
  *     e.g. remove leading and trailing white space; 
  *     see the {@link #normalizeUserName(java.lang.String)} method
@@ -31,6 +36,18 @@ import javax.annotation.Nonnull;
  * (The complex wording is saying that a single NamedBean object is allowed to have its 
  * system name and user name be the same, but that's the only non-uniqueness that's allowed within a specific type).
  * Note that the uniqueness restrictions are currently not completely 
+=======
+ * <li>And eventually, we may insist on normalizing user names to a specific form,
+ *     e.g. remove leading and trailing white space;
+ *     see the {@link #normalizeUserName(java.lang.String)} method
+ * </ul><p>
+ * Each of these two
+ * names must be unique for every NamedBean of the same type on the layout and a single NamedBean
+ * cannot have a user name that is the same as the system name of another NamedBean of the same type.
+ * (The complex wording is saying that a single NamedBean object is allowed to have its
+ * system name and user name be the same, but that's the only non-uniqueness that's allowed within a specific type).
+ * Note that the uniqueness restrictions are currently not completely
+>>>>>>> JMRI/master
  * enforced, only warned about; a future version of JMRI will enforce this restriction.
  *<p>
  * For more information, see the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names and Naming</a> page
@@ -303,6 +320,7 @@ public interface NamedBean {
     @CheckReturnValue
     @Nonnull
     public String getBeanType();
+<<<<<<< HEAD
     
     /**
      * Enforces, and as a user convenience converts to, the standard form for a user name.
@@ -319,6 +337,26 @@ public interface NamedBean {
         // uncomment next line to allow debugging of trimmed user names
         // return inputName.trim();
         return inputName;
+=======
+
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a user name.
+     * <p>
+     * This implementation just does a trim(), but later versions might 
+     * e.g. do more extensive things.
+     *
+     * @param inputName User name to be normalized
+     * @throws BadUserNameException If the inputName can't be converted to normalized form
+     * @return A user name in standard normalized form
+     */
+    @CheckReturnValue
+    static public @CheckForNull String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
+        String result = inputName;
+        if (null != inputName) {
+            result = result.trim();            
+        }
+        return result;
+>>>>>>> JMRI/master
     }
     public class BadUserNameException extends IllegalArgumentException {}
     public class BadSystemNameException extends IllegalArgumentException {}

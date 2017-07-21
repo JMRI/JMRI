@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.cmri.serial.SerialMessageTest.class,
    jmri.jmrix.cmri.serial.SerialTrafficControllerTest.class,
    jmri.jmrix.cmri.serial.SerialAddressTest.class,
+   jmri.jmrix.cmri.serial.SerialAddressTwoSystemTest.class,
    jmri.jmrix.cmri.serial.networkdriver.PackageTest.class,
    jmri.jmrix.cmri.serial.sim.PackageTest.class,
    jmri.jmrix.cmri.serial.serialdriver.PackageTest.class,
@@ -38,7 +39,12 @@ import org.slf4j.LoggerFactory;
    SerialTurnoutTest.class,
    SerialLightTest.class,
    SerialLightManagerTest.class,
+<<<<<<< HEAD
    SerialSensorTest.class
+=======
+   SerialSensorTest.class,
+   BundleTest.class
+>>>>>>> JMRI/master
 })
 
 public class PackageTest{

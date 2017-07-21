@@ -1,9 +1,9 @@
 package jmri.jmrix.oaktree;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.oaktree package.
@@ -50,6 +50,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialReplyTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

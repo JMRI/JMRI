@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 4.3.6
  */
-public class Bundle extends jmri.jmrix.lenz.Bundle {
+public class Bundle extends jmri.jmrix.lenz.swing.Bundle {
 
     @Nullable
     private static final String name = "jmri.jmrix.lenz.swing.lv102.LV102Bundle"; // NOI18N

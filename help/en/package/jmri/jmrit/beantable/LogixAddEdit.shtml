@@ -32,8 +32,8 @@
       particular Logix, for example, "Signal 5 Control".</p>
 
       <p>The system name for a Logix always must begin with the two
-      letters IX, usually followed by a number selected by the
-      user. For example, valid Logix system names include: IX1,
+      letters <strong>IX</strong>, usually followed by a number selected
+      by the user. For example, valid Logix system names include: IX1,
       IX34, and IX100. All letters in a system name must be in
       upper case. If the user enters lower case letters, JMRI will
       automatically convert them to upper case. Also, as a
@@ -43,7 +43,7 @@
       enter 32 in the system name field, and the program will do
       the rest.</p>
 
-      <p>The Edit Logix window allows Conditionals to be created
+      <p>The Edit Logix pane allows Conditionals to be created
       and edited. The system name and user name of the Logix are
       displayed at the top. The user name may be changed by
       entering/modifying the text in the User Name field. Next is a
@@ -53,7 +53,7 @@
       "ConditionalAddEdit.shtml">separate help page on
       adding/editing Conditionals</a>) This will create a new
       Conditional (a new row in the Conditional Table), and open
-      the Edit Conditional window allowing the logical expression
+      the Edit Conditional pane allowing the logical expression
       and actions of the new Conditional to be defined. An existing
       Conditional may be edited by clicking the <strong>Edit</strong> button
       of that Conditional in the table. The user name of the
@@ -61,9 +61,13 @@
       names may be any useful text, provided the new user name is
       not used by another Conditional belonging to this Logix. It
       may be the same as the user name of another Logix's
+<<<<<<< HEAD
       Conditional.  <strong>Note: The name must be unique among all
       conditionals if it is going to be referred to by another
       Logix.</strong> <em>When editing the user name (or any item in    
+=======
+      Conditional. <em>When editing the user name (or any item in    
+>>>>>>> JMRI/master
       any JMRI table) please remember to move to another cell in
       the table so that the program is notified that you have
       finished your entry, otherwise the entry may not take

@@ -6,10 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the XPressNet specific Sensor implementation.
- * <P>
+ * Manage the XpressNet specific Sensor implementation.
+ * <p>
  * System names are "XSnnn", where nnn is the sensor number without padding.
+<<<<<<< HEAD
  * <P>
+=======
+ *
+>>>>>>> JMRI/master
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
  */
@@ -36,7 +40,12 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
+<<<<<<< HEAD
     // XPressNet specific methods
+=======
+    // XpressNet specific methods
+
+>>>>>>> JMRI/master
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new XNetSensor(systemName, userName, tc);
@@ -53,7 +62,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -91,12 +100,24 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
+<<<<<<< HEAD
     // listen for the messages to the LI100/LI101
+=======
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
     // Handle a timeout notification
+=======
+    /**
+     * Handle a timeout notification.
+     */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -176,5 +197,3 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class.getName());
 
 }
-
-

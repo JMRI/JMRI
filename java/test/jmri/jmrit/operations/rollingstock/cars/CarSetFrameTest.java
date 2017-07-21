@@ -2,10 +2,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
+import jmri.IdTagManager;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+<<<<<<< HEAD
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.After;
+=======
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assume;
+>>>>>>> JMRI/master
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +52,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c1.setOwner("Owner2");
         // make sure the ID tags exist before we
         // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
+        InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
         c1.setTypeName("Caboose");
         c1.setWeight("1.4");
@@ -61,7 +69,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c2.setOwner("AT");
         // make sure the ID tags exist before we
         // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
+        InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 2");
         c2.setRfid("RFID 2");
         c2.setTypeName("Boxcar");
 
@@ -74,7 +82,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c3.setOwner("AB");
         // make sure the ID tags exist before we
         // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
+        InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 5");
         c3.setRfid("RFID 5");
         c3.setTypeName("Gondola");
 
@@ -87,7 +95,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c4.setOwner("AAA");
         // make sure the ID tags exist before we
         // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
+        InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 4");
         c4.setRfid("RFID 4");
         c4.setTypeName("Tank Food");
 
@@ -100,7 +108,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c5.setOwner("DAB");
         // make sure the ID tags exist before we
         // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
+        InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 1");
         c5.setRfid("RFID 1");
         c5.setTypeName("Coilcar");
 
@@ -110,6 +118,10 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
     @After
     public void setUp() throws Exception {
         super.setUp();
+<<<<<<< HEAD
+=======
+        JUnitUtil.initIdTagManager();
+>>>>>>> JMRI/master
     }
 
     @Override

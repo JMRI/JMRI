@@ -152,6 +152,7 @@ public class AutoTrainAction {
         s.addPropertyChangeListener(sensorListener
                 = new java.beans.PropertyChangeListener() {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("KnownState")) {
@@ -160,6 +161,8 @@ public class AutoTrainAction {
                     }
                 });
 =======
+=======
+>>>>>>> JMRI/master
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("KnownState")) {
@@ -167,6 +170,9 @@ public class AutoTrainAction {
                 }
             }
         });
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         tsa.setSensorListener(sensorListener);
         return true;
@@ -295,6 +301,7 @@ public class AutoTrainAction {
         s.addPropertyChangeListener(_doneSensorListener
                 = new java.beans.PropertyChangeListener() {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("KnownState")) {
@@ -305,6 +312,8 @@ public class AutoTrainAction {
                                 }
                             }
 =======
+=======
+>>>>>>> JMRI/master
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("KnownState")) {
@@ -312,6 +321,9 @@ public class AutoTrainAction {
                     if (state == Sensor.ACTIVE) {
                         if (_activeTrain.getStatus() == ActiveTrain.WORKING) {
                             _activeTrain.setStatus(ActiveTrain.READY);
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                         }
                     }

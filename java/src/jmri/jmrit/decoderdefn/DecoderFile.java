@@ -357,7 +357,6 @@ public class DecoderFile extends XmlFile {
             VariableTableModel variableModel) {
 
         nextCvStoreIndex = 0;
-        nextICvStoreIndex = 0;
 
         processVariablesElement(decoderElement.getChild("variables"), variableModel, "", "");
 
@@ -365,7 +364,6 @@ public class DecoderFile extends XmlFile {
     }
 
     int nextCvStoreIndex = 0;
-    int nextICvStoreIndex = 0;
 
     public void processVariablesElement(Element variablesElement,
             VariableTableModel variableModel, String extraInclude, String extraExclude) {
@@ -431,6 +429,7 @@ public class DecoderFile extends XmlFile {
             variableModel.setConstant(e);
         }
 
+<<<<<<< HEAD
         for (Element e : variablesElement.getChildren("ivariable")) {
             try {
                 if (log.isDebugEnabled()) {
@@ -469,6 +468,8 @@ public class DecoderFile extends XmlFile {
             }
         }
 
+=======
+>>>>>>> JMRI/master
         for (Element e : variablesElement.getChildren("variables")) {
             processVariablesElement(e, variableModel, extraInclude, extraExclude);
         }
@@ -483,11 +484,6 @@ public class DecoderFile extends XmlFile {
             for (int i = 0; i < resetList.size(); i++) {
                 Element e = resetList.get(i);
                 resetModel.setRow(i, e, decoderElement.getChild("resets"), _model);
-            }
-            List<Element> iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
-            for (int i = 0; i < iresetList.size(); i++) {
-                Element e = iresetList.get(i);
-                resetModel.setIndxRow(i, e, decoderElement.getChild("resets"), _model);
             }
         }
     }

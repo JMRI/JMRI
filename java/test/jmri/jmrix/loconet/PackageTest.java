@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
-        suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.spjfile.PackageTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
@@ -87,7 +87,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new JUnit4TestAdapter(Ib1ThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib1ThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib2ThrottleManagerTest.class));
@@ -105,6 +108,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SE8cSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         return suite;
     }

@@ -1,14 +1,17 @@
 package jmri.jmrit.speedometer;
 
 import apps.tests.Log4JFixture;
+<<<<<<< HEAD
+=======
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+>>>>>>> JMRI/master
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 
@@ -37,7 +40,7 @@ public class SpeedometerActionTest {
     public void testMakePanel(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction("Test SpeedometerAction");
-        action.makePanel(); // this should throw an IllegalArgumentException. 
+        action.makePanel(); // this should throw an IllegalArgumentException.
     }
 
     @Test
@@ -52,6 +55,7 @@ public class SpeedometerActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SpeedometerFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
 

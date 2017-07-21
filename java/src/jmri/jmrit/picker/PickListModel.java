@@ -13,7 +13,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.BlockManager;
-import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.Manager;
@@ -308,11 +307,14 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
              * Overridden to prevent empty cells from being selected
              */
 <<<<<<< HEAD
+<<<<<<< HEAD
             public void changeSelection(int row, int col, boolean toggle, boolean extend) {
                 if (this.getValueAt(row, col) != null)
                     super.changeSelection(row, col, toggle, extend);
         }};
 =======
+=======
+>>>>>>> JMRI/master
             @Override
             public void changeSelection(int row, int col, boolean toggle, boolean extend) {
                 if (this.getValueAt(row, col) != null) {
@@ -320,6 +322,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
                 }
             }
         };
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
@@ -476,6 +481,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new WarrantPickModel();
     }
 
+<<<<<<< HEAD
     public static PickListModel conditionalPickModelInstance() {
         Integer num = _listMap.get("conditional");
         if (num != null) {
@@ -486,6 +492,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new ConditionalPickModel();
     }
 
+=======
+>>>>>>> JMRI/master
     public static PickListModel entryExitPickModelInstance() {
         Integer num = _listMap.get("entryExit");
         if (num != null) {
@@ -822,6 +830,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName, false, 0);
+<<<<<<< HEAD
         }
 
         @Override
@@ -852,12 +861,15 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewConditional(sysName, userName);
+=======
+>>>>>>> JMRI/master
         }
 
         @Override
         public boolean canAddBean() {
             return false;
         }
+<<<<<<< HEAD
 
         @Override
         public JTable makePickTable() {
@@ -880,6 +892,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             }
             return super.getValueAt(r, c);
         }
+=======
+>>>>>>> JMRI/master
     }
 
     static class EntryExitPickModel extends PickListModel {

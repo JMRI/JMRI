@@ -25,6 +25,7 @@ public class ZTC611XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest
         };
     }
 
+<<<<<<< HEAD
     @After
     @Override
     public void tearDown() {
@@ -32,4 +33,6 @@ public class ZTC611XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest
         apps.tests.Log4JFixture.tearDown();
     }
 
+=======
+>>>>>>> JMRI/master
 }

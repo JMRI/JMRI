@@ -254,6 +254,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     int lastidx = rxLine.lastIndexOf(">");
                     log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                     // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
@@ -265,6 +266,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             rxLine.lastIndexOf(">")));
                     //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                     //                                rxLine.lastIndexOf(">")));
+=======
+>>>>>>> JMRI/master
 =======
 >>>>>>> JMRI/master
 
@@ -293,6 +296,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
 <<<<<<< HEAD
+<<<<<<< HEAD
                         DCCppReply msgForLater = thisMsg;
 
                         @Override
@@ -301,6 +305,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                         }
                     };
 =======
+=======
+>>>>>>> JMRI/master
                             DCCppReply msgForLater = thisMsg;
                             
                             @Override
@@ -308,6 +314,9 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                                 notifyReply(msgForLater, null);
                             }
                         };
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                     javax.swing.SwingUtilities.invokeLater(r);
                     // done with this one
@@ -337,7 +346,11 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     class XmtHandler implements Runnable {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master

@@ -37,7 +37,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     private Vector<VariableValue> rowVector = new Vector<VariableValue>();  // vector of Variable items
     private CvTableModel _cvModel = null;          // reference to external table model
-    private IndexedCvTableModel _indxCvModel = null;
     private Vector<JButton> _writeButtons = new Vector<JButton>();
     private Vector<JButton> _readButtons = new Vector<JButton>();
     private JLabel _status = null;
@@ -47,11 +46,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * "Read", "Write", "Comment", "CV", "Mask", "State".
      * For each, a property key in SymbolicProgBundle by the same name allows i18n
      */
-    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
         super();
         _status = status;
         _cvModel = cvModel;
-        _indxCvModel = iCvModel;
         headers = Arrays.copyOf(h, h.length);
     }
 
@@ -356,25 +354,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     /**
-     * Create an IndexedVariableValue object of a specific type from a
-     * describing element.
-     *
-     * @return null if no valid element
-     */
-    protected VariableValue createIndexedVariableFromElement(Element e, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
-        VariableValue iv = null;
-        Element child;
-        if ((child = e.getChild("indexedVal")) != null) {
-            iv = processIndexedVal(child, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item);
-        } else if ((child = e.getChild("ienumVal")) != null) {
-            iv = processIEnumVal(child, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID, modelID, familyID);
-        } else if ((child = e.getChild("indexedPairVal")) != null) {
-            iv = processIndexedPairVal(child, readOnly, infoOnly, writeOnly, name, comment, cvName, opsOnly, cv, mask, item);
-        }
-        return iv;
-    }
-
-    /**
      * If there's a "default" attribute, set that value to start
      *
      * @return true if the value was set
@@ -388,6 +367,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         return false;
     }
+<<<<<<< HEAD
     private String _piCv = "";
 
     public String piCv() {
@@ -502,6 +482,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         return row;
     }
+=======
+>>>>>>> JMRI/master
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
         VariableValue v;
@@ -604,109 +586,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         v = new HexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
         return v;
-    }
-
-    protected VariableValue processIEnumVal(Element child, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
-        VariableValue iv;
-        List<Element> l = child.getChildren("ienumChoice");
-        IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, _indxCvModel.allIndxCvMap(), _status, item);
-        iv = v1;
-        for (int x = 0; x < l.size(); x++) {
-            Element ex = l.get(x);
-            if (DecoderFile.isIncluded(ex, productID, modelID, familyID, "", "") == false) {  // add inherited include, inherited exclude
-                l.remove(x);
-                x--;
-            }
-        }
-        v1.nItems(l.size());
-        for (int k = 0; k < l.size(); k++) {
-            Element enumChElement = l.get(k);
-            // is a value specified?
-            Attribute valAttr = enumChElement.getAttribute("value");
-            if (valAttr == null) {
-                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"));
-            } else {
-                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"),
-                        Integer.parseInt(valAttr.getValue()));
-            }
-        }
-        v1.lastItem();
-        return iv;
-    }
-
-    protected VariableValue processIndexedPairVal(Element child, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, String cvName, boolean opsOnly, String cv, String mask, String item) throws NumberFormatException {
-        VariableValue iv;
-        int minVal = 0;
-        int maxVal = 65535;
-        Attribute a;
-        if ((a = child.getAttribute("min")) != null) {
-            minVal = Integer.valueOf(a.getValue()).intValue();
-        }
-        if ((a = child.getAttribute("max")) != null) {
-            maxVal = Integer.valueOf(a.getValue()).intValue();
-        }
-        int factor = 1;
-        if ((a = child.getAttribute("factor")) != null) {
-            factor = Integer.valueOf(a.getValue()).intValue();
-        }
-        int offset = 0;
-        if ((a = child.getAttribute("offset")) != null) {
-            offset = Integer.valueOf(a.getValue()).intValue();
-        }
-        String uppermask = "VVVVVVVV";
-        if ((a = child.getAttribute("upperMask")) != null) {
-            uppermask = a.getValue();
-        }
-        String highCVname = "";
-        String highCVnumber = "";
-        int highCVpiVal = -1;
-        int highCVsiVal = -1;
-        if ((a = child.getAttribute("highCVname")) != null) {
-            highCVname = a.getValue();
-            int x = highCVname.indexOf('.');
-            highCVnumber = highCVname.substring(0, x);
-            int y = highCVname.indexOf('.', x + 1);
-            if (y > 0) {
-                highCVpiVal = Integer.valueOf(highCVname.substring(x + 1, y)).intValue();
-                x = highCVname.lastIndexOf('.');
-                highCVsiVal = Integer.valueOf(highCVname.substring(x + 1)).intValue();
-            } else {
-                x = highCVname.lastIndexOf('.');
-                highCVpiVal = Integer.valueOf(highCVname.substring(x + 1)).intValue();
-            }
-        }
-
-        // ensure highCVnumber indexed CV exists
-        if (log.isDebugEnabled()) {
-            log.debug("Add high indexed CV " + highCVname);
-        }
-        _indxCvModel.addIndxCV(highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
-
-        // order
-        boolean upperFirst = false;
-        if ((a = child.getAttribute("order")) != null) {
-            if (a.getValue().equals("highFirst")) {
-                upperFirst = true;
-            }
-        }
-
-        iv = new IndexedPairVariableValue(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvMap(), _status, item, highCVname, factor, offset, uppermask, upperFirst);
-        return iv;
-    }
-
-    protected VariableValue processIndexedVal(Element child, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item) throws NumberFormatException {
-        VariableValue iv;
-        int minVal = 0;
-        int maxVal = 255;
-        Attribute a;
-        if ((a = child.getAttribute("min")) != null) {
-            minVal = Integer.valueOf(a.getValue()).intValue();
-        }
-        if ((a = child.getAttribute("max")) != null) {
-            maxVal = Integer.valueOf(a.getValue()).intValue();
-        }
-        iv = new IndexedVariableValue(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvMap(), _status, item);
-        return iv;
     }
 
     protected VariableValue processLongAddressVal(String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) {
@@ -886,11 +765,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 log.debug("Found default value: " + val + " for " + stdname);
             }
             defaultVal = Integer.valueOf(val).intValue();
-            if (stdname.compareTo("PICV") == 0) {
-                _piCv = val;
-            } else if (stdname.compareTo("SICV") == 0) {
-                _siCv = val;
-            }
         }
 
         // create the specific object
@@ -1066,9 +940,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if (name.equals("CV" + getCvName(i))) {
                 return i;
             }
-//            try {
-//                if (name.equals("CV"+((IndexedEnumVariableValue)rowVector.elementAt(i)).cvName())) return i;
-//            } catch (Exception e){}
         }
         return -1;
     }
@@ -1099,7 +970,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         rowVector = null;
 
         _cvModel = null;
-        _indxCvModel = null;
 
         _writeButtons.removeAllElements();
         _writeButtons = null;

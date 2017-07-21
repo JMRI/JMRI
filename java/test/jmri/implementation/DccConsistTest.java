@@ -14,13 +14,7 @@ import jmri.DccLocoAddress;
  *
  * @author	Paul Copyright (C) 2011, 2016
  */
-public class DccConsistTest{
-
-    @Test public void testCtor() {
-        // NmraLocoAddress constructor test.
-        DccConsist c = new DccConsist(new DccLocoAddress(12, true));
-        Assert.assertNotNull(c);
-    }
+public class DccConsistTest extends AbstractConsistTestBase {
 
     @Test public void testCtor2() {
         // integer constructor test.
@@ -28,6 +22,7 @@ public class DccConsistTest{
         Assert.assertNotNull(c);
     }
 
+<<<<<<< HEAD
     @Ignore("Not quite ready yet")
     @Test(expected=java.lang.NullPointerException.class) 
     public void checkDisposeMethod(){
@@ -125,15 +120,23 @@ public class DccConsistTest{
         Assert.assertNull("Roster ID B",c.getRosterId(B));
     }
 
+=======
+>>>>>>> JMRI/master
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        c = new DccConsist(new DccLocoAddress(12, true));
     }
    
     @After
+    @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        c = null;
     }
 
 }

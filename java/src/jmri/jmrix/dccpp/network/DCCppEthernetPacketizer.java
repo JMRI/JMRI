@@ -42,8 +42,12 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
     //
     @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
+=======
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},justification = "Two locks needed for synchronization here, this is OK")
+>>>>>>> JMRI/master
 =======
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},justification = "Two locks needed for synchronization here, this is OK")
 >>>>>>> JMRI/master
@@ -52,7 +56,11 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         // remember who sent this
         mLastSender = reply;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master
@@ -62,7 +70,11 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         Runnable r = new XmtNotifier(m, mLastSender, this);
         SwingUtilities.invokeLater(r);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master
@@ -71,7 +83,11 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         // add header
         int offset = addHeaderToOutput(msg, m);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> JMRI/master
 =======
         
 >>>>>>> JMRI/master

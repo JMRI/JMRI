@@ -10,6 +10,10 @@ import static jmri.util.FileUtil.SETTINGS;
 
 import com.sun.jna.platform.win32.KnownFolders;
 import com.sun.jna.platform.win32.Shell32Util;
+<<<<<<< HEAD
+=======
+import com.sun.jna.platform.win32.ShlObj;
+>>>>>>> JMRI/master
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,7 +63,7 @@ import org.slf4j.LoggerFactory;
 public class FileUtilSupport extends Bean {
 
     /* User's home directory */
-    private static final String homePath = System.getProperty("user.home") + File.separator; // NOI18N
+    private static final String HOME_PATH = System.getProperty("user.home") + File.separator; // NOI18N
     /*
      * Settable directories
      */
@@ -486,7 +490,7 @@ public class FileUtilSupport extends Bean {
      * @return User's home directory as a String
      */
     public String getHomePath() {
-        return homePath;
+        return HOME_PATH;
     }
 
     /**
@@ -641,7 +645,16 @@ public class FileUtilSupport extends Bean {
                     }
                     break;
                 case SystemType.WINDOWS:
+<<<<<<< HEAD
                     cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
+=======
+                    try {
+                        cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
+                    } catch (UnsatisfiedLinkError er) {
+                        // Needed only on Windows XP
+                        cache = new File(new File(Shell32Util.getFolderPath(ShlObj.CSIDL_LOCAL_APPDATA), "JMRI/cache"), Version.getCanonicalVersion());
+                    }
+>>>>>>> JMRI/master
                     break;
                 default:
                     // fallback
@@ -760,7 +773,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the URL of a portable filename if it can be located using
-     * {@link #findURL(java.lang.String)}
+     * {@link #findURI(java.lang.String)}
      *
      * @param path the path to find
      * @return URL of portable or absolute path
@@ -942,6 +955,7 @@ public class FileUtilSupport extends Bean {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
+<<<<<<< HEAD
      * <ol><li>{@link Location#ALL} will not place any limits on the
      * search</li><li>{@link Location#NONE} effectively requires that
      * <code>path</code> be a portable
@@ -949,6 +963,18 @@ public class FileUtilSupport extends Bean {
      * {@link FileUtil#PROGRAM} directory and JARs in the class
      * path</li><li>{@link Location#USER} limits the search to the
      * {@link FileUtil#PROFILE} directory</li></ol>
+=======
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
+>>>>>>> JMRI/master
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
@@ -978,8 +1004,21 @@ public class FileUtilSupport extends Bean {
         }
         File file;
         if (locations == Location.ALL || locations == Location.USER) {
+<<<<<<< HEAD
+=======
             // attempt to return path from preferences directory
-            file = new File(this.getUserFilesPath() + path);
+            file = new File(this.getUserFilesPath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+            // attempt to return path from profile directory
+            file = new File(this.getProfilePath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+>>>>>>> JMRI/master
+            // attempt to return path from preferences directory
+            file = new File(this.getPreferencesPath(), path);
             if (file.exists()) {
                 return file.toURI();
             }

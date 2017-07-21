@@ -5,8 +5,11 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
+import javax.swing.JPanel;
+>>>>>>> JMRI/master
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import org.slf4j.Logger;
@@ -34,6 +37,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param tc tc for connection for node
      */
     public AddNodeFrame(IEEE802154TrafficController tc) {
         super();

@@ -62,7 +62,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         HighPriorityQueue = new java.util.concurrent.LinkedBlockingQueue<DCCppMessage>();
         HighPriorityListeners = new java.util.concurrent.LinkedBlockingQueue<DCCppListener>();
 <<<<<<< HEAD
+<<<<<<< HEAD
  log.debug("DCCppTrafficController created.");
+=======
+        log.debug("DCCppTrafficController created.");
+>>>>>>> JMRI/master
 =======
         log.debug("DCCppTrafficController created.");
 >>>>>>> JMRI/master
@@ -109,6 +113,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
+<<<<<<< HEAD
 <<<<<<< HEAD
  try {
      // NOTE: For now, just forward ALL messages without filtering
@@ -162,6 +167,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      ((DCCppListener) client).message((DCCppReply) m);
  }
 =======
+=======
+>>>>>>> JMRI/master
         try {
             // NOTE: For now, just forward ALL messages without filtering
             ((DCCppListener) client).message((DCCppReply) m);
@@ -213,6 +220,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
             // that sent a message without being a registered listener
             ((DCCppListener) client).message((DCCppReply) m);
         }
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
     }
 
@@ -231,7 +241,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -271,7 +285,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mListenerMasks.put(l, Integer.valueOf(mask));
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> JMRI/master
 =======
     
 >>>>>>> JMRI/master
@@ -299,7 +317,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     protected AbstractMRMessage enterNormalMode() {
         //return DCCppMessage.getExitProgModeMsg();
 <<<<<<< HEAD
+<<<<<<< HEAD
  return null;
+=======
+        return null;
+>>>>>>> JMRI/master
 =======
         return null;
 >>>>>>> JMRI/master
@@ -321,6 +343,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     // endOfMessage() not really used in DCC++ .. it's handled in the Packetizer.
     protected boolean endOfMessage(AbstractMRReply msg) {
 <<<<<<< HEAD
+<<<<<<< HEAD
  if (msg.getElement(msg.getNumDataElements()-1) == '>')
      return true;
  else
@@ -335,10 +358,19 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
     
 >>>>>>> JMRI/master
+=======
+        if (msg.getElement(msg.getNumDataElements()-1) == '>')
+            return true;
+        else
+            return false;
+    }
+    
+>>>>>>> JMRI/master
     @Override
     protected AbstractMRReply newReply() {
         return new DCCppReply();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 //    /**
@@ -392,6 +424,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
 
 =======
+=======
+>>>>>>> JMRI/master
     
     //    /**
     //     * Get characters from the input source, and file a message.
@@ -443,6 +477,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     //    }
     
     
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
     @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {

@@ -8,7 +8,11 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE systems
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @see jmri.ProgrammerManager
+=======
+ * @see jmri.GlobalProgrammerManager
+>>>>>>> JMRI/master
 =======
  * @see jmri.GlobalProgrammerManager
 >>>>>>> JMRI/master

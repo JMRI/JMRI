@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
@@ -156,10 +157,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (block == null) {
             //not found, create a new jmri.Block
             String s = "";
-            boolean found = true;
 
             //create a unique system name
-            while (found) {
+            for (boolean found = true; found;) {
                 s = "IB" + jmriblknum;
                 jmriblknum++;
                 block = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(s);
@@ -199,7 +199,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
+<<<<<<< HEAD
     // this should only be used for debugging…
+=======
+    // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "LayoutBlock " + getDisplayName();
     }
@@ -901,9 +905,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void blockEditDonePressed(ActionEvent a) {
         boolean needsRedraw = false;
         //check if Sensor changed
-        if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
+        String newName = NamedBean.normalizeUserName(sensorNameField.getText());
+        if (!(getOccupancySensorName()).equals(newName)) {
             //sensor has changed
-            String newName = sensorNameField.getText().trim();
             if (newName.length() == 0) {
                 setOccupancySensorName(newName);
                 sensorNameField.setText("");
@@ -975,9 +979,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         //check if Memory changed
-        if (!memoryName.equals(memoryNameField.getText().trim())) {
+
+        newName = NamedBean.normalizeUserName(memoryNameField.getText());
+        if (!memoryName.equals(newName)) {
             //memory has changed
-            String newName = memoryNameField.getText().trim();
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
             if (getMemory() == null) {
                 //invalid memory entered
@@ -1120,9 +1125,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         needsRedraw = true;
                     }
                     //check if Memory changed
-                    if (!memoryName.equals(memoryNameField.getText().trim())) {
+                    String newName = NamedBean.normalizeUserName(memoryNameField.getText());
+                    if (!memoryName.equals(newName)) {
                         //memory has changed
-                        String newName = memoryNameField.getText().trim();
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
                         if (getMemory() == null) {
                             //invalid memory entered
@@ -2662,7 +2667,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void stateUpdate() {
         //Need to find a way to fire off updates to the various tables
         if (enableUpdateRouteLogging) {
-            log.debug("From " + this.getDisplayName() + " A block state change (" + getBlockStatusString() + ") has occured");
+            log.debug("From " + this.getDisplayName() + " A block state change (" + getBlockStatusString() + ") has occurred");
         }
         RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, -1, -1, getBlockStatus(), getNextPacketID());
         firePropertyChange("routing", null, update);
@@ -3135,7 +3140,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> JMRI/master
 =======
 
 >>>>>>> JMRI/master
@@ -3209,6 +3218,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if ((null != nxtBlock) && (null != dstBlock)) {
             ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             if (rtr.size() == 0) {
                 log.info("From {}, no routes returned for getRouteByNeighbour({})",
@@ -3216,16 +3226,22 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         nxtBlock.getDisplayName());
 
 =======
+=======
+>>>>>>> JMRI/master
 
             if (rtr.size() == 0) {
                 log.debug("From {}, no routes returned for getRouteByNeighbour({})",
                         this.getDisplayName(),
                         nxtBlock.getDisplayName());
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
                 return null;
             }
 
             for (Routes rt : rtr) {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
                         + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
@@ -3236,12 +3252,17 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
 =======
+=======
+>>>>>>> JMRI/master
                 if (rt.getDestBlock() == dstBlock) {
                     log.debug("From " + this.getDisplayName() + ", found dest " + dstBlock.getDisplayName() + ".");
                     return rt;
                 }
             }
             log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         } else {
             log.warn("getValidRoute({}, {}",

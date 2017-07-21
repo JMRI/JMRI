@@ -1,15 +1,22 @@
 package jmri.jmrix.loconet.locormi;
 
 import org.junit.After;
+<<<<<<< HEAD
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+=======
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+>>>>>>> JMRI/master
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
+<<<<<<< HEAD
  * @author Paul Bender Copyright (C) 2017	
  */
 public class LnMessageClientTest {
@@ -18,6 +25,23 @@ public class LnMessageClientTest {
     public void testCTor() {
         LnMessageClient t = new LnMessageClient();
         Assert.assertNotNull("exists",t);
+=======
+ * @author Paul Bender Copyright (C) 2017
+ */
+public class LnMessageClientTest {
+
+    private static final SecurityManager SM = System.getSecurityManager();
+
+    @Test
+    public void testCTor() {
+        LnMessageClient t = new LnMessageClient();
+        Assert.assertNotNull("exists", t);
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        System.setSecurityManager(SM);
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J

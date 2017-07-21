@@ -16,6 +16,10 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+<<<<<<< HEAD
+=======
+import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 
 /**
  *
@@ -24,6 +28,10 @@ import jmri.web.servlet.ServletUtil;
  */
 @WebServlet(name = "AboutServlet",
         urlPatterns = {"/about"})
+<<<<<<< HEAD
+=======
+@ServiceProvider(service = HttpServlet.class)
+>>>>>>> JMRI/master
 public class AboutServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

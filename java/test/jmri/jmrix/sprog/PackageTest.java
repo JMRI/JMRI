@@ -44,7 +44,12 @@ import org.junit.runners.Suite;
    SprogConstantsTest.class,
    SprogReplyTest.class,
    jmri.jmrix.sprog.update.PackageTest.class,
+<<<<<<< HEAD
    SprogSlotTest.class
+=======
+   SprogSlotTest.class,
+   BundleTest.class
+>>>>>>> JMRI/master
 })
 public class PackageTest {
 }

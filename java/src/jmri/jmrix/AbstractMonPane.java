@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for JPanels displaying communications monitor information
+ * Abstract base class for JPanels displaying communications monitor information.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
@@ -45,7 +45,7 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     /**
      * Initialize the data source.
-     * <P>
+     * <p>
      * This is invoked at the end of the GUI initialization phase. Subclass
      * implementations should connect to their data source here.
      */
@@ -272,7 +272,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                         log.debug("Have to repeat attempt to set Always on Top");
                         timerCount++;
                         if (timerCount > 50) {
-                            log.debug("Set Always on Top failed");
+                            log.warn("Took too long to \"Set Always on Top\", failed");
                             timer.stop();
                         }
                     }      

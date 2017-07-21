@@ -162,6 +162,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
+<<<<<<< HEAD
+=======
+            case DccThrottle.SpeedStepMode128:
+                return speed;
+>>>>>>> JMRI/master
             default:
                 log.warn("Unhandled speed step: {}", this.getSpeedStepMode());
                 break;

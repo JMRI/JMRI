@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+<<<<<<< HEAD
 public class JsonConsistManagerTest {
 
     @Test
@@ -28,6 +29,28 @@ public class JsonConsistManagerTest {
     }
 
     @After
+=======
+public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
+
+    @Ignore("The JsonConsistManager does not conform to the letter of the Javadoc here.  It returns null when the consist cannot be created.")
+    @Test
+    @Override
+    public void testGetConsist(){
+    }
+
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        cm = new JsonConsistManager();
+    }
+
+    @After
+    @Override
+>>>>>>> JMRI/master
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

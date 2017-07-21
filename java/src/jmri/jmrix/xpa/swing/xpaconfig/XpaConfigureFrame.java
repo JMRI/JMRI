@@ -1,6 +1,6 @@
 /**
- * Description:	Frame for configuring an XPA using a modem
- * <P>
+ * Frame for configuring an XPA using a modem.
+ *
  * @author	Paul Bender Copyright (C) 2004
  */
 package jmri.jmrix.xpa.swing.xpaconfig;
@@ -18,9 +18,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
     // member declarations
     XpaSystemConnectionMemo memo = null;
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.xpa.XpaBundle");
-
-    // Drop down box and button to set XPressNet address
+    // Drop down box and button to set XpressNet address
     javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
     javax.swing.JButton setAddr = new javax.swing.JButton();
 
@@ -45,7 +43,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
     public XpaConfigureFrame(XpaSystemConnectionMemo m) {
         super();
-        setTitle(rb.getString("MenuItemXpaConfigTool"));
+        setTitle(Bundle.getMessage("MenuItemXpaConfigTool"));
         memo = m;
     }
 
@@ -56,7 +54,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         // First set up the pane for address selection.
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("XPressNet Address: "));
+        pane0.add(new JLabel(Bundle.getMessage("XpAddressLabel")));
         pane0.add(addrBox);
         pane0.add(setAddr);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -66,7 +64,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         // button does
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-        pane1.add(new JLabel("Zero Button Causes: "));
+        pane1.add(new JLabel(Bundle.getMessage("ZeroButtonLabel")));
         pane1.add(zeroEmergencyOff);
         pane1.add(zeroEmergencyStop);
         pane1.add(setZero);
@@ -76,7 +74,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         // add the pane that sets the momentary function durration
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
-        pane2.add(new JLabel("Momentary Function Durration: "));
+        pane2.add(new JLabel(Bundle.getMessage("MomentaryDurLabel")));
         pane2.add(functionBox);
         pane2.add(setFunction);
         pane2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -86,7 +84,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         getContentPane().add(xpaReset);
 
         // Initialzie the components
-        setAddr.setText("Set Address");
+        setAddr.setText(Bundle.getMessage("ButtonSetAddress"));
         setAddr.setVisible(true);
 
         setAddr.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +96,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
         // Initilize the Address Components
         addrBox.setVisible(true);
-        addrBox.setToolTipText("Select the XpressNet address");
+        addrBox.setToolTipText(Bundle.getMessage("SetAddressToolTip"));
         for (int i = 0; i < validXNetAddresses.length; i++) {
             addrBox.addItem(validXNetAddresses[i]);
         }
@@ -106,7 +104,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
         // Initilize the function buttons for the zero key 
         // settings.
-        zeroEmergencyOff.setText("Emergency Off");
+        zeroEmergencyOff.setText(Bundle.getMessage("XNetCSStatusEmergencyOff"));
         zeroEmergencyOff.setSelected(true);
 
         zeroEmergencyOff.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +114,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
             }
         });
 
-        zeroEmergencyStop.setText("Emergency Stop");
+        zeroEmergencyStop.setText(Bundle.getMessage("XNetCSStatusEmergencyStop"));
         zeroEmergencyStop.setSelected(false);
 
         zeroEmergencyStop.addActionListener(new java.awt.event.ActionListener() {
@@ -126,7 +124,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
             }
         });
 
-        setZero.setText("Set Zero Function");
+        setZero.setText(Bundle.getMessage("ButtonSetZero"));
 
         setZero.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -136,7 +134,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         });
 
         // Initilize the Function durration components
-        setFunction.setText("Set Durration");
+        setFunction.setText(Bundle.getMessage("ButtonSetDuration"));
         setFunction.setVisible(true);
 
         setFunction.addActionListener(new java.awt.event.ActionListener() {
@@ -147,14 +145,14 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         });
 
         functionBox.setVisible(true);
-        functionBox.setToolTipText("Select the durration of momentary Functions");
+        functionBox.setToolTipText(Bundle.getMessage("SetDurationToolTip"));
         for (int i = 0; i < validTimes.length; i++) {
             functionBox.addItem(validTimes[i]);
         }
         functionBox.setSelectedIndex(0);
 
         // Initilize the reset button
-        xpaReset.setText("Reset XPA");
+        xpaReset.setText(Bundle.getMessage("ButtonReset"));
         xpaReset.setVisible(true);
 
         xpaReset.addActionListener(new java.awt.event.ActionListener() {

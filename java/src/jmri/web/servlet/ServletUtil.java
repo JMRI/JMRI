@@ -3,6 +3,7 @@ package jmri.web.servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import jmri.web.server.WebServerPreferences;
  */
 public class ServletUtil {
 
-    public static final String UTF8 = "UTF-8"; // NOI18N
+    public static final String UTF8 = StandardCharsets.UTF_8.toString(); // NOI18N
     // media types
     public static final String APPLICATION_JAVASCRIPT = "application/javascript"; // NOI18N
     public static final String APPLICATION_JSON = "application/json"; // NOI18N
@@ -103,13 +104,26 @@ public class ServletUtil {
         return navBar;
     }
 
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     * @deprecated since 4.7.4; use {@link #getDefault() } instead
+     */
+    @Deprecated
     public static ServletUtil getInstance() {
-        ServletUtil instance = InstanceManager.getNullableDefault(ServletUtil.class);
-        if (instance == null) {
-            instance = new ServletUtil();
-            InstanceManager.setDefault(ServletUtil.class, instance);
-        }
-        return instance;
+        return getDefault();
+    }
+
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     */
+    public static ServletUtil getDefault() {
+        return InstanceManager.getOptionalDefault(ServletUtil.class).orElseGet(() -> {
+            return InstanceManager.setDefault(ServletUtil.class, new ServletUtil());
+        });
     }
 
     /**

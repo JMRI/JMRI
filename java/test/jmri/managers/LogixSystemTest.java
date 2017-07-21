@@ -1,11 +1,19 @@
 package jmri.managers;
 
+<<<<<<< HEAD
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
 import jmri.*;
+=======
+import jmri.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.junit.Assert;
+>>>>>>> JMRI/master
 
 /**
  * Overall tests of Logix operation, including operation of 
