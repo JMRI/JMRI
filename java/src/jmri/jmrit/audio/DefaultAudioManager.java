@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
+import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownTask;
@@ -225,15 +226,14 @@ public class DefaultAudioManager extends AbstractAudioManager {
      * If not existing, create a new instance.
      *
      * @return reference to currently active AudioManager
+     * @deprecated since 4.9.1; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
+     * argument {@code AudioManager.class} instead
      */
-    public static DefaultAudioManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultAudioManager();
-        }
-        return _instance;
+    @Deprecated
+    public static AudioManager instance() {
+        return InstanceManager.getDefault(AudioManager.class);
     }
-
-    private volatile static DefaultAudioManager _instance;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 

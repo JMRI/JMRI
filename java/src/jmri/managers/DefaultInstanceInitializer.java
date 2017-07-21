@@ -57,7 +57,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
     public <T> Object getDefault(Class<T> type) {
 
         if (type == AudioManager.class) {
-            return DefaultAudioManager.instance();
+            return new DefaultAudioManager();
         }
 
         // @TODO Should do "implements InstanceManagerAutoDefault" instead
