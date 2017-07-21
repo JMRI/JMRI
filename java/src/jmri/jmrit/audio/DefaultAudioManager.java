@@ -1,6 +1,5 @@
 package jmri.jmrit.audio;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Audio;
@@ -33,18 +32,15 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
-    private static int countListeners = 0;
-    private static int countSources = 0;
-    private static int countBuffers = 0;
-
+    private int countListeners = 0;
+    private int countSources = 0;
+    private int countBuffers = 0;
     /**
      * Reference to the currently active AudioFactory
      */
-    private static AudioFactory activeAudioFactory = null;
-
-    private static boolean initialised = false;
-
-    ShutDownTask audioShutDownTask;
+    private AudioFactory activeAudioFactory = null;
+    private boolean initialised = false;
+    private ShutDownTask audioShutDownTask;
 
     @Override
     public int getXMLOrder() {
@@ -123,8 +119,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Method used to initialise the manager
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
         if (!initialised) {
@@ -164,25 +158,21 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
+                        InstanceManager.getDefault(AudioManager.class).cleanUp();
                         return true;
                     }
                 };
             }
-            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
-            }
+            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((manager) -> {
+                manager.register(audioShutDownTask);
+            });
 
             initialised = true;
-            if (log.isDebugEnabled()) {
-                log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
-            }
+            log.debug("Initialised AudioFactory type: {}", activeAudioFactory.getClass().getSimpleName());
         }
     }
 
     @Override
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(NamedBean s) {
         super.deregister(s);
         if (s instanceof Audio) {
