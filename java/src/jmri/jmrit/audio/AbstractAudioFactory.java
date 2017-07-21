@@ -35,13 +35,13 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     /**
      * Boolean used to determine if this AudioFactory has been initialised
      */
-    private static boolean initialised = false;
+    private boolean initialised = false;
 
     /**
      * Boolean used to determine if this AudioFactory should attenuate sources
      * based on their distance from the Listener
      */
-    private static boolean distanceAttenuated = true;
+    private boolean distanceAttenuated = true;
 
     /**
      * Reference to the separate thread used to process all AudioCommands
