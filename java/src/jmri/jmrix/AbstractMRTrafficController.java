@@ -42,6 +42,13 @@ abstract public class AbstractMRTrafficController {
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
+
+        // We use a shutdown hook here to make sure the connection is left
+        // in a clean state prior to exiting.  This is required on systems
+        // which have a service mode to ensure we don't leave the system 
+        // in an unusable state (This code predates the ShutdownTask 
+        // mechanisim, but it remains a shutdown hook because shtudown hooks
+        // will always run after ShutdownTasks do).
         shutdownHook = new Thread(new CleanupHook(this));
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
