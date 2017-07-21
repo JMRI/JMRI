@@ -16,11 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author lionel
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
     private JCheckBox cbUseToolBar;

@@ -746,8 +746,9 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     /**
      * Create an image of icon with overlaid text.
+     *
      * @param text the text to overlay
-     * @param ic the icon containing the image
+     * @param ic   the icon containing the image
      * @return the icon overlaying text on ic
      */
     protected NamedIcon makeTextOverlaidIcon(String text, NamedIcon ic) {
@@ -993,28 +994,35 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_popupUtil == null) {
             super.paintComponent(g);
         } else {
-            Graphics2D gr = (Graphics2D) g.create();
+            Graphics2D g2d = (Graphics2D) g.create();
 
             // set antialiasing hint for macOS and Windows
             // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
             if (SystemType.isMacOSX() || SystemType.isWindows()) {
-                gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             }
 
             switch (_popupUtil.getOrientation()) {
                 case PositionablePopupUtil.VERTICAL_UP:
-                    gr.translate(0, getSize().getHeight());
-                    gr.transform(AffineTransform.getQuadrantRotateInstance(-1));
+                    g2d.translate(0, getSize().getHeight());
+                    g2d.transform(AffineTransform.getQuadrantRotateInstance(-1));
                     break;
                 case PositionablePopupUtil.VERTICAL_DOWN:
-                    gr.transform(AffineTransform.getQuadrantRotateInstance(1));
-                    gr.translate(0, -getSize().getWidth());
+                    g2d.transform(AffineTransform.getQuadrantRotateInstance(1));
+                    g2d.translate(0, -getSize().getWidth());
                     break;
                 default:
             }
 
             needsRotate = true;
-            super.paintComponent(gr);
+            super.paintComponent(g2d);
             needsRotate = false;
         }
     }

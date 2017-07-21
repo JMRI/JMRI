@@ -27,12 +27,14 @@ import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Preferences panel to configure optional actions taken at startup.
  *
  * @author Randall Wood (C) 2016
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
     /**

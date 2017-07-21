@@ -283,6 +283,26 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   //getDisplayName
 
     /**
+     * Get the text from the editor for this JmriBeanComboBox
+     *
+     * @return the text
+     */
+    public String getText() {
+        return getEditor().getItem().toString();
+    }   // getText
+
+    /**
+     * Set the text from the editor for this JmriBeanComboBox
+     * 
+     * @param text the text to set
+     */
+    public void setText(String text) {
+        getEditor().setItem(text);
+        setSelectedBeanByName(text);
+        validateText();
+    }   // setText
+
+    /**
      * Get the display order of the combobox.
      *
      * @return the display order of this combobox
@@ -486,6 +506,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         return result;
+
     }   //getBean
 
     public enum DisplayOptions {
@@ -545,6 +566,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     public void dispose() {
         _manager.removePropertyChangeListener(this);
+
     }
 
     static class beanSelectionManager implements KeySelectionManager {
@@ -601,5 +623,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class
+            .getName());
 }

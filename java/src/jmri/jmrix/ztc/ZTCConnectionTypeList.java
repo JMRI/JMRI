@@ -1,5 +1,8 @@
 package jmri.jmrix.ztc;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid ZTC Connection Types.  Note that
  * most ZTC Connection types are Lenz (ZTC uses XpressNet )
@@ -8,6 +11,7 @@ package jmri.jmrix.ztc;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class ZTCConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ZTC = "ZTC";
