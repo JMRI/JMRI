@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -704,7 +705,16 @@ public class PositionableLabel extends JLabel implements Positionable {
                     }
                     if (_namedIcon != null) {
                         String url = _namedIcon.getURL();
-                        _namedIcon = new NamedIcon(url, url);
+                        if (url == null) {
+                            if (_text & _icon) {    // create new text over icon
+                                _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
+                                _namedIcon.rotate(deg, this);
+                            } else if (_text) {
+                                _namedIcon = null;
+                            }
+                        } else {
+                            _namedIcon = new NamedIcon(url, url);
+                        }
                     }
                     super.setIcon(_namedIcon);
                 } else {
@@ -742,7 +752,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.setIcon(_namedIcon);
         }
         updateSize();
-    }
+    }   // rotate
 
     /**
      * Create an image of icon with overlaid text.
@@ -874,6 +884,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         BufferedImage bufIm = new BufferedImage(width + 2, height + 2, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufIm.createGraphics();
+
+        g2d.setBackground(new Color(0, 0, 0, 0));
+        g2d.clearRect(0, 0, bufIm.getWidth(), bufIm.getHeight());
+
         g2d.setFont(getFont());
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);

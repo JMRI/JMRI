@@ -1,6 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
+import java.awt.Font;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -69,6 +72,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     protected void storeTextInfo(Positionable p, Element element) {
         //if (p.getText()!=null) element.setAttribute("text", p.getText());
         PositionablePopupUtil util = p.getPopupUtility();
+
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        String defaultFontName = manager.getDefaultFont().getFontName();
+
+        String fontName = util.getFont().getFontName();
+        if (fontName != defaultFontName) {
+            element.setAttribute("fontname", "" + util.getFont().getFontName());
+        }
+
         element.setAttribute("size", "" + util.getFontSize());
         element.setAttribute("style", "" + util.getFontStyle());
 
@@ -276,6 +288,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.warn("PositionablePopupUtil is null! " + element.toString());
             return;
         }
+
         Attribute a = element.getAttribute("size");
         try {
             if (a != null) {
@@ -284,6 +297,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
+
         a = element.getAttribute("style");
         try {
             if (a != null) {
@@ -304,6 +318,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
+        }
+
+        a = element.getAttribute("fontname");
+        try {
+            if (a != null) {
+                util.setFont(new Font(a.getValue(), util.getFontStyle(), util.getFontSize()));
+            }
+        } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
         // set color if needed

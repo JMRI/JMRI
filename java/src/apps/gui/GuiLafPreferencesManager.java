@@ -31,6 +31,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = PreferencesManager.class)
 public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
+    public static final String FONT_NAME = "fontName";
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
@@ -60,6 +61,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
+    private Font currentFont = null;
+    private Font defaultFont = null;
     private int fontSize = 0;
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
@@ -84,19 +87,26 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
+
             this.setDefaultFontSize(); // before we change anything
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getDefaultFontSize()));
             if (this.getFontSize() == 0) {
                 this.setFontSize(this.getDefaultFontSize());
             }
+
+            this.setFontByName(preferences.get(FONT_NAME, this.getDefaultFont().getFontName()));
+            if (this.getFont() == null) {
+                this.setFont(this.getDefaultFont());
+            }
+
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
-            
+
             Locale.setDefault(this.getLocale());
             javax.swing.JComponent.setDefaultLocale(this.getLocale());
             javax.swing.JOptionPane.setDefaultLocale(this.getLocale());
-           
+
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
@@ -128,6 +138,19 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
         preferences.put(LOCALE, this.getLocale().toLanguageTag());
         preferences.put(LOOK_AND_FEEL, this.getLookAndFeel());
+
+        if (currentFont == null) {
+            currentFont = this.getDefaultFont();
+        }
+
+        String currentFontName = currentFont.getFontName();
+        if (currentFontName != null) {
+            String prefFontName = preferences.get(FONT_NAME, currentFontName);
+            if ((prefFontName == null) || (currentFontName != prefFontName)) {
+                preferences.put(FONT_NAME, currentFontName);
+            }
+        }
+
         int temp = this.getFontSize();
         if (temp == this.getDefaultFontSize()) {
             temp = 0;
@@ -162,6 +185,78 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.setDirty(true);
         this.setRestartRequired(true);
         firePropertyChange(LOCALE, oldLocale, locale);
+    }
+
+    /**
+     * @return the currently selected font
+     */
+    public Font getFont() {
+        return currentFont;
+    }
+
+    /**
+     * Sets a new font
+     *
+     * @param newFont the new font to set
+     */
+    public void setFont(Font newFont) {
+        Font oldFont = this.currentFont;
+        this.currentFont = newFont;
+        if (this.currentFont != oldFont) {
+            firePropertyChange(FONT_NAME, oldFont, this.currentFont);
+        }
+        this.setDirty(true);
+        this.setRestartRequired(true);
+    }
+
+    /**
+     * Sets a new font by name
+     *
+     * @param newFontName the name of the new font to set
+     */
+    public void setFontByName(String newFontName) {
+        Font oldFont = getFont();
+        if (oldFont == null) {
+            oldFont = this.getDefaultFont();
+        }
+        setFont(new Font(newFontName, oldFont.getStyle(), fontSize));
+    }
+
+    /**
+     * @return the current {@literal Look & Feel} default font
+     */
+    public Font getDefaultFont() {
+        if (defaultFont == null) {
+            setDefaultFont();
+        }
+        return defaultFont;
+    }
+
+    /**
+     * Called to load the current {@literal Look & Feel} default font,
+     * based on looking up the "List.font"
+     * <br><br>
+     * The value can be can be read by calling {@link #getDefaultFont()}
+     */
+    public void setDefaultFont() {
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+
+            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
+                Font f = UIManager.getFont(key);
+                log.debug("Key:" + key.toString() + " Font: " + f.getName());
+                defaultFont = f;
+                return;
+            }
+        }
+        // couldn't find the default return a reasonable font
+        defaultFont = UIManager.getFont("List.font");
+        if (defaultFont == null) {
+            // or maybe not quite as reasonable
+            defaultFont = UIManager.getFont("TextArea.font");
+        }
     }
 
     /**
