@@ -22,11 +22,13 @@ import jmri.util.prefs.InitializationException;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
     public static final String FONT_SIZE = "fontSize";

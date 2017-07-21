@@ -11,11 +11,13 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class FileLocationsPreferences extends AbstractPreferencesManager {
 
     public static final String USER_FILES = "user-files"; // NOI18N

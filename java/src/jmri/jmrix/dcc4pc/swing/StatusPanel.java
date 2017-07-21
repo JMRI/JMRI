@@ -33,7 +33,6 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
-        //memo.getTrafficController().addEcosListener(this);
         tc = memo.getDcc4PcTrafficController();
         // Create GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

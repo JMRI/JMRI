@@ -34,11 +34,13 @@ import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N
