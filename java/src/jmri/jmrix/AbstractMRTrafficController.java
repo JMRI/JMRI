@@ -33,15 +33,17 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRTrafficController {
 
+    private Thread shutdownHook = null; // retain shutdown hook for 
+                                        // possible removal.
+
     public AbstractMRTrafficController() {
         log.debug("Creating AbstractMRTrafficController instance");
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
-        // should this be a ShutDownTask instead, or are we worried at this point
-        // that a ShutDownManager does not yet exist?
-        Runtime.getRuntime().addShutdownHook(new Thread(new CleanupHook(this)));
+        shutdownHook = new Thread(new CleanupHook(this));
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
     private boolean synchronizeRx = true;
@@ -1133,7 +1135,10 @@ abstract public class AbstractMRTrafficController {
             } catch (InterruptedException ie){
                 // interrupted durring cleanup.
             }
-        }     
+        }    
+
+        // we also need to remove the shutdown hook. 
+        Runtime.getRuntime().removeShutdownHook(shutdownHook);
     }
     
     /**
