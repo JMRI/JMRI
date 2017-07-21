@@ -453,11 +453,22 @@ public final class MathUtil {
     /**
      * offset a rectangle
      * @param r the rectangle
+     * @param x the horzontial offset
+     * @param y the vertical offset
+     * @return the offset rectangle
+     */
+    public static Rectangle2D offset(Rectangle2D r, double x, double y) {
+        return new Rectangle2D.Double(r.getX() + x, r.getY() + y, r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * offset a rectangle
+     * @param r the rectangle
      * @param o the offset
      * @return the offset rectangle
      */
     public static Rectangle2D offset(Rectangle2D r, Point2D o) {
-        return new Rectangle2D.Double(r.getX() + o.getX(), r.getY() + o.getY(), r.getWidth(), r.getHeight());
+        return offset(r, o.getX(), o.getY());
     }
 
     /**
