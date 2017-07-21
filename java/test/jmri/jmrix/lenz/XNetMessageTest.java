@@ -39,7 +39,7 @@ public class XNetMessageTest{
     public void testOpCode() {
         XNetMessage m = new XNetMessage(5);
         m.setOpCode(4);
-        Assert.assertEquals("read=back op code", 4, m.getOpCode());
+        Assert.assertEquals("readback op code", 4, m.getOpCode());
         Assert.assertEquals("stored op code", 0x43, m.getElement(0));
     }
 
@@ -495,7 +495,7 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringWriteOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Write: 5 to CV 29 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Write: 5 to CV 29 for Decoder Address 5",m.toMonitorString());
     }
 
     @Test
@@ -514,7 +514,7 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringVerifyOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Verify: 5 to CV 29 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Verify: 5 to CV 29 for Decoder Address 5",m.toMonitorString());
     }
 
     @Test
@@ -543,9 +543,9 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringWriteOpsBitModeCVMsg(){
        XNetMessage m = XNetMessage.getBitWriteOpsModeCVMsg(0,5,29,2,true);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 1 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 1 to CV 29 bit 2 for Decoder Address 5",m.toMonitorString());
        m = XNetMessage.getBitWriteOpsModeCVMsg(0,5,29,2,false);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 0 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 0 to CV 29 bit 2 for Decoder Address 5",m.toMonitorString());
     }
 
     @Test
@@ -574,9 +574,9 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringVerifyOpsBitModeCVMsg(){
        XNetMessage m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,true);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 1 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 1 to CV 29 bit 2 for Decoder Address 5",m.toMonitorString());
        m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,false);
-       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 0 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 0 to CV 29 bit 2 for Decoder Address 5",m.toMonitorString());
     }
 
     @Test
@@ -637,9 +637,9 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringAddLocoToConsistMessage(){
        XNetMessage m = XNetMessage.getAddLocoToConsistMsg(42,1234,true);
-       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive:1234 To Multi Unit Consist: 42 With Loco Direction Normal",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive: 1234 to Multi Unit Consist: 42 with Loco Direction Normal",m.toMonitorString());
        m = XNetMessage.getAddLocoToConsistMsg(42,1234,false);
-       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive:1234 To Multi Unit Consist: 42 With Loco Direction Reversed",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive: 1234 to Multi Unit Consist: 42 with Loco Direction Reversed",m.toMonitorString());
     }
 
     @Test
@@ -656,7 +656,7 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringRemoveLocoFromConsistMessage(){
        XNetMessage m = XNetMessage.getRemoveLocoFromConsistMsg(42,1234);
-       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Remove Locomotive:1234 From Multi Unit Consist: 42",m.toMonitorString());
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Remove Locomotive: 1234 from Multi Unit Consist: 42",m.toMonitorString());
     }
 
     @Test

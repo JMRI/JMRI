@@ -105,7 +105,9 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
     JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
 
-    //Send Information request to LI100/LI101
+    /**
+     * Send Information request to LI100/LI101.
+     */
     void getSystemInfo() {
         /* First, we need to send a request for the Command Station
          hardware and software version */
@@ -123,7 +125,9 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         tc.sendXNetMessage(msg3, this);
     }
 
-    // listen for responses from the LI101
+    /**
+     * Listen for responses from the LI101.
+     */
     @Override
     public void message(XNetReply l) {
 
@@ -145,36 +149,42 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
                 int statusByte = l.getElement(2);
                 if ((statusByte & 0x01) == 0x01) {
                     // Command station is in Emergency Off Mode
-                    CSStatus.setText("Emergency Off");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusEmergencyOff"));
                 } else if ((statusByte & 0x02) == 0x02) {
                     // Command station is in Emergency Stop Mode
-                    CSStatus.setText("Emergency Stop");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusEmergencyStop"));
                 } else if ((statusByte & 0x08) == 0x08) {
                     // Command station is in Service Mode
-                    CSStatus.setText("Service Mode");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusServiceMode"));
                 } else if ((statusByte & 0x40) == 0x40) {
                     // Command station is in Power Up Mode
                     if ((statusByte & 0x04) == 0x04) {
-                        CSStatus.setText("Powering up, Auto Mode");
+                        CSStatus.setText(Bundle.getMessage("XNetCSStatusPoweringUp") + ": "
+                                + Bundle.getMessage("XNetCSStatusPowerModeAuto"));
                     } else {
-                        CSStatus.setText("Powering up, Manual Mode");
+                        CSStatus.setText(Bundle.getMessage("XNetCSStatusPoweringUp") + ": "
+                                + Bundle.getMessage("XNetCSStatusPowerModeManual"));
                     }
                 } else if ((statusByte & 0x80) == 0x80) {
                     // Command station has a experienced a ram check error
-                    CSStatus.setText("RAM check error!");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusRamCheck"));
                 } else {
-                    CSStatus.setText("Normal");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusRamNormal"));
                 }
             }
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -183,9 +193,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     }
 
     /**
-     * This just displays the currently known version information from the
+     * Display the currently known version information from the
      * LenzCommandStation class.
-     *
      */
     private void setCSVersionDisplay() {
         CSSoftwareVersion.setText("" + tc.getCommandStation()

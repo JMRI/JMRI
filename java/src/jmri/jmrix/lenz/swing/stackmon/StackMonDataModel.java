@@ -19,7 +19,6 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
     static private final int ADDRCOLUMN = 0;     // Locomotive address
     static private final int TYPECOLUMN = 1;     // Type of Database Entry
-    //static private final int PLACEHODLER = 2;  //
     static private final int DELCOLUMN = 3;      // Remove Button
 
     static private final int NUMCOLUMN = 4;
@@ -33,7 +32,9 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
     protected XNetTrafficController tc = null;
 
-    // Construct a new instance
+    /**
+     * Constructor for a new instance
+     */
     StackMonDataModel(int row, int column, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         tc = memo.getXNetTrafficController();
     }
@@ -135,8 +136,8 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    /*
-     * Update the internal data structures for a specified address
+    /**
+     * Update the internal data structures for a specified address.
      */
     public void updateData(Integer address, String type) {
         if (_addressList == null) {
@@ -153,14 +154,15 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         fireTableDataChanged();
     }
 
-    /*
-     * Update the internal data structures for a specified address
+    /**
+     * Update the internal data structures for a specified address.
      */
     public void clearData() {
         _addressList = new java.util.ArrayList<Integer>();
         _typeList = new java.util.Hashtable<Integer, String>();
         fireTableDataChanged();
     }
+
     private final static Logger log = LoggerFactory.getLogger(StackMonDataModel.class.getName());
 
 }

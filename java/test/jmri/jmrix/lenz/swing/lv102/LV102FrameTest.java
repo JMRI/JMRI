@@ -10,9 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LV102FrameTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
+ * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
  * @author	Paul Bender
  */

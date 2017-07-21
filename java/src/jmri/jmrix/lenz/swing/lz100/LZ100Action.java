@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register an LZ100Frame object.
- * <P>
+ * <p>
  * The {@link LZ100Frame} is a configuration tool for the LZ100 command Station.
  *
  * @author Paul Bender Copyright (C) 2005
@@ -17,7 +17,7 @@ public class LZ100Action extends AbstractXPressNetAction {
     }
 
     public LZ100Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LZ100 Configuration Manager", memo);
+        this(Bundle.getMessage("LZ100Config"), memo);
     }
 
     @Override
@@ -26,5 +26,5 @@ public class LZ100Action extends AbstractXPressNetAction {
         LZ100Frame f = new LZ100Frame(Bundle.getMessage("LZ100Config"), _memo);
         f.setVisible(true);
     }
-}
 
+}

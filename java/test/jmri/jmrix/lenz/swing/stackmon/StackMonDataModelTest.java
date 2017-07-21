@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonDataModel class
  *
  * @author Paul Bender Copyright (C) 2017	
  */

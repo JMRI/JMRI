@@ -2,8 +2,9 @@ package jmri.jmrix.lenz.swing.lv102;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import javax.swing.JComboBox;
 
 /*
@@ -22,15 +23,15 @@ public class LV102FrameScaffold extends JFrameOperator{
    }
 
    public void pushCloseButton(){
-        new JToggleButtonOperator(this,"Close").push();
+        new JButtonOperator(this,Bundle.getMessage("ButtonClose")).push();
    }
 
    public void pushResetButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
+        new JButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
    }
 
    public void pushDefaultButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102DefaultButtonLabel")).push();
+        new JButtonOperator(IFrameOperator,Bundle.getMessage("ButtonResetDefaults")).push();
    }
 
    public void pushWriteSettingsButton(){

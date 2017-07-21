@@ -8,13 +8,15 @@ import javax.swing.JToggleButton;
 
 /**
  * Frame displaying the LZV100 configuration utility.
- *
- * This is a container for holding the LZV100 configuration utility. The actuall
+ * <p>
+ * This is a container for holding the LZV100 configuration utility. The actual
  * configuration utility consists of two parts:
- * {@link jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame} a command station
- * configuration utility for the LZ100/LZV100
- * {@link jmri.jmrix.lenz.swing.lv102.LV102InternalFrame} a configuration
- * utility for the LV102 power station
+ * <ul>
+ * <li>{@link jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame} a command station
+ * configuration utility for the LZ100/LZV100</li>
+ * <li>{@link jmri.jmrix.lenz.swing.lv102.LV102InternalFrame} a configuration
+ * utility for the LV102 power station</li>
+ * </ul>
  *
  * @author Paul Bender Copyright (C) 2003,2005
   */

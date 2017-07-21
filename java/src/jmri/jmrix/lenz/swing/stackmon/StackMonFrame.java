@@ -21,19 +21,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This frame provides a method for searching the command station stack. Current
- * functionality is to search the stack and delete entries. Future capabilities
- * will include the ability to set the status of function buttons
- * <P>
+ * This frame provides a method for searching the command station stack.
+ * <p>
+ * Current functionality is to search the stack and delete entries.
+ * Future capabilities may include the ability to set the status of function buttons.
  *
  * @author Paul Bender Copyright (C) 2005-2010
-  */
+ */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
+    // buttons currently (4.8) not displayed
     JButton nextButton = new JButton(Bundle.getMessage("NextButtonLabel"));
     JButton previousButton = new JButton(Bundle.getMessage("PreviousButtonLabel"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    JButton refreshButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    JButton refreshButton = new JButton(Bundle.getMessage("RefreshButtonLabel"));
     JLabel CurrentStatus = new JLabel(" ");
 
     JTextField adrTextField = new javax.swing.JTextField(4);
@@ -41,8 +42,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     StackMonDataModel stackModel = null;
     javax.swing.JTable stackTable = null;
 
-    private boolean _getAll = false; // flag to know if get all or 
-    // get next/previous was pressed
+    // flag to know if Get All or Get Next/Previous was pressed
+    private boolean _getAll = false;
 
     protected XNetTrafficController tc = null;
 
@@ -52,7 +53,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         stackModel = new StackMonDataModel(1, 4, memo);
         stackTable = new javax.swing.JTable(stackModel);
 
-        // add listener object to retrieve the next entry
+        // Add listener object to retrieve the next entry
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,13 +61,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             }
         });
 
-        // Change the text on the nextButton according to the resource 
-        // bundle
-        nextButton.setText(Bundle.getMessage("NextButtonLabel"));
-
-        // Set the nextButton to visible
+        // Set the Next button to visible
         nextButton.setVisible(true);
-
         // add listener object to retrieve the previous entry
         previousButton.addActionListener(new ActionListener() {
             @Override
@@ -75,21 +71,14 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             }
         });
 
-        // Change the text on the previousButton according to the resource 
-        // bundle
-        previousButton.setText(Bundle.getMessage("PreviousButtonLabel"));
-
-        // set the previous button to visible.
+        // Set the Previous button to visible.
         previousButton.setVisible(true);
-
         // The previous function is not currently implemented on the 
         // command station, so we're going to disable the button for now
         previousButton.setEnabled(false);
 
-        // Change the text on the deleteButton according to the resource 
-        // bundle
-        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
-
+        // Set the Delete button to visible
+        deleteButton.setVisible(true);
         // add listener object to remove the current entry
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -98,9 +87,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             }
         });
 
-        // Set the deleteButton to visible
-        deleteButton.setVisible(true);
-
+        // Set the nextButton to visible
+        refreshButton.setVisible(true);
         // add listener object to retrieve the next entry
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -109,18 +97,11 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             }
         });
 
-        // Change the text on the nextButton according to the resource 
-        // bundle
-        refreshButton.setText(Bundle.getMessage("RefreshButtonLabel"));
-
-        // Set the nextButton to visible
-        refreshButton.setVisible(true);
-
         // Set the adrTextField to visible
         adrTextField.setVisible(true);
 
         // general GUI config
-        setTitle(Bundle.getMessage("StackMonitorTitle"));
+        setTitle(Bundle.getMessage("MenuItemCSDatabaseManager"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -133,22 +114,22 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         JPanel manualPanel = new JPanel();
         manualPanel.setLayout(new FlowLayout());
-        manualPanel.add(nextButton);
         manualPanel.add(previousButton);
+        manualPanel.add(nextButton);
         manualPanel.add(deleteButton);
 
-        //getContentPane().add(manualPanel);
+        //getContentPane().add(manualPanel); // not working?
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         pane2.add(adrTextField);
-        //getContentPane().add(pane2);
+        //getContentPane().add(pane2); // not working?
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(CurrentStatus);
- //getContentPane().add(pane3);
+        //getContentPane().add(pane3); // not working?
 
-        // Set up the jtable in a Scroll Pane..
+        // Set up the JTable in a Scroll Pane
         JScrollPane stackPane = new JScrollPane(stackTable);
         stackPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         stackModel.initTable(stackTable, this);
@@ -187,7 +168,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     /**
-     *  Request the next entry.
+     * Request the next entry.
      */
     private void getNextEntry() {
         int address = 0;
@@ -199,7 +180,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     /**
-     * Request the next entry.
+     * Request the next entry by ID.
      */
     private void getNextEntry(int address) {
         XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address, true);
@@ -330,13 +311,16 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     }
 
-    // We need to be able to receive information sent by the computer to 
-    // the command station
+    /**
+     * Receive information sent by the computer to the command station.
+     */
     @Override
     public void message(XNetMessage m) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

@@ -1169,31 +1169,31 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringSearchResponseNormalLoco(){
         XNetReply r = new XNetReply("E3 30 C1 04 11");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Normal Locomotive: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Normal Locomotive: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseDoubleHeaderLoco(){
         XNetReply r = new XNetReply("E3 31 C1 04 17");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Loco in Double Header: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in Double Header: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMUBaseLoco(){
         XNetReply r = new XNetReply("E3 32 00 04 C5");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, MU Base Address: 4",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: MU Base Address: 4",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMULoco(){
         XNetReply r = new XNetReply("E3 33 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Loco in MU: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in MU: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseFail(){
         XNetReply r = new XNetReply("E3 34 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Search failed for: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Search failed for: 260",r.toMonitorString());
     }
 
     // the following are invalid by the XpressNet Standard, but we want to
