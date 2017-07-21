@@ -1145,7 +1145,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     //note: panel width & height comes from the saved (xml) panel (file) on disk
                     setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
                             prefsWindowLocation.x, prefsWindowLocation.y,
-                            panelWidth, panelHeight);
+                            panelWidth, panelHeight, true);
                 }
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
         });     //SwingUtilities.invokeLater
