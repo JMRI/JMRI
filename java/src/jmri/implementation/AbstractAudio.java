@@ -27,8 +27,6 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
     private int _state = STATE_INITIAL;
 
-    private static final int INT_PRECISION = (int) Math.pow(10, DECIMAL_PLACES);
-
     /**
      * Abstract constructor for new Audio with system name
      *
@@ -94,7 +92,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @return float value rounded to DECIMAL_PLACES decimal places
      */
     public static float roundDecimal(float value) {
-        return roundDecimal(value, Math.log10(INT_PRECISION));
+        return roundDecimal(value, DECIMAL_PLACES);
     }
 
     @Override
