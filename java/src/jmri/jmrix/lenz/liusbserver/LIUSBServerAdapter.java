@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to XPressNet via a the Lenz LIUSB Server. NOTES: The LIUSB
+ * Provide access to XpressNet via a the Lenz LIUSB Server. NOTES: The LIUSB
  * server binds only to localhost (127.0.0.1) on TCP ports 5550 and 5551. Port
  * 5550 is used for general communication. Port 5551 is used for broadcast
  * messages only. The LIUSB Server disconnects both ports if there is 60 seconds
@@ -64,7 +64,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         if (log.isDebugEnabled()) {
             log.debug("connect called");
         }
-        // open the port in XPressNet mode
+        // open the port in XpressNet mode
         try {
             bcastAdapter = new BroadCastPortAdapter(this);
             commAdapter = new CommunicationPortAdapter(this);

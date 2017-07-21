@@ -300,6 +300,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             rcvException = true;
             return;
         }
+        if (threadStopRequest) return;
+        
         // create the reply from the received data.
         Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 
@@ -365,6 +367,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            if (threadStopRequest) return;
                         }
                     }
                     // update state, and notify to continue
@@ -444,6 +447,20 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             // set the controller to null, even if terminate fails.
             controller = null;
         }
+    }
+
+    /**
+     * Terminate the receive and transmit threads.
+     *<p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStopRequest = true;
+        // ensure socket closed to end pending operations
+        if ( controller!=null && ((Z21Adapter) controller).getSocket()!=null) ((Z21Adapter) controller).getSocket().close();
+        
+        // usual stop process
+        super.terminateThreads();
     }
 
     // The methods to implement the Z21Interface

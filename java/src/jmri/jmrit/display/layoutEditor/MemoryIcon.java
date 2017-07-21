@@ -215,7 +215,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             }
         }
         if (getMemory().getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occured
+            //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);

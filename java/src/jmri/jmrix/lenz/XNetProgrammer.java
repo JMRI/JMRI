@@ -508,19 +508,18 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-
-    /*
+    /**
      * Since the Lenz programming sequence requires several 
-     * operations, We want to be able to check and see if we are 
+     * operations, we want to be able to check and see if we are
      * currently programming before allowing the Traffic Controller 
-     * to send a request to exit service mode
+     * to send a request to exit service mode.
      */
     synchronized public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     @Override
     synchronized protected void timeout() {
@@ -539,7 +538,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    // internal method to notify of the final result
+    /**
+     * Internal method to notify of the final result
+     */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -560,6 +561,3 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class.getName());
 
 }
-
-
-

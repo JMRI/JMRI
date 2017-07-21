@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import jmri.SignalHead;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,12 +14,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class VirtualSignalHeadTest {
+public class VirtualSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCTor() {
         VirtualSignalHead t = new VirtualSignalHead("Virtual Signal Head Test");
         Assert.assertNotNull("exists",t);
+    }
+
+    @Override
+    public SignalHead getHeadToTest() {
+        return new VirtualSignalHead("Virtual Signal Head Test");
     }
 
     // The minimal setup for log4J

@@ -28,10 +28,12 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Pete Cressman Copyright (C) 2015
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
 
     static int STRUT_SIZE = 10;

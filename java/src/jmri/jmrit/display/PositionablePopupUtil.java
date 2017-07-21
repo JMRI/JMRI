@@ -723,6 +723,7 @@ public class PositionablePopupUtil {
         ButtonGroup justButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r;
         switch (ori) {
+            default:
             case HORIZONTAL:
                 r = new JRadioButtonMenuItem("Horizontal");
                 break;
@@ -732,8 +733,6 @@ public class PositionablePopupUtil {
             case VERTICAL_DOWN:
                 r = new JRadioButtonMenuItem("Vertical Down");
                 break;
-            default:
-                r = new JRadioButtonMenuItem("Horizontal");
         }
         r.addActionListener((ActionEvent e) -> {
             setOrientation(ori);

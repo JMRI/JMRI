@@ -1,5 +1,8 @@
 package jmri.jmrix.sprog;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid Sprog Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.sprog;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SprogConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String SPROG = "SPROG DCC";

@@ -28,6 +28,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Manager for Startup Actions. Reads preferences at startup and triggers
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015, 2016
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class StartupActionsManager extends AbstractPreferencesManager {
 
     private final List<StartupModel> actions = new ArrayList<>();
@@ -107,7 +109,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     }
                 }
             } catch (NullPointerException ex) {
-                // ignore - this indicates migration has not occured
+                // ignore - this indicates migration has not occurred
                 log.debug("No element to read");
             }
             if (perform) {

@@ -85,5 +85,6 @@
         <classpathentry kind="lib" path="lib/usb-api-1.0.2.jar"/>
         <classpathentry kind="lib" path="lib/usb4java-1.2.0.jar"/>
         <classpathentry kind="lib" path="lib/usb4java-javax-1.2.0.jar"/>
+        <classpathentry kind="lib" path="lib/org-openide-util-lookup-RELEASE82.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

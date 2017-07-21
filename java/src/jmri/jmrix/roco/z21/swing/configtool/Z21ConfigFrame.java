@@ -144,8 +144,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
          panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BroadcastFlagsTitle")));
          panel.setLayout(new GridLayout(0, 1));
     
-         XPressNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("XPressNetMessagesFlagLabel"),cs.getXPressNetMessagesFlag());
-         XPressNetMessagesCheckBox.setToolTipText(Bundle.getMessage("XPressNetMessagesFlagToolTip"));
+         XPressNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetMessagesFlagLabel"),cs.getXPressNetMessagesFlag());
+         XPressNetMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetMessagesFlagToolTip"));
          panel.add(XPressNetMessagesCheckBox);
 
          RMBusMessagesCheckBox = new JCheckBox(Bundle.getMessage("RMBusMessagesFlagLabel"),cs.getRMBusMessagesFlag());
@@ -156,8 +156,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
          SystemStatusMessagesCheckBox.setToolTipText(Bundle.getMessage("RMBusMessagesFlagToolTip"));
          panel.add(SystemStatusMessagesCheckBox);
 
-         XPressNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("XPressNetLocomotiveMessagesFlagLabel"),cs.getXPressNetLocomotiveMessagesFlag());
-         XPressNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("XPressNetLocomotiveMessagesFlagToolTip"));
+         XPressNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetLocomotiveMessagesFlagLabel"),cs.getXPressNetLocomotiveMessagesFlag());
+         XPressNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetLocomotiveMessagesFlagToolTip"));
          panel.add(XPressNetLocomotiveMessagesCheckBox);
 
          RailComMessagesCheckBox = new JCheckBox(Bundle.getMessage("RailComMessagesFlagLabel"),cs.getRailComMessagesFlag());

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for XPressNet. It
+ * This class performs Command Station dependant initilization for XpressNet. It
  * adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
@@ -54,7 +54,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
             jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         } else if (CSSoftwareVersion < 3.0) {
-            log.error("Command Station does not support XPressNet Version 3 Command Set");
+            log.error("Command Station does not support XpressNet Version 3 Command Set");
         } else {
             /* First, we load things that should work on all systems */
             jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
@@ -138,7 +138,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("XPressNet Initialization Complete");
+            log.debug("XpressNet Initialization Complete");
         }
     }
 

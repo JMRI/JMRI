@@ -38,6 +38,10 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
         this.station = station;
         this.bell = bell;
 
+        // align at start
+        indicationComplete(indicationStart());
+        
+        // attach listeners for future changes
         sm.provideSensor(inputSensor).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
     }
 

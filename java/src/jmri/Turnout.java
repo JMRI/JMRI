@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * <li>Although the program hasn't commanded a change, something on the layout
  * has made the turnout change. This could be a local electrical button, a
  * mechanical movement of the points, or something else.
- * <li>For a bus-like system, e.g. LocoNet or XPressNet, some other device might
+ * <li>For a bus-like system, e.g. LocoNet or XpressNet, some other device might
  * have sent a command to change the turnout.
  * </ul>
  * <P>

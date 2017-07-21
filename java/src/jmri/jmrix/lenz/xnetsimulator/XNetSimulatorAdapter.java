@@ -18,12 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to a simulated XPressNet system.
+ * Provide access to a simulated XpressNet system.
  *
  * Currently, the XNetSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  *
- **NOTE: Most XPressNet commands are still unsupported in this implementation.
+ **NOTE: Most XpressNet commands are still unsupported in this implementation.
  *
  * Normally controlled by the lenz.XNetSimulator.XNetSimulatorFrame class.
  *
@@ -38,7 +38,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private boolean CheckBuffer = true;
 
     private int csStatus;
-    // status flags from the XPressNet Documentation.
+    // status flags from the XpressNet Documentation.
     private final static int csEmergencyStop = 0x01; // bit 0
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
@@ -77,7 +77,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         setPort(portName);
         return null; // normal operation
     }
@@ -457,7 +457,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return r;
     }
 
-    // Create a reply to a request for the XPressNet Version
+    // Create a reply to a request for the XpressNet Version
     private XNetReply xNetVersionReply(){
         XNetReply reply=new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);

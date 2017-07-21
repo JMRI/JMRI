@@ -30,6 +30,7 @@ import jmri.web.servlet.ServletUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
@@ -43,6 +44,7 @@ import org.slf4j.LoggerFactory;
             "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
             "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
         })
+@ServiceProvider(service = HttpServlet.class)
 public class OperationsServlet extends HttpServlet {
 
     private ObjectMapper mapper;

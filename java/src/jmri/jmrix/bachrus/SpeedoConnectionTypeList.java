@@ -1,5 +1,8 @@
 package jmri.jmrix.bachrus;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid BAchrus Connection Types
  * <P>
@@ -8,6 +11,7 @@ package jmri.jmrix.bachrus;
  * @author Andrew Crosland Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SpeedoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String BACHRUS = "Bachrus";

@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for {@link apps.startup.StartupPauseModel} objects.
  *
  * @author Randall Wood (c) 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class StartupPauseFactory implements StartupModelFactory {
 
     @Override

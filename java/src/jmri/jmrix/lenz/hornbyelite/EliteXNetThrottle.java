@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a XpressnetNet
+ * An implementation of DccThrottle with code specific to a XpressNet
  * connection on the Hornby Elite
  *
  * @author Paul Bender (C) 2008-2009
@@ -114,7 +114,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // First, we want to see if this throttle is waiting for a message
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle - recieved message ");
+            log.debug("Throttle - received message ");
         }
         if (requestState == THROTTLEIDLE) {
             if (log.isDebugEnabled()) {
@@ -161,7 +161,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
             }
         }
         // We didn't find any Elite specific messages, so send the
-        // message on to the standard XPressNet throttle message handler 
+        // message on to the standard XpressNet throttle message handler
         super.message(l);
     }
 
