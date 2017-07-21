@@ -12,11 +12,13 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);

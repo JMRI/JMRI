@@ -3,11 +3,13 @@ package jmri.server.json.time;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonTimeServiceFactory implements JsonServiceFactory {
 
     public final static String TIME = "time";

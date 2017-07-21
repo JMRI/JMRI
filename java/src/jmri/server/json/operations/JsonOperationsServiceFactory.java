@@ -11,12 +11,14 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Service factory for the JSON Operations services.
  * 
  * @author Randall Wood (c) 2016
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonOperationsServiceFactory implements JsonServiceFactory {
 
     @Override

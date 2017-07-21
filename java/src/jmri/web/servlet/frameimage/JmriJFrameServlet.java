@@ -45,6 +45,7 @@ import jmri.util.JmriJFrame;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A simple servlet that returns a JMRI window as a PNG image or enclosing HTML
@@ -67,6 +68,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "FrameServlet",
         urlPatterns = {"/frame"})
+@ServiceProvider(service = HttpServlet.class)
 public class JmriJFrameServlet extends HttpServlet {
 
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions

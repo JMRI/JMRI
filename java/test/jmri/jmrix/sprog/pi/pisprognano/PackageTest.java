@@ -12,8 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    PiSprogNanoSerialDriverAdapterTest.class,
    ConnectionConfigTest.class,
-   jmri.jmrix.sprog.pi.pisprognano.configurexml.PackageTest.class
-
+   jmri.jmrix.sprog.pi.pisprognano.configurexml.PackageTest.class,
+   BundleTest.class
 })
 public class PackageTest {
 }

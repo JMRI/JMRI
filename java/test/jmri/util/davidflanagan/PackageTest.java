@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    HardcopyWriterTest.class
+    HardcopyWriterTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.util.davidflanagan package.
