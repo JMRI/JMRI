@@ -33,6 +33,6 @@ public class ResumeAutomationActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class.getName());
 
 }
