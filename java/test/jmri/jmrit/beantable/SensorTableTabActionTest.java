@@ -33,6 +33,6 @@ public class SensorTableTabActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class.getName());
 
 }

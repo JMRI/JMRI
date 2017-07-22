@@ -46,6 +46,6 @@ public class RailComTableActionTest extends AbstractTableActionBase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RailComTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RailComTableActionTest.class.getName());
 
 }
