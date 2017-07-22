@@ -37,6 +37,6 @@ public class JFrameInterfaceTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JFrameInterfaceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JFrameInterfaceTest.class.getName());
 
 }

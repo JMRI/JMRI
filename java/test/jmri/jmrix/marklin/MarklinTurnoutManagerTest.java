@@ -35,6 +35,6 @@ public class MarklinTurnoutManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerTest.class.getName());
 
 }

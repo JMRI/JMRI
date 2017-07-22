@@ -34,6 +34,6 @@ public class WarningProgrammerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarningProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WarningProgrammerManagerTest.class.getName());
 
 }

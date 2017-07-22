@@ -44,6 +44,6 @@ public class ProfileConfigurationTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class.getName());
 
 }
