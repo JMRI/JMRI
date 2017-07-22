@@ -1,11 +1,14 @@
 package jmri.jmrit.vsdecoder;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
+import jmri.AudioManager;
+import jmri.InstanceManager;
+import jmri.jmrit.audio.JoalAudioFactory;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the SoundBite class
@@ -30,6 +33,7 @@ public class SoundBiteTest {
 
     @Test
     public void testCreateFull() {
+        Assume.assumeTrue("Requires Joal Audio", InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory() instanceof JoalAudioFactory);
         SoundBite uut = new SoundBite(null, filename, "sysname", "uname"); // BOUND_MODE
         Assert.assertEquals("sound name", "uname", uut.getName());
         Assert.assertEquals("file name", filename, uut.getFileName());
@@ -41,6 +45,7 @@ public class SoundBiteTest {
 
     @Test
     public void TestSetGet() {
+        Assume.assumeTrue("Requires Joal Audio", InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory() instanceof JoalAudioFactory);
         SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
@@ -57,6 +62,7 @@ public class SoundBiteTest {
 
     @Test
     public void testSetXML() {
+        Assume.assumeTrue("Requires Joal Audio", InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory() instanceof JoalAudioFactory);
         SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         Element e = buildTestXML();
         uut.setXml(e);
@@ -68,10 +74,12 @@ public class SoundBiteTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        InstanceManager.getDefault(AudioManager.class).init();
     }
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(AudioManager.class).cleanUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
