@@ -43,6 +43,6 @@ public class PrintTrainsByCarTypesActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesActionTest.class.getName());
 
 }

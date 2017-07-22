@@ -41,6 +41,6 @@ public class JsonConnectionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonConnectionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonConnectionTest.class.getName());
 
 }

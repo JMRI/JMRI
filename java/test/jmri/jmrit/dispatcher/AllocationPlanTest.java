@@ -41,6 +41,6 @@ public class AllocationPlanTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocationPlanTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AllocationPlanTest.class.getName());
 
 }

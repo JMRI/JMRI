@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CreateButtonModel extends AbstractActionModel {
 
-    private final static Logger log = LoggerFactory.getLogger(CreateButtonModel.class);
+    // private final static Logger log = LoggerFactory.getLogger(CreateButtonModel.class);
 
     public CreateButtonModel() {
         super();

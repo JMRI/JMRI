@@ -33,6 +33,6 @@ public class CreateButtonModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CreateButtonModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CreateButtonModelTest.class.getName());
 
 }

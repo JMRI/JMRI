@@ -37,6 +37,6 @@ public class JsonClientMonitorActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonClientMonitorActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientMonitorActionTest.class.getName());
 
 }
