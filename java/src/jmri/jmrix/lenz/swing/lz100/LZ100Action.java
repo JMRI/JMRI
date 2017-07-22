@@ -17,13 +17,13 @@ public class LZ100Action extends AbstractXPressNetAction {
     }
 
     public LZ100Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this(Bundle.getMessage("LZ100Config"), memo);
+        this(Bundle.getMessage("MenuItemLZ100ConfigurationManager"), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create an LZ100Frame
-        LZ100Frame f = new LZ100Frame(Bundle.getMessage("LZ100Config"), _memo);
+        LZ100Frame f = new LZ100Frame(Bundle.getMessage("MenuItemLZ100ConfigurationManager"), _memo);
         f.setVisible(true);
     }
 

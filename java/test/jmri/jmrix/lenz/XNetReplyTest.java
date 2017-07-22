@@ -900,7 +900,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringDataSentNoTimeslot(){
         XNetReply r = new XNetReply("01 08 09");
-        Assert.assertEquals("Monitor String","Request Sent While the CS is not providing a timeslot",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Request Sent while the CS is not providing a Timeslot",r.toMonitorString());
     }
 
     @Test

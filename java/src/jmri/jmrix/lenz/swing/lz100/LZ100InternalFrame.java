@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
@@ -89,7 +90,15 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         resetCSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                resetLZ100CS();
+                // ask user confirmation
+                if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                        null, Bundle.getMessage("LZ100ConfirmResetDialog"),
+                                Bundle.getMessage("QuestionTitle"),
+                        javax.swing.JOptionPane.OK_CANCEL_OPTION,
+                        javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                    // indeed send reset commands
+                    resetLZ100CS();
+                }
             }
         }
         );

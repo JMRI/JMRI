@@ -560,15 +560,17 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     }
 
     // Set to LV102 default values.  Voltage is 16, E Line is Active, 
-    // Railcom is innactive, Railcom Mode is 3 bit cutout.
+    // Railcom is inactive, Railcom Mode is 3 bit cutout, Railcom Timing is 435 uS.
     void defaultLV102Settings() {
         voltBox.setSelectedIndex(10);
         eLineBox.setSelectedIndex(0);
         railComBox.setSelectedIndex(1);
         railComModeBox.setSelectedIndex(0);
+        // also set RailCom Timing, 435uS is named Default
+        railComTimingBox.setSelectedIndex(0);
         synchronized (CurrentStatus) {
             CurrentStatus.setText(Bundle.getMessage("LV102StatusInitial"));
-            log.debug("Current Status: Factory Default Settings.  May Not match actual configuration");
+            log.debug("Current Status: Factory Default Settings. May Not match actual configuration");
         }
     }
 
@@ -609,41 +611,31 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         @Override
         public void programmingOpReply(int value, int status) {
-            if (log.isDebugEnabled()) {
-                log.debug("Programming Operation reply received, value is " + value + " ,status is " + status);
-            }
+            log.debug("Programming Operation reply received, value is {}, status is {}", value, status);
             if (status == ProgListener.ProgrammerBusy) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusBUSY"));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Current Status: " + Bundle.getMessage("LV102StatusBUSY"));
-                    }
+                    log.debug("Current Status: {}", Bundle.getMessage("LV102StatusBUSY"));
                     CurrentStatus.notify();
                 }
             } else if (status == ProgListener.OK) {
                 if (CurrentStatus.getText().equals(Bundle.getMessage("LV102StatusProgMode"))) {
                     synchronized (CurrentStatus) {
                         CurrentStatus.setText(Bundle.getMessage("LV102StatusReadyProg"));
-                        if (log.isDebugEnabled()) {
-                            log.debug("Current Status: " + Bundle.getMessage("LV102StatusReadyProg"));
-                        }
+                        log.debug("Current Status: {}", Bundle.getMessage("LV102StatusReadyProg"));
                         CurrentStatus.notify();
                     }
                 } else {
                     synchronized (CurrentStatus) {
                         CurrentStatus.setText(Bundle.getMessage("LV102StatusWritten"));
-                        if (log.isDebugEnabled()) {
-                            log.debug("Current Status: " + Bundle.getMessage("LV102StatusWritten"));
-                        }
+                        log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWritten"));
                         CurrentStatus.notify();
                     }
                 }
             } else {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusUnknown"));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Current Status: " + Bundle.getMessage("LV102StatusUnknown"));
-                    }
+                    log.debug("Current Status: {}", Bundle.getMessage("LV102StatusUnknown"));
                     CurrentStatus.notify();
                 }
             }

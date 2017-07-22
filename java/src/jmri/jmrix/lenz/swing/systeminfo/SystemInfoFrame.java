@@ -3,7 +3,12 @@ package jmri.jmrix.lenz.swing.systeminfo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
@@ -32,30 +37,39 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(Bundle.getMessage("SystemInfoFrameTitle"));
+        super(Bundle.getMessage("MenuItemXNetSystemInformation"));
         tc = memo.getXNetTrafficController();
-        getContentPane().setLayout(new GridLayout(0, 2));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
-        getContentPane().add(new JLabel(Bundle.getMessage("CommandStationLabel")));
-        getContentPane().add(CSType);
+        JPanel infoPane = new JPanel();
+        infoPane.setBorder(BorderFactory.createEtchedBorder());
+        infoPane.setLayout(new GridLayout(6, 2));
 
-        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
-        getContentPane().add(CSSoftwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("CommandStationLabel")));
+        infoPane.add(CSType);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
-        getContentPane().add(CSStatus);
+        infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
+        infoPane.add(CSSoftwareVersion);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("InterfaceLabel")));
-        getContentPane().add(LIType);
+        infoPane.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
+        infoPane.add(CSStatus);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
-        getContentPane().add(LIHardwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("InterfaceLabel")));
+        infoPane.add(LIType);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
-        getContentPane().add(LISoftwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
+        infoPane.add(LIHardwareVersion);
 
-        getContentPane().add(getSystemInfoButton);
-        getContentPane().add(closeButton);
+        infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
+        infoPane.add(LISoftwareVersion);
+
+        getContentPane().add(infoPane);
+        getContentPane().add(Box.createVerticalGlue());
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.add(getSystemInfoButton);
+        buttonPane.add(closeButton);
+        getContentPane().add(buttonPane);
 
         addHelpMenu("package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame", true);
 
@@ -103,7 +117,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     JLabel LISoftwareVersion = new JLabel("");
 
     JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     /**
      * Send Information request to LI100/LI101.

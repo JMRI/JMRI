@@ -17,7 +17,7 @@ import javax.swing.JToggleButton;
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this(Bundle.getMessage("LZ100Config"), memo);
+        this(Bundle.getMessage("MenuItemLZ100ConfigurationManager"), memo);
     }
 
     public LZ100Frame(String FrameName, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
