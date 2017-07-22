@@ -37,6 +37,6 @@ public class LocationTrackBlockingOrderFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrameTest.class.getName());
 
 }

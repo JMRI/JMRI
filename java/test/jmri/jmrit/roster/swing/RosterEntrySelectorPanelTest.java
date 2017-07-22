@@ -33,6 +33,6 @@ public class RosterEntrySelectorPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntrySelectorPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterEntrySelectorPanelTest.class.getName());
 
 }

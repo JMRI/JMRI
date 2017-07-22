@@ -34,6 +34,6 @@ public class StartupActionsPreferencesPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelTest.class.getName());
 
 }

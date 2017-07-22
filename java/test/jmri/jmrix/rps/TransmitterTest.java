@@ -33,6 +33,6 @@ public class TransmitterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransmitterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TransmitterTest.class.getName());
 
 }

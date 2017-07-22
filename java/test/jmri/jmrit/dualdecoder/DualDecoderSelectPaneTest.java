@@ -33,6 +33,6 @@ public class DualDecoderSelectPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPaneTest.class.getName());
 
 }

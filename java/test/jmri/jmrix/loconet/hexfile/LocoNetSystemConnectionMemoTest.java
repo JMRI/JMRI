@@ -33,6 +33,6 @@ public class LocoNetSystemConnectionMemoTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class.getName());
 
 }

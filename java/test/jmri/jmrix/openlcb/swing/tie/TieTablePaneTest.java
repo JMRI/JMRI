@@ -33,6 +33,6 @@ public class TieTablePaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TieTablePaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TieTablePaneTest.class.getName());
 
 }
