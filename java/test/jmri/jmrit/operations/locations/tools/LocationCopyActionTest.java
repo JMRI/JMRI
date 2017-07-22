@@ -33,6 +33,6 @@ public class LocationCopyActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationCopyActionTest.class.getName());
 
 }

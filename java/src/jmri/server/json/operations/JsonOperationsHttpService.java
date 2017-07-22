@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonOperationsHttpService.class);
+    // private final static Logger log = LoggerFactory.getLogger(JsonOperationsHttpService.class);
     private final JsonUtil utilities;
 
     public JsonOperationsHttpService(ObjectMapper mapper) {

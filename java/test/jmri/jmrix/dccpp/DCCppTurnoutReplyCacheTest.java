@@ -38,6 +38,6 @@ public class DCCppTurnoutReplyCacheTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class.getName());
 
 }

@@ -20,5 +20,5 @@ public class Z21XNetTurnoutManagerXml extends jmri.jmrix.lenz.configurexml.XNetT
         super();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerXml.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerXml.class.getName());
 }
