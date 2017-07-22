@@ -217,10 +217,10 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                         + " version - " + al.alGetString(AL.AL_VERSION));
             }
         } catch (ALException e) {
-            log.error("Error initialising JOAL:", e);
+            log.debug("Error initialising JOAL:", e);
             return false;
         } catch (RuntimeException e) {
-            log.error("Error initialising OpenAL:", e);
+            log.debug("Error initialising OpenAL:", e);
             return false;
         }
 
