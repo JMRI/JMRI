@@ -114,7 +114,8 @@ public final class MathUtil {
     /**
      * offset a point by two scalars
      * @param p the point
-     * @param s the scalar
+     * @param x the x scalar
+     * @param y the y scalar
      * @return the point offset by the scalars
      */
     public static Point2D offset(Point2D p, double x, double y) {
