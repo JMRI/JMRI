@@ -32,7 +32,8 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     public LI100Adapter() {
         super();
         option1Name = "FlowControl"; // NOI18N
-        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLI100")), validOption1));
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel",
+                Bundle.getMessage("IFTypeLI100")), validOption1));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
@@ -83,11 +84,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-            }
+            // report additional status
+            log.debug(" port flow control shows {} ",
+                    (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
                 @Override

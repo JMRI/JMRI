@@ -34,7 +34,8 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
     public LI100fAdapter() {
         super();
         option1Name = "FlowControl"; // NOI18N
-        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLI100F")), validOption1));
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel",
+                Bundle.getMessage("IFTypeLI100F")), validOption1));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
@@ -60,8 +61,9 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et);
             }
