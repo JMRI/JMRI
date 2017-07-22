@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    NceShowCabPanelTest.class
+    NceShowCabPanelTest.class,
+    BundleTest.class
 })
 
 /**

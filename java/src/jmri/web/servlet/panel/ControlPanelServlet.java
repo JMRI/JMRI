@@ -13,6 +13,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "ControlPanelServlet",
         urlPatterns = {"/panel/ControlPanel"})
+@ServiceProvider(service = HttpServlet.class)
 public class ControlPanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
