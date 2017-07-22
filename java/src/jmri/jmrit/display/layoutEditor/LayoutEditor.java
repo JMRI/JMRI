@@ -10913,10 +10913,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int wideMin = gridSize1st / 2;
 
         //Dimension dim = getSize();
-        double minX = upperLeftX;
-        double minY = upperLeftY;
-        double maxX = panelWidth + upperLeftX;
-        double maxY = panelHeight + upperLeftY;
+        // granulize puts these on gridSize1st increments
+        double minX = MathUtil.granulize(upperLeftX, gridSize1st);
+        double minY = MathUtil.granulize(upperLeftY, gridSize1st);
+        double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
+        double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);

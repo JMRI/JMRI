@@ -112,15 +112,46 @@ public final class MathUtil {
     }
 
     /**
+     * offset a point by two scalars
+     * @param p the point
+     * @param s the scalar
+     * @return the point offset by the scalars
+     */
+    public static Point2D offset(Point2D p, double x, double y) {
+        return new Point2D.Double(p.getX() + x, p.getY() + y);
+    }
+
+    /**
+     * rotate x and y coordinates (by radians)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(double x, double y, double a) {
+        double cosA = Math.cos(a), sinA = Math.sin(a);
+        return new Point2D.Double(cosA * x - sinA * y, sinA * x + cosA * y);
+    }
+
+    /**
+     * rotate x and y coordinates (by degrees)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(double x, double y, double a) {
+        return rotateRAD(x, y, Math.toRadians(a));
+    }
+
+    /**
      * rotate a point (by radians)
      * @param p the point
      * @param a the angle (in radians)
      * @return the point rotated by the angle
      */
     public static Point2D rotateRAD(Point2D p, double a) {
-        double pX = p.getX(), pY = p.getY();
-        double cosA = Math.cos(a), sinA = Math.sin(a);
-        return new Point2D.Double(cosA * pX - sinA * pY, sinA * pX + cosA * pY);
+        return rotateRAD(p.getX(), p.getY(), a);
     }
 
     /**
@@ -322,6 +353,20 @@ public final class MathUtil {
      */
     public static Point2D threeFourthsPoint(Point2D pA, Point2D pB) {
         return lerp(pA, pB, 3.0 / 4.0);
+    }
+
+    /**
+     * Wrap an int between two values (for example +/- 180 or 0-360 degrees)
+     * @param inValue the value
+     * @param inMin the lowest value
+     * @param inMax the highest value
+     * @return the value wrapped between the lowest and highest values
+     * Note: THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN AND MAX
+     * (And yes, this works correctly with negative numbers)
+     */
+    public static int wrap(int inValue, int inMin, int inMax) {
+        int valueRange = inMax - inMin;
+        return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
     }
 
     /**
