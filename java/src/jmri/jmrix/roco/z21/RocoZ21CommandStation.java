@@ -320,6 +320,6 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     /*
      * We need to register for logging
      */
-    private final static Logger log = LoggerFactory.getLogger(RocoZ21CommandStation.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RocoZ21CommandStation.class.getName());
 
 }
