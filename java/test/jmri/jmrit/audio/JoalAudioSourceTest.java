@@ -4,8 +4,8 @@ import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,17 +15,19 @@ import org.junit.Test;
  */
 public class JoalAudioSourceTest {
 
+    private JoalAudioFactory factory;
+
     @Test
-    @Ignore("Fails when the constructor calls the superclass constructor")
     public void testCtor() {
-        JoalAudioSource l = new JoalAudioSource("test");
+        Assume.assumeTrue("Unable to initialize JoalAudioFactory", factory.init());
+        JoalAudioSource l = new JoalAudioSource("test", factory.getAL());
         Assert.assertNotNull("exists", l);
     }
 
     @Test
-    @Ignore("Fails when the constructor calls the superclass constructor")
     public void testC2Stringtor() {
-        JoalAudioSource l = new JoalAudioSource("testsysname","testusername");
+        Assume.assumeTrue("Unable to initialize JoalAudioFactory", factory.init());
+        JoalAudioSource l = new JoalAudioSource("testsysname", "testusername", factory.getAL());
         Assert.assertNotNull("exists", l);
     }
 
@@ -33,10 +35,12 @@ public class JoalAudioSourceTest {
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        factory = new JoalAudioFactory();
     }
 
     @After
     public void tearDown() {
+        factory.cleanup();
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }
