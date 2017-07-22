@@ -18,7 +18,7 @@ public class LV102FrameScaffold extends JFrameOperator{
    private JInternalFrameOperator IFrameOperator = null;
 
    public LV102FrameScaffold(){
-        super(Bundle.getMessage("LV102Config"));
+        super(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         IFrameOperator = new JInternalFrameOperator(this,Bundle.getMessage("LV102Power"));
    }
 

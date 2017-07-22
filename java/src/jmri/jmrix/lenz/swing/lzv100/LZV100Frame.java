@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
 /**
  * Frame displaying the LZV100 configuration utility.
@@ -61,7 +61,7 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
 
     }
 
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     @Override
     public void dispose() {

@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 public class LV102Frame extends jmri.util.JmriJFrame {
 
     public LV102Frame() {
-        this(Bundle.getMessage("LV102Config"));
+        this(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
     }
 
     public LV102Frame(String FrameName) {
