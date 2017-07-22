@@ -320,11 +320,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (java.lang.InterruptedException ie) {
             if(threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait:" + ie);
-            ie.printStackTrace();
+            log.error("Unexpected exception in invokeAndWait:" + ie,ie);
         } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+            log.error("Unexpected exception in invokeAndWait:" + e,e);
         }
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");

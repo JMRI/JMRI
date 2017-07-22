@@ -47,8 +47,8 @@ abstract public class AbstractMRTrafficController {
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
         // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim, but it remains a shutdown hook because shtudown hooks
-        // will always run after ShutdownTasks do).
+        // mechanisim).  Once the , shutdown hook executes, the connection
+        // must be considered closed.
         shutdownHook = new Thread(new CleanupHook(this));
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
