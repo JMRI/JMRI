@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for XpressNet. It
- * adds the appropriate Managers via the Initialization Manager based on the
+ * This class performs Command Station dependent initialization for XpressNet.
+ * It adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003
@@ -20,9 +20,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
 
     @Override
     protected void init() {
-        if (log.isDebugEnabled()) {
-            log.debug("Init called");
-        }
+        log.debug("Init called");
         float CSSoftwareVersion = systemMemo.getXNetTrafficController()
                 .getCommandStation()
                 .getCommandStationSoftwareVersion();
@@ -63,9 +61,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
             /* Next we check the command station type, and add the 
              apropriate managers */
             if (CSType == 0x02) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Commpact/Commander/Other");
-                }
+                log.debug("Command Station is: Commpact/Commander/Other");
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
                 systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
@@ -75,13 +71,9 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                 jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
             } else if (CSType == 0x01) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is LH200");
-                }
+                log.debug("Command Station is: LH200");
             } else if (CSType == 0x00) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is LZ100/LZV100");
-                }
+                log.debug("Command Station is: LZ100/LZV100");
                 systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
                 /* the "raw" Command Station only works on systems that support   
@@ -99,9 +91,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
             } else if (CSType == 0x10) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is multiMaus");
-                }
+                log.debug("Command Station is: multiMaus");
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
                 systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
@@ -115,9 +105,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 // multMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
             } else {
                 /* If we still don't  know what we have, load everything */
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Unknown type");
-                }
+                log.debug("Command Station is: Unknown type");
                 systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
                 /* the "raw" Command Station only works on systems that support   
@@ -137,9 +125,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("XpressNet Initialization Complete");
-        }
+        log.debug("XpressNet Initialization Complete");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class.getName());

@@ -31,7 +31,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushResetButton();
@@ -48,7 +48,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushDefaultButton();

@@ -15,7 +15,7 @@ public class StackMonAction extends AbstractXPressNetAction {
     }
 
     public StackMonAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Stack Monitor", memo);
+        this(Bundle.getMessage("MenuItemCSDatabaseManager"), memo);
     }
 
     @Override
@@ -25,5 +25,5 @@ public class StackMonAction extends AbstractXPressNetAction {
         StackMonFrame f = new StackMonFrame(_memo);
         f.setVisible(true);
     }
-}
 
+}

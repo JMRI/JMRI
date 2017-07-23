@@ -34,7 +34,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
 
     public SerialAdapter() {
         super(new RpsSystemConnectionMemo());
-        option1Name = "Protocol";
+        option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Protocol", validOptions1));
         this.manufacturerName = jmri.jmrix.rps.RpsConnectionTypeList.NAC;
     }

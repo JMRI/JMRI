@@ -26,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public String name() {
         return "Intellibox-II/IB-Com (USB)";
-    }
+    } // NOI18N
 
     @Override
     protected void setInstance() {
