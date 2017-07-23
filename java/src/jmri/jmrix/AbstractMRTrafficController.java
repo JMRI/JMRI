@@ -423,7 +423,10 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error(interruptMessage);
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                log.error(interruptMessage+"in {}", name);
             }
         }
         log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
