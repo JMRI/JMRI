@@ -420,6 +420,8 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
+        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
+
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
