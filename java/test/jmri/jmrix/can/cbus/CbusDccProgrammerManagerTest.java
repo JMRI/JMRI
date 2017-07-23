@@ -38,6 +38,6 @@ public class CbusDccProgrammerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManagerTest.class.getName());
 
 }

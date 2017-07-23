@@ -46,6 +46,6 @@ public class MrcTrafficListenerFilterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcTrafficListenerFilterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcTrafficListenerFilterTest.class.getName());
 
 }

@@ -33,6 +33,6 @@ public class RosterGroupTableModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterGroupTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterGroupTableModelTest.class.getName());
 
 }

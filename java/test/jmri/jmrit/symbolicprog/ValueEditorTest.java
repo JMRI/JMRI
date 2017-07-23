@@ -33,6 +33,6 @@ public class ValueEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ValueEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ValueEditorTest.class.getName());
 
 }

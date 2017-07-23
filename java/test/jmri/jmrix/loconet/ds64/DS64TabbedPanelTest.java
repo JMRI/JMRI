@@ -33,6 +33,6 @@ public class DS64TabbedPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DS64TabbedPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DS64TabbedPanelTest.class.getName());
 
 }

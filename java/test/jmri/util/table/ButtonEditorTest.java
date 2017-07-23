@@ -34,6 +34,6 @@ public class ButtonEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ButtonEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ButtonEditorTest.class.getName());
 
 }

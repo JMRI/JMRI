@@ -38,6 +38,6 @@ public class DCCppMultiMeterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class.getName());
 
 }

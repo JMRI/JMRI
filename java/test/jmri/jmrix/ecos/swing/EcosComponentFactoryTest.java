@@ -34,6 +34,6 @@ public class EcosComponentFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosComponentFactoryTest.class.getName());
 
 }

@@ -37,6 +37,6 @@ public class EcosMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosMenuTest.class.getName());
 
 }

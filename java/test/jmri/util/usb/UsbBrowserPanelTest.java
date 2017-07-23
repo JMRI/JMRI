@@ -34,6 +34,6 @@ public class UsbBrowserPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanelTest.class.getName());
 
 }

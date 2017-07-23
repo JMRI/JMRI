@@ -33,6 +33,6 @@ public class CanConfigurationManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CanConfigurationManagerTest.class.getName());
 
 }

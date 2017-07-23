@@ -36,6 +36,6 @@ public class EditableResizableImagePanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanelTest.class.getName());
 
 }

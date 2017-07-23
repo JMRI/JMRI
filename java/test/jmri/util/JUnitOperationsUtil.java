@@ -371,5 +371,5 @@ public class JUnitOperationsUtil {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class.getName());
 }

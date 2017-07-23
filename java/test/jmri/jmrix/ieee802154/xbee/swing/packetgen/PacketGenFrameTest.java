@@ -36,6 +36,6 @@ public class PacketGenFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
 
 }

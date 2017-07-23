@@ -33,6 +33,6 @@ public class StartupPauseFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StartupPauseFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StartupPauseFactoryTest.class.getName());
 
 }
