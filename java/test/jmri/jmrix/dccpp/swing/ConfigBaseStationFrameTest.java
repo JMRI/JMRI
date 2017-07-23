@@ -48,6 +48,6 @@ public class ConfigBaseStationFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class.getName());
 
 }

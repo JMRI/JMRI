@@ -34,6 +34,6 @@ public class DecoderProPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderProPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderProPaneTest.class.getName());
 
 }

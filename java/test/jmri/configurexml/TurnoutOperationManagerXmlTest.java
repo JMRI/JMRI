@@ -33,6 +33,6 @@ public class TurnoutOperationManagerXmlTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXmlTest.class.getName());
 
 }

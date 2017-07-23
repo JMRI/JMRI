@@ -33,6 +33,6 @@ public class DefaultPowerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class.getName());
 
 }

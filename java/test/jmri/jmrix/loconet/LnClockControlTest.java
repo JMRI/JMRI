@@ -35,6 +35,6 @@ public class LnClockControlTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnClockControlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnClockControlTest.class.getName());
 
 }

@@ -39,6 +39,6 @@ public class NceMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceMenuTest.class.getName());
 
 }

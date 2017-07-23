@@ -33,6 +33,6 @@ public class BlockEditActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockEditActionTest.class.getName());
 
 }
