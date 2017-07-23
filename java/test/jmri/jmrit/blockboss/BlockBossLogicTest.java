@@ -71,7 +71,24 @@ public class BlockBossLogicTest extends TestCase {
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "initial red sets yellow");  // wait and test
     }
-    
+
+    // occupancy check
+    public void testSimpleBlockOccupancy() throws jmri.JmriException {
+        setupSimpleBlock();
+        p.setSensor1("IS1");
+        startLogic(p);
+        s1.setKnownState(Sensor.INACTIVE);
+        
+        h2.setAppearance(SignalHead.GREEN);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
+
+        InstanceManager.sensorManagerInstance().getSensor("IS1").setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "occupied sets red");  // wait and test
+
+        s1.setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "unoccupied sets green");  // wait and test
+    }
+
     // test signal following in distant simple block
     public void testSimpleBlockDistant() {
         setupSimpleBlock();
@@ -122,6 +139,26 @@ public class BlockBossLogicTest extends TestCase {
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
+    }
+
+    // test signal following in restricting simple block
+    public void testSimpleBlockRestricting() throws jmri.JmriException {
+        s1.setKnownState(Sensor.INACTIVE);
+
+        setupSimpleBlock();
+        p.setSensor1("IS1");
+        p.setRestrictingSpeed1(true);
+        startLogic(p);
+        
+        h2.setAppearance(SignalHead.YELLOW);
+        JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "yellow sets flashing red");  // wait and test
+
+        s1.setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so occupied sets red");  // wait and test
+
+        h2.setAppearance(SignalHead.GREEN);
+        s1.setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so unoccupied green sets flashing red");  // wait and test
     }
 
     // if no next signal, next signal considered green

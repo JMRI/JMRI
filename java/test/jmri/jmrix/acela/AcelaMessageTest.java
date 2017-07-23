@@ -33,6 +33,6 @@ public class AcelaMessageTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaMessageTest.class.getName());
 
 }

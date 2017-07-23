@@ -34,6 +34,6 @@ public class Dcc4PcProgrammerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcProgrammerManagerTest.class.getName());
 
 }

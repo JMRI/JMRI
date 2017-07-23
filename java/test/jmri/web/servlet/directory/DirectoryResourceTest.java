@@ -32,6 +32,6 @@ public class DirectoryResourceTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectoryResourceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DirectoryResourceTest.class.getName());
 
 }

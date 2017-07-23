@@ -36,6 +36,6 @@ public class SignallingFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignallingFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignallingFrameTest.class.getName());
 
 }

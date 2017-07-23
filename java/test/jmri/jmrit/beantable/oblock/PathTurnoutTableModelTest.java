@@ -33,6 +33,6 @@ public class PathTurnoutTableModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModelTest.class.getName());
 
 }

@@ -125,5 +125,5 @@ public class EditorScaffold extends Editor implements MouseListener, MouseMotion
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EditorScaffold.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditorScaffold.class.getName());
 }
