@@ -74,4 +74,5 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
         return new HashSet<>(Arrays.asList(LocoNetSystemConnectionMemo.class));
     }
+
 }

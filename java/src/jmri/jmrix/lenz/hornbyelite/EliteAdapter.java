@@ -32,7 +32,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());
-        option1Name = Bundle.getMessage("FlowControlTitle");
+        option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
         option2Name = Bundle.getMessage("BufferTitle");
         options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
@@ -58,14 +58,14 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
             }
 
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et);
             }
@@ -100,60 +100,38 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             return;
                     }
                 }
