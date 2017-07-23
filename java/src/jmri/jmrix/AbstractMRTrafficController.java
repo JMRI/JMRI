@@ -426,7 +426,7 @@ abstract public class AbstractMRTrafficController {
                 String[] packages = this.getClass().getName().split("\\.");
                 String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
                         +(packages.length>=1 ? packages[packages.length-1] :"");
-                log.error(interruptMessage+"in {}", name);
+                log.error(interruptMessage+" in transmitWait(..) of {}", name);
             }
         }
         log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
