@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ConnectionConfigXmlTest.java
- *
- * Description: tests for the ConnectionConfigXml class
+ * Tests for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */

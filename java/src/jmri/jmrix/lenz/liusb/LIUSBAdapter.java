@@ -31,8 +31,8 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
 
     public LIUSBAdapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("LIUSB connection uses : ", validOption1));
+        option1Name = "FlowControl"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLIUSB")), validOption1));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
@@ -94,59 +94,39 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
                             if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
+                                log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             }
                             return;
                     }
@@ -207,8 +187,8 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * set up all of the other objects to operate with a LIUSB connected to this
-     * port
+     * Set up all of the other objects to operate with a LIUSB connected to this
+     * port.
      */
     @Override
     public void configure() {
@@ -252,7 +232,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -286,11 +266,12 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"57,600 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{57600};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended for Lenz 23150)", "no flow control (required for Lenz 23151)"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")
+            , Bundle.getMessage("FlowOptionNoReq23151")};
 
     private boolean opened = false;
     InputStream serialStream = null;
