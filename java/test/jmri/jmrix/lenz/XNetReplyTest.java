@@ -139,7 +139,7 @@ public class XNetReplyTest {
     public void testSkipPrefix(){
        XNetReply m=new XNetReply("63 14 01 04 72");
        // skip prefix currently always returns -1, there is no prefix.
-       Assert.assertEquals("skipPrefix return value",-1,(long)m.skipPrefix(0));
+       Assert.assertEquals("skipPrefix return value",-1, m.skipPrefix(0));
     }
 
 
