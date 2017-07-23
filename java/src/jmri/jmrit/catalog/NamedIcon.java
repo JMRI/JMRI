@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 import javax.swing.ImageIcon;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,7 @@ public class NamedIcon extends ImageIcon {
      */
     public NamedIcon(NamedIcon pOld, Component comp) {
         this(pOld.mURL, pOld.mName);
-        setLoad(pOld._deg, pOld._scale, comp);
+        setLoad(pOld._degrees, pOld._scale, comp);
         setRotation(pOld.mRotation, comp);
     }
 
@@ -185,7 +186,7 @@ public class NamedIcon extends ImageIcon {
         }
         mRotation = pRotation;
         setImage(createRotatedImage(mDefaultImage, comp, mRotation));
-        _deg = 0;
+        _degrees = 0;
         if (Math.abs(_scale - 1.0) > .00001) {
             int w = (int) Math.ceil(_scale * getIconWidth());
             int h = (int) Math.ceil(_scale * getIconHeight());
@@ -293,13 +294,13 @@ public class NamedIcon extends ImageIcon {
         }
         return myImage;
     }
-    private int _deg = 0;
+    private int _degrees = 0;
     private double _scale = 1.0;
     private AffineTransform _transformS = new AffineTransform();    // scaling
     private AffineTransform _transformF = new AffineTransform();    // Fliped or Mirrored
 
     public int getDegrees() {
-        return _deg;
+        return _degrees;
     }
 
     public double getScale() {
@@ -367,7 +368,7 @@ public class NamedIcon extends ImageIcon {
         if (Math.abs(scale - 1.0) > .00001) {
             _transformS = AffineTransform.getScaleInstance(scale, scale);
         }
-        rotate(_deg, comp);
+        rotate(_degrees, comp);
     }
 
     /**
@@ -384,31 +385,39 @@ public class NamedIcon extends ImageIcon {
             transformImage(w, h, _transformS, comp);
         }
         mRotation = 0;
-        degree = degree % 360;
-        _deg = degree;
-        if (degree == 0) {
+        // this _always_ returns a value between 0 and 360...
+        // (and yes, it does work properly for negative numbers)
+        _degrees = MathUtil.wrap(degree, 0, 360);
+        if (_degrees == 0) {
             return;
         }
-        double rad = Math.toRadians(degree);
+        double rad = Math.toRadians(_degrees);
         double w = getIconWidth();
         double h = getIconHeight();
         int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));
         int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
         AffineTransform t;
-        if (0 <= degree && degree < 90 || -360 < degree && degree <= -270) {
-            t = AffineTransform.getTranslateInstance(h * Math.sin(rad), 0.0);
-        } else if (90 <= degree && degree < 180 || -270 < degree && degree <= -180) {
-            t = AffineTransform.getTranslateInstance(h * Math.sin(rad) - w * Math.cos(rad), -h * Math.cos(rad));
-        } else if (180 <= degree && degree < 270 || -180 < degree && degree <= -90) {
-            t = AffineTransform.getTranslateInstance(-w * Math.cos(rad), -w * Math.sin(rad) - h * Math.cos(rad));
-        } else /*if (270<=degree && degree<360)*/ {
-            t = AffineTransform.getTranslateInstance(0.0, -w * Math.sin(rad));
+        if (false) {
+            //TODO: Test to see if the "else" case is necessary…
+            t = AffineTransform.getTranslateInstance(
+                h * Math.sin(rad) - w * Math.cos(rad),
+                -w * Math.sin(rad) - h * Math.cos(rad));
+        } else {
+            if (_degrees < 90) {
+                t = AffineTransform.getTranslateInstance(h * Math.sin(rad), 0.0);
+            } else if (_degrees < 180) {
+                t = AffineTransform.getTranslateInstance(h * Math.sin(rad) - w * Math.cos(rad), -h * Math.cos(rad));
+            } else if (_degrees < 270) {
+                t = AffineTransform.getTranslateInstance(-w * Math.cos(rad), -w * Math.sin(rad) - h * Math.cos(rad));
+            } else /* if (_degrees < 360) */ {
+                t = AffineTransform.getTranslateInstance(0.0, -w * Math.sin(rad));
+            }
         }
         AffineTransform r = AffineTransform.getRotateInstance(rad);
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         if (comp instanceof PositionableLabel) {
-            ((PositionableLabel) comp).setDegrees(degree);
+            ((PositionableLabel) comp).setDegrees(_degrees);
         }
     }
 
@@ -452,7 +461,7 @@ public class NamedIcon extends ImageIcon {
         if (flip == NOFLIP) {
             setImage(mDefaultImage);
             _transformF = new AffineTransform();
-            _deg = 0;
+            _degrees = 0;
             int w = (int) Math.ceil(_scale * getIconWidth());
             int h = (int) Math.ceil(_scale * getIconHeight());
             transformImage(w, h, _transformF, comp);
