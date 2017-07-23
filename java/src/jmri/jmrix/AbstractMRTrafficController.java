@@ -446,7 +446,10 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmitLoop interrupted");
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                log.error("transmitLoop interrupted in class {}", name);
             }
             loopCount++;
             int currentDispatchTime = loopCount * DISPATCH_WAIT_INTERVAL;
