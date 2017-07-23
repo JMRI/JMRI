@@ -479,6 +479,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         super.setIcon(_namedIcon);
         updateSize();
+        repaint();
     }
 
     /**
@@ -596,6 +597,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditorFrame = null;
         _iconEditor = null;
         invalidate();
+        repaint();
     }
 
     public jmri.util.JmriJFrame _paletteFrame;
@@ -671,6 +673,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             _namedIcon.scale(s, this);
             super.setIcon(_namedIcon);
             updateSize();
+            repaint();
         }
     }
 
@@ -759,6 +762,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.setIcon(_namedIcon);
         }
         updateSize();
+        repaint();
     }   // rotate
 
     /**
@@ -1102,5 +1106,4 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
-
 }

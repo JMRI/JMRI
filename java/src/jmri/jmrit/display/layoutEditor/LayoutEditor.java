@@ -7382,183 +7382,174 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DELETE) {
             deleteSelectedItems();
-
             return;
         }
 
-        if (_positionableSelection != null) {
-            for (Positionable c : _positionableSelection) {
-                int xNew;
-                int yNew;
+        double deltaX = returnDeltaPositionX(e);
+        double deltaY = returnDeltaPositionY(e);
+        if ((deltaX != 0) || (deltaY != 0)) {
 
-                if ((c instanceof MemoryIcon) && (c.getPopupUtility().getFixedWidth() == 0)) {
-                    MemoryIcon pm = (MemoryIcon) c;
-                    xNew = (int) (returnNewXPostition(e, pm.getOriginalX()));
-                    yNew = (int) (returnNewYPostition(e, pm.getOriginalY()));
-                } else {
-                    Point2D upperLeft = c.getLocation();
-                    xNew = (int) (returnNewXPostition(e, upperLeft.getX()));
-                    yNew = (int) (returnNewYPostition(e, upperLeft.getY()));
-                }
-                c.setLocation(xNew, yNew);
-            }
-        }
+            if (_positionableSelection != null) {
+                for (Positionable c : _positionableSelection) {
+                    int xNew;
+                    int yNew;
 
-        // loop over all turnouts
-        if (_turnoutSelection != null) {
-            for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout t = entry.getKey();
-                int ttype = t.getTurnoutType();
-
-                if ((t.getVersion() == 2) && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                        || (ttype == LayoutTurnout.LH_XOVER)
-                        || (ttype == LayoutTurnout.RH_XOVER))) {
-                    TurnoutSelection ts = entry.getValue();
-
-                    if (ts.getPointA()) {
-                        Point2D coord = t.getCoordsA();
-                        t.setCoordsA(new Point2D.Double(returnNewXPostition(e, coord.getX()),
-                                returnNewYPostition(e, coord.getY())));
+                    if ((c instanceof MemoryIcon) && (c.getPopupUtility().getFixedWidth() == 0)) {
+                        MemoryIcon pm = (MemoryIcon) c;
+                        xNew = (int) Math.max(0.0, pm.getOriginalX() + deltaX);
+                        yNew = (int) Math.max(0.0, pm.getOriginalY() + deltaY);
+                    } else {
+                        Point2D upperLeft = c.getLocation();
+                        xNew = (int) Math.max(0.0, upperLeft.getX() + deltaX);
+                        yNew = (int) Math.max(0.0, upperLeft.getY() + deltaY);
                     }
-
-                    if (ts.getPointB()) {
-                        Point2D coord = t.getCoordsB();
-                        t.setCoordsB(new Point2D.Double(returnNewXPostition(e, coord.getX()),
-                                returnNewYPostition(e, coord.getY())));
-                    }
-
-                    if (ts.getPointC()) {
-                        Point2D coord = t.getCoordsC();
-                        t.setCoordsC(new Point2D.Double(returnNewXPostition(e, coord.getX()),
-                                returnNewYPostition(e, coord.getY())));
-                    }
-
-                    if (ts.getPointD()) {
-                        Point2D coord = t.getCoordsD();
-                        t.setCoordsD(new Point2D.Double(returnNewXPostition(e, coord.getX()),
-                                returnNewYPostition(e, coord.getY())));
-                    }
-                } else {
-                    Point2D center = t.getCoordsCenter();
-                    t.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
-                            returnNewYPostition(e, center.getY())));
+                    c.setLocation(xNew, yNew);
                 }
             }
-        }
 
-        if (_xingSelection != null) {
-            // loop over all level crossings
-            for (LevelXing x : _xingSelection) {
-                Point2D center = x.getCoordsCenter();
-                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
-                        returnNewYPostition(e, center.getY())));
-            }
-        }
+            // loop over all turnouts
+            if (_turnoutSelection != null) {
+                for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
+                    LayoutTurnout t = entry.getKey();
+                    int ttype = t.getTurnoutType();
 
-        if (_slipSelection != null) {
-            // loop over all slips
-            for (LayoutSlip sl : _slipSelection) {
-                Point2D center = sl.getCoordsCenter();
-                sl.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
-                        returnNewYPostition(e, center.getY())));
-            }
-        }
+                    if ((t.getVersion() == 2) && ((ttype == LayoutTurnout.DOUBLE_XOVER)
+                            || (ttype == LayoutTurnout.LH_XOVER)
+                            || (ttype == LayoutTurnout.RH_XOVER))) {
+                        TurnoutSelection ts = entry.getValue();
 
-        // loop over all turntables
-        if (_turntableSelection != null) {
-            for (LayoutTurntable x : _turntableSelection) {
-                Point2D center = x.getCoordsCenter();
-                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
-                        returnNewYPostition(e, center.getY())));
-            }
-        }
+                        if (ts.getPointA()) {
+                            Point2D coord = t.getCoordsA();
+                            t.setCoordsA(new Point2D.Double(
+                                    Math.max(0.0, coord.getX() + deltaX),
+                                    Math.max(0.0, coord.getY() + deltaY)));
+                        }
 
-        // loop over all Anchor Points and End Bumpers
-        if (_pointSelection != null) {
-            for (PositionablePoint p : _pointSelection) {
-                Point2D coord = p.getCoords();
-                p.setCoords(new Point2D.Double(returnNewXPostition(e, coord.getX()),
-                        returnNewYPostition(e, coord.getY())));
+                        if (ts.getPointB()) {
+                            Point2D coord = t.getCoordsB();
+                            t.setCoordsB(new Point2D.Double(
+                                    Math.max(0.0, coord.getX() + deltaX),
+                                    Math.max(0.0, coord.getY() + deltaY)));
+                        }
+
+                        if (ts.getPointC()) {
+                            Point2D coord = t.getCoordsC();
+                            t.setCoordsC(new Point2D.Double(
+                                    Math.max(0.0, coord.getX() + deltaX),
+                                    Math.max(0.0, coord.getY() + deltaY)));
+                        }
+
+                        if (ts.getPointD()) {
+                            Point2D coord = t.getCoordsD();
+                            t.setCoordsD(new Point2D.Double(
+                                    Math.max(0.0, coord.getX() + deltaX),
+                                    Math.max(0.0, coord.getY() + deltaY)));
+                        }
+                    } else {
+                        Point2D coord = t.getCoordsCenter();
+                        t.setCoordsCenter(new Point2D.Double(
+                                Math.max(0.0, coord.getX() + deltaX),
+                                Math.max(0.0, coord.getY() + deltaY)));
+                    }
+                }
             }
+
+            if (_xingSelection != null) {
+                // loop over all level crossings
+                for (LevelXing x : _xingSelection) {
+                    Point2D coord = x.getCoordsCenter();
+                    x.setCoordsCenter(new Point2D.Double(
+                            Math.max(0.0, coord.getX() + deltaX),
+                            Math.max(0.0, coord.getY() + deltaY)));
+                }
+            }
+
+            if (_slipSelection != null) {
+                // loop over all slips
+                for (LayoutSlip sl : _slipSelection) {
+                    Point2D coord = sl.getCoordsCenter();
+                    sl.setCoordsCenter(new Point2D.Double(
+                            Math.max(0.0, coord.getX() + deltaX),
+                            Math.max(0.0, coord.getY() + deltaY)));
+                }
+            }
+
+            // loop over all turntables
+            if (_turntableSelection != null) {
+                for (LayoutTurntable x : _turntableSelection) {
+                    Point2D coord = x.getCoordsCenter();
+                    x.setCoordsCenter(new Point2D.Double(
+                            Math.max(0.0, coord.getX() + deltaX),
+                            Math.max(0.0, coord.getY() + deltaY)));
+                }
+            }
+
+            // loop over all PositionablePoints
+            if (_pointSelection != null) {
+                for (PositionablePoint p : _pointSelection) {
+                    Point2D coord = p.getCoords();
+                    p.setCoords(new Point2D.Double(
+                            Math.max(0.0, coord.getX() + deltaX),
+                            Math.max(0.0, coord.getY() + deltaY)));
+                }
+            }
+            repaint();
         }
-        repaint();
     }   //keyPressed
 
-    private double returnNewXPostition(KeyEvent e, double val) {
-        if (e.isShiftDown()) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT: {
-                    val = val - 1;
-                    break;
-                }
+    private double returnDeltaPositionX(KeyEvent e) {
+        double result = 0.0;
+        double amount = e.isShiftDown() ? 5.0 : 1.0;
 
-                case KeyEvent.VK_RIGHT: {
-                    val = val + 1;
-                    break;
-                }
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT: {
+                result = -amount;
+                break;
+            }
 
-                default: {
-                    break;
-                }
-            }   //switch
-        } else {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT: {
-                    val = val - 5;
-                    break;
-                }
+            case KeyEvent.VK_RIGHT: {
+                result = +amount;
+                break;
+            }
 
-                case KeyEvent.VK_RIGHT: {
-                    val = val + 5;
-                    break;
-                }
+            default: {
+                break;
+            }
+        }   //switch
+        return result;
+    }
 
-                default: {
-                    break;
-                }
-            }   //switch
-        }
-        return Math.max(val, 0);
-    }   //returnNewXPostition
+    private double returnDeltaPositionY(KeyEvent e) {
+        double result = 0.0;
+        double amount = e.isShiftDown() ? 5.0 : 1.0;
 
-    private double returnNewYPostition(KeyEvent e, double val) {
-        if (e.isShiftDown()) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP: {
-                    val = val - 1;
-                    break;
-                }
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP: {
+                result = -amount;
+                break;
+            }
 
-                case KeyEvent.VK_DOWN: {
-                    val = val + 1;
-                    break;
-                }
+            case KeyEvent.VK_DOWN: {
+                result = +amount;
+                break;
+            }
 
-                default: {
-                    log.warn("Unexpected key code {}  in returnNewYPosition", e.getKeyCode());
-                    break;
-                }
-            }   //switch
-        } else {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP: {
-                    val = val - 5;
-                    break;
-                }
+            default: {
+                break;
+            }
+        }   //switch
+        return result;
+    }
 
-                case KeyEvent.VK_DOWN: {
-                    val = val + 5;
-                    break;
-                }
+    private double returnNewPostitionX(KeyEvent e, double val) {
+        double deltaX = returnDeltaPositionX(e);
+        return Math.max(val + deltaX, 0.0);
+    }   //returnNewPostitionX
 
-                default: {
-                    log.warn("Unexpected key code {}  in returnNewYPosition", e.getKeyCode());
-                    break;
-                }
-            }   //switch
-        }
-        return Math.max(val, 0);
-    }   //returnNewYPostition
+    private double returnNewPostitionY(KeyEvent e, double val) {
+        double deltaY = returnDeltaPositionY(e);
+        return Math.max(val + deltaY, 0.0);
+    }   //returnNewPostitionY
 
     int _prevNumSel = 0;
 
