@@ -19,6 +19,13 @@ public class NceTurnoutManagerXmlTest {
       Assert.assertNotNull("NceTurnoutManagerXml constructor",new NceTurnoutManagerXml());
     }
 
+    @Test
+    public void testInvalidLoad(){
+       NceTurnoutManagerXml ntmx = new NceTurnoutManagerXml();
+       ntmx.load(new org.jdom2.Element("test"),ntmx);
+       jmri.util.JUnitAppender.assertErrorMessage("Invalid method called");
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

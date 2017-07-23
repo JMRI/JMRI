@@ -112,6 +112,60 @@ public final class MathUtil {
     }
 
     /**
+     * offset a point by two scalars
+     * @param p the point
+     * @param x the x scalar
+     * @param y the y scalar
+     * @return the point offset by the scalars
+     */
+    public static Point2D offset(Point2D p, double x, double y) {
+        return new Point2D.Double(p.getX() + x, p.getY() + y);
+    }
+
+    /**
+     * rotate x and y coordinates (by radians)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(double x, double y, double a) {
+        double cosA = Math.cos(a), sinA = Math.sin(a);
+        return new Point2D.Double(cosA * x - sinA * y, sinA * x + cosA * y);
+    }
+
+    /**
+     * rotate x and y coordinates (by degrees)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(double x, double y, double a) {
+        return rotateRAD(x, y, Math.toRadians(a));
+    }
+
+    /**
+     * rotate a point (by radians)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(Point2D p, double a) {
+        return rotateRAD(p.getX(), p.getY(), a);
+    }
+
+    /**
+     * rotate a point (by degrees)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(Point2D p, double a) {
+        return rotateRAD(p, Math.toRadians(a));
+    }
+
+    /**
      * dot product of two points (vectors)
      * @param pA the first point
      * @param pB the second point
@@ -163,6 +217,27 @@ public final class MathUtil {
             result = divide(p, length);
         }
         return result;
+    }
+
+    /**
+     * compute the angle (direction in radians) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in radians
+     */
+    public static double computeAngleRAD(Point2D p1, Point2D p2) {
+        Point2D delta = subtract(p1, p2);
+        return Math.atan2(delta.getX(), delta.getY());
+    }
+
+    /**
+     * compute the angle (direction in degrees) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in degrees
+     */
+    public static double computeAngleDEG(Point2D p1, Point2D p2) {
+        return Math.toDegrees(computeAngleRAD(p1, p2));
     }
 
     /**
@@ -282,6 +357,20 @@ public final class MathUtil {
     }
 
     /**
+     * Wrap an int between two values (for example +/- 180 or 0-360 degrees)
+     * @param inValue the value
+     * @param inMin the lowest value
+     * @param inMax the highest value
+     * @return the value wrapped between the lowest and highest values
+     * Note: THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN AND MAX
+     * (And yes, this works correctly with negative numbers)
+     */
+    public static int wrap(int inValue, int inMin, int inMax) {
+        int valueRange = inMax - inMin;
+        return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
+    }
+
+    /**
      * Wrap a double between two values (for example +/- 180 or 0-360 degrees)
      * @param inValue the value
      * @param inMin the lowest value
@@ -327,8 +416,18 @@ public final class MathUtil {
      * @param a the angle
      * @return the angle wrapped between 0 and 360
      */
-    public static double normalizeAngle(double a) {
+    public static double normalizeAngleDEG(double a) {
         return wrap360(a);
+    }
+
+    /**
+     * calculate the relative difference (+/-180) between two angles
+     * @param a the first angle
+     * @param b the second angle
+     * @return the relative difference between the two angles
+     */
+    public static double diffAngleDEG(double a, double b) {
+        return wrapPM180(a - b);
     }
 
     /**
@@ -337,8 +436,8 @@ public final class MathUtil {
      * @param b the second angle
      * @return the absolute difference between the two angles
      */
-    public static double diffAngle(double a, double b) {
-        return Math.abs(wrapPM180(a - b));
+    public static double absDiffAngleDEG(double a, double b) {
+        return Math.abs(diffAngleDEG(a, b));
     }
 
     /**
@@ -400,11 +499,22 @@ public final class MathUtil {
     /**
      * offset a rectangle
      * @param r the rectangle
+     * @param x the horzontial offset
+     * @param y the vertical offset
+     * @return the offset rectangle
+     */
+    public static Rectangle2D offset(Rectangle2D r, double x, double y) {
+        return new Rectangle2D.Double(r.getX() + x, r.getY() + y, r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * offset a rectangle
+     * @param r the rectangle
      * @param o the offset
      * @return the offset rectangle
      */
     public static Rectangle2D offset(Rectangle2D r, Point2D o) {
-        return new Rectangle2D.Double(r.getX() + o.getX(), r.getY() + o.getY(), r.getWidth(), r.getHeight());
+        return offset(r, o.getX(), o.getY());
     }
 
     /**

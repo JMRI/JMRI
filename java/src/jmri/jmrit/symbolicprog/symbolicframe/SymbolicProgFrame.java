@@ -19,7 +19,6 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ValueEditor;
 import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -55,13 +54,9 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
     JTable cvTable = new JTable(cvModel);
     JScrollPane cvScroll = new JScrollPane(cvTable);
 
-    IndexedCvTableModel icvModel = new IndexedCvTableModel(progStatus, null);
-    JTable icvTable = new JTable(icvModel);
-    JScrollPane icvScroll = new JScrollPane(icvTable);
-
     VariableTableModel variableModel = new VariableTableModel(progStatus,
             new String[]{"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment"},
-            cvModel, icvModel);
+            cvModel);
     JTable variableTable = new JTable(variableModel);
     JScrollPane variableScroll = new JScrollPane(variableTable);
 

@@ -7,9 +7,7 @@ import org.junit.Test;
 
 
 /**
- * <p>
- * Title: XNetPacketizerTest </p>
- * <p>
+ * Tests for the jmri.jmrix.XNetPacketizer package
  *
  * @author Bob Jacobsen Copyrgiht (C) 2002
  * @author Paul Bender Copyright (C) 2016
@@ -23,11 +21,6 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
 
         public StoppingXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation p) {
             super(p);
-        }
-
-        public void stop() {
-            xmtThread.stop();
-            rcvThread.stop();
         }
 
         // methods removed for testing
@@ -210,6 +203,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         tc=null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

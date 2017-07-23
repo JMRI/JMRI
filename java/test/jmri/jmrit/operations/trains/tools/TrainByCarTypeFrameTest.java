@@ -37,6 +37,6 @@ public class TrainByCarTypeFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrameTest.class.getName());
 
 }

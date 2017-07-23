@@ -401,7 +401,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     train.build();
                 }
             });
-            build.setName("Build Train (train.getName())"); // NOI18N
+            build.setName("Build Train (" + train.getName() + ")"); // NOI18N
             build.start();
             // print build report, print manifest, run or open file
         } else {

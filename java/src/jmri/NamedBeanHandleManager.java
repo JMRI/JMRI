@@ -96,7 +96,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
                 h.setName(newName);
             }
         }
-        updateListenerRef(oldName, newName, ((NamedBean) bean));
+        updateListenerRef(oldName, newName, bean);
     }
 
     /**
@@ -126,7 +126,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
                 h.setBean(newBean);
             }
         }
-        moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
+        moveListener(oldBean, newBean, name);
     }
 
     public void updateBeanFromUserToSystem(@Nonnull NamedBean bean) {

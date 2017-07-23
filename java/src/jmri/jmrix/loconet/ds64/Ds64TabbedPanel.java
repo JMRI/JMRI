@@ -1963,7 +1963,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         // before proceeding, make sure that the user really wants to go forward
         Object[] dialogBoxButtonOptions = {
             Bundle.getMessage("ButtonTextResetToFactoryDefault"),
-            Bundle.getMessage("ButtonTextCancelBoardReset")};
+            Bundle.getMessage("ButtonCancel")};
         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogTextBoardResetWarning"),
                 Bundle.getMessage("DialogHeadingBoardResetWarning"),
@@ -2528,7 +2528,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         // before proceeding, make sure that the user really wants to go forward
                         Object[] dialogBoxButtonOptions = {
                             Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
-                            Bundle.getMessage("ButtonTextCancelBoardReset")};
+                            Bundle.getMessage("ButtonCancel")};
                         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                                 Bundle.getMessage("DialogTextClearRouteWarning",routeNumber),
                                 Bundle.getMessage("DialogHeadingClearRouteWarning"),

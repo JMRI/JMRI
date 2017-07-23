@@ -2,7 +2,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -29,45 +28,30 @@ public class ShapeDrawer {
 
         JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newRectangle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRectangle();
         });
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newRoundRectangle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRoundRectangle();
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newPolygon();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newPolygon();
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newCircle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newCircle();
         });
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newEllipse();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newEllipse();
         });
 
         return drawMenu;
@@ -132,15 +116,15 @@ public class ShapeDrawer {
         }
     }
 
+    ///////////////////////////// Mouse /////////////////////////////
     /**
-     * ************************** Mouse ************************
-     */
-    /**
-     * *** return true if creating or editing **
+     * @param event the event to process
+     * @param pos   the item to check
+     * @return true if creating or editing; false otherwise
      */
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
         if (_drawFrame instanceof DrawPolygon) {
-            ((DrawPolygon)_drawFrame).anchorPoint(event.getX(), event.getY());
+            ((DrawPolygon) _drawFrame).anchorPoint(event.getX(), event.getY());
         }
         if (pos instanceof PositionableShape && _editor.isEditable()) {
             if (!pos.equals(_currentSelection)) {
@@ -171,8 +155,8 @@ public class ShapeDrawer {
 
     public boolean doMouseClicked(MouseEvent event) {
         if (_drawFrame != null) {
-            if (_drawFrame instanceof DrawPolygon && event.getClickCount()>1) {
-                ((DrawPolygon)_drawFrame).setEditing(true);
+            if (_drawFrame instanceof DrawPolygon && event.getClickCount() > 1) {
+                ((DrawPolygon) _drawFrame).setEditing(true);
             }
             return true;
         }

@@ -18,6 +18,7 @@ public class ClientRxHandlerTest {
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -33,6 +34,6 @@ public class ClientRxHandlerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
 
 }

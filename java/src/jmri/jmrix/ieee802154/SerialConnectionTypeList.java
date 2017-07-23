@@ -1,5 +1,8 @@
 package jmri.jmrix.ieee802154;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid IEEE 802.15.4 Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.ieee802154;
  * @author Paul Bender Copyright (C) 2013
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String IEEE802154 = "IEEE 802.15.4";

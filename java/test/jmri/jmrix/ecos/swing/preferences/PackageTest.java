@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     PreferencesFrameTest.class,
     PreferencesFrameActionTest.class,
-    PreferencesPaneTest.class
+    PreferencesPaneTest.class,
+    BundleTest.class
 })
 
 /**

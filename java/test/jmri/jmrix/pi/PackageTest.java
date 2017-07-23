@@ -30,6 +30,6 @@ public class PackageTest {
         org.junit.runner.JUnitCore.main(PackageTest.class.getName());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

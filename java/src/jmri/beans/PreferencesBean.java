@@ -1,6 +1,5 @@
 package jmri.beans;
 
-import java.util.Objects;
 import javax.annotation.Nonnull;
 import jmri.profile.Profile;
 
@@ -30,10 +29,10 @@ public abstract class PreferencesBean extends Bean {
     /**
      * Create the PreferencesBean.
      *
-     * @param profile the Profile this PreferencesBean is associated with
+     * @param profile the Profile this PreferencesBean is associated with; if
+     * null is not associated with a Profile, but applies application wide
      */
-    public PreferencesBean(@Nonnull Profile profile) {
-        Objects.requireNonNull(profile, "Profile must be specified.");
+    public PreferencesBean(Profile profile) {
         this.profile = profile;
     }
 
@@ -80,11 +79,8 @@ public abstract class PreferencesBean extends Bean {
      * Set if preferences need to be saved.
      *
      * @param value true to indicate need to save; false otherwise
-     * @deprecated public access is deprecated since 4.7.5; will become
-     * protected after 4.8 is released
      */
-    @Deprecated
-    public void setIsDirty(boolean value) {
+    protected void setIsDirty(boolean value) {
         boolean old = this.isDirty;
         if (old != value) {
             this.isDirty = value;

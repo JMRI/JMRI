@@ -40,8 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccPowerManagerTest.class));
-        suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));

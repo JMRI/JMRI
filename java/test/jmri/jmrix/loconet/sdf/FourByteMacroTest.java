@@ -33,6 +33,6 @@ public class FourByteMacroTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FourByteMacroTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FourByteMacroTest.class.getName());
 
 }

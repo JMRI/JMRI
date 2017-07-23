@@ -15,10 +15,12 @@ import org.slf4j.LoggerFactory;
 public class LnMessageClientPollThreadTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws InterruptedException {
         LnMessageClient c = new LnMessageClient();
         LnMessageClientPollThread t = new LnMessageClientPollThread(c);
         Assert.assertNotNull("exists",t);
+        t.interrupt();
+        t.join();
     }
 
     // The minimal setup for log4J
@@ -34,6 +36,6 @@ public class LnMessageClientPollThreadTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThreadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThreadTest.class.getName());
 
 }

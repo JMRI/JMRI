@@ -138,7 +138,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occured while sending delayed off to turnout: " + e);
+                    log.error("Exception occurred while sending delayed off to turnout: " + e);
                 }
             }
         }, METERINTERVAL);

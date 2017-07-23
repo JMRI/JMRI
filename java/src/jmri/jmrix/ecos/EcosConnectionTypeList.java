@@ -1,12 +1,16 @@
 package jmri.jmrix.ecos;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid ESU Ecos Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class EcosConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ESU = "ESU";

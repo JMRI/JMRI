@@ -56,7 +56,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     private static enum Registration {
         DENIAL, REDIRECTION, RESOURCE, SERVLET
-    };
+    }
     private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;

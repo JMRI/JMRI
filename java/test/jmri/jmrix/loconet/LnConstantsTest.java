@@ -33,6 +33,6 @@ public class LnConstantsTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnConstantsTest.class.getName());
 
 }

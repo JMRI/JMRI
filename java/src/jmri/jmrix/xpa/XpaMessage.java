@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an XPressNet command station via an XPA and a modem.
+ * Encodes a message to an XpressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
   */
@@ -212,5 +212,3 @@ public class XpaMessage implements jmri.jmrix.Message {
     private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
-
-

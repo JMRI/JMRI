@@ -27,12 +27,15 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Hold configuration data for Warrants, includes Speed Map
  *
  * @author Pete Cressman Copyright (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N

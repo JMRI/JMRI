@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.powerline.swing.packetgen.PackageTest.class,
     jmri.jmrix.powerline.swing.serialmon.PackageTest.class,
     PowerlineComponentFactoryTest.class,
-    PowerlineMenuTest.class
+    PowerlineMenuTest.class,
+    PowerlineNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.swing package.

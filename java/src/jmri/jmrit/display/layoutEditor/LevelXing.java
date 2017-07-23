@@ -1363,8 +1363,8 @@ public class LevelXing extends LayoutTrack {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        block1NameComboBox.getEditor().setItem(blockNameAC);
-        block2NameComboBox.getEditor().setItem(blockNameBD);
+        block1NameComboBox.setText(blockNameAC);
+        block2NameComboBox.setText(blockNameBD);
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1396,7 +1396,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1NameComboBox.getEditor().setItem("");
+                    block1NameComboBox.setText("");
                     block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1442,7 +1442,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2NameComboBox.getEditor().setItem("");
+                    block2NameComboBox.setText("");
                     block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1483,7 +1483,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1NameComboBox.getEditor().setItem("");
+                    block1NameComboBox.setText("");
                     block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1511,7 +1511,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2NameComboBox.getEditor().setItem("");
+                    block2NameComboBox.setText("");
                     block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
@@ -1694,32 +1694,32 @@ public class LevelXing extends LayoutTrack {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsA();
 
+        pt = getCoordsA();
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsB();
 
+        pt = getCoordsB();
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsC();
 
+        pt = getCoordsC();
         if (getConnectC() == null) {
-            g2.setColor(Color.magenta);
+            g2.setColor(Color.red);
         } else {
-            g2.setColor(Color.blue);
+            g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-        pt = getCoordsD();
 
+        pt = getCoordsD();
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
