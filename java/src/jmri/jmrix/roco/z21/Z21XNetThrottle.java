@@ -220,7 +220,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) 
-            log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString());
+            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
         if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
@@ -235,9 +235,9 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                int b7= l.getElement(8)&0xff; 
                // byte 2 contains the speed step mode and availability 
                // information.
-               parseSpeedandAvailability(b2); 
+               parseSpeedAndAvailability(b2);
                // byte 3 contains the direction and the speed information
-               parseSpeedandDirection(b3);
+               parseSpeedAndDirection(b3);
                // byte 4 contains flags for whether or not the locomotive
                // is in a double header and for smart search.  These aren't used
                // here.

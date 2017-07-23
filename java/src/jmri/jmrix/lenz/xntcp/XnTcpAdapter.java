@@ -26,7 +26,8 @@ import org.slf4j.LoggerFactory;
  * port.
  *
  * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by
- * Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
+ * Bob Jacobsen, Copyright (C) 2002
+ * @author Portions by Paul Bender, Copyright (C) 2003
  * GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2008 - Added
  * updating of connection status in the main menu panel (using ConnectionStatus
@@ -54,8 +55,8 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
     public XnTcpAdapter() {
         super();
-        option1Name = "XnTcpInterface";
-        options.put(option1Name, new Option("XnTcp Interface:", getInterfaces()));
+        option1Name = "XnTcpInterface"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XnTcpInterfaceLabel"), getInterfaces()));
         m_HostName = DEFAULT_IP_ADDRESS;
         m_port = DEFAULT_TCP_PORT;
     }
@@ -79,7 +80,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         for (int i = 0; i < v.size(); i++) {
             a[i + 1] = v.elementAt(i);
         }
-        a[0] = "Manual";
+        a[0] = Bundle.getMessage("Manual");
         return a;
 
     }
@@ -99,7 +100,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             outName = getOptionState(option1Name);
         }
         // Did user manually provide IP number and port?
-        if (outName.equals("Manual")) {
+        if (outName.equals(Bundle.getMessage("Manual")) || outName.equals("Manual")) {
             // Yes - retrieve IP number and port
             if (m_HostName == null) {
                 m_HostName = DEFAULT_IP_ADDRESS;
@@ -145,14 +146,14 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
-            log.error("Socket exception while opening TCP connection with " + outName + " trace follows: " + se);
+            log.error("Socket exception while opening TCP connection with {} trace follows: {}", outName, se);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
-            log.error("Unexpected exception while opening TCP connection with " + outName + " trace follows: " + e);
+            log.error("Unexpected exception while opening TCP connection with {} trace follows: {}", outName, e);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
@@ -160,12 +161,14 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
     }
 
+    /**
+     * Retrieve all XnTcp interfaces available on the network
+     * by broadcasting a UDP request on port 61234, listening
+     * to all possible replies, storing in hostNameVector
+     * the NETBIOS names of interfaces found and their IP
+     * and port numbers in HostAddressVector.
+     */
     private void findInterfaces() {
-        // Retrieve all XnTcp interfaces available on the network
-        // by broadcasting a UDP request on port 61234, listening
-        // to all possible replies, storing in hostNameVector
-        // the NETBIOS names of interfaces found and in
-        // HostAddressVector their IP and port numbers
 
         DatagramSocket udpSocket = null;
 
@@ -213,7 +216,9 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     /**
      * TCP/IP stack and the XnTcp interface provide enough buffering to avoid
      * overrun. However, queueing commands faster than they can be processed
-     * should in general be avoided. To this purpose, a counter is incremented
+     * should in general be avoided.
+     * <p>
+     * To this purpose, a counter is incremented
      * each time a packet is queued and decremented when a reply from the
      * interface is received. When the counter reaches the pre-defined maximum
      * (e.g. 15) queuing of commands is blocked. Owing to broadcasts from the
@@ -221,7 +226,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
      * than that of commands sent, but this fact simply implies that we may have
      * a higher number of pending commands for a while, without any negative
      * consequence (the maximum is however arbitrary).
-     *
      */
     synchronized protected void xnTcpSetPendingPackets(int s) {
         pendingPackets += s;
@@ -245,9 +249,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             // Clear open status, in order to avoid issuing the error 
             // message more than than once.
             opened = false;
-            if (log.isDebugEnabled()) {
-                log.debug("XnTcpError: TCP/IP communication dropped");
-            }
+            log.debug("XnTcpError: TCP/IP communication dropped");
         }
     }
 
@@ -263,13 +265,13 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
         synchronized (this) {
             // Return "true" if the maximum number of commands queued has not been reached
-            log.debug("XnTcpAdapter.okToSend = " + (pendingPackets < MAX_PENDING_PACKETS) + " (pending packets =" + pendingPackets + ")");
+            log.debug("XnTcpAdapter.okToSend = {} (pending packets = {})", (pendingPackets < MAX_PENDING_PACKETS), pendingPackets);
             return pendingPackets < MAX_PENDING_PACKETS;
         }
     }
 
     /**
-     * set up all of the other objects to operate with a XnTcp interface
+     * Set up all of the other objects to operate with a XnTcp interface.
      */
     @Override
     public void configure() {
@@ -281,6 +283,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     }
 
 // Base class methods for the XNetNetworkPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -309,8 +312,10 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         return opened;
     }
 
-    // Extract the IP number from a URL, by removing
-    // the domain name, if present
+    /**
+     * Extract the IP number from a URL, by removing the
+     * domain name, if present.
+     */
     private static String cleanIP(String ip) {
         String outIP = ip;
         int i = outIP.indexOf("/");
@@ -320,7 +325,10 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         return outIP;
     }
 
-    // Our output class, used to count output packets and make sure that they are immediatelly sent
+    /**
+     * Output class, used to count output packets and make sure that
+     * they are immediatelly sent.
+     */
     public class OutputTcpStream extends OutputStream {
 
         private OutputStream tcpOut = null;
@@ -341,14 +349,14 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             synchronized (tcpOut) {
                 try {
                     tcpOut.write(b);
-                    log.debug("XnTcpAdatper: sent " + Integer.toHexString(b & 0xff));
+                    log.debug("XnTcpAdapter: sent {}", Integer.toHexString(b & 0xff));
                     // If this is the start of a new packet, save it's length
                     if (count < 0) {
                         count = b & 0x0f;
                     } // If the whole packet was queued, send it and count it
                     else if (count-- == 0) {
                         tcpOut.flush();
-                        log.debug("XnTcpAdatper: flush ");
+                        log.debug("XnTcpAdapter: flush ");
                         xnTcpSetPendingPackets(1);
                     }
                 } catch (java.io.IOException e) {

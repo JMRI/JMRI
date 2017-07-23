@@ -289,9 +289,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case IDLE:
                 default:
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message Received in default(IDLE) state.  Message is: " + l.toString());
-                    }
+                    log.debug("Message Received in default(IDLE) state. Message is: {}", l.toString());
             }
         }
 

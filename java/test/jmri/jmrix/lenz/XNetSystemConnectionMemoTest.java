@@ -48,7 +48,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
           @Override
           public int getCommandStationType(){
               return(0x10); // MultiMaus
-          };
+          }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -63,7 +63,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
           @Override
           public int getCommandStationType(){
               return(0x00); // LZV100
-          };
+          }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();

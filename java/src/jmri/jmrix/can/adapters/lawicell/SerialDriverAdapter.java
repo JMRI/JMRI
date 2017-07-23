@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
 
     public SerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
-        option1Name = "Protocol";
+        option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
     }
 

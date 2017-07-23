@@ -21,7 +21,7 @@ public class PR3Adapter extends LocoBufferAdapter {
         super(new PR3SystemConnectionMemo());
 
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     /**
