@@ -393,23 +393,33 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_LEFT) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_STOP) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.THROWN);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_RIGHT) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.THROWN);
-        } else {
-            log.error("Got code not recognized: {}", value);
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+        } else switch (value) {
+            case Triple100: // CODE_LEFT
+                hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            case Triple010: // CODE_STOP
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.THROWN);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            case Triple001: // CODE_RIGHT
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.THROWN);
+                break;
+            case Triple000: // CODE_OFF
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED); // all off
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            default: 
+                log.error("Got code not recognized: {}", value);
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
         }
     } 
 
