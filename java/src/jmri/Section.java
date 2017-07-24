@@ -1270,8 +1270,10 @@ public class Section extends AbstractNamedBean {
      * should only happen if blocks are not set up correctly--if all connections
      * go to the same Block, or not all Blocks set. An error message is logged
      * if EntryPoint.UNKNOWN is returned.
+     * 
+     * @param t Actually of type LayoutSlip, this is the track segment to check.
      */
-    private int getDirectionSlip(LayoutSlip t, ConnectivityUtil cUtil) {
+    private int getDirectionSlip(LayoutTurnout t, ConnectivityUtil cUtil) {
         LayoutBlock aBlock = ((TrackSegment) t.getConnectA()).getLayoutBlock();
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
         LayoutBlock cBlock = ((TrackSegment) t.getConnectC()).getLayoutBlock();
@@ -2231,7 +2233,7 @@ public class Section extends AbstractNamedBean {
                             }
                         }
                     } else if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP || t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                        int direction = getDirectionSlip((LayoutSlip) t, cUtil);
+                        int direction = getDirectionSlip(t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
                             altDirection = EntryPoint.REVERSE;
@@ -2357,10 +2359,9 @@ public class Section extends AbstractNamedBean {
         }
         Block eBlock = getEntryBlock();
         ArrayList<EntryPoint> epList = getListOfForwardBlockEntryPoints(eBlock);
-        if (epList.size() > 0) {
 
-// djd debugging - need code to fully implement checkSignals
-        }
+        // need code to fully implement checkSignals if (epList.size() > 0)
+
         return true;
     }
 
@@ -2585,7 +2586,6 @@ public class Section extends AbstractNamedBean {
     }
 
     public void setNameFromActiveBlock(Object value) {
-        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
             setNameInBlocks(value);
@@ -2689,9 +2689,8 @@ public class Section extends AbstractNamedBean {
                     throw new PropertyVetoException(Bundle.getMessage("VetoBlockInSection", getDisplayName()), e);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-
-        }
+        } 
+        // "DoDelete" case, if needed, should be handled here.
     }
 
     private final static Logger log = LoggerFactory.getLogger(Section.class.getName());
