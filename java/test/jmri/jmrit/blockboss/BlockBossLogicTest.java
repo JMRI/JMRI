@@ -55,13 +55,13 @@ public class BlockBossLogicTest extends TestCase {
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
         
         setAndWait(h2, SignalHead.YELLOW);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
 
         setAndWait(h2, SignalHead.RED);
-        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so red sets yellow");  // wait and test
 
         setAndWait(h2, SignalHead.GREEN);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so green sets green");  // wait and test
     }
 
     // test that initial conditions are set right
@@ -79,14 +79,14 @@ public class BlockBossLogicTest extends TestCase {
         startLogic(p);
         JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
         
-        setAndWait(h2, SignalHead.GREEN);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
+        setAndWait(h2, SignalHead.YELLOW);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
 
         JUnitUtil.setBeanState(s1, Sensor.ACTIVE);
-        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "occupied sets red");  // wait and test
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so occupied sets red");  // wait and test
 
         JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "unoccupied sets green");  // wait and test
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so unoccupied sets green");  // wait and test
     }
 
     // test signal following in distant simple block

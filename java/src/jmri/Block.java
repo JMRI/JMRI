@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
+
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -373,10 +376,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * block must be added to the deny list of the other block. By default no
      * block is barred, so traffic flow is bi-directional.
      *
-     * @param pName name of the block to add
+     * @param pName name of the block to add, which must exist
      */
-    public void addBlockDenyList(String pName) {
+    public void addBlockDenyList(@Nonnull String pName) {
         Block blk = InstanceManager.getDefault(BlockManager.class).getBlock(pName);
+        if (blk == null) throw new IllegalArgumentException("addBlockDenyList requests block \""+pName+"\" exists");
         NamedBeanHandle<Block> namedBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
