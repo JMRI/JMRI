@@ -426,6 +426,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
+        if (w.commandsHaveTrackSpeeds()) {
+            w.getSpeedUtil().getValidSpeedProfile(this);            
+        } else {
+            setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
+        }
+        
         msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {
             setStatusText(msg, Color.red, false);
@@ -440,8 +446,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             } else if (msg.equals("warnStartManual")) {
                 msg = Bundle.getMessage("warnStartManual", w.getTrainName(), w.getCurrentBlockName());
             }
+            setStatusText(msg, WarrantTableModel.myGold, false);
         }
-        setStatusText(msg, WarrantTableModel.myGold, false);
         // From here on messages are status information, not abort info
         msg = w.checkRoute();   // notify about occupation ahead
         if (msg != null) {

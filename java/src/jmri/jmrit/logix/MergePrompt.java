@@ -1,9 +1,8 @@
 package jmri.jmrit.logix;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,19 +11,20 @@ import java.util.TreeMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -40,13 +40,16 @@ public class MergePrompt extends JDialog {
     HashMap<String, Boolean> _candidates;   // merge candidate choices
     HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
     HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
+    HashMap<String, HashMap<Integer, Boolean>> _anomalyMap;
     JPanel _viewFrame;
-    JTable _viewTable;
+    JTable _mergeTable;
+    JmriJFrame _anomolyFrame;
     static int STRUT = 20;
 
-    MergePrompt(String name, HashMap<String, Boolean> cand) {
+    MergePrompt(String name, HashMap<String, Boolean> cand, HashMap<String, HashMap<Integer, Boolean>> anomalies) {
         super();
         _candidates = cand;
+        _anomalyMap = anomalies;
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         _mergeProfiles = manager.getMergeProfiles();
         _sessionProfiles = manager.getSessionProfiles();
@@ -65,12 +68,14 @@ public class MergePrompt extends JDialog {
 
         table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
         table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellEditor(new ButtonEditor(new JButton()));
-        table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonRenderer());
+//        table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonRenderer());
+        table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonCellRenderer());
 
         int tablewidth = 0;
         for (int i = 0; i < model.getColumnCount(); i++) {
-            TableColumn column = table.getColumnModel().getColumn(i);
-            tablewidth += column.getPreferredWidth();
+            int width = model.getPreferredWidth(i);
+            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            tablewidth += width;
         }
         int rowHeight = new JButton("VIEW").getPreferredSize().height;
         table.setRowHeight(rowHeight);
@@ -105,13 +110,23 @@ public class MergePrompt extends JDialog {
         });
         panel.add(button);
 
+//        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        JScrollPane pane = new JScrollPane(table);
+        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.add(description);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        JScrollPane pane = new JScrollPane(table);
-        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
         mainPanel.add(pane);
+        if (_anomalyMap != null && _anomalyMap.size() > 0) {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+            JLabel l = new JLabel(Bundle.getMessage("anomalyPrompt"));
+            l.setForeground(java.awt.Color.RED);
+            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            p.add(l);
+            mainPanel.add(p);
+        }
         mainPanel.add(panel);
 
         JPanel p = new JPanel();
@@ -142,18 +157,35 @@ public class MergePrompt extends JDialog {
     void showProfiles(String id) {
         if (_viewFrame != null) {
             getContentPane().remove(_viewFrame);
-//            _viewFrame.removeKeyListener(_viewFrame);
         }
         _viewFrame = new JPanel();
         _viewFrame.setLayout(new BoxLayout(_viewFrame, BoxLayout.PAGE_AXIS));
+        _viewFrame.add(Box.createGlue());
         JPanel panel = new JPanel();
         panel.add(new JLabel(Bundle.getMessage("viewTitle", id)));
-        panel = new JPanel();
-        panel.add(new JLabel(Bundle.getMessage("deletePrompt", id)));
         _viewFrame.add(panel);
+        
+        HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
+        if (anomalies != null && anomalies.size() > 0) {
+            panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+            JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
+            label.setForeground(java.awt.Color.RED);
+            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            panel.add(label);
+            label = new JLabel(Bundle.getMessage("deletePrompt2"));
+            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            panel.add(label);
+            label = new JLabel(Bundle.getMessage("deletePrompt3"));
+            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            panel.add(label);
+            _viewFrame.add(panel);
+            
+        }
  
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
+        spPanel.add(Box.createGlue());
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -166,83 +198,30 @@ public class MergePrompt extends JDialog {
         if (speedProfile == null) {
             speedProfile = new RosterSpeedProfile(null);            
         }
-        SpeedTableModel model = new SpeedTableModel(speedProfile);
-        JTable table = new JTable(model);
-        int tablewidth = 0;
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            TableColumn column = table.getColumnModel().getColumn(i);
-            int width = model.getPreferredWidth(i);
-            column.setPreferredWidth(width);
-            tablewidth += width;
-        }
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        JScrollPane pane = new JScrollPane(table);
-        int barWidth = 5+pane.getVerticalScrollBar().getPreferredSize().width;
-        tablewidth += barWidth;
-        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
-        panel.add(pane);
+        JPanel speedPanel = new SpeedProfilePanel(speedProfile, null);
+        panel.add(speedPanel);
         spPanel.add(panel);
+        spPanel.add(Box.createGlue());
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("mergedSpeedProfile")));
-        model = new SpeedTableModel(_mergeProfiles.get(id));
-        _viewTable = new JTable(model);
-        _viewTable.addKeyListener(new KeyListener() {
-            public void keyTyped(KeyEvent ke) {
-                char ch = ke.getKeyChar(); 
-                if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
-                    deleteRow();
-                }
-            }
-            public void keyPressed(KeyEvent e) {}
-            public void keyReleased(KeyEvent e) {}
-        });
-        tablewidth = barWidth;
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            int width = model.getPreferredWidth(i);
-            TableColumn column = table.getColumnModel().getColumn(i);
-            column.setPreferredWidth(width);
-            tablewidth += width;
-        }
-        _viewTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        pane = new JScrollPane(_viewTable);
-        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
-        panel.add(pane);
+        speedPanel = new SpeedProfilePanel(_mergeProfiles.get(id), anomalies);
+        panel.add(speedPanel);
         spPanel.add(panel);
+        spPanel.add(Box.createGlue());
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("sessionSpeedProfile")));
-        model = new SpeedTableModel(_sessionProfiles.get(id));
-        table = new JTable(model);
-        tablewidth = barWidth;
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            int width = model.getPreferredWidth(i);
-            TableColumn column = table.getColumnModel().getColumn(i);
-            column.setPreferredWidth(width);
-            tablewidth += width;
-        }
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        pane = new JScrollPane(table);
-        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
-        panel.add(pane);
+        speedPanel = new SpeedProfilePanel(_sessionProfiles.get(id), null);
+        panel.add(speedPanel);
         spPanel.add(panel);
+        spPanel.add(Box.createGlue());
         
         _viewFrame.add(spPanel);
         getContentPane().add(_viewFrame);
         pack();
-    }
-
-    private void deleteRow() {
-        int row = _viewTable.getSelectedRow();
-        if (row >= 0) {
-            SpeedTableModel model = (SpeedTableModel)_viewTable.getModel();
-            Map.Entry<Integer, SpeedStep> entry = model.speedArray.get(row);
-            model.speedArray.remove(entry);
-            model.profile.deleteStep(entry.getKey());
-            model.fireTableDataChanged();
-        }
     }
 
     /**
@@ -250,9 +229,11 @@ public class MergePrompt extends JDialog {
      * Omit anomalies.
      * @param speedProfile speedProfile
      * @param id roster id
+     * @return HashMap of Key and direction of possible errors
      */
-    static protected void validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
+    static protected HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
         // do forward speeds, then reverse
+        HashMap<Integer, Boolean> anomalies =  new HashMap<Integer, Boolean>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
         float lastForward = 0;
         Integer lastKey = Integer.valueOf(0);
@@ -268,13 +249,15 @@ public class MergePrompt extends JDialog {
                         float nextForward = nextEntry.getValue().getForwardSpeed();
                         if (nextForward > 0.0f) {
                             if (nextForward > lastForward) {    // remove forward
-                                log.info("Remove anomaly key={}, forward={} from profile {}", key, forward, id);
-                                speedProfile.setForwardSpeed(key, 0.0f);
+                                log.warn("SpeedProfile anomaly at key={}, forward={} for {}", key, forward, id);
+                                anomalies.put(key, true);
+                                //speedProfile.setForwardSpeed(key, 0.0f);
                                 forward = nextForward;
                                 key = nextEntry.getKey();
                             } else {    // remove lastForward
-                                speedProfile.setForwardSpeed(lastKey, 0.0f);
-                                log.info("Remove anomaly key={}, forward={} from profile {}", lastKey, lastForward, id);
+                                log.warn("SpeedProfile anomaly at key={}, forward={} for {}", lastKey, lastForward, id);
+                                anomalies.put(lastKey, true);
+                                //speedProfile.setForwardSpeed(lastKey, 0.0f);
                             }
                             break;
                         }
@@ -300,13 +283,15 @@ public class MergePrompt extends JDialog {
                         float nextreverse = nextEntry.getValue().getReverseSpeed();
                         if (nextreverse > 0.0f) {
                             if (nextreverse > lastReverse) {    // remove reverse
-                                log.info("Remove anomaly key={}, reverse={} from profile {}", key, reverse, id);
-                                speedProfile.setReverseSpeed(key, 0.0f);
+                                log.warn("SpeedProfile anomaly at key={}, reverse={} for {}", key, reverse, id);
+                                anomalies.put(key, false);
+                                //speedProfile.setReverseSpeed(key, 0.0f);
                                 reverse = nextreverse;
                                 key = nextEntry.getKey();
                             } else {    // remove lastReverse
-                                speedProfile.setReverseSpeed(lastKey, 0.0f);
-                                log.info("Remove anomaly key={}, reverse={} from profile{}", lastKey, lastReverse, id);
+                                log.warn("SpeedProfile anomaly at key={}, reverse={} for {}", lastKey, lastReverse, id);
+                                anomalies.put(lastKey, false);
+                                //speedProfile.setReverseSpeed(lastKey, 0.0f);
                             }
                             break;
                         }
@@ -316,6 +301,7 @@ public class MergePrompt extends JDialog {
                 lastKey = key;
             }           
         }
+        return anomalies;
     }
 
     class MergeTableModel extends javax.swing.table.AbstractTableModel {
@@ -324,13 +310,21 @@ public class MergePrompt extends JDialog {
         static final int VIEW_COL = 2;
         static final int NUMCOLS = 3;
  
-        ArrayList<Map.Entry<String, Boolean>> candidates = new  ArrayList<Map.Entry<String, Boolean>>();
+        ArrayList<Map.Entry<String, Boolean>> candidateArray = new  ArrayList<Map.Entry<String, Boolean>>();
         
         MergeTableModel (HashMap<String, Boolean> map) {
             Iterator <java.util.Map.Entry <String, Boolean>> iter = map.entrySet().iterator(); 
             while (iter.hasNext()) {
-                candidates.add(iter.next());
+                candidateArray.add(iter.next());
             }
+        }
+        boolean hasAnomaly(int row) {
+            Map.Entry<String, Boolean> entry = candidateArray.get(row);
+            HashMap<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
+            if (anomaly!=null && anomaly.size() > 0) {                
+                return true;
+            }
+            return false;
         }
 
         @Override
@@ -340,7 +334,7 @@ public class MergePrompt extends JDialog {
 
         @Override
         public int getRowCount() {
-            return candidates.size();
+            return candidateArray.size();
         }
         @Override
         public String getColumnName(int col) {
@@ -378,11 +372,10 @@ public class MergePrompt extends JDialog {
                 case MERGE_COL:
                     return new JTextField(3).getPreferredSize().width;                
                 case ID_COL:
-                    return new JTextField(12).getPreferredSize().width;
+                    return new JTextField(16).getPreferredSize().width;
                 case VIEW_COL:
-                    return new JTextField(8).getPreferredSize().width;
+                    return new JTextField(7).getPreferredSize().width;
                 default:
-                    // fall out
                     break;
             }
             return new JTextField(12).getPreferredSize().width;
@@ -398,7 +391,7 @@ public class MergePrompt extends JDialog {
 
         @Override
         public Object getValueAt(int row, int col) {
-            Map.Entry<String, Boolean> entry = candidates.get(row);
+            Map.Entry<String, Boolean> entry = candidateArray.get(row);
             switch (col) {
                 case MERGE_COL:
                     return entry.getValue();
@@ -415,7 +408,7 @@ public class MergePrompt extends JDialog {
 
         @Override
         public void setValueAt(Object value, int row, int col) {
-            Map.Entry<String, Boolean> entry = candidates.get(row);
+            Map.Entry<String, Boolean> entry = candidateArray.get(row);
             switch (col) {
                 case MERGE_COL:
                     _candidates.put(entry.getKey(), (Boolean)value);
@@ -431,103 +424,19 @@ public class MergePrompt extends JDialog {
             }
        }
     }
- 
-    class SpeedTableModel extends javax.swing.table.AbstractTableModel {
-        static final int STEP_COL = 0;
-        static final int THROTTLE_COL = 1;
-        static final int FORWARD_SPEED_COL = 2;
-        static final int REVERSE_SPEED_COL = 3;
-        static final int NUMCOLS = 4;
-        
-        java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
-        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
-        RosterSpeedProfile profile;
-        
-        SpeedTableModel(RosterSpeedProfile sp) {
-            profile = sp;
-            TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
-            Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
-            while (entry!=null) {
-                speedArray.add(entry);
-                entry = speeds.higherEntry(entry.getKey());
-            }
-        }
-        
-        @Override
-        public int getColumnCount() {
-            return NUMCOLS;
-        }
 
+    public class ButtonCellRenderer extends ButtonRenderer {
         @Override
-        public int getRowCount() {
-            return speedArray.size();
-        }
-        @Override
-        public String getColumnName(int col) {
-            switch (col) {
-                case STEP_COL:
-                    return Bundle.getMessage("step");
-                case THROTTLE_COL:
-                    return Bundle.getMessage("throttlesetting");
-                case FORWARD_SPEED_COL:
-                    return Bundle.getMessage("forward");
-                case REVERSE_SPEED_COL:
-                    return Bundle.getMessage("reverse");
-                default:
-                    // fall out
-                    break;
-            }
-            return "";
-        }
-        @Override
-        public Class<?> getColumnClass(int col) {
-            return String.class;
-        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+            Component b = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case STEP_COL:
-                    return new JTextField(3).getPreferredSize().width;
-                case THROTTLE_COL:
-                    return new JTextField(5).getPreferredSize().width;
-                case FORWARD_SPEED_COL:
-                case REVERSE_SPEED_COL:
-                    return new JTextField(8).getPreferredSize().width;
-                default:
-                    // fall out
-                    break;
+            MergeTableModel tableModel = (MergeTableModel) table.getModel();
+            if (tableModel.hasAnomaly(row)) {
+                b.setBackground(java.awt.Color.RED);
+            } else {
+                b.setBackground(table.getBackground());                
             }
-            return new JTextField(8).getPreferredSize().width;
-        }
-        
-        @Override
-        public boolean isCellEditable(int row, int col) {
-            return false;
-        }
-
-        @Override
-        public Object getValueAt(int row, int col) {
-            Map.Entry<Integer, SpeedStep> entry = speedArray.get(row);
-            switch (col) {
-                case STEP_COL:
-                    return Math.round((float)(entry.getKey()*126)/1000);
-                case THROTTLE_COL:
-                    return (float)(entry.getKey())/1000;
-                case FORWARD_SPEED_COL:
-                    float speed = entry.getValue().getForwardSpeed();
-                    return threeDigit.format(speed);
-                case REVERSE_SPEED_COL:
-                    speed = entry.getValue().getReverseSpeed();
-                    return threeDigit.format(speed);
-                default:
-                    // fall out
-                    break;
-            }
-            return "";
-        }
-
-        @Override
-        public void setValueAt(Object value, int row, int col) {
+            return b;
         }
     }
 

@@ -1,8 +1,16 @@
 package jmri.jmrit.logix;
 
+import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -166,7 +174,54 @@ public class SpeedUtil {
     protected int getRampTimeIncrement() {
         return _signalSpeedMap.getStepDelay();
     }
-    
+
+    /**
+     * Must be called from eventThread
+     * @param frame JmriJFrame caller
+     * @return speedProfile
+     */
+    protected RosterSpeedProfile getValidSpeedProfile(java.awt.Frame frame) {
+        RosterSpeedProfile speedProfile = getSpeedProfile();
+        HashMap<Integer, Boolean> anomalies = MergePrompt.validateSpeedProfile(speedProfile, _rosterId);
+        if (anomalies != null && anomalies.size() > 0) {
+            if (log.isDebugEnabled()) log.debug("getValidSpeedProfile for {} #anomalies={} on Gui {}",
+                    _rosterId, anomalies.size(), jmri.util.ThreadingUtil.isLayoutThread());
+            if (jmri.util.ThreadingUtil.isLayoutThread()) { // safety
+                JDialog dialog = new JDialog(frame, Bundle.getMessage("viewTitle", _rosterId), true);
+                JButton ok = new JButton(Bundle.getMessage("ButtonDone"));
+                ok.addActionListener((ActionEvent evt) -> {
+                    dialog.dispose();
+                });
+                JPanel p = new JPanel();
+                p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+                JLabel l = new JLabel(Bundle.getMessage("anomaly",_rosterId));
+                l.setForeground(java.awt.Color.RED);
+                l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                p.add(l);
+                JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
+                label.setForeground(java.awt.Color.RED);
+                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                p.add(label);
+                label = new JLabel(Bundle.getMessage("deletePrompt2"));
+                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                p.add(label);
+                label = new JLabel(Bundle.getMessage("deletePrompt3"));
+                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                p.add(label);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+                panel.add(p);
+                panel.add(new SpeedProfilePanel(speedProfile, anomalies));
+                panel.add(ok);
+                dialog.getContentPane().add(panel);
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        }
+        return _speedProfile;
+    }
+
     protected RosterSpeedProfile getSpeedProfile() {
         if (_speedProfile == null || _newRosterId) {
             makeSpeedTree();
@@ -183,7 +238,7 @@ public class SpeedUtil {
             _sessionProfile = new RosterSpeedProfile(null);
         }
         if (_speedProfile == null) {
-            _speedProfile = new RosterSpeedProfile(_rosterEntry);   // will be a copy or an empty profile            
+            _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile            
             if (_rosterEntry!=null) {
                 if (log.isDebugEnabled()) log.debug("makeSpeedTree - Copy TreeMap");
                 RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
@@ -194,19 +249,18 @@ public class SpeedUtil {
                     }
                 }
             }
-            MergePrompt.validateSpeedProfile(_speedProfile, _rosterId);
         }
         _newRosterId = false;
-
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
     }
     
     protected boolean profileHasSpeedInfo(boolean isForward) {
-        if (_sessionProfile==null) {
-            makeSpeedTree();
+        if (_speedProfile == null) {
+            return false;
         }
         if (isForward) {
             return _speedProfile.hasForwardSpeeds();            

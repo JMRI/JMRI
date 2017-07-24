@@ -83,6 +83,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 
     /**
      * Default constructor
+     * @param warrantFrame caller
      */
     public LearnThrottleFrame(WarrantFrame warrantFrame) {
         super(false, false);

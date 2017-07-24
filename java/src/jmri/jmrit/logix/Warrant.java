@@ -362,6 +362,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _commands.add(ts);
     }
     
+    public boolean commandsHaveTrackSpeeds() {
+        for (ThrottleSetting ts : _commands) {
+            if  (ts.getSpeed() > 0.0f) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void setNoRamp(boolean set) {
         _noRamp = set;
     }
@@ -725,6 +734,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected String acquireThrottle() {
         String msg = null;
         DccLocoAddress dccAddress = _speedUtil.getDccAddress();
+        if(log.isDebugEnabled()) log.debug("acquireThrottle request at {} for warrant {}",
+                dccAddress, getDisplayName());
         if (dccAddress == null)  {
             msg = Bundle.getMessage("NoAddress", getDisplayName());
         } else {
@@ -736,8 +747,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     return Bundle.getMessage("trainInUse", dccAddress.getNumber());
                 }           
             }
-            if(log.isDebugEnabled()) log.debug("Throttle at {} requested for warrant {}",
-                    dccAddress.toString(), getDisplayName());
         }
         if (msg!=null) {
             abortWarrant(msg);

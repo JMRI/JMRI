@@ -463,27 +463,31 @@ public class WarrantFrame extends WarrantRoute {
         typePanel.add(wTypePanel);
 
         _addSpeeds.addActionListener((ActionEvent evt)-> {
-            String id = _speedUtil.getTrainId();
-            RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();         
-            boolean isForward = true;
-            for (ThrottleSetting ts :_throttleCommands) {
-                if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
-                    isForward = Boolean.parseBoolean(ts.getValue());
-                }
-                if ("SPEED".equalsIgnoreCase(ts.getCommand())) {
-                    try {
-                        ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);                    
-                    } catch (NumberFormatException nfe) {
-                        log.error("Command failed! {} {}", ts.toString(), nfe.toString());
-                    }
-                }
-            }
-            _commandModel.fireTableDataChanged();
-            showCommands(true);
-            _addSpeeds.setSelected(false);
+            addSpeeds();
         });
 
         return typePanel;
+    }
+    
+    private void addSpeeds() {
+        setAddress();
+        RosterSpeedProfile speedProfile =  _speedUtil.getValidSpeedProfile(this);         
+        boolean isForward = true;
+        for (ThrottleSetting ts :_throttleCommands) {
+            if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
+                isForward = Boolean.parseBoolean(ts.getValue());
+            }
+            if ("SPEED".equalsIgnoreCase(ts.getCommand())) {
+                try {
+                    ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);                    
+                } catch (NumberFormatException nfe) {
+                    log.error("Command failed! {} {}", ts.toString(), nfe.toString());
+                }
+            }
+        }
+        _commandModel.fireTableDataChanged();
+        showCommands(true);
+        _addSpeeds.setSelected(false);
     }
 
     private JPanel makeSCParamPanel() {
@@ -883,6 +887,7 @@ public class WarrantFrame extends WarrantRoute {
      *
      */
     private String checkTrainId() {
+        setAddress();
         String msg = null;
         if (_warrant.getRunMode() != Warrant.MODE_NONE) {
             msg = _warrant.getRunModeMessage();
@@ -958,8 +963,9 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(getTrainName());
         _startTime = System.currentTimeMillis();
         _speed = 0.0f;
+        
+        _warrant.getSpeedUtil().getValidSpeedProfile(this);
         _warrant.addPropertyChangeListener(this);
-//        _warrant.getSpeedUtil().makeSpeedTree();
 
         msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
                 _throttleCommands, _runETOnlyBox.isSelected());
@@ -994,7 +1000,16 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.black);
             return;
         }
+        if (_warrant.commandsHaveTrackSpeeds()) {
+            _warrant.getSpeedUtil().getValidSpeedProfile(this);            
+        } else {
+            setStatusText(Bundle.getMessage("NoTrackSpeeds", _warrant.getDisplayName()), Color.red);
+        }
         _warrant.addPropertyChangeListener(this);
+        if (_saveWarrant!=null) {
+            _saveWarrant.addPropertyChangeListener(WarrantTableFrame.getDefault().getModel());            
+        }
+        
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {

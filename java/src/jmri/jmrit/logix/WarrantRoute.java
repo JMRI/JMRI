@@ -250,7 +250,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
+        RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
         if (speedProfile != null) {
             _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getTrainId());
             _spTable.setVisible(true);
@@ -1324,8 +1324,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
      * Puts label message to the Left, 2nd component (button) to the right
      *
-     * @param vertical Label orientation true = above, false = left
      * @param comp     Component to put into JPanel
+     * @param button   2nd Component for panel, usually a button
      * @param label    Bundle keyword for label message
      * @param tooltip  Bundle keyword for tooltip message
      * @return Panel containing Component
@@ -1341,8 +1341,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(Box.createHorizontalGlue());
 
-//        comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
-//        comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
         panel.add(comp);
         if (comp instanceof JTextField || comp instanceof JComboBox) {
             comp.setBackground(Color.white);

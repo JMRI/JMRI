@@ -24,6 +24,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
 
     HashMap<String, Boolean> _mergeCandidates;
     HashMap<String, RosterSpeedProfile> _mergeProfiles;
+    HashMap<String, HashMap<Integer, Boolean>> _anomalies;
     /**
      * Constructor specifies the warning message and action to take
      *
@@ -44,6 +45,9 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         switch (preferences.getShutdown()) {
             case MERGE_ALL:
                 if (makeMergeCandidates()) {
+                    if (_anomalies != null && _anomalies.size() > 0) {
+                        makeMergeWindow();
+                    }
                     merge();
                 }
                 break;
@@ -69,18 +73,22 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         if (_mergeProfiles == null || _mergeProfiles.size() == 0) {
             return false;
         }
+        _anomalies = new HashMap<String, HashMap<Integer, Boolean>>();
         _mergeCandidates = new HashMap<String, Boolean> ();
         Iterator <java.util.Map.Entry <String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator(); 
         while (iter.hasNext()) {
             java.util.Map.Entry <String, RosterSpeedProfile> entry = iter.next();
-            MergePrompt.validateSpeedProfile(entry.getValue(), entry.getKey());  // clean up
+            HashMap<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue(), entry.getKey());
+            if (anomaly.size() > 0) {
+                _anomalies.put(entry.getKey(), anomaly);
+            }
             _mergeCandidates.put(entry.getKey(), new Boolean(true));
         }
         return  true;
     }
     
     private void makeMergeWindow() {
-        new MergePrompt(Bundle.getMessage("MergeTitle"), _mergeCandidates);
+        new MergePrompt(Bundle.getMessage("MergeTitle"), _mergeCandidates, _anomalies);
     }
     
     private void merge() {
