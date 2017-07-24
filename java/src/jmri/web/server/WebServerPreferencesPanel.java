@@ -26,7 +26,9 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
+import org.openide.util.lookup.ServiceProvider;
 
+@ServiceProvider(service = PreferencesPanel.class)
 public class WebServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JSpinner port;
@@ -64,7 +66,7 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
         readonlyPower.addActionListener((ActionEvent e) -> {
             readonlyPower.setToolTipText(Bundle.getMessage(readonlyPower.isSelected() ? "ToolTipReadonlyPowerTrue" : "ToolTipReadonlyPowerFalse"));
         });
-        
+
         binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${readonlyPower}"), readonlyPower, BeanProperty.create("selected"));
         bindingGroup.addBinding(binding);
 
@@ -176,6 +178,11 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
         return true; // no validity checking performed
     }
 
+    @Override
+    public int getSortOrder() {
+        return 1100;
+    }
+    
     private boolean isStartupAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
                 .anyMatch((model) -> (WebServerAction.class.getName().equals(model.getClassName())));

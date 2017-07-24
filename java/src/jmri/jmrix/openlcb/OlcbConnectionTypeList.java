@@ -1,5 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.openlcb;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String OPENLCB = "OpenLCB";

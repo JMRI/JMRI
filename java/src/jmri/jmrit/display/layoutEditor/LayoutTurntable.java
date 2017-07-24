@@ -722,7 +722,7 @@ public class LayoutTurntable extends LayoutTrack {
         RayTrack closest = null;
         double bestDel = 360.0;
         for (RayTrack rt : rayList) {
-            double del = MathUtil.diffAngle(rt.getAngle(), ang);
+            double del = MathUtil.absDiffAngleDEG(rt.getAngle(), ang);
             if (del < bestDel) {
                 bestDel = del;
                 closest = rt;

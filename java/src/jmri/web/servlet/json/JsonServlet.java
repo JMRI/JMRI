@@ -35,6 +35,8 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide JSON formatted responses for requests to requests for information
@@ -59,6 +61,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
+@ServiceProvider(service = HttpServlet.class)
 public class JsonServlet extends WebSocketServlet {
 
     private transient ObjectMapper mapper;

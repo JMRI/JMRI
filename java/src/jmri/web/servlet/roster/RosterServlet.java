@@ -54,6 +54,7 @@ import jmri.web.servlet.ServletUtil;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide roster data to HTTP clients.
@@ -73,6 +74,7 @@ import org.slf4j.LoggerFactory;
             "/roster", // default
             "/prefs/roster.xml", // redirect to /roster?format=xml since ~ 9 Apr 2012
         })
+@ServiceProvider(service = HttpServlet.class)
 public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;

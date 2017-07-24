@@ -1,5 +1,8 @@
 package jmri.jmrix.marklin;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns list of valid ESU Marklin Connection Types
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.marklin;
  * @author Kevin Dickerson Copyright (C) 2010
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MARKLIN = "Marklin";

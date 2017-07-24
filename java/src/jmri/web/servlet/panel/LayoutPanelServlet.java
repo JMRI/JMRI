@@ -19,6 +19,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "LayoutPanelServlet",
         urlPatterns = {"/panel/Layout"})
+@ServiceProvider(service = HttpServlet.class)
 public class LayoutPanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(LayoutPanelServlet.class);

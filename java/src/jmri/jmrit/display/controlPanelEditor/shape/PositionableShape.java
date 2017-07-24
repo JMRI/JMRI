@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
@@ -23,6 +24,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -168,16 +170,20 @@ public class PositionableShape extends PositionableJComponent
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
-        /*
-         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-         RenderingHints.VALUE_RENDER_QUALITY);
-         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-         RenderingHints.VALUE_ANTIALIAS_ON);
-         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
-         RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-         */
+
+        // set antialiasing hint for macOS and Windows
+        // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+        if (SystemType.isMacOSX() || SystemType.isWindows()) {
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                    RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        }
+
         g2d.setClip(null);
         if (_transform != null) {
             g2d.transform(_transform);

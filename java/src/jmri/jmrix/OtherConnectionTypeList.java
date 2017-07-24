@@ -1,5 +1,8 @@
 package jmri.jmrix;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix;
  * @author Kevin Dickerson Copyright (C) 2010
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class OtherConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String OTHER = "Others";

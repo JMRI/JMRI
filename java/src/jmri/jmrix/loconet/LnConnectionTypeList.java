@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
  * Returns a list of valid LocoNet Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.loconet;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String DIGITRAX = "Digitrax"; // NOI18N

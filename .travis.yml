@@ -6,6 +6,9 @@ addons:
     - graphviz
 
 before_install:
+  # ensure no unwanted defaults are set
+  # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
+  - export MAVEN_SKIP_RC="true"
   # set Linux to use JDK 8, accept defaults on macOS
   - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
   # install graphviz on macOS
@@ -36,6 +39,7 @@ env:
   global:
   # false to silence most maven output; true to catch tests that do not complete
   - PRINT_SUMMARY=true
+  - MAVEN_OPTS=-Xmx1536m
   matrix:
   - HEADLESS=true
   - HEADLESS=false
