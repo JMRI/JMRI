@@ -3,6 +3,7 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -491,12 +492,7 @@ public class Section extends AbstractNamedBean {
             mFirstBlock = b;
         } else {
             // check that block is unique
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                if (mBlockEntries.get(i) == b) {
-                    // block is already present
-                    return false;
-                }
-            }
+            for (Block block : mBlockEntries) if (block == b) return false; // already present
             // Note: connectivity to current block is assumed to have been checked
         }
         // add Block to the Block list
@@ -552,8 +548,8 @@ public class Section extends AbstractNamedBean {
      */
     void handleBlockChange(PropertyChangeEvent e) {
         int o = UNOCCUPIED;
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            if (mBlockEntries.get(i).getState() == OCCUPIED) {
+        for (Block block : mBlockEntries) {
+            if (block.getState() == OCCUPIED) {
                 o = OCCUPIED;
                 break;
             }
@@ -602,8 +598,8 @@ public class Section extends AbstractNamedBean {
             initializeBlocks();
         }
         float length = 0.0f;
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            length = length + mBlockEntries.get(i).getLengthMm();
+        for (Block block : mBlockEntries) {
+            length = length + block.getLengthMm();
         }
         length = length / (float) (Scale.getScaleFactor(scale));
         if (meters) {
@@ -736,8 +732,8 @@ public class Section extends AbstractNamedBean {
     }
 
     public boolean containsBlock(Block b) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            if (b == mBlockEntries.get(i)) {
+        for (Block block : mBlockEntries) {
+            if (b == block) {
                 return true;
             }
         }
@@ -1642,8 +1638,7 @@ public class Section extends AbstractNamedBean {
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
         ConnectivityUtil cUtil = panel.getConnectivityUtil();
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block cBlock = mBlockEntries.get(i);
+        for (Block cBlock : mBlockEntries) {
             LayoutBlock lBlock = layoutBlockManager.getByUserName(cBlock.getUserName());
             ArrayList<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
@@ -2504,8 +2499,7 @@ public class Section extends AbstractNamedBean {
      * @param set true to use alternate unoccupied color; false otherwise
      */
     public void setAlternateColor(boolean set) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
             if (lb != null) {
                 lb.setUseExtraColor(set);
@@ -2530,8 +2524,7 @@ public class Section extends AbstractNamedBean {
         if (!set || getState() == FREE || getState() == UNKNOWN) {
             setAlternateColor(set);
         } else if (getState() == FORWARD) {
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2543,8 +2536,7 @@ public class Section extends AbstractNamedBean {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (int i = mBlockEntries.size(); i < 0; i--) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2567,8 +2559,7 @@ public class Section extends AbstractNamedBean {
      * @param name the value to set all blocks to
      */
     public void setNameInBlocks(String name) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             b.setValue(name);
         }
     }
@@ -2579,8 +2570,7 @@ public class Section extends AbstractNamedBean {
      * @param value the name to set block values to
      */
     public void setNameInBlocks(Object value) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             b.setValue(value);
         }
     }
@@ -2590,8 +2580,7 @@ public class Section extends AbstractNamedBean {
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
             setNameInBlocks(value);
         } else if (getState() == FORWARD) {
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2600,8 +2589,7 @@ public class Section extends AbstractNamedBean {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (int i = mBlockEntries.size(); i < 0; i--) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2619,8 +2607,7 @@ public class Section extends AbstractNamedBean {
      * This function clears the block values for blocks in this section.
      */
     public void clearNameInUnoccupiedBlocks() {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             if (b.getState() == Block.UNOCCUPIED) {
                 b.setValue("  ");
             }
