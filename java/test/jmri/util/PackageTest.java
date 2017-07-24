@@ -76,6 +76,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoAddressComparatorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MouseInputAdapterInstallerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NamedBeanComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NonNullArrayListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NoArchiveFileFilterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OrderedPropertiesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PhysicalLocationPanelTest.class));
