@@ -2,10 +2,13 @@ package jmri.util;
 import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * An ArrayList that FindBugs understands will never contain null elements.
  *
+ * @see java.util.ArrayList
+ * @see java.util.List
  * @author	Bob Jacobsen, Copyright (C) 2017
  */
 public class NonNullArrayList<E> extends ArrayList<E> {
@@ -16,6 +19,22 @@ public class NonNullArrayList<E> extends ArrayList<E> {
     @Override
     public void add(int i, @Nonnull E e) { super.add(i, e); }
 
+    @Override
+    public boolean addAll(Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
+        for (E e : c ) {
+            if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot accept collection containing null");
+        }
+        return super.addAll(c);
+    }
+    
+    @Override
+    public boolean addAll(int i, Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
+        for (E e : c ) {
+            if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot accept collection containing null");
+        }
+        return super.addAll(i, c);
+    }
+    
     @Override
     @Nonnull
     public E get(int i) { return super.get(i); }
