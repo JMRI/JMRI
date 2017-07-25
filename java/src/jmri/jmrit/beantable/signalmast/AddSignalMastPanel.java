@@ -40,6 +40,7 @@ import jmri.SignalSystem;
 import jmri.SignalSystemManager;
 import jmri.Turnout;
 import jmri.implementation.DccSignalMast;
+import jmri.implementation.DefaultSignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
 import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.TurnoutSignalMast;
@@ -82,9 +83,9 @@ public class AddSignalMastPanel extends JPanel {
     JScrollPane turnoutMastScroll;
     JScrollPane dccMastScroll;
     JPanel dccMastPanel = new JPanel();
-    JLabel systemPrefixBoxLabel = new JLabel(Bundle.getMessage("DCCSystem") + ":");
+    JLabel systemPrefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
     JComboBox<String> systemPrefixBox = new JComboBox<String>();
-    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("DCCMastAddress")+ ":");
+    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCMastAddress")));
     JTextField dccAspectAddressField = new JTextField(5);
     JCheckBox allowUnLit = new JCheckBox();
     JPanel unLitSettingsPanel = new JPanel();
@@ -95,7 +96,7 @@ public class AddSignalMastPanel extends JPanel {
     char[] unLitPanelBits;
     String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 0 in order to set > 6
     char[] emptyBits = emptyChars.toCharArray();
-    JLabel bitNumLabel = new JLabel(Bundle.getMessage("MatrixBitsLabel") + ":");
+    JLabel bitNumLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("MatrixBitsLabel")));
     JComboBox<String> columnChoice = new JComboBox<String>(choiceArray());
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton apply = new JButton(Bundle.getMessage("ButtonApply"));
@@ -120,10 +121,10 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel() {
 
         signalMastDriver = new JComboBox<String>(new String[]{
-            Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"), Bundle.getMessage("MatrixCtlMast")
+            Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"),
+                Bundle.getMessage("MatrixCtlMast"), Bundle.getMessage("DCCMast")
         });
 
-        signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
         List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         for (int x = 0; x < connList.size(); x++) {
             if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
@@ -517,6 +518,13 @@ public class AddSignalMastPanel extends JPanel {
         //something_else.dispose();
     }
 
+    /**
+     * Pick type from system name.
+     * Used to get corresponding appearance map xml file.
+     *
+     * @param name Signal mast name
+     * @return name of signal mast type, eg. SL-1
+     */
     String extractMastTypeFromMast(String name) {
         String[] parts = name.split(":");
         if (parts.length > 3) {
@@ -566,6 +574,10 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Display the 'This mast can be Unlit' option on the
+     * edit pane when supported by selected signal connection.
+     */
     protected void updateUnLit() {
         dccUnLitPanel.setVisible(false);
         turnoutUnLitPanel.setVisible(false);
@@ -604,10 +616,14 @@ public class AddSignalMastPanel extends JPanel {
     JPanel disabledAspectsPanel = new JPanel();
     JScrollPane disabledAspectsScroll;
 
+    /**
+     * Update contents of list of available aspects and - for Virtual and
+     * Turnout Controlled mast - a pane with a Disabled checkbox for each.
+     */
     void updateDisabledOption() {
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         Enumeration<String> aspects = sigMap.getAspects();
         disabledAspects = new LinkedHashMap<String, JCheckBox>(10);
 
@@ -1180,12 +1196,12 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(AddSignalMastPanel.this,
+        JOptionPane.showMessageDialog(AddSignalMastPanel.this,
                 java.text.MessageFormat.format(
                         Bundle.getMessage("ErrorSignalMastAddFailed"),
                         new Object[]{sysName}),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     void updateTurnoutAspectPanel() {
@@ -1195,7 +1211,7 @@ public class AddSignalMastPanel extends JPanel {
         turnoutAspect = new LinkedHashMap<String, TurnoutAspectPanel>(10); // keeps the order of items added
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         Enumeration<String> aspects = sigMap.getAspects();
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
@@ -1407,7 +1423,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         Enumeration<String> aspects = sigMap.getAspects(); // sorted a-z
         SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
@@ -1720,7 +1736,7 @@ public class AddSignalMastPanel extends JPanel {
 
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         Enumeration<String> aspects = sigMap.getAspects();
         // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {
@@ -1966,7 +1982,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         Enumeration<String> aspects = sigMap.getAspects(); // sorted a-z
         // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {

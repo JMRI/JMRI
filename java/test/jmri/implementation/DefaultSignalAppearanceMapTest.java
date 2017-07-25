@@ -73,10 +73,10 @@ public class DefaultSignalAppearanceMapTest {
         t.loadDefaults();
 
         java.util.Enumeration<String> e = t.getAspects();
-
-        Assert.assertEquals("Stop", e.nextElement());
+        // 3 sorted aspects
         Assert.assertEquals("Approach", e.nextElement());
         Assert.assertEquals("Clear", e.nextElement());
+        Assert.assertEquals("Stop", e.nextElement());
 
         Assert.assertTrue(!e.hasMoreElements());
     }
@@ -156,4 +156,5 @@ public class DefaultSignalAppearanceMapTest {
         h2.dispose();
         apps.tests.Log4JFixture.tearDown();
     }
+
 }
