@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -397,7 +396,7 @@ public class AddSignalMastPanel extends JPanel {
 
                 }
             }
-            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
             if (!connList.isEmpty()) {
                 for (int x = 0; x < connList.size(); x++) {
                     jmri.CommandStation station = connList.get(x);
@@ -1370,7 +1369,7 @@ public class AddSignalMastPanel extends JPanel {
     JPanel dccUnLitPanel = new JPanel();
     JTextField unLitAspectField = new JTextField(5);
 
-    HashMap<String, DCCAspectPanel> dccAspect = new HashMap<String, DCCAspectPanel>(10); // only used once, see updateDCCAspectPanel()
+    LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<String, DCCAspectPanel>(10); // only used once, see updateDCCAspectPanel()
 
     void dccUnLitPanel() {
         dccUnLitPanel.setLayout(new BoxLayout(dccUnLitPanel, BoxLayout.Y_AXIS));
@@ -1405,7 +1404,7 @@ public class AddSignalMastPanel extends JPanel {
             return;
         }
         dccAspect = new LinkedHashMap<String, DCCAspectPanel>(10);
-        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
         if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
@@ -1723,7 +1722,7 @@ public class AddSignalMastPanel extends JPanel {
         matrixAspect = new LinkedHashMap<String, MatrixAspectPanel>(10); // LinkedHT type keeps things sorted
 
     /*  Todo: option dcc packet
-        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
         if (connList != null) {
             for (int x = 0; x < connList.size(); x++) {
@@ -1742,7 +1741,7 @@ public class AddSignalMastPanel extends JPanel {
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
-            matrixAspect.put(aspect, aspectpanel); // store in HashMap
+            matrixAspect.put(aspect, aspectpanel); // store in LinkedHashMap
             // values are filled in later
         }
         matrixMastPanel.removeAll();
