@@ -11,3 +11,4 @@ REM $Revision$ (CVS maintains this line, do not edit please)
 SET CLASSPATH=.;classes;jmriplugins.jar;jmri.jar;comm.jar;Serialio.jar;log4j.jar;jhall.jar;crimson.jar;jdom.jar;jython-standalone-2.7.0.jar;javacsv.jar;jakarta-regexp-1.5.jar;servlet.jar;vecmath.jar;lib/mailapi.jar;lib/smtp.jar;lib/ExternalLinkContentViewerUI.jar
 
 jython jython/PacketPro.py %1 %2 %3 %4 %5 %6 %7 %8 %9
+
