@@ -1,10 +1,13 @@
 package jmri.implementation;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import jmri.SignalHead;
 import jmri.SignalSystem;
+import java.util.Enumeration;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -259,7 +262,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     /**
-     * Get a property associated with a specific aspect
+     * Get a property associated with a specific aspect.
      */
     @Override
     public String getProperty(String aspect, String key) {
@@ -357,9 +360,19 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         table.put(aspect, appearances);
     }
 
+    /**
+     * Provide the Aspect elements to GUI and store methods.
+     *
+     * @return all aspects in this signal mast appearance map, sorted a-z by key (name)
+     */
     @Override
-    public java.util.Enumeration<String> getAspects() {
-        return table.keys();
+    public Enumeration<String> getAspects() {
+        // create sortable temporary List
+        List<String> aspectlist = new ArrayList<String> (Collections.list(table.keys()));
+        // sort List
+        Collections.sort(aspectlist); // sort list alphabetically before returning
+        log.debug("list of aspects provided");
+        return Collections.enumeration(aspectlist);
     }
 
     @Override
@@ -429,5 +442,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
+
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
 }

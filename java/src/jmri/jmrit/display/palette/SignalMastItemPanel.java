@@ -173,7 +173,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _family = _mast.getSignalSystem().getSystemName();
         _currentIconMap = new HashMap<String, NamedIcon>();
         SignalAppearanceMap appMap = _mast.getAppearanceMap();
-        Enumeration<String> e = _mast.getAppearanceMap().getAspects();
+        Enumeration<String> e = _mast.getAppearanceMap().getAspects(); // sorted a-z
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
             String s = appMap.getImageLink(aspect, _family);
