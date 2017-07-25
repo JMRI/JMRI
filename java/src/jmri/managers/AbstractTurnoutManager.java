@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
-public abstract class AbstractTurnoutManager extends AbstractManager
+public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager, java.beans.VetoableChangeListener {
 
     public AbstractTurnoutManager() {
