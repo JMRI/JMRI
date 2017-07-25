@@ -177,6 +177,8 @@ public class InstanceManager {
      * @see #getOptionalDefault(java.lang.Class)
      */
     @Nonnull
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", 
+            justification = "FindBugs 3.0.1 flags the Objects.requireNonNull call as having a possible null argument, which is the entire point")
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
         return Objects.requireNonNull(InstanceManager.getNullableDefault(type),

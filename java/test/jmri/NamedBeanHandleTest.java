@@ -17,7 +17,7 @@ public class NamedBeanHandleTest {
     @Test
     public void testParmaterizedCTor(){
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
-        NamedBeanHandle t = new NamedBeanHandle("test handle",it);
+        NamedBeanHandle<Turnout> t = new NamedBeanHandle<>("test handle",it);
         Assert.assertNotNull("exists",t);
        
     }
