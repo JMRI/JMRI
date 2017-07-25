@@ -33,6 +33,6 @@ public class RpsTrackingFrameActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsTrackingFrameActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsTrackingFrameActionTest.class.getName());
 
 }

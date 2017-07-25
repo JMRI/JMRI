@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>ID</name>
+    <column>
+        <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
+        <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
+        <display item="User Id #1" label="Major firmware version (user changable so may not show correct value)"/>
+        <display item="User Id #2" label="Minor firmware version (user changable so may not show correct value)"/>
+        <display item="Customer Code"/>
+        <display item="Sound Type"/>
+        <display item="Product Revision"/>
+        <display item="Product ID"/>
+    </column>
+</pane>

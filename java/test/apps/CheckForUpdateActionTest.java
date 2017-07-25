@@ -33,6 +33,6 @@ public class CheckForUpdateActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CheckForUpdateActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CheckForUpdateActionTest.class.getName());
 
 }

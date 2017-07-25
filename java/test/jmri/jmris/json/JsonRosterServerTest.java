@@ -42,6 +42,6 @@ public class JsonRosterServerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonRosterServerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonRosterServerTest.class.getName());
 
 }

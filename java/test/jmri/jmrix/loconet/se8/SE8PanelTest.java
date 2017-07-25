@@ -33,6 +33,6 @@ public class SE8PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class.getName());
 
 }

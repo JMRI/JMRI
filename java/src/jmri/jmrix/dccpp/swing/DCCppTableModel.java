@@ -46,7 +46,7 @@ public abstract class DCCppTableModel extends AbstractTableModel {
             }
         }
         return(false);
-    };
+    }
     
     public boolean isNewRow(int row) {
         //return((boolean) isNew.elementAt(row));

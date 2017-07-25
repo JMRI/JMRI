@@ -179,26 +179,28 @@ public class XmlFileLocationAction extends AbstractAction {
             configName = profile + configName;
         }
         
-        String s = "";       
-        s += "User Files Location: " + user + "\n";
-        s += "Roster Location: " + roster + "\n";
-        s += "Profile Location: " + profile + "\n";
-        s += "Settings Location: " + settings + "\n";
-        s += "Current Config file: " + configName + "\n";
-        s += "Scripts Location: " + scripts + "\n";
-        s += "Program Location: " + prog + "\n";
-        s += "Temp Files Location: " + tmpDir + "\n";
-        s += "Log Files Location: " + logDir + "\n";
+        StringBuffer s = new StringBuffer();       
+        s.append("User Files Location: ").append(user).append("\n");
+        s.append("Roster Location: ").append(roster).append("\n");
+        s.append("Profile Location: ").append(profile).append("\n");
+        s.append("Settings Location: ").append(settings).append("\n");
+        s.append("Current Config file: ").append(configName).append("\n");
+        s.append("Scripts Location: ").append(scripts).append("\n");
+        s.append("Program Location: ").append(prog).append("\n");
+        s.append("Temp Files Location: ").append(tmpDir).append("\n");
+        s.append("Log Files Location: ").append(logDir).append("\n");
         
         //include names of any *.log files in log folder
         File dir = new File(logDir);
         String[] files = dir.list();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].indexOf(".log") != -1) {
-                s += "  " + logDir + files[i] + "\n";
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].indexOf(".log") != -1) {
+                    s.append("  ").append(logDir).append(files[i]).append("\n");
+                }
             }
         }
-        return s;
+        return s.toString();
     }
 
     private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class.getName());

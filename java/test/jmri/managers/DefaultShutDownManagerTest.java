@@ -111,6 +111,6 @@ public class DefaultShutDownManagerTest {
         return tasks;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class.getName());
 
 }

@@ -26,7 +26,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
     public GcSerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
-        option1Name = "Protocol";
+        option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }

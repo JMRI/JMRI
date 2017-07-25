@@ -46,13 +46,11 @@ import org.slf4j.LoggerFactory;
 public class LoadAndStoreTestBase {
 
     private final File file;
-    private final boolean pass; // currently ignored, but not removing this
     // allows code reuse when building the parameter
     // collection in getFiles()
 
     public LoadAndStoreTestBase(File file, boolean pass) {
         this.file = file;
-        this.pass = pass;
     }
 
     /**

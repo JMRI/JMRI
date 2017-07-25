@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register an LZV100Frame object.
- * <P>
+ * <p>
  * The {@link LZV100Frame} is a configuration tool for the LZV100 command
  * Station.
  *
@@ -18,13 +18,13 @@ public class LZV100Action extends AbstractXPressNetAction {
     }
 
     public LZV100Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LZV100 Configuration Manager", memo);
+        this(Bundle.getMessage("MenuItemLZV100ConfigurationManager"), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create an LZV100Frame
-        LZV100Frame f = new LZV100Frame(Bundle.getMessage("LZV100Config"), _memo);
+        LZV100Frame f = new LZV100Frame(Bundle.getMessage("MenuItemLZV100ConfigurationManager"), _memo);
         f.setVisible(true);
     }
 

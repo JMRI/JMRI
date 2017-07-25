@@ -402,6 +402,9 @@
 
         <li>William C Gage provided an MRC decoder definition</li>
 
+        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
+        and helped fix the Transit implementation of comments.
+
         <li>Brian Gilhuly, who helped debug a programmer problem in
         JMRI 3.11.1</li>
 
@@ -420,6 +423,8 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
+        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
+
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
@@ -430,10 +435,6 @@
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
-
-        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
-        and helped fix the Transit implementation of comments.
-
 
         <li>Mark Gurries, who provided loaner equipment and great
         ideas. He's currently working on decoder definitions for
