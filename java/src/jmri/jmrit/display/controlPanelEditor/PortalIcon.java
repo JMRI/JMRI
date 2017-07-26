@@ -38,7 +38,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text
     }
 
     public PortalIcon(Editor editor, Portal portal) {
