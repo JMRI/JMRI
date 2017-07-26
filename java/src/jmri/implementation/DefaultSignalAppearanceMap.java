@@ -1,8 +1,6 @@
 package jmri.implementation;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import jmri.SignalHead;
@@ -359,16 +357,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     /**
      * Provide the Aspect elements to GUI and store methods.
      *
-     * @return all aspects in this signal mast appearance map, sorted a-z by key (name)
+     * @return all aspects in this signal mast appearance map, in the order defined in xml definition
      */
     @Override
     public Enumeration<String> getAspects() {
-        // create sortable temporary List
-        List<String> aspectlist = new ArrayList<String> (Collections.list(table.keys()));
-        // sort List
-        Collections.sort(aspectlist); // sort list alphabetically before returning
         log.debug("list of aspects provided");
-        return Collections.enumeration(aspectlist);
+        return table.keys();
     }
 
     @Override

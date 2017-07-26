@@ -1423,7 +1423,7 @@ public class AddSignalMastPanel extends JPanel {
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
-        Enumeration<String> aspects = sigMap.getAspects(); // sorted a-z
+        Enumeration<String> aspects = sigMap.getAspects();
         SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
@@ -1982,7 +1982,7 @@ public class AddSignalMastPanel extends JPanel {
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
-        Enumeration<String> aspects = sigMap.getAspects(); // sorted a-z
+        Enumeration<String> aspects = sigMap.getAspects();
         // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();

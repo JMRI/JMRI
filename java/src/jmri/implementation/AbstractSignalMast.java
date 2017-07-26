@@ -164,7 +164,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      */
     @Override
     public Vector<String> getValidAspects() {
-        java.util.Enumeration<String> e = map.getAspects(); // sorted a-z
+        java.util.Enumeration<String> e = map.getAspects();
         // copy List to Vector
         Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
@@ -183,7 +183,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * @return list of known aspects; may be empty
      */
     public Vector<String> getAllKnownAspects() {
-        java.util.Enumeration<String> e = map.getAspects(); // sorted a-z
+        java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
