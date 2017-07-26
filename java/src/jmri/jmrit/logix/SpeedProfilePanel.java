@@ -91,7 +91,6 @@ public class SpeedProfilePanel extends JPanel {
             }
             int row = model.getRow(entry);
             int pos = (int)(((float)row)*bar.getMaximum() / numRows + .5);
-            System.out.println("key="+key+" row="+row+" pos="+pos);
             bar.setValue(pos);
         }
         add(pane);
