@@ -112,17 +112,18 @@ public class NXFrame extends WarrantRoute {
         init();
     }
     
-    private void updatePreferences() {
+    private WarrantPreferences updatePreferences() {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
         setScale(preferences.getLayoutScale());
-        setDepth(preferences.getSearchDepth());
         setTimeInterval(preferences.getTimeIncrement());
         setThrottleIncrement(preferences.getThrottleIncrement());
+        return preferences;
     }
 
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
-        updatePreferences();
+        WarrantPreferences preferences = updatePreferences();
+        setDepth(preferences.getSearchDepth());
         makeMenus();
 
         _routePanel = new JPanel();

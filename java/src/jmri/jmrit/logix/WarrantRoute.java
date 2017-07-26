@@ -252,7 +252,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
         if (speedProfile != null) {
-            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getTrainId());
+            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
             _spTable.setVisible(true);
             return;
         }
@@ -272,7 +272,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _rosterBox.setSelectedIndex(0);
         if (_speedUtil.setDccAddress(name)) {
             _dccNumBox.setText(_speedUtil.getDccAddress().toString());
-            _rosterBox.setSelectedItem(_speedUtil.getTrainId());
+            _rosterBox.setSelectedItem(_speedUtil.getRosterId());
             if (_trainNameBox.getText() == null) {
                 if (_speedUtil.getRosterEntry()!=null) {
                     setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
@@ -301,7 +301,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     
     protected void setAddress() {
         _speedUtil.setDccAddress(_dccNumBox.getText());
-        _rosterBox.setSelectedItem(_speedUtil.getTrainId());
+        _rosterBox.setSelectedItem(_speedUtil.getRosterId());
     }
 
     protected String getAddress() {

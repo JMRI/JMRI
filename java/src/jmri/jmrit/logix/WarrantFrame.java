@@ -162,9 +162,9 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(warrant.getTrainName());
         
         SpeedUtil spU = warrant.getSpeedUtil();
-        String trainId = spU.getTrainId();
+        String trainId = spU.getRosterId();
         setTrainInfo(trainId);
-        _warrant.getSpeedUtil().setTrainId(trainId);
+        _warrant.getSpeedUtil().setDccAddress(trainId);
     }
 
     private void init() {
@@ -1350,7 +1350,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setThrottleCommands(_throttleCommands);
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
-                _warrant.getDisplayName(), _speedUtil.getTrainId(), getTrainName());
+                _warrant.getDisplayName(), _speedUtil.getRosterId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getDefault().getModel().fireTableDataChanged();
         return true;

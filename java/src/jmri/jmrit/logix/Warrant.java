@@ -822,8 +822,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         // let WarrantFrame do the abort. (WarrantFrame listens for "abortLearn") 
                         firePropertyChange("abortLearn", Integer.valueOf(-MODE_LEARN), Integer.valueOf(_idxCurrentOrder));
                     } else {
+                        firePropertyChange("controlChange", Integer.valueOf(MODE_RUN), Integer.valueOf(ABORT));
                         stopWarrant(true);
-                        ret = true;
                     }
                     break;
                 default:

@@ -41,7 +41,6 @@ public class SpeedUtil {
 
     private DccLocoAddress _dccAddress;
     private String _rosterId;        // Roster title for train
-    private boolean _newRosterId;
     private RosterEntry _rosterEntry;
     private Warrant _warrant;
 
@@ -73,14 +72,17 @@ public class SpeedUtil {
         return _rosterEntry;
     }
 
-    public String getTrainId() {
+    /**
+     * Set the identifier for the Speed Profile
+     * If a RosterEntry exists, _rosterId is the RosterEntry id,
+     * otherwise it may be just the decoder address
+     * @return key to speedProfile
+     */
+    public String getRosterId() {
         return _rosterId;
     }
 
-    public void setTrainId(String id) {
-        if (_rosterId != null && !_rosterId.equals(id)) {
-            _newRosterId = true;            
-        }
+    private void setRosterId(String id) {
         _rosterId = id;
     }
     
@@ -107,14 +109,20 @@ public class SpeedUtil {
     }
 
    /**
-     * Sets dccAddress and will fetch RosterEntry if one exists
-     * @param id address as a String, either RosterTitle or decoder address
+     * Sets dccAddress and will fetch RosterEntry if one exists.
+     * If _rosterEntry exists, _rosterId set to RosterEntry Id (which may or not be "id")
+     * else _rosterId set to "id" or decoder address.
+     * Called from: 
+     *    WarrantRoute.setAddress() - whatever is in _dccNumBox.getText()
+     *    WarrantRoute.setTrainInfo(name) - whatever = name
+     *    WarrantTableModel - whatever address is put into the ADDRESS_COLUMN
+     * @param id address as a String, either RosterEntryTitle or decoder address
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
         if (id == null || id.trim().length()==0) {
             _rosterEntry = null;
-            setTrainId(null);   // set _rosterId
+            setRosterId(null);   // set _rosterId
             _dccAddress = null;           
            return false;
         } else if (id.equals(_rosterId)){
@@ -142,7 +150,7 @@ public class SpeedUtil {
                     if (num != 0) {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _trainId.
-                        setTrainId(_rosterEntry.getId());
+                        setRosterId(_rosterEntry.getId());
                     }
                     _dccAddress = _rosterEntry.getDccLocoAddress();           
                 } else {
@@ -152,14 +160,14 @@ public class SpeedUtil {
                         isLong = false;
                     }
                     _dccAddress = new DccLocoAddress(num, isLong);
-                    setTrainId(_dccAddress.toString()); // not a rosterId, but does identify the  DccLocoAddress                       
+                    setRosterId(_dccAddress.toString()); // not a rosterId, but does identify the  DccLocoAddress                       
                }
             } catch (NumberFormatException e) {
                 _dccAddress = null;
                 return false;
             }
         } else {
-            setTrainId(id);
+            setRosterId(id);
             _dccAddress = _rosterEntry.getDccLocoAddress();           
         }
         if (log.isDebugEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
@@ -223,14 +231,17 @@ public class SpeedUtil {
     }
 
     protected RosterSpeedProfile getSpeedProfile() {
-        if (_speedProfile == null || _newRosterId) {
+        if (_speedProfile == null) {
             makeSpeedTree();
         }
         return _speedProfile;
     }
 
     private void makeSpeedTree() {
-        if (log.isDebugEnabled()) log.debug("makeSpeedTree for {}", _rosterId);
+        if (_rosterId == null) {
+            setDccAddress(getAddress());
+        }
+        if (log.isDebugEnabled()) log.debug("makeSpeedTree for {}.", _rosterId);
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         _speedProfile = manager.getMergeProfile(_rosterId);
         _sessionProfile = manager.getSessionProfile(_rosterId);
@@ -250,7 +261,6 @@ public class SpeedUtil {
                 }
             }
         }
-        _newRosterId = false;
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
@@ -578,6 +588,7 @@ public class SpeedUtil {
         }
  
         _timeAtSpeed = 0;
+        _changetime = System.currentTimeMillis();
         _distanceTravelled = 0.0f;
         _settingsTravelled = 0.0f;
         _numchanges = 0;

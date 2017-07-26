@@ -101,7 +101,7 @@ public class WarrantManagerXml //extends XmlFile
     static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
         SpeedUtil speedUtil = warrant.getSpeedUtil();
-        String str = speedUtil.getTrainId();
+        String str = speedUtil.getRosterId();
         if (str==null) str = "";
         elem.setAttribute("trainId", str);
 
@@ -298,17 +298,18 @@ public class WarrantManagerXml //extends XmlFile
     static void loadTrain(Element elem, Warrant warrant) {
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
-            speedUtil.setTrainId(elem.getAttribute("trainId").getValue());
+            speedUtil.setDccAddress(elem.getAttribute("trainId").getValue());
         }
+        // if a RosterEntry exists "trainId" will be the Roster Id, otherwise a train name
+        // Possible redundant call to setDccAddress() is OK
         if (elem.getAttribute("dccAddress") != null) {
-            int address = 0;
             try {
-               address = elem.getAttribute("dccAddress").getIntValue();
+               int address = elem.getAttribute("dccAddress").getIntValue();
+               String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
+               speedUtil.setDccAddress(addr);
             } catch (org.jdom2.DataConversionException dce) {
                 log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
             }
-            String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
-            speedUtil.setDccAddress(addr);
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
