@@ -279,7 +279,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
-        ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        if(l != null){
+            ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        }
         super.handleTimeout(msg, l);
     }
 
