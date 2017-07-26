@@ -34,6 +34,6 @@ public class JsonPacketGenActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonPacketGenActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonPacketGenActionTest.class.getName());
 
 }

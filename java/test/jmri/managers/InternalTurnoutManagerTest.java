@@ -33,6 +33,6 @@ public class InternalTurnoutManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerTest.class.getName());
 
 }

@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,12 +20,13 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+import jmri.util.MenuScroller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * This class handles text attributes for Positionables. Font size, style and
+ * This class handles text attributes for Positionables. Font, size, style and
  * color. Margin size and color, Border size and color, Fixed sizes.
  * Justification.
  * </p>
@@ -170,6 +172,7 @@ public class PositionablePopupUtil {
 
     public void setTextFontMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFont"));
+        edit.add(makeFontMenu());
         edit.add(makeFontSizeMenu());
         edit.add(makeFontStyleMenu());
         JMenu colorMenu = new JMenu(Bundle.getMessage("FontColor"));
@@ -318,6 +321,49 @@ public class PositionablePopupUtil {
         return _textComponent.getBackground();
     }
 
+    protected JMenu makeFontMenu() {
+        JMenu fontMenu = new JMenu("Font"); // create font menu
+        //fontMenu.setMnemonic('n'); // set mnemonic to n
+
+        // get the current font family name
+        String defaultFontFamilyName = _textComponent.getFont().getFamily();
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
+
+        // create radiobutton menu items for font names
+        ButtonGroup fontButtonGroup = new ButtonGroup(); // manages font names
+
+        // create Font radio button menu items
+        for (String fontFamilyName : fontFamilyNames) {
+            // create its menu item
+            JCheckBoxMenuItem fontMenuItem = new JCheckBoxMenuItem(fontFamilyName);
+            Font menuFont = fontMenuItem.getFont();
+            menuFont = new Font(fontFamilyName, menuFont.getStyle(), menuFont.getSize());
+            fontMenuItem.setFont(menuFont);
+
+            // set its action listener
+            fontMenuItem.addActionListener((ActionEvent e) -> {
+                Font oldFont = _textComponent.getFont();
+                Font newFont = new Font(fontFamilyName, oldFont.getStyle(), oldFont.getSize());
+                if (!oldFont.equals(newFont)) {
+                    setFont(newFont);
+                }
+            });
+
+            // add to button group
+            fontButtonGroup.add(fontMenuItem);
+            // set (de)selected
+            fontMenuItem.setSelected(defaultFontFamilyName == fontFamilyName);
+            // add to font menu
+            fontMenu.add(fontMenuItem);
+        }
+
+        MenuScroller.setScrollerFor(fontMenu, 36);
+
+        return fontMenu;
+    }
+
     protected JMenu makeFontSizeMenu() {
         JMenu sizeMenu = new JMenu("Font Size");
         ButtonGroup buttonGrp = new ButtonGroup();
@@ -328,6 +374,7 @@ public class PositionablePopupUtil {
         addFontMenuEntry(sizeMenu, buttonGrp, 12);
         addFontMenuEntry(sizeMenu, buttonGrp, 14);
         addFontMenuEntry(sizeMenu, buttonGrp, 16);
+        addFontMenuEntry(sizeMenu, buttonGrp, 18);
         addFontMenuEntry(sizeMenu, buttonGrp, 20);
         addFontMenuEntry(sizeMenu, buttonGrp, 24);
         addFontMenuEntry(sizeMenu, buttonGrp, 28);
@@ -342,17 +389,18 @@ public class PositionablePopupUtil {
             setFontSize(size);
         });
         fontButtonGroup.add(r);
-        if (_textComponent.getFont().getSize() == size) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
+        r.setSelected(_textComponent.getFont().getSize() == size);
         menu.add(r);
     }
 
     public void setFont(Font font) {
-        _textComponent.setFont(font);
-        _parent.updateSize();
+        Font oldFont = _textComponent.getFont();
+        Font newFont = new Font(font.getFamily(), oldFont.getStyle(), oldFont.getSize());
+        if (!oldFont.equals(newFont)) {
+            _textComponent.setFont(newFont);
+            _parent.updateSize();
+            _parent.getEditor().setAttributes(_self, _parent);
+        }
     }
 
     public Font getFont() {
@@ -360,8 +408,10 @@ public class PositionablePopupUtil {
     }
 
     public void setFontSize(float newSize) {
-        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), newSize));
+        //_textComponent.setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
+        _textComponent.setFont(_textComponent.getFont().deriveFont(newSize));
         _parent.updateSize();
+        ///_parent.getEditor().setAttributes(_self, _parent);
     }
 
     public int getFontSize() {
@@ -425,7 +475,7 @@ public class PositionablePopupUtil {
     }
 
     public void setFontStyle(int addStyle, int dropStyle) {
-        int styleValue = (_textComponent.getFont().getStyle() & ~dropStyle) | addStyle;
+        int styleValue = (getFontStyle() & ~dropStyle) | addStyle;
         log.debug("setFontStyle: addStyle={}, dropStyle={}, net styleValue is {}", addStyle, dropStyle, styleValue);
         if (bold != null) {
             bold.setSelected((styleValue & Font.BOLD) != 0);
@@ -449,9 +499,9 @@ public class PositionablePopupUtil {
         c.addActionListener(a);
         if (log.isDebugEnabled()) { // Avoid action lookup unless needed
             log.debug("When creating style item {} mask was {} state was {}",
-                    ((String) a.getValue(AbstractAction.NAME)), mask, _textComponent.getFont().getStyle());
+                    ((String) a.getValue(AbstractAction.NAME)), mask, getFontStyle());
         }
-        if ((mask & _textComponent.getFont().getStyle()) == mask) {
+        if ((mask & getFontStyle()) == mask) {
             c.setSelected(true);
         }
         return c;
@@ -764,6 +814,7 @@ public class PositionablePopupUtil {
     /**
      * Add a menu item to be displayed when the popup menu is called for when in
      * view mode.
+     *
      * @param menu menu item or submenu to add
      */
     public void addViewPopUpMenu(JMenuItem menu) {

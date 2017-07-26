@@ -33,6 +33,6 @@ public class BlockPathTableModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockPathTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockPathTableModelTest.class.getName());
 
 }

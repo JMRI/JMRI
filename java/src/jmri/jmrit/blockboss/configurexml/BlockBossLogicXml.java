@@ -108,6 +108,10 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
 
             block.setAttribute("limitspeed1", "" + p.getLimitSpeed1());
             block.setAttribute("limitspeed2", "" + p.getLimitSpeed2());
+            if (p.getRestrictingSpeed1())
+                block.setAttribute("restrictingspeed1", "" + p.getRestrictingSpeed1());
+            if (p.getRestrictingSpeed2())
+                block.setAttribute("restrictingspeed2", "" + p.getRestrictingSpeed2());
             block.setAttribute("useflashyellow", "" + p.getUseFlash());
             block.setAttribute("distantsignal", "" + p.getDistantSignal());
 
@@ -247,8 +251,14 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                     if (block.getAttribute("limitspeed1") != null) {
                         bb.setLimitSpeed1(block.getAttribute("limitspeed1").getBooleanValue());
                     }
+                    if (block.getAttribute("restrictingspeed1") != null) {
+                        bb.setRestrictingSpeed1(block.getAttribute("restrictingspeed1").getBooleanValue());
+                    }
                     if (block.getAttribute("limitspeed2") != null) {
                         bb.setLimitSpeed2(block.getAttribute("limitspeed2").getBooleanValue());
+                    }
+                    if (block.getAttribute("restrictingspeed2") != null) {
+                        bb.setRestrictingSpeed2(block.getAttribute("restrictingspeed2").getBooleanValue());
                     }
                     try {
                         if (block.getAttribute("watchedturnout") != null) {

@@ -162,7 +162,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             default:
                 str = "track";
         }
-        description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));;
+        description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         model.fireTableDataChanged();
     }
 

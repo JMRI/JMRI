@@ -41,6 +41,6 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManagerTest.class.getName());
 
 }

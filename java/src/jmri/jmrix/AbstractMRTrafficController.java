@@ -33,15 +33,24 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRTrafficController {
 
+    private Thread shutdownHook = null; // retain shutdown hook for 
+                                        // possible removal.
+
     public AbstractMRTrafficController() {
         log.debug("Creating AbstractMRTrafficController instance");
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
-        // should this be a ShutDownTask instead, or are we worried at this point
-        // that a ShutDownManager does not yet exist?
-        Runtime.getRuntime().addShutdownHook(new Thread(new CleanupHook(this)));
+
+        // We use a shutdown hook here to make sure the connection is left
+        // in a clean state prior to exiting.  This is required on systems
+        // which have a service mode to ensure we don't leave the system 
+        // in an unusable state (This code predates the ShutdownTask 
+        // mechanisim).  Once the , shutdown hook executes, the connection
+        // must be considered closed.
+        shutdownHook = new Thread(new CleanupHook(this));
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
     private boolean synchronizeRx = true;
@@ -414,7 +423,14 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error(interruptMessage);
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                if (!threadStopRequest) {
+                    log.error(interruptMessage+" in transmitWait(..) of {}", name);
+                } else {
+                    log.debug("during shutdown, "+interruptMessage+" in transmitWait(..) of {}", name);
+                }
             }
         }
         log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
@@ -437,7 +453,10 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmitLoop interrupted");
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                log.error("transmitLoop interrupted in class {}", name);
             }
             loopCount++;
             int currentDispatchTime = loopCount * DISPATCH_WAIT_INTERVAL;
@@ -1133,7 +1152,10 @@ abstract public class AbstractMRTrafficController {
             } catch (InterruptedException ie){
                 // interrupted durring cleanup.
             }
-        }     
+        }    
+
+        // we also need to remove the shutdown hook. 
+        Runtime.getRuntime().removeShutdownHook(shutdownHook);
     }
     
     /**

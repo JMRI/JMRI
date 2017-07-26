@@ -36,6 +36,6 @@ public class EasyDccThrottleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class.getName());
 
 }

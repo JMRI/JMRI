@@ -33,6 +33,6 @@ public class SprogConstantsTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogConstantsTest.class.getName());
 
 }

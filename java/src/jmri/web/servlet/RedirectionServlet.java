@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class RedirectionServlet extends HttpServlet {
 
     private final Properties redirections = new Properties();
-    private static final Logger log = LoggerFactory.getLogger(RedirectionServlet.class);
+    // private static final Logger log = LoggerFactory.getLogger(RedirectionServlet.class);
 
     public RedirectionServlet() {
         // do nothing

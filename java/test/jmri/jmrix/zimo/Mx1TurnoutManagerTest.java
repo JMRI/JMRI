@@ -44,6 +44,6 @@ public class Mx1TurnoutManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1TurnoutManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1TurnoutManagerTest.class.getName());
 
 }

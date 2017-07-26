@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from XNet messages. The "XNetInterface" side
  * sends/receives XNetMessage objects. The connection to a XNetPortController is
- * via a pair of *Streams, which then carry sequences of characters for
+ * via a pair of Streams, which then carry sequences of characters for
  * transmission.
  * <P>
  * Messages come to this via the main GUI thread, and are forwarded back to
@@ -36,7 +36,7 @@ public class XNetPacketizer extends XNetTrafficController {
 
     /**
      * Forward a preformatted XNetMessage to the actual interface.
-     *
+     * <p>
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queue for transmission
      *
@@ -67,8 +67,10 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
     /**
-     * Check to see if PortController object can be sent to. returns true if
-     * ready, false otherwise May throw an Exception.
+     * Check to see if PortController object can be sent to.
+     *
+     * @return true if ready, false otherwise
+     * @throws Exception when the XNet connection fails
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
@@ -79,9 +81,7 @@ public class XNetPacketizer extends XNetTrafficController {
             ((XNetPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("XPressNet port not ready to receive");
-            }
+            log.debug("XpressNet port not ready to receive");
             return false;
         }
     }

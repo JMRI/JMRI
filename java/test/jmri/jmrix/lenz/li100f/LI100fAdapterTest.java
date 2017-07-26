@@ -6,33 +6,31 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * LI100AdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.li100f.LI100Adapter class
+ * Tests for the jmri.jmrix.lenz.li100f.LI100fAdapter class
  *
  * @author	Paul Bender
  */
-public class LI100AdapterTest extends TestCase {
+public class LI100fAdapterTest extends TestCase {
 
     public void testCtor() {
-        LI100Adapter a = new LI100Adapter();
+        LI100fAdapter a = new LI100fAdapter();
         Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-    public LI100AdapterTest(String s) {
+    public LI100fAdapterTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LI100AdapterTest.class.getName()};
+        String[] testCaseName = {"-noloading", LI100fAdapterTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LI100AdapterTest.class);
+        TestSuite suite = new TestSuite(LI100fAdapterTest.class);
         return suite;
     }
 
