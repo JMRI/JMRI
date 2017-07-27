@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
    BundleTest.class,
    LnTcpPreferencesPanelTest.class,
    LnTcpPreferencesTest.class,
-   LnTcpStartpActionFActoryTest.class
+   LnTcpStartupActionFactoryTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.
