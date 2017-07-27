@@ -18,7 +18,7 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     XNetSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -28,6 +28,4 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new XNetMenu(memo);
     }
 }
-
-
 

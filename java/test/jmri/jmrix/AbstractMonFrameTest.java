@@ -23,7 +23,7 @@ public class AbstractMonFrameTest {
            @Override
            public String title(){
               return "test";
-           };
+           }
            @Override
            public void init(){
            }

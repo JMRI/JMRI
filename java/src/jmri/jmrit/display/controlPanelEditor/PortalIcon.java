@@ -202,7 +202,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                         setStatus(FROM_ARROW);
                         break;
                     default:
-                        log.warn("Unhandled portal value: {}", ((Integer)e.getNewValue()) );
+                        log.warn("Unhandled portal value: {}", e.getNewValue() );
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());

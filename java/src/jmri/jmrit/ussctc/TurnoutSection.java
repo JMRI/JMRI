@@ -122,7 +122,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
     }
     
     public void addLocks(List<Lock> locks) { 
-        central.addLocks(locks);
         field.addLocks(locks); 
     }
     
@@ -164,9 +163,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         NamedBeanHandle<Sensor> hNormalInput;
         NamedBeanHandle<Sensor> hReversedInput;
-
-        List<Lock> locks;
-        public void addLocks(List<Lock> locks) { this.locks = locks; }
 
         enum State {
             SHOWING_NORMAL,
@@ -263,7 +259,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         public TurnoutFieldSection(String layoutTO) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
                     
             hLayoutTO = hm.getNamedBeanHandle(layoutTO, tm.provideTurnout(layoutTO));
         

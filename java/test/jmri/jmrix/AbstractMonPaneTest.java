@@ -20,7 +20,7 @@ public class AbstractMonPaneTest {
            @Override
            public String getTitle(){
               return "test";
-           };
+           }
            @Override
            public void init(){
            }

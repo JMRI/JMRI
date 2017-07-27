@@ -148,6 +148,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
+     * @throws IllegalArgumentException if cannot create block; never returns null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
@@ -159,6 +160,9 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
             b = createNewBlock(name, null);
         } else {
             b = createNewBlock(makeSystemName(name), null);
+        }
+        if (b==null) {
+            throw new IllegalArgumentException("Could not create block \""+name+"\"");
         }
         return b;
     }
@@ -210,14 +214,13 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         return (retv);
     }
 
-    static BlockManager _instance = null;
-
+    /**
+     * @deprecated 4.9.1 Use InstanceManager
+     */
+    @Deprecated
     static @CheckForNull public
     BlockManager instance() {
-        if (_instance == null) {
-            _instance = new BlockManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(BlockManager.class);
     }
 
     String defaultSpeed = "Normal";

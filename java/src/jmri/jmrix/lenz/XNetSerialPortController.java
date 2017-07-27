@@ -65,7 +65,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
             }
         } else {
             if (checkBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
+                log.debug("Buffer Empty: {}", OutputBufferEmpty);
                 return (OutputBufferEmpty && hasTimeSlot() );
             } else {
                 log.debug("No Flow Control or Buffer Check");
