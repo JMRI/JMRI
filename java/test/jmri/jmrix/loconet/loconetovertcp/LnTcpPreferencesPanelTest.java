@@ -25,7 +25,7 @@ public class LnTcpPreferencesPanelTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.installStartupActionsManager();
+        jmri.util.JUnitUtil.initStartupActionsManager();
     }
 
     @After
