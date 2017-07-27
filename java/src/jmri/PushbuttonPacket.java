@@ -52,7 +52,9 @@ public class PushbuttonPacket {
         Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(prefix + turnoutNum);
         byte[] bl;
 
-        if (t.getDecoderName().equals(unknown)) {
+        if (t == null || t.getDecoderName() == null ) {
+            return null;
+        } else if (t.getDecoderName().equals(unknown)) {
             return null;
         } else if (t.getDecoderName().equals(NCEname)) {
             if (locked) {
@@ -98,7 +100,7 @@ public class PushbuttonPacket {
             modTurnoutNum++;
             Turnout t = InstanceManager.turnoutManagerInstance()
                     .getBySystemName(prefix + modTurnoutNum);
-            if (t != null) {
+            if (t != null && t.getDecoderName() != null) {
                 if (t.getDecoderName().equals(CVP_1Bname)) {
                     // do nothing button already = oneButton
                 } else if (t.getDecoderName().equals(CVP_2Bname)) {
