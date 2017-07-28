@@ -10,9 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LV102FrameTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
+ * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
  * @author	Paul Bender
  */
@@ -34,7 +32,7 @@ public class LV102FrameTest {
     public void testCloseButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // an LV102 Internal Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushCloseButton();

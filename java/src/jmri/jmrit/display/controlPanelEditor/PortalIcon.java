@@ -38,7 +38,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -202,7 +201,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                         setStatus(FROM_ARROW);
                         break;
                     default:
-                        log.warn("Unhandled portal value: {}", ((Integer)e.getNewValue()) );
+                        log.warn("Unhandled portal value: {}", e.getNewValue() );
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());

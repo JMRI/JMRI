@@ -520,12 +520,28 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return limitSpeed1;
     }
 
+    public void setRestrictingSpeed1(boolean d) {
+        restrictingSpeed1 = d;
+    }
+
+    public boolean getRestrictingSpeed1() {
+        return restrictingSpeed1;
+    }
+
     public void setLimitSpeed2(boolean d) {
         limitSpeed2 = d;
     }
 
     public boolean getLimitSpeed2() {
         return limitSpeed2;
+    }
+
+    public void setRestrictingSpeed2(boolean d) {
+        restrictingSpeed2 = d;
+    }
+
+    public boolean getRestrictingSpeed2() {
+        return restrictingSpeed2;
     }
 
     public boolean getUseFlash() {
@@ -539,7 +555,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public boolean getDistantSignal() {
         return distantSignal;
     }
-
+   
     boolean mHold = false;
 
     /**
@@ -587,9 +603,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     NamedBeanHandle<Sensor> approachSensor1 = null;
 
     boolean limitSpeed1 = false;
+    boolean restrictingSpeed1 = false;
     boolean limitSpeed2 = false;
+    boolean restrictingSpeed2 = false;
     boolean protectWithFlashing = false;
     boolean distantSignal = false;
+    boolean restricting = false;
 
     public void setApproachSensor1(String name) {
         if (name == null || name.equals("")) {
@@ -845,6 +864,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             appearance = slowerOf(appearance, SignalHead.YELLOW);
         }
 
+        // if restricting, limit to flashing red
+        if (restrictingSpeed1) {
+            appearance = slowerOf(appearance, SignalHead.FLASHRED);
+        }
+
         // check for red overriding yellow or green
         if (watchSensor1 != null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) {
             appearance = SignalHead.RED;
@@ -898,6 +922,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // if limited speed and green, reduce to yellow
         if (limitSpeed1) {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
+        }
+        // if restricting, limit to flashing red
+        if (restrictingSpeed1) {
+            appearance = slowerOf(appearance, SignalHead.FLASHRED);
         }
 
         // check for red overriding yellow or green
@@ -960,6 +988,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // if limited speed and green, reduce to yellow
         if (limitSpeed2) {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
+        }
+        // if restricting, limit to flashing red
+        if (restrictingSpeed2) {
+            appearance = slowerOf(appearance, SignalHead.FLASHRED);
         }
 
         // check for red overriding yellow or green
@@ -1032,9 +1064,15 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         if (watchTurnout != null && limitSpeed1 && watchTurnout.getBean().getKnownState() != Turnout.THROWN) {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
         }
-
         if (watchTurnout != null && limitSpeed2 && watchTurnout.getBean().getKnownState() != Turnout.CLOSED) {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
+        }
+        // if restricting, limit to flashing red
+        if (watchTurnout != null && restrictingSpeed1 && watchTurnout.getBean().getKnownState() != Turnout.THROWN) {
+            appearance = slowerOf(appearance, SignalHead.FLASHRED);
+        }
+        if (watchTurnout != null && restrictingSpeed2 && watchTurnout.getBean().getKnownState() != Turnout.CLOSED) {
+            appearance = slowerOf(appearance, SignalHead.FLASHRED);
         }
 
         // check for red overriding yellow or green

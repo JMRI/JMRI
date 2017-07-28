@@ -164,31 +164,6 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
       }
     }
 
-    /**
-     * Adds Lunar to the available values.
-     */
-    private static final int[] validStates = new int[]{
-            DARK,
-            RED,
-            YELLOW,
-            GREEN,
-            LUNAR,
-            FLASHRED,
-            FLASHYELLOW,
-            FLASHGREEN,
-            FLASHLUNAR
-    };
-    private static final String[] validStateNames = new String[]{
-            Bundle.getMessage("SignalHeadStateDark"),
-            Bundle.getMessage("SignalHeadStateRed"),
-            Bundle.getMessage("SignalHeadStateYellow"),
-            Bundle.getMessage("SignalHeadStateGreen"),
-            Bundle.getMessage("SignalHeadStateLunar"),
-            Bundle.getMessage("SignalHeadStateFlashingRed"),
-            Bundle.getMessage("SignalHeadStateFlashingYellow"),
-            Bundle.getMessage("SignalHeadStateFlashingGreen"),
-            Bundle.getMessage("SignalHeadStateFlashingLunar"),};
-
     @Override
     public int[] getValidStates() {
         int[] validStates;

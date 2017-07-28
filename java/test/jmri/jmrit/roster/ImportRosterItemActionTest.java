@@ -40,6 +40,6 @@ public class ImportRosterItemActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportRosterItemActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportRosterItemActionTest.class.getName());
 
 }

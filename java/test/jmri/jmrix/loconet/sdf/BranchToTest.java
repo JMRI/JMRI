@@ -33,6 +33,6 @@ public class BranchToTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BranchToTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BranchToTest.class.getName());
 
 }

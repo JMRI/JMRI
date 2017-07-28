@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     NceMonPanelTest.class,
-    NceMonBinaryTest.class
+    NceMonBinaryTest.class,
+    BundleTest.class
 })
 
 /**

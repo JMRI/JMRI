@@ -33,6 +33,6 @@ public class RosterSpeedProfileTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterSpeedProfileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterSpeedProfileTest.class.getName());
 
 }

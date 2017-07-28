@@ -63,7 +63,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     public void message(DCCppReply l) {
-        int addr = 0;
+        int addr = -1;  // -1 flags that no sensor address was found in reply
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
@@ -77,22 +77,23 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             addr = l.getSensorNumInt();
             log.debug("Sensor Status Reply for Encoder" + Integer.toString(addr));
         }
-        String s = prefix + typeLetter() + (addr);
-        if (null == getBySystemName(s)) {
-            // The sensor doesn't exist.  We need to create a 
-            // new sensor, and forward this message to it.
-            ((DCCppSensor) provideSensor(s)).initmessage(l);
-        } else {
-            // The sensor exists.  We need to forward this 
-            // message to it.
-            Sensor sen = getBySystemName(s);
-            if (sen == null) {
-                log.error("Failed to get sensor for {}", s);
+        if (addr >= 0) {
+            String s = prefix + typeLetter() + (addr);
+            if (null == getBySystemName(s)) {
+                // The sensor doesn't exist.  We need to create a 
+                // new sensor, and forward this message to it.
+                ((DCCppSensor) provideSensor(s)).initmessage(l);
             } else {
-                ((DCCppSensor) sen).message(l);
+                // The sensor exists.  We need to forward this 
+                // message to it.
+                Sensor sen = getBySystemName(s);
+                if (sen == null) {
+                    log.error("Failed to get sensor for {}", s);
+                } else {
+                    ((DCCppSensor) sen).message(l);
+                }
             }
         }
-
     }
 
     /**

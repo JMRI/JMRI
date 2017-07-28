@@ -33,6 +33,6 @@ public class Dcc4PcConnectionTypeListTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcConnectionTypeListTest.class.getName());
 
 }

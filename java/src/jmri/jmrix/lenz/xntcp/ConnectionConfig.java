@@ -43,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -51,7 +51,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "XnTcp";
+        return Bundle.getMessage("XnTcpName");
     }
 
     /**
@@ -72,7 +72,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         if (x == null) {
             return JmrixConfigPane.NONE;
         }
-        if (x.equals("Manual")) {
+        if (x.equals(Bundle.getMessage("Manual"))) {
             x = "";
         } else {
             x += ":";
@@ -115,7 +115,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         String choice = options.get("XnTcpInterface").getItem();
 //GT 2.14 - Added test for null, now returned by opt1Box at startup (somewhere the initialization is missing)
         if (choice != null) {
-            manualInput = choice.equals("Manual");
+            manualInput = (choice.equals(Bundle.getMessage("Manual")) || choice.equals("Manual")); // support pre-i18n configurations
         } else {
             manualInput = false;
         }

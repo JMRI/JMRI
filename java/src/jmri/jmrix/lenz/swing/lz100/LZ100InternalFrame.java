@@ -3,8 +3,10 @@ package jmri.jmrix.lenz.swing.lz100;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
@@ -26,15 +28,15 @@ import org.slf4j.LoggerFactory;
   */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
-    private boolean autoMode = false; // Holds Auto/Manual Startup Mode.
+    private boolean autoMode = false; // holds Auto/Manual Startup Mode.
 
-    private int resetMode = 0; // hold the reset mode;
+    private int resetMode = 0; // holds the reset mode;
     static final private int IDLE = 0;
     static final private int ONSENT = 1;
     static final private int OFFSENT = 2;
 
     private int sendCount = 0; // count the number of times the on/off 
-    // sequence for F4 has been sent durring a reset
+    // sequence for F4 has been sent during a reset
 
     protected XNetTrafficController tc = null;
 
@@ -44,26 +46,26 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        setTitle(Bundle.getMessage("LZ100Command"));
+        setTitle(Bundle.getMessage("CommandConfigTitle"));
 
         JPanel pane4 = new JPanel();
         pane4.add(new JLabel(Bundle.getMessage("LZ100StartMode")));
 
         isAutoMode.setVisible(true);
-        isAutoMode.setText(Bundle.getMessage("LZ100AutoMode"));
+        // isAutoMode
         isAutoMode.setToolTipText(Bundle.getMessage("LZ100AutoModeToolTip"));
         pane4.add(isAutoMode);
 
         isManualMode.setVisible(true);
-        isManualMode.setText(Bundle.getMessage("LZ100ManualMode"));
+        // isManualMode
         isManualMode.setToolTipText(Bundle.getMessage("LZ100ManualModeToolTip"));
         pane4.add(isManualMode);
 
-        amModeGetButton.setText(Bundle.getMessage("LZ100GetAMMode"));
+        // amModeGetButton
         amModeGetButton.setToolTipText(Bundle.getMessage("LZ100GetAMModeToolTip"));
         pane4.add(amModeGetButton);
 
-        amModeSetButton.setText(Bundle.getMessage("LZ100SetAMMode"));
+        // amModeSetButton
         amModeSetButton.setToolTipText(Bundle.getMessage("LZ100SetAMModeToolTip"));
         pane4.add(amModeSetButton);
         getContentPane().add(pane4);
@@ -71,7 +73,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         JPanel pane3 = new JPanel();
         pane3.add(new JLabel(Bundle.getMessage("LZ100OptionLabel")));
 
-        resetCSButton.setText(Bundle.getMessage("LZ100Reset"));
+        // resetCSButton
         resetCSButton.setToolTipText(Bundle.getMessage("LZ100ResetToolTip"));
         pane3.add(resetCSButton);
         getContentPane().add(pane3);
@@ -88,7 +90,15 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         resetCSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                resetLZ100CS();
+                // ask user confirmation
+                if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                        null, Bundle.getMessage("LZ100ConfirmResetDialog"),
+                                Bundle.getMessage("QuestionTitle"),
+                        javax.swing.JOptionPane.OK_CANCEL_OPTION,
+                        javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                    // indeed send reset commands
+                    resetLZ100CS();
+                }
             }
         }
         );
@@ -132,10 +142,10 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         );
 
         // configure internal frame options
-        setClosable(false);  // don't let the user close this frame
-        setResizable(false);  // don't let the user resize this frame
-        setIconifiable(false); // don't let the user minimize this frame
-        setMaximizable(false); // don't let the user maximize this frame
+        setClosable(false);     // don't let the user close this frame
+        setResizable(false);    // don't let the user resize this frame
+        setIconifiable(false);  // don't let the user minimize this frame
+        setMaximizable(false);  // don't let the user maximize this frame
 
         // make the internal frame visible
         this.setVisible(true);
@@ -147,31 +157,20 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         } else {
             log.warn("No XpressNet connection, so panel won't function");
         }
-
     }
 
     boolean read = false;
 
-    JComboBox<String> voltBox = new javax.swing.JComboBox<String>();
-    JComboBox<String> eLineBox = new javax.swing.JComboBox<String>();
-
     JLabel status = new JLabel(" ");
+    JButton resetCSButton = new JButton(Bundle.getMessage("LZ100Reset"));
+    JRadioButton isAutoMode = new JRadioButton(Bundle.getMessage("Automatic"));
+    JRadioButton isManualMode = new JRadioButton(Bundle.getMessage("Manual"));
+    JToggleButton amModeGetButton = new JToggleButton(Bundle.getMessage("LZ100GetAMMode"));
+    JToggleButton amModeSetButton = new JToggleButton(Bundle.getMessage("LZ100SetAMMode"));
 
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
-    JToggleButton resetCSButton = new JToggleButton("Reset Command Station");
-
-    JRadioButton isAutoMode = new JRadioButton("Auto");
-    JRadioButton isManualMode = new JRadioButton("Manual");
-    JToggleButton amModeGetButton = new JToggleButton("Get Current Mode");
-    JToggleButton amModeSetButton = new JToggleButton("Set Mode");
-
-    protected String[] validVoltage = new String[]{"11V", "11.5V", "12V", "12.5V", "13V", "13.5V", "14V", "14.5V", "15V", "15.5V", "16V", "16.5V", "17V", "17.5V", "18V", "18.5V", "19V", "19.5V", "20V", "20.5V", "21V", "21.5V", "22V"};
-    protected int[] validVoltageValues = new int[]{22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44};
-
-    protected String[] validELineStatus = new String[]{"Active", "Inactive", "default"};
-    protected int[] validELineStatusValues = new int[]{90, 91, 99};
-
-    // listen for responses from the LZ100
+    /**
+     * Listen for responses from the LZ100.
+     */
     @Override
     synchronized public void message(XNetReply l) {
         if (l.isOkMessage()) {
@@ -180,7 +179,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
              resetting the command station 
              */
             if (status.getText().equals(Bundle.getMessage("LZ100StatusSetMode"))) {
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             }
             if (resetMode == OFFSENT) {
                 XNetMessage msgon = XNetMessage.getFunctionGroup1OpsMsg(0, false, false, false, false, true);
@@ -205,36 +204,34 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
                 isAutoMode.setSelected(true);
                 isManualMode.setSelected(false);
                 autoMode = true;
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             } else {
                 isAutoMode.setSelected(false);
                 isManualMode.setSelected(true);
                 autoMode = false;
-                status.setText(Bundle.getMessage("LZ100StatusOK"));
+                status.setText(Bundle.getMessage("StatusOK"));
             }
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     synchronized public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message {}", msg.toString());
     }
 
-    // Set to default values.  Voltage is 16, E Line is Active. 
-    synchronized void resetLZ100Settings() {
-        voltBox.setSelectedIndex(10);
-        eLineBox.setSelectedIndex(0);
-    }
-
-    // reset the command station to factory defaults
+    /**
+     * Reset the command station to factory defaults.
+     */
     synchronized void resetLZ100CS() {
         resetCSButton.setEnabled(false);
         status.setText(Bundle.getMessage("LZ100StatusReset"));
@@ -246,7 +243,9 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         tc.sendXNetMessage(msgon, this);
     }
 
-    // get the current automatic/manual mode
+    /**
+     * Get the current automatic/manual mode.
+     */
     synchronized void amModeGet() {
         XNetMessage msg = XNetMessage.getCSStatusRequestMessage();
         tc.sendXNetMessage(msg, this);
@@ -254,14 +253,14 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         status.setText(Bundle.getMessage("LZ100StatusRetrieveMode"));
     }
 
-    // set the current automatic/manual mode
+    /**
+     * Set the current automatic/manual mode.
+     */
     synchronized void amModeSave() {
-        if (log.isDebugEnabled()) {
-            if (autoMode) {
-                log.debug("Auto Mode True");
-            } else {
-                log.debug("Auto Mode False");
-            }
+        if (autoMode) {
+            log.debug("Auto Mode True");
+        } else {
+            log.debug("Auto Mode False");
         }
         XNetMessage msg = XNetMessage.getCSAutoStartMessage(autoMode);
         tc.sendXNetMessage(msg, this);
@@ -269,21 +268,21 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         status.setText(Bundle.getMessage("LZ100StatusSetMode"));
     }
 
-    // Toggle Auto Power-up Mode
+    /**
+     * Toggle Auto Power-up Mode.
+     */
     synchronized void AutoModeAction() {
-        if (log.isDebugEnabled()) {
-            log.debug("Auto Mode Action Called");
-        }
+        log.debug("Auto Mode Action Called");
         isAutoMode.setSelected(true);
         isManualMode.setSelected(false);
         autoMode = true;
     }
 
-    // Toggle Manual Power-up Mode
+    /**
+     * Toggle Manual Power-up Mode.
+     */
     synchronized void ManualModeAction() {
-        if (log.isDebugEnabled()) {
-            log.debug("Manual Mode Action Called");
-        }
+        log.debug("Manual Mode Action Called");
         isAutoMode.setSelected(false);
         isManualMode.setSelected(true);
         autoMode = false;

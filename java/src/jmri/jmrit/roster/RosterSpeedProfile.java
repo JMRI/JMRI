@@ -241,7 +241,7 @@ public class RosterSpeedProfile {
 
         entry = speeds.lowerEntry(lowStep);
         while (entry != null && lower<=0.0f) {
-            lowStep = entry.getKey();;
+            lowStep = entry.getKey();
             float value = entry.getValue().getForwardSpeed();
             if (value > 0.0f) {
                 lower = value;
