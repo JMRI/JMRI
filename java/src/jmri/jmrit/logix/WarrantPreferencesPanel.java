@@ -53,6 +53,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private AppearanceTableModel _appearanceModel;
     private JTable _appearanceTable;
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
+    private WarrantPreferences.Shutdown _shutdown;
 
     public WarrantPreferencesPanel() {
         initGUI();
@@ -70,6 +71,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         leftPanel.add(timeIncrementPanel(true));
         leftPanel.add(throttleIncrementPanel(true));
         leftPanel.add(throttleScalePanel(true));
+        leftPanel.add(speedRosterPanel(true));
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
         rightPanel.add(interpretationPanel());
@@ -213,10 +215,58 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _throttleScale = new JTextField(5);
         _throttleScale.setText(Float.toString(WarrantPreferences.getDefault().getThrottleScale()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
+        p.add(WarrantRoute.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
         _throttleScale.setColumns(8);
         p.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         return p;
+    }
+    
+    private JPanel speedRosterPanel(boolean vertical) {
+        ButtonGroup bg = new ButtonGroup();
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        JRadioButton b1 = new JRadioButton(Bundle.getMessage("NeverMerge"));
+        b1.addActionListener((ActionEvent e) -> {
+            if (b1.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.NO_MERGE;
+            }
+        });
+        bg.add(b1);
+        p.add(b1);
+        JRadioButton b2 = new JRadioButton(Bundle.getMessage("PromptMerges"));
+        b2.addActionListener((ActionEvent e) -> {
+            if (b2.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.PROMPT;
+            }
+        });
+        bg.add(b2);
+        p.add(b2);
+        JRadioButton b3 = new JRadioButton(Bundle.getMessage("AlwaysMerge"));
+        b3.addActionListener((ActionEvent e) -> {
+            if (b3.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.MERGE_ALL;
+            }
+        });
+        bg.add(b3);
+        p.add(b3);
+        _shutdown = WarrantPreferences.getDefault().getShutdown();
+        switch (_shutdown) {
+            case NO_MERGE:
+                b1.setSelected(true);
+                break;
+            case PROMPT:
+                b2.setSelected(true);
+                break;
+            case MERGE_ALL:
+                b3.setSelected(true);
+                break;
+            default:
+                // fall out
+                break;
+        }
+        JPanel panel = new JPanel();
+        panel.add(WarrantRoute.makeTextBoxPanel(vertical, p, "MergeRoster", "ToolTipMergeRoster"));
+        return panel;
     }
 
     private JPanel speedNamesPanel() {
@@ -492,6 +542,12 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
         if (preferences.getThrottleScale() != scale) {
             preferences.setThrottleScale(scale);
+            _isDirty = true;
+        }
+
+        WarrantPreferences.Shutdown shutDown = preferences.getShutdown();
+        if (shutDown != _shutdown) {
+            preferences.setShutdown(_shutdown);
             _isDirty = true;
         }
 
