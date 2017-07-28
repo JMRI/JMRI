@@ -9,6 +9,8 @@ import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Panel to show DCC4PC status
@@ -43,7 +45,11 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         // ask to be notified
         Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
         nextPacket = 0x00;
-        tc.sendDcc4PcMessage(m, this);
+        if(tc!=null){
+            tc.sendDcc4PcMessage(m, this);
+        } else {
+            log.error("no Traffic Controller Found");
+        }
 
         sendButton = new JButton("Update");
         sendButton.setVisible(true);
@@ -71,22 +77,25 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     // to free resources when no longer used
     @Override
     public void dispose() {
-        tc.removeDcc4PcListener(this);
-        tc = null;
+        if(tc!=null){
+            tc.removeDcc4PcListener(this);
+            tc = null;
+        }
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        reset();
-        Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
-        nextPacket = 0x00;
-        tc.sendDcc4PcMessage(m, this);
-
+        if(tc!=null){
+            reset();
+            Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
+            nextPacket = 0x00;
+            tc.sendDcc4PcMessage(m, this);
+        }
     }
 
     @SuppressWarnings("unused")
     private void checkTC() throws JmriException {
         if (tc == null) {
-            throw new JmriException("attempt to use EcosPowerManager after dispose");
+            throw new JmriException("attempt to use DCC4PC Traffic Controller after dispose");
         }
     }
 
@@ -162,10 +171,6 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
     }
-
-    @Override
-    public void processingData() {
-        //We should be increasing our timeout
-    }
-
+    
+    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class.getName());
 }
