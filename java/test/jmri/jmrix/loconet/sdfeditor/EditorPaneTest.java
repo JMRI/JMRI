@@ -20,7 +20,9 @@ public class EditorPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SdfBuffer buff = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         Assert.assertNotNull(buff);
-        new EditorFrame(buff).setVisible(true);
+        EditorFrame f = new EditorFrame(buff);
+        f.setVisible(true);
+        f.dispose();
     }
 
     // The minimal setup for log4J
