@@ -37,6 +37,6 @@ public class MrcPowerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcPowerManagerTest.class.getName());
 
 }

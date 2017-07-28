@@ -409,6 +409,14 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         return linesBuffer.toString();
     }
 
+    /** 
+     * Get access to the main text area. This is intended
+     * for use in e.g. scripting to extend the behavior of the window.
+     */
+    public final synchronized JTextArea getTextArea() {
+        return monTextPane;
+    }
+    
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *

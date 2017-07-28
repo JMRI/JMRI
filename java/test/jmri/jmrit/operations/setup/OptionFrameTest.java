@@ -119,6 +119,6 @@ public class OptionFrameTest extends OperationsSwingTestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class.getName());
 
 }

@@ -33,6 +33,6 @@ public class MemoryFrameActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryFrameActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MemoryFrameActionTest.class.getName());
 
 }

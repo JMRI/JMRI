@@ -33,6 +33,6 @@ public class SystemConsoleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConsoleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SystemConsoleTest.class.getName());
 
 }

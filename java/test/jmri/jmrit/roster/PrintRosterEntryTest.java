@@ -44,6 +44,6 @@ public class PrintRosterEntryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintRosterEntryTest.class.getName());
 
 }

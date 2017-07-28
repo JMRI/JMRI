@@ -19,8 +19,6 @@ public class PacketGenActionTest {
        
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
     @Test
     public void testStringCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -44,7 +42,7 @@ public class PacketGenActionTest {
         // resource bundle ) in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame(rb.getString("PacketGenFrameTitle"), false, false);
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("PacketGenFrameTitle"), false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(PacketGenFrame.class.getName(), frame.getClass().getName());

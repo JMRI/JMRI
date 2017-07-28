@@ -7,9 +7,7 @@ import org.junit.Test;
 
 
 /**
- * <p>
- * Title: XNetPacketizerTest </p>
- * <p>
+ * Tests for the jmri.jmrix.XNetPacketizer package
  *
  * @author Bob Jacobsen Copyrgiht (C) 2002
  * @author Paul Bender Copyright (C) 2016

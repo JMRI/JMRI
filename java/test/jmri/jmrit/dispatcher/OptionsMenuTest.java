@@ -39,6 +39,6 @@ public class OptionsMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OptionsMenuTest.class.getName());
 
 }

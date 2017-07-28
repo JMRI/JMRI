@@ -672,8 +672,9 @@
     <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
         <!-- Compile the java code from ${source} into ${target} -->
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <mkdir dir="${java.target.directory}"/>
         <javac srcdir="${java.source.directory}"
-               destdir="${target}"
+               destdir="${java.target.directory}"
                source="${source_version}"
                target="${jre_version}"
                includeantruntime="false"
@@ -682,7 +683,7 @@
                 <pathelement path="${libdir}/ecj.jar"/>
             </compilerclasspath>
             <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-            <classpath refid="compile.class.path"/>
+            <classpath refid="${java.class.path}"/>
         </javac>
     </target>
 
@@ -691,6 +692,8 @@
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${source}"/>
+          <param name="java.target.directory" value="${target}"/>
+          <param name="java.class.path" value="compile.class.path"/>
         </antcall>
     </target>
 
@@ -699,6 +702,8 @@
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${test}"/>
+          <param name="java.target.directory" value="${testtarget}"/>
+          <param name="java.class.path" value="test.class.path"/>
         </antcall>
     </target>
 
@@ -1276,7 +1281,7 @@
           <check>
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1334,6 +1339,7 @@
 
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1348,6 +1354,7 @@
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
+        </jacoco:coverage>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1434,7 +1441,7 @@
           <check>
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1460,7 +1467,7 @@
           <check>
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1468,6 +1475,33 @@
           </check>
        </jacoco:report>
     </target>
+
+    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
+
 
 
     <!-- end of test execution targets -->
@@ -2290,7 +2324,7 @@
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />
-            <antcall target="ci-test-appveyor" />
+            <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>
     </target>
 </project>

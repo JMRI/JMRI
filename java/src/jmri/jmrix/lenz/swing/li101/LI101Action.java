@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register an LI101Frame object.
- * <P>
+ * <p>
  * The {@link LI101Frame} is a configuration tool. Note that this class does not
  * provide port services for the LI101; that's done elsewhere.
  *
@@ -18,7 +18,7 @@ public class LI101Action extends AbstractXPressNetAction {
     }
 
     public LI101Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LI101 Configuration Manager", memo);
+        this(Bundle.getMessage("MenuItemLI101ConfigurationManager"), memo);
     }
 
     @Override

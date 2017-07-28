@@ -283,7 +283,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             log.error("illegal system prefix in CMRI system name: " + systemName);
             return false;
         }
-        ;
+
         if (systemName.charAt(offset) != type) {
             log.error("illegal type character in CMRI system name: " + systemName);
             return false;

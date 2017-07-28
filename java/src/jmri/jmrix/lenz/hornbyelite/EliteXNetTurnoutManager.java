@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2008
-  */
+ */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
     public EliteXNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller, String prefix) {
@@ -18,6 +18,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // XNet-specific methods
+
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
@@ -26,12 +27,12 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
         return t;
     }
 
-    // listen for turnouts, creating them as needed
+    /**
+     * Listen for turnouts, creating them as needed
+     */
     @Override
     public void message(jmri.jmrix.lenz.XNetReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
+        log.debug("received message: {}", l);
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
@@ -41,9 +42,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                 // XpressNet address 2
                 // in the message.
                 if (addr >= 0) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("message has address: " + addr);
-                    }
+                    log.debug("message has address: {}", addr);
                     // reach here for switch command; make sure we know 
                     // about this one
                     String s = "XT" + (addr - 1);

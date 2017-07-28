@@ -37,6 +37,6 @@ public class MrcProgrammerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcProgrammerTest.class.getName());
 
 }

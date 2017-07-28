@@ -33,6 +33,6 @@ public class EasyDccCommandStationTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStationTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStationTest.class.getName());
 
 }

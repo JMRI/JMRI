@@ -33,6 +33,6 @@ public class PM4PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PM4PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PM4PanelTest.class.getName());
 
 }

@@ -2741,7 +2741,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             }
 
             NamedBean getBean() {
-                return (NamedBean) namedBean.getBean();
+                return namedBean.getBean();
             }
 
             NamedBeanHandle<?> getNamedBean() {
