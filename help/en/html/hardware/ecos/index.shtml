@@ -129,18 +129,18 @@
 
         <li>Send ECoS Command</li>
 
-        <li>ECoS Info</li>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml">ECoS Info</a></li>
 
-        <li>ECoS Loco Database</li>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/locodatabase/EcosLocoTable.shtml">ECoS Loco Database</a></li>
 
-        <li>ECoS Preferences</li>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/preferencesframe/PreferencesFrame.shtml">ECoS Preferences</a></li>
 
         <li>Add Loco to ECoS</li>
 
       </ul>
 
       <h3>ECoS Loco Database</h3>
-      The ECoS Loco Database tool allows
+      The <a href="../../../package/jmri/jmrix/ecos/swing/locodatabase/EcosLocoTable.shtml">ECoS Loco Database</a> tool allows
       you to view all the Locos that are configured on the ECoS,
       assign them to a JMRI Roster entry or Import it in to the
       JMRI Roster.
@@ -161,6 +161,26 @@
       changed in the ECoS Preferences menu.<br>
       Use the Add Loco to ECoS tool to manually copy a Roster entry
       from JMRI to your ECoS.
+      
+      <h2>Documentation</h2>
+
+      <h3>JMRI Help</h3>
+
+      <ul>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/locodatabase/EcosLocoTable.shtml">ECoS Database tool</a></li>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/preferencesframe/PreferencesFrame.shtml">ECoS Preferences</a></li>
+        <li><a href="../../../package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml">ECoS Satus Frame</a></li>
+      </ul>
+
+      <h3>Third Party info</h3>
+
+      <p>For more information on ESU ECoS, please see:</p>
+
+      <ul>
+        <li>The <a href="http://www.esu.eu/en/support/tips-tricks/ecos/">ESU web
+      site</a></li>
+      </ul>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
