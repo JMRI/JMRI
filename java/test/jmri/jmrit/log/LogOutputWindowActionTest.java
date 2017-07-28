@@ -33,6 +33,6 @@ public class LogOutputWindowActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LogOutputWindowActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LogOutputWindowActionTest.class.getName());
 
 }

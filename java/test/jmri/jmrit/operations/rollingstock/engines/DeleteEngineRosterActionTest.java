@@ -38,6 +38,6 @@ public class DeleteEngineRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class.getName());
 
 }

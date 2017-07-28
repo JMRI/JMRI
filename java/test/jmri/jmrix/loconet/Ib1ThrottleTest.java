@@ -35,6 +35,6 @@ public class Ib1ThrottleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleTest.class.getName());
 
 }

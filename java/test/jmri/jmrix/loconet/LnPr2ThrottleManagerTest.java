@@ -40,6 +40,6 @@ public class LnPr2ThrottleManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManagerTest.class.getName());
 
 }

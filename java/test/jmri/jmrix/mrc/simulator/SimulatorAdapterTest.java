@@ -33,6 +33,6 @@ public class SimulatorAdapterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimulatorAdapterTest.class.getName());
 
 }

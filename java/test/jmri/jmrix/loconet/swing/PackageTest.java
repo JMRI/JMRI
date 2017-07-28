@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     jmri.jmrix.loconet.swing.throttlemsg.PackageTest.class,
     LnComponentFactoryTest.class,
-    LocoNetMenuTest.class
+    LocoNetMenuTest.class,
+    LnNamedPaneActionTest.class
 })
 public class PackageTest {
 }

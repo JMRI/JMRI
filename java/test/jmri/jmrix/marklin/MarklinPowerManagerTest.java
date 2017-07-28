@@ -35,6 +35,6 @@ public class MarklinPowerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class.getName());
 
 }

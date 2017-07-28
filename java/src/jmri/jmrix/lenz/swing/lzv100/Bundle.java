@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.lenz.swing.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.lenz.swing.lzv100.LZV100Bundle"; // NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

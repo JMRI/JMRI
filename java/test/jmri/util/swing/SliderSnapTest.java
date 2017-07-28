@@ -33,6 +33,6 @@ public class SliderSnapTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SliderSnapTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SliderSnapTest.class.getName());
 
 }

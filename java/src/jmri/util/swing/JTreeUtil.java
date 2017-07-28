@@ -43,7 +43,7 @@ public class JTreeUtil extends GuiUtilBase {
         node.setUserObject(actionFromNode(main, wi, context));
 
         main.getChildren("node").stream().forEach((child) -> {
-            node.add(treeFromElement((Element) child, wi, context));
+            node.add(treeFromElement(child, wi, context));
         });
         return node;
     }

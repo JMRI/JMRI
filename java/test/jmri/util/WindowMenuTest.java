@@ -38,6 +38,6 @@ public class WindowMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WindowMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WindowMenuTest.class.getName());
 
 }

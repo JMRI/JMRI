@@ -130,7 +130,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testAutoCreateNotOK() {
         try {
-        NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
+            InstanceManager.getDefault(NoAutoCreate.class);
             Assert.fail("Expected NullPointerException not thrown");
         } catch (NullPointerException ex) {
             // passes
