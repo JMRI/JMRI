@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * Frame for running CMRI assignment list.
  *
  * @author Dave Duchamp Copyright (C) 2006
- * @autho  Chuck Catania  Copyright (C) 2016, 2017
+ * @author  Chuck Catania  Copyright (C) 2016, 2017
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 

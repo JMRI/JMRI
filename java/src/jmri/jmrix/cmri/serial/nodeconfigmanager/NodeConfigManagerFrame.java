@@ -106,7 +106,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JPanel panelnetOptBox = new JPanel();  //c2 CMRInet options frame
     protected javax.swing.JPanel panelnodeOpt = new JPanel();   //c2 node options
 	
-    private static boolean changedNode = false;  // true if a node was changed, deleted, or added
+    protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
 	
     protected SerialNode curNode = null;    // Serial Node being editted
@@ -1778,7 +1778,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             log.info("nodeAddress < 0");
             return;
         }
-        if (nodeAddress < 0) return;
         
         // get the SerialNode corresponding to this node address
         //------------------------------------------------------
