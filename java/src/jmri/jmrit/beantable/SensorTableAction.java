@@ -230,8 +230,11 @@ public class SensorTableAction extends AbstractTableAction {
             case "XpressNet":
             case "NCE":
             case "DCC++":
-                log.debug("Custom tooltip [{}]", "AddEntryToolTip" + connectionChoice);
-                sysNameTextField.setToolTipText(Bundle.getMessage("AddEntryToolTip" + connectionChoice));
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddInputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) + "<br>" +
+                        Bundle.getMessage("AddInputEntryToolTip" + connectionChoice) + "</html>");
                 break;
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");

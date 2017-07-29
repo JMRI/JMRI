@@ -1666,8 +1666,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             case "XpressNet":
             case "NCE":
             case "DCC++":
-                log.debug("Custom tooltip [{}]", "AddEntryToolTip" + connectionChoice);
-                sysNameTextField.setToolTipText(Bundle.getMessage("AddEntryToolTip" + connectionChoice));
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) + "<br>" +
+                        Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
                 break;
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");

@@ -757,8 +757,11 @@ public class LightTableAction extends AbstractTableAction {
             case "XpressNet":
             case "NCE":
             case "DCC++":
-                log.debug("Custom tooltip [{}]", "AddEntryToolTip" + connectionChoice);
-                fieldHardwareAddress.setToolTipText(Bundle.getMessage("AddEntryToolTip" + connectionChoice));
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
+                fieldHardwareAddress.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) + "<br>" +
+                        Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
                 break;
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
