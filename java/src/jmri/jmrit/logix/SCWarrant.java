@@ -90,6 +90,7 @@ public class SCWarrant extends Warrant {
         log.debug(_trainName+" notifyThrottleFound address= " + throttle.getLocoAddress().toString() + " _runMode= " + _runMode);
         
         startupWarrant();
+        getSpeedUtil().setThrottle(throttle);
         _engineer = new Engineer(this, throttle);
         firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();
@@ -115,7 +116,7 @@ public class SCWarrant extends Warrant {
                     aspect = ((SignalMast) _nextSignal).getAspect();
                 }
             }
-            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, _engineer.getSpeed(),signal,aspect);
+            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, _engineer._throttle.getSpeedSetting(),signal,aspect);
         }
     }
 
@@ -300,7 +301,7 @@ public class SCWarrant extends Warrant {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }
-        if (_engineer.getSpeed() == SPEED_STOP) {
+        if (_engineer == null || _engineer._throttle.getSpeedSetting() == SPEED_STOP) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }

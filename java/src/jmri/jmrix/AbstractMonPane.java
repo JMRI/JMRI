@@ -628,6 +628,14 @@ public abstract class AbstractMonPane extends JmriPanel {
         return monTextPane.getText();
     }
 
+    /** 
+     * Get access to the main text area. This is intended
+     * for use in e.g. scripting to extend the behavior of the window.
+     */
+    public final synchronized JTextArea getTextArea() {
+        return monTextPane;
+    }
+
     public synchronized String getFilterText() {
         return filterField.getText();
     }

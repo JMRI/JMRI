@@ -30,7 +30,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRNodeTrafficController(){
            @Override
-           protected void setInstance() {};
+           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }

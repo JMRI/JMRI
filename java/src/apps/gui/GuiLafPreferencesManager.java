@@ -67,7 +67,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
-    private boolean verticalToolBar = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private boolean dirty = false;

@@ -175,7 +175,7 @@ public class WarrantTest {
         
 //        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
 //        Assert.assertNotNull("dccAddress", dccAddress);
-        warrant.setDccAddress("999(L)");
+        warrant.getSpeedUtil().setDccAddress("999(L)");
         msg = warrant.setRoute(0, orders);
         Assert.assertNull("setRoute - "+msg, msg);
         msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
@@ -187,6 +187,7 @@ public class WarrantTest {
         PropertyChangeListener listener = new WarrantListener(warrant);
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
+        Assert.assertNotNull("speedProfile", warrant.getSpeedUtil().getSpeedProfile());
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
@@ -209,10 +210,7 @@ public class WarrantTest {
                 sSouth.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitUtil.releaseThread(this, 100);
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
@@ -256,6 +254,7 @@ public class WarrantTest {
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initShutDownManager();
 //        JUnitUtil.initWarrantManager();
     }
 

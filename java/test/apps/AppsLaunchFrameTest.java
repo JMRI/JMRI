@@ -43,5 +43,4 @@ public class AppsLaunchFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrameTest.class.getName());
-
 }

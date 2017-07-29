@@ -1,12 +1,11 @@
 package jmri;
 
 import apps.gui3.TabbedPreferences;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,7 +68,7 @@ public class InstanceManager {
     protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
     private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
     // data members to hold contact with the property listeners
-    private static final HashSet<PropertyChangeListener> listeners = new HashSet<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /* properties */
     /**
@@ -124,6 +123,7 @@ public class InstanceManager {
         log.debug("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
         }
         return (List<T>) managerLists.get(type);
     }
@@ -150,7 +150,9 @@ public class InstanceManager {
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         ArrayList<T> l = (ArrayList<T>) getList(type);
+        int index = l.indexOf(item);
         l.remove(item);
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
@@ -177,6 +179,8 @@ public class InstanceManager {
      * @see #getOptionalDefault(java.lang.Class)
      */
     @Nonnull
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", 
+            justification = "FindBugs 3.0.1 flags the Objects.requireNonNull call as having a possible null argument, which is the entire point")
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
         return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
@@ -319,38 +323,45 @@ public class InstanceManager {
     }
 
     /**
-     * Remove notification on changes to specific types
+     * Remove notification on changes to specific types.
      *
-     * @param l The listener to remove.
+     * @param l The listener to remove
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        getDefault().pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * Remove notification on changes to specific types.
+     *
+     * @param propertyName the property being listened for
+     * @param l            The listener to remove
+     */
+    public static synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.removePropertyChangeListener(propertyName, l);
+    }
+
+    /**
+     * Register for notification on changes to specific types.
+     *
+     * @param l The listener to add
+     */
+    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(l);
     }
 
     /**
      * Register for notification on changes to specific types
      *
-     * @param l The listener to add.
+     * @param propertyName the property being listened for
+     * @param l            The listener to add
      */
-    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.add(l);
-        }
+    public static synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(propertyName, l);
     }
 
     protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        HashSet<PropertyChangeListener> set;
-        synchronized (InstanceManager.class) {
-            set = new HashSet<>(listeners);
-        }
-        // forward to all listeners
-        set.stream().forEach((listener) -> {
-            listener.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
-        });
+        getDefault().pcs.firePropertyChange(property, oldValue, newValue);
     }
 
     /**
@@ -363,6 +374,18 @@ public class InstanceManager {
      */
     public static String getDefaultsPropertyName(Class<?> clazz) {
         return "default-" + clazz.getName();
+    }
+
+    /**
+     * Get the property name included in the
+     * {@link java.beans.PropertyChangeEvent} thrown when the list for a
+     * specific class is changed.
+     *
+     * @param clazz the class being listened for
+     * @return the property name
+     */
+    public static String getListPropertyName(Class<?> clazz) {
+        return "list-" + clazz.getName();
     }
 
     /* ****************************************************************************
@@ -884,5 +907,26 @@ public class InstanceManager {
     // }
 
     /* *************************************************************************** */
+    /**
+     * Default constructor for the InstanceManager.
+     */
+    public InstanceManager() {
+        // do nothing
+    }
+
+    /**
+     * Get the default instance of the InstanceManager. This is used for
+     * verifying the source of events fired by the InstanceManager.
+     *
+     * @return the default instance of the InstanceManager, creating it if
+     *         needed
+     */
+    @Nonnull
+    public static synchronized InstanceManager getDefault() {
+        return InstanceManager.getOptionalDefault(InstanceManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(InstanceManager.class, new InstanceManager());
+        });
+    }
+
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }

@@ -108,7 +108,7 @@ public class InputWindow extends JPanel {
         });
         languages = new JComboBox<>(names.toArray(new String[names.size()]));
         if (pref.getComboBoxLastSelection(languageSelection) != null) {
-            languages.setSelectedItem((String) pref.getComboBoxLastSelection(languageSelection));
+            languages.setSelectedItem(pref.getComboBoxLastSelection(languageSelection));
         }
 
         JPanel p = new JPanel();
