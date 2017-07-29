@@ -51,7 +51,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         if (timeMemory == null) {
             timeMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
                         Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"TIME");
-            timeMemory.setValue(new Integer(DEFAULT_RUN_TIME_LENGTH));
+            timeMemory.setValue(Integer.valueOf(DEFAULT_RUN_TIME_LENGTH));
         }
 
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -59,11 +59,25 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
         
-        hRightHeads = new ArrayList<>();
-        for (String s : rightHeads) hRightHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
-
-        hLeftHeads = new ArrayList<>();
-        for (String s : leftHeads) hLeftHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
+        hRightHeads = new ArrayDeque<>();
+        for (String s : rightHeads) {
+            SignalHead sh = shm.getSignalHead(s);
+            if (sh != null) {
+                hRightHeads.add(hm.getNamedBeanHandle(s,sh));
+            } else {
+                log.debug("Signal {} for SignalHeadSection wasn't found", s);
+            }
+        }
+        
+        hLeftHeads = new ArrayDeque<>();
+        for (String s : leftHeads) {
+            SignalHead sh = shm.getSignalHead(s);
+            if (sh != null) {
+                hLeftHeads.add(hm.getNamedBeanHandle(s,sh));
+            } else {
+                log.debug("Signal {} for SignalHeadSection wasn't found", s);
+            }
+        }
         
         hLeftIndicator = hm.getNamedBeanHandle(leftIndicator, tm.provideTurnout(leftIndicator));
         hStopIndicator = hm.getNamedBeanHandle(stopIndicator, tm.provideTurnout(stopIndicator));
@@ -83,22 +97,23 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         setListHeldState(hLeftHeads, true);
         
         // add listeners
-        for (String s : leftHeads) 
-            shm.getSignalHead(s).addPropertyChangeListener(
+        for (NamedBeanHandle<Signal> b : hRightHeads) {
+            b.getBean().addPropertyChangeListener(
                 (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
             );
-        for (String s : rightHeads) 
-            shm.getSignalHead(s).addPropertyChangeListener(
+        }
+        for (NamedBeanHandle<Signal> b : hLeftHeads) {
+            b.getBean().addPropertyChangeListener(
                 (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
             );
-
+        }
     }
     
     Memory timeMemory = null;
     Memory logMemory = null;
     
-    ArrayList<NamedBeanHandle<Signal>> hRightHeads;
-    ArrayList<NamedBeanHandle<Signal>> hLeftHeads;
+    ArrayDeque<NamedBeanHandle<Signal>> hRightHeads;
+    ArrayDeque<NamedBeanHandle<Signal>> hLeftHeads;
 
     NamedBeanHandle<Turnout> hLeftIndicator;
     NamedBeanHandle<Turnout> hStopIndicator;
@@ -276,30 +291,30 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
     }
 
-    protected void setListHeldState(ArrayList<NamedBeanHandle<Signal>> list, boolean state) {
+    protected void setListHeldState(Iterable<NamedBeanHandle<Signal>> list, boolean state) {
         for (NamedBeanHandle<Signal> handle : list) {
             if (handle.getBean().getHeld() != state) handle.getBean().setHeld(state);
         }
     }
     
     public String toString() {
-        String retVal = "SignalHeadSection [";
+        StringBuffer retVal = new StringBuffer("SignalHeadSection [");
         boolean first;
         first = true;
         for (NamedBeanHandle<Signal> handle : hRightHeads) {
-            if (!first) retVal = retVal + ", ";
+            if (!first) retVal.append(", ");
             first = false;
-            retVal = retVal + "\""+ handle.getName()+"\"";
+            retVal.append("\"").append(handle.getName()).append("\"");
         }
-        retVal = retVal+"],[";
+        retVal.append("],[");
         first = true;
         for (NamedBeanHandle<Signal> handle : hLeftHeads) {
-            if (!first) retVal = retVal + ", ";
+            if (!first) retVal.append(", ");
             first = false;
-            retVal = retVal + "\""+ handle.getName()+"\"";
+            retVal.append("\"").append(handle.getName()).append("\"");
         }        
-        retVal = retVal+"]";
-        return retVal;
+        retVal.append("]");
+        return retVal.toString()    ;
     }
     
     /**

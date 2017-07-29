@@ -11,7 +11,6 @@ import java.util.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
-@net.jcip.annotations.Immutable
 public class CodeLine {
 
     /**

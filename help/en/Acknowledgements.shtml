@@ -189,10 +189,12 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li>Egbert Broerse, who worked on translations, improved
-        the signaling help and website content, contributed the
-        Rio Grande 1965 signal definition and greatly improved the GUI
-        for adding turnouts and signals.</li>
+        <li>Egbert Broerse, who worked on translations, added
+        Switchboards, graphic state display in the tables,
+        the Output Matrix signal mast and the Rio Grande 1965
+        signal definition, localized hardware connection tools and 
+        improved the signaling help, website content and
+        the GUI for adding turnouts and signals.</li>
 
         <li>Dick Bronson, who created the great LocoBuffer-II and
         worked hard to make sure it worked well with JMRI. He also
@@ -422,6 +424,8 @@
         the UK press, greatly helped with ZTC decoder definitions,
         provided the DH83FX definition, and many great
         suggestions</li>
+
+        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
 
         <li>Bill Gray suggested web page improvements</li>
 

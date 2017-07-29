@@ -14,7 +14,9 @@ import org.junit.runners.Suite;
     BundleTest.class,
     ProgModeExceptionTest.class,
     ProgDeferredServiceModePaneTest.class,
-    ProgServiceModeComboBoxTest.class
+    ProgServiceModeComboBoxTest.class,
+    ProgModePaneTest.class,
+    ProgOpsModePaneTest.class
 })
 public class PackageTest {
 }

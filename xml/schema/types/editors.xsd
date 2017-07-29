@@ -1566,6 +1566,22 @@
       </xs:attribute>
 
       <xs:attribute name="tristate" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="singleSlipRoute">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="upperWestToUpperEast"></xs:enumeration>
+            <xs:enumeration value="lowerWestToLowerEast"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="firstTurnoutExit">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="upper"></xs:enumeration>
+            <xs:enumeration value="lower"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
 
