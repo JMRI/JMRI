@@ -1,9 +1,9 @@
-# Author: Lionel Jeanson copyright 2009
+# Author: Lionel Jeanson copyright 2017
 # Part of the JMRI distribution
 #
 # Use a Nintendo Wiimote device as a throttle
 # You need to have Bluecove and WiiRemoteJ jars in your Java classpath, JMRI lib folder is a good place for that (copy both jars there)
-# See: http://bluecove.org/ and https://github.com/micromu/WiiRemoteJ 
+# See: http://bluecove.org/ and https://github.com/micromu/WiiRemoteJ
 #
 # once Jynstrument started (aka WiimoteThrottle.jyn **FOLDER** (no the py file) dropped into a throttle window toolbar
 # press 1+2 on the Wiimote you want to use, it should connect
@@ -16,47 +16,80 @@
 #
 # Default control:
 #   left / right : browse through throttles in instrumented window
-#   home   : lights
+#   home   : lights (function 0 or advanced function 0)
 #    +/-   : direction
 #     A    : brake
 #     B    : accelerate
-#     1       : jump speed to "Cruise speed"
-#     1 twice : jump speed to "Max speed" 
-#     2       : jump speed to "Slow Speed"
-#     2 twice : jump speed to "Stop Speed"
 #    1+2      : EStop 
+#     1   :function 1 (or advanced function 1)
+#     2   :function 2 (or advanced function 2)
+#
 
 speedEStopSpeed = -1
-speedStopSpeed = 0
-speedSlowSpeed = 0.3
-speedCruiseSpeed = 0.8
-speedMaxSpeed = 1
-
 valueSpeedTimerRepeat = 25 # repeat time in ms for speed set task
 valueSpeedIncrement = 0.01
 
-delay4double = 500 # delay for double tap on button (ms)
-
 import java
-import jmri
-import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
-import javax.swing.Timer as Timer
 import java.awt.event.ActionListener as ActionListener
 import java.util.Calendar as Calendar
 import java.lang.Runnable as Runnable
-import thread
+import javax.swing.Timer as Timer
+import javax.swing.JButton as JButton
+import javax.swing.ImageIcon as ImageIcon
 import javax.swing.SwingUtilities as SwingUtilities
+import thread
+import jmri.jmrit.throttle.AddressListener as AddressListener
+import jmri.jmrit.jython.Jynstrument as Jynstrument
 import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
 import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
 import wiiremotej.WiiRemoteJ as WiiRemoteJ
 import wiiremotej.event.WRButtonEvent as WRButtonEvent
-import javax.swing.JButton as JButton
-import javax.swing.ImageIcon as ImageIcon
 
-class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):
+
+class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):
+    #Jynstrument main and mandatory methods
+    def getExpectedContextClassName(self):
+        return "jmri.jmrit.throttle.ThrottleWindow"
+    
+    def init(self):
+        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
+        self.addressPanel=self.getContext().getCurrentThrottleFrame().getAddressPanel();
+        self.addressPanel.addAddressListener(self) # change of throttle in Current frame
+        self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        self.speedAction =  SpeedAction()  #Speed increase thread
+        self.speedAction.setThrottle( self.throttle )
+        self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
+        self.speedTimer.setRepeats(True)
+        self.label = JButton(ImageIcon(self.getFolder() + "/WiimoteThrottle2.png","WiiMote")) #label
+        self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
+        self.add(self.label)
+        self.lastTimeButton1 = Calendar.getInstance().getTimeInMillis()
+        self.lastTimeButton2 = Calendar.getInstance().getTimeInMillis()
+        self.advFunctions = AdvFunctions()
+        self.lastTimeEStop = Calendar.getInstance().getTimeInMillis()
+        self.wiiDevice = None
+        self.sync = thread.allocate_lock() # A lock protecting bellow self.evt
+        self.evt = None
+        java.lang.System.setProperty("bluecove.jsr82.psm_minimum_off", "true"); # Required for Bluecove + WiiRemoteJ
+        WiiRemoteJ.findRemotes(self, 1) # Search for 1 Wiimote, and call back
+       
+    def quit(self):
+        self.speedTimer.stop() 
+        WiiRemoteJ.stopFind()
+        if ((self.wiiDevice != None) and (self.wiiDevice.isConnected())):
+            self.wiiDevice.removeWiiRemoteListener(self)
+            self.wiiDevice.disconnect()
+        self.wiiDevice = None
+        self.speedAction = None
+        self.speedTimer = None
+        self.throttle = None
+        self.advFunctions = None
+        self.getContext().removePropertyChangeListener(self)
+        self.addressPanel.removeAddressListener(self)
+        self.addressPanel = None    
     #Wiimote discoverer events
+        
     def findFinished(self, nb):
         print "Search finished, found ",nb ," wiimotes"
 
@@ -93,7 +126,7 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
             self.getContext().previousRunningThrottleFrame()  
         # No throttle assigned to current frame, browse through roster      
         if (self.throttle == None):
-            if ( evt.wasReleased(WRButtonEvent.HOME) ):  # Assign selected roster entry
+            if (evt.wasReleased(WRButtonEvent.HOME) ):  # Assign selected roster entry
                 self.addressPanel.selectRosterEntry()
                 return
             if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # Next roster entry
@@ -110,15 +143,6 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
                 return
         # Throttle assigned to current frame, control it  
         if (self.throttle != None):
-            if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
-                self.throttle.setF0( not self.throttle.getF0() )
-                return
-            if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # FORWARD
-                self.throttle.setIsForward(True)
-                return
-            if ( evt.wasReleased(WRButtonEvent.MINUS) ):  # BACKWARD
-                self.throttle.setIsForward(False)
-                return
             # Speed control
             if ( evt.isPressed(WRButtonEvent.B) ): # SPEED - increment
                 self.speedAction.setSpeedIncrement( valueSpeedIncrement )
@@ -129,29 +153,48 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
                 self.speedTimer.start()
                 return
             # EStop
-            if ( evt.isPressed( WRButtonEvent.ONE | WRButtonEvent.TWO ) ): # estop = button1 + button2
+            if ( evt.isPressed( WRButtonEvent.PLUS | WRButtonEvent.MINUS ) ): # estop = + & -
                 self.throttle.setSpeedSetting( speedEStopSpeed )
                 self.lastTimeEStop = Calendar.getInstance().getTimeInMillis() # To cancel next inputs
                 self.wiiDevice.vibrateFor(750)
                 return
-            # Speed presets
-            if (Calendar.getInstance().getTimeInMillis() - self.lastTimeEStop > delay4double): # Delay for nothing after EStop
-                if (( evt.wasReleased(WRButtonEvent.TWO) ) and           #STOP = button2 x2 or (button2 and CurrentSpeed = slow speed)
-                    ( (Calendar.getInstance().getTimeInMillis() - self.lastTimeButton2 < delay4double) or ( self.throttle.getSpeedSetting() == speedSlowSpeed ))):  
-                    self.throttle.setSpeedSetting( speedStopSpeed )
+            
+            if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # FORWARD
+                self.throttle.setIsForward(True)
+                return
+            if ( evt.wasReleased(WRButtonEvent.MINUS) ):  # BACKWARD
+                self.throttle.setIsForward(False)
+                return   
+                        
+            if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
+                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None):
+                   return
+                self.throttle.setF0( not self.throttle.getF0() )
+                return            
+            # Wiimote 1 & 2 buttons
+            if (evt.isPressed(WRButtonEvent.ONE)):
+                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None):
                     return
-                if ( evt.wasReleased(WRButtonEvent.TWO) ):               # SLOW SPEED = button2
-                    self.throttle.setSpeedSetting( speedSlowSpeed )
-                    self.lastTimeButton2 = Calendar.getInstance().getTimeInMillis()
+                # default F1 not momentary (switch only on Release, do nothing here)
+                return                                
+            if (evt.wasReleased(WRButtonEvent.ONE)):
+                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None):
                     return
-                if (( evt.wasReleased(WRButtonEvent.ONE) ) and           # MAX SPEED = button1x2 or (button1 and CurrentSpeed = cruise speed)
-                    ( (Calendar.getInstance().getTimeInMillis() - self.lastTimeButton1 < delay4double) or ( self.throttle.getSpeedSetting() == speedCruiseSpeed ))): 
-                    self.throttle.setSpeedSetting( speedMaxSpeed )
+                self.throttle.setF1( not self.throttle.getF1() )
+                return
+                
+            if (evt.isPressed(WRButtonEvent.TWO)):
+                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None):
                     return
-                if ( evt.wasReleased( WRButtonEvent.ONE) ):              # CRUISE SPEED = button1
-                    self.throttle.setSpeedSetting( speedCruiseSpeed )
-                    self.lastTimeButton1 = Calendar.getInstance().getTimeInMillis()
+                # default F2 momentary
+                self.throttle.setF2( not self.throttle.getF2() )
+                return                
+            if (evt.wasReleased(WRButtonEvent.TWO)):
+                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None):
                     return
+                self.throttle.setF2( not self.throttle.getF2() )
+                return                
+
 
     def disconnected(self):
         self.wiiDevice = None
@@ -185,45 +228,6 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
             self.throttle = self.addressPanel.getThrottle()
             self.speedAction.setThrottle( self.throttle )
             self.addressPanel.addAddressListener(self)
-
-#Jynstrument main and mandatory methods
-    def getExpectedContextClassName(self):
-        return "jmri.jmrit.throttle.ThrottleWindow"
-    
-    def init(self):
-        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.addressPanel=self.getContext().getCurrentThrottleFrame().getAddressPanel();
-        self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-        self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
-        self.speedAction =  SpeedAction()  #Speed increase thread
-        self.speedAction.setThrottle( self.throttle )
-        self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
-        self.speedTimer.setRepeats(True)
-        self.label = JButton(ImageIcon(self.getFolder() + "/WiimoteThrottle.png","WiiMote")) #label
-        self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
-        self.add(self.label)
-        self.lastTimeButton1 = Calendar.getInstance().getTimeInMillis()
-        self.lastTimeButton2 = Calendar.getInstance().getTimeInMillis()
-        self.lastTimeEStop = Calendar.getInstance().getTimeInMillis()
-        self.wiiDevice = None
-        self.sync = thread.allocate_lock() # A lock protecting bellow self.evt
-        self.evt = None
-        java.lang.System.setProperty("bluecove.jsr82.psm_minimum_off", "true"); # Required for Bluecove + WiiRemoteJ
-        WiiRemoteJ.findRemotes(self, 1) # Search for 1 Wiimote, and call back
-       
-    def quit(self):
-        self.speedTimer.stop() 
-        WiiRemoteJ.stopFind()
-        if ((self.wiiDevice != None) and (self.wiiDevice.isConnected())):
-            self.wiiDevice.removeWiiRemoteListener(self)
-            self.wiiDevice.disconnect()
-        self.wiiDevice = None
-        self.speedAction = None
-        self.speedTimer = None
-        self.throttle = None
-        self.getContext().removePropertyChangeListener(self)
-        self.addressPanel.removeAddressListener(self)
-        self.addressPanel = None
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):
@@ -288,3 +292,65 @@ class SpeedAction(ActionListener):
                 ns = 1
             throttle.setSpeedSetting( ns )
 
+class AdvFunctions():
+    # (rosterEntry, fnId , push (boolean)
+    def call(self, rosterEntry, advFn, status, throttle):
+        assert (rosterEntry!=None), "rosterEntry is null"
+        assert (advFn!=None), "advFn is null"
+        assert (status!=None), "status is null"
+        todoStr = self.getAdvFunctionString(rosterEntry, advFn)
+        if (todoStr == None):
+            return None
+        self.parseAdvFunctionString(rosterEntry, todoStr, status, throttle)                
+        return True
+
+    def getAdvFunctionString(self, rosterEntry, fn):
+        return rosterEntry.getAttribute("advF"+fn)
+
+    def parseAdvFunctionString(self, rosterEntry, todoStr, status, throttle):
+        todo = todoStr.split(";")
+        for task in todo:
+            task = task.lstrip()
+            # Actual function call 
+            if (task.startswith("F")):
+                if (throttle == None):
+                    print ("Was going to activate "+task+" but no throttle")
+                    continue                    
+                task = task.rstrip()
+                setter = None
+                getter = None
+                ok = False
+                for fct in throttle.getClass().getMethods():
+                    fctName = fct.getName()
+                    if (fctName == "set"+task):
+                        setter=fct
+                    if (fctName == "get"+task):
+                        getter=fct
+                    if (setter != None and getter != None):
+                        ok = True
+                        break
+                if (ok):
+                    if (not rosterEntry.getFunctionLockable(int(task[1:]))):
+                        setter.invoke(throttle, status)
+                    else:
+                        state = getter.invoke(throttle)
+                        setter.invoke(throttle, not state)
+                continue
+            # Play sound
+            if (task.startswith("P") and status):
+                path = task[1:]
+                self.play(path)
+                continue
+                
+    def play(self, sndPath):
+        assert (sndPath!=None), "sndPath is null"   
+        source = audio.getAudio("IAS"+sndPath)
+        if (source == None):
+            buffer = audio.getAudio("IAS"+sndPath)
+            if (buffer == None):
+                buffer = audio.provideAudio("IAB"+sndPath)
+                buffer.setURL(sndPath)
+            source = audio.provideAudio("IAS"+sndPath)
+            source.setAssignedBuffer("IAB"+sndPath)
+        # would need to update location here
+        source.play()
