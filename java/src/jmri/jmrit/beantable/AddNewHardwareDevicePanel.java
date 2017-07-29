@@ -71,7 +71,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         JPanel panelBottom = new JPanel();
         panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
-        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        panelBottom.add(cancel);
         cancel.addActionListener(cancelListener);
 
         panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
@@ -115,11 +115,12 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton ok;
-    JButton cancel;
+    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName"));
     JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
+
 }
