@@ -106,6 +106,7 @@
                   <xs:attribute name="command" type="xs:string" use="required"></xs:attribute>
                   <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
                   <xs:attribute name="block" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="speed" type="xs:string"></xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="train" minOccurs="0" maxOccurs="1">

@@ -87,11 +87,8 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         public void handleTimeout(Dcc4PcMessage m) {
         }
 
-        @Override
-        public void processingData(){
-        }
-
     }
+    
     Dcc4PcReply rcvdReply;
     Dcc4PcMessage rcvdMsg;
 
