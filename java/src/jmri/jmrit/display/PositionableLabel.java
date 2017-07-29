@@ -624,8 +624,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (_displayLevel > Editor.BKG) {
-            popup.add(CoordinateEdit.getRotateEditAction(this));
-            return true;
+//             popup.add(CoordinateEdit.getRotateEditAction(this));
+            return _editor.setShowRotationMenu(this, popup);
         }
         return false;
     }

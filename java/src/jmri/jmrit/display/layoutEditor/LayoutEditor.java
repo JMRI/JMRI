@@ -522,8 +522,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean animatingLayout = true;
     private boolean showHelpBar = true;
     private boolean drawGrid = false;
+
     private boolean snapToGridOnAdd = false;
     private boolean snapToGridOnMove = false;
+    private boolean snapToGridInvert = false;
+
     private boolean antialiasingOn = false;
     private boolean highlightSelectedBlockFlag = false;
 
@@ -619,7 +622,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //TODO: Add code to set default save file name to name of currently loaded config/panel
         //TODO: need to setSelectedFile
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
-        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
@@ -2010,12 +2013,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         targetWindowClosing(save);
     }   //targetWindowClosingEvent
 
-    //
-    //setup editable JmriBeanComboBoxes
-    //
-    //note: inValidateMode  if true, valid text == green, invalid text == red background
-    //          "       "  if false, valid text == green, invalid text == yellow background
-    //
+    /**
+     * setup editable JmriBeanComboBoxes
+     *
+     * @param inComboBox     the editable JmriBeanComboBoxes to setup
+     * @param inValidateMode boolean: if true, valid text == green, invalid text
+     *                       == red background; if false, valid text == green,
+     *                       invalid text == yellow background
+     * @param inEnable       boolean to enable / disable the JmriBeanComboBoxes
+     */
     public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
@@ -2208,7 +2214,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
         editModeItem.setMnemonic(stringsToVTCodes.get(rb.getString("EditModeMnemonic")));
-        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         editModeItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(rb.getString("EditModeAccelerator")), primary_modifier));
         editModeItem.addActionListener((ActionEvent event) -> {
@@ -3131,7 +3137,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
 
-        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
         //add zoom choices to menu
         JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
@@ -5225,6 +5231,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         _lastX = _anchorX;
         _lastY = _anchorY;
         calcLocation(event);
+        
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
@@ -5697,16 +5706,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //initialize mouse position
         calcLocation(event);
 
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 
             // released the mouse with shift down... see what we're adding
-            if ((!event.isPopupTrigger()) && (!event.isMetaDown())
-                    && (!event.isAltDown()) && event.isShiftDown()) {
+            if ((!event.isPopupTrigger()) && (!event.isMetaDown()) && event.isShiftDown()) {
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
-                if (snapToGridOnAdd) {
+                if (snapToGridOnAdd != snapToGridInvert) {
                     // this snaps the current point to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
@@ -6130,6 +6141,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void mouseClicked(MouseEvent event) {
+
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
         if ((!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown())
                 && (!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown())) {
             calcLocation(event);
@@ -7388,7 +7403,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         double deltaX = returnDeltaPositionX(e);
         double deltaY = returnDeltaPositionY(e);
         if ((deltaX != 0) || (deltaY != 0)) {
-
             if (_positionableSelection != null) {
                 for (Positionable c : _positionableSelection) {
                     int xNew;
@@ -7557,6 +7571,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void mouseMoved(MouseEvent event) {
         calcLocation(event);
 
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
@@ -7593,6 +7610,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             return;
         }
 
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
         //process this mouse dragged event
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
@@ -7615,9 +7635,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         if (isEditable()) {
-            if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
+            if ((selectedObject != null) && event.isMetaDown() && allPositionable()) {
                 //moving a point
-                if (snapToGridOnMove) {
+                if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();

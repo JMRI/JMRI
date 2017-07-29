@@ -280,8 +280,9 @@ public class PositionableShape extends PositionableJComponent
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (super.getDisplayLevel() > Editor.BKG) {
-            popup.add(CoordinateEdit.getRotateEditAction(this));
-            return true;
+//             popup.add(CoordinateEdit.getRotateEditAction(this));
+//             return true;
+            return _editor.setShowRotationMenu(this, popup);
         }
         return false;
     }

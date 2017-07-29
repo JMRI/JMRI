@@ -55,14 +55,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         setStoreElementClass(blocks);
         BlockManager tm = (BlockManager) o;
         if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
 
             // don't return an element if there are not blocks to include
             if (!iter.hasNext()) {
                 return null;
             }
             blocks.addContent(new Element("defaultspeed").addContent(tm.getDefaultSpeed()));
+
             // write out first set of blocks without contents
             while (iter.hasNext()) {
                 try {
@@ -77,11 +77,11 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         } else {
                             Element elem = new Element("block");
                             elem.addContent(new Element("systemName").addContent(sname));
-                            
+
                             // As a work-around for backward compatibility, store systemName as attribute.
                             // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                             elem.setAttribute("systemName", sname);
-                            
+
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
                             String uname = b.getUserName();
                             if ((uname != null) && (!uname.equals(""))) {
@@ -99,6 +99,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     log.error(e.toString());
                 }
             }
+
             // write out again with contents
             iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
@@ -117,11 +118,11 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         }
                         Element elem = new Element("block");
                         elem.addContent(new Element("systemName").addContent(sname));
-                            
+
                         // As a work-around for backward compatibility, store systemName as attribute.
                         // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                         elem.setAttribute("systemName", sname);
-                            
+
                         if (log.isDebugEnabled()) {
                             log.debug("second store Block " + sname + ":" + uname);
                         }
@@ -175,7 +176,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             }
         }
         return blocks;
-    }
+    }   // class BlockManagerXml
 
     void addPath(Element e, Path p) {
         // for now, persist two directions and a bean setting
@@ -244,7 +245,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             loadBlock(block);
         }
         return result;
-    }
+    }   // load
 
     /**
      * Utility method to load the individual Block objects.
@@ -368,8 +369,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (startSize + loadCount != block.getPaths().size()) {
             log.error("Started with " + startSize + " paths in block " + sysName + ", added " + loadCount + " but final count is " + block.getPaths().size() + "; something not right.");
         }
-
-    }
+    }   // loadBlock
 
     /**
      * Load path into an existing Block from XML.
@@ -417,7 +417,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             log.debug("Skipping load of duplicate path {}", path);
             return false;
         }
-    }
+    }   // loadPath
 
     /**
      * Load BeanSetting into an existing Path.
@@ -444,8 +444,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         } catch (IllegalArgumentException ex) {
             log.warn("failed to create Turnout \"{}\" during Block load", name);
         }
-
-    }
+    }   // loadBeanSetting
 
     @Override
     public int loadOrder() {
@@ -453,4 +452,4 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());
-}
+}   // class BlockManagerXml
