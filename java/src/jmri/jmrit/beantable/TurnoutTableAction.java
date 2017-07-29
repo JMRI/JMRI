@@ -1656,7 +1656,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
-        log.debug("System selection made");
+        // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
