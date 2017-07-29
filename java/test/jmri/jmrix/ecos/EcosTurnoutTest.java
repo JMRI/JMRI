@@ -36,6 +36,6 @@ public class EcosTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosTurnoutTest.class.getName());
 
 }

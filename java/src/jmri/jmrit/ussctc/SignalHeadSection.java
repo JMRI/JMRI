@@ -2,12 +2,14 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 import java.util.*;
+import java.beans.*;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Drive a signal section on a USS CTC panel.
  * Implements {@link Section} for both the field and CTC machine parts.
  * <p>
- * Based on SignalHead signals for now.
+ * Based on the Signal interface.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  * TODO: Update state diagram
@@ -26,8 +28,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      * 
      * Accepts user or system names.
      *
-     * @param rightHeads  Set of SignalHeads to release when rightward travel allowed
-     * @param leftHeads  Set of SignalHeads to release when leftward travel allowed
+     * @param rightHeads  Set of Signals to release when rightward travel allowed
+     * @param leftHeads  Set of Signals to release when leftward travel allowed
      * @param leftIndicator  Turnout name for leftward indicator
      * @param stopIndicator  Turnout name for stop indicator
      * @param rightIndicator  Turnout name for rightward indicator
@@ -49,7 +51,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         if (timeMemory == null) {
             timeMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
                         Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"TIME");
-            timeMemory.setValue(new Integer(DEFAULT_RUN_TIME_LENGTH));
+            timeMemory.setValue(Integer.valueOf(DEFAULT_RUN_TIME_LENGTH));
         }
 
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -57,11 +59,25 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
         
-        hRightHeads = new ArrayList<>();
-        for (String s : rightHeads) hRightHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
-
-        hLeftHeads = new ArrayList<>();
-        for (String s : leftHeads) hLeftHeads.add(hm.getNamedBeanHandle(s, shm.getSignalHead(s)));
+        hRightHeads = new ArrayDeque<>();
+        for (String s : rightHeads) {
+            SignalHead sh = shm.getSignalHead(s);
+            if (sh != null) {
+                hRightHeads.add(hm.getNamedBeanHandle(s,sh));
+            } else {
+                log.debug("Signal {} for SignalHeadSection wasn't found", s);
+            }
+        }
+        
+        hLeftHeads = new ArrayDeque<>();
+        for (String s : leftHeads) {
+            SignalHead sh = shm.getSignalHead(s);
+            if (sh != null) {
+                hLeftHeads.add(hm.getNamedBeanHandle(s,sh));
+            } else {
+                log.debug("Signal {} for SignalHeadSection wasn't found", s);
+            }
+        }
         
         hLeftIndicator = hm.getNamedBeanHandle(leftIndicator, tm.provideTurnout(leftIndicator));
         hStopIndicator = hm.getNamedBeanHandle(stopIndicator, tm.provideTurnout(stopIndicator));
@@ -72,31 +88,32 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         
         this.station = station;
         
-        // initialize lamps to follow layout state to all off - you don't know anything
+        // initialize lamps to follow layout state to STOP
         tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
-        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.CLOSED);
+        tm.provideTurnout(stopIndicator).setCommandedState(Turnout.THROWN);
         tm.provideTurnout(rightIndicator).setCommandedState(Turnout.CLOSED);
         // hold everything
         setListHeldState(hRightHeads, true);
         setListHeldState(hLeftHeads, true);
         
         // add listeners
-        for (String s : leftHeads) 
-            shm.getSignalHead(s).addPropertyChangeListener(
+        for (NamedBeanHandle<Signal> b : hRightHeads) {
+            b.getBean().addPropertyChangeListener(
                 (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
             );
-        for (String s : rightHeads) 
-            shm.getSignalHead(s).addPropertyChangeListener(
+        }
+        for (NamedBeanHandle<Signal> b : hLeftHeads) {
+            b.getBean().addPropertyChangeListener(
                 (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
             );
-
+        }
     }
     
     Memory timeMemory = null;
     Memory logMemory = null;
     
-    ArrayList<NamedBeanHandle<SignalHead>> hRightHeads;
-    ArrayList<NamedBeanHandle<SignalHead>> hLeftHeads;
+    ArrayDeque<NamedBeanHandle<Signal>> hRightHeads;
+    ArrayDeque<NamedBeanHandle<Signal>> hLeftHeads;
 
     NamedBeanHandle<Turnout> hLeftIndicator;
     NamedBeanHandle<Turnout> hStopIndicator;
@@ -106,10 +123,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     NamedBeanHandle<Sensor> hRightInput;
         
     // coding used locally to ensure consistency
-    private final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
-    private final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
-    private final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
-    private final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
+    public static final CodeGroupThreeBits CODE_LEFT = CodeGroupThreeBits.Triple100;
+    public static final CodeGroupThreeBits CODE_STOP = CodeGroupThreeBits.Triple010;
+    public static final CodeGroupThreeBits CODE_RIGHT = CodeGroupThreeBits.Triple001;
+    public static final CodeGroupThreeBits CODE_OFF = CodeGroupThreeBits.Triple000;
     
     // States to track changes at the Code Machine end
     enum Machine {
@@ -124,11 +141,15 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     public boolean isRunningTime() { return timeRunning; }
     
     Station station;
-    
-    List<Lock> locks;
-    public void addLocks(List<Lock> locks) { this.locks = locks; }
+    public Station getStation() { return station;}
+    public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
 
-    protected boolean checkLockPermitted() {
+    List<Lock> rightwardLocks;
+    List<Lock> leftwardLocks;
+    public void addRightwardLocks(List<Lock> locks) { this.rightwardLocks = locks; }
+    public void addLeftwardLocks(List<Lock> locks) { this.leftwardLocks = locks; }
+
+    protected boolean checkLockPermitted(List<Lock> locks) {
         boolean permitted = true;
         if (locks != null) {
             for (Lock lock : locks) {
@@ -219,7 +240,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
 
     public static int MOVEMENT_DELAY = 5000;
-    
+
+    boolean deferIndication = false; // when set, don't indicate on layout change
+                                     // because something else will ensure it later
+
     /**
      * Code arrives in field. Sets the signals on the layout.
      */
@@ -231,22 +255,14 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
-        if (! checkLockPermitted() ) {
-            // lock sets stop
+        if (value == CODE_LEFT && checkLockPermitted(leftwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
             log.debug("Layout signals set LEFT");
             lastIndication = CODE_LEFT;
             setListHeldState(hLeftHeads, false);
-        } else if (value == CODE_LEFT) {
-            lastIndication = CODE_STOP;
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
-            log.debug("Layout signals set LEFT");
-            lastIndication = CODE_LEFT;
-            setListHeldState(hLeftHeads, false);
-        } else if (value == CODE_RIGHT) {
+        } else if (value == CODE_RIGHT && checkLockPermitted(rightwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
@@ -275,30 +291,30 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
     }
 
-    protected void setListHeldState(ArrayList<NamedBeanHandle<SignalHead>> list, boolean state) {
-        for (NamedBeanHandle<SignalHead> handle : list) {
+    protected void setListHeldState(Iterable<NamedBeanHandle<Signal>> list, boolean state) {
+        for (NamedBeanHandle<Signal> handle : list) {
             if (handle.getBean().getHeld() != state) handle.getBean().setHeld(state);
         }
     }
     
     public String toString() {
-        String retVal = "SignalHeadSection [";
+        StringBuffer retVal = new StringBuffer("SignalHeadSection [");
         boolean first;
         first = true;
-        for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
-            if (!first) retVal = retVal + ", ";
+        for (NamedBeanHandle<Signal> handle : hRightHeads) {
+            if (!first) retVal.append(", ");
             first = false;
-            retVal = retVal + "\""+ handle.getName()+"\"";
+            retVal.append("\"").append(handle.getName()).append("\"");
         }
-        retVal = retVal+"],[";
+        retVal.append("],[");
         first = true;
-        for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
-            if (!first) retVal = retVal + ", ";
+        for (NamedBeanHandle<Signal> handle : hLeftHeads) {
+            if (!first) retVal.append(", ");
             first = false;
-            retVal = retVal + "\""+ handle.getName()+"\"";
+            retVal.append("\"").append(handle.getName()).append("\"");
         }        
-        retVal = retVal+"]";
-        return retVal;
+        retVal.append("]");
+        return retVal.toString()    ;
     }
     
     /**
@@ -324,12 +340,16 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      * Clear is defined as showing above Restricting.
      * We implement that as not Held, not RED, not Restricting.
      */
-    public boolean headShowsClear(NamedBeanHandle<SignalHead> handle) { return ( (!handle.getBean().getHeld()) && (handle.getBean().getAppearance()!=SignalHead.RED) && !headShowsRestricting(handle)); }
+    public boolean headShowsClear(NamedBeanHandle<Signal> handle) { 
+        return !handle.getBean().getHeld() && handle.getBean().isCleared();
+        }
     
     /**
      * "Restricting" means that a signal is showing FLASHRED
      */
-    public boolean headShowsRestricting(NamedBeanHandle<SignalHead> handle) { return handle.getBean().getAppearance()==SignalHead.FLASHRED; }
+    public boolean headShowsRestricting(NamedBeanHandle<Signal> handle) { 
+        return handle.getBean().isShowingRestricting();
+    }
     
     /**
      * Work out current indication from layout status
@@ -337,13 +357,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     public CodeGroupThreeBits getCurrentIndication() {
         boolean leftClear = false;
         boolean leftRestricting = false;
-        for (NamedBeanHandle<SignalHead> handle : hLeftHeads) {
+        for (NamedBeanHandle<Signal> handle : hLeftHeads) {
             if (headShowsClear(handle)) leftClear = true;
             if (headShowsRestricting(handle)) leftRestricting = true;
         }
         boolean rightClear = false;
         boolean rightRestricting = false;
-        for (NamedBeanHandle<SignalHead> handle : hRightHeads) {
+        for (NamedBeanHandle<Signal> handle : hRightHeads) {
             if (headShowsClear(handle)) rightClear = true;
             if (headShowsRestricting(handle)) rightRestricting = true;
         }
@@ -372,7 +392,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
 
     CodeGroupThreeBits lastIndication = CODE_OFF;
-    
+    void setLastIndication(CodeGroupThreeBits v) { 
+        CodeGroupThreeBits old = lastIndication;
+        lastIndication = v;
+        firePropertyChange("LastIndication", old, lastIndication);
+    }
+    CodeGroupThreeBits getLastIndication() { return lastIndication; }
+
     /**
      * Process values received from the field unit.
      */
@@ -382,34 +408,71 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
             hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_LEFT) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_STOP) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.THROWN);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
-        } else if (value == CODE_RIGHT) {
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.THROWN);
-        } else {
-            log.error("Got code not recognized: {}", value);
-            hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
-            hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+        } else switch (value) {
+            case Triple100: // CODE_LEFT
+                hLeftIndicator.getBean().setCommandedState(Turnout.THROWN);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            case Triple010: // CODE_STOP
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.THROWN);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            case Triple001: // CODE_RIGHT
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.THROWN);
+                break;
+            case Triple000: // CODE_OFF
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED); // all off
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
+            default: 
+                log.error("Got code not recognized: {}", value);
+                hLeftIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hStopIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                hRightIndicator.getBean().setCommandedState(Turnout.CLOSED);
+                break;
         }
     } 
 
     void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
-        if (getCurrentIndication() != lastIndication) {
+        CodeGroupThreeBits current = getCurrentIndication();
+        // as a modeling thought, if we're dropping to stop, set held right now
+        if (current == CODE_STOP && current != lastIndication && ! deferIndication ) {
+            deferIndication = true;
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+            deferIndication = false;
+        }
+
+        // if there was a change, need to send indication back to central
+        if (current != lastIndication && ! deferIndication) {
             log.debug("  SignalHead change resulted in changed Indication, driving update");
             station.requestIndicationStart();
         } else {
             log.debug("  SignalHead change without change in Indication");
         }
     }
-    
+
+    final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class.getName());
 }

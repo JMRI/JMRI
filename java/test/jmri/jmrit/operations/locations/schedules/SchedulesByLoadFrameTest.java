@@ -40,6 +40,6 @@ public class SchedulesByLoadFrameTest {
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class.getName());
 
 }

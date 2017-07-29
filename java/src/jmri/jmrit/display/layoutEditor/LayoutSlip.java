@@ -1085,7 +1085,7 @@ public class LayoutSlip extends LayoutTurnout {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        blockNameComboBox.getEditor().setItem(blockName);
+        blockNameComboBox.setText(blockName);
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -1301,7 +1301,7 @@ public class LayoutSlip extends LayoutTurnout {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
                 blockName = "";
-                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setText("");
                 blockNameComboBox.setSelectedIndex(-1);
             }
             needRedraw = true;

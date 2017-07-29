@@ -310,8 +310,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     protected int[] validSpeedValues = new int[]{115200};
     
     // meanings are assigned to these above, so make sure the order is consistent
-    //    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
-    protected String[] validOption1 = new String[]{"no flow control"};
+    //    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
     
     private boolean opened = false;
     InputStream serialStream = null;

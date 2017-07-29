@@ -33,6 +33,6 @@ public class TransitManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TransitManagerTest.class.getName());
 
 }

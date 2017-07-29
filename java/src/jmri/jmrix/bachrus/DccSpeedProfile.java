@@ -32,8 +32,6 @@ public class DccSpeedProfile {
     protected int _lastPoint;
     protected List<String> dccProfileData = new ArrayList<String>();
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
-
     public DccSpeedProfile(int len) {
         _length = len;
         _dataPoints = new float[_length];
@@ -103,8 +101,8 @@ public class DccSpeedProfile {
             today = new Date();
             result = formatter.format(today);
             // title 
-            String annotate = "Bachrus MTS-DCC " + rb.getString("ProfileFor") + " "
-                    + address + " " + rb.getString("CreatedOn")
+            String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+                    + address + " " + Bundle.getMessage("CreatedOn")
                     + " " + result;
             p.print(annotate);
             p.println();
@@ -273,4 +271,5 @@ public class DccSpeedProfile {
     }
 
     private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
+
 }

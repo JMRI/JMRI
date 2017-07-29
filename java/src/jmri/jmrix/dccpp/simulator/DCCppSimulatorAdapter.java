@@ -75,7 +75,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         setPort(portName);
         return null; // normal operation
     }

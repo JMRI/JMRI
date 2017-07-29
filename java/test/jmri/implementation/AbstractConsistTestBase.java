@@ -25,7 +25,7 @@ abstract public class AbstractConsistTestBase {
     @Test public void testCtor() {
         Assert.assertNotNull(c);
     }
-    @Ignore("Not quite ready yet")
+
     @Test(expected=java.lang.NullPointerException.class) 
     public void checkDisposeMethod(){
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);

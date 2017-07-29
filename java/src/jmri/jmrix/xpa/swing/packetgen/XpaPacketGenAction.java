@@ -32,6 +32,3 @@ public class XpaPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(XpaPacketGenAction.class.getName());
 }
-
-
-

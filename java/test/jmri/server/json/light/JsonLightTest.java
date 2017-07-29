@@ -33,6 +33,6 @@ public class JsonLightTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonLightTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonLightTest.class.getName());
 
 }

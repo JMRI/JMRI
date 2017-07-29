@@ -61,9 +61,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     // node table pane items
     protected JPanel nodeTablePanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
-    protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-                                                                    rbx.getString("ConfiguredNodes"),
-                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+//    protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
+//                                                                    rbx.getString("ConfiguredNodes"),
+//                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
     protected NodeTableModel nodeTableModel = null;
     protected JTable nodeTable = null;
 
@@ -182,7 +182,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception
     {
         // set the frame's initial state
-        setTitle(rbx.getString("WindowTitle"));
+        setTitle(rbx.getString("WindowTitle")+" [Connection "+_memo.getUserName()+"]");
         setSize(500,150);
 
         Container contentPane = getContentPane();        
@@ -203,6 +203,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTable.setRowSelectionAllowed(false);
         nodeTable.setFont(new Font("Arial", Font.PLAIN, 14));
         nodeTable.setRowHeight(30);
+        
         nodeTable.getTableHeader().setReorderingAllowed(false);
         nodeTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300,350));                        
         TableColumnModel assignmentColumnModel = nodeTable.getColumnModel();
@@ -278,6 +279,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodedescColumn.setResizable(true);
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
 
+        Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
+                                                                    rbx.getString("Connection")+" "+_memo.getUserName(),
+                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
         nodeTablePanel.add(nodeTableScrollPane,BorderLayout.CENTER);
         nodeTablePanel.setBorder(inputBorderTitled);
         setPreferredSize(new Dimension(950, 550));

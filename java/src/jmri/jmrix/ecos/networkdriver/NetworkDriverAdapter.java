@@ -56,7 +56,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
 
     @Override
     protected void resetupConnection() {
-        log.info("reconnected to ECOS after lost connection");
+        log.info("reconnected to ECoS after lost connection");
         if (opened) {
             this.getSystemConnectionMemo().getTrafficController().connectPort(this);
             this.getSystemConnectionMemo().getTurnoutManager().refreshItems();

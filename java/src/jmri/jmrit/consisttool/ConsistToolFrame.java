@@ -231,7 +231,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             }
         });
 
-        resetLocoButton.setText(Bundle.getMessage("ResetButtonText"));
+        resetLocoButton.setText(Bundle.getMessage("ButtonReset"));
         resetLocoButton.setVisible(true);
         resetLocoButton.setToolTipText(Bundle.getMessage("ResetButtonToolTip"));
         resetLocoButton.addActionListener(new ActionListener() {

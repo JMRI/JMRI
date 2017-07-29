@@ -20,8 +20,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
@@ -34,8 +33,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");

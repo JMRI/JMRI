@@ -27,6 +27,8 @@ public class NmraConsistTest extends AbstractConsistTestBase {
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         c = new NmraConsist(new DccLocoAddress(12, true));
     }
    
@@ -34,6 +36,7 @@ public class NmraConsistTest extends AbstractConsistTestBase {
     @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

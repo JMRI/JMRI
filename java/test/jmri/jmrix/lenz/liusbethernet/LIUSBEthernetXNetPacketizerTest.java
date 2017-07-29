@@ -50,10 +50,4 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
         };
     }
 
-    @After
-    @Override
-    public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
-
 }

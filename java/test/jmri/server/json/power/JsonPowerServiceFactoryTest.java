@@ -33,6 +33,6 @@ public class JsonPowerServiceFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonPowerServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonPowerServiceFactoryTest.class.getName());
 
 }

@@ -33,6 +33,6 @@ public class ProfileFileViewTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProfileFileViewTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProfileFileViewTest.class.getName());
 
 }

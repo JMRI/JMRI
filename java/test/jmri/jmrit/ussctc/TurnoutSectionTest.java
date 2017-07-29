@@ -64,7 +64,7 @@ public class TurnoutSectionTest {
 
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_NORMAL;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_NORMAL;
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
         Assert.assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
@@ -73,7 +73,7 @@ public class TurnoutSectionTest {
         
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_REVERSED;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_REVERSED;
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
         Assert.assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
@@ -90,7 +90,7 @@ public class TurnoutSectionTest {
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_REVERSED;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_REVERSED;
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
         
@@ -108,7 +108,7 @@ public class TurnoutSectionTest {
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_NORMAL;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_NORMAL;
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
         

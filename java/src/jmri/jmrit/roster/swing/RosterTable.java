@@ -157,7 +157,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                     re = null;
                 } // leave last selected item visible if no selection
             } else if (e.getFirstIndex() == -1) {
-                //A reorder of the table might of occured therefore we are going to make sure that the selected item is still in view
+                //A reorder of the table might of occurred therefore we are going to make sure that the selected item is still in view
                 moveTableViewToSelected();
             }
         };

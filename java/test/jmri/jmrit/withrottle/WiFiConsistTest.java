@@ -17,6 +17,8 @@ public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(1234,true);
         c = new WiFiConsist(addr);
     }
@@ -24,6 +26,7 @@ public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Override
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

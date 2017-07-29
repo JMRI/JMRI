@@ -33,6 +33,6 @@ public class LoaderPanelActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPanelActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LoaderPanelActionTest.class.getName());
 
 }

@@ -22,6 +22,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     LocoNetInterfaceScaffold lnis;
     SlotManager slotmanager;
     LocoNetSystemConnectionMemo memo;
+    LnThrottleManager ltm;
 
     //utility function, handle slot messages required to suppress 
     // errors from the LnThrottleManager after constructor call.
@@ -56,15 +57,6 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         LocoNetConsist c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
         ReturnSlotInfo();
         Assert.assertNotNull(c);
-    }
-
-    @Ignore("not quite ready yet")
-    @Test public void checkDisposeMethod(){
-        // verify that c has been added to the traffic controller's
-        // list of listeners.
-        int listeners = lnis.numListeners();
-        c.dispose();
-        Assert.assertEquals("dispose check",listeners -1, lnis.numListeners());
     }
 
     @Test
@@ -130,7 +122,8 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        memo.setThrottleManager(new LnThrottleManager(memo));
+        ltm = new LnThrottleManager(memo);
+        memo.setThrottleManager(ltm);
 
         try {
         // set slot 3 to address 3
@@ -156,6 +149,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
    
     @After
     public void tearDown() {
+        ltm.dispose();
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
         c = null;

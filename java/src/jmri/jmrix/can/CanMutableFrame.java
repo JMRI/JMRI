@@ -26,5 +26,3 @@ public interface CanMutableFrame extends CanFrame {
     public void setElement(int n, int v);
 
 }
-
-

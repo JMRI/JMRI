@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register an LIUSBConfigFrame object.
- * <P>
+ * <p>
  * The {@link LIUSBConfigFrame} is a configuration tool.
  *
  * @author Paul Bender Copyright (C) 2009
@@ -17,7 +17,7 @@ public class LIUSBConfigAction extends AbstractXPressNetAction {
     }
 
     public LIUSBConfigAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LIUSB Configuration Manager", memo);
+        this(Bundle.getMessage("MenuItemLIUSBConfigurationManager"), memo);
     }
 
     @Override
@@ -26,5 +26,5 @@ public class LIUSBConfigAction extends AbstractXPressNetAction {
         LIUSBConfigFrame f = new LIUSBConfigFrame(_memo);
         f.setVisible(true);
     }
-}
 
+}

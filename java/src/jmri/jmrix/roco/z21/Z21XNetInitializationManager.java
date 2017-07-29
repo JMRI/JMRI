@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class performs Command Station dependant initialization for the Roco
- * z21/Z21 XPressNet implementation. It adds the appropriate Managers via the
+ * z21/Z21 XpressNet implementation. It adds the appropriate Managers via the
  * Initialization Manager based on the Command Station Type.
  *
  * @author	Paul Bender Copyright (C) 2015
@@ -55,7 +55,7 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         if (log.isDebugEnabled()) {
-            log.debug("XPressNet Initialization Complete");
+            log.debug("XpressNet Initialization Complete");
         }
     }
 

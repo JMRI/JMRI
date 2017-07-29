@@ -123,7 +123,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                     try {
                         sendSetOffMessage(state);
                     } catch (Exception e) {
-                        log.error("Exception occured while sending delayed off to turnout: " + e);
+                        log.error("Exception occurred while sending delayed off to turnout: " + e);
                     }
                 }
             }, METERINTERVAL);
