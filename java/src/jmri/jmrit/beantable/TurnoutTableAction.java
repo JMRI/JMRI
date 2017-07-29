@@ -955,7 +955,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
-    AddNewHardwareDevicePanel addPane = null;
 
     @Override
     protected void addPressed(ActionEvent e) {
