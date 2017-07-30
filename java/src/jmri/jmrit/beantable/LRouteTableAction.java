@@ -613,7 +613,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     elt = _outputMap.get(key);
                 }
                 if (elt == null) {
-                    showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                     new Object[]{action.toString(), c.getSystemName()}),
                             rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);

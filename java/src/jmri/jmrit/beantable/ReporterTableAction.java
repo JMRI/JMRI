@@ -208,7 +208,7 @@ public class ReporterTableAction extends AbstractTableAction {
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel("Hardware Address");
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
