@@ -1,5 +1,6 @@
 package jmri;
 
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager
-        implements java.beans.PropertyChangeListener {
+public class TransitManager extends AbstractManager implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();
@@ -158,7 +158,7 @@ public class TransitManager extends AbstractManager
      * @param z the transit to remove
      */
     public void deleteTransit(Transit z) {
-        // delete the Transit    
+        // delete the Transit
         deregister(z);
         z.dispose();
     }

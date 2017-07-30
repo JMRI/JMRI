@@ -14,7 +14,6 @@ import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
-import jmri.SectionManager;
 import jmri.SensorManager;
 import jmri.SignalGroupManager;
 import jmri.SignalHeadManager;
@@ -22,7 +21,6 @@ import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
 import jmri.SignalSystemManager;
 import jmri.Timebase;
-import jmri.TransitManager;
 import jmri.TurnoutManager;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
@@ -58,11 +56,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == AudioManager.class) {
             return DefaultAudioManager.instance();
-        }
-
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == BlockManager.class) {
-            return new BlockManager();
         }
 
         if (type == CatalogTreeManager.class) {
@@ -117,11 +110,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new jmri.managers.ProxySensorManager();
         }
 
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == SectionManager.class) {
-            return new SectionManager();
-        }
-
         if (type == SignalGroupManager.class) {
             // ensure signal mast manager exists first
             InstanceManager.getDefault(jmri.SignalMastManager.class);
@@ -152,11 +140,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
                 InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);
             }
             return timebase;
-        }
-
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == TransitManager.class) {
-            return new TransitManager();
         }
 
         if (type == TurnoutManager.class) {
