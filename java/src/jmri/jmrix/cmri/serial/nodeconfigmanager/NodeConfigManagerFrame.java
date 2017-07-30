@@ -56,21 +56,21 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected boolean doingPrint = false;
 
     // node select pane items
-    JLabel nodeLabel = new JLabel(rbx.getString("NodeBoxLabel")+" ");
+    JLabel nodeLabel = new JLabel(Bundle.getMessage("NodeBoxLabel")+" ");
 
     // node table pane items
     protected JPanel nodeTablePanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
 //    protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-//                                                                    rbx.getString("ConfiguredNodes"),
+//                                                                    Bundle.getMessage("ConfiguredNodes"),
 //                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
     protected NodeTableModel nodeTableModel = null;
     protected JTable nodeTable = null;
 
     // button pane items
-    JButton addButton = new JButton(rbx.getString("AddButtonText") );
-    JButton doneButton = new JButton(rbx.getString("DoneButtonText") );
-    JButton printButton = new JButton(rbx.getString("PrintButtonText") );
+    JButton addButton = new JButton(Bundle.getMessage("AddButtonText") );
+    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText") );
+    JButton printButton = new JButton(Bundle.getMessage("PrintButtonText") );
   
     NodeConfigManagerFrame curFrame;
        
@@ -82,15 +82,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
     protected javax.swing.JComboBox cardSizeBox; 
     protected javax.swing.JComboBox cardSize8Box; 
-    protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+rbx.getString("LabelCardSize"));
-    protected javax.swing.JLabel onBoardBytesText = new javax.swing.JLabel(rbx.getString("LabelOnBoardBytes")+ " 3 Input Bytes, 6 Output Bytes");
+    protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+Bundle.getMessage("LabelCardSize"));
+    protected javax.swing.JLabel onBoardBytesText = new javax.swing.JLabel(Bundle.getMessage("LabelOnBoardBytes")+ " 3 Input Bytes, 6 Output Bytes");
 	
-    protected javax.swing.JButton addNodeButton = new javax.swing.JButton(rbx.getString("ButtonAdd"));
-    protected javax.swing.JButton editNodeButton = new javax.swing.JButton(rbx.getString("ButtonEdit"));
-    protected javax.swing.JButton deleteNodeButton = new javax.swing.JButton(rbx.getString("ButtonDelete"));
-    protected javax.swing.JButton doneNodeButton = new javax.swing.JButton(rbx.getString("ButtonDone"));
-    protected javax.swing.JButton updateNodeButton = new javax.swing.JButton(rbx.getString("ButtonUpdate"));
-    protected javax.swing.JButton cancelNodeButton = new javax.swing.JButton(rbx.getString("ButtonCancel"));
+    protected javax.swing.JButton addNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd"));
+    protected javax.swing.JButton editNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonEdit"));
+    protected javax.swing.JButton deleteNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonDelete"));
+    protected javax.swing.JButton doneNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
+    protected javax.swing.JButton updateNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonUpdate"));
+    protected javax.swing.JButton cancelNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel"));
 	
     protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
@@ -124,15 +124,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected boolean errorInStatus1 = false;
     protected boolean errorInStatus2 = false;
     
-    protected String editStatus1 = rbx.getString("NotesEdit1");
-    protected String editStatus2 = rbx.getString("NotesEdit2");
-    protected String editStatus3 = rbx.getString("NotesEdit3");
-    protected String addStatus1 = rbx.getString("NotesAdd1");
-    protected String addStatus2 = rbx.getString("NotesAdd2");
-    protected String addStatus3 = rbx.getString("NotesAdd3");
-    protected String delStatus1 = rbx.getString("NotesDel1");
-    protected String delStatus2 = rbx.getString("NotesDel2");
-    protected String delStatus3 = rbx.getString("NotesDel3");
+    protected String editStatus1 = Bundle.getMessage("NotesEdit1");
+    protected String editStatus2 = Bundle.getMessage("NotesEdit2");
+    protected String editStatus3 = Bundle.getMessage("NotesEdit3");
+    protected String addStatus1 = Bundle.getMessage("NotesAdd1");
+    protected String addStatus2 = Bundle.getMessage("NotesAdd2");
+    protected String addStatus3 = Bundle.getMessage("NotesAdd3");
+    protected String delStatus1 = Bundle.getMessage("NotesDel1");
+    protected String delStatus2 = Bundle.getMessage("NotesDel2");
+    protected String delStatus3 = Bundle.getMessage("NotesDel3");
     
     protected String nodeDescText = "";
     protected int deleteNodeAddress = 0;
@@ -142,20 +142,20 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     // --------------------------
     // CMRInet Options CheckBoxes
     // --------------------------
-    protected JCheckBox cbx_cmrinetopt_AUTOPOLL = new JCheckBox(rbx.getString("cmrinetOpt0"),true);
-    protected JCheckBox cbx_cmrinetopt_USECMRIX = new JCheckBox(rbx.getString("cmrinetOpt1"));
-    protected JCheckBox cbx_cmrinetopt_USEBCC = new JCheckBox(rbx.getString("cmrinetOpt2"));
-    protected JCheckBox cbx_cmrinetopt_BIT8 = new JCheckBox(rbx.getString("cmrinetOpt8"));
-    protected JCheckBox cbx_cmrinetopt_BIT15 = new JCheckBox(rbx.getString("cmrinetOpt15"));
+    protected JCheckBox cbx_cmrinetopt_AUTOPOLL = new JCheckBox(Bundle.getMessage("cmrinetOpt0"),true);
+    protected JCheckBox cbx_cmrinetopt_USECMRIX = new JCheckBox(Bundle.getMessage("cmrinetOpt1"));
+    protected JCheckBox cbx_cmrinetopt_USEBCC = new JCheckBox(Bundle.getMessage("cmrinetOpt2"));
+    protected JCheckBox cbx_cmrinetopt_BIT8 = new JCheckBox(Bundle.getMessage("cmrinetOpt8"));
+    protected JCheckBox cbx_cmrinetopt_BIT15 = new JCheckBox(Bundle.getMessage("cmrinetOpt15"));
 	
     // -------------------------
     // cpNode Options CheckBoxes
     // -------------------------
-    protected JCheckBox cbx_cpnodeopt_SENDEOT = new JCheckBox(rbx.getString("cpnodeOpt0"));
-    protected JCheckBox cbx_cpnodeopt_BIT1 = new JCheckBox(rbx.getString("cpnodeOpt1")); 
-    protected JCheckBox cbx_cpnodeopt_BIT2 = new JCheckBox(rbx.getString("cpnodeOpt2"));
-    protected JCheckBox cbx_cpnodeopt_BIT8 = new JCheckBox(rbx.getString("cpnodeOpt8"));
-    protected JCheckBox cbx_cpnodeopt_BIT15 = new JCheckBox(rbx.getString("cpnodeOpt15"));
+    protected JCheckBox cbx_cpnodeopt_SENDEOT = new JCheckBox(Bundle.getMessage("cpnodeOpt0"));
+    protected JCheckBox cbx_cpnodeopt_BIT1 = new JCheckBox(Bundle.getMessage("cpnodeOpt1")); 
+    protected JCheckBox cbx_cpnodeopt_BIT2 = new JCheckBox(Bundle.getMessage("cpnodeOpt2"));
+    protected JCheckBox cbx_cpnodeopt_BIT8 = new JCheckBox(Bundle.getMessage("cpnodeOpt8"));
+    protected JCheckBox cbx_cpnodeopt_BIT15 = new JCheckBox(Bundle.getMessage("cpnodeOpt15"));
 
      private CMRISystemConnectionMemo _memo = null;
 
@@ -169,7 +169,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         // Clear information arrays
         for (int i = 0; i < 64; i++) {
-            cardType[i] = rbx.getString("CardTypeNone"); // NOI18N
+            cardType[i] = Bundle.getMessage("CardTypeNone"); // NOI18N
         }
         for (int i = 0; i < 48; i++) {
             searchlightBits[i] = false;
@@ -182,7 +182,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception
     {
         // set the frame's initial state
-        setTitle(rbx.getString("WindowTitle")+" [Connection "+_memo.getUserName()+"]");
+        setTitle(Bundle.getMessage("WindowTitle")+" [Connection "+_memo.getUserName()+"]");
         setSize(500,150);
 
         Container contentPane = getContentPane();        
@@ -262,10 +262,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         TableColumn selectColumn = assignmentColumnModel.getColumn(NodeTableModel.SELECT_COLUMN);
         JComboBox comboBox = new JComboBox();
-        comboBox.addItem(rbx.getString("SelectSelect"));
-        comboBox.addItem(rbx.getString("SelectEdit"));
-        comboBox.addItem(rbx.getString("SelectInfo"));
-        comboBox.addItem(rbx.getString("SelectDelete"));
+        comboBox.addItem(Bundle.getMessage("SelectSelect"));
+        comboBox.addItem(Bundle.getMessage("SelectEdit"));
+        comboBox.addItem(Bundle.getMessage("SelectInfo"));
+        comboBox.addItem(Bundle.getMessage("SelectDelete"));
         selectColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
         selectColumn.setMinWidth(40);
@@ -280,7 +280,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
 
         Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-                                                                    rbx.getString("Connection")+" "+_memo.getUserName(),
+                                                                    Bundle.getMessage("Connection")+" "+_memo.getUserName(),
                                                                     TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
         nodeTablePanel.add(nodeTableScrollPane,BorderLayout.CENTER);
         nodeTablePanel.setBorder(inputBorderTitled);
@@ -306,7 +306,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * -----------------
          */
         addButton.setVisible(true);
-        addButton.setToolTipText(rbx.getString("AddButtonTip") );
+        addButton.setToolTipText(Bundle.getMessage("AddButtonTip") );
         addButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -323,7 +323,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * -------------------
          */
         printButton.setVisible(true);
-        printButton.setToolTipText(rbx.getString("PrintButtonTip") );
+        printButton.setToolTipText(Bundle.getMessage("PrintButtonTip") );
 	if (numConfigNodes > 0) {
                 printButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -339,7 +339,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * ------------------
          */
         doneButton.setVisible(true);
-        doneButton.setToolTipText(rbx.getString("DoneButtonTip") );
+        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
 	doneButton.addActionListener(new java.awt.event.ActionListener()
         {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -375,8 +375,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if(changedNode)
         {
              JOptionPane.showMessageDialog(this,
-             rbx.getString("Reminder1")+"\n"+rbx.getString("Reminder2"),
-             rbx.getString("ReminderTitle"),
+             Bundle.getMessage("Reminder1")+"\n"+Bundle.getMessage("Reminder2"),
+             Bundle.getMessage("ReminderTitle"),
              JOptionPane.INFORMATION_MESSAGE);
         }
       changedNode = false;
@@ -593,17 +593,17 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
 	public void setValueAt(Object value, int row, int col) {
             if (col == SELECT_COLUMN) {
-               if ( rbx.getString("SelectEdit").equals(value) )
+               if ( Bundle.getMessage("SelectEdit").equals(value) )
                {
                  editActionSelected();
                } 
                else 
-                if (rbx.getString("SelectInfo").equals(value) )
+                if (Bundle.getMessage("SelectInfo").equals(value) )
                 {
                   infoActionSelected();
                 } 
                else
-                if (rbx.getString("SelectDelete").equals(value) )
+                if (Bundle.getMessage("SelectDelete").equals(value) )
                 {
                   deleteActionSelected();
                 } 
@@ -831,13 +831,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 //    	super();
         // Clear information arrays
         for (int i = 0; i<64 ; i++) {
-            cardType[i] = rbx.getString("CardTypeNone");
+            cardType[i] = Bundle.getMessage("CardTypeNone");
         }
         
         //cpMega onboard bytes held in a separate array and will be copied
         //to CardArray.
         for (int i = 0; i<16 ; i++) {
-            onBoardType[i] = rbx.getString("CardTypeNone");                                 
+            onBoardType[i] = Bundle.getMessage("CardTypeNone");                                 
         }
         
         for (int i = 0; i<48 ; i++) {
@@ -858,7 +858,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      */
     public void initNodeConfigWindow()
     {
-        setTitle(rbx.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -868,13 +868,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
-        panel11.add(new JLabel(rbx.getString("LabelNodeAddress")+" "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress")+" "));
         panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(rbx.getString("TipNodeAddress"));
+        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         nodeAddrField.setText("-1");
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
-        panel11.add(new JLabel("   "+rbx.getString("LabelNodeType")+" "));
+        panel11.add(new JLabel("   "+Bundle.getMessage("LabelNodeType")+" "));
         nodeTypeBox = new JComboBox();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI");
@@ -911,7 +911,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true); 
                             panelnodeOpt.setVisible(false);
                             nodeType = SerialNode.SMINI;
-                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 3 Input, 6 Output");
+                            onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 3 Input, 6 Output");
                     }
                     else if (s.equals("USIC_SUSIC")) 
                     {
@@ -945,7 +945,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true);
                             panelnodeOpt.setVisible(true);
                             nodeType = SerialNode.CPNODE;
-                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 2 Bytes");
+                            onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 2 Bytes");
                    }
                     else if (s.equals("CPMEGA"))   //c2
                     {
@@ -962,7 +962,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             panelnetOptBox.setVisible(true);
                             panelnodeOpt.setVisible(true);
                             nodeType = SerialNode.CPMEGA;
-                            onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 8 Bytes");
+                            onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 8 Bytes");
                     }
              /**
               *   Here add code for other types of nodes
@@ -975,22 +975,22 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
               resetNotes();
             }
 	});                
-        nodeTypeBox.setToolTipText(rbx.getString("TipNodeType")); 
+        nodeTypeBox.setToolTipText(Bundle.getMessage("TipNodeType")); 
         
         JPanel panel12 = new JPanel();
         panel12.setLayout(new FlowLayout());
-        panel12.add(new JLabel(rbx.getString("LabelDelay")+" "));
+        panel12.add(new JLabel(Bundle.getMessage("LabelDelay")+" "));
         panel12.add(receiveDelayField);
-        receiveDelayField.setToolTipText(rbx.getString("TipDelay"));
+        receiveDelayField.setToolTipText(Bundle.getMessage("TipDelay"));
         receiveDelayField.setText("0");
         panel12.add(cardSizeText);
         cardSizeBox = new JComboBox();
         cardSize8Box = new JComboBox();
         panel12.add(cardSizeBox);
         panel12.add(cardSize8Box);
-        cardSizeBox.addItem(rbx.getString("CardSize24"));
-        cardSizeBox.addItem(rbx.getString("CardSize32"));
-        cardSize8Box.addItem(rbx.getString("CardSize8"));
+        cardSizeBox.addItem(Bundle.getMessage("CardSize24"));
+        cardSizeBox.addItem(Bundle.getMessage("CardSize32"));
+        cardSize8Box.addItem(Bundle.getMessage("CardSize8"));
        /**
         *   Here add code for other types of nodes
         */
@@ -1000,30 +1000,30 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             public void actionPerformed(java.awt.event.ActionEvent event)
             {
                     String s = (String)cardSizeBox.getSelectedItem();
-                    if (s.equals(rbx.getString("CardSize24"))) {
+                    if (s.equals(Bundle.getMessage("CardSize24"))) {
                             bitsPerCard = 24;
                     }
-                    else if (s.equals(rbx.getString("CardSize32"))) {
+                    else if (s.equals(Bundle.getMessage("CardSize32"))) {
                             bitsPerCard = 32;
                     }              
-                    else if (s.equals(rbx.getString("CardSize8"))) {
+                    else if (s.equals(Bundle.getMessage("CardSize8"))) {
                             bitsPerCard = 8;
                     }              
                     // here add code for other node types, if required
             }
 	});
-        cardSizeBox.setToolTipText(rbx.getString("TipCardSize"));
+        cardSizeBox.setToolTipText(Bundle.getMessage("TipCardSize"));
         cardSizeText.setVisible(false);
         cardSizeBox.setVisible(false);
         cardSize8Box.setVisible(false);
         
         JPanel panel13 = new JPanel();
         panel13.setLayout(new FlowLayout());
-        panel13.add(new JLabel(rbx.getString("LabelPulseWidth")+" "));
+        panel13.add(new JLabel(Bundle.getMessage("LabelPulseWidth")+" "));
         panel13.add(pulseWidthField);
-        pulseWidthField.setToolTipText(rbx.getString("TipPulseWidth"));
+        pulseWidthField.setToolTipText(Bundle.getMessage("TipPulseWidth"));
         pulseWidthField.setText("500");       
-        panel13.add(new JLabel(rbx.getString("LabelMilliseconds")));
+        panel13.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
 
         JPanel panel14 = new JPanel();        
         panel14.add(onBoardBytesText);
@@ -1043,13 +1043,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         */
         JPanel panel21 = new JPanel();
         panel21.setLayout(new BoxLayout(panel21, BoxLayout.Y_AXIS));
-        panel21.add(new JLabel(rbx.getString("HintCardTypePartA")));
-        panel21.add(new JLabel(" "+rbx.getString("HintCardTypePartB")));
-        panel21.add(new JLabel(" "+rbx.getString("HintCardTypePartC")));
+        panel21.add(new JLabel(Bundle.getMessage("HintCardTypePartA")));
+        panel21.add(new JLabel(" "+Bundle.getMessage("HintCardTypePartB")));
+        panel21.add(new JLabel(" "+Bundle.getMessage("HintCardTypePartC")));
         panel21.add(new JLabel("   "));
-        panel21.add(new JLabel(rbx.getString("HintCardTypePartD")));
-        panel21.add(new JLabel(" "+rbx.getString("HintCardTypePartE")));
-        panel21.add(new JLabel(" "+rbx.getString("HintCardTypePartF")));
+        panel21.add(new JLabel(Bundle.getMessage("HintCardTypePartD")));
+        panel21.add(new JLabel(" "+Bundle.getMessage("HintCardTypePartE")));
+        panel21.add(new JLabel(" "+Bundle.getMessage("HintCardTypePartF")));
         panel2.add(panel21);
         TableModel cardConfigModel = new CardConfigModel();
         JTable cardConfigTable = new JTable(cardConfigModel);
@@ -1057,9 +1057,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,95));  //c2
 		
         JComboBox cardTypeCombo = new JComboBox();
-        cardTypeCombo.addItem(rbx.getString("CardTypeOutput"));
-        cardTypeCombo.addItem(rbx.getString("CardTypeInput"));
-        cardTypeCombo.addItem(rbx.getString("CardTypeNone"));
+        cardTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
+        cardTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
+        cardTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
 		
         TableColumnModel typeColumnModel = cardConfigTable.getColumnModel();
         TableColumn addressColumn = typeColumnModel.getColumn(CardConfigModel.ADDRESS_COLUMN);
@@ -1082,13 +1082,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          */
         JPanel panel2a1 = new JPanel();
         panel2a1.setLayout(new BoxLayout(panel2a1, BoxLayout.Y_AXIS));
-        panel2a1.add(new JLabel(rbx.getString("HintSearchlightPartA")));
-        panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartB")));
-        panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartC")));
+        panel2a1.add(new JLabel(Bundle.getMessage("HintSearchlightPartA")));
+        panel2a1.add(new JLabel(" "+Bundle.getMessage("HintSearchlightPartB")));
+        panel2a1.add(new JLabel(" "+Bundle.getMessage("HintSearchlightPartC")));
         panel2a1.add(new JLabel("   "));
-        panel2a1.add(new JLabel(rbx.getString("HintSearchlightPartD")));
-        panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartE")));
-        panel2a1.add(new JLabel(" "+rbx.getString("HintSearchlightPartF")));
+        panel2a1.add(new JLabel(Bundle.getMessage("HintSearchlightPartD")));
+        panel2a1.add(new JLabel(" "+Bundle.getMessage("HintSearchlightPartE")));
+        panel2a1.add(new JLabel(" "+Bundle.getMessage("HintSearchlightPartF")));
         panel2a.add(panel2a1);
         
         TableModel searchlightConfigModel = new SearchlightConfigModel();
@@ -1119,9 +1119,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         osnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(170,95)); //160
 		
         JComboBox osnodeTypeCombo = new JComboBox();
-        osnodeTypeCombo.addItem(rbx.getString("CardTypeOutput"));
-        osnodeTypeCombo.addItem(rbx.getString("CardTypeInput"));
-        osnodeTypeCombo.addItem(rbx.getString("CardTypeNone"));
+        osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
+        osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
+        osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
         
         TableColumnModel osnodePortModel = osnodeConfigTable.getColumnModel();
         TableColumn x11Column = osnodePortModel.getColumn(OSnodeConfigModel.CARDNUM_COLUMN);
@@ -1154,9 +1154,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cpnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200,130)); //160
 		
         JComboBox cpnodeTypeCombo = new JComboBox();
-        cpnodeTypeCombo.addItem(rbx.getString("CardTypeOutput"));
-        cpnodeTypeCombo.addItem(rbx.getString("CardTypeInput"));
-        cpnodeTypeCombo.addItem(rbx.getString("CardTypeNone"));
+        cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
+        cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
+        cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
         
         TableColumnModel cpnodePortModel = cpnodeConfigTable.getColumnModel();
         TableColumn x1Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARDNUM_COLUMN);
@@ -1272,7 +1272,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel3.add(panel32);
         panel3.add(panel33);
         Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,rbx.getString("BoxLabelNotes"));
+        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
         
@@ -1283,9 +1283,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
         
-        addNodeButton.setText(rbx.getString("ButtonAdd"));
+        addNodeButton.setText(Bundle.getMessage("ButtonAdd"));
         addNodeButton.setVisible(false);
-        addNodeButton.setToolTipText(rbx.getString("TipAddButton"));
+        addNodeButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addNodeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				addNodeButtonActionPerformed();
@@ -1293,9 +1293,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		});
         panel4.add(addNodeButton);
 		
-        deleteNodeButton.setText(rbx.getString("ButtonDelete"));
+        deleteNodeButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteNodeButton.setVisible(false);
-        deleteNodeButton.setToolTipText(rbx.getString("TipDeleteButton"));
+        deleteNodeButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         deleteNodeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				deleteNodeButtonActionConfirm();
@@ -1303,9 +1303,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		});
         panel4.add(deleteNodeButton);
         
-        updateNodeButton.setText(rbx.getString("ButtonUpdate"));
+        updateNodeButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateNodeButton.setVisible(false);
-        updateNodeButton.setToolTipText(rbx.getString("TipUpdateButton"));
+        updateNodeButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         updateNodeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				updateNodeButtonActionPerformed();
@@ -1313,9 +1313,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		});
         panel4.add(updateNodeButton);
         
-        cancelNodeButton.setText(rbx.getString("ButtonCancel"));
+        cancelNodeButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelNodeButton.setVisible(false);
-        cancelNodeButton.setToolTipText(rbx.getString("TipCancelButton"));
+        cancelNodeButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         cancelNodeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				cancelNodeButtonActionPerformed();
@@ -1323,9 +1323,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		});
         panel4.add(cancelNodeButton);
 
-        doneNodeButton.setText(rbx.getString("ButtonDone"));
+        doneNodeButton.setText(Bundle.getMessage("ButtonDone"));
         doneNodeButton.setVisible(false);
-        doneNodeButton.setToolTipText(rbx.getString("TipDoneButton"));
+        doneNodeButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         doneNodeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				doneNodeButtonActionPerformed();
@@ -1404,11 +1404,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          */
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            JOptionPane.showMessageDialog(this,rbx.getString("Error1")+Integer.toString(nodeAddress)+
-								rbx.getString("Error2"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1")+Integer.toString(nodeAddress)+
+								Bundle.getMessage("Error2"),"",JOptionPane.ERROR_MESSAGE); 
 
-            statusText1.setText(rbx.getString("Error1")+Integer.toString(nodeAddress)+
-								rbx.getString("Error2"));
+            statusText1.setText(Bundle.getMessage("Error1")+Integer.toString(nodeAddress)+
+								Bundle.getMessage("Error2"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1429,9 +1429,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         */
         curNode = new SerialNode(nodeAddress,nodeType,_memo.getTrafficController());
         if (curNode == null) {
-            statusText1.setText(rbx.getString("Error3"));
+            statusText1.setText(Bundle.getMessage("Error3"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error3")+Integer.toString(nodeAddress),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3")+Integer.toString(nodeAddress),"",JOptionPane.ERROR_MESSAGE); 
             log.error("Error creating Serial Node, constructor returned null");
             errorInStatus1 = true;
             resetNotes2();
@@ -1455,7 +1455,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         
         // provide user feedback
         //----------------------
-        statusText1.setText(rbx.getString("FeedBackAdd")+" "+Integer.toString(nodeAddress));
+        statusText1.setText(Bundle.getMessage("FeedBackAdd")+" "+Integer.toString(nodeAddress));
         statusText2.setVisible(false);
         statusText3.setVisible(true);
         doneNodeButton.setVisible(true);
@@ -1478,7 +1478,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         //------------------------------------------------------
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rbx.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1502,8 +1502,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             case SerialNode.SMINI:
                 nodeTypeBox.setSelectedItem("SMINI");
                 bitsPerCard = 24;
-                cardSizeBox.setSelectedItem(rbx.getString("CardSize24"));
-		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 3 Input Bytes, 6 Output Bytes");			
+                cardSizeBox.setSelectedItem(Bundle.getMessage("CardSize24"));
+		onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 3 Input Bytes, 6 Output Bytes");			
                 // set up the searchlight arrays
                 num2LSearchLights = 0;
                 for (int i=0;i<48;i++) {
@@ -1528,10 +1528,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		nodeTypeBox.setSelectedItem("USIC_SUSIC");
                 bitsPerCard = curNode.getNumBitsPerCard();
                 if (bitsPerCard==24) {
-                cardSizeBox.setSelectedItem(rbx.getString("CardSize24"));
+                cardSizeBox.setSelectedItem(Bundle.getMessage("CardSize24"));
                 }
                 if (bitsPerCard==32) {
-                cardSizeBox.setSelectedItem(rbx.getString("CardSize32"));
+                cardSizeBox.setSelectedItem(Bundle.getMessage("CardSize32"));
                 }
 		onBoardBytesText.setText("  ");			
 
@@ -1542,8 +1542,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             case SerialNode.CPNODE:
 		nodeTypeBox.setSelectedItem("CPNODE");
                 bitsPerCard = 8;
-                cardSize8Box.setSelectedItem(rbx.getString("CardSize8"));
-		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 2 Bytes");			
+                cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
+		onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 2 Bytes");			
                 
                 // --------------
                 // cpNode Options
@@ -1560,8 +1560,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             case SerialNode.CPMEGA:
 		nodeTypeBox.setSelectedItem("CPMEGA");
                 bitsPerCard = 8;
-                cardSize8Box.setSelectedItem(rbx.getString("CardSize8"));
-		onBoardBytesText.setText(rbx.getString("LabelOnBoardBytes")+" 8 Bytes");
+                cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
+		onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes")+" 8 Bytes");
                 
                 // --------------
                 // cpMega Options
@@ -1606,13 +1606,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         for (int i=0;i<64;i++) 
         {
             if (curNode.isOutputCard(i)) {
-                cardType[i] = rbx.getString("CardTypeOutput");
+                cardType[i] = Bundle.getMessage("CardTypeOutput");
             }
             else if (curNode.isInputCard(i)) {
-                cardType[i] = rbx.getString("CardTypeInput");
+                cardType[i] = Bundle.getMessage("CardTypeInput");
             }
             else {
-                cardType[i] = rbx.getString("CardTypeNone");
+                cardType[i] = Bundle.getMessage("CardTypeNone");
             }
         }
         
@@ -1620,13 +1620,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         for (int i=0;i<8;i++) // Remap the onboard bytes
         {
             if (curNode.isOutputCard(i)) {
-                onBoardType[i] = rbx.getString("CardTypeOutput");
+                onBoardType[i] = Bundle.getMessage("CardTypeOutput");
             }
             else if (curNode.isInputCard(i)) {
-                onBoardType[i] = rbx.getString("CardTypeInput");
+                onBoardType[i] = Bundle.getMessage("CardTypeInput");
             }
             else {
-                onBoardType[i] = rbx.getString("CardTypeNone");
+                onBoardType[i] = Bundle.getMessage("CardTypeNone");
             }
         }
 		
@@ -1666,7 +1666,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         //------------------------------------------------------
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rbx.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1720,7 +1720,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setVisible(true);
         
         // provide user feedback
-        statusText1.setText(rbx.getString("FeedBackUpdate")+" "+Integer.toString(nodeAddress));
+        statusText1.setText(Bundle.getMessage("FeedBackUpdate")+" "+Integer.toString(nodeAddress));
         statusText2.setVisible(false);
         cancelNodeButton.setVisible(false); 
         errorInStatus1 = true;
@@ -1734,8 +1734,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // confirm deletion with the user
         //-------------------------------
        if ( JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
-            this,rbx.getString("ConfirmDelete1")+"\n"+
-            rbx.getString("ConfirmDelete2"),rbx.getString("ConfirmDeleteTitle"),
+            this,Bundle.getMessage("ConfirmDelete1")+"\n"+
+            Bundle.getMessage("ConfirmDelete2"),Bundle.getMessage("ConfirmDeleteTitle"),
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.WARNING_MESSAGE) ) {
 
@@ -1747,7 +1747,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             
             // provide user feedback
             resetNotes();
-            statusText1.setText(rbx.getString("FeedBackDelete")+" "+Integer.toString(deleteNodeAddress));
+            statusText1.setText(Bundle.getMessage("FeedBackDelete")+" "+Integer.toString(deleteNodeAddress));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             changedNode = true;
@@ -1790,14 +1790,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // get the node corresponding to this node address
         //------------------------------------------------
         if (curNode == null) {
-            statusText1.setText(rbx.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
             return;
         }
         else {
-            statusText1.setText(rbx.getString("NotesDel3"));
+            statusText1.setText(Bundle.getMessage("NotesDel3"));
             statusText1.setVisible(true); 
         }
     }
@@ -1830,8 +1830,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if (changedNode) {
          Remind user to Save new configuration
          JOptionPane.showMessageDialog(this,
-         rbx.getString("Reminder1")+"\n"+rbx.getString("Reminder2"),
-         rbx.getString("ReminderTitle"),
+         Bundle.getMessage("Reminder1")+"\n"+Bundle.getMessage("Reminder2"),
+         Bundle.getMessage("ReminderTitle"),
          JOptionPane.INFORMATION_MESSAGE);
         }
         */
@@ -2144,7 +2144,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception e)
         {
-            statusText1.setText(rbx.getString("Error5"));
+            statusText1.setText(Bundle.getMessage("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -2152,10 +2152,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         
         if ( (addr < 0) || (addr > 127) ) {
-//            statusText1.setText(rbx.getString("Error6"));
+//            statusText1.setText(Bundle.getMessage("Error6"));
 //            statusText1.setVisible(true);
             errorInStatus1 = true;
-            JOptionPane.showMessageDialog(this,rbx.getString("Error6"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error6"),"",JOptionPane.ERROR_MESSAGE); 
             resetNotes2();
             return -1;
         }
@@ -2177,27 +2177,27 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception e)
         {
-            statusText1.setText(rbx.getString("Error7"));
+            statusText1.setText(Bundle.getMessage("Error7"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error7"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error7"),"",JOptionPane.ERROR_MESSAGE); 
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
             return (false);
         }
         if (receiveDelay < 0) {
-            statusText1.setText(rbx.getString("Error8"));
+            statusText1.setText(Bundle.getMessage("Error8"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error8"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error8"),"",JOptionPane.ERROR_MESSAGE); 
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
             return (false);
         }
         if (receiveDelay > 65535) {
-            statusText1.setText(rbx.getString("Error9"));
+            statusText1.setText(Bundle.getMessage("Error9"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error9"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error9"),"",JOptionPane.ERROR_MESSAGE); 
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
@@ -2222,18 +2222,18 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception e)
         {
-            statusText1.setText(rbx.getString("Error18"));
+            statusText1.setText(Bundle.getMessage("Error18"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error18"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error18"),"",JOptionPane.ERROR_MESSAGE); 
             pulseWidth = 500;
             errorInStatus1 = true;
             resetNotes2();
             return (false);
         }
         if (pulseWidth < 100) {
-            statusText1.setText(rbx.getString("Error16"));
+            statusText1.setText(Bundle.getMessage("Error16"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error16"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error16"),"",JOptionPane.ERROR_MESSAGE); 
             pulseWidth = 100;
 	    pulseWidthField.setText(Integer.toString(pulseWidth));
             errorInStatus1 = true;
@@ -2241,9 +2241,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             return (false);
         }
         if (pulseWidth > 10000) {
-            statusText1.setText(rbx.getString("Error17"));
+            statusText1.setText(Bundle.getMessage("Error17"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this,rbx.getString("Error17"),"",JOptionPane.ERROR_MESSAGE); 
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error17"),"",JOptionPane.ERROR_MESSAGE); 
             pulseWidth = 500;
 	    pulseWidthField.setText(Integer.toString(pulseWidth));
             errorInStatus1 = true;
@@ -2271,9 +2271,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     if (searchlightBits[i]) numBits ++;
                 }
                 if ( (2*num2LSearchLights) != numBits ) {
-                    statusText1.setText(rbx.getString("Error10"));
+                    statusText1.setText(Bundle.getMessage("Error10"));
                     statusText1.setVisible(true);
-                    JOptionPane.showMessageDialog(this,rbx.getString("Error10"),"",JOptionPane.ERROR_MESSAGE); 
+                    JOptionPane.showMessageDialog(this,Bundle.getMessage("Error10"),"",JOptionPane.ERROR_MESSAGE); 
                     errorInStatus1 = true;
                     resetNotes2();
                     return (false);
@@ -2284,14 +2284,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 numCards = 0;
                 boolean atNoCard = false;
                 for (int i = 0; i<64 ; i++) {
-                    if ( (cardType[i].equals(rbx.getString("CardTypeOutput"))) || 
-						(cardType[i].equals(rbx.getString("CardTypeInput"))) ) {
+                    if ( (cardType[i].equals(Bundle.getMessage("CardTypeOutput"))) || 
+						(cardType[i].equals(Bundle.getMessage("CardTypeInput"))) ) {
                         if (atNoCard) {
                             // gap error
-                            statusText1.setText(rbx.getString("Error11"));
+                            statusText1.setText(Bundle.getMessage("Error11"));
                             statusText1.setVisible(true);
-                            statusText2.setText(rbx.getString("Error12"));
-                            JOptionPane.showMessageDialog(this,rbx.getString("Error11")+rbx.getString("Error12"),"",JOptionPane.ERROR_MESSAGE); 
+                            statusText2.setText(Bundle.getMessage("Error12"));
+                            JOptionPane.showMessageDialog(this,Bundle.getMessage("Error11")+Bundle.getMessage("Error12"),"",JOptionPane.ERROR_MESSAGE); 
                             errorInStatus1 = true;
                             errorInStatus2 = true;
                             return (false);
@@ -2300,17 +2300,17 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             numCards ++;
                         }
                     }
-                    else if (cardType[i].equals(rbx.getString("CardTypeNone"))) {
+                    else if (cardType[i].equals(Bundle.getMessage("CardTypeNone"))) {
                         atNoCard = true;
                     }
                 }
                 // ensure that at least one card has been defined
                 if ( numCards <= 0 ) {
                     // no card error
-                    statusText1.setText(rbx.getString("Error13"));
-                    statusText2.setText(rbx.getString("Error14"));
+                    statusText1.setText(Bundle.getMessage("Error13"));
+                    statusText2.setText(Bundle.getMessage("Error14"));
                     statusText1.setVisible(true);
-                    JOptionPane.showMessageDialog(this,rbx.getString("Error13")+rbx.getString("Error14"),"",JOptionPane.ERROR_MESSAGE); 
+                    JOptionPane.showMessageDialog(this,Bundle.getMessage("Error13")+Bundle.getMessage("Error14"),"",JOptionPane.ERROR_MESSAGE); 
                     errorInStatus1 = true;
                     errorInStatus2 = true;
                     return (false);
@@ -2318,10 +2318,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 // check that card size is 24 or 32 bit
                 if ( (bitsPerCard!=24 ) && (bitsPerCard!=32) ) {
                     // card size error
-                    statusText1.setText(rbx.getString("Error15"));
+                    statusText1.setText(Bundle.getMessage("Error15"));
                     statusText1.setVisible(true);
                     errorInStatus1 = true;
-                    JOptionPane.showMessageDialog(this,rbx.getString("Error15"),"",JOptionPane.ERROR_MESSAGE); 
+                    JOptionPane.showMessageDialog(this,Bundle.getMessage("Error15"),"",JOptionPane.ERROR_MESSAGE); 
                     resetNotes2();
                     return (false);
                 }
@@ -2333,10 +2333,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     // will the number of cards be reduced by this edit?
                     if ( numCards<(numOutput+numInput) ) {
                         if ( javax.swing.JOptionPane.NO_OPTION == javax.swing.JOptionPane.showConfirmDialog(this,
-                              rbx.getString("ConfirmUpdate1")+"\n"+
-                              rbx.getString("ConfirmUpdate2")+"\n"+
-                              rbx.getString("ConfirmUpdate3"),
-                              rbx.getString("ConfirmUpdateTitle"),
+                              Bundle.getMessage("ConfirmUpdate1")+"\n"+
+                              Bundle.getMessage("ConfirmUpdate2")+"\n"+
+                              Bundle.getMessage("ConfirmUpdate3"),
+                              Bundle.getMessage("ConfirmUpdateTitle"),
                               javax.swing.JOptionPane.YES_NO_OPTION,
                               javax.swing.JOptionPane.WARNING_MESSAGE) ) {
                             // user said don't update - cancel the update
@@ -2348,16 +2348,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             case SerialNode.CPNODE:   //c2
                 for (int j = 0; j<64; j++) 
                 {
-                    if ( (cardType[j].equals(rbx.getString("CardTypeOutput"))) || 
-						(cardType[j].equals(rbx.getString("CardTypeInput"))) )
+                    if ( (cardType[j].equals(Bundle.getMessage("CardTypeOutput"))) || 
+						(cardType[j].equals(Bundle.getMessage("CardTypeInput"))) )
 						numCards ++;  
                 }
 	    break;
             case SerialNode.CPMEGA:   //c2
                 for (int j = 0; j<64; j++) 
                 {
-                    if ( (cardType[j].equals(rbx.getString("CardTypeOutput"))) || 
-						(cardType[j].equals(rbx.getString("CardTypeInput"))) )
+                    if ( (cardType[j].equals(Bundle.getMessage("CardTypeOutput"))) || 
+						(cardType[j].equals(Bundle.getMessage("CardTypeInput"))) )
 						numCards ++;  
                 }
 	    break;
@@ -2404,8 +2404,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int ADDRESS_COLUMN = 0;
         public static final int TYPE_COLUMN = 1;
     }
-    private String[] cardConfigColumnNames = {rbx.getString("HeadingCardAddress"),
-                                              " "+rbx.getString("HeadingCardType")};
+    private String[] cardConfigColumnNames = {Bundle.getMessage("HeadingCardAddress"),
+                                              " "+Bundle.getMessage("HeadingCardType")};
     private String[] cardType = new String[64];
     private String[] onBoardType = new String[16];
 	
@@ -2497,7 +2497,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		
         public static final int PORT_COLUMN = 0;
     }
-    private String[] searchlightConfigColumnNames = {rbx.getString("HeadingPort"),"0","1","2","3","4","5","6","7"};
+    private String[] searchlightConfigColumnNames = {Bundle.getMessage("HeadingPort"),"0","1","2","3","4","5","6","7"};
     private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
     private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 	
