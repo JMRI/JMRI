@@ -1019,7 +1019,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create a {@literal JComboBox<String>} containing all the options for
-     * turnout automation parameters for this turnout
+     * turnout automation parameters for this turnout.
      *
      * @param t the turnout
      * @return the JComboBox
@@ -1656,10 +1656,30 @@ public class TurnoutTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
+        // show tooltip for selected system connection
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        log.debug("Connection choice = [{}]", connectionChoice);
+        switch (connectionChoice) {
+            case "MERG": // Bundle key: AddEntryToolTipMERG
+            case "C/MRI":
+            case "XpressNet":
+            case "NCE":
+            case "DCC++":
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) + "<br>" +
+                        Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
+                break;
+            default: // LocoNet and others: "enter a number"
+                log.debug("Default tooltip");
+                sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+        }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
@@ -1667,7 +1687,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return;
                 }
             }
-        } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
         }
     }
