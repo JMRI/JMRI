@@ -97,6 +97,7 @@ public class SensorTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -222,6 +223,10 @@ public class SensorTableAction extends AbstractTableAction {
         range.setSelected(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
@@ -239,6 +244,7 @@ public class SensorTableAction extends AbstractTableAction {
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
                 sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                break;
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;

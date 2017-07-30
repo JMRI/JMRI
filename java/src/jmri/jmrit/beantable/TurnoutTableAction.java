@@ -123,6 +123,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
+    String connectionChoice = "";
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
@@ -1659,6 +1660,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
             case "MERG": // Bundle key: AddEntryToolTipMERG
@@ -1675,6 +1680,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
                 sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                break;
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;

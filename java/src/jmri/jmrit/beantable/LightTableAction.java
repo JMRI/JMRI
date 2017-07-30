@@ -536,6 +536,7 @@ public class LightTableAction extends AbstractTableAction {
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
+    String connectionChoice = "";
 
     // parts for supporting variable intensity, transition
     JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity") + "  ");
@@ -749,6 +750,10 @@ public class LightTableAction extends AbstractTableAction {
         labelNumToAdd.setEnabled(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
@@ -766,6 +771,7 @@ public class LightTableAction extends AbstractTableAction {
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
                 fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+                break;
         }
 
         addFrame.pack();
