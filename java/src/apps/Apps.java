@@ -49,7 +49,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
-import jmri.NamedBeanHandleManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
@@ -217,7 +216,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);

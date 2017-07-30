@@ -268,9 +268,6 @@ public class JUnitUtil {
                 InstanceManager.defaultInstanceManager = null;
             }
         };
-
-        // add the NamedBeanHandleManager, which is always needed
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     public static void resetTurnoutOperationManager() {
