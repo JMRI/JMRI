@@ -70,12 +70,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     private final AL al;
 
     // Arrays to hold various .wav file information
-    private int[] format = new int[1];
-    private int[] dataStorageBuffer = new int[1];
-    private ByteBuffer[] data = new ByteBuffer[1];
-    private int[] size = new int[1];
-    private int[] freq = new int[1];
-    private int[] loop = new int[1];
+    private final int[] format = new int[1];
+    private final int[] dataStorageBuffer = new int[1];
+    private final ByteBuffer[] data = new ByteBuffer[1];
+    private final int[] size = new int[1];
+    private final int[] freq = new int[1];
+    private final int[] loop = new int[1];
 
     private boolean initialised = false;
 
@@ -119,7 +119,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError(al)) {
-            log.warn("Error creating JoalAudioBuffer (" + this.getSystemName() + ")");
+            log.warn("Error creating JoalAudioBuffer ({})", this.getSystemName());
             return false;
         }
 
@@ -213,7 +213,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         try {
             ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Exception loading JoalAudioBuffer from stream: {}", e.toString());
+            log.warn("Exception loading JoalAudioBuffer from stream: {}", e.getMessage());
             return false;
         }
 
@@ -235,7 +235,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         try {
             ALut.alutLoadWAVFile(FileUtil.getExternalFilename(this.getURL()), format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Exception loading JoalAudioBuffer from file: {}", e.toString());
+            log.warn("Exception loading JoalAudioBuffer from file: {}", e.getMessage());
             return false;
         }
 
