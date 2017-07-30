@@ -52,6 +52,10 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static final String INTERPRETATION = "interpretation"; // NOI18N
     public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
     public static final String APPEARANCES = "appearances"; // NOI18N
+    public static final String SHUT_DOWN = "shutdown"; // NOI18N
+    public static final String NO_MERGE = "NO_MERGE";
+    public static final String PROMPT   = "PROMPT";
+    public static final String MERGE_ALL = "MERGE_ALL";
     /**
      * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
      */
@@ -125,6 +129,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private int _msIncrTime = 500;          // time in milliseconds between speed changes ramping up or down
     private float _throttleIncr = 0.03f;    // throttle increment for each ramp speed change
 
+    public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
+    private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
+
     /**
      * Get the default instance.
      *
@@ -168,12 +175,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
     }
 
-    public void loadLayoutParams(Element child) {
-        if (child == null) {
+    public void loadLayoutParams(Element layoutParm) {
+        if (layoutParm == null) {
             return;
         }
         Attribute a;
-        if ((a = child.getAttribute(LAYOUT_SCALE)) != null) {
+        if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
             try {
                 setScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -181,12 +188,23 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(SEARCH_DEPTH)) != null) {
+        if ((a = layoutParm.getAttribute(SEARCH_DEPTH)) != null) {
             try {
                 _searchDepth = a.getIntValue();
             } catch (DataConversionException ex) {
                 _searchDepth = 20;
                 log.error("Unable to read route search depth. Setting to default value (20).", ex);
+            }
+        }
+        Element shutdown = layoutParm.getChild(SHUT_DOWN);
+        if (shutdown != null) {
+            String choice = shutdown.getText();
+            if (MERGE_ALL.equals(choice)) {
+                _shutdown = Shutdown.MERGE_ALL;
+            } else if (NO_MERGE.equals(choice)) {
+                _shutdown = Shutdown.NO_MERGE;
+            } else {
+                _shutdown = Shutdown.PROMPT;
             }
         }
     }
@@ -350,6 +368,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         try {
             prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
             prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
+            Element shutdownPref = new Element(SHUT_DOWN);
+            shutdownPref.setText(_shutdown.toString());
+            prefs.addContent(shutdownPref);
             root.addContent(prefs);
 
             prefs = new Element(SPEED_MAP_PARAMS);
@@ -664,6 +685,13 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             this.openFile(FileUtil.getUserFilesPath() + "signal" + File.separator + "WarrantPreferences.xml");
             this.setInitialized(profile, true);
         }
+    }
+
+    protected void setShutdown(Shutdown set) {
+        _shutdown = set;
+    }
+    public Shutdown getShutdown() {
+        return _shutdown;
     }
 
     @Override

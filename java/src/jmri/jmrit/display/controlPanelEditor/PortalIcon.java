@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.catalog.NamedIcon;
@@ -38,7 +37,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -244,18 +242,14 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                 return this;
             }
         }.init(this, lockItem));
-        JMenuItem jmi = popup.add(lockItem);
-        jmi.setEnabled(false);
+        popup.add(lockItem);
     }
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
 
-        JMenuItem jmi = edit.add("x = " + getX());
-        jmi.setEnabled(false);
-
-        jmi = edit.add("y = " + getY());
-        jmi.setEnabled(false);
+        edit.add("x = " + getX());
+        edit.add("y = " + getY());
 
         edit.add(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
@@ -263,8 +257,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private void setDisplayLevelMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        JMenuItem jmi = edit.add("level= " + getDisplayLevel());
-        jmi.setEnabled(false);
+        edit.add("level= " + getDisplayLevel());
 
         edit.add(CoordinateEdit.getLevelEditAction(this));
         popup.add(edit);
@@ -285,8 +278,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
-        JMenuItem jmi = popup.add(getNameString());
-        jmi.setEnabled(false);
+        popup.add(getNameString());
         setPositionableMenu(popup);
         if (isPositionable()) {
             setShowCoordinatesMenu(popup);

@@ -1046,7 +1046,9 @@
 
         <li>The <a href="http://www.easeeinterfaces.com">Easee
         Interfaces web site</a>.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
