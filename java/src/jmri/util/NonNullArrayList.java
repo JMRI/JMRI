@@ -14,10 +14,16 @@ import java.util.Collection;
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
-    public boolean add(@Nonnull E e) { return super.add(e); }
+    public boolean add(@Nonnull E e) { 
+        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
+        return super.add(e); 
+    }
 
     @Override
-    public void add(int i, @Nonnull E e) { super.add(i, e); }
+    public void add(int i, @Nonnull E e) { 
+        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
+        super.add(i, e);
+    }
 
     @Override
     public boolean addAll(Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
@@ -45,9 +51,13 @@ public class NonNullArrayList<E> extends ArrayList<E> {
     
     @Override
     @Nonnull
-    public E set(int i, @Nonnull E e) { return super.set(i, e); }
+    public E set(int i, @Nonnull E e) { 
+        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot set item null");
+        return super.set(i, e);
+    }
     
-    // test routines 
+    // test routines for FindBugs checking - protected so you don't see them
+    // These should be clean
     protected NonNullArrayList<Integer> testAddAndReturn() {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
@@ -59,7 +69,7 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
         for (Integer s : t) {
-            if (s.toString().equals(c)) return true;
+            if (s.toString().equals(c)) return true; // FindBugs should not require null check
         }     
         return false;
     }
