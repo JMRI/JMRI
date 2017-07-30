@@ -507,7 +507,7 @@ public class LightTableAction extends AbstractTableAction {
     private boolean lightControlChanged = false;
 
     // items of add frame
-    JLabel systemLabel = new JLabel(Bundle.getMessage("LightSystem"));
+    JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JTextField fieldHardwareAddress = new JTextField(10);

@@ -175,15 +175,19 @@
       part as much as possible, with JMRI using system-dependent
       subparts only when really necessary. Access to
       system-independent features is via the main JMRI menus, such
-      as the Tools menu. Access to system-dependent features is via
+      as the <a href="#tools">Tools</a> menu.
+      Access to system-dependent features is via
       a menu titled for the hardware system supported; C/MRI
-      specific features are accessed via the C/MRI menu.</p>
+      specific features are accessed via the
+      <a href="#tools">C/MRI menu</a>.</p>
 
       <p>JMRI presents itself to users via several application
       front ends, each focusing on a type of use, but all based on
-      the same underlying software library. The popular DecoderPro
+      the same underlying software library. The popular
+      <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>
       application focuses on programming DCC decoders, and is not
-      of much interest to C/MRI. On the other hand, PanelPro is the
+      of much interest to C/MRI. On the other hand,
+      <a href="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> is the
       JMRI application that focuses on layout automation,
       signaling, and CTC panels. PanelPro is the application most
       often used with C/MRI, and is the one used in the examples
@@ -325,10 +329,12 @@
       bits.)</p>
 
       <ol>
-        <li>Start the PanelPro program.</li>
+        <li>Start the <a href="../../apps/index.shtml">PanelPro</a>
+        program.</li>
 
-        <li>From the Edit menu, select <b>Preferences...</b> and
-        configure:
+        From the Edit menu, select
+        <a href="../../../package/apps/TabbedPreferences.shtml#Connection"><b>Preferences...</b></a>
+        and configure:
 
           <ul>
             <li>For layout connection select "C/MRI".</li>
@@ -338,8 +344,8 @@
 
             <li>Select the baud rate your C/MRI system uses.</li>
 
-            <li>Click the "Configure C/MRI nodes" button. On the
-            new pane that opens:
+            <li>Click the <a href="#confignodes">"Configure C/MRI nodes"</a>
+            button. On the new pane that opens:
 
               <ul>
                 <li>Enter your SMINI's node address. (0 is
@@ -363,8 +369,9 @@
         </li>
 
         <li>Restart the program. You need to assign an input bit to
-        start polling. Select <b>Sensor Table</b> from the Tools
-        menu, and proceed:
+        start polling. Select
+        <a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml"><b>Sensor Table</b></a>
+        from the Tools menu, and proceed:
 
           <ul>
             <li>Click "Add..." at the bottom of the table.</li>
@@ -394,10 +401,10 @@
 
         <li>To check that the input bit (Sensor) you assigned is
         working, connect a jumper wire from input pin 1 to the
-        ground terminal on your SMINI board. The Sensor should
-        switch to "Active". The Sensor state will alternate between
-        "Active" and "Inactive", according to whether pin 1 is
-        grounded or not.</li>
+        ground terminal on your SMINI board. The Sensor state should
+        switch to "Active" in the table. The Sensor state will
+        alternate between "Active" and "Inactive", according to
+        whether pin 1 is grounded or not.</li>
 
         <li>To check that everything is working on the output side,
         select <b>Turnout Control</b> from the Tools menu. When the

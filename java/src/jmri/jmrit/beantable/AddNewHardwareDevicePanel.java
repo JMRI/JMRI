@@ -118,7 +118,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JSpinner _endRange;
     JCheckBox _range;
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));

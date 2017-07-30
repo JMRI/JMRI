@@ -43,8 +43,9 @@
       XBee Modules</a> are family of wireless communication devices
       that have their own microcontroller and IO pins that make
       them useful for many distributed control networks, including
-      on model railroads.</p><a name="hardware" id="hardware"></a>
+      on model railroads.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Command Station</h3>

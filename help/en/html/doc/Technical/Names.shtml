@@ -601,7 +601,7 @@
           <td>MT18</td>
           <td>integer</td>
           <td>+18;-18</td>
-          <td> </td>
+          <td>Note: not working</td>
           <td> </td>
         </tr>
         <tr>
@@ -634,7 +634,7 @@
           <td>MT200018</td>
           <td>node + (5 digits)</td>
           <td>N2E18</td>
-          <td> </td>
+          <td>Note: not working</td>
           <td> </td>
         </tr>
         <tr>
@@ -645,7 +645,7 @@
           <td>MTN2E18</td>
           <td>N + number + E + number</td>
           <td>2000018</td>
-          <td> </td>
+          <td>Note: not working</td>
           <td> </td>
         </tr>
         <tr>
