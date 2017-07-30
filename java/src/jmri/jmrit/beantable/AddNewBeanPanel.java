@@ -57,7 +57,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         c.gridx = 2;
         c.gridy = 1;
         p.add(sys, c);
-        sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "Y"));
+        sys.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
         c.gridx = 3;
         p.add(finishLabel, c);
         c.gridx = 4;

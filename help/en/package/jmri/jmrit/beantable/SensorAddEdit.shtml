@@ -21,13 +21,14 @@
     <div id="mainContent">
       <h1>Adding/Editing Sensors</h1>
 
-      <p>When adding a Sensor, you select from the drop down list
-      the system to which the Sensor is attached to.</p><img src=
-      "images/AddSensor.png">
+      <p>When adding a Sensor, from the "System:" drop down
+      list select the hardware connection this Sensor is
+      attached to.</p><img src="images/AddSensor.png">
 
-      <p>Enter a valid address for that Sensor and if desired enter
-      a User Name which can be anything you wish to describe the
-      Sensor.<br>
+      <p>Enter a valid address for the Sensor (look at
+      the Tooltip for accepted input options per system).
+      If desired, enter a User Name which can be anything you
+      wish to describe the Sensor.<br>
       Finish by clicking the "OK" button.</p>
 
       <h2>Creating A Number of Sensors</h2>

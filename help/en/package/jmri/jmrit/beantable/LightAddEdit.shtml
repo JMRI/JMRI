@@ -22,8 +22,8 @@
       <h1>Adding/Editing Lights</h1><a name="addLight" id=
       "addLight"></a>
 
-      <h2>Adding a new Light</h2>To add a new Light, follow this
-      procedure:
+      <h2>Adding a new Light</h2>
+      To add a new Light, follow this procedure:
 
       <ol>
         <li>
@@ -40,14 +40,15 @@
           <p>Select a <b>System:</b> if your layout is connected to
           more than one system or if creating an Internal Light.
           Next enter the <b>Hardware Address:</b> of your new Light
-          (usually a number). This is the address JMRI will send to
-          your system when switching the Light. From this
+          (often entered as a number, look at the Tooltip for accepted
+          input options per system). This is the address JMRI will
+          send to your system when switching the Light.<br>From this
           information, the program will make a <b>System Name</b>
           in the JMRI convention, appropriate for a Light in the
           selected System using the entered address. Examples of
-          valid System Names are: CL1004, and LL401, assuming you
-          have the hardware for the addressed digital output
-          bits.</p>
+          valid System Names are: CL1004, and LL401 (entered as 401
+          here), assuming you have the hardware for the addressed
+          digital output bits.</p>
         </li>
 
         <li>
