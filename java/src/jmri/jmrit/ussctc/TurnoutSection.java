@@ -110,6 +110,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      */
     public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        this.station = station;       
 
         central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
 
@@ -117,8 +118,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         central.initializeLamps(tm.provideTurnout(layoutTO));        
         field.initializeState(tm.provideTurnout(layoutTO)); 
-        
-        this.station = station;       
     }
     
     public void addLocks(List<Lock> locks) { 
