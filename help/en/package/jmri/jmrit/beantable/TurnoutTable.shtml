@@ -34,7 +34,8 @@
         <dt>System Name</dt>
 
         <dd>The System Name cannot be changed once entered into the
-        table. The "Add..." button located in the lower left corner
+        table. The <a href="TurnoutAddEdit.shtml">"Add..."</a>
+        button located in the lower left corner
         of the pane allows you to add a new Turnout to the table.
         The System Name is automatically generated when using the
         "Add..." button.<br>
@@ -45,8 +46,8 @@
         <dt>User Name</dt>
 
         <dd>You can directly enter or change the "User Name" for an
-        existing Turnout. This can be pretty much anything you wish
-        to describe the Turnout.</dd>
+        existing Turnout (double click in the cell). This can be
+        pretty much anything you wish to describe the Turnout.</dd>
 
         <dt>State</dt>
         <img src="images/TurnoutTableGraphic.png" height="96" width="399"

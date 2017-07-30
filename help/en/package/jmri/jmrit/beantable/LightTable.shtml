@@ -44,12 +44,16 @@
       other on/off tasks where the control mechanisms of Lights fit
       the need.</p>
 
-      <p>Optionally a Light may be controlled in five ways: it may
-      be controlled by a single Sensor, by two Sensors, by a
-      Turnout, by the JMRI Fast Clock, or switched on for a
-      specified time by a Sensor. One or more of these controls may
-      be specified when the Light is created, or when it is edited
-      via the Light Table.</p>
+      <p>Optionally a Light may be controlled in five ways:
+      <ul>
+        <li>by a single Sensor</li>
+        <li>by two Sensors</li>
+        <li>by a Turnout</li>
+        <li>by the JMRI Fast Clock</li>
+        <li>or switched on for a specified time by a Sensor.</li>
+      </ul>
+      One or more of these controls may be specified when the
+      Light is created, or when it is edited via the Light Table.</p>
 
       <p>When a Light is created, or when it is read from a
       configuration file, the Light is 'activated'; it is set up to
@@ -119,7 +123,8 @@
       not the target intensity, when transition effects are
       enabled.</p>
 
-      <h2>Creating New Lights</h2>To define a new light, click the
+      <h2>Creating New Lights</h2>
+      To define a new light, click the
       <a href="LightAddEdit.shtml">Add...</a> button the Light
       Table. This will take you to a <a href=
       "LightAddEdit.shtml">new pane</a> for adding or editing
