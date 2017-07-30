@@ -734,9 +734,13 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitChange invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitChange[] starts");
+        
+        int[] initialState = new int[mInputs.length];
+        for (int i = 0 ; i < mInputs.length; i++) {
+            initialState[i] = mInputs[i].getState();
         }
+        
+        log.debug("waitChange[] starts for {} listeners", mInputs.length);
 
         // register listeners
         int i;
@@ -753,13 +757,25 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        // wait for notify
-        wait(maxDelay);
+        log.debug("waitChange[] listeners registered");
+        
+        // quick check for whether there was a change while registering
+        boolean skipWait = false;
+        for (i = 0 ; i < mInputs.length; i++) {
+            if ( initialState[i] != mInputs[i].getState() ) {
+                skipWait = true;
+                break;
+            }
+        }
+
+        // wait for notify from a listener
+        if (!skipWait) wait(maxDelay);
 
         // remove the listeners
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].removePropertyChangeListener(listeners[i]);
         }
+        log.debug("waitChange[] listeners removed");
 
     }
 
