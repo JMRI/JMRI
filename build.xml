@@ -2299,7 +2299,7 @@
 
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2310,7 +2310,7 @@
     </target>
 
     <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2322,7 +2322,7 @@
 
 
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />
             <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>
