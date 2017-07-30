@@ -725,6 +725,5 @@ public class InstanceManager {
             return InstanceManager.setDefault(InstanceManager.class, new InstanceManager());
         });
     }
-
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
