@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
+public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
