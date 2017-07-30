@@ -1007,9 +1007,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            sysNameTextField.setName("sysNameTextField");
-            userNameTextField.setName("userNameTextField");
-            prefixBox.setName("prefixBox");
+            sysNameTextField.setName("sysNameTextField"); // NOI18N
+            userNameTextField.setName("userNameTextField"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             //sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip")); // already assigned by AddNew...
             canAddRange(null);
@@ -1167,8 +1167,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
                 dialog.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(f, "There is no operation type suitable for this turnout",
-                        "No operation type", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("TurnoutOperationErrorDialog"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -1207,8 +1207,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                         String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
                         if (newName != null && !newName.equals("")) {
                             if (!myOp.rename(newName)) {
-                                JOptionPane.showMessageDialog(self, "This name is already in use",
-                                        "Name already in use", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(self, Bundle.getMessage("TurnoutErrorDuplicate"),
+                                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                             }
                             setTitle();
                             myTurnout.setTurnoutOperation(null);
@@ -1639,7 +1639,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
                     if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
                         if (JOptionPane.showConfirmDialog(addFrame,
-                                "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
+                                Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
                                 JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all, // I18N TODO see above for existing keys
                         {
                             useLastType = true;
@@ -1766,4 +1766,5 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
+
 }
