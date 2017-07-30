@@ -1,11 +1,15 @@
 package jmri.managers;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CatalogTreeManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
 import jmri.IdTagManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
@@ -27,6 +31,7 @@ import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide the usual default implementations for the
@@ -46,10 +51,11 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 2.9.4
  */
-public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
+@ServiceProvider(service = InstanceInitializer.class)
+public class DefaultInstanceInitializer implements InstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
@@ -151,7 +157,37 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
         }
 
         // Nothing found
-        return null;
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public Set<Class<?>> getInitalizes() {
+        Set<Class<?>> set = new HashSet<>(Arrays.asList(
+                AudioManager.class,
+                BlockManager.class,
+                CatalogTreeManager.class,
+                ClockControl.class,
+                ConditionalManager.class,
+                IdTagManager.class,
+                LightManager.class,
+                LogixManager.class,
+                MemoryManager.class,
+                ProgrammerManager.class,
+                RailComManager.class,
+                ReporterManager.class,
+                RosterIconFactory.class,
+                RouteManager.class,
+                SensorManager.class,
+                SignalGroupManager.class,
+                SignalHeadManager.class,
+                SignalMastLogicManager.class,
+                SignalMastManager.class,
+                SignalSystemManager.class,
+                Timebase.class,
+                TurnoutManager.class,
+                VSDecoderManager.class
+        ));
+        return set;
     }
 
 }

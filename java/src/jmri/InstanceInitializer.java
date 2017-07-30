@@ -1,5 +1,7 @@
 package jmri;
 
+import java.util.Set;
+
 /**
  * Interface providing initialization of specific objects by default. This is
  * used to move references to specific subtypes out of the jmri package and into
@@ -19,6 +21,20 @@ package jmri;
  */
 public interface InstanceInitializer {
 
-    public <T> Object getDefault(Class<T> type);
+    /**
+     * Provide the default for the given class.
+     *
+     * @param <T>  the class to get the default for
+     * @param type the class to get the default for
+     * @return the newly created default for the given class
+     */
+    public <T> Object getDefault(Class<T> type) throws IllegalArgumentException;
 
+    /**
+     * Get the set of classes for which this InstanceInitializer can provide
+     * default instances for.
+     *
+     * @return the set of classes this InstanceInitalizer supports
+     */
+    public Set<Class<?>> getInitalizes();
 }

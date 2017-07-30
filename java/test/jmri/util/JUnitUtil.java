@@ -262,10 +262,10 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // create a new instance manager & use initializer to clear static list of state
+        // create a new instance manager & use initializer to clear static manager instance
         new InstanceManager() {
             {
-                managerLists.clear();
+                InstanceManager.defaultInstanceManager = null;
             }
         };
 
