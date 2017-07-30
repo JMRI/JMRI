@@ -34,6 +34,45 @@ public class NonNullArrayListTest {
     }
 
     @Test
+    public void testNotAddNull() {
+        NonNullArrayList<Integer> t = new NonNullArrayList<>();
+        boolean thrown = false;
+        try {
+            t.add(null);
+        } catch (IllegalArgumentException e) {
+            thrown = true;
+        } finally {
+            Assert.assertTrue(thrown);
+        }
+    }
+
+    @Test
+    public void testNotAddIndexNull() {
+        NonNullArrayList<Integer> t = new NonNullArrayList<>();
+        boolean thrown = false;
+        try {
+            t.add(0, null);
+        } catch (IllegalArgumentException e) {
+            thrown = true;
+        } finally {
+            Assert.assertTrue(thrown);
+        }
+    }
+
+    @Test
+    public void testNotSetNull() {
+        NonNullArrayList<Integer> t = new NonNullArrayList<>();
+        boolean thrown = false;
+        try {
+            t.set(0, null);
+        } catch (IllegalArgumentException e) {
+            thrown = true;
+        } finally {
+            Assert.assertTrue(thrown);
+        }
+    }
+
+    @Test
     public void testLoop() {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
