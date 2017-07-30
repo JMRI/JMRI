@@ -1129,12 +1129,10 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1147,7 +1145,7 @@ public class LightTableAction extends AbstractTableAction {
         // Check if the User Name has been changed
         String uName = userName.getText();
         if (uName.equals("")) {
-            uName = null;   // a blank field means no user name
+            uName = null; // a blank field means no user name
         }
         String prevUName = g.getUserName();
         if ((uName != null) && !(uName.equals(prevUName))) {
@@ -2150,4 +2148,5 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+
 }

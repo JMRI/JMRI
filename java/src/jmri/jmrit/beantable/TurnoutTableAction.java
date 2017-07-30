@@ -1698,19 +1698,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    void handleCreateException(Exception ex, String sysNameTextField) {
+    void handleCreateException(Exception ex, String sysName) {
         if (ex.getMessage() != null) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         } else {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("ErrorTurnoutAddFailed"),
-                            new Object[]{sysNameTextField}),
+            JOptionPane.showMessageDialog(addFrame,
+                    Bundle.getMessage("ErrorTurnoutAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
