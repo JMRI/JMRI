@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.annotation.Nonnull;
+
 import jmri.BasicRosterEntry;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -442,7 +444,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors sensors to wait on
      */
-    public void waitSensorInactive(Sensor[] mSensors) {
+    public void waitSensorInactive(@Nonnull Sensor[] mSensors) {
         log.debug("waitSensorInactive[] starts");
         waitSensorState(mSensors, Sensor.INACTIVE);
     }
@@ -452,7 +454,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors sensors to wait on
      */
-    public void waitSensorActive(Sensor[] mSensors) {
+    public void waitSensorActive(@Nonnull Sensor[] mSensors) {
         log.debug("waitSensorActive[] starts");
         waitSensorState(mSensors, Sensor.ACTIVE);
     }
@@ -467,7 +469,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensors Array of sensors to watch
      * @param state    State to check (static value from jmri.Sensors)
      */
-    public synchronized void waitSensorState(Sensor[] mSensors, int state) {
+    public synchronized void waitSensorState(@Nonnull Sensor[] mSensors, @Nonnull int state) {
         if (!inThread) {
             log.warn("waitSensorState invoked from invalid context");
         }
@@ -514,7 +516,7 @@ public class AbstractAutomaton implements Runnable {
      * @param warrant The name of the warrant to watch
      * @param state   State to check (static value from jmri.logix.warrant)
      */
-    public synchronized void waitWarrantRunState(Warrant warrant, int state) {
+    public synchronized void waitWarrantRunState(@Nonnull Warrant warrant, int state) {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
@@ -556,7 +558,7 @@ public class AbstractAutomaton implements Runnable {
      * @param occupied Determines whether to wait for the block to become
      *                 occupied or unoccupied
      */
-    public synchronized void waitWarrantBlock(Warrant warrant, String block, boolean occupied) {
+    public synchronized void waitWarrantBlock(@Nonnull Warrant warrant, @Nonnull String block, boolean occupied) {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
@@ -602,7 +604,7 @@ public class AbstractAutomaton implements Runnable {
      * @return The name of the block that was entered or null if the warrant is
      *         no longer running.
      */
-    public synchronized String waitWarrantBlockChange(Warrant warrant) {
+    public synchronized String waitWarrantBlockChange(@Nonnull Warrant warrant) {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
@@ -653,7 +655,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mTurnouts list of turnouts to watch
      */
-    public synchronized void waitTurnoutConsistent(Turnout[] mTurnouts) {
+    public synchronized void waitTurnoutConsistent(@Nonnull Turnout[] mTurnouts) {
         if (!inThread) {
             log.warn("waitTurnoutConsistent invoked from invalid context");
         }
@@ -699,7 +701,7 @@ public class AbstractAutomaton implements Runnable {
      * @param closed turnouts to set to closed state
      * @param thrown turnouts to set to thrown state
      */
-    public void setTurnouts(Turnout[] closed, Turnout[] thrown) {
+    public void setTurnouts(@Nonnull Turnout[] closed, @Nonnull Turnout[] thrown) {
         Turnout[] turnouts = new Turnout[closed.length + thrown.length];
         int ti = 0;
         for (int i = 0; i < closed.length; ++i) {
@@ -730,20 +732,53 @@ public class AbstractAutomaton implements Runnable {
     // The synchronized can cause thread lockup when a one thread
     // is held at the inner synchronized (self)
     //
-    public void waitChange(NamedBean[] mInputs, int maxDelay) {
+    public void waitChange(@Nonnull NamedBean[] mInputs, int maxDelay) {
         if (!inThread) {
             log.warn("waitChange invoked from invalid context");
         }
         
-        int[] initialState = new int[mInputs.length];
-        for (int i = 0 ; i < mInputs.length; i++) {
-            initialState[i] = mInputs[i].getState();
+        int i;
+        int[] tempState = waitChangePrecheckStates;
+        // do we need to create it now?
+        boolean recreate = false;
+        if (waitChangePrecheckBeans != null && waitChangePrecheckStates != null ) {
+            // Seems precheck intended, see if done right
+            if (waitChangePrecheckBeans.length != mInputs.length) {
+                log.warn("Precheck ignored because of mismatch in size: before {}, now {}", waitChangePrecheckBeans.length, mInputs.length);
+                recreate = true;
+            }
+            if (waitChangePrecheckBeans.length != waitChangePrecheckStates.length) {
+                log.error("Precheck data inconsistent because of mismatch in size: {}, {}", waitChangePrecheckBeans.length, waitChangePrecheckStates.length);
+                recreate = true;
+            }
+            if (! recreate) { // have to check if the beans are the same, but only check if the above tests pass
+                for (i = 0 ; i < mInputs.length; i++) {
+                    if (waitChangePrecheckBeans[i] != mInputs[i]) {
+                        log.warn("Precheck ignored because of mismatch in bean {}", i);
+                        recreate = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            recreate = true;
         }
+        
+        if (recreate) {
+            // here, have to create a new state array
+            log.debug("recreate state array");
+            tempState = new int[mInputs.length];
+            for (i = 0 ; i < mInputs.length; i++) {
+                tempState[i] = mInputs[i].getState();
+            }
+        }
+        waitChangePrecheckBeans = null;
+        waitChangePrecheckStates  = null;        
+        final int[] initialState = tempState; // needs to be final for off-thread references
         
         log.debug("waitChange[] starts for {} listeners", mInputs.length);
 
         // register listeners
-        int i;
         java.beans.PropertyChangeListener[] listeners
                 = new java.beans.PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
@@ -759,17 +794,23 @@ public class AbstractAutomaton implements Runnable {
 
         log.debug("waitChange[] listeners registered");
         
-        // quick check for whether there was a change while registering
-        boolean skipWait = false;
-        for (i = 0 ; i < mInputs.length; i++) {
-            if ( initialState[i] != mInputs[i].getState() ) {
-                skipWait = true;
-                break;
+        // queue a check for whether there was a change while registering
+        jmri.util.ThreadingUtil.runOnLayoutEventually(
+            () -> {
+                for (int j = 0 ; j < mInputs.length; j++) {
+                    if ( initialState[j] != mInputs[j].getState() ) {
+                        log.debug("notify that input {} changed when initial on-layout check was finally done", j);
+                        synchronized (self) {
+                            self.notifyAll();
+                        }
+                        break;
+                    }
+                }
             }
-        }
+        );
 
         // wait for notify from a listener
-        if (!skipWait) wait(maxDelay);
+        wait(maxDelay);
 
         // remove the listeners
         for (i = 0; i < mInputs.length; i++) {
@@ -779,6 +820,24 @@ public class AbstractAutomaton implements Runnable {
 
     }
 
+    NamedBean[] waitChangePrecheckBeans = null;
+    int[] waitChangePrecheckStates  = null;
+
+    /**
+     * Wait forever for one of a list of NamedBeans (sensors, signal heads
+     * and/or turnouts) to change, or for a specific time to pass.
+     *
+     * @param mInputs Array of NamedBeans to watch
+     */
+    public void waitChangePrecheck(NamedBean[] mInputs) {
+        waitChangePrecheckBeans = new NamedBean[mInputs.length];
+        waitChangePrecheckStates = new int[mInputs.length];
+        for (int i = 0 ; i < mInputs.length; i++) {
+            waitChangePrecheckBeans[i] = mInputs[i];
+            waitChangePrecheckStates[i] = mInputs[i].getState();
+        }       
+    }
+    
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
      * and/or turnouts) to change, or for a specific time to pass.
