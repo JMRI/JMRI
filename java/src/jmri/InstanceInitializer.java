@@ -35,7 +35,8 @@ public interface InstanceInitializer {
      * @param <T>  the class to get the default for
      * @param type the class to get the default for
      * @return the newly created default for the given class
-     * @throws IllegalArgumentException if unable to create an instance of type
+     * @throws IllegalArgumentException if creating an instance of type is not
+     *                                  supported by this InstanceInitalizer
      */
     @Nonnull
     public <T> Object getDefault(@Nonnull Class<T> type) throws IllegalArgumentException;
