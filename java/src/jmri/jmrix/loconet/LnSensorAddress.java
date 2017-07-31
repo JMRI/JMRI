@@ -1,4 +1,3 @@
-// LnSensorAddress.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class LnSensorAddress {
 
@@ -39,7 +38,7 @@ public class LnSensorAddress {
     boolean _valid;
 
     public LnSensorAddress(int sw1, int sw2, String prefix) {
-        _as = sw2 & 0x20;		// should be a LocoNet constant?
+        _as = sw2 & 0x20;  // should be a LocoNet constant?
         _high = sw2 & 0x0F;
         _low = sw1 & 0x7F;
         _valid = true;
@@ -85,6 +84,9 @@ public class LnSensorAddress {
                             break;
                         case 'D':
                             d = 3;
+                            break;
+                        default:
+                            log.warn("Unhandled addr code: {}", c);
                             break;
                     }
                     int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 2)) * 16 + d * 4
@@ -164,6 +166,7 @@ public class LnSensorAddress {
         return _valid;
     }
 
+    @Override
     public String toString() {
         return getNumericAddress() + ":"
                 + getDS54Address() + ":"
@@ -242,6 +245,3 @@ public class LnSensorAddress {
     private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
-
-
-/* @(#)LnSensorAddress.java */

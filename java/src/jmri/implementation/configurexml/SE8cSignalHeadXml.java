@@ -26,15 +26,13 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SE8cSignalHead p = (SE8cSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
 
         storeCommon(p, element);
 
@@ -89,8 +87,13 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Process stored signal head output (turnout).
+     * <p>
+     * Needs to handle two types of element: turnoutname is new form; turnout is
+     * old form.
+     *
+     * @param o xml object defining a turnout on an SE8C signal head
+     * @return named bean for the turnout
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
@@ -118,6 +121,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -77,7 +78,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -85,7 +86,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
     static JComponent _jynstrumentSpace = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();

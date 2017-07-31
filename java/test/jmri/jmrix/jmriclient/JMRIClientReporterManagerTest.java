@@ -1,9 +1,7 @@
 package jmri.jmrix.jmriclient;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * JMRIClientReporterManagerTest.java
@@ -13,36 +11,31 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientReporterManagerTest extends TestCase {
+public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
-    public void testCtor() {
-        JMRIClientReporterManager m = new JMRIClientReporterManager(new JMRIClientSystemConnectionMemo());
-        Assert.assertNotNull(m);
+    @Override
+    public String getSystemName(String i) {
+        return "JR" + i;
     }
 
-    // from here down is testing infrastructure
-    public JMRIClientReporterManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientReporterManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientReporterManagerTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        JMRIClientTrafficController tc = new JMRIClientTrafficController(){
+           @Override
+           public void sendJMRIClientMessage(JMRIClientMessage m,JMRIClientListener reply) {
+           }
+        };
+        l = new JMRIClientReporterManager(new JMRIClientSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

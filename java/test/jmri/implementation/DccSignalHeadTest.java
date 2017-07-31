@@ -7,7 +7,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright (C) 2013
  */
-public class DccSignalHeadTest {
+public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCtor1() {
@@ -154,6 +153,11 @@ public class DccSignalHeadTest {
 
     // from here down is testing infrastructure
 
+    @Override
+    public SignalHead getHeadToTest() {
+        return new DccSignalHead("IH$1");
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
@@ -162,15 +166,18 @@ public class DccSignalHeadTest {
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
+            @Override
             public void sendPacket(byte[] packet, int repeats) {
                 lastSentPacket = packet;
                 sentPacketCount++;
             }
 
+            @Override
             public String getUserName() {
                 return null;
             }
 
+            @Override
             public String getSystemPrefix() {
                 return "I";
             }

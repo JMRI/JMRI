@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Alex Shepherd Copyright (C) 2003
+ * @author Alex Shepherd Copyright (C) 2003
  */
 public class Pr1Importer {
 

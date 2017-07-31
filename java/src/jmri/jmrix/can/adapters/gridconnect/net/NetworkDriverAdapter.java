@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -15,15 +14,15 @@ import org.slf4j.LoggerFactory;
  * This connects via a telnet connection. Normally controlled by the
  * NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new CanSystemConnectionMemo());
-        option1Name = "Gateway";
+        option1Name = "Gateway"; // NOI18N
         options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
-        option2Name = "Protocol";
+        option2Name = "Protocol"; // NOI18N
         options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
@@ -33,6 +32,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
      * set up all of the other objects to operate with the CAN bus connected via
      * this TCP/IP link
      */
+    @Override
     public void configure() {
         TrafficController tc;
         if (getOptionState(option2Name).equals(ConfigurationManager.MERGCBUS)) {

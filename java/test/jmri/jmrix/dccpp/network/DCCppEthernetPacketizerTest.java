@@ -1,42 +1,32 @@
 package jmri.jmrix.dccpp.network;
 
-import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * <p>
  * Title: DCCppEthernetPacketizerTest </p>
  * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2009</p>
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2009
  */
-public class DCCppEthernetPacketizerTest extends TestCase {
-
-    public void testCtor() {
-        DCCppEthernetPacketizer f = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation());
-        Assert.assertNotNull(f);
-    }
-
-    // from here down is testing infrastructure
-    public DCCppEthernetPacketizerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppEthernetPacketizerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerTest {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

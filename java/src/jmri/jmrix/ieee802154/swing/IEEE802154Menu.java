@@ -1,4 +1,3 @@
-// IEEE802154Menu.java
 package jmri.jmrix.ieee802154.swing;
 
 import java.util.ResourceBundle;
@@ -7,14 +6,9 @@ import javax.swing.JMenu;
 /**
  * Create a menu containing the IEEE 802.15.4 specific tools
  *
- * @author	Paul Bender Copyright 2013
+ * @author Paul Bender Copyright 2013
  */
 public class IEEE802154Menu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5731448996189078879L;
 
     public IEEE802154Menu(String name, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
         this(memo);

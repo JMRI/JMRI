@@ -1,4 +1,3 @@
-// EditCarTypeAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -29,8 +28,8 @@ public class EditCarTypeAction extends AbstractAction {
         }
         f.initComponents(CarEditFrame.TYPE, null);
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)EditCarTypeAction.java */
+

@@ -86,7 +86,7 @@ public class ConsistController extends AbstractController implements ProgListene
         }
 
         // Loop through the NCE consists and send consist detail for each
-    	/* dboudreau 2/26/2012 added consist manager for NCE
+     /* dboudreau 2/26/2012 added consist manager for NCE
          NceConsistRoster r = NceConsistRoster.getDefault();
          List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
          int i=-1;
@@ -187,6 +187,7 @@ public class ConsistController extends AbstractController implements ProgListene
         isConsistAllowed = b;
     }
 
+    @Override
     boolean verifyCreation() {
         return isValid;
     }
@@ -195,6 +196,7 @@ public class ConsistController extends AbstractController implements ProgListene
      *
      * @param message string containing new consist information
      */
+    @Override
     void handleMessage(String message) {
         try {
             if (message.charAt(0) == 'P') {  //  Change consist 'P'ositions
@@ -438,6 +440,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     }
 
+    @Override
     public void programmingOpReply(int value, int status) {
 
     }
@@ -463,10 +466,12 @@ public class ConsistController extends AbstractController implements ProgListene
         return false;
     }
 
+    @Override
     void register() {
         throw new UnsupportedOperationException("Not used.");
     }
 
+    @Override
     void deregister() {
         throw new UnsupportedOperationException("Not used.");
     }

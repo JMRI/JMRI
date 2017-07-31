@@ -16,6 +16,10 @@
 	<!-- new file, based on Wow diesel sound set 2 -->
 	<version author="Michael Mosher" version="2" lastUpdated="20160608"/>
 	<!-- Fix version IDs -->
+	<version author="Michael Mosher" version="3" lastUpdated="20170317"/>
+	<!-- update factory resets -->
+	<version author="Michael Mosher" version="4" lastUpdated="20170616"/>
+	<!-- add funtion output 7 and 8 and update sound none number -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 3" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -32,14 +36,16 @@
 				<output name="Brake"/>
 				<size length="1.35" width="0.66" height="0.22" units="inches"/>
 			</model>
-			<model model="WOW Diesel 121 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
+			<model model="WOW Diesel 121 SS3" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
 				lowVersionID="3" highVersionID="3" productID="171">
-				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="plug" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="plug" maxcurrent="logic"/>
+				<output name="6" label="Pink" connection="plug" maxcurrent="logic"/>
+				<output name="7" label="Pnk/Pur" connection="plug"/>
+				<output name="8" label="Grn/Brn" connection="plug"/>
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
@@ -1552,7 +1558,11 @@
 			</variable>
 		</variables>
 		<resets>
-			<factReset label="Entire decoder (All motor, light, and sound settings)" CV="T2CV.5.0" default="2"/>
+      <mode>PAGEMODE</mode>
+      <mode>DIRECTMODE</mode>
+      <mode>OPSBYTEMODE</mode>
+			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
+			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
 			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
 			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
 			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
@@ -1560,6 +1570,9 @@
 			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
 			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
 			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
+			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>

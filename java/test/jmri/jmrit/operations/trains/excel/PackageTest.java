@@ -26,11 +26,14 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.excel.PackageTest"); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        // GUI tests start here
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramManifestFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramSwitchListFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCustomManifestTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCustomSwitchListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramSwitchListFrameActionTest.class));
         return suite;
     }
 

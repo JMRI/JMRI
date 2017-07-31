@@ -29,7 +29,14 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.rollingstock.cars.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.rollingstock.engines.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRollingStockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockAttributeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockLoggerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockSetFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockGroupTest.class));
 
         // Last test, deletes log file if one exists
         suite.addTest(OperationsLoggerTest.suite());

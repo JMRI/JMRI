@@ -113,32 +113,32 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (powerManager == null) {
             powerManager = new DCCppPowerManager(this);
         }
-	log.debug("power manager created: {}", powerManager);
+        log.debug("power manager created: {}", powerManager);
         return powerManager;
-
+        
     }
-
+    
     public void setPowerManager(PowerManager p) {
         powerManager = p;
     }
-
+    
     private PowerManager powerManager;
-
+    
     /*
      * Provides access to the Sensor Manager for this particular connection.
      * NOTE: Sensor manager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
-
+        
     }
-
+    
     public void setSensorManager(SensorManager s) {
         sensorManager = s;
     }
-
+    
     private SensorManager sensorManager = null;
-
+    
     /*
      * Provides access to the Turnout Manager for this particular connection.
      * NOTE: Turnout manager defaults to NULL
@@ -196,19 +196,20 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         ((DCCppCommandStation) c).setTrafficController(xt);
         ((DCCppCommandStation) c).setSystemConnectionMemo(this);
     }
-
+    
     private CommandStation commandStation = null;
-
+    
     private MultiMeter multiMeter = null;
     
     public MultiMeter getMultiMeter() {
-	return(multiMeter);
+        return(multiMeter);
     }
-
+    
     public void setMultiMeter(MultiMeter m) {
-	multiMeter = m;
+        multiMeter = m;
     }
-
+    
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -226,7 +227,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return false;
             }
             return p.isAddressedModePossible();
-	    //TODO: Update return value of the following as Managers are brought online.
+            //TODO: Update return value of the following as Managers are brought online.
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
@@ -241,14 +242,15 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
-	} else if (type.equals(jmri.MultiMeter.class)) {
-	    return true;
+        } else if (type.equals(jmri.MultiMeter.class)) {
+            return true;
         } else {
             return false; // nothing, by default
         }
     }
-
+    
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -283,16 +285,18 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-	if (T.equals(jmri.MultiMeter.class)) {
-	    return (T) getMultiMeter();
-	}
+        if (T.equals(jmri.MultiMeter.class)) {
+            return (T) getMultiMeter();
+        }
         return null; // nothing, by default
     }
-
+    
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppActionListBundle");
     }
 
+    @Override
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, DCCppSystemConnectionMemo.class);
@@ -305,4 +309,4 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private final static Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class.getName());
 
 }
-/* @(#)DCCppSystemConnectionMemo.java */
+

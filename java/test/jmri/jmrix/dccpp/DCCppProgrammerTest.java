@@ -25,6 +25,7 @@ public class DCCppProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -92,7 +93,7 @@ public class DCCppProgrammerTest extends TestCase {
         mr2.setElement(4, 0x7A);
         t.sendTestMessage(mr2);
 
-        // At this point, the standard XPressNet programmer 
+        // At this point, the standard XpressNet programmer
         // should send a result to the programmer listeners, and 
         // wait for either the next read/write request or for the 
         // traffic controller to exit from service mode.  We just
@@ -113,6 +114,7 @@ public class DCCppProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -181,7 +183,7 @@ public class DCCppProgrammerTest extends TestCase {
         mr2.setElement(4, 0x54);
         t.sendTestMessage(mr2);
 
-        // At this point, the standard XPressNet programmer 
+        // At this point, the standard XpressNet programmer
         // should send a result to the programmer listeners, and 
         // wait for either the next read/write request or for the 
         // traffic controller to exit from service mode.  We just
@@ -197,13 +199,14 @@ public class DCCppProgrammerTest extends TestCase {
 
     // this test is the same as the testWriteCvSequence test, but
     // it checks the sequence for CVs greater than 256, which use 
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testWriteHighCvSequence() throws JmriException {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -233,13 +236,14 @@ public class DCCppProgrammerTest extends TestCase {
 
     // this test is the same as the testReadCvSequence test, but
     // it checks the sequence for CVs greater than 256, which use 
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testReadCvHighSequence() throws JmriException {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -397,11 +401,13 @@ public class DCCppProgrammerTest extends TestCase {
 
     // The minimal setup is for log4J
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

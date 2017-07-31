@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * Swing action to create and register a SerialPacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialPacketGenAction extends AbstractAction {
 
@@ -22,9 +22,10 @@ public class SerialPacketGenAction extends AbstractAction {
     }
 
     public SerialPacketGenAction(CMRISystemConnectionMemo memo) {
-        this("Send C/MRI message",memo);
+        this(Bundle.getMessage("SendCommandTitle"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
         try {

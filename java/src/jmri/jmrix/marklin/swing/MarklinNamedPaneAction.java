@@ -1,4 +1,3 @@
-// MarklinNamedPaneAction.java
 package jmri.jmrix.marklin.swing;
 
 import javax.swing.Icon;
@@ -9,16 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to create and load a JmriPanel from just its name.
+ * Action to create and load a Marklin JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4877105383231547187L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -55,5 +49,3 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
 
     private final static Logger log = LoggerFactory.getLogger(MarklinNamedPaneAction.class.getName());
 }
-
-/* @(#)MarklinNamedPaneAction.java */

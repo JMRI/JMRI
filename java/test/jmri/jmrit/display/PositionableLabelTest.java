@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.finder.JLabelFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -53,13 +54,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         // test button in upper left
         JButton doButton = new JButton("change label");
-        doButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (to.getText().equals("one"))
-                    to.setText("two");
-                else
-                    to.setText("one");
-            }
+        doButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (to.getText().equals("one"))
+                to.setText("two");
+            else
+                to.setText("one");
         });
         doButton.setBounds(0, 0, 120, 40);
         p.add(doButton);
@@ -238,6 +237,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         }
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
+            log.info("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            return;
+        }
+
+        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
             log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
             return;
         }
@@ -318,7 +322,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         }
 
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
+            log.info("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
             return;
         }
 
@@ -564,13 +568,16 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
         if (panel != null) {
@@ -580,6 +587,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel = null;
+            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         }
 
         apps.tests.Log4JFixture.tearDown();

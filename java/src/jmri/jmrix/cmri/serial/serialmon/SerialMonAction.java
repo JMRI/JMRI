@@ -11,7 +11,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonAction extends AbstractAction {
 
@@ -23,9 +23,10 @@ public class SerialMonAction extends AbstractAction {
     }
 
     public SerialMonAction(CMRISystemConnectionMemo memo) {
-        this("C/MRI monitor",memo);
+        this(Bundle.getMessage("SerialCommandMonTitle"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(_memo);

@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractVariableLight;
@@ -31,14 +30,11 @@ import org.slf4j.LoggerFactory;
 abstract public class SerialLight extends AbstractVariableLight {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 544453820964921510L;
-
-    /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName system name for light
+     * @param tc traffic controller
      */
     public SerialLight(String systemName, SerialTrafficController tc) {
         super(systemName);
@@ -51,6 +47,9 @@ abstract public class SerialLight extends AbstractVariableLight {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName system name for light
+     * @param tc traffic controller
+     * @param userName user name for light
      */
     public SerialLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
@@ -82,6 +81,7 @@ abstract public class SerialLight extends AbstractVariableLight {
      * Invoked the first time intensity is set.
      * <p>
      * Default implementation doesn't do anything.
+     * @param intensity float for 0-&gt;1.0
      */
     protected void initIntensity(double intensity) {
     }
@@ -96,6 +96,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     /**
      * Send a On/Off Command to the hardware
      */
+    @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);
@@ -134,4 +135,4 @@ abstract public class SerialLight extends AbstractVariableLight {
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
-/* @(#)SerialLight.java */
+

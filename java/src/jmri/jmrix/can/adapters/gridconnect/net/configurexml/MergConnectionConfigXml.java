@@ -23,10 +23,12 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new MergNetworkDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((MergConnectionConfig) object).getAdapter();
     }

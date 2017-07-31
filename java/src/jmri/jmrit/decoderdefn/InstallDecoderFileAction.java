@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from local file.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
@@ -35,6 +35,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
 
     JFileChooser fci;
 
+    @Override
     URL pickURL(JPanel who) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
@@ -61,6 +62,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

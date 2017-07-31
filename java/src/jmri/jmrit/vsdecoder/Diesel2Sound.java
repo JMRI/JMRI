@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,6 +84,7 @@ class Diesel2Sound extends EngineSound {
     }
 
     // Responds to "CHANGE" trigger
+    @Override
     public void changeThrottle(float s) {
         NotchSound cn = notch_sounds.get(current_notch);
         log.debug("Change Throttle: " + s + " Accel Limit = " + cn.getAccelLimit() + " Decel Limit = " + cn.getDecelLimit());
@@ -128,6 +129,7 @@ class Diesel2Sound extends EngineSound {
         }
         t = newTimer(notch_transition.getLengthAsInt() - this.getFadeInTime(), false,
                 new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent e) {
                         handleNotchTimerPop(e);
                     }

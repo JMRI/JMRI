@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,15 +33,24 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRTrafficController {
 
+    private Thread shutdownHook = null; // retain shutdown hook for 
+                                        // possible removal.
+
     public AbstractMRTrafficController() {
         log.debug("Creating AbstractMRTrafficController instance");
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
-        // should this be a ShutDownTask instead, or are we worried at this point
-        // that a ShutDownManager does not yet exist?
-        Runtime.getRuntime().addShutdownHook(new Thread(new CleanupHook(this)));
+
+        // We use a shutdown hook here to make sure the connection is left
+        // in a clean state prior to exiting.  This is required on systems
+        // which have a service mode to ensure we don't leave the system 
+        // in an unusable state (This code predates the ShutdownTask 
+        // mechanisim).  Once the , shutdown hook executes, the connection
+        // must be considered closed.
+        shutdownHook = new Thread(new CleanupHook(this));
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
     private boolean synchronizeRx = true;
@@ -156,7 +166,7 @@ abstract public class AbstractMRTrafficController {
     public static final int WAITREPLYINNORMMODESTATE = 35;  // xmt has done mode change, await reply
     public static final int OKSENDMSGSTATE = 40;        // mode change reply here, send original msg
     public static final int AUTORETRYSTATE = 45;        // received message where automatic recovery may occur with a retransmission, re-send original msg
-    public static final int POLLSTATE = 50;			// Send program mode or poll message
+    public static final int POLLSTATE = 50;   // Send program mode or poll message
 
     protected boolean allowUnexpectedReply;
 
@@ -238,7 +248,7 @@ abstract public class AbstractMRTrafficController {
         log.debug("transmitLoop starts");
 
         // loop forever
-        while (!connectionError) {
+        while (!connectionError && !threadStopRequest) {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
             // check for something to do
@@ -330,7 +340,8 @@ abstract public class AbstractMRTrafficController {
                         waitTimePoll = waitTimePoll + endTime - startTime;
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
-                        log.error("transmitLoop interrupted");
+                        // end of transmit loop
+                        break;
                     }
                 }
                 // once we decide that mCurrentState is in the IDLESTATE and there's an xmt msg we must guarantee
@@ -340,7 +351,7 @@ abstract public class AbstractMRTrafficController {
                         log.error("left timeout in unexpected state: {}", mCurrentState);
                     }
                     if (mCurrentState == IDLESTATE) {
-                        mCurrentState = POLLSTATE;	// this prevents other transitions from the IDLESTATE
+                        mCurrentState = POLLSTATE; // this prevents other transitions from the IDLESTATE
                     }
                 }
                 // went around with nothing to do; leave programming state if in it
@@ -394,7 +405,7 @@ abstract public class AbstractMRTrafficController {
         }
     }   // end of transmit loop; go around again
 
-    protected void transmitWait(int waitTime, int state, String InterruptMessage) {
+    protected void transmitWait(int waitTime, int state, String interruptMessage) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used
         long currentTime = Calendar.getInstance().getTimeInMillis();
@@ -412,7 +423,14 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error(InterruptMessage);
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                if (!threadStopRequest) {
+                    log.error(interruptMessage+" in transmitWait(..) of {}", name);
+                } else {
+                    log.debug("during shutdown, "+interruptMessage+" in transmitWait(..) of {}", name);
+                }
             }
         }
         log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
@@ -435,7 +453,10 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmitLoop interrupted");
+                String[] packages = this.getClass().getName().split("\\.");
+                String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"");
+                log.error("transmitLoop interrupted in class {}", name);
             }
             loopCount++;
             int currentDispatchTime = loopCount * DISPATCH_WAIT_INTERVAL;
@@ -460,7 +481,11 @@ abstract public class AbstractMRTrafficController {
 
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         //log.debug("Timeout mCurrentState: {}", mCurrentState);
-        log.warn("Timeout on reply to message: {} consecutive timeouts = {}", msg.toString(), timeouts);
+        String[] packages = this.getClass().getName().split("\\.");
+        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"");
+
+        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg.toString(), timeouts, name);
         timeouts++;
         timeoutFlag = true;
         flushReceiveChars = true;
@@ -520,7 +545,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);
@@ -596,7 +621,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     protected void portWarn(Exception e) {
-        log.warn("sendMessage: Exception: port warn {}", e.toString());
+        log.warn("sendMessage: Exception: In {} port warn: ", this.getClass().getName(), e);
     }
 
     protected boolean connectionError = false;
@@ -612,9 +637,10 @@ abstract public class AbstractMRTrafficController {
         return (ostream != null && istream != null);
     }
 
-    protected Thread xmtThread = null;
-    protected Runnable xmtRunnable = null;
-    protected Thread rcvThread = null;
+    volatile protected Thread xmtThread = null;
+    volatile protected Thread rcvThread = null;
+
+    volatile protected Runnable xmtRunnable = null;
 
     /**
      * Make connection to existing PortController object.
@@ -634,26 +660,45 @@ abstract public class AbstractMRTrafficController {
             controller = p;
             // and start threads
             xmtThread = new Thread(xmtRunnable = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         transmitLoop();
                     } catch (Throwable e) {
-                        log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+                        // ThreadDeath must be thrown per Java API Javadocs
+                        if (e instanceof ThreadDeath) {
+                            throw e;
+                        }
                     }
                 }
             });
-            xmtThread.setName("Transmit");
+            
+            String[] packages = this.getClass().getName().split("\\.");
+            xmtThread.setName(
+                (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"")
+                +" Transmit thread");
+
+            xmtThread.setDaemon(true);
+            xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
+
             rcvThread = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     receiveLoop();
                 }
             });
-            rcvThread.setName("Receive");
-            int xr = rcvThread.getPriority();
-            xr++;
-            rcvThread.setPriority(xr);      //bump up the priority
+            rcvThread.setName(
+                (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"")
+                +" Receive thread");
+
+            rcvThread.setPriority(Thread.MAX_PRIORITY);      //bump up the priority
+            rcvThread.setDaemon(true);
             rcvThread.start();
+            
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
@@ -709,10 +754,13 @@ abstract public class AbstractMRTrafficController {
     public void receiveLoop() {
         log.debug("receiveLoop starts");
         int errorCount = 0;
-        while (errorCount < maxRcvExceptionCount) {   // loop permanently, stream close will exit via exception
+        while (errorCount < maxRcvExceptionCount && !threadStopRequest) { // stream close will exit via exception
             try {
                 handleOneIncomingReply();
                 errorCount = 0;
+            } catch (java.io.InterruptedIOException e) {
+                // related to InterruptedException, catch first
+                break;
             } catch (IOException e) {
                 rcvException = true;
                 reportReceiveLoopException(e);
@@ -726,11 +774,16 @@ abstract public class AbstractMRTrafficController {
                 }
             }
         }
-        ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-        log.error("Exit from rcv loop");
-        recovery();
+        if (!threadStopRequest) { // if e.g. unexpected end
+            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            log.error("Exit from rcv loop in {}", this.getClass().toString());
+            recovery(); // see if you can restart
+        }
     }
 
+    /**
+     * Invoked at abnormal end of receiveLoop
+     */
     protected final void recovery() {
         AbstractPortController adapter = controller;
         disconnectPort(controller);
@@ -742,7 +795,7 @@ abstract public class AbstractMRTrafficController {
      * though message is asynchronous.
      */
     protected void reportReceiveLoopException(Exception e) {
-        log.error("run: Exception: {}", e.toString());
+        log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof AbstractNetworkPortController) {
             portWarnTCP(e);
@@ -764,11 +817,14 @@ abstract public class AbstractMRTrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
      *
+     * @param istream stream to read
+     * @return the byte read
+     * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
         while (true) { // loop will repeat until character found
@@ -844,7 +900,7 @@ abstract public class AbstractMRTrafficController {
      *
      */
     public void handleOneIncomingReply() throws IOException {
-            // we sit in this until the message is complete, relying on
+        // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
 
         // Create message off the right concrete class
@@ -856,6 +912,8 @@ abstract public class AbstractMRTrafficController {
         // message exists, now fill it
         loadChars(msg, istream);
 
+        if (threadStopRequest) return;
+        
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
@@ -874,6 +932,7 @@ abstract public class AbstractMRTrafficController {
             }
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            return;
         }
         log.debug("dispatch thread invoked");
 
@@ -985,6 +1044,7 @@ abstract public class AbstractMRTrafficController {
     // Override the finalize method for this class
     // to request termination, which might have happened
     // before in any case
+    @Override
     protected final void finalize() throws Throwable {
         terminate();
         super.finalize();
@@ -1032,6 +1092,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             log.debug("Delayed rcv notify starts");
             mTC.notifyReply(mMsg, mDest);
@@ -1061,12 +1122,47 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             log.debug("Delayed xmt notify starts");
             mTC.notifyMessage(mMsg, mDest);
         }
     }  // end XmtNotifier
 
+    /**
+     * Terminate the receive and transmit threads.
+     *<p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStopRequest = true;
+        if (xmtThread != null) {
+            xmtThread.interrupt();
+            try {
+                xmtThread.join();
+            } catch (InterruptedException ie){
+                // interrupted durring cleanup.
+            }
+        }
+        
+        if (rcvThread != null) {
+            rcvThread.interrupt();
+            try {
+                rcvThread.join();
+            } catch (InterruptedException ie){
+                // interrupted durring cleanup.
+            }
+        }    
+
+        // we also need to remove the shutdown hook. 
+        Runtime.getRuntime().removeShutdownHook(shutdownHook);
+    }
+    
+    /**
+     * Flag that threads should terminate as soon as they can.
+     */
+    protected volatile boolean threadStopRequest = false;
+    
     /**
      * Internal class to handle traffic controller cleanup. the primary task of
      * this thread is to make sure the DCC system has exited service mode when
@@ -1080,6 +1176,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             mTC.terminate();
         }

@@ -76,19 +76,21 @@ public class LnMessageClient extends LnTrafficRouter {
         }
 
         try {
-            System.setSecurityManager(new java.rmi.RMISecurityManager());
-            log.debug("security manager set, set interface to //"
-                    + remoteHostName + "//"
+            if (System.getSecurityManager() == null) {
+                System.setSecurityManager(new SecurityManager());
+            }
+            log.debug("security manager set, set interface to //" // NOI18N
+                    + remoteHostName + "//" // NOI18N
                     + LnMessageServer.serviceName);
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
-                    "//" + serverName + "/" + LnMessageServer.serviceName);
+                    "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
 
             lnMessageBuffer = lnServer.getMessageBuffer();
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
         } catch (Exception ex) {
-            log.error("Exception while trying to connect: " + ex);
-            throw new LocoNetException("Failed to Connect to Server: " + serverName);
+            log.error("Exception while trying to connect: " + ex); // NOI18N
+            throw new LocoNetException("Failed to Connect to Server: " + serverName); // NOI18N
         }
     }
 

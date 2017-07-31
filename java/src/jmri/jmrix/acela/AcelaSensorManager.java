@@ -34,6 +34,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the Acela system letter
      */
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
@@ -42,6 +43,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
@@ -98,6 +100,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Dummy routine
      */
+    @Override
     public void message(AcelaMessage r) {
         log.warn("unexpected message");
     }
@@ -105,6 +108,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     public void reply(AcelaReply r) {
         // Determine which state we are in: Initiallizing Acela Network or Polling Sensors
         boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();

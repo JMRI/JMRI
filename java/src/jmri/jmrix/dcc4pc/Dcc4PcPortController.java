@@ -1,10 +1,9 @@
-// Dcc4PcPortController.java
 package jmri.jmrix.dcc4pc;
 
 /*
  * Identifying class representing a DCC4PC communications port
  * @author          Kevin Dickerson Copyright (C) 2012
- * @author			Bob Jacobsen    Copyright (C) 2001, 2008
+ * @author   Bob Jacobsen    Copyright (C) 2001, 2008
  * 
  */
 public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPortController {
@@ -20,6 +19,3 @@ public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPort
         return (Dcc4PcSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-
-
-/* @(#)Dcc4PcPortController.java */

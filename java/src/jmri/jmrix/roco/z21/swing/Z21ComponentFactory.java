@@ -18,10 +18,12 @@ public class Z21ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
         }
         return new Z21Menu(memo);
     }
+
 }

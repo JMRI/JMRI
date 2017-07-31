@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.internal;
 
 /**
@@ -10,6 +9,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     /**
      * Ctor for an object being created during load process;
+     * @param p serial port adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -22,10 +22,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return "No Connection";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new InternalAdapter();

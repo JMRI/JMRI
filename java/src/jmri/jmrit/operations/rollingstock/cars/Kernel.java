@@ -1,6 +1,6 @@
-// Kernel.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -20,7 +20,7 @@ public class Kernel extends RollingStockGroup {
         log.debug("New Kernel ({})", name);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "getGroup() only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "getGroup() only provides Car Objects")
     public List<Car> getCars() {
         List<Car> cars = new ArrayList<Car>();
         for (RollingStock rs : getGroup()) {

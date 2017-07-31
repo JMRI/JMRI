@@ -133,7 +133,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (!_suppressNamePrompts) {
             if (_family == null || _family.trim().length() == 0) {
                 _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
-                        Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
                     _family = null;
@@ -142,7 +142,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 }
             }
             int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("questionTitle"),
+                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps);
@@ -276,6 +276,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             button.addActionListener(new ActionListener() {
                 String key;
 
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     openStatusEditDialog(key);
                 }
@@ -298,6 +299,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         bottomPanel.setLayout(new FlowLayout());
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_iconPanel.isVisible()) {
                     hideIcons();
@@ -311,6 +313,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
         JButton createIconsButton = new JButton(Bundle.getMessage("createNewFamily"));
         createIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 newFamilyDialog();
             }
@@ -321,6 +324,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (!_update) {
             JButton deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     deleteFamilySet();
                     dispose();
@@ -504,6 +508,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             return super.isDataFlavorSupported(flavor);
         }
 
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {

@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -44,7 +43,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrix.ecos.EcosListener;
@@ -70,7 +68,6 @@ public class EcosLocoToRoster implements EcosListener {
     int _ecosObjectInt;
     Label _statusLabel = null;
     CvTableModel cvModel = null;
-    IndexedCvTableModel iCvModel = null;
     Programmer mProgrammer;
     JLabel progStatus;
 //    Programmer pProg;
@@ -99,6 +96,7 @@ public class EcosLocoToRoster implements EcosListener {
         suppressFurtherAdditions = false;
         inProcess = true;
         Runnable run = new Runnable() {
+            @Override
             public void run() {
                 while (locoList.size() != 0) {
                     final EcosLocoAddress tmploco = locoList.get(0);
@@ -115,30 +113,31 @@ public class EcosLocoToRoster implements EcosListener {
                                 ecosObject = o;
                             }
 
+                            @Override
                             public void run() {
                                 final JDialog dialog = new JDialog();
-                                dialog.setTitle("Add Roster Entry From JMRI?");
+                                dialog.setTitle(Bundle.getMessage("AddRosterEntryQuestion"));
                                 //dialog.setLocationRelativeTo(null);
                                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                                 JPanel container = new JPanel();
                                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                                JLabel question = new JLabel("Loco " + ecosObject.getEcosDescription() + " has been add to the " + adaptermemo.getUserName());
+                                JLabel question = new JLabel(Bundle.getMessage("LocoAddedJMessage", ecosObject.getEcosDescription(), adaptermemo.getUserName()));
                                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 container.add(question);
 
-                                question = new JLabel("Do you want to add it to JMRI?");
+                                question = new JLabel(Bundle.getMessage("AddToJMRIQuestion"));
                                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 container.add(question);
-                                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                                 remember.setFont(remember.getFont().deriveFont(10f));
                                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 //user preferences do not have the save option, but once complete the following line can be removed
                                 //Need to get the method to save connection configuration.
                                 remember.setVisible(true);
-                                JButton yesButton = new JButton("Yes");
-                                JButton noButton = new JButton("No");
+                                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                                 JPanel button = new JPanel();
                                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 button.add(yesButton);
@@ -146,6 +145,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 container.add(button);
 
                                 noButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         ecosObject.doNotAddToRoster();
                                         waitingForComplete = true;
@@ -158,6 +158,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 });
 
                                 yesButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         if (remember.isSelected()) {
                                             p.setAddLocoToJMRI(EcosPreferences.YES);
@@ -195,6 +196,7 @@ public class EcosLocoToRoster implements EcosListener {
                         waitingForComplete = true;
                     }
                     Runnable r = new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 while (!waitingForComplete) {
@@ -208,7 +210,7 @@ public class EcosLocoToRoster implements EcosListener {
                     };
                     Thread thr = new Thread(r);
                     thr.start();
-                    thr.setName("Ecos Loco To Roster Inner thread");
+                    thr.setName("Ecos Loco To Roster Inner thread"); // NOI18N
                     try {
                         thr.join();
                     } catch (InterruptedException ex) {
@@ -220,7 +222,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         };
         Thread thread = new Thread(run);
-        thread.setName("Ecos Loco To Roster");
+        thread.setName("Ecos Loco To Roster"); // NOI18N
         thread.start();
 
     }
@@ -259,6 +261,7 @@ public class EcosLocoToRoster implements EcosListener {
                 WindowMaker() {
                 }
 
+                @Override
                 public void run() {
                     comboPanel();
                 }
@@ -269,6 +272,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
+    @Override
     public void reply(EcosReply m) {
         int startval;
         int endval;
@@ -429,13 +433,14 @@ public class EcosLocoToRoster implements EcosListener {
                     re.setFunctionLabel(functNo, functionLabel);
                     re.setFunctionLockable(functNo, !moment);
                 } catch (Exception e) {
-                    log.error("Error occured while getting the function information : " + e.toString());
+                    log.error("Error occurred while getting the function information : " + e.toString());
                 }
                 getFunctionDetails(functNo + 1);
             }
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
 
     }
@@ -445,7 +450,7 @@ public class EcosLocoToRoster implements EcosListener {
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
 
-        re.writeFile(null, null, null);
+        re.writeFile(null, null);
 
         Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
@@ -454,7 +459,7 @@ public class EcosLocoToRoster implements EcosListener {
 //    JComboBox combo;
 
     public void comboPanel() {
-        frame.setTitle("Decoder Selection For Loco " + ecosLoco.getEcosDescription());
+        frame.setTitle(Bundle.getMessage("DecoderSelectionXTitle", ecosLoco.getEcosDescription()));
         frame.getContentPane().setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
@@ -467,8 +472,8 @@ public class EcosLocoToRoster implements EcosListener {
         topPanel.setLayout(new BorderLayout());
         //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //frame.setDefaultCloseOperation(frameclosed());
-        JLabel jLabel1 = new JLabel("Decoder installed can not be identified, please select from the list below");
-        JButton okayButton = new JButton("Okay");
+        JLabel jLabel1 = new JLabel(Bundle.getMessage("DecoderNoIDWarning"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         p1.add(jLabel1);
         p2.add(okayButton);
         topPanel.add(p1);
@@ -505,6 +510,7 @@ public class EcosLocoToRoster implements EcosListener {
         });
 
         ActionListener okayButtonAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 okayButton();
             }
@@ -543,42 +549,41 @@ public class EcosLocoToRoster implements EcosListener {
         re.setMfg("");
         re.setModel("");
         re.setOwner(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
-        re.setComment("Automatically Imported from the Ecos");
+        re.setComment(Bundle.getMessage("LocoAutoAdded"));
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
-        if (pDecoderFile.getSupportedProtocols().length > 0) {
-            List<jmri.LocoAddress.Protocol> protocols = new ArrayList<jmri.LocoAddress.Protocol>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
-            if ((ecosLoco.getECOSProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.Protocol.DCC)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.DCC);
-            } else if (ecosLoco.getECOSProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.Protocol.MFX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MFX);
-            } else if (ecosLoco.getECOSProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.Protocol.MOTOROLA)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
-            } else if (ecosLoco.getECOSProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.Protocol.SELECTRIX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
+        if ((ecosLoco.getECOSProtocol().startsWith("DCC"))) {
+            if (ecosLoco.getNumber() <= 127) {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_SHORT);
+            } else {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_LONG);
             }
+        } else if (ecosLoco.getECOSProtocol().equals("MMFKT") || ecosLoco.getECOSProtocol().equals("MFX")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MFX);
+        } else if (ecosLoco.getECOSProtocol().startsWith("MM")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
+        } else if (ecosLoco.getECOSProtocol().equals("SX32")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
         }
 
         mProgrammer = null;
         cvModel = new CvTableModel(progStatus, mProgrammer);
-        iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
-        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"},
-                cvModel, iCvModel);
+        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"}, cvModel);
         resetModel = new ResetTableModel(progStatus, mProgrammer);
         storeloco();
         filename = "programmers" + File.separator + "Basic.xml";
         loadProgrammerFile(re);
         loadDecoderFile(pDecoderFile, re);
 
-        variableModel.findVar("Speed Step Mode").setIntValue(0);
+        variableModel.findVar("Speed Step Mode").setIntValue(0); // NOI18N
         if (ecosLoco.getECOSProtocol().equals("DCC128")) {
             variableModel.findVar("Speed Step Mode").setIntValue(1);
         }
 
-        re.writeFile(cvModel, iCvModel, variableModel);
+        re.writeFile(cvModel, variableModel);
         getFunctionDetails(0);
-        JOptionPane.showMessageDialog(frame, "Loco Added to the JMRI Roster");
+        JOptionPane.showMessageDialog(frame, Bundle.getMessage("LocoAddedJDialog"));
         waitingForComplete = true;
     }
 
@@ -613,10 +618,6 @@ public class EcosLocoToRoster implements EcosListener {
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3197427124986523211L;
 
             @Override
             public String getToolTipText(MouseEvent evt) {
@@ -715,6 +716,7 @@ public class EcosLocoToRoster implements EcosListener {
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener
         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                         && // can't be just a mfg, has to be at least a family
@@ -759,10 +761,6 @@ public class EcosLocoToRoster implements EcosListener {
     // from http://www.codeguru.com/java/articles/143.shtml
     static class DecoderTreeNode extends DefaultMutableTreeNode {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5606230191141397789L;
         private String toolTipText;
         private String title;
 
@@ -834,7 +832,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (log.isDebugEnabled()) {
             //String msg = "Identified "+pList.size()+" matches: ";
             StringBuilder buf = new StringBuilder();
-            buf.append("Identified ");
+            buf.append("Identified "); // NOI18N
             buf.append(pList.size());
             buf.append(" matches: ");
             for (int i = 0; i < pList.size(); i++) {
@@ -922,13 +920,6 @@ public class EcosLocoToRoster implements EcosListener {
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
-        // load reset from decoder tree
-        if (!variableModel.piCv().equals("")) {
-            resetModel.setPiCv(variableModel.piCv());
-        }
-        if (!variableModel.siCv().equals("")) {
-            resetModel.setSiCv(variableModel.siCv());
-        }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         // load function names
@@ -981,6 +972,7 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+
 }
 /*
  cv8 - mfgIdFromName

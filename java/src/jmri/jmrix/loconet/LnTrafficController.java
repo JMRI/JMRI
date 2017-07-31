@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation and some statistics support.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class LnTrafficController implements LocoNetInterface {
 
@@ -26,12 +27,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return self;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;
 
     // Abstract methods for the LocoNetInterface
+    @Override
     abstract public boolean status();
 
     /**
@@ -41,11 +43,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     abstract public void sendLocoNetMessage(LocoNetMessage m);
 
     // The methods to implement adding and removing listeners
     protected Vector<LocoNetListener> listeners = new Vector<LocoNetListener>();
 
+    @Override
     public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
         // add only if not already registered
         if (l == null) {
@@ -56,6 +60,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         }
     }
 
+    @Override
     public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);

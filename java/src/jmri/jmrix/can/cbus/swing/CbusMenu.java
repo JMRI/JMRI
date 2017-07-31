@@ -8,7 +8,7 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2008, 2009
+ * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
  */
 public class CbusMenu extends JMenu {
@@ -16,13 +16,11 @@ public class CbusMenu extends JMenu {
     public CbusMenu(CanSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.CbusBundle");
-
         String title;
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuItemCBUS");
+            title = Bundle.getMessage("MenuItemCBUS");
         }
 
         setText(title);
@@ -33,7 +31,7 @@ public class CbusMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 

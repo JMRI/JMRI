@@ -192,12 +192,42 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
         lines in the comment about what it does, how you added it,
         etc is also very helpful.</li>
 
-        <li>Click "Create pull request". That submits all the info
-        and notifies the JMRI maintainers. One of them will check
-        it over and either contact you for more info
+        <li>Click "Create pull request". That submits all the info,
+        starts the 
+        <a href="ContinuousIntegration.shtml">Continuous Integration (CI) tests</a>
+        and notifies the JMRI maintainers. </li>
+        
+        <li>One of the maintainers will check
+        over your code and the test results, and then either contact you for more info
         (occasionally), or merge it into the master branch in the
         the main repository (more often). You can sign up for a
         notification when that happens.</li>
+        
+        <a id="labels" name="labels"></a>
+        <li>Sometimes, a maintainer will put a label on your PR
+        to indicate its status. Some of the more interesting ones are:
+          <ul>
+            <li>"WIP" - this is a "blue flag" indicating Work In Progress - 
+                something is needed before this can be merged in. Place it on
+                a PR so that maintainers don't have to read the entire thread before doing the merge.
+            <li>"After Next Test Release" and "After Next Production Release" - placed
+                when a PR should be merged later for some reason
+            <li>"Add To Next Release" - needs to be merged before the next release is built
+            <li>"dev/test/publish infrastucture" - there's a lot of automation around building
+                and publishing JMRI.  This change is to that infrastructure, not the 
+                released JMRI code itself.
+            <li>"Cleanup" - a change that improves the code, but doesn't really affect JMRI users directly
+            <li>"Support Request" - A request for help figuring something out, typically found in the Issues section.
+                                Typically these items are closed if resolved, 
+                                or become "Enhancement" or "Bug" items.
+            <li>"Enhancement" - request that somebody make JMRI better in some way.
+            <li>"Bug" - a problem that's bitten at least one person.
+            <li>"Duplicate", "Invalid", "Won't Fix" - items that have (typically) been closed
+                                without action.  Issues and PRs never go away, but these
+                                labels mark them as not intended for further consideration.
+          </ul>
+        
+        
       </ul><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

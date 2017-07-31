@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionListener;
@@ -55,6 +55,7 @@ class EngineSound extends VSDSound {
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
+    @Override
     public void play() {
         log.debug("EngineSound Play");
         if (engine_started || auto_start_engine) {
@@ -63,6 +64,7 @@ class EngineSound extends VSDSound {
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
+    @Override
     public void loop() {
         log.debug("EngineSound Loop");
         if (engine_started || auto_start_engine) {
@@ -70,14 +72,17 @@ class EngineSound extends VSDSound {
         }
     }
 
+    @Override
     public void stop() {
         is_playing = false;
     }
 
+    @Override
     public void fadeIn() {
         this.play();
     }
 
+    @Override
     public void fadeOut() {
         this.stop();
     }
@@ -151,6 +156,7 @@ class EngineSound extends VSDSound {
         e.setThrottle(EngineSound.calcEngineNotch(s));
     }
 
+    @Override
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
         t = new Timer(time, al);
         t.setRepeats(repeat);
@@ -173,14 +179,17 @@ class EngineSound extends VSDSound {
         engine_started = es;
     }
 
+    @Override
     public void shutdown() {
         // do nothing.
     }
 
+    @Override
     public void mute(boolean m) {
         // do nothing.
     }
 
+    @Override
     public void setVolume(float v) {
         // do nothing.
     }
@@ -196,6 +205,7 @@ class EngineSound extends VSDSound {
 
     }
 
+    @Override
     public Element getXml() {
         Element me = new Element("sound");
         me.setAttribute("name", this.getName());

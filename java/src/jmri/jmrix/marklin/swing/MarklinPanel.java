@@ -1,4 +1,3 @@
-// MarklinPanel.java
 package jmri.jmrix.marklin.swing;
 
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -15,14 +14,11 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 abstract public class MarklinPanel extends jmri.util.swing.JmriPanel implements MarklinPanelInterface {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -997775203894632617L;
-    /**
      * make "memo" object available as convenience
      */
     protected MarklinSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(MarklinSystemConnectionMemo memo) {
         this.memo = memo;
     }

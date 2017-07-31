@@ -1,8 +1,10 @@
 package jmri.jmrit.logix;
 
-import java.io.File;
+import java.util.HashMap;
+import jmri.InstanceManager;
+import jmri.ShutDownTask;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.managers.AbstractManager;
-import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +29,9 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
-
-    static private WarrantPreferences warrantPreferences = null;
+    
+    private HashMap<String, RosterSpeedProfile> _mergeProfiles;
+    private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
         super();
@@ -39,10 +42,12 @@ public class WarrantManager extends AbstractManager
         return jmri.Manager.WARRANTS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'W';
     }
@@ -51,9 +56,13 @@ public class WarrantManager extends AbstractManager
      * Method to create a new Warrant if it does not exist Returns null if a
      * Warrant with the same systemName or userName already exists, or if there
      * is trouble creating a new Warrant.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @return an existing warrant if found or a new warrant
      */
     public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
-        log.debug("createNewWarrant "+systemName+" SCWa="+SCWa);
+        log.debug("createNewWarrant " + systemName + " SCWa="+SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -86,6 +95,9 @@ public class WarrantManager extends AbstractManager
      * Method to get an existing Warrant. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     *
+     * @param name the system name or user name
+     * @return the warrant if found or null
      */
     public Warrant getWarrant(String name) {
         Warrant r = getByUserName(name);
@@ -124,29 +136,80 @@ public class WarrantManager extends AbstractManager
         return w;
     }
 
-    static WarrantManager _instance = null;
-
-    static public WarrantManager instance() {
-        if (_instance == null) {
-            _instance = new WarrantManager();
-        }
-        return (_instance);
+    /**
+     * Get the default WarrantManager.
+     *
+     * @return the default WarrantManager, creating it if necessary
+     */
+    public static WarrantManager getDefault() {
+        return InstanceManager.getOptionalDefault(WarrantManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WarrantManager.class, new WarrantManager());
+        });
     }
 
+    /**
+     * Get the default WarrantManager.
+     *
+     * @return the default WarrantManager, creating it if necessary
+     * @deprecated since 4.7.1; use {@link #getDefault()} instead
+     */
+    @Deprecated
+    static public WarrantManager instance() {
+        return getDefault();
+    }
+
+    /**
+     * Get the default warrant preferences.
+     *
+     * @return the default preferences, created if necessary
+     * @deprecated since 4.7.1; use
+     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
+     */
+    @Deprecated
     static public WarrantPreferences warrantPreferencesInstance() {
-        if (warrantPreferences == null) {
-            if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
-                jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()
-                        + "signal" + File.separator + "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
-            }
-            warrantPreferences = jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class);
-        }
-        return warrantPreferences;
+        return WarrantPreferences.getDefault();
     }
 
     @Override
     public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameWarrant");
+        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    }
+    
+    protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
+        if (_mergeProfiles == null) {
+            _mergeProfiles = new HashMap<String, RosterSpeedProfile>();
+            _sessionProfiles = new HashMap<String, RosterSpeedProfile>();
+            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+            } else {
+                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
+            }
+        }
+        if (id != null && merge != null) {
+            _mergeProfiles.put(id, merge);
+            _sessionProfiles.put(id, session);
+        }
+    }
+    
+    protected RosterSpeedProfile getMergeProfile(String id) {
+        if (_mergeProfiles == null) {
+            return null;
+        }
+        return _mergeProfiles.get(id);
+    }
+    protected RosterSpeedProfile getSessionProfile(String id) {
+        if (_sessionProfiles == null) {
+            return null;
+        }
+        return _sessionProfiles.get(id);
+    }
+    
+    protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
+        return _mergeProfiles;
+    }
+    protected HashMap<String, RosterSpeedProfile> getSessionProfiles() {
+        return _sessionProfiles;
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());

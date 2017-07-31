@@ -40,16 +40,16 @@ import org.slf4j.LoggerFactory;
  * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015
- * @author B. Milhaupt Copyright (C) 2013, 2014
+ * @author Bob Jacobsen Copyright (C) 2005, 2015
+ * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         implements ActionListener {
 
     // GUI member declarations
-
     JLabel inputFileName = new JLabel("");
 
+    protected JButton selectButton;
     protected JButton loadButton;
     protected JButton verifyButton;  // protected so subclass can set invisible
     protected JButton abortButton;
@@ -72,12 +72,12 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     abstract public String getHelpTarget();
 
     /**
-     * Include code to add additional options here.
-     * By convention, if you include visible options, follow
-     * with a JSeparator.
+     * Include code to add additional options here. By convention, if you
+     * include visible options, follow with a JSeparator.
      */
-    protected void addOptionsPanel() {}
-    
+    protected void addOptionsPanel() {
+    }
+
     @Override
     public void initComponents() throws Exception {
         super.initComponents();
@@ -103,16 +103,13 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
-            selectButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    inputContent = new MemoryContents();
-                    setDefaultFieldValues();
-                    updateDownloadVerifyButtons();
-                    selectInputFile();
-                    doRead(chooser);
-                }
+            selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
+            selectButton.addActionListener((ActionEvent e) -> {
+                inputContent = new MemoryContents();
+                setDefaultFieldValues();
+                updateDownloadVerifyButtons();
+                selectInputFile();
+                doRead(chooser);
             });
             p.add(selectButton);
 
@@ -151,22 +148,16 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             loadButton.setEnabled(false);
             loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);
-            loadButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doLoad();
-                }
+            loadButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                doLoad();
             });
 
             verifyButton = new JButton(Bundle.getMessage("ButtonVerify"));
             verifyButton.setEnabled(false);
             verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
             p.add(verifyButton);
-            verifyButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doVerify();
-                }
+            verifyButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                doVerify();
             });
 
             add(p);
@@ -175,11 +166,8 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             abortButton.setEnabled(false);
             abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
             p.add(abortButton);
-            abortButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setOperationAborted(true);
-                }
+            abortButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                setOperationAborted(true);
             });
 
             add(p);
@@ -210,17 +198,19 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
     /**
      * Add filter(s) for possible types to the input file chooser.
+     *
+     * @param chooser the choose to add filter(s) to
      */
     protected void addChooserFilters(JFileChooser chooser) {
-            javax.swing.filechooser.FileNameExtensionFilter filter;
-            chooser.addChoosableFileFilter(
-                    filter = new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
+        javax.swing.filechooser.FileNameExtensionFilter filter;
+        chooser.addChoosableFileFilter(
+                filter = new javax.swing.filechooser.FileNameExtensionFilter(
+                        "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
 
-            // make the downloadable file filter the default active filter
-            chooser.setFileFilter(filter);
+        // make the downloadable file filter the default active filter
+        chooser.setFileFilter(filter);
     }
-    
+
     private void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
@@ -270,10 +260,13 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         status.setText(Bundle.getMessage("StatusDoDownload"));
     }
 
-    protected void handleOptionsInFileContent(MemoryContents inputContent){}
-    
+    protected void handleOptionsInFileContent(MemoryContents inputContent) {
+    }
+
     /**
-     * Read file into local memory
+     * Read file into local memory.
+     *
+     * @param chooser chooser to select the file to read from
      */
     protected void doRead(JFileChooser chooser) {
         if (inputFileName.getText().equals("")) {
@@ -307,42 +300,14 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             status.setText(Bundle.getMessage("StatusFileNotFound"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch (MemoryContents.MemoryFileRecordLengthException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileChecksumException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileUnknownRecordType f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileRecordContentException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileAddressingRangeException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileNoDataRecordsException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileNoEOFRecordException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
+        } catch (MemoryContents.MemoryFileRecordLengthException
+                | MemoryContents.MemoryFileChecksumException
+                | MemoryContents.MemoryFileUnknownRecordType
+                | MemoryContents.MemoryFileRecordContentException
+                | MemoryContents.MemoryFileAddressingRangeException
+                | MemoryContents.MemoryFileNoDataRecordsException
+                | MemoryContents.MemoryFileNoEOFRecordException
+                | MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
@@ -353,9 +318,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             this.disableDownloadVerifyButtons();
             return;
         }
-        
+
         log.debug("Read complete: {}", inputContent.toString());
-        
+
         loadButton.setEnabled(true);
         loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
         verifyButton.setEnabled(true);
@@ -363,7 +328,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         status.setText(Bundle.getMessage("StatusDoDownload"));
 
         handleOptionsInFileContent(inputContent);
-        
+
         MemoryContents.LoadOffsetFieldType addresstype = inputContent.getCurrentAddressFormat();
         if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE16BITS) {
             address16bit.setSelected(true);
@@ -388,6 +353,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+        selectButton.setEnabled(false);
     }
 
     protected void doVerify() {
@@ -398,6 +364,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+        selectButton.setEnabled(false);
     }
 
     /**
@@ -428,6 +395,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+        selectButton.setEnabled(true);
     }
 
     /**
@@ -450,6 +418,8 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+        selectButton.setEnabled(true);
+
     }
 
     // boolean used to abort the threaded operation
@@ -470,8 +440,8 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         }
     }
 
-
-    protected void setDefaultFieldValues() {}
+    protected void setDefaultFieldValues() {
+    }
 
     /**
      * Checks the values in the GUI text boxes to determine if any are invalid.
@@ -487,7 +457,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
      *
      * @return false if one or more GUI text box contains an invalid value
      */
-    protected boolean parametersAreValid() { return true; }
+    protected boolean parametersAreValid() {
+        return true;
+    }
 
     protected boolean intParameterIsValid(JTextField jtf, int minOk, int maxOk) {
         String text;
@@ -516,7 +488,6 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         return allIsOk;
     }
 
-
     /**
      * Conditionally enables or disables the Download and Verify GUI buttons
      * based on the validity of the parameter values in the GUI and the state of
@@ -529,7 +500,13 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             disableDownloadVerifyButtons();
         }
     }
+    
+    public void clearInputFileName() {
+        inputFileName.setText("");
+        inputFileName.setToolTipText("");
+    }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         updateDownloadVerifyButtons();
         log.info("ActionListener");

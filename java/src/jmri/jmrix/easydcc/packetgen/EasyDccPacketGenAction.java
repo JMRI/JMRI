@@ -1,4 +1,3 @@
-// EasyDccPacketGenAction.java
 package jmri.jmrix.easydcc.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +8,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a EasyDccPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3670621091383325151L;
 
     public EasyDccPacketGenAction(String s) {
         super(s);
@@ -26,6 +20,7 @@ public class EasyDccPacketGenAction extends AbstractAction {
         this("Generate EasyDCC message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         EasyDccPacketGenFrame f = new EasyDccPacketGenFrame();
         try {
@@ -37,6 +32,3 @@ public class EasyDccPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class.getName());
 }
-
-
-/* @(#)EasyDccPacketGenAction.java */

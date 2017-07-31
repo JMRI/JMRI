@@ -29,7 +29,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
+
+        setInstance();
+
         // have to embed the usual one in a new JPanel
 
         JPanel p = new JPanel();
@@ -39,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure C/MRI nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
 
         details.add(b);
 
@@ -47,16 +51,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     }
 
-    /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<>();
-     portNameVector.addElement("(None)");
-     return portNameVector;
-     }*/
-    //public boolean isPortAdvanced() { return true; }
+    @Override
     public String name() {
         return "Simulator";
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SimDriverAdapter();

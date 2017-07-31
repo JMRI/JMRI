@@ -10,13 +10,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 Copied from LocoNet
+ * @author Bob Jacobsen Copyright (C) 2010 Copied from LocoNet
  * @author kcameron
  */
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s Human readable panel name
+     * @param wi window to place the new panel
+     * @param paneClass name of panel class, should be subclass of JmriPanel
+     * @param memo system connection memo
      */
     public NceNamedPaneAction(String s, WindowInterface wi, String paneClass, NceSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -30,6 +34,7 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     NceSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {

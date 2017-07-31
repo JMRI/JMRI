@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  *
  * An opaque Object can be passed as a context, but null is also possible.
  *
- * <b>NOTE</b> Either {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent)
- * }
- * or {@link jmri.util.swing.JmriAbstractAction#makePanel() } must be overridden
+ * <b>NOTE</b> Either
+ * {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent)}
+ * or {@link jmri.util.swing.JmriAbstractAction#makePanel()} must be overridden
  * by extending classes.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
@@ -25,7 +25,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
      *
      * @param name the name for the action; a value of null is ignored
      * @param wi   the window interface controlling how this action is displayed

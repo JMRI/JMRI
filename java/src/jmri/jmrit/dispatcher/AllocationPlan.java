@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2011
+ * @author Dave Duchamp Copyright (C) 2011
  */
 public class AllocationPlan {
 
@@ -63,9 +63,9 @@ public class AllocationPlan {
     private int _tSectionOneSeq = 0;
     private int _tSectionTwoSeq = 0;
 
-    /**
-     * Access methods
-     */
+    //
+    // Access methods
+    //
     protected int getPlanNum() {
         return _planNum;
     }
@@ -127,9 +127,9 @@ public class AllocationPlan {
         return 0;
     }
 
-    /**
-     * Other Methods
-     */
+    //
+    // Other Methods
+    //
     protected boolean isComplete() {
         if ((_atOne == null) || (_atTwo == null)) {
             return false;

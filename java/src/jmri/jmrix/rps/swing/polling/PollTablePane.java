@@ -71,6 +71,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
         // status info on bottom
         JPanel p = new JPanel() {
+            @Override
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -81,8 +82,10 @@ public class PollTablePane extends javax.swing.JPanel {
 
         polling = new JCheckBox(Bundle.getMessage("LabelPoll"));
         polling.setSelected(Engine.instance().getPolling());
+        polling.setToolTipText(Bundle.getMessage("PollToolTip"));
         p.add(polling);
         polling.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 checkPolling();
@@ -97,6 +100,7 @@ public class PollTablePane extends javax.swing.JPanel {
         m.add(bscMode);
         g.add(bscMode);
         bscMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 checkMode();
@@ -107,6 +111,7 @@ public class PollTablePane extends javax.swing.JPanel {
         m.add(directMode);
         g.add(directMode);
         directMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 checkMode();
@@ -117,6 +122,7 @@ public class PollTablePane extends javax.swing.JPanel {
         m.add(throttleMode);
         g.add(throttleMode);
         throttleMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 checkMode();
@@ -128,8 +134,10 @@ public class PollTablePane extends javax.swing.JPanel {
         p.add(new JLabel(Bundle.getMessage("LabelDelay")));
         delay = new JTextField(5);
         delay.setText("" + Engine.instance().getPollingInterval());
+        delay.setToolTipText(Bundle.getMessage("IntervalToolTip"));
         p.add(delay);
         delay.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 updateInterval();
@@ -138,6 +146,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
         JButton b = new JButton(Bundle.getMessage("LabelSetDefault"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);
                 setDefaults();

@@ -20,8 +20,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
@@ -34,8 +33,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
@@ -62,10 +60,12 @@ public class FnMapPanelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

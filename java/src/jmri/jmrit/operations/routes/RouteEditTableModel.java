@@ -116,7 +116,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
-        table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(60);
+        table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
         table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
@@ -619,7 +619,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             } else {
                 hour = Integer.toString(i);
             }
-            for (int j = 0; j < 60; j = j + 5) {
+            for (int j = 0; j < 60; j += 1) {
                 if (j < 10) {
                     minute = "0" + Integer.toString(j);
                 } else {

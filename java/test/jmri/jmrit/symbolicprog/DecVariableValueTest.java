@@ -10,9 +10,10 @@ import junit.framework.TestSuite;
 /**
  * @author	Bob Jacobsen Copyright 2003, 2006
  */
-public class DecVariableValueTest extends VariableValueTest {
+public class DecVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
@@ -20,19 +21,23 @@ public class DecVariableValueTest extends VariableValueTest {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
+    @Override
     void setValue(VariableValue var, String val) {
         ((JTextField) var.getCommonRep()).setText(val);
         ((JTextField) var.getCommonRep()).postActionEvent();
     }
 
+    @Override
     void setReadOnlyValue(VariableValue var, String val) {
         ((DecVariableValue) var).setValue(Integer.valueOf(val).intValue());
     }
 
+    @Override
     void checkValue(VariableValue var, String comment, String val) {
         Assert.assertEquals(comment, val, ((JTextField) var.getCommonRep()).getText());
     }
 
+    @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         Assert.assertEquals(comment, val, ((JLabel) var.getCommonRep()).getText());
     }

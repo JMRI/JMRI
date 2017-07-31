@@ -3,8 +3,8 @@ package jmri.jmrix.openlcb.swing.hub;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
 /**
  * @author Bob Jacobsen Copyright 2013
  */

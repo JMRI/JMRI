@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <li>The preferences directory <li>The program directory <li>and any log files
  * seen in the program directory </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
 public class XmlFileLocationAction extends AbstractAction {
 
@@ -34,23 +34,18 @@ public class XmlFileLocationAction extends AbstractAction {
         super();
     }
 
+    final static String user = FileUtil.getUserFilesPath();
+    final static String roster = Roster.getDefault().getRosterLocation();
+    final static String profile = FileUtil.getProfilePath();
+    final static String settings = FileUtil.getPreferencesPath();
+    final static String scripts = FileUtil.getScriptsPath();
+    final static String prog = System.getProperty("user.dir");
+    final static String logDir = System.getProperty("jmri.log.path");
+    final static String tmpDir = System.getProperty("java.io.tmpdir");
+
+
     @Override
     public void actionPerformed(ActionEvent ev) {
-
-        final String user = FileUtil.getUserFilesPath();
-        final String roster = Roster.getDefault().getRosterLocation();
-        final String profile = FileUtil.getProfilePath();
-        final String settings = FileUtil.getPreferencesPath();
-        final String scripts = FileUtil.getScriptsPath();
-        final String prog = System.getProperty("user.dir");
-        final String log = System.getProperty("jmri.log.path");
-
-        String configName = System.getProperty("org.jmri.Apps.configFilename");
-        if (!new File(configName).isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            configName = profile + configName;
-        }
 
         JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
 
@@ -152,7 +147,7 @@ public class XmlFileLocationAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    Desktop.getDesktop().open(new java.io.File(log));
+                    Desktop.getDesktop().open(new java.io.File(logDir));
                 } catch (java.io.IOException e) {
                     XmlFileLocationAction.log.error("Error when opening log files location: " + e);
                 } catch (UnsupportedOperationException e) {
@@ -168,36 +163,44 @@ public class XmlFileLocationAction extends AbstractAction {
         textPane.setEditable(false);
         pane.add(textPane);
 
-        textPane.append("User Files Location: " + user + "\n");
-
-        textPane.append("Roster Location: " + roster + "\n");
-
-        textPane.append("Profile Location: " + profile + "\n");
-
-        textPane.append("Settings Location: " + settings + "\n");
-
-        textPane.append("Current Config file: " + configName + "\n");
-
-        textPane.append("Scripts Location: " + scripts + "\n");
-
-        textPane.append("Program Location: " + prog + "\n");
-
-        textPane.append("Log Files Location: " + log + "\n");
-
-        addLogFiles(textPane, log);
+        textPane.append(getLocationsReport());
 
         frame.pack();
         frame.setVisible(true);
     }
 
-    void addLogFiles(JTextArea pane, String logDir) {
+    //return a text string listing the various locations and filenames of interest
+    public static String getLocationsReport() {
+
+        String configName = System.getProperty("org.jmri.Apps.configFilename");
+        if (!new File(configName).isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            configName = profile + configName;
+        }
+        
+        StringBuffer s = new StringBuffer();       
+        s.append("User Files Location: ").append(user).append("\n");
+        s.append("Roster Location: ").append(roster).append("\n");
+        s.append("Profile Location: ").append(profile).append("\n");
+        s.append("Settings Location: ").append(settings).append("\n");
+        s.append("Current Config file: ").append(configName).append("\n");
+        s.append("Scripts Location: ").append(scripts).append("\n");
+        s.append("Program Location: ").append(prog).append("\n");
+        s.append("Temp Files Location: ").append(tmpDir).append("\n");
+        s.append("Log Files Location: ").append(logDir).append("\n");
+        
+        //include names of any *.log files in log folder
         File dir = new File(logDir);
         String[] files = dir.list();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].indexOf(".log") != -1) {
-                pane.append(logDir + files[i] + "\n");
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].indexOf(".log") != -1) {
+                    s.append("  ").append(logDir).append(files[i]).append("\n");
+                }
             }
         }
+        return s.toString();
     }
 
     private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class.getName());

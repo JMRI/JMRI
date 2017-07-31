@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
- * <P>
- * @author	Paul Bender Copyright (C) 2003-2010
+ * Extend jmri.AbstractSensor for XpressNet layouts.
+ *
+ * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -41,7 +41,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * Common initialization for both constructors
+     * Common initialization for both constructors.
      */
     private void init(String id) {
         // store address
@@ -81,14 +81,14 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
-
     }
 
     /**
-     * request an update on status by sending an XPressNet message
+     * Request an update on status by sending an XpressNet message.
      */
+    @Override
     public void requestUpdateFromLayout() {
-        // To do this, we send an XpressNet Accessory Decoder Information 
+        // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts 
         // with feedback, but the address passed is translated as though it 
@@ -106,12 +106,10 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * initmessage is a package proteceted class which allows the Manger to send
+     * initmessage is a package protected class which allows the Manger to send
      * a feedback message at initilization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
-     *
-     *
      */
     synchronized void initmessage(XNetReply l) {
         boolean oldState = statusRequested;
@@ -125,11 +123,11 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * firePropertyChange(String propertyName, Object oldValue, Object newValue)
      * _once_ if anything has changed state (or set the commanded state
      * directly)
-     *
      */
+    @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -158,32 +156,45 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         return;
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
+    @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
-    // package protected routine to get the Sensor Number
+    /**
+     * Package protected routine to get the Sensor Number.
+     */
     int getNumber() {
         return address;
     }
 
-    // package protected routine to get the Sensor Base Address
+    /**
+     * Package protected routine to get the Sensor Base Address.
+     */
     int getBaseAddress() {
         return baseaddress;
     }
 
-    // package protected routine to get the Sensor Nibble
+    /**
+     * Package protected routine to get the Sensor Nibble.
+     */
     int getNibble() {
         return nibble;
     }

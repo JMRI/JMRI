@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @Nullable
-    private final static String name = null; // no local resources
+    private final static String name = "jmri.jmrix.loconet.locomon.Llnmon"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -96,5 +96,3 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import jmri.jmrix.AbstractSerialPortController;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * CommandStation interface, which is where the real guts of it is. In
  * particular, note that transmission is not a threaded operation.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -51,7 +52,7 @@ public class TrafficController implements jmri.CommandStation {
     @Deprecated
     static TrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;
@@ -65,9 +66,10 @@ public class TrafficController implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission, but is ignored
      *                in the current implementation
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (repeats != 1) {
@@ -150,10 +152,12 @@ public class TrafficController implements jmri.CommandStation {
     protected DataInputStream istream = null;
     protected OutputStream ostream = null;
 
+    @Override
     public String getUserName() {
         return "Others";
     }
 
+    @Override
     public String getSystemPrefix() {
         return "N";
     }

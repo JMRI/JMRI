@@ -20,22 +20,24 @@ public class RouteManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static RouteManagerXml _instance = null;
 
     public static synchronized RouteManagerXml instance() {
-        if (_instance == null) {
+        RouteManagerXml instance = jmri.InstanceManager.getNullableDefault(RouteManagerXml.class);
+        if (instance == null) {
             log.debug("RouteManagerXml creating instance");
             // create and load
-            _instance = new RouteManagerXml();
-            _instance.load();
+            instance = new RouteManagerXml();
+            jmri.InstanceManager.setDefault(RouteManagerXml.class,instance);
+            instance.load();
             log.debug("Routes have been loaded!");
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManagerXml returns instance {}", _instance);
+            log.debug("RouteManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
@@ -101,10 +103,7 @@ public class RouteManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsRouteRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());

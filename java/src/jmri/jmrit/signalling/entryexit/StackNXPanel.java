@@ -37,6 +37,7 @@ public class StackNXPanel extends JPanel {
         entryExitPanel.add(listScrollPane);
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 //This method can be called only if
                 //there's a valid selection

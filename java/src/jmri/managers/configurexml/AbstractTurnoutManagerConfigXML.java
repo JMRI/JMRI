@@ -39,6 +39,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * @param o Object to store, of type TurnoutManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element turnouts = new Element("turnouts");
         setStoreElementClass(turnouts);
@@ -65,8 +66,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 String sname = iter.next();
                 log.debug("system name is " + sname);
                 Turnout t = tm.getBySystemName(sname);
-                Element elem = new Element("turnout")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store turnout " + sname);
 
@@ -222,6 +222,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 break;
             }
             String userName = getUserName(elem);
+
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create turnout: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
             }
@@ -380,6 +383,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.turnoutManagerInstance().getXMLOrder();
     }

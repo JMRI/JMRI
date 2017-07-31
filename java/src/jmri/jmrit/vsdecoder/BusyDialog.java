@@ -1,6 +1,14 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JProgressBar;
+
+/**
+ * Creates a simple "indeterminate" busy spinner dialog...
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,25 +23,11 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
-
-// class BusyDialog
-//
-// Creates a simple "indeterminate" busy spinner dialog...
 class BusyDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8208365926206646918L;
     JFrame frame;
     JProgressBar pbar;
 

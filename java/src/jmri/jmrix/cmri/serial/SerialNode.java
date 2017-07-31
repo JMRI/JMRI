@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Arrays;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
@@ -30,13 +31,8 @@ import org.slf4j.LoggerFactory;
  * on the node board and 0-128 bits of input or output (in 8 bit increments)
  * for added I/O extender cards IOX16,IOX32.  
  *
- * A PINODE (Raspberry Pi Node) is defined as having 3 inputs and 3 outputs //c2
- *on the node board and 0-128 bits of input or output (in 8 bit increments)
- * for added I/O extender cards IOX16,IOX32.  
- *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @author      Chuck Catania, cpNode Extensions 2013, 2014, 2015, 2016
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialNode extends AbstractNode {
 
@@ -67,7 +63,7 @@ public class SerialNode extends AbstractNode {
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
-    protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+    protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
     //   1 = searchlight LED, 2*NS bits must be set to 1
@@ -172,18 +168,16 @@ public class SerialNode extends AbstractNode {
         num2LSearchLights = n;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getLocSearchLightBits() {
-        return locSearchLightBits;
+        return Arrays.copyOf(locSearchLightBits, locSearchLightBits.length);
     }
 
     public void setLocSearchLightBits(int num, int value) {
         locSearchLightBits[num] = (byte) (value & 0xFF);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getCardTypeLocation() {
-        return cardTypeLocation;
+        return Arrays.copyOf(cardTypeLocation, cardTypeLocation.length);
     }
 
     public void setCardTypeLocation(int num, int value) {
@@ -258,6 +252,7 @@ public class SerialNode extends AbstractNode {
      * Get state of Sensor polling. Note: returns 'true' if at least one sensor
      * is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -275,7 +270,6 @@ public class SerialNode extends AbstractNode {
      */
     public int numInputCards() {
         int result = 0;
-        int nodeID = this.getNodeAddress();
         for (int i = 0; i < cardTypeLocation.length; i++) {
             if (cardTypeLocation[i] == INPUT_CARD) {
                 result++;
@@ -287,7 +281,7 @@ public class SerialNode extends AbstractNode {
         {
           case SMINI:      if (result!=1)
                            {
-                            warn("CMRI SMINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
+                            warn("CMRI SMINI with "+result+" INPUT cards");
                            }
           break;
           case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
@@ -549,6 +543,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check valid node address, must match value in dip switches (0 - 127)
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address >= 0) && (address < 128);
     }
@@ -630,7 +625,7 @@ public class SerialNode extends AbstractNode {
             log.error("illegal card type/address specification for SMINI");
             return;
         }
-    // here add type/location restrictions for other types of card
+// here add type/location restrictions for other types of card
         cardTypeLocation[address] = (byte) type;
     }
 
@@ -817,6 +812,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Create an Initialization packet (SerialMessage) for this node
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         // Assemble initialization byte array from node information
         int nInitBytes = 4;
@@ -1007,7 +1003,8 @@ public class SerialNode extends AbstractNode {
     /**
      * Create an Transmit packet (SerialMessage)
      */
-        public AbstractMRMessage createOutPacket() {
+    @Override
+    public AbstractMRMessage createOutPacket() {
         // Count the number of DLE's to be inserted
         int nOutBytes = numOutputCards() * (bitsPerCard / 8);
         int nDLE = 0;
@@ -1134,6 +1131,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
@@ -1171,6 +1169,7 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");

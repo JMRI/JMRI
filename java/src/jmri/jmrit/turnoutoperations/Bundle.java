@@ -1,9 +1,6 @@
 package jmri.jmrit.turnoutoperations;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
@@ -26,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmrit.turnoutoperations.Bundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.turnoutoperations.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

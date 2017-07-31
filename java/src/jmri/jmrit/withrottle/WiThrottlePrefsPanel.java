@@ -23,10 +23,12 @@ import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox eStopCB;
@@ -88,7 +90,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         consistCB.setSelected(localPrefs.isAllowConsist());
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             startupCB.setSelected(isStartUpAction());
-        }); 
+        });
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
@@ -177,7 +179,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
-        JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelPort"));
         label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
         SPPanel.add(label);
@@ -194,7 +196,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
                     manager.setActions(this.startupActionPosition, model);
                 }
             } else {
-                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName()))).forEach((model) -> {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
                     this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
                     manager.removeAction(model);
                 });
@@ -213,7 +215,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
 
-        turnoutCB = new JCheckBox(Bundle.getMessage("LabelTurnout"));
+        turnoutCB = new JCheckBox(Bundle.getMessage("Turnouts"));
         turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
         panel.add(turnoutCB);
 
@@ -242,7 +244,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
     @Override
     public String getPreferencesItem() {
         return "WITHROTTLE"; // NOI18N
@@ -301,9 +303,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     private boolean isStartUpAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
-                .anyMatch((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName())));
+                .anyMatch((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName())));
 //        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
-//            if (model.getClassName().equals(WiThrottleCreationAction.class.getName())) {
+//            if (WiThrottleCreationAction.class.getName().equals(model.getClassName()))) {
 //                return true;
 //            }
 //        }

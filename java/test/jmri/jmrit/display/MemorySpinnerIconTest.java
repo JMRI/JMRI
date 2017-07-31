@@ -1,9 +1,11 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowListener;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * MemorySpinnerIconTest.java
@@ -11,7 +13,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
-  */
+ */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
     MemorySpinnerIcon tos1 = null;
@@ -21,9 +23,12 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     MemorySpinnerIcon toi2 = null;
     MemorySpinnerIcon toi3 = null;
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
 
     public void testShow() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JmriJFrame jf = new JmriJFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -44,7 +49,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         toi1.setMemory("IM2");
         toi2.setMemory("IM2");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(Integer.valueOf(10));
+        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(10);
 
         tos3 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(tos3);
@@ -52,8 +57,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(toi3);
         tos3.setMemory("IM1");
         toi3.setMemory("IM2");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue(new Float(11.58F));
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(new Double(0.89));
+        jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue(11.58F);
+        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(0.89);
         tos1.setMemory("IM1");
         Assert.assertEquals("Spinner 1", "12", tos1.getValue());
         tos2.setMemory("IM2");
@@ -61,7 +66,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
-        
+
         if (!System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
         }
@@ -86,21 +91,27 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+
+        if (!GraphicsEnvironment.isHeadless()) {
+            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+        }
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        if (panel != null) {
+            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            for (WindowListener listener : listeners) {
+                panel.getTargetFrame().removeWindowListener(listener);
+            }
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

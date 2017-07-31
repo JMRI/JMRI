@@ -1,4 +1,3 @@
-// SprogInterface.java
 package jmri.jmrix.sprog;
 
 /**
@@ -6,7 +5,7 @@ package jmri.jmrix.sprog;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public interface SprogInterface {
 
     public void addSprogListener(SprogListener l);
@@ -30,4 +29,4 @@ public interface SprogInterface {
 }
 
 
-/* @(#)SprogInterface.java */
+

@@ -3,7 +3,6 @@ package jmri.implementation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
-import jmri.RailCom;
 import jmri.IdTag;
 import jmri.IdTagListener;
 import jmri.InstanceManager;

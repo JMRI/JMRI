@@ -7,7 +7,7 @@ import jmri.PowerManager;
 /**
  * Swing action to create and register a PowerPanelFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
@@ -44,10 +44,12 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         updateLabel();
     }
 
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name

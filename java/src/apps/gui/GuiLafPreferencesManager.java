@@ -1,8 +1,10 @@
 package apps.gui;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -11,6 +13,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -19,17 +22,25 @@ import jmri.util.prefs.InitializationException;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
+@ServiceProvider(service = PreferencesManager.class)
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
+    public static final String FONT_NAME = "fontName";
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
+    /**
+     * Display state in bean tables as icon.
+     */
+    public static final String GRAPHICTABLESTATE = "graphicTableState";
+    public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     /**
      * Smallest font size a user can set the font size to other than zero
@@ -50,9 +61,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
+    private Font currentFont = null;
+    private Font defaultFont = null;
     private int fontSize = 0;
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
+    private boolean graphicTableState = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private boolean dirty = false;
@@ -63,6 +77,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * be per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
@@ -71,14 +86,26 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
+
             this.setDefaultFontSize(); // before we change anything
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getDefaultFontSize()));
             if (this.getFontSize() == 0) {
                 this.setFontSize(this.getDefaultFontSize());
             }
+
+            this.setFontByName(preferences.get(FONT_NAME, this.getDefaultFont().getFontName()));
+            if (this.getFont() == null) {
+                this.setFont(this.getDefaultFont());
+            }
+
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
+            this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
+
             Locale.setDefault(this.getLocale());
+            javax.swing.JComponent.setDefaultLocale(this.getLocale());
+            javax.swing.JOptionPane.setDefaultLocale(this.getLocale());
+
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
@@ -90,7 +117,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -110,6 +137,19 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
         preferences.put(LOCALE, this.getLocale().toLanguageTag());
         preferences.put(LOOK_AND_FEEL, this.getLookAndFeel());
+
+        if (currentFont == null) {
+            currentFont = this.getDefaultFont();
+        }
+
+        String currentFontName = currentFont.getFontName();
+        if (currentFontName != null) {
+            String prefFontName = preferences.get(FONT_NAME, currentFontName);
+            if ((prefFontName == null) || (currentFontName != prefFontName)) {
+                preferences.put(FONT_NAME, currentFontName);
+            }
+        }
+
         int temp = this.getFontSize();
         if (temp == this.getDefaultFontSize()) {
             temp = 0;
@@ -118,6 +158,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
+        preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -143,6 +184,78 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.setDirty(true);
         this.setRestartRequired(true);
         firePropertyChange(LOCALE, oldLocale, locale);
+    }
+
+    /**
+     * @return the currently selected font
+     */
+    public Font getFont() {
+        return currentFont;
+    }
+
+    /**
+     * Sets a new font
+     *
+     * @param newFont the new font to set
+     */
+    public void setFont(Font newFont) {
+        Font oldFont = this.currentFont;
+        this.currentFont = newFont;
+        if (this.currentFont != oldFont) {
+            firePropertyChange(FONT_NAME, oldFont, this.currentFont);
+        }
+        this.setDirty(true);
+        this.setRestartRequired(true);
+    }
+
+    /**
+     * Sets a new font by name
+     *
+     * @param newFontName the name of the new font to set
+     */
+    public void setFontByName(String newFontName) {
+        Font oldFont = getFont();
+        if (oldFont == null) {
+            oldFont = this.getDefaultFont();
+        }
+        setFont(new Font(newFontName, oldFont.getStyle(), fontSize));
+    }
+
+    /**
+     * @return the current {@literal Look & Feel} default font
+     */
+    public Font getDefaultFont() {
+        if (defaultFont == null) {
+            setDefaultFont();
+        }
+        return defaultFont;
+    }
+
+    /**
+     * Called to load the current {@literal Look & Feel} default font,
+     * based on looking up the "List.font"
+     * <br><br>
+     * The value can be can be read by calling {@link #getDefaultFont()}
+     */
+    public void setDefaultFont() {
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+
+            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
+                Font f = UIManager.getFont(key);
+                log.debug("Key:" + key.toString() + " Font: " + f.getName());
+                defaultFont = f;
+                return;
+            }
+        }
+        // couldn't find the default return a reasonable font
+        defaultFont = UIManager.getFont("List.font");
+        if (defaultFont == null) {
+            // or maybe not quite as reasonable
+            defaultFont = UIManager.getFont("TextArea.font");
+        }
     }
 
     /**
@@ -193,7 +306,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 return;
             }
         }
-        defaultFontSize = 11;	// couldn't find the default return a reasonable font size
+        defaultFontSize = 11;   // couldn't find the default return a reasonable font size
     }
 
     /**
@@ -201,7 +314,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // the unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts
         if (log.isTraceEnabled()) {
             log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -253,6 +366,24 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.setDirty(true);
         this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+    }
+
+    /**
+     * @return the graphicTableState
+     */
+    public boolean isGraphicTableState() {
+        return graphicTableState;
+    }
+
+    /**
+     * @param graphicTableState the graphicTableState to set
+     */
+    public void setGraphicTableState(boolean graphicTableState) {
+        boolean oldGraphicTableState = this.graphicTableState;
+        this.graphicTableState = graphicTableState;
+        this.setDirty(true);
+        this.setRestartRequired(true);
+        firePropertyChange(GRAPHICTABLESTATE, oldGraphicTableState, graphicTableState);
     }
 
     /**
@@ -381,5 +512,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (oldRestartRequired != restartRequired) {
             propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
         }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 }

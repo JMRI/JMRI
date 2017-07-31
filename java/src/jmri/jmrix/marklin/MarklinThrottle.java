@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottle implementation
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinThrottle extends AbstractThrottle implements MarklinListener {
@@ -54,6 +55,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      * Send the message to set the state of functions F0, F1, F2, F3, F4. To
      * send function group 1 we have to also send speed, direction etc.
      */
+    @Override
     protected void sendFunctionGroup1() {
 
         tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 0, (f0 ? 0x01 : 0x00)), this);
@@ -67,6 +69,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
 
         tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 5, (f5 ? 0x01 : 0x00)), this);
@@ -76,6 +79,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     }
 
+    @Override
     protected void sendFunctionGroup3() {
 
         tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 9, (f9 ? 0x01 : 0x00)), this);
@@ -85,6 +89,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     }
 
+    @Override
     protected void sendFunctionGroup4() {
 
         tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 13, (f13 ? 0x01 : 0x00)), this);
@@ -98,6 +103,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     }
 
+    @Override
     protected void sendFunctionGroup5() {
 
         tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 21, (f21 ? 0x01 : 0x00)), this);
@@ -118,7 +124,8 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -151,6 +158,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         return ((lSpeed) / 1000.f);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -165,6 +173,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     MarklinTrafficController tc;
 
+    @Override
     public void setSpeedStepMode(int Mode) {
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode
@@ -190,18 +199,22 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         super.setSpeedStepMode(Mode);
     }
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         active = false;
     }
 
+    @Override
     public void message(MarklinMessage m) {
         // messages are ignored
     }
 
+    @Override
     public void reply(MarklinReply m) {
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.MANCOMMANDSTART && m.getCommand() <= MarklinConstants.MANCOMMANDEND) {
             if (m.getAddress() != getCANAddress()) {

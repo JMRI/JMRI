@@ -1,4 +1,3 @@
-// TrainSetColorAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -37,4 +36,4 @@ public class TrainsTableSetColorAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainSetColorAction.java */
+

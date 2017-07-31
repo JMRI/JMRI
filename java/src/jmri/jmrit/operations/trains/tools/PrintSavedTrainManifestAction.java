@@ -1,4 +1,3 @@
-// PrintSavedTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
@@ -39,6 +38,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     boolean _isPreview;
     Train _train;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
@@ -80,9 +80,9 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     // Get file to read from
     protected File getFile() {
-        String pathName = TrainManagerXml.instance().getBackupManifestDirectory();
+        String pathName = TrainManagerXml.instance().getBackupManifestDirectoryName();
         if (_train != null) {
-            pathName = TrainManagerXml.instance().getBackupManifestDirectory(_train.getName());
+            pathName = TrainManagerXml.instance().getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
         fc.addChoosableFileFilter(new FileFilter());

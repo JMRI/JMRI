@@ -1,33 +1,29 @@
-// LZV100Frame.java
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
 /**
- * Frame displaying the LZV100 configuration utility
- *
- * This is a container for holding the LZV100 configuration utility. The actuall
+ * Frame displaying the LZV100 configuration utility.
+ * <p>
+ * This is a container for holding the LZV100 configuration utility. The actual
  * configuration utility consists of two parts:
- * {@link jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame} a command station
- * configuration utility for the LZ100/LZV100
- * {@link jmri.jmrix.lenz.swing.lv102.LV102InternalFrame} a configuration
- * utility for the LV102 power station
+ * <ul>
+ * <li>{@link jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame} a command station
+ * configuration utility for the LZ100/LZV100</li>
+ * <li>{@link jmri.jmrix.lenz.swing.lv102.LV102InternalFrame} a configuration
+ * utility for the LV102 power station</li>
+ * </ul>
  *
- * @author	Paul Bender Copyright (C) 2003,2005
+ * @author Paul Bender Copyright (C) 2003,2005
   */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -272552917307354256L;
-
     public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LZV100 Configuration Utility", memo);
+        this(Bundle.getMessage("MenuItemLZV100ConfigurationManager"), memo);
     }
 
     public LZV100Frame(String FrameName, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -55,6 +51,7 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -64,8 +61,9 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
 
     }
 
-    JToggleButton closeButton = new JToggleButton("Close");
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

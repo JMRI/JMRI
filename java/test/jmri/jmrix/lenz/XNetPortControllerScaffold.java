@@ -13,21 +13,25 @@ import org.slf4j.LoggerFactory;
  * 
  * @author	Bob Jacobsen Copyright (C) 2006, 2015
  */
-class XNetPortControllerScaffold extends XNetSimulatorPortController {
+public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
     private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
 
+    @Override
     public java.util.Vector<String> getPortNames() {
         return null;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         return null;
     }
 
+    @Override
     public void configure() {
     }
 
+    @Override
     public String[] validBaudRates() {
         return null;
     }
@@ -38,7 +42,7 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     PipedInputStream itempIPipe;
     PipedOutputStream itempOPipe;
     
-    protected XNetPortControllerScaffold() throws Exception {
+    public XNetPortControllerScaffold() throws Exception {
         otempIPipe = new PipedInputStream(200);
         tostream = new DataInputStream(otempIPipe);
         otempOPipe = new PipedOutputStream(otempIPipe);
@@ -68,6 +72,7 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Returns the InputStream from the port.
      */
+    @Override
     public DataInputStream getInputStream() {
         return istream;
     }
@@ -75,6 +80,7 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Returns the outputStream to the port.
      */
+    @Override
     public DataOutputStream getOutputStream() {
         return ostream;
     }
@@ -82,14 +88,17 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Check that this object is ready to operate.
      */
+    @Override
     public boolean status() {
         return true;
     }
 
+    @Override
     public boolean okToSend() {
         return true;
     }
 
+    @Override
     public void setOutputBufferEmpty(boolean s) {
     }
 
@@ -100,12 +109,12 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Can read test data from this.
      */
-    DataInputStream tostream;
+    public DataInputStream tostream;
 
     /**
      * Tests write to this.
      */
-    DataOutputStream tistream;
+    public DataOutputStream tistream;
     /**
      * The traffic controller can read test data from this.
      */

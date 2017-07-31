@@ -5,8 +5,8 @@ package jmri;
  * <P>
  * The AbstractAudio class contains a basic implementation of the state and
  * messaging code, and forms a useful start for a system-specific
- * implementation. Specific implementations in the jmrix package, e.g. for
- * LocoNet and NCE, will convert to and from the layout commands.
+ * implementation. Specific implementations in jmrix sub-packages will convert
+ * to and from the layout commands.
  * <P>
  * The states and names are Java Bean parameters, so that listeners can be
  * registered to be notified of any changes.
@@ -14,7 +14,7 @@ package jmri;
  * Each Audio object has a two names. The "user" name is entirely free form, and
  * can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
- * control system (e.g. LocoNet, NCE, etc) and address within that system.
+ * control system and address within that system.
  * <BR>
  * <hr>
  * This file is part of JMRI.
@@ -222,6 +222,8 @@ public interface Audio extends NamedBean {
 
     /**
      * Method used to update the current state of the Audio object
+     *
+     * @param oldState the former state
      */
     public void stateChanged(int oldState);
 

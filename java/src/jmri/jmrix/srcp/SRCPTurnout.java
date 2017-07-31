@@ -20,13 +20,11 @@ import org.slf4j.LoggerFactory;
 public class SRCPTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -5621580488773391864L;
-
-    /**
      * SRCP turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     *
+     * @param number the turnout number
+     * @param memo   the associated connection
      */
     public SRCPTurnout(int number, SRCPBusConnectionMemo memo) {
         super(memo.getSystemPrefix() + memo.getTurnoutManager().typeLetter() + number);
@@ -50,6 +48,7 @@ public class SRCPTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -68,6 +67,7 @@ public class SRCPTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
@@ -97,6 +97,3 @@ public class SRCPTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
 
 }
-
-
-/* @(#)SRCPTurnout.java */

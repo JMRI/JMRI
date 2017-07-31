@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.util.ResourceBundle;
@@ -22,6 +21,7 @@ public class MergConnectionConfig extends ConnectionConfig {
         super(p);
     }
 
+    @Override
     public String name() {
         return NAME;
     }
@@ -33,6 +33,7 @@ public class MergConnectionConfig extends ConnectionConfig {
         super();
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new MergNetworkDriverAdapter();
@@ -40,6 +41,7 @@ public class MergConnectionConfig extends ConnectionConfig {
         }
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }

@@ -3,10 +3,13 @@ package jmri.implementation;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.Turnout;
+
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +18,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
-public class SingleTurnoutSignalHeadTest extends TestCase {
+public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
+    @Test
     public void testNoDarkValidTypes() {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h
@@ -44,6 +48,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testDarkValidTypes1() {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h
@@ -77,6 +82,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testDarkValidTypes2() {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h
@@ -110,31 +116,24 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SingleTurnoutSignalHeadTest(String s) {
-        super(s);
+    @Override
+    public SignalHead getHeadToTest() {
+        Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        return new SingleTurnoutSignalHead("IH1",
+                        new jmri.NamedBeanHandle<Turnout>("IT1", t),
+                        SignalHead.GREEN, SignalHead.DARK);
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SingleTurnoutSignalHeadTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SingleTurnoutSignalHeadTest.class);
-        return suite;
-    }
-
+    
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadTest.class.getName());
+
 }

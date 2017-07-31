@@ -14,16 +14,15 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
- *
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
 
     protected Hashtable<XNetListener, Integer> mListenerMasks;
 
     /**
-     * static function returning the TrafficController instance to use.
+     * Static function returning the TrafficController instance to use.
      *
      * @return The registered TrafficController instance for general use, if
      *         need be creating one.
@@ -34,7 +33,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * static function setting this object as the TrafficController instance to
+     * Static function setting this object as the TrafficController instance to
      * use.
      */
     @Override
@@ -48,7 +47,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     static XNetTrafficController self = null;
 
     /**
-     * Must provide a LenzCommandStation reference at creation time
+     * Must provide a LenzCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,
      *                        preserved for later.
@@ -62,20 +61,33 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     // Abstract methods for the XNetInterface
-    abstract public boolean status();
 
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
+
+
+    /**
+     * Make connection to existing PortController object.
+     */
+    @Override
+    public void connectPort(jmri.jmrix.AbstractPortController p) {
+       super.connectPort(p);
+       if(p instanceof XNetPortController ){
+          this.addXNetListener(XNetInterface.COMMINFO,new XNetTimeSlotListener((XNetPortController)p));
+       }
+    }
 
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *
      * @param m Message to send;
      */
+    @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
         if(!(reply instanceof XNetListener) || !(m instanceof XNetMessage)){
            throw new IllegalArgumentException("");
@@ -84,12 +96,14 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * Forward a preformatted XNetMessage to the registered XNetListeners. NOTE:
-     * this drops the packet if the checksum is bad.
+     * Forward a preformatted XNetMessage to the registered XNetListeners.
+     * <p>
+     * NOTE: this drops the packet if the checksum is bad.
      *
      * @param m Message to send # @param client is the client getting the
      *          message
      */
+    @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         if(!(client instanceof XNetListener) || !(m instanceof XNetReply)){
            throw new IllegalArgumentException("");
@@ -148,8 +162,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     // We use the pollMessage routines for high priority messages.
-    // This means responses to time critical messages (turnout off 
-    // messages).  
+    // This means responses to time critical messages (turnout off messages).
     java.util.concurrent.LinkedBlockingQueue<XNetMessage> HighPriorityQueue = null;
     java.util.concurrent.LinkedBlockingQueue<XNetListener> HighPriorityListeners = null;
 
@@ -162,6 +175,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         try {
             if (HighPriorityQueue.peek() == null) {
@@ -175,6 +189,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         try {
             if (HighPriorityListeners.peek() == null) {
@@ -188,6 +203,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
+    @Override
     public synchronized void addXNetListener(int mask, XNetListener l) {
         addListener(l);
         // This is adds all the mask information.  A better way to do
@@ -195,6 +211,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         mListenerMasks.put(l, Integer.valueOf(mask));
     }
 
+    @Override
     public synchronized void removeXNetListener(int mask, XNetListener l) {
         removeListener(l);
         // This is removes all the mask information.  A better way to do 
@@ -203,8 +220,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * enterProgMode(); has to be available, even though it doesn't do anything
-     * on lenz
+     * This method has to be available, even though it doesn't do anything
+     * on lenz.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -212,7 +229,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * enterNormalMode() returns the value of getExitProgModeMsg();
+     * Return the value of getExitProgModeMsg().
      */
     @Override
     protected AbstractMRMessage enterNormalMode() {
@@ -220,7 +237,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * programmerIdle() checks to see if the programmer associated with this
+     * Check to see if the programmer associated with this
      * interface is idle or not.
      */
     @Override
@@ -290,12 +307,12 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * Reference to the command station in communication here
+     * Reference to the command station in communication here.
      */
     LenzCommandStation mCommandStation;
 
     /**
-     * Get access to communicating command station object
+     * Get access to communicating command station object.
      *
      * @return associated Command Station object
      */
@@ -304,13 +321,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * Reference to the system connection memo *
+     * Reference to the system connection memo.
      */
     XNetSystemConnectionMemo mMemo = null;
 
     /**
      * Get access to the system connection memo associated with this traffic
-     * controller
+     * controller.
      *
      * @return associated systemConnectionMemo object
      */
@@ -319,7 +336,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * Set the system connection memo associated with this traffic controller
+     * Set the system connection memo associated with this traffic controller.
      *
      * @param m associated systemConnectionMemo object
      */
@@ -330,7 +347,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     private XNetFeedbackMessageCache _FeedbackCache = null;
 
     /**
-     * return an XNetFeedbackMessageCache object associated with this traffic
+     * Return an XNetFeedbackMessageCache object associated with this traffic
      * controller.
      */
     public XNetFeedbackMessageCache getFeedbackMessageCache() {
@@ -341,4 +358,5 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
+
 }

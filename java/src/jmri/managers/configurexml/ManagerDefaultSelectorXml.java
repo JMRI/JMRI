@@ -1,10 +1,10 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
-import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
+import jmri.profile.ProfileManager;
 import org.jdom2.Element;
 
 /**
@@ -29,6 +29,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type ManagerDefaultSelector
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("managerdefaults");
         e.setAttribute("class", getClass().getName());
@@ -56,20 +57,17 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
             Class<?> c = null;
             try {
                 c = Class.forName(className);
-            } catch (java.lang.ClassNotFoundException ex) {
-                continue;
-            } catch (java.lang.NoClassDefFoundError ex) {
+            } catch (java.lang.ClassNotFoundException | java.lang.NoClassDefFoundError ex) {
                 continue;
             }
             InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(c, name);
 
         }
         // put into effect
-        InstanceManager.getDefault(ManagerDefaultSelector.class).configure();
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
+        InstanceManager.getDefault(ManagerDefaultSelector.class).configure(ProfileManager.getDefault().getActiveProfile());
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).ifPresent((cm) -> {
             cm.registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
-        }
+        });
         return true;
     }
 
@@ -79,6 +77,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       PanelEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
     }
 

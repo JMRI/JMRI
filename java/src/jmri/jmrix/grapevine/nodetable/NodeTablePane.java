@@ -34,8 +34,8 @@ import jmri.util.table.ButtonRenderer;
  * <LI>Not present
  * </OL>
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -79,6 +79,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         // status info on bottom
         JPanel p = new JPanel() {
+            @Override
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -89,6 +90,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         JButton b = new JButton(rb.getString("ButtonCheck"));
         b.setToolTipText(rb.getString("TipCheck"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 startPoll();
             }
@@ -102,6 +104,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         // renumber button
         b = new JButton(rb.getString("ButtonRenumber"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 renumber();
             }
@@ -139,6 +142,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         timer = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
             int node = 1;
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // send message to node
                 SerialTrafficController.instance().sendSerialMessage(SerialMessage.getPoll(node), null);
@@ -171,12 +175,14 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     /**
      * Ignore messages being sent
      */
+    @Override
     public void message(SerialMessage m) {
     }
 
     /**
      * Listen for software version messages to know a node is present
      */
+    @Override
     public void reply(SerialReply m) {
         // set the status as having seen something
         if (status.getText().equals(rb.getString("StatusStart"))) {
@@ -215,14 +221,17 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         static private final int LAST = 3;
 
+        @Override
         public int getColumnCount() {
             return LAST + 1;
         }
 
+        @Override
         public int getRowCount() {
             return 127;
         }
 
+        @Override
         public String getColumnName(int c) {
             switch (c) {
                 case ADDRCOL:
@@ -236,6 +245,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == EDITCOL || c == INITCOL) {
                 return JButton.class;
@@ -246,10 +256,12 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == EDITCOL || c == INITCOL);
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             // r is row number, from 0, and therefore r+1 is node number
             switch (c) {
@@ -287,6 +299,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             switch (c) {
                 case EDITCOL:

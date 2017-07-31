@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.locobufferusb.configurexml.PackageTest.class
+   jmri.jmrix.loconet.locobufferusb.configurexml.PackageTest.class,
+   LocoBufferUsbAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.locobufferusb package.

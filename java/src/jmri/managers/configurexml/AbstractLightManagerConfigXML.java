@@ -34,6 +34,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * @param o Object to store, of type LightManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element lights = new Element("lights");
         setStoreElementClass(lights);
@@ -56,8 +57,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 log.debug("system name is " + sname);
                 Light lgt = tm.getBySystemName(sname);
-                Element elem = new Element("light")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
@@ -143,6 +143,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             }
 
             String userName = getUserName(lightList.get(i));
+
+            checkNameNormalization(sysName, userName, tm);
 
             if (log.isDebugEnabled()) {
                 log.debug("create light: (" + sysName + ")("
@@ -320,6 +322,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }

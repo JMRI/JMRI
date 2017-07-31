@@ -22,7 +22,7 @@ abstract public class AbstractWiThrottlePreferences {
         try {
             root = prefsXml.rootFromFile(file);
         } catch (java.io.FileNotFoundException ea) {
-            log.info("Could not find WiThrottle preferences file.  Normal if preferences have not been saved before.");
+            log.info("Could not find WiThrottle preferences file ({}).  Normal if preferences have not been saved before.", fileName);
             root = null;
         } catch (Exception eb) {
             log.error("Exception while loading throttles preferences: " + eb);
@@ -77,6 +77,6 @@ abstract public class AbstractWiThrottlePreferences {
     public static class AbstractWiThrottlePreferencesXml extends XmlFile {
     }
 
-    private static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// PrintOptionAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
@@ -34,4 +33,4 @@ public class PrintOptionAction extends AbstractAction {
     }
 }
 
-/* @(#)PrintOptionAction.java */
+

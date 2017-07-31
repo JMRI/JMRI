@@ -1,6 +1,6 @@
-// NceConsistEngines.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     // we use a thread so the status frame will work!
     public void run() {
         if (tc == null) {
@@ -170,7 +170,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     private void syncEngines(int offset, int step) {
         for (int consistNum = 1; consistNum < 128; consistNum++) {
             int engNum = getEngineNumberFromArray(consistNum, offset, step);
@@ -264,7 +264,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
     } // ignore replies
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NN_NAKED_NOTIFY", "NO_NOTIFY_NOT_NOTIFYALL"}, justification = "Only want to notify this thread" )
+    @SuppressFBWarnings(value = {"NN_NAKED_NOTIFY", "NO_NOTIFY_NOT_NOTIFYALL"}, justification = "Only want to notify this thread" )
     public void reply(NceReply r) {
 
         if (waiting <= 0) {

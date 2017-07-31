@@ -1,4 +1,3 @@
-// CarLoadEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
@@ -110,13 +109,13 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // row 10
         // optional panel
         JPanel pOptionalPickup = new JPanel();
-//		pOptionalPickup.setLayout(new BoxLayout(pOptionalPickup, BoxLayout.Y_AXIS));
+//  pOptionalPickup.setLayout(new BoxLayout(pOptionalPickup, BoxLayout.Y_AXIS));
         pOptionalPickup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptionalPickup")));
         addItem(pOptionalPickup, pickupCommentTextField, 0, 0);
 
         // row 12
         JPanel pOptionalDrop = new JPanel();
-//		pOptionalDrop.setLayout(new BoxLayout(pOptionalDrop, BoxLayout.Y_AXIS));
+//  pOptionalDrop.setLayout(new BoxLayout(pOptionalDrop, BoxLayout.Y_AXIS));
         pOptionalDrop.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptionalDrop")));
         addItem(pOptionalDrop, dropCommentTextField, 0, 0);
 
@@ -362,14 +361,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
-//	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+// java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 //
-//	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-//		pcs.addPropertyChangeListener(l);
-//	}
+// public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+//  pcs.addPropertyChangeListener(l);
+// }
 //
-//	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-//		pcs.removePropertyChangeListener(l);
-//	}
+// public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+//  pcs.removePropertyChangeListener(l);
+// }
     private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
 }

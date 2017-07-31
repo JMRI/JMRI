@@ -1,0 +1,146 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/utilization-bar/utilization-bar-chart.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/utilization-bar/utilization-bar-chart.directive.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfUtilizationBarChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>Directive for rendering a utilization bar chart
+There are three possible fill colors for Used Percentage, dependent on whether or not there are thresholds:<br/></p>
+<ul>
+<li>When no thresholds exist, or if the used percentage has not surpassed any thresholds, the indicator is blue.
+<li>When the used percentage has surpassed the warning threshold, but not the error threshold, the indicator is orange.
+<li>When the used percentage has surpassed the error threshold, the indicator is is red.
+</ul></div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-utilization-bar-chart
+     chart-data="{object}"
+     [chart-title="{object}"]
+     [chart-footer="{object}"]
+     [layout="{object}"]
+     [footer-label-format="{string}"]
+     [units="{object}"]
+     [threshold-error="{string}"]
+     [threshold-warning="{string}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>chartData</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>the data to be shown in the utilization bar chart<br/></p>
+<ul style='list-style-type: none'>
+<li>.used          - number representing the amount used
+<li>.total         - number representing the total amount
+<li>.dataAvailable - Flag if there is data available - default: true
+</ul></div></td></tr><tr><td>chart-title <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>The title displayed on the left-hand side of the chart</p>
+</div></td></tr><tr><td>chart-footer <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>The label displayed on the right-hand side of the chart.  If chart-footer is not
+specified, the automatic footer-label-format will be used.</p>
+</div></td></tr><tr><td>layout <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>Various alternative layouts the utilization bar chart may have:<br/></p>
+<ul style='list-style-type: none'>
+<li>.type - The type of layout to use.  Valid values are &#39;regular&#39; (default) displays the standard chart layout,
+and &#39;inline&#39; displays a smaller, inline layout.</li>
+<li>.titleLabelWidth - Width of the left-hand title label when using &#39;inline&#39; layout. Example values are &quot;120px&quot;, &quot;20%&quot;, &quot;10em&quot;, etc..</li>
+<li>.footerLabelWidth - Width of the right-hand used label when using &#39;inline&#39; layout. Example values are &quot;120px&quot;, &quot;20%&quot;, &quot;10em&quot;, etc..</li>
+</ul></div></td></tr><tr><td>footer-label-format <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>The auto-format of the label on the right side of the bar chart when chart-footer
+has not been specified. Values may be:<br/></p>
+<ul style='list-style-type: none'>
+<li>&#39;actual&#39; - (default) displays the standard label of &#39;(n) of (m) (units) Used&#39;.
+<li>&#39;percent&#39; - displays a percentage label of &#39;(n)% Used&#39;.</li>
+</ul></div></td></tr><tr><td>units <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>to be displayed on the chart. Examples: &quot;GB&quot;, &quot;MHz&quot;, &quot;I/Ops&quot;, etc...</p>
+</div></td></tr><tr><td>threshold-error <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>The percentage used, when reached, denotes an error.  Valid values are 1-100. When the error threshold
+has been reached, the used donut arc will be red.</p>
+</div></td></tr><tr><td>threshold-warning <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><p>The percentage usage, when reached, denotes a warning.  Valid values are 1-100. When the warning threshold
+has been reached, the used donut arc will be orange.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationbarchart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.example" source-edit-deps="angular.js script.js" source-edit-html="index.html-19" source-edit-css="" source-edit-js="script.js-20" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-19" ng-html-wrap-loaded="patternfly.example angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-19">
+  <div ng-controller="ChartCtrl">
+
+    <label class="label-title">Default Layout, no Thresholds</label>
+    <div pf-utilization-bar-chart chart-data=data1 chart-title=title1
+    units=units1></div>
+    <br>
+    <label class="label-title">Inline Layouts with Error, Warning, and Ok Thresholds</label>
+    <div pf-utilization-bar-chart chart-data=data5 chart-title=title5 layout=layoutInline units=units5 threshold-error="85" threshold-warning="60">../utilization-trend/utilization-trend-chart-directive.js</div>
+    <div pf-utilization-bar-chart chart-data=data3 chart-title=title3 layout=layoutInline units=units3 threshold-error="85" threshold-warning="60"></div>
+    <div pf-utilization-bar-chart chart-data=data2 chart-title=title2 layout=layoutInline units=units2 threshold-error="85" threshold-warning="60"></div>
+    <br>
+    <label class="label-title">layout='inline', footer-label-format='percent', and custom chart-footer labels</label>
+    <div pf-utilization-bar-chart chart-data=data2 chart-title=title2 layout=layoutInline footer-label-format='percent' units=units2 threshold-error="85" threshold-warning="60"></div>
+    <div pf-utilization-bar-chart chart-data=data3 chart-title=title3 layout=layoutInline footer-label-format='percent' units=units3 threshold-error="85" threshold-warning="60"></div>
+    <div pf-utilization-bar-chart chart-data=data4 chart-title=title4 chart-footer=footer1 layout=layoutInline units=units4 threshold-error="85" threshold-warning="60"></div>
+    <div pf-utilization-bar-chart chart-data=data5 chart-title=title5 chart-footer=footer2 layout=layoutInline units=units5 threshold-error="85" threshold-warning="60"></div>
+    <div class="row">
+      <div class="col-md-6">
+        <form role="form"">
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="data1.dataAvailable">Data Available</input>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-20"></pre>
+<script type="text/ng-template" id="script.js-20">
+angular.module( 'patternfly.example', ['patternfly.charts', 'patternfly.card']);
+
+angular.module( 'patternfly.example' ).controller( 'ChartCtrl', function( $scope ) {
+
+ $scope.title1 = 'RAM Usage';
+ $scope.units1 = 'MB';
+
+ $scope.data1 = {
+   'dataAvailable': true,
+   'used': '8',
+   'total': '24'
+ };
+
+ $scope.title2      = 'Memory';
+ $scope.units2      = 'GB';
+
+ $scope.data2 = {
+   'used': '25',
+   'total': '100'
+ };
+
+ $scope.title3 = 'CPU Usage';
+ $scope.units3 = 'MHz';
+
+ $scope.data3 = {
+   'used': '420',
+   'total': '500',
+ };
+
+ $scope.title4 = 'Disk Usage';
+ $scope.units4 = 'TB';
+ $scope.data4 = {
+   'used': '350',
+   'total': '500',
+ };
+
+ $scope.title5 = 'Disk I/O';
+ $scope.units5 = 'I/Ops';
+ $scope.data5 = {
+   'used': '450',
+   'total': '500',
+ };
+
+ $scope.layoutInline = {
+   'type': 'inline'
+ };
+
+ $scope.footer1 = '<strong>500 TB</strong> Total';
+ $scope.footer2 = '<strong>450 of 500</strong> Total';
+
+});
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.example" ng-set-html="index.html-19" ng-eval-javascript="script.js-20"></div>
+</div></div>
+</div>

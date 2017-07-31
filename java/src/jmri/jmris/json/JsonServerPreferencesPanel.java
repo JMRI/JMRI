@@ -12,10 +12,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Randall Wood Copyright (C) 2012, 2015
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     public static final int MAX_HEARTBEAT_INTERVAL = 3600;
@@ -26,7 +28,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
-    private static final long serialVersionUID = 5452568391598728906L;
+
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
         this.preferences.apply(JsonServerPreferences.getDefault());

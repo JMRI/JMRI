@@ -11,12 +11,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-  <!-- $Id$ -->
   <version author="sip@euronet.nl" version="1.0 beta" lastUpdated="20020810"/>
   <!-- Based on the contribution of many others -->
   <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane>
       <name>Basic</name>
+      <name xml:lang="it">Basic</name>
+      <name xml:lang="ca">Bàsic</name>
+      <name xml:lang="de">Einfach</name>
+      <name xml:lang="nl">Basis</name>
       <column>
         <dccaddress/>
         <label>
@@ -47,11 +50,11 @@
           <text> </text>
         </label>
       </column>
-      <name xml:lang="it">Basic</name>
-	  <name xml:lang="ca">Bàsic</name>
     </pane>
     <pane>
       <name>Motor</name>
+      <name xml:lang="it">Motore</name>
+      <name xml:lang="ca">Motor</name>
       <column>
         <display item="Acceleration"/>
         <display item="Deceleration"/>
@@ -84,11 +87,13 @@
         <display item="K Adjustment"/>
         <display item="I Adjustment"/>
       </column>
-      <name xml:lang="it">Motore</name>
-	  <name xml:lang="ca">Motor</name>
     </pane>
     <pane>
       <name>Speed Control</name>
+      <name xml:lang="it">Controllo Velocità</name>
+      <name xml:lang="ca">Control de Velocitat</name>
+      <name xml:lang="de">Geschwindigkeitsregelung</name>
+      <name xml:lang="nl">Snelheidsregeling</name>
       <column>
         <display item="Speed Table Definition" format="offradiobutton" layout="above" label="CV 29, bit 4"/>
         <row>
@@ -110,19 +115,23 @@
         <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
         <display item="Speed Table" layout="above" label="CV 67-94"/>
       </column>
-      <name xml:lang="it">Controllo Velocità</name>
-	  <name xml:lang="ca">Control de Velocitat</name>
     </pane>
     <pane>
       <name>Function/Output Map</name>
+      <name xml:lang="it">Mappa Funzioni/uscite</name>
+      <name xml:lang="ca">Mapa de funcions/sortides</name>
+      <name xml:lang="de">Funktionszuweisung</name>
+      <name xml:lang="nl">Funktietoewijzing</name>
       <column>
         <fnmapping/>
       </column>
-      <name xml:lang="it">Mappa Funzioni/uscite</name>
-	  <name xml:lang="ca">Mapa de funcions/sortides</name>
     </pane>
     <pane>
       <name>Output Handling</name>
+      <name xml:lang="it">Gestione Uscite</name>
+      <name xml:lang="ca">Gestió de les sortides</name>
+      <name xml:lang="de">Ausgangsabhandlung</name>
+      <name xml:lang="nl">Uitgangseffecten</name>
       <column>
         <label>
           <text>F-9(r) Key Output Control</text>
@@ -155,11 +164,13 @@
         <display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7"/>
         <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8"/>
       </column>
-      <name xml:lang="it">Gestione Uscite</name>
-	  <name xml:lang="ca">Gestió de les sortides</name>
     </pane>
     <pane>
       <name>Lights</name>
+      <name xml:lang="it">Luci</name>
+      <name xml:lang="ca">Llums</name>
+      <name xml:lang="de">Lichte</name>
+      <name xml:lang="nl">Lichten</name>
       <column>
         <display item="Blink Rate"/>
       </column>
@@ -173,11 +184,13 @@
         <display item="Brightness AUX"/>
         <display item="Output Configuration AUX"/>
       </column>
-      <name xml:lang="it">Luci</name>
-	  <name xml:lang="ca">Llums</name>
     </pane>
     <pane>
       <name>Consist</name>
+      <name xml:lang="it">Consist</name>
+      <name xml:lang="ca">Multi-Tracció</name>
+      <name xml:lang="de">Mehrfachtraktion</name>
+      <name xml:lang="nl">Multi-tractie</name>
       <column>
         <display item="Consist Address"/>
         <separator/>
@@ -185,6 +198,8 @@
           <text>Will decoder respond to function requests at consist address?</text>
           <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
 		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
+          <text xml:lang="de">Sind Decoderfunktionen steuerbar durch die Mehrfachtrakstionsadresse?</text>
+          <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
         </label>
         <separator/>
         <display item="Consist Acceleration Adjustment"/>
@@ -192,11 +207,13 @@
         <display item="Consist Deceleration Adjustment"/>
         <display item="Consist Deceleration Adjustment Sign"/>
       </column>
-      <name xml:lang="it">Consist</name>
-	  <name xml:lang="ca">Multi-Tracció</name>
     </pane>
     <pane>
       <name>Advanced</name>
+      <name xml:lang="it">Avanzato</name>
+      <name xml:lang="ca">Avançat</name>
+      <name xml:lang="de">Erweitert</name>
+      <name xml:lang="nl">Uitgebreid</name>
       <column>
         <display item="Packet Time-out Value"/>
       </column>
@@ -208,6 +225,8 @@
           <text>Analog Mode Functions F1-F8</text>
           <text xml:lang="it">Funzioni in Analogico F1-F8</text>
 		  <text xml:lang="ca">Funcions en analògic F1-F8</text>
+          <text xml:lang="de">Analogfunktionen F1-F8</text>
+          <text xml:lang="nl">Analoge funkties F1-F8</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
@@ -225,6 +244,8 @@
           <text>Analog Mode Functions F0, F9-F12</text>
           <text xml:lang="it">Funzioni in Analogico F0, F9-F12</text>
 		  <text xml:lang="ca">Funcions en analògic F0, F9-F12</text>
+          <text xml:lang="de">Analogfunktionen F0, F9-F12</text>
+          <text xml:lang="nl">Analoge funkties F0, F9-F12</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>
@@ -244,11 +265,12 @@
         </label>
         <display item="ZIMO Signal Dependence Active"/>
       </column>
-      <name xml:lang="it">Avanzato</name>
-	  <name xml:lang="ca">Avançat</name>
     </pane>
     <pane>
       <name>Sound</name>
+      <name xml:lang="it">Suono</name>
+      <name xml:lang="ca">So</name>
+      <name xml:lang="nl">Geluid</name>
       <column>
         <display item="Minimum Incidental Sound RPM"/>
         <display item="Maximum Incidental Sound RPM"/>
@@ -267,24 +289,24 @@
         </label>
         <display item="Braking Noise Start"/>
       </column>
-      <name xml:lang="it">Suono</name>
-	  <name xml:lang="ca">So</name>
     </pane>
     <pane>
       <name>Sound Levels</name>
+      <name xml:lang="it">Livelli Suono</name>
+      <name xml:lang="ca">Volum de So</name>
+      <name xml:lang="de">Lautstärke</name>
+      <name xml:lang="nl">Volume</name>
       <column>
         <display item="Sound Level"/>
       </column>
-      <name xml:lang="it">Livelli Suono</name>
-	  <name xml:lang="ca">Volum de So</name>
     </pane>
     <pane>
       <name>CVs</name>
+      <name xml:lang="it">CV</name>
+      <name xml:lang="ca">CV</name>
       <column>
         <cvtable/>
       </column>
-      <name xml:lang="it">CV</name>
-	  <name xml:lang="ca">CV</name>
     </pane>
   </programmer>
 </programmer-config>

@@ -15,18 +15,21 @@ import jmri.Sensor;
  * Provides an edit panel for a sensor debounce object This is designed so that
  * it can be re-used in other panels.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SensorDebounceEditAction extends BeanEditAction {
 
+    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
     } //IN18N
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
@@ -57,6 +60,7 @@ public class SensorDebounceEditAction extends BeanEditAction {
         }
 
         sensorDebounceGlobalCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (sensorDebounceGlobalCheck.isSelected()) {
                     sensorDebounceInactiveField.setEnabled(false);
@@ -69,9 +73,11 @@ public class SensorDebounceEditAction extends BeanEditAction {
         });
 
         sensorDebounceInactiveField.addKeyListener(new KeyListener() {
+            @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
 
+            @Override
             public void keyReleased(KeyEvent keyEvent) {
                 String text = sensorDebounceInactiveField.getText();
                 if (!validateNumericalInput(text)) {
@@ -80,14 +86,17 @@ public class SensorDebounceEditAction extends BeanEditAction {
                 }
             }
 
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
 
         sensorDebounceActiveField.addKeyListener(new KeyListener() {
+            @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
 
+            @Override
             public void keyReleased(KeyEvent keyEvent) {
                 String text = sensorDebounceActiveField.getText();
                 if (!validateNumericalInput(text)) {
@@ -96,6 +105,7 @@ public class SensorDebounceEditAction extends BeanEditAction {
                 }
             }
 
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
@@ -106,21 +116,13 @@ public class SensorDebounceEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(sensorDebounceActiveField, Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4211002470804824662L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveDebounceItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9107982698145419220L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 resetDebounceItems(e);
             }

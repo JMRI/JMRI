@@ -1,4 +1,3 @@
-// HexFileFrame.java
 package jmri.jmrix.loconet.hexfile;
 
 import javax.swing.BoxLayout;
@@ -16,14 +15,11 @@ import org.slf4j.LoggerFactory;
  * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
  * sending a few commands).
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
+ * @author i18n Egbert Broerse 2017
  */
 public class HexFileFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2625562807572301674L;
     // member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();
     javax.swing.JButton filePauseButton = new javax.swing.JButton();
@@ -33,39 +29,40 @@ public class HexFileFrame extends JmriJFrame {
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser
-            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
 
     public HexFileFrame() {
         super();
     }
 
     //LocoNetSystemConnectionMemo adaptermemo = null;
+    @Override
     public void initComponents() throws Exception {
         if (port == null) {
             log.error("initComponents called before adapter has been set");
         }
         // the following code sets the frame's initial state
 
-        openHexFileButton.setText("Open file");
+        openHexFileButton.setText(Bundle.getMessage("OpenFile"));
         openHexFileButton.setVisible(true);
-        openHexFileButton.setToolTipText("run from hex file");
+        openHexFileButton.setToolTipText(Bundle.getMessage("OpenFileTooltip"));
 
-        filePauseButton.setText("Pause");
+        filePauseButton.setText(Bundle.getMessage("ButtonPause"));
         filePauseButton.setVisible(true);
-        filePauseButton.setToolTipText("pauses the trace at the source");
+        filePauseButton.setToolTipText(Bundle.getMessage("ButtonPauseTooltip"));
 
-        jButton1.setText("Continue");
+        jButton1.setText(Bundle.getMessage("ButtonContinue"));
         jButton1.setVisible(true);
-        jButton1.setToolTipText("continues the trace at the source");
+        jButton1.setToolTipText(Bundle.getMessage("ButtonContinueTooltip"));
 
         delayField.setText("200");
         delayField.setVisible(true);
-        delayField.setToolTipText("delay (in milliseconds) between commands");
+        delayField.setToolTipText(Bundle.getMessage("DelayTooltip"));
 
-        jLabel1.setText("Delay:");
+        jLabel1.setText(Bundle.getMessage("FieldDelay"));
         jLabel1.setVisible(true);
 
-        setTitle("LocoNet Simulator");
+        setTitle(Bundle.getMessage("TitleLocoNetSimulator"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane1 = new JPanel();
@@ -87,21 +84,25 @@ public class HexFileFrame extends JmriJFrame {
         getContentPane().add(pane3);
 
         openHexFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 openHexFileButtonActionPerformed(e);
             }
         });
         filePauseButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 filePauseButtonActionPerformed(e);
             }
         });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 jButton1ActionPerformed(e);
             }
         });
         delayField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 delayFieldActionPerformed(e);
             }
@@ -116,6 +117,7 @@ public class HexFileFrame extends JmriJFrame {
 
     boolean connected = false;
 
+    @Override
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
@@ -163,7 +165,7 @@ public class HexFileFrame extends JmriJFrame {
                 false, false);
         port.getSystemConnectionMemo().configureManagers();
         LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
+        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();

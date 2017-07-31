@@ -47,10 +47,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         Bundle.getMessage("center"),
         Bundle.getMessage("right")};
 
-    static final String[] STYLES = {Bundle.getMessage("plain"),
+    static final String[] STYLES = {Bundle.getMessage("Plain"),
         Bundle.getMessage("Bold"),
         Bundle.getMessage("Italic"),
-        Bundle.getMessage("bold/italic")};
+        Bundle.getMessage("Bold/italic")};
 
     static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
         "20", "24", "28", "32", "36"};
@@ -112,7 +112,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         _previewPanel = new JPanel();
         _previewPanel.setLayout(new BorderLayout());
-        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),"Preview"));
+        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.NORTH);
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.SOUTH);
         _previewPanel.setBackground(bkgrnd);
@@ -188,7 +188,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
-        Positionable item = pos.deepClone();		// copy of PositionableLabel being edited
+        Positionable item = pos.deepClone();  // copy of PositionableLabel being edited
         _util = item.getPopupUtility();
 
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
@@ -261,7 +261,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             doPopupUtility("Text", TEXT_FONT, sample, _util, addtextField);
         }
         makeFontPanels();
-//        item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
+//        item.setVisible(false);  // otherwise leaves traces for PositionableJPanels
 
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
@@ -295,7 +295,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     protected void makeFontPanels() {
         JPanel fontPanel = new JPanel();
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
-        fontPanel.add(makeBoxPanel("fontSize", _fontSizeBox)); // NOI18N
+        fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
         int row = 4;
         for (int i = 0; i < FONTSIZE.length; i++) {
             if (_util.getFontSize() == Integer.parseInt(FONTSIZE[i])) {
@@ -306,7 +306,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _fontSizeBox.setSelectedIndex(row);
 
         _fontStyleBox = new AJComboBox(STYLES, STYLE);
-        fontPanel.add(makeBoxPanel("fontStyle", _fontStyleBox)); // NOI18N
+        fontPanel.add(makeBoxPanel("FontStyle", _fontStyleBox)); // NOI18N
         _fontStyleBox.setSelectedIndex(_util.getFont().getStyle());
 
         _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);
@@ -376,12 +376,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     return this;
                 }
 
+                @Override
                 public void keyTyped(KeyEvent E) {
                 }
 
+                @Override
                 public void keyPressed(KeyEvent E) {
                 }
 
+                @Override
                 public void keyReleased(KeyEvent E) {
                     JTextField tmp = (JTextField) E.getSource();
                     sample.setText(tmp.getText());
@@ -400,6 +403,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         button.addActionListener(new ActionListener() {
             AJRadioButton button;
 
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (button.isSelected()) {
                     switch (button.which) {
@@ -440,6 +444,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         button.addActionListener(new ActionListener() {
             AJRadioButton button;
 
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (button.isSelected()) {
                     int prevButton = _selectedButton;
@@ -511,6 +516,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         Object obj = e.getSource();
         if (obj instanceof AJSpinner) {
@@ -645,6 +651,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         
     }
 
+    @Override
     public void itemStateChanged(ItemEvent e) {
         Object obj = e.getSource();
         if (obj instanceof AJComboBox) {

@@ -27,6 +27,7 @@ public class SignalHeadSignalMastXml
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SignalHeadSignalMast p = (SignalHeadSignalMast) o;
         Element e = new Element("signalmast");
@@ -63,7 +64,7 @@ public class SignalHeadSignalMastXml
             m = InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideSignalMast(sys);
         } catch (Exception e) {
-            log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
+            log.error("An error occurred while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
         if (getUserName(shared) != null) {
@@ -91,6 +92,7 @@ public class SignalHeadSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

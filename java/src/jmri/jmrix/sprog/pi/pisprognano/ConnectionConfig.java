@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.util.SystemType;
@@ -26,14 +25,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
-        return "Pi-SPROG Nano Command Station";
+        return Bundle.getMessage("PiSprogNanoCSTitle");
     }
 
+    @Override
     public String getManufacturer() {
         return adapter.getManufacturer();
     }
 
+    @Override
     public void setManufacturer(String manu) {
         adapter.setManufacturer(manu);
     }
@@ -46,11 +48,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null) {
            adapter = new PiSprogNanoSerialDriverAdapter();
         }
     }
 }
-
-/* @(#)ConnectionConfig.java */

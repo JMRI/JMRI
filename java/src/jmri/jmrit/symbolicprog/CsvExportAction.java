@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class CsvExportAction extends AbstractAction {
 
@@ -32,6 +32,7 @@ public class CsvExportAction extends AbstractAction {
      */
     CvTableModel mModel;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (fileChooser == null) {

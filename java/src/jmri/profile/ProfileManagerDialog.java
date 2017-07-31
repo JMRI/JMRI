@@ -25,7 +25,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -102,8 +101,7 @@ public class ProfileManagerDialog extends JDialog {
         countDownLbl = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
-        setTitle(bundle.getString("ProfileManagerDialog.title")); // NOI18N
+        setTitle(Bundle.getMessage("ProfileManagerDialog.title")); // NOI18N
         setMinimumSize(new Dimension(310, 110));
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
@@ -114,17 +112,18 @@ public class ProfileManagerDialog extends JDialog {
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
             }
-            public void windowClosing(WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
-        listLabel.setText(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
+        listLabel.setText(Bundle.getMessage("ProfileManagerDialog.listLabel.text")); // NOI18N
 
         profiles.setModel(new ProfileListModel());
         profiles.setSelectedValue(ProfileManager.getDefault().getActiveProfile(), true);
         profiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        profiles.setToolTipText(bundle.getString("ProfileManagerDialog.profiles.toolTipText")); // NOI18N
+        profiles.setToolTipText(Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText")); // NOI18N
+        profiles.setCellRenderer(new ProfileListCellRenderer());
         profiles.setNextFocusableComponent(btnSelect);
         profiles.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -138,32 +137,33 @@ public class ProfileManagerDialog extends JDialog {
         });
         jScrollPane1.setViewportView(profiles);
         profiles.ensureIndexIsVisible(profiles.getSelectedIndex());
-        profiles.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.profiles.AccessibleContext.accessibleName")); // NOI18N
+        profiles.getAccessibleContext().setAccessibleName(Bundle.getMessage("ProfileManagerDialog.profiles.AccessibleContext.accessibleName")); // NOI18N
+        profiles.getAccessibleContext().setAccessibleDescription(Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText")); // NOI18N
 
-        btnSelect.setText(bundle.getString("ProfileManagerDialog.btnSelect.text")); // NOI18N
+        btnSelect.setText(Bundle.getMessage("ProfileManagerDialog.btnSelect.text")); // NOI18N
         btnSelect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btnSelectActionPerformed(evt);
             }
         });
 
-        btnCreate.setText(bundle.getString("ProfileManagerDialog.btnCreate.text")); // NOI18N
-        btnCreate.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
+        btnCreate.setText(Bundle.getMessage("ProfileManagerDialog.btnCreate.text")); // NOI18N
+        btnCreate.setToolTipText(Bundle.getMessage("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
         btnCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btnCreateActionPerformed(evt);
             }
         });
 
-        btnUseExisting.setText(bundle.getString("ProfileManagerDialog.btnUseExisting.text")); // NOI18N
+        btnUseExisting.setText(Bundle.getMessage("ProfileManagerDialog.btnUseExisting.text")); // NOI18N
         btnUseExisting.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btnUseExistingActionPerformed(evt);
             }
         });
 
-        countDownLbl.setText(bundle.getString("ProfileManagerDialog.countDownLbl.text")); // NOI18N
-        countDownLbl.setToolTipText(bundle.getString("ProfileManagerDialog.countDownLbl.toolTipText")); // NOI18N
+        countDownLbl.setText(Bundle.getMessage("ProfileManagerDialog.countDownLbl.text")); // NOI18N
+        countDownLbl.setToolTipText(Bundle.getMessage("ProfileManagerDialog.countDownLbl.toolTipText")); // NOI18N
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +200,7 @@ public class ProfileManagerDialog extends JDialog {
                 .addContainerGap())
         );
 
-        listLabel.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
+        listLabel.getAccessibleContext().setAccessibleName(Bundle.getMessage("ProfileManagerDialog.listLabel.text")); // NOI18N
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -279,15 +279,19 @@ public class ProfileManagerDialog extends JDialog {
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {
+        ProfileManager manager = ProfileManager.getDefault();
         if (ProfileManager.getStartingProfile() == null
                 || (System.getProperty(ProfileManager.SYSTEM_PROPERTY) == null
-                && !ProfileManager.getDefault().isAutoStartActiveProfile())) {
+                && !manager.isAutoStartActiveProfile())) {
+            Profile last = manager.getActiveProfile();
             ProfileManagerDialog pmd = new ProfileManagerDialog(f, true);
             pmd.setLocationRelativeTo(f);
             pmd.setVisible(true);
-            ProfileManager.getDefault().saveActiveProfile();
+            if (last == null || !last.equals(manager.getActiveProfile())) {
+                manager.saveActiveProfile();
+            }
         }
-        return ProfileManager.getDefault().getActiveProfile();
+        return manager.getActiveProfile();
     }
 
     private void profileNameChanged(Profile p) {
@@ -320,11 +324,14 @@ public class ProfileManagerDialog extends JDialog {
     }//GEN-LAST:event_profilesKeyPressed
 
     @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a profile is not selected or autostarted")
-    private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void formWindowClosed(WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (countDown != -1) {
+            // prevent an attempt to reclose this window from blocking application exit
+            countDown = -1;
+            // exit with an error code to indicate abnormal exit
             System.exit(255);
         }
-    }//GEN-LAST:event_formWindowClosing
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnCreate;

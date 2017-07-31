@@ -33,7 +33,7 @@ public class RestoreFilesAction extends AbstractAction {
     }
 
     private void restore() {
-		// This method can restore files from any directory selected by the File
+  // This method can restore files from any directory selected by the File
         // Chooser.
 
         // check to see if files are dirty
@@ -119,4 +119,4 @@ public class RestoreFilesAction extends AbstractAction {
 
 }
 
-/* @(#)RestoreFilesAction.java */
+

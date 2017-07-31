@@ -1,4 +1,3 @@
-// InterchangeTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -28,6 +27,9 @@ public class InterchangeTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("InterchangeName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

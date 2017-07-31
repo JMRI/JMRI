@@ -1,6 +1,7 @@
 //NceTournoutMonitor.java
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,35 +33,35 @@ import org.slf4j.LoggerFactory;
 public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChangeListener {
 
     // scope constants
-    public static final int CS_ACCY_MEMORY = 0xEC00; 	// Address of start of CS accessory memory 
+    public static final int CS_ACCY_MEMORY = 0xEC00;  // Address of start of CS accessory memory 
     private static final int NUM_BLOCK = 16;            // maximum number of memory blocks
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
-    private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
-    private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
-    private static final int NCE_ACCY_CLOSED = 1;		// NCE internal accessory "NORM"
-    static final int POLL_TIME = 200;					// Poll NCE memory every 200 msec plus xmt time (~70 msec)
+    private static final int REPLY_LEN = BLOCK_LEN;  // number of bytes read
+    private static final int NCE_ACCY_THROWN = 0;  // NCE internal accessory "REV"
+    private static final int NCE_ACCY_CLOSED = 1;  // NCE internal accessory "NORM"
+    static final int POLL_TIME = 200;     // Poll NCE memory every 200 msec plus xmt time (~70 msec)
 
     // object state
-    private int currentBlock;							// used as state in scan over active blocks
-    private int numTurnouts = 0;						// number of NT turnouts known by NceTurnoutMonitor 
+    private int currentBlock;       // used as state in scan over active blocks
+    private int numTurnouts = 0;      // number of NT turnouts known by NceTurnoutMonitor 
     private int numActiveBlocks = 0;
-    private boolean FeedbackChange = false;				// true if feedback for a turnout has changed 
+    private boolean FeedbackChange = false;    // true if feedback for a turnout has changed 
 
     // cached work fields
-    boolean[] newTurnouts = new boolean[NUM_BLOCK];	// used to sync poll turnout memory
-    boolean[] activeBlock = new boolean[NUM_BLOCK];	// When true there are active turnouts in the memory block
-    boolean[] validBlock = new boolean[NUM_BLOCK];	// When true received block from CS
-    byte[] csAccMemCopy = new byte[NUM_BLOCK * BLOCK_LEN];	// Copy of NCE CS accessory memory
-    byte[] dataBuffer = new byte[NUM_BLOCK * BLOCK_LEN];	// place to store reply messages
+    boolean[] newTurnouts = new boolean[NUM_BLOCK]; // used to sync poll turnout memory
+    boolean[] activeBlock = new boolean[NUM_BLOCK]; // When true there are active turnouts in the memory block
+    boolean[] validBlock = new boolean[NUM_BLOCK]; // When true received block from CS
+    byte[] csAccMemCopy = new byte[NUM_BLOCK * BLOCK_LEN]; // Copy of NCE CS accessory memory
+    byte[] dataBuffer = new byte[NUM_BLOCK * BLOCK_LEN]; // place to store reply messages
 
-    private boolean recData = false;					// when true, valid recieve data
+    private boolean recData = false;     // when true, valid recieve data
 
     Thread NceTurnoutMonitorThread;
-    boolean turnoutUpdateValid = true;					// keep the thread running
-    private boolean sentWarnMessage = false;			// used to report about early 2007 EPROM problem 
+    boolean turnoutUpdateValid = true;     // keep the thread running
+    private boolean sentWarnMessage = false;   // used to report about early 2007 EPROM problem 
 
     // debug final
-    static final boolean debugTurnoutMonitor = false;	// Control verbose debug
+    static final boolean debugTurnoutMonitor = false; // Control verbose debug
     private NceTrafficController tc = null;
 
     public NceTurnoutMonitor(NceTrafficController t) {
@@ -73,13 +74,13 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     public NceMessage pollMessage() {
 
         if (tc.getCommandOptions() < NceTrafficController.OPTION_2006) {
-            return null;	//Only 2007 CS EPROMs support polling
+            return null; //Only 2007 CS EPROMs support polling
         }
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            return null;		//Can't poll USB!
+            return null;  //Can't poll USB!
         }
         if (NceTurnout.getNumNtTurnouts() == 0) {
-            return null;							//No work!
+            return null;       //No work!
         }
         long currentTime = java.util.Calendar.getInstance().getTimeInMillis();
         if (currentTime - lastPollTime < 2 * POLL_TIME) {
@@ -97,7 +98,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++) {
 
-                newTurnouts[block] = true;			// Block may be active, but new turnouts may have been loaded	
+                newTurnouts[block] = true;   // Block may be active, but new turnouts may have been loaded 
                 if (activeBlock[block] == false) {  // no need to scan once known to be active
 
                     for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
@@ -108,9 +109,9 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                             mControlTurnout.removePropertyChangeListener(this);
 
                             if (mControlTurnout.getFeedbackMode() == Turnout.MONITORING) {
-                                activeBlock[block] = true;	// turnout found, block is active forever
+                                activeBlock[block] = true; // turnout found, block is active forever
                                 numActiveBlocks++;
-                                break; 						// don't check rest of block
+                                break;       // don't check rest of block
                             } else {
                                 // turnout feedback isn't monitoring, but listen in case it changes
                                 mControlTurnout.addPropertyChangeListener(this);
@@ -137,6 +138,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         // This protects pollMessage (xmt) and reply threads if there's lockup!
         if (NceTurnoutMonitorThread == null) {
             NceTurnoutMonitorThread = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     turnoutUpdate();
                 }
@@ -169,13 +171,15 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @Override
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
@@ -459,6 +463,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("feedbackchange")) {
             if (((Integer) e.getNewValue()).intValue() == Turnout.MONITORING) {
@@ -471,4 +476,4 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             .getLogger(NceTurnoutMonitor.class.getName());
 
 }
-/* @(#)NceTurnoutMonitor.java */
+

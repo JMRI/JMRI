@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Programmer
  * @see jmri.ProgrammerManager
  * @see jmri.managers.DefaultProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 @net.jcip.annotations.Immutable
 public final class ProgrammingMode {
@@ -48,17 +48,23 @@ public final class ProgrammingMode {
     }
 
     /**
-     * Display the localized (human readable) name
+     * Display the localized (human readable) name.
+     *
+     * @return the localized name
      */
     @Override
-    public @Nonnull String toString() {
+    @Nonnull
+    public String toString() {
         return localName;
     }
 
     /**
-     * Return the standard (not localized, human readable) name
+     * Return the standard (not localized, human readable) name.
+     *
+     * @return the standard name
      */
-    public @Nonnull String getStandardName() {
+    @Nonnull
+    public String getStandardName() {
         return standardName;
     }
 
@@ -79,7 +85,9 @@ public final class ProgrammingMode {
         return standardName.hashCode();
     }
 
-    private @Nonnull final String standardName;
-    private @Nonnull final String localName;
+    @Nonnull
+    private final String standardName;
+    @Nonnull
+    private final String localName;
 
 }

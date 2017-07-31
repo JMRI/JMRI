@@ -30,18 +30,22 @@ public class DefaultSignalGroupManager extends AbstractManager
         //load();
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.SIGNALGROUPS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'F';
     }
 
+    @Override
     public SignalGroup getSignalGroup(String name) {
         SignalGroup t = getByUserName(name);
         if (t != null) {
@@ -51,14 +55,17 @@ public class DefaultSignalGroupManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public SignalGroup getBySystemName(String key) {
         return (SignalGroup) _tsys.get(key);
     }
 
+    @Override
     public SignalGroup getByUserName(String key) {
         return (SignalGroup) _tuser.get(key);
     }
 
+    @Override
     public SignalGroup newSignalGroup(String sys) {
         SignalGroup g;
         g = new DefaultSignalGroup(sys);
@@ -67,6 +74,7 @@ public class DefaultSignalGroupManager extends AbstractManager
 
     }
 
+    @Override
     public SignalGroup provideSignalGroup(String systemName, String userName) {
         SignalGroup r;
         r = getByUserName(systemName);
@@ -77,7 +85,7 @@ public class DefaultSignalGroupManager extends AbstractManager
         if (r != null) {
             return r;
         }
-        // Route does not exist, create a new group
+        // Group does not exist, create a new group
         r = new DefaultSignalGroup(systemName, userName);
         // save in the maps
         register(r);
@@ -121,10 +129,12 @@ public class DefaultSignalGroupManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public void deleteSignalGroup(SignalGroup s) {
         deregister(s);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalGroup");
     }

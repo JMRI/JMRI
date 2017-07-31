@@ -37,6 +37,7 @@ public class DrawRoundRect extends DrawRectangle {
         _radiusText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_radiusText);
         _radiusText.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ((PositionableRoundRect)_shape).setCornerRadius(
                         Integer.parseInt(_radiusText.getText()));
@@ -44,9 +45,11 @@ public class DrawRoundRect extends DrawRectangle {
             }
         });
         _radiusText.addMouseMotionListener( new MouseMotionListener() {
+            @Override
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
+            @Override
             public void mouseMoved(MouseEvent e) {
                 ((PositionableRoundRect)_shape).setCornerRadius(
                         Integer.parseInt(_radiusText.getText()));

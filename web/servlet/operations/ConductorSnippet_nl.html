@@ -1,0 +1,38 @@
+<!--
+%1$s Train name
+%2$s Train description
+%3$s Train comment
+%4$s Route comment
+%5$s Location (with next location as appropriate)
+%6$s Location notes
+%7$s Engine pick ups
+%8$s Car pick ups
+%9$s Car set outs
+%10$s Car local moves
+%11$s Engine set outs
+%12$s Next location
+%13$s Move button text
+By default both Engine pick ups and Engine set outs are in the same list, but they can be separated
+-->
+<h1><span class="ops-train-name">%1$s</span> <span class="ops-train-desciption">(%2$s)</span> <span class="ops-train-view"><small>Conducteur</small></span></h1>
+<p>%3$s</p>
+<p>%4$s</p>
+<div class="ops-location">
+    <h2>%5$s</h2>%6$s
+</div>
+<div class="row">
+    <div id="ops-engine-pickup" class="ops-engine ops-pickup col-sm-6">%7$s</div>
+    <div id="ops-engine-setout" class="ops-engine ops-setout col-sm-6">%11$s</div>
+</div>
+<div class="row">
+    <div id="ops-pickup" class="ops-pickup col-md-4"><h3>Zet uit</h3><ul class="list-unstyled">%8$s</ul></div>
+    <div id="ops-setout" class="ops-setout col-md-4"><h3>Haal op</h3><ul class="list-unstyled">%9$s</ul></div>
+    <div id="ops-local" class="ops-local col-md-4"><h3>Locale werkzaamheden</h3><ul class="list-unstyled">%10$s</ul></div>
+</div>
+<form class="form-inline" role="form">
+    <div class="btn-group">
+        <button id="check-all" type="button" class="btn btn-default"><span class="glyphicon glyphicon-check"></span></button>
+        <button id="clear-all" type="button" class="btn btn-default"><span class="glyphicon glyphicon-unchecked"></span></button>
+    </div>
+    <button id="move-train" type="button" class="btn btn-primary" disabled="disabled" data-location="%12$s">%13$s</button>
+</form>

@@ -15,9 +15,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class EnumVariableValueTest extends VariableValueTest {
+public class EnumVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
@@ -43,14 +44,17 @@ public class EnumVariableValueTest extends VariableValueTest {
         return v1;
     }
 
+    @Override
     void setValue(VariableValue var, String val) {
         ((JComboBox<?>) var.getCommonRep()).setSelectedItem(val);
     }
 
+    @Override
     void setReadOnlyValue(VariableValue var, String val) {
         ((EnumVariableValue) var).setValue(Integer.valueOf(val).intValue());
     }
 
+    @Override
     void checkValue(VariableValue var, String comment, String val) {
         // we treat one test case (from the parent) specially...
         if (val.equals("14")) {
@@ -60,6 +64,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         }
     }
 
+    @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         checkValue(var, comment, val);
     }
@@ -67,6 +72,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     // check synchonization of value, representations.
     // This replaces a parent member function (test) that had just
     // too many casts in it to work.
+    @Override
     public void testVariableSynch() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -81,24 +87,24 @@ public class EnumVariableValueTest extends VariableValueTest {
         Component val1 = variable.getCommonRep();
         // now get rep, check
         JComboBox<?> rep1 = (JComboBox<?>) variable.getNewRep("");
-        Assert.assertEquals("initial rep ", "5", (String) rep1.getSelectedItem());
+        Assert.assertEquals("initial rep ", "5", rep1.getSelectedItem());
 
         // update via value
         setValue(variable, "2");
 
         // check again with existing reference
         Assert.assertEquals("same value object ", val1, variable.getCommonRep());
-        Assert.assertEquals("1 saved rep ", "2", (String) rep1.getSelectedItem());
+        Assert.assertEquals("1 saved rep ", "2", rep1.getSelectedItem());
         // pick up new references and check
         checkValue(variable, "1 new value ", "2");
-        Assert.assertEquals("1 new rep ", "2", (String) ((JComboBox<?>) variable.getNewRep("")).getSelectedItem());
+        Assert.assertEquals("1 new rep ", "2", ((JComboBox<?>) variable.getNewRep("")).getSelectedItem());
 
         // update via rep
         rep1.setSelectedItem("9");
 
         // check again with existing references
         Assert.assertEquals("2 saved value ", "9", ((JComboBox<?>) val1).getSelectedItem());
-        Assert.assertEquals("2 saved rep ", "9", (String) rep1.getSelectedItem());
+        Assert.assertEquals("2 saved rep ", "9", rep1.getSelectedItem());
         // pick up new references and check
         checkValue(variable, "2 new value ", "9");
         Assert.assertEquals("2 new rep ", "9", ((JComboBox<?>) variable.getNewRep("")).getSelectedItem());

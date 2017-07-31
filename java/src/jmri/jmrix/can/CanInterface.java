@@ -1,4 +1,3 @@
-// CanInterface.java
 package jmri.jmrix.can;
 
 /**
@@ -27,6 +26,3 @@ public interface CanInterface {
      */
     void sendCanMessage(CanMessage m, CanListener l);
 }
-
-
-/* @(#)CanInterface.java */

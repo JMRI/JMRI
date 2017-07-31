@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTest
+ * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  */
 public /*abstract*/ class AbstractSensorTest extends TestCase {
 
@@ -28,9 +28,11 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     /*abstract*/ public void checkOffMsgSent() {}
 
     // load t with actual object; create scaffolds as needed
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         t = new AbstractSensor("Foo", "Bar"){
+            @Override
                 public void requestUpdateFromLayout(){}
         };
     }
@@ -41,6 +43,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -50,7 +53,8 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     // test creation - real work is in the setup() routine
     public void testCreate() {
         // initial state when created must be UNKNOWN
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, t.getState());
+        Assert.assertEquals("initial state 1", Sensor.UNKNOWN, t.getState());
+        Assert.assertEquals("initial state 2", "Unknown", t.describeState(t.getState()));
     }
 
     public void testAddListener() throws JmriException {
@@ -82,14 +86,16 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     public void testCommandInactive() throws JmriException {
         t.setState(Sensor.INACTIVE);
         // check
-        Assert.assertEquals("state", Sensor.INACTIVE, t.getState());
+        Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
         checkOffMsgSent();
     }
 
     public void testCommandActive() throws JmriException {
         t.setState(Sensor.ACTIVE);
         // check
-        Assert.assertEquals("commanded state", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
         checkOnMsgSent();
     }
 
@@ -123,7 +129,12 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.INACTIVE;}, "Sensor.INACTIVE set");
     }
-    
+
+    public void testGetPullResistance(){
+       // default is off, override this test if this is supported.
+       Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
+    }
+
     // from here down is testing infrastructure
 
     public AbstractSensorTest(String s) {
@@ -143,6 +154,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

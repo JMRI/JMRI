@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.marklin.networkdriver;
 
 import javax.swing.JPanel;
@@ -33,9 +32,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         portField.setEnabled(false);
     }
 
+    @Override
     public String name() {
         return "CS2 via network";
-    }
+    } // NOI18N
 
     /**
      * Access to current selected command station mode
@@ -43,6 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /*public String getMode() {
      return opt2Box.getSelectedItem().toString();
      }*/
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();

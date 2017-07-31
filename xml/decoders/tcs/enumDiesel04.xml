@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for TCS diesel version 4 sound set -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoiceGroup>
+		<name>Air Compressor</name>
+		<enumChoice choice="ALCO 251 compressor #503" value="0"/>
+		<enumChoice choice="EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="1"/>
+		<enumChoice choice="EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor 2" value="2"/>
+		<enumChoice choice="GE Whooping Air Compressor" value="3"/>
+		<enumChoice choice="Air Compressor" value="4"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Air Spitter</name>
+		<enumChoice choice="Air Spitter 1" value="5"/>
+		<enumChoice choice="Air Spitter 2" value="6"/>
+		<enumChoice choice="Air Spitter 3" value="7"/>
+		<enumChoice choice="Air Spitter 4" value="8"/>
+		<enumChoice choice="Air Spitter 5" value="9"/>
+		<enumChoice choice="Air Spitter 6" value="10"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Bell</name>
+		<enumChoice choice="Electric E-Bell" value="11"/>
+		<enumChoice choice="Fairbanks Morse Bell" value="12"/>
+		<enumChoice choice="Galloping Goose #3 Bell" value="13"/>
+		<enumChoice choice="GE 45 tonner Bell" value="14"/>
+		<enumChoice choice="Western Pacific GP20 #2100 Bell" value="15"/>
+		<enumChoice choice="PRR GG1 Bell" value="16"/>
+		<enumChoice choice="Niles Canyon Mongo speeder Bell" value="17"/>
+		<enumChoice choice="John Bull Replica Hand Powered Bell" value="18"/>
+		<enumChoice choice="Quincy RR SW8 #1100 Bell" value="19"/>
+		<enumChoice choice="Richmond Pacific SW900 Bell" value="20"/>
+		<enumChoice choice="RSD1 #1956 Bell" value="21"/>
+		<enumChoice choice="RSD12 #2958 Bell" value="22"/>
+		<enumChoice choice="Santa Catalina JLA2 Critter #103 Bell" value="23"/>
+		<enumChoice choice="Southern Pacific #1423 Bell" value="24"/>
+		<enumChoice choice="Southern Pacific #3100 Bell" value="25"/>
+		<enumChoice choice="Southern Pacific #5472 Bell" value="26"/>
+		<enumChoice choice="Southern Pacific #5623 Bell" value="27"/>
+		<enumChoice choice="Western Pacific #713 Bell" value="28"/>
+		<enumChoice choice="Western Pacific 918D F unit Bell" value="29"/>
+		<enumChoice choice="C&amp;O Bell" value="30"/>
+		<enumChoice choice="C&amp;T #484 Bell" value="31"/>
+		<enumChoice choice="Leetonia Railroad Shay #1 Bell" value="32"/>
+		<enumChoice choice="PRR 2-8-0 H3 1187 Hand Powered Bell" value="33"/>
+		<enumChoice choice="Unknown Bell from Strasburg museum floor" value="34"/>
+		<enumChoice choice="Lehigh Coal and Navigation Co #1 Bell" value="35"/>
+		<enumChoice choice="Lehigh Valley Bell" value="36"/>
+		<enumChoice choice="Lehigh Valley Pacific Bell" value="37"/>
+		<enumChoice choice="Strasburg #89 Air Powered Bell" value="38"/>
+		<enumChoice choice="Philadelphia and Reading Co Camelback #592 Bell" value="39"/>
+		<enumChoice choice="PRR 2-8-0 H3 2846 Air Powered Bell" value="40"/>
+		<enumChoice choice="Heisler Class 53833 #4 Hand Powered bell" value="41"/>
+		<enumChoice choice="PRR #1223 American 4-4-0 D16SB Hand Powered Bell" value="42"/>
+		<enumChoice choice="PRR Bell" value="43"/>
+		<enumChoice choice="Conrail #2233 GP30 Air Powered Bell" value="44"/>
+		<enumChoice choice="Virginia Truckee Railroad 2-6-0 Hand Powered Bell" value="45"/>
+		<enumChoice choice="Reading Bell 1" value="46"/>
+		<enumChoice choice="Reading Bell 2" value="47"/>
+		<enumChoice choice="Reading Bell 3" value="48"/>
+		<enumChoice choice="Richland Fredricksburg &amp; Potomac Bell" value="49"/>
+		<enumChoice choice="Richmond Pacific SW900 Bell" value="50"/>
+		<enumChoice choice="Strasburg #475 Air Powered bell" value="51"/>
+		<enumChoice choice="Strasburg #475 Hand Powered bell" value="52"/>
+		<enumChoice choice="Strasburg #90 Hand Powered Bell (Variation)" value="53"/>
+		<enumChoice choice="Strasburg #90 hand powered double hit Bell" value="54"/>
+		<enumChoice choice="Baldwin ten wheeler #12 Bell" value="55"/>
+		<enumChoice choice="Unknown Bell" value="56"/>
+		<enumChoice choice="Williams Grove PRR #643 0-6-0 Bell" value="57"/>
+		<enumChoice choice="PRR 4-4-2 #7002 Hand Powered Bell" value="58"/>
+		<enumChoice choice="Strasburg #90 Hand Powered Bell" value="59"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Release</name>
+		<enumChoice choice="Brake Release 1" value="60"/>
+		<enumChoice choice="Brake Release 2" value="61"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Squeal</name>
+		<enumChoice choice="Brake Squeal Function" value="62"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coupler Clank</name>
+		<enumChoice choice="Coupling" value="92"/>
+		<enumChoice choice="Uncoupling" value="93"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Crew Alert</name>
+		<enumChoice choice="Crew Alert" value="94"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Dynamic Brake</name>
+		<enumChoice choice="Dynamic Brake 1" value="95"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Exhaust Fan</name>
+		<enumChoice choice="Exhaust Fan" value="98"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Forward</name>
+		<enumChoice choice="Fairbanks Morse forward" value="99"/>
+		<enumChoice choice="GE 45 tonner forward" value="100"/>
+		<enumChoice choice="GE 80 tonner forward" value="101"/>
+		<enumChoice choice="GE U-Boat forward" value="102"/>
+		<enumChoice choice="Hancock Air Whistle forward" value="103"/>
+		<enumChoice choice="Leslie 125 forward" value="104"/>
+		<enumChoice choice="Leslie 200 forward" value="105"/>
+		<enumChoice choice="Leslie 3 Chime forward" value="106"/>
+		<enumChoice choice="Leslie RS3 forward" value="107"/>
+		<enumChoice choice="Leslie RS3L forward" value="108"/>
+		<enumChoice choice="Leslie RS5T forward" value="109"/>
+		<enumChoice choice="Nathan K3 forward" value="110"/>
+		<enumChoice choice="Nathan K3H #1 forward" value="111"/>
+		<enumChoice choice="Nathan K3H #2 forward" value="112"/>
+		<enumChoice choice="Nathan K3LA forward" value="113"/>
+		<enumChoice choice="Nathan K3LL forward" value="114"/>
+		<enumChoice choice="Nathan K5H forward" value="115"/>
+		<enumChoice choice="Nathan K5HL forward" value="116"/>
+		<enumChoice choice="Nathan K5LA forward" value="117"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA forward" value="118"/>
+		<enumChoice choice="Nathan K5LLA forward" value="119"/>
+		<enumChoice choice="Nathan M3 #1 forward" value="120"/>
+		<enumChoice choice="Nathan M3 #2 forward" value="121"/>
+		<enumChoice choice="Nathan M3 #3 forward" value="122"/>
+		<enumChoice choice="Nathan M3 Tilt forward" value="123"/>
+		<enumChoice choice="Nathan M5 forward" value="124"/>
+		<enumChoice choice="Nathan P3 forward" value="125"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) forward" value="126"/>
+		<enumChoice choice="Nathan P5A forward" value="127"/>
+		<enumChoice choice="Quincy RR SW8 #1100 forward" value="128"/>
+		<enumChoice choice="RSD12 #2958 forward" value="129"/>
+		<enumChoice choice="Galloping Goose #3 forward" value="130"/>
+		<enumChoice choice="Wabco E2 3 Chime forward" value="131"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Long</name>
+		<enumChoice choice="Fairbanks Morse long" value="132"/>
+		<enumChoice choice="GE 45 tonner long" value="133"/>
+		<enumChoice choice="GE 80 tonner long" value="134"/>
+		<enumChoice choice="GE U-Boat long" value="135"/>
+		<enumChoice choice="Hancock Air Whistle long" value="136"/>
+		<enumChoice choice="Leslie 125 long" value="137"/>
+		<enumChoice choice="Leslie 200 long" value="138"/>
+		<enumChoice choice="Leslie 3 Chime long" value="139"/>
+		<enumChoice choice="Leslie RS3 long" value="140"/>
+		<enumChoice choice="Leslie RS3L long" value="141"/>
+		<enumChoice choice="Leslie RS5T long" value="142"/>
+		<enumChoice choice="Nathan K3 long" value="143"/>
+		<enumChoice choice="Nathan K3H #1 long" value="144"/>
+		<enumChoice choice="Nathan K3H #2 long" value="145"/>
+		<enumChoice choice="Nathan K3LA long" value="146"/>
+		<enumChoice choice="Nathan K3LL long" value="147"/>
+		<enumChoice choice="Nathan K5H long" value="148"/>
+		<enumChoice choice="Nathan K5HL long" value="149"/>
+		<enumChoice choice="Nathan K5LA long" value="150"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA long" value="151"/>
+		<enumChoice choice="Nathan K5LLA long" value="152"/>
+		<enumChoice choice="Nathan M3 #1 long" value="153"/>
+		<enumChoice choice="Nathan M3 #2 long" value="154"/>
+		<enumChoice choice="Nathan M3 #3 long" value="155"/>
+		<enumChoice choice="Nathan M3 Tilt long" value="156"/>
+		<enumChoice choice="Nathan M5 long" value="157"/>
+		<enumChoice choice="Nathan P3 long" value="158"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) long" value="159"/>
+		<enumChoice choice="Nathan P5A long" value="160"/>
+		<enumChoice choice="Quincy RR SW8 #1100 long" value="161"/>
+		<enumChoice choice="RSD12 #2958 long" value="162"/>
+		<enumChoice choice="Galloping Goose #3 long" value="163"/>
+		<enumChoice choice="Wabco E2 3 Chime long" value="164"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Quill</name>
+		<enumChoice choice="Fairbanks Morse quill 1" value="165"/>
+		<enumChoice choice="Fairbanks Morse quill 2" value="166"/>
+		<enumChoice choice="Fairbanks Morse quill 3" value="167"/>
+		<enumChoice choice="GE 45 tonner quill 1" value="168"/>
+		<enumChoice choice="GE 45 tonner quill 2" value="169"/>
+		<enumChoice choice="GE 45 tonner quill 3" value="170"/>
+		<enumChoice choice="GE 80 tonner quill 1" value="171"/>
+		<enumChoice choice="GE 80 tonner quill 2" value="172"/>
+		<enumChoice choice="GE 80 tonner quill 3" value="173"/>
+		<enumChoice choice="GE U-Boat quill 1" value="174"/>
+		<enumChoice choice="GE U-Boat quill 2" value="175"/>
+		<enumChoice choice="GE U-Boat quill 3" value="176"/>
+		<enumChoice choice="Hancock Air Whistle quill" value="177"/>
+		<enumChoice choice="Hancock Air Whistle quill Medium" value="178"/>
+		<enumChoice choice="Hancock Air Whistle quill Long" value="179"/>
+		<enumChoice choice="Leslie 125 Grade Crossing" value="180"/>
+		<enumChoice choice="Leslie 125 Grade Crossing Medium" value="181"/>
+		<enumChoice choice="Leslie 125 Grade Crossing Long" value="182"/>
+		<enumChoice choice="Leslie 200 Grade Crossing" value="183"/>
+		<enumChoice choice="Leslie 200 Grade Crossing Medium" value="184"/>
+		<enumChoice choice="Leslie 200 Grade Crossing Long" value="185"/>
+		<enumChoice choice="Leslie 3 Chime Grade Crossing" value="186"/>
+		<enumChoice choice="Leslie 3 Chime Grade Crossing Medium" value="187"/>
+		<enumChoice choice="Leslie 3 Chime Grade Crossing Long" value="188"/>
+		<enumChoice choice="Leslie RS3 Grade Crossing" value="189"/>
+		<enumChoice choice="Leslie RS3 Grade Crossing Medium" value="190"/>
+		<enumChoice choice="Leslie RS3 Grade Crossing Long" value="191"/>
+		<enumChoice choice="Leslie RS3L Grade Crossing" value="192"/>
+		<enumChoice choice="Leslie RS3L Grade Crossing Medium" value="193"/>
+		<enumChoice choice="Leslie RS3L Grade Crossing Long" value="194"/>
+		<enumChoice choice="Leslie RS5T Grade Crossing" value="195"/>
+		<enumChoice choice="Leslie RS5T Grade Crossing Medium" value="196"/>
+		<enumChoice choice="Leslie RS5T Grade Crossing Long" value="197"/>
+		<enumChoice choice="Nathan K3 Grade Crossing" value="198"/>
+		<enumChoice choice="Nathan K3 Grade Crossing Medium" value="199"/>
+		<enumChoice choice="Nathan K3 Grade Crossing Long" value="200"/>
+		<enumChoice choice="Nathan K3H 1 Grade Crossing" value="201"/>
+		<enumChoice choice="Nathan K3H 1 Grade Crossing Medium" value="202"/>
+		<enumChoice choice="Nathan K3H 1 Grade Crossing Long" value="203"/>
+		<enumChoice choice="Nathan K3H 2 Grade Crossing" value="204"/>
+		<enumChoice choice="Nathan K3H 2 Grade Crossing Medium" value="205"/>
+		<enumChoice choice="Nathan K3H 2 Grade Crossing Long" value="206"/>
+		<enumChoice choice="Nathan K3LA Grade Crossing" value="207"/>
+		<enumChoice choice="Nathan K3LA Grade Crossing Medium" value="208"/>
+		<enumChoice choice="Nathan K3LA Grade Crossing Long" value="209"/>
+		<enumChoice choice="Nathan K3LL Grade Crossing" value="210"/>
+		<enumChoice choice="Nathan K3LL Grade Crossing Medium" value="211"/>
+		<enumChoice choice="Nathan K3LL Grade Crossing Long" value="212"/>
+		<enumChoice choice="Nathan K5H Grade Crossing" value="213"/>
+		<enumChoice choice="Nathan K5H Grade Crossing Medium" value="214"/>
+		<enumChoice choice="Nathan K5H Grade Crossing Long" value="215"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing" value="216"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing Medium" value="217"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing Long" value="218"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing" value="219"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing Medium" value="220"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing Long" value="221"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA quill 1" value="222"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA quill 2" value="223"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA quill 3" value="224"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing" value="225"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing Medium" value="226"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing Long" value="227"/>
+		<enumChoice choice="Nathan M3 1 Grade Crossing" value="228"/>
+		<enumChoice choice="Nathan M3 1 Grade Crossing Medium" value="229"/>
+		<enumChoice choice="Nathan M3 1 Grade Crossing Long" value="230"/>
+		<enumChoice choice="Nathan M3 2 Grade Crossing" value="231"/>
+		<enumChoice choice="Nathan M3 2 Grade Crossing Medium" value="232"/>
+		<enumChoice choice="Nathan M3 2 Grade Crossing Long" value="233"/>
+		<enumChoice choice="Nathan M3 3 Grade Crossing" value="234"/>
+		<enumChoice choice="Nathan M3 3 Grade Crossing Medium" value="235"/>
+		<enumChoice choice="Nathan M3 3 Grade Crossing Long" value="236"/>
+		<enumChoice choice="Nathan M3 Tilt Grade Crossing" value="237"/>
+		<enumChoice choice="Nathan M3 Tilt Grade Crossing Medium" value="238"/>
+		<enumChoice choice="Nathan M3 Tilt Grade Crossing Long" value="239"/>
+		<enumChoice choice="Nathan M5 Grade Crossing" value="240"/>
+		<enumChoice choice="Nathan M5 Grade Crossing Medium" value="241"/>
+		<enumChoice choice="Nathan M5 Grade Crossing Long" value="242"/>
+		<enumChoice choice="Nathan P3 Grade Crossing" value="243"/>
+		<enumChoice choice="Nathan P3 Grade Crossing Medium" value="244"/>
+		<enumChoice choice="Nathan P3 Grade Crossing Long" value="245"/>
+		<enumChoice choice="Nathan P5 Chime quill (Australia)" value="246"/>
+		<enumChoice choice="Nathan P5 Chime quill Medium (Australia)" value="247"/>
+		<enumChoice choice="Nathan P5 Chime quill Long (Australia)" value="248"/>
+		<enumChoice choice="Nathan P5A Grade Crossing" value="249"/>
+		<enumChoice choice="Nathan P5A Grade Crossing Medium" value="250"/>
+		<enumChoice choice="Nathan P5A Grade Crossing Long" value="251"/>
+		<enumChoice choice="Quincy RR SW8 #1100 quill 1" value="252"/>
+		<enumChoice choice="Quincy RR SW8 #1100 quill 2" value="253"/>
+		<enumChoice choice="Quincy RR SW8 #1100 quill 3" value="254"/>
+		<enumChoice choice="RSD12 #2958 quill 1" value="255"/>
+		<enumChoice choice="RSD12 #2958 quill 2" value="256"/>
+		<enumChoice choice="RSD12 #2958 quill 3" value="257"/>
+		<enumChoice choice="Galloping Goose #3 quill 1" value="258"/>
+		<enumChoice choice="Galloping Goose #3 quill 2" value="259"/>
+		<enumChoice choice="Galloping Goose #3 quill 3" value="260"/>
+		<enumChoice choice="Wabco E2 3 Chime Grade Crossing" value="261"/>
+		<enumChoice choice="Wabco E2 3 Chime Grade Crossing Medium" value="262"/>
+		<enumChoice choice="Wabco E2 3 Chime Grade Crossing Long" value="263"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Reverse</name>
+		<enumChoice choice="Fairbanks Morris" value="1290"/>
+		<enumChoice choice="GE 45 tonner" value="1291"/>
+		<enumChoice choice="GE 80 tonner" value="1292"/>
+		<enumChoice choice="Southern Pacific 3100" value="1293"/>
+		<enumChoice choice="Hancock Air Whistle" value="1294"/>
+		<enumChoice choice="Leslie 125 Air Horn" value="1295"/>
+		<enumChoice choice="Leslie 200 Air Horn" value="1296"/>
+		<enumChoice choice="Leslie 3 Chime" value="1297"/>
+		<enumChoice choice="Leslie RS3" value="1298"/>
+		<enumChoice choice="Leslie RS3L" value="1299"/>
+		<enumChoice choice="Leslie RS5T" value="1300"/>
+		<enumChoice choice="Nathan K3" value="1301"/>
+		<enumChoice choice="Nathan K3H" value="1302"/>
+		<enumChoice choice="Nathan K3H_1" value="1303"/>
+		<enumChoice choice="Nathan K3LA" value="1304"/>
+		<enumChoice choice="Nathan K3LL" value="1305"/>
+		<enumChoice choice="Nathan K5H" value="1306"/>
+		<enumChoice choice="Nathan K5HL" value="1307"/>
+		<enumChoice choice="Nathan K5LA" value="1308"/>
+		<enumChoice choice="Strasburg 8618 SW8 Nathan K5LA" value="1309"/>
+		<enumChoice choice="Nathan K5LLA" value="1310"/>
+		<enumChoice choice="Nathan M3 C.P. 1" value="1311"/>
+		<enumChoice choice="Nathan M3 C.P. 2" value="1312"/>
+		<enumChoice choice="Nathan M3 C.P. 3" value="1313"/>
+		<enumChoice choice="Nathan M3 Tilt" value="1314"/>
+		<enumChoice choice="Nathan M5" value="1315"/>
+		<enumChoice choice="Nathan P3" value="1316"/>
+		<enumChoice choice="Nathan P5 Chime (Australia)" value="1317"/>
+		<enumChoice choice="Nathan P5A" value="1318"/>
+		<enumChoice choice="Quincy RR SW8 #1100" value="1319"/>
+		<enumChoice choice="RSD12 #2958" value="1320"/>
+		<enumChoice choice="Galloping Goose #3" value="1321"/>
+		<enumChoice choice="Wabco E2 3 Chime" value="1322"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Short</name>
+		<enumChoice choice="Fairbanks Morse short" value="264"/>
+		<enumChoice choice="GE 45 tonner short" value="265"/>
+		<enumChoice choice="GE 80 tonner short" value="266"/>
+		<enumChoice choice="GE U-Boat short" value="267"/>
+		<enumChoice choice="Hancock Air Whistle short" value="268"/>
+		<enumChoice choice="Leslie 125 short" value="269"/>
+		<enumChoice choice="Leslie 200 short" value="270"/>
+		<enumChoice choice="Leslie 3 Chime short" value="271"/>
+		<enumChoice choice="Leslie RS3 short" value="272"/>
+		<enumChoice choice="Leslie RS3L short" value="273"/>
+		<enumChoice choice="Leslie RS5T short" value="274"/>
+		<enumChoice choice="Nathan K3 short" value="275"/>
+		<enumChoice choice="Nathan K3H #1 short" value="276"/>
+		<enumChoice choice="Nathan K3H #2 short" value="277"/>
+		<enumChoice choice="Nathan K3LA short" value="278"/>
+		<enumChoice choice="Nathan K3LL short" value="279"/>
+		<enumChoice choice="Nathan K5H short" value="280"/>
+		<enumChoice choice="Nathan K5HL short" value="281"/>
+		<enumChoice choice="Nathan K5LA short" value="282"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA short" value="283"/>
+		<enumChoice choice="Nathan K5LLA short" value="284"/>
+		<enumChoice choice="Nathan M3 #1 short" value="285"/>
+		<enumChoice choice="Nathan M3 #2 short" value="286"/>
+		<enumChoice choice="Nathan M3 #3 short" value="287"/>
+		<enumChoice choice="Nathan M3 Tilt short" value="288"/>
+		<enumChoice choice="Nathan M5 short" value="289"/>
+		<enumChoice choice="Nathan P3 short" value="290"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) short" value="291"/>
+		<enumChoice choice="Nathan P5A short" value="292"/>
+		<enumChoice choice="Quincy RR SW8 #1100 short" value="293"/>
+		<enumChoice choice="RSD12 #2958 short" value="294"/>
+		<enumChoice choice="Galloping Goose #3 short" value="295"/>
+		<enumChoice choice="Wabco E2 3 Chime short" value="296"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Stop</name>
+		<enumChoice choice="Fairbanks Morse stop" value="1356"/>
+		<enumChoice choice="GE 45 tonner stop" value="1357"/>
+		<enumChoice choice="GE 80 tonner stop" value="1358"/>
+		<enumChoice choice="GE U-Boat stop" value="1359"/>
+		<enumChoice choice="Hancock Air Whistle stop" value="1360"/>
+		<enumChoice choice="Leslie 125 stop" value="1361"/>
+		<enumChoice choice="Leslie 200 stop" value="1362"/>
+		<enumChoice choice="Leslie 3 Chime stop" value="1363"/>
+		<enumChoice choice="Leslie RS3 stop" value="1364"/>
+		<enumChoice choice="Leslie RS3L stop" value="1365"/>
+		<enumChoice choice="Leslie RS5T stop" value="1366"/>
+		<enumChoice choice="Nathan K3 stop" value="1367"/>
+		<enumChoice choice="Nathan K3H #1 stop" value="1368"/>
+		<enumChoice choice="Nathan K3H #2 stop" value="1369"/>
+		<enumChoice choice="Nathan K3LA stop" value="1370"/>
+		<enumChoice choice="Nathan K3LL stop" value="1371"/>
+		<enumChoice choice="Nathan K5H stop" value="1372"/>
+		<enumChoice choice="Nathan K5HL stop" value="1373"/>
+		<enumChoice choice="Nathan K5LA stop" value="1374"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA stop" value="1375"/>
+		<enumChoice choice="Nathan K5LLA stop" value="1376"/>
+		<enumChoice choice="Nathan M3 #1 stop" value="1377"/>
+		<enumChoice choice="Nathan M3 #2 stop" value="1378"/>
+		<enumChoice choice="Nathan M3 #3 stop" value="1379"/>
+		<enumChoice choice="Nathan M3 Tilt stop" value="1380"/>
+		<enumChoice choice="Nathan M5 stop" value="1381"/>
+		<enumChoice choice="Nathan P3 stop" value="1382"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) stop" value="1383"/>
+		<enumChoice choice="Nathan P5A stop" value="1384"/>
+		<enumChoice choice="Quincy RR SW8 #1100 stop" value="1385"/>
+		<enumChoice choice="RSD12 #2958 stop" value="1386"/>
+		<enumChoice choice="Galloping Goose #3 stop" value="1387"/>
+		<enumChoice choice="Wabco E2 3 Chime stop" value="1388"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Manual Notch</name>
+		<enumChoice choice="Manual Notch Down 1" value="297"/>
+		<enumChoice choice="Manual Notch Up 1" value="298"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Momentum</name>
+		<enumChoice choice="Switching/Mainline Momentum Function" value="299"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Mute</name>
+		<enumChoice choice="Mute Function" value="301"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Prime Mover Ignition</name>
+		<enumChoice choice="Prime Mover Ignition" value="1264"/>
+		<enumChoice choice="Prime Mover Ignition (on/off)" value="1266"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Rotate Horn</name>
+		<enumChoice choice="Rotate Horn" value="1323"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Windshield Wipers</name>
+		<enumChoice choice="Windshield Wiper" value="1389"/>
+	</enumChoiceGroup>
+	<enumChoice choice="None " value="65535"/>
+</enumVal>

@@ -48,7 +48,7 @@ public class SerialLight extends AbstractLight {
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(systemName);
+        mBit = _memo.getBitFromSystemName(systemName);
         // Set initial state
         setState(OFF);
     }
@@ -64,8 +64,9 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName(),_memo.getTrafficController());
+        SerialNode mNode = (SerialNode) _memo.getNodeFromSystemName(getSystemName(),_memo.getTrafficController());
         if (mNode != null) {
             if (newState == ON) {
                 mNode.setOutputBit(mBit, false);

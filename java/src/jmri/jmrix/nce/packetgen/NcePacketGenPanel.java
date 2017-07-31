@@ -1,7 +1,6 @@
 package jmri.jmrix.nce.packetgen;
 
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import jmri.jmrix.nce.NceMessage;
@@ -13,13 +12,12 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Nce messages
  *
- * @author	Ken Cameron	Copyright (C) 2010 derived from:
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Ken Cameron Copyright (C) 2010 derived from:
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -34,6 +32,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -44,10 +43,12 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.packetgen.NcePacketGenFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -56,10 +57,11 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("Title"));
+        x.append(Bundle.getMessage("Title"));
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -95,6 +97,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         add(replyLenTextField);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -134,9 +137,11 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(NceReply r) {
     } // ignore replies
 

@@ -4,8 +4,6 @@ import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Tests for the Bundle class
@@ -49,5 +47,6 @@ public class BundleTest  {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
+
 
 }

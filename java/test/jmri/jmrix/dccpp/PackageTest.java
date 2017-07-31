@@ -30,8 +30,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppConnectionTypeListTest.class));
         suite.addTest(new TestSuite(DCCppMessageTest.class));
         suite.addTest(new TestSuite(DCCppReplyTest.class));
-        suite.addTest(new TestSuite(DCCppPacketizerTest.class));
-        suite.addTest(new TestSuite(DCCppTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTrafficControllerTest.class));
         suite.addTest(new TestSuite(DCCppSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(DCCppThrottleTest.class));
         suite.addTest(new TestSuite(DCCppInitializationManagerTest.class));
@@ -42,20 +42,26 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
-        suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSensorManagerTest.class));
-        suite.addTest(jmri.jmrix.dccpp.network.DCCppEthernetTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutTest.class));
+        suite.addTest(jmri.jmrix.dccpp.network.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.swing.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.dccppovertcp.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.serial.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.configurexml.PackageTest.class));
-	/*
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-	*/
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppNetworkPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSerialPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSimulatorPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMessageExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppRegisterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMultiMeterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutReplyCacheTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

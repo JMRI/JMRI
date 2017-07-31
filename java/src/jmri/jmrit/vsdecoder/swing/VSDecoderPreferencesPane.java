@@ -1,5 +1,27 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.net.URI;
+import java.net.URISyntaxException;
+import jmri.util.FileUtil;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrit.vsdecoder.VSDecoderPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * <hr>
  * This file is part of JMRI.
@@ -15,30 +37,10 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.net.URI;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.jmrit.vsdecoder.VSDecoderPreferences;
-
 class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
-
-    private static final long serialVersionUID = -5473594799045080011L;
 
     private javax.swing.JCheckBox cbAutoStartEngine;
     private javax.swing.JCheckBox cbAutoLoadVSDFile;
@@ -103,20 +105,22 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         tfDefaultVSDFileName = new javax.swing.JTextField(40);
         JButton jbPathBrowse = new javax.swing.JButton(Bundle.getMessage("Browse"));
         jbPathBrowse.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbPathBrowseActionPerformed(evt);
             }
         });
         JButton jbFileBrowse = new javax.swing.JButton(Bundle.getMessage("Browse"));
         jbFileBrowse.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbFileBrowseActionPerformed(evt);
             }
         });
 
         // Audio Mode
-        audioModeRoomButton = new JRadioButton("Room Ambient");
-        audioModeHeadphoneButton = new JRadioButton("Headphones");
+        audioModeRoomButton = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
+        audioModeHeadphoneButton = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
         audioModeGroup = new ButtonGroup();
         audioModeGroup.add(audioModeRoomButton);
         audioModeGroup.add(audioModeHeadphoneButton);
@@ -137,6 +141,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         // Set action listener to check consistency when the user makes changes.
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkConsistency();
             }
@@ -147,8 +152,9 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         tfDefaultVSDFileName.addActionListener(al);
 
         // Set action listeners for save / cancel / reset buttons
-        jbSave.setText(Bundle.getMessage("VSDecoderPrefsSave"));
+        jbSave.setText(Bundle.getMessage("ButtonSave"));
         jbSave.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSaveActionPerformed(evt);
             }
@@ -157,13 +163,15 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         jbCancel.setText(Bundle.getMessage("VSDecoderPrefsReset"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelActionPerformed(evt);
             }
         });
 
-        jbApply.setText(Bundle.getMessage("VSDecoderPrefsApply"));
+        jbApply.setText(Bundle.getMessage("ButtonApply"));
         jbApply.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbApplyActionPerformed(evt);
             }
@@ -289,16 +297,17 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             try {
                 URI base = null;
                 if (tfDefaultVSDFilePath.getText() != null) {
-                    base = URI.create(tfDefaultVSDFilePath.getText());
+                    base = FileUtil.findURL(tfDefaultVSDFilePath.getText()).toURI();
                 } else {
-                    base = URI.create(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath());
+                    base = FileUtil.findURL(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath()).toURI();
                 }
-                URI absolute = URI.create(fc.getSelectedFile().getCanonicalPath());
+                URI absolute = fc.getSelectedFile().toURI();
                 URI relative = base.relativize(absolute);
+                log.debug("URI absolute = {} relative = {}", absolute.toString(), relative.toString());
 
                 tfDefaultVSDFileName.setText(relative.getPath());
-            } catch (java.io.IOException e) {
-                // do nothing.
+            } catch (URISyntaxException ex) {
+                log.warn("Unable to get URI for {}", path, ex);
             }
         }
     }
@@ -330,9 +339,10 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     public void setContainer(JFrame f) {
         m_container = f;
         jbSave.setVisible(true);
-        jbCancel.setText(Bundle.getMessage("VSDecoderPrefsCancel"));
+        jbCancel.setText(Bundle.getMessage("ButtonCancel"));
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ((evt == null) || (evt.getPropertyName() == null)) {
             return;
@@ -346,6 +356,5 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         }
     }
 
-    // Unused - yet.
-    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
 }

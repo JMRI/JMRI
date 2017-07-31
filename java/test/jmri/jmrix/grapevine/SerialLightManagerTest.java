@@ -18,9 +18,10 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  */
-public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -31,6 +32,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
                 return this;
             }
 
+            @Override
             synchronized protected void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {
             }
         }.test();
@@ -40,6 +42,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         jmri.InstanceManager.setLightManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
         return "GL" + n;
     }
@@ -70,10 +73,12 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     /**
      * Number of light to test. Use 9th output on node 1.
      */
+    @Override
     protected int getNumToTest1() {
         return 1109;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 1107;
     }

@@ -1,6 +1,6 @@
-// NceConsistBackup.java
 package jmri.jmrix.nce.consist;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * Consist data byte:
  *
- * bit	15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
+ * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
  *
  *
  * This backup routine uses the same consist data format as NCE.
@@ -43,10 +43,10 @@ import org.slf4j.LoggerFactory;
  */
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CONSIST_LNTH = 16;		// 16 bytes per line
-    private int replyLen = 0;					// expected byte length
-    private int waiting = 0;					// to catch responses not intended for this module
-    private boolean fileValid = false;			// used to flag backup status messages
+    private static final int CONSIST_LNTH = 16;  // 16 bytes per line
+    private int replyLen = 0;     // expected byte length
+    private int waiting = 0;     // to catch responses not intended for this module
+    private boolean fileValid = false;   // used to flag backup status messages
 
     private byte[] nceConsistData = new byte[CONSIST_LNTH];
 
@@ -64,6 +64,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         }
     }
 
+    @Override
     public void run() {
 
         // get file to write to
@@ -128,8 +129,8 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         consistNumber.setVisible(true);
 
         // now read NCE CS consist memory and write to file
-        waiting = 0;			// reset in case there was a previous error
-        fileValid = true;		// assume we're going to succeed
+        waiting = 0;   // reset in case there was a previous error
+        fileValid = true;  // assume we're going to succeed
         // output string to file
 
         for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
@@ -214,18 +215,20 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     private NceMessage readConsistMemory(int consistNum) {
 
         int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
-        replyLen = NceMessage.REPLY_16; 			// Expect 16 byte response
+        replyLen = NceMessage.REPLY_16;    // Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     // this reply always expects two consecutive reads
+    @Override
     public void reply(NceReply r) {
 
         if (waiting <= 0) {
@@ -251,6 +254,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 
     private static class textFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -263,6 +267,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             }
         }
 
+        @Override
         public String getDescription() {
             return "Text Documents (*.txt)";
         }

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgModePane extends ProgModeSelector {
 
@@ -92,6 +92,7 @@ public class ProgModePane extends ProgModeSelector {
      *
      * @return Always true in this implementation
      */
+    @Override
     public boolean isSelected() {
         return true;
     }
@@ -99,6 +100,7 @@ public class ProgModePane extends ProgModeSelector {
     /**
      * Get the configured programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if (mServicePane!=null && mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
@@ -109,6 +111,7 @@ public class ProgModePane extends ProgModeSelector {
         }
     }
 
+    @Override
     public void dispose() {
         if (mServicePane != null) {
             mServicePane.dispose();

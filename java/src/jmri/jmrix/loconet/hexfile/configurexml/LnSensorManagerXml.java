@@ -14,8 +14,9 @@ import org.jdom2.Element;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 public class LnSensorManagerXml extends jmri.jmrix.loconet.configurexml.LnSensorManagerXml {
 
+    @Override
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class", super.getClass().getSuperclass().getName());
+        sensors.setAttribute("class", super.getClass().getSuperclass().getName()); // NOI18N
     }
 
 }

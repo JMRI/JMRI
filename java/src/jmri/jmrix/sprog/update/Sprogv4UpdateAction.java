@@ -17,13 +17,12 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
         super(s,memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        Object[] options = {"Cancel", "Update"};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonContinue")};
         if (1 == JOptionPane.showOptionDialog(null,
-                "In order to proceed with a SPROG firmware update"
-                + "You must have a valid .hex firmware update file\n"
-                + "Are you certain you want to update the SPROG firmware?",
-                "SPROG Firmware Update", JOptionPane.YES_NO_OPTION,
+                Bundle.getMessage("SprogXUpdateDialogString", ""),
+                Bundle.getMessage("SprogXFirmwareUpdate", " v3/v4"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame
             // create a SprogUpdateFrame
@@ -42,4 +41,4 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
 }
 
 
-/* @(#)Sprogv4UpdateAction.java */
+

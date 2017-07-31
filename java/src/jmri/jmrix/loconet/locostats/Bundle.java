@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    private final static String name = "jmri.jmrix.loconet.locostats.LocoStatsBundle"; // NO18N
+    @Nullable
+    private static final String name = null; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -75,6 +76,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
+
 
     private final static Bundle b = new Bundle();
 

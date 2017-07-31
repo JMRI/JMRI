@@ -54,14 +54,14 @@ public class BlockBossLogicTest extends TestCase {
         startLogic(p);
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
         
-        JUnitUtil.setBeanState(h2, SignalHead.YELLOW);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
+        setAndWait(h2, SignalHead.YELLOW);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
 
-        JUnitUtil.setBeanState(h2, SignalHead.RED);
-        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
+        setAndWait(h2, SignalHead.RED);
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so red sets yellow");  // wait and test
 
-        h2.setAppearance(SignalHead.GREEN);
-        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
+        setAndWait(h2, SignalHead.GREEN);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so green sets green");  // wait and test
     }
 
     // test that initial conditions are set right
@@ -71,7 +71,24 @@ public class BlockBossLogicTest extends TestCase {
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "initial red sets yellow");  // wait and test
     }
-    
+
+    // occupancy check
+    public void testSimpleBlockOccupancy() throws jmri.JmriException {
+        setupSimpleBlock();
+        p.setSensor1("IS1");
+        startLogic(p);
+        JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
+        
+        setAndWait(h2, SignalHead.YELLOW);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
+
+        JUnitUtil.setBeanState(s1, Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so occupied sets red");  // wait and test
+
+        JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so unoccupied sets green");  // wait and test
+    }
+
     // test signal following in distant simple block
     public void testSimpleBlockDistant() {
         setupSimpleBlock();
@@ -80,13 +97,13 @@ public class BlockBossLogicTest extends TestCase {
 
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 
-        h2.setAppearance(SignalHead.YELLOW);
+        setAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
-        h2.setAppearance(SignalHead.RED);
+        setAndWait(h2, SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
-        h2.setAppearance(SignalHead.GREEN);
+        setAndWait(h2, SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
     }
 
@@ -97,13 +114,13 @@ public class BlockBossLogicTest extends TestCase {
         p.setLimitSpeed1(true);
         startLogic(p);
 
-        h2.setAppearance(SignalHead.RED);
+        setAndWait(h2, SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
-        h2.setAppearance(SignalHead.YELLOW);
+        setAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
-        h2.setAppearance(SignalHead.GREEN);
+        setAndWait(h2, SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
     }
 
@@ -114,14 +131,34 @@ public class BlockBossLogicTest extends TestCase {
         p.setLimitSpeed1(true);
         startLogic(p);
 
-        h2.setAppearance(SignalHead.YELLOW);
+        setAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
-        h2.setAppearance(SignalHead.RED);
+        setAndWait(h2, SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
-        h2.setAppearance(SignalHead.GREEN);
+        setAndWait(h2, SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
+    }
+
+    // test signal following in restricting simple block
+    public void testSimpleBlockRestricting() throws jmri.JmriException {
+        JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
+
+        setupSimpleBlock();
+        p.setSensor1("IS1");
+        p.setRestrictingSpeed1(true);
+        startLogic(p);
+        
+        setAndWait(h2, SignalHead.YELLOW);
+        JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "yellow sets flashing red");  // wait and test
+
+        JUnitUtil.setBeanState(s1, Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so occupied sets red");  // wait and test
+
+        setAndWait(h2, SignalHead.GREEN);
+        JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
+        JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so unoccupied green sets flashing red");  // wait and test
     }
 
     // if no next signal, next signal considered green
@@ -247,6 +284,7 @@ public class BlockBossLogicTest extends TestCase {
      * creates a set of turnouts, sensors and signals as common background for
      * testing
      */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -255,6 +293,7 @@ public class BlockBossLogicTest extends TestCase {
         
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
@@ -306,8 +345,11 @@ public class BlockBossLogicTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         stopLogic();
+        // reset InstanceManager
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

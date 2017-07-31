@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * makes creation a little more heavy-weight, but speeds operation.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem {
 
@@ -25,6 +25,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         super(systemName);
     }
 
+    @Override
     public void setProperty(String aspect, String key, Object value) {
         getTable(aspect).put(key, value);
         if (!keys.contains(key)) {
@@ -32,6 +33,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         }
     }
 
+    @Override
     public Object getProperty(String aspect, String key) {
         if (aspect == null) {
             return null;
@@ -39,16 +41,19 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return getTable(aspect).get(key);
     }
 
+    @Override
     public void setImageType(String type) {
         if (!imageTypes.contains(type)) {
             imageTypes.add(type);
         }
     }
 
+    @Override
     public Enumeration<String> getImageTypeList() {
         return imageTypes.elements();
     }
 
+    @Override
     public String getAspect(Object obj, String key) {
         if (obj == null) {
             return null;
@@ -74,14 +79,17 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return t;
     }
 
+    @Override
     public Enumeration<String> getAspects() {
         return aspects.keys();
     }
 
+    @Override
     public Enumeration<String> getKeys() {
         return keys.elements();
     }
 
+    @Override
     public boolean checkAspect(String aspect) {
         return aspects.get(aspect) != null;
     }
@@ -108,16 +116,31 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method returns a constant result on the DefaultSignalSystem.
+     *
+     * @return {@link jmri.NamedBean#INCONSISTENT}
+     */
+    @Override
     public int getState() {
-        throw new NoSuchMethodError();
+        return INCONSISTENT;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method has no effect on the DefaultSignalSystem.
+     */
+    @Override
     public void setState(int s) {
-        throw new NoSuchMethodError();
+        // do nothing
     }
 
     float maximumLineSpeed = 0.0f;
 
+    @Override
     public float getMaximumLineSpeed() {
         if (maximumLineSpeed == 0.0f) {
             for (String as : aspects.keySet()) {
@@ -155,24 +178,24 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
-        String retval = "SignalSystem " + getSystemName() + "\n";
+        StringBuilder retval = new StringBuilder();
+        retval.append("SignalSystem ").append(getSystemName()).append("\n");
         Enumeration<String> e1 = getAspects();
         while (e1.hasMoreElements()) {
             String s1 = e1.nextElement();
-            retval += "  " + s1 + "\n";
+            retval.append("  ").append(s1).append("\n");
             Enumeration<String> e2 = getKeys();
             while (e2.hasMoreElements()) {
                 String s2 = e2.nextElement();
-                retval += "    " + s2 + ": " + getProperty(s1, s2) + "\n";
+                retval.append("    ").append(s2).append(": ").append(getProperty(s1, s2)).append("\n");
             }
         }
-        return retval;
+        return retval.toString();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalSystem");
     }

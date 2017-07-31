@@ -1,29 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.servlet.panel;
 
 import java.util.List;
+import javax.servlet.annotation.WebServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.server.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
+@WebServlet(name = "ControlPanelServlet",
+        urlPatterns = {"/panel/ControlPanel"})
+@ServiceProvider(service = HttpServlet.class)
 public class ControlPanelServlet extends AbstractPanelServlet {
 
-    private static final long serialVersionUID = -8086671279145186127L;
     private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
 
     @Override

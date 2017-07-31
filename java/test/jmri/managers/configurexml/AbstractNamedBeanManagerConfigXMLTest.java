@@ -22,13 +22,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
 
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -44,13 +47,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -70,13 +76,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -89,13 +98,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -116,13 +128,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -138,13 +153,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -156,6 +174,102 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals(null, to.getProperty("foo"));
         Assert.assertEquals(Boolean.valueOf(true), to.getProperty("biff"));
 
+    }
+
+    public void testGetUserName() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        Element e = new Element("test");
+        Assert.assertEquals(null, x.getUserName(e));
+        
+        e = new Element("test");
+        Element e2 = new Element("userName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        Assert.assertEquals("foo", x.getUserName(e));
+        
+        e = new Element("test");
+        e.setAttribute("userName", "bar");
+        Assert.assertEquals("bar", x.getUserName(e));
+
+        e = new Element("test");
+        e2 = new Element("userName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        e.setAttribute("userName", "bar");
+        Assert.assertEquals("foo", x.getUserName(e));
+
+    }
+
+    public void testGetSystemName() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        Element e = new Element("test");
+        Assert.assertEquals(null, x.getSystemName(e));
+        
+        e = new Element("test");
+        Element e2 = new Element("systemName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        Assert.assertEquals("foo", x.getSystemName(e));
+        
+        e = new Element("test");
+        e.setAttribute("systemName", "bar");
+        Assert.assertEquals("bar", x.getSystemName(e));
+
+        e = new Element("test");
+        e2 = new Element("systemName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        e.setAttribute("systemName", "bar");
+        Assert.assertEquals("foo", x.getSystemName(e));
+
+    }
+    
+    public void testCheckedNamedBeanName() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        jmri.Turnout t = null;
+        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        tm.provideTurnout("IT01").setUserName("foo");
+
+        Assert.assertEquals(null, x.checkedNamedBeanName(null, t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanName("", t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanName("bar", t, tm));
+        Assert.assertEquals("IT01", x.checkedNamedBeanName("IT01", t, tm));
+        Assert.assertEquals("foo", x.checkedNamedBeanName("foo", t, tm));        
+    }
+
+    public void testCheckedNamedBeanReference() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        jmri.Turnout t = null;
+        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        NamedBean nb = tm.provideTurnout("IT01");
+        nb.setUserName("foo");
+
+        Assert.assertEquals(null, x.checkedNamedBeanReference(null, t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanReference("", t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanReference("bar", t, tm));
+        Assert.assertEquals(nb, x.checkedNamedBeanReference("IT01", t, tm));
+        Assert.assertEquals(nb, x.checkedNamedBeanReference("foo", t, tm));        
+    }
+
+    public void testCheckedNamedBeanHandle() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
+        jmri.Turnout t = null;
+        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        jmri.Turnout nb = tm.provideTurnout("IT01");
+        nb.setUserName("foo");
+        
+
+        Assert.assertEquals(null, x.checkedNamedBeanHandle(null, t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanHandle("", t, tm));
+        Assert.assertEquals(null, x.checkedNamedBeanHandle("bar", t, tm));
+        Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("IT01", nb), x.checkedNamedBeanHandle("IT01", t, tm));
+        Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("foo", nb), x.checkedNamedBeanHandle("foo", t, tm));        
     }
 
     // from here down is testing infrastructure
@@ -176,10 +290,12 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

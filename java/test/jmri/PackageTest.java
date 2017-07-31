@@ -1,5 +1,6 @@
 package jmri;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,48 +28,74 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
         suite.addTest(jmri.BeanSettingTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
+        suite.addTest(jmri.NamedBeanTest.suite());
         suite.addTest(jmri.LightTest.suite());
-        suite.addTest(jmri.NmraPacketTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NmraPacketTest.class));
         suite.addTest(jmri.ConditionalVariableTest.suite());
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalMastLogicTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitSectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitSectionActionTest.class));
         suite.addTest(jmri.TurnoutTest.suite());
         suite.addTest(jmri.TurnoutOperationTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
         suite.addTest(jmri.AudioTest.suite());
         suite.addTest(jmri.IdTagTest.suite());
-        suite.addTest(jmri.SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.SchemaTest.class));
         suite.addTest(jmri.ProgrammingModeTest.suite());
-        suite.addTest(jmri.VersionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(VersionTest.class));
         suite.addTest(jmri.beans.PackageTest.suite());
         suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
-        suite.addTest(jmri.managers.PackageTest.suite());
-        suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues?
-        suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.swing.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.managers.PackageTest.class));
+        suite.addTest(jmri.jmrix.PackageTest.suite());
+        suite.addTest(jmri.jmrit.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.swing.PackageTest.class));
         suite.addTest(jmri.util.PackageTest.suite());
-        suite.addTest(jmri.web.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.web.PackageTest.class));
         suite.addTest(jmri.jmris.PackageTest.suite());
-        suite.addTest(jmri.profile.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.profile.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.server.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.plaf.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AudioExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProgrammerExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProgReadExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProgWriteExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TimebaseRateExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.spi.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriPluginTest.class));
+        suite.addTest(new JUnit4TestAdapter(MetadataTest.class));
+        suite.addTest(new JUnit4TestAdapter(NoFeedbackTurnoutOperationTest.class));
+        suite.addTest(new JUnit4TestAdapter(RawTurnoutOperationTest.class));
+        suite.addTest(new JUnit4TestAdapter(ScaleTest.class));
+        suite.addTest(new JUnit4TestAdapter(SectionManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorTurnoutOperationTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

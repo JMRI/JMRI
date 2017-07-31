@@ -6,9 +6,18 @@ import java.io.DataOutputStream;
 /**
  * Enables basic setup of a interface for a jmrix implementation.
  * <P>
- * This has no e.g. serial-specific information.
+ * This is the basic interface. Subclasses provide extensions for specific
+ * connection types (network, serial, etc).
+ * <p>
+ * For historical reasons, this provides both four specific options (option1 to option4)
+ * plus a more flexible interface based on a String array.  The more flexible 
+ * interface is the preferred one for new work, but the 1-4 form hasn't been 
+ * deprecated yet.
+ * <p>
+ * General design documentation is available on the 
+ * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @see jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
@@ -28,9 +37,11 @@ public interface PortAdapter {
     public boolean status();
 
     /**
-     * Open the connection
+     * Open the connection.
      *
+     * @throws java.lang.Exception if unable to connect
      */
+    // TODO: this needs to use more specific exceptions
     public void connect() throws Exception;
 
     public String getCurrentPortName();
@@ -90,28 +101,30 @@ public interface PortAdapter {
     public String[] getOptionChoices(String option);
 
     /**
-     * Return the System Manufacturers Name
+     * Return the system manufacturer's name.
      *
      * @return Manufacturer's Name
      */
     public String getManufacturer();
 
     /**
-     * Set the System Manufacturers Name
+     * Set the system manufacturer's name.
      *
+     * @param Manufacturer the manufacturer's name
      */
     public void setManufacturer(String Manufacturer);
 
     /**
-     * Return the disabled state of the adapter
+     * Return the disabled state of the adapter.
      *
      * @return true if disabled
      */
     public boolean getDisabled();
 
     /**
-     * Sets whether the connection is disabled
+     * Sets whether the connection is disabled.
      *
+     * @param disabled When true, disables operation
      */
     public void setDisabled(boolean disabled);
 
@@ -125,6 +138,7 @@ public interface PortAdapter {
     /**
      * Set the user name for this adapter.
      *
+     * @param userName the new user name
      * @throws IllegalArgumentException if another adapter has this user name
      */
     public void setUserName(String userName) throws IllegalArgumentException;
@@ -139,6 +153,7 @@ public interface PortAdapter {
     /**
      * Set the system prefix for this adapter.
      *
+     * @param systemPrefix the new system prefix
      * @throws IllegalArgumentException if another adapter has this system
      *                                  prefix
      */
@@ -153,6 +168,10 @@ public interface PortAdapter {
      * {@link java.lang.NullPointerException} should be thrown if the parameter
      * is null.
      *
+     * @param connectionMemo the new connection memo
+     * @throws IllegalArgumentException if connectionMemo is the wrong subclass
+     *                                  of SystemConnectionMemo
+     * @throws NullPointerException     if connectionMemo is null
      */
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 

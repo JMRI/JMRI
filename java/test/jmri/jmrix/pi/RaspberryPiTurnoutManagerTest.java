@@ -7,11 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import com.pi4j.io.gpio.WiringPiGpioProviderBase;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinMode;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.PinPullResistance;
 
 /**
  * <P>
@@ -19,7 +14,7 @@ import com.pi4j.io.gpio.PinPullResistance;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i){
@@ -102,41 +97,8 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     @Before
     public void setUp() {
        apps.tests.Log4JFixture.setUp();
-       GpioProvider myprovider = new WiringPiGpioProviderBase(){
-           @Override
-           public String getName(){
-              return "RaspberryPi GPIO Provider";
-           }
-          @Override
-           public boolean hasPin(Pin pin) {
-              return false;
-           }
-
-           @Override
-           public void export(Pin pin, PinMode mode, PinState defaultState) {
-           }
-
-           @Override
-           public void unexport(Pin pin) {
-           }
-
-           @Override
-           public void setPullResistance(Pin pin, PinPullResistance resistance) {
-           }
-
-           @Override
-           protected void updateInterruptListener(Pin pin) {
-           }
-
-           @Override
-           public PinState getState(Pin pin) {
-                  return PinState.HIGH;
-           };
-
-       };
-
+       GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
-
        l = new RaspberryPiTurnoutManager("Pi");
 
     }

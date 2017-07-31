@@ -31,7 +31,7 @@
       application for creating control panels. This page describes
       the application, and how to use it.
 
-      <p>PanelPro provides three separate ways to create Control
+      <p>PanelPro provides four separate ways to create Control
       Panels:</p>
 
       <ul>
@@ -48,6 +48,11 @@
         the logic for signals, etc. This constrains how the panel
         appears a little, but it can save significant time when
         first bringing your layout up.</li>
+
+        <li><a href="#swb">Switchboard Editor</a> is a graphic,
+        straightforward control interface, showing a range of switch
+        keys to watch and control items.</li>
+
       </ul>
 
       <h2>Which to use: Layout Editor or Panel Editor?</h2>
@@ -94,7 +99,8 @@
       etc.) which are then placed on the Panel.</p>
 
       <p><a href=
-      "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"><img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
+      "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
+      <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
       align="right" height="216" width="313"></a> Many people use
       both, with the Layout Editor creating schematic panels to
       handle the actual configuration for signals and Panel Editor
@@ -103,6 +109,10 @@
       "http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">tutorial</a>
       that describes how Panel Pro and Layout Editor can be used
       together.</p>
+
+      <p>The Switchboard is easier to set up, using a simple grid
+      of pre-defined buttons or indicators. It is limited to the
+      basic inputs (Sensors) and Outputs (Turnouts and Lights).</p>
 
       <p>Please see our <a href=
       "http://jmri.org/community/examples/Gallery.shtml">Gallery
@@ -114,9 +124,10 @@
 
       <p>Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
       application is another tool for creating modern-style Control
-      Panels. <a name="pe" id="pe"></a></p>
+      Panels.</p>
 
-      <h2>The Panel Editor</h2><a href=
+      <h2><a name="pe" id="pe">The Panel Editor</a></h2>
+      <a href=
       "../../../images/CornwallPanelLit.gif"><img src=
       "../../../images/CornwallPanelLit.gif" alt=
       "screen shot of Cornwall panel" width="333" height="200"
@@ -345,9 +356,16 @@
       configure the colors used, the width of the track lines, and
       other details of the presentation.</p>
 
-      <p>For more information, please see the <a href=
-      "../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
-      Editor help page</a>.</p>
+      <a href="../../../package/jmri/jmrit/display/images/Switchboard.png">
+      <img src="../../../package/jmri/jmrit/display/images/Switchboard.png"
+      width="198" height="154" align="right" hspace="0" vspace="0"></a>
+      <h2><a name="swb" id="swb">The Switchboard Editor</a></h2>
+      <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
+      To create a new Switchboard, from the Panels menu, choose New Panel &gt;
+      Switchboard Editor.</p>
+      <p>For more information, please see the
+      <a href="../../../package/jmri/jmrit/display/SwitchboardEditor.shtml">
+      Switchboard Editor help page</a>.</p>
 
       <h2>Communicating with Multiple Systems</h2>
 

@@ -1,4 +1,3 @@
-// TrackEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -332,7 +331,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         addRadioButtonAction(excludeTrainPickup);
         addRadioButtonAction(excludeRoutePickup);
 
-        //		addComboBoxAction(comboBoxTypes);
+        //  addComboBoxAction(comboBoxTypes);
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
 
@@ -372,7 +371,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // load
         updateCheckboxes();
-        //		updateTypeComboBoxes();
+        //  updateTypeComboBoxes();
         updateTrainDir();
         updateCarOrder();
         updateDropOptions();
@@ -1045,7 +1044,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     // car and loco types
     private void updateCheckboxes() {
-        //		log.debug("Update all checkboxes");
+        //  log.debug("Update all checkboxes");
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
         x = 0;
@@ -1222,7 +1221,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        _location.removePropertyChangeListener(this);
+        if (_location !=null) {
+            _location.removePropertyChangeListener(this);
+        }
         CarRoads.instance().removePropertyChangeListener(this);
         CarLoads.instance().removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);

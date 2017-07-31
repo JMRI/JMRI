@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.List;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -18,7 +17,7 @@ import javax.annotation.Nonnull;
  * Each Memory has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, if any, and provides a unique mapping to the layout control
- * system (e.g. LocoNet, NCE, etc) and address within that system. Note that
+ * system (for example LocoNet or NCE) and address within that system. Note that
  * most (all?) layout systems don't have anything corresponding to this, in
  * which case the "Internal" Memory objects are still available with names like
  * IM23.
@@ -38,7 +37,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.Memory
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
@@ -56,10 +55,11 @@ public interface MemoryManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Memory doesn't already exist and the
      *                                  manager cannot create the Memory due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull
+    public Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -68,23 +68,28 @@ public interface MemoryManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull Memory getMemory(@Nonnull String name);
+    @CheckForNull
+    public Memory getMemory(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
      * already exists.
      *
+     * @param systemName the system name
      * @return requested Memory object or null if none exists
      */
-    public @CheckForNull Memory getBySystemName(@Nonnull String systemName);
+    @CheckForNull
+    public Memory getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
      * already exists.
      *
+     * @param userName the user name
      * @return requested Memory object or null if none exists
      */
-    public @CheckForNull Memory getByUserName(@Nonnull String userName);
+    @CheckForNull
+    public Memory getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -108,20 +113,23 @@ public interface MemoryManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Memory objects when you should be looking them up.
      *
+     * @param systemName the system name
+     * @param userName   the user name
      * @return requested Memory object (never null)
      * @throws IllegalArgumentException if cannot create the Memory due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Memory newMemory(@Nonnull String systemName, String userName);
+    @Nonnull
+    public Memory newMemory(@Nonnull String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
      * the user can optionally supply a username.
      * <P>
      * This will always return a valid object reference; a new object will be
-     * created if necessary. ( If a null reference is given for user name, no
-     * user name will be associated with the Memory object created
+     * created if necessary. (If a null reference is given for user name, no
+     * user name will be associated with the Memory object created)
      *
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
@@ -129,16 +137,22 @@ public interface MemoryManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Memory objects when you should be looking them up.
      *
+     * @param userName the user name
      * @return requested Memory object (never null)
      * @throws IllegalArgumentException if cannot create the Memory due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Memory newMemory(@Nonnull String userName);
+    @Nonnull
+    public Memory newMemory(@Nonnull String userName);
 
     /**
-     * Get a list of all Memory objects' system names.
+     * Get a list of system names of all Memory objects.
+     *
+     * {@inheritDoc}
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull
+    @Override
+    public List<String> getSystemNameList();
 
 }

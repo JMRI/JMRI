@@ -35,6 +35,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -63,8 +64,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x48);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -90,6 +91,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -123,8 +125,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x7A);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -151,6 +153,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -181,8 +184,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x48);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -209,6 +212,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -241,8 +245,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x54);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         //Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -264,13 +268,14 @@ public class LI100XNetProgrammerTest extends TestCase {
 
     // this test is the same as the testWriteCvSequence test, but
     // it checks the sequence for CVs greater than 255, which use
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testWriteHighCvSequence() throws JmriException {
         // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -299,8 +304,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x78);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -322,13 +327,14 @@ public class LI100XNetProgrammerTest extends TestCase {
 
     // this test is the same as the testReadCvSequence test, but
     // it checks the sequence for CVs greater than 256, which use
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testReadHighCvSequence() throws JmriException {
         // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
+            @Override
             protected synchronized void restartTimer(int delay) {
                 super.restartTimer(RESTART_TIME);
             }
@@ -359,8 +365,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x78);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -399,11 +405,13 @@ public class LI100XNetProgrammerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

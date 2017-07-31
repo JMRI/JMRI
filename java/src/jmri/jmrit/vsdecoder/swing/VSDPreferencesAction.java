@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionEvent;
@@ -40,8 +40,9 @@ public class VSDPreferencesAction extends AbstractAction {
         this("VSDecoder preferences");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        JmriJFrame f = new JmriJFrame(Bundle.getMessage("FieldVSDecoderPreferencesFrameTitle"), false, false);
+        JmriJFrame f = new JmriJFrame(Bundle.getMessage("VSDecoderFileMenuPreferences"), false, false); // used here for the Frame Title
         VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(VSDecoderManager.instance().getVSDecoderPreferences());
         f.add(tpP);
         tpP.setContainer(f);

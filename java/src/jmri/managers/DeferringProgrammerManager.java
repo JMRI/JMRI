@@ -29,22 +29,25 @@ public class DeferringProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String getUserName() {
         return userName;
     }
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String toString() {
         return getUserName();
     }
 
+    @Override
     public Programmer getGlobalProgrammer() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gp == null) {
@@ -57,6 +60,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return p;
     }
 
+    @Override
     public Programmer reserveGlobalProgrammer() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gp == null) {
@@ -65,6 +69,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return gp.reserveGlobalProgrammer();
     }
 
+    @Override
     public void releaseGlobalProgrammer(Programmer p) {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gp == null) {
@@ -78,6 +83,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      *
      * @return false if there's no chance of getting one
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gp == null) {
@@ -86,6 +92,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (ap == null) {
@@ -94,6 +101,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return ap.getAddressedProgrammer(pLongAddress, pAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (ap == null) {
@@ -102,6 +110,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return ap.reserveAddressedProgrammer(pLongAddress, pAddress);
     }
 
+    @Override
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (ap == null) {
@@ -115,6 +124,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      *
      * @return false if there's no chance of getting one
      */
+    @Override
     public boolean isAddressedModePossible() {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (ap == null) {
@@ -128,10 +138,12 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      *
      * @return false if there's no chance of getting one
      */
+    @Override
     public boolean isAddressedModePossible(jmri.LocoAddress l) {
         return isAddressedModePossible();
     }
 
+    @Override
     public java.util.List<ProgrammingMode> getDefaultModes() {
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * User interface frame for creating and editing "OS Indicator" logic on USS CTC
  * machines.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicatorPanel extends BasePanel {
 
@@ -70,6 +70,7 @@ public class OsIndicatorPanel extends BasePanel {
 
         viewButton = new JButton(rb.getString("ButtonView"));
         viewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 viewPressed();
             }
@@ -77,6 +78,7 @@ public class OsIndicatorPanel extends BasePanel {
         p2xs.add(viewButton);
         addButton = new JButton(rb.getString("ButtonAddUpdate"));
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addPressed();
             }

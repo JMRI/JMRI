@@ -3,13 +3,10 @@ package jmri.jmrix.lenz.li100f.configurexml;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * ConnectionConfigXmlTest.java
- *
- * Description: tests for the ConnectionConfigXml class
+ * Tests for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */

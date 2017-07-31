@@ -21,6 +21,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         userName = "Lionel TMCC";
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // the protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
@@ -33,6 +34,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
      * Address 1 and above can be long
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return (address >= 1);
     }
@@ -41,6 +43,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
      * The full range of short addresses are available
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return (address <= 127);
     }
@@ -48,11 +51,13 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
     /**
+     * @return current connection instance
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

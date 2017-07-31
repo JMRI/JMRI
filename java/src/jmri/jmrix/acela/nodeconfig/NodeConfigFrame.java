@@ -1,5 +1,6 @@
 package jmri.jmrix.acela.nodeconfig;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -16,15 +17,14 @@ import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.acela.AcelaNode;
-import jmri.jmrix.acela.AcelaTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user configuration of Acela nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -167,9 +167,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -227,6 +228,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(new JLabel(rb.getString("LabelNodeAddress") + " "));
         nodeAddrBox = new JComboBox<String>(AcelaNode.getNodeNames());
         nodeAddrBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 infoButtonActionPerformed();
             }
@@ -246,6 +248,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panelNodeInfo.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
         nodeTypeBox = new JComboBox<String>(AcelaNode.getModuleNames());
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) nodeTypeBox.getSelectedItem();
                 if (s.equals("Acela")) {
@@ -1140,6 +1143,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setVisible(true);
         addButton.setToolTipText(rb.getString("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -1150,6 +1154,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         editButton.setToolTipText(rb.getString("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -1160,6 +1165,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 deleteButtonActionPerformed();
             }
@@ -1170,6 +1176,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setToolTipText(rb.getString("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doneButtonActionPerformed();
             }
@@ -1180,6 +1187,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setToolTipText(rb.getString("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateButtonActionPerformed();
             }
@@ -1191,6 +1199,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(rb.getString("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -1221,7 +1230,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
@@ -1519,7 +1528,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrBox.setVisible(true);
 //        nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
@@ -1549,7 +1558,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
@@ -1676,6 +1685,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Do the done action if the window is closed early.
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
     }
@@ -1812,39 +1822,42 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //    public class SensorConfigModel extends AbstractTableModel
     public class SensorConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8903322968361854433L;
-
+        @Override
         public String getColumnName(int c) {
             return sensorConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
 
+        @Override
         public int getRowCount() {
             return numrows;
         }
 
+        @Override
         public void setNumRows(int r) {
             numrows = r;
         }
 
+        @Override
         public void setEditMode(boolean b) {
             editmode = b;
         }
 
+        @Override
         public boolean getEditMode() {
             return editmode;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r);
@@ -1874,6 +1887,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 filterType[r] = (String) type;
@@ -1886,6 +1900,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if ((c == 1) && editmode) {
                 return (true);
@@ -1920,39 +1935,42 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class OutputConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6592677373811166261L;
-
+        @Override
         public String getColumnName(int c) {
             return outputConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
 
+        @Override
         public int getRowCount() {
             return numrows;
         }
 
+        @Override
         public void setNumRows(int r) {
             numrows = r;
         }
 
+        @Override
         public void setEditMode(boolean b) {
             editmode = b;
         }
 
+        @Override
         public boolean getEditMode() {
             return editmode;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r);
@@ -1984,6 +2002,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 outputWired[r] = (String) type;
@@ -1999,6 +2018,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if ((c == 1) && editmode) {
                 return (true);

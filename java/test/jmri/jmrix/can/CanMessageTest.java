@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanMessageTest extends CanMRCommonTest {
+public class CanMessageTest extends CanMRCommonTestBase {
 
     public void testCopyCtor() {
         CanMessage m1 = new CanMessage(0x12);
@@ -144,11 +144,13 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         new TrafficControllerScaffold();
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.ConfigureManager} for information on the various types of
  * information stored in configuration files.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
@@ -30,6 +30,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         loadFile(getConfigFileChooser());
     }

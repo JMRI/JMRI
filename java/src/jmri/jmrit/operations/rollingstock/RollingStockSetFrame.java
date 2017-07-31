@@ -1,6 +1,6 @@
-// RollingStockSetFrame.java
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -258,8 +258,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         textType.setText(_rs.getTypeName());
         locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
         outOfServiceCheckBox.setSelected(_rs.isOutOfService());
-        updateComboBoxes();		// load the location, destination, and final destination combo boxes
-        updateTrainComboBox();	// load the train combo box
+        updateComboBoxes();  // load the location, destination, and final destination combo boxes
+        updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
         if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
@@ -305,7 +305,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rl;
     RouteLocation rd;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(RollingStock rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons

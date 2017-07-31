@@ -1,9 +1,16 @@
 package jmri.profile;
 
+import static org.junit.Assert.fail;
+
+import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import junit.framework.TestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,66 +19,69 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public class ProfileUtilsTest extends TestCase {
+public class ProfileUtilsTest {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileUtilsTest.class);
 
-    public ProfileUtilsTest(String testName) {
-        super(testName);
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @After
+    public void tearDown() {
+        JUnitUtil.resetProfileManager();
+        Log4JFixture.tearDown();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testCopy() {
         Profile source;
         Profile destination;
         try {
-            File dir = Files.createTempDirectory("source").toFile();
+            File dir = folder.newFolder("source");
             source = new Profile("source", dir.getName(), dir);
-            dir = Files.createTempDirectory("dest").toFile();
+            dir = folder.newFolder("dest");
             destination = new Profile("destination", dir.getName(), dir);
         } catch (IOException ex) {
             // skip test if unable to create temporary profiles
-            TestCase.fail("Unable to create temporary profiles");
+            fail("Unable to create temporary profiles");
             return;
         }
         try {
             ProfileUtils.copy(source, destination);
         } catch (IllegalArgumentException ex) {
-            TestCase.fail("Unable to copy profiles with IllegalArgumentException.");
+            fail("Unable to copy profiles with IllegalArgumentException.");
             return;
         } catch (IOException ex) {
             log.error("Failure copying profiles", ex);
-            TestCase.fail("Unable to copy profiles with IOException.");
+            fail("Unable to copy profiles with IOException.");
             return;
         }
         File profile = new File(destination.getPath(), Profile.PROFILE);
         if (profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId()))).length > 0) {
-            TestCase.fail("Source ID remains in destination profile.");
+            fail("Source ID remains in destination profile.");
         }
     }
 
+    @Test
     public void testCopyToActive() {
         Profile source;
         Profile destination;
         try {
-            File dir = Files.createTempDirectory("source").toFile();
+            File dir = folder.newFolder("source");
             source = new Profile("source", dir.getName(), dir);
-            dir = Files.createTempDirectory("dest").toFile();
+            dir = folder.newFolder("dest");
             destination = new Profile("destination", dir.getName(), dir);
             // Should cause copy() to throw IllegalArgumentException
             ProfileManager.getDefault().setActiveProfile(destination);
         } catch (IOException ex) {
             // skip test if unable to create temporary profiles
-            TestCase.fail("Unable to create temporary profiles");
+            fail("Unable to create temporary profiles");
             return;
         }
         try {
@@ -81,7 +91,7 @@ public class ProfileUtilsTest extends TestCase {
             // This exception is expected and throwing it passes the test
         } catch (IOException ex) {
             log.error("Failure copying profiles", ex);
-            TestCase.fail("Unable to copy profiles with IOException.");
+            fail("Unable to copy profiles with IOException.");
         }
     }
 

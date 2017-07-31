@@ -1,4 +1,3 @@
-// ChannelStart.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class ChannelStart extends SdfMacro {
 
@@ -14,12 +13,14 @@ public class ChannelStart extends SdfMacro {
         this.number = number;
     }
 
+    @Override
     public String name() {
-        return "CHANNEL_START";
+        return "CHANNEL_START"; // NOI18N
     }
 
     int number;
 
+    @Override
     public int length() {
         return 2;
     }
@@ -56,6 +57,7 @@ public class ChannelStart extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(0x81);
@@ -65,14 +67,17 @@ public class ChannelStart extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Channel " + number + '\n';
+        return "Channel " + number + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
-        return name() + ' ' + number + '\n';
+        return name() + ' ' + number + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         String output = indent + oneInstructionString();
         if (children == null) {
@@ -84,5 +89,3 @@ public class ChannelStart extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)ChannelStart.java */

@@ -20,6 +20,9 @@ public class NceLight extends AbstractLight {
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in NceLightManager
+     * @param systemName system name for light
+     * @param tc traffic controller for connection
+     * @param mgr light manager for light
      */
     public NceLight(String systemName, NceTrafficController tc, NceLightManager mgr) {
         super(systemName);
@@ -33,6 +36,10 @@ public class NceLight extends AbstractLight {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in NceLightManager
+     * @param systemName system name for light
+     * @param userName userName for light
+     * @param tc traffic controller for connection
+     * @param mgr light manager for light
      */
     public NceLight(String systemName, String userName, NceTrafficController tc, NceLightManager mgr) {
         super(systemName, userName);
@@ -57,6 +64,7 @@ public class NceLight extends AbstractLight {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         boolean state = true;
         if (newState == OFF) {

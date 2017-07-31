@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * communications.
  *
  * @see SlotManager
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
 
@@ -36,6 +36,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     /**
      * LocoNet allows multiple throttles for the same device
      */
+    @Override
     protected boolean singleUse() {
         return false;
     }
@@ -49,6 +50,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * others?) this code will retry and then fail the request if no response
      * occurs
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
 
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);  //first try
@@ -63,6 +65,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 this.list = list;
             }
 
+            @Override
             public void run() {
                 int attempts = 1;  //already tried once above
                 int maxAttempts = 2;
@@ -70,31 +73,37 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                     try {
                         Thread.sleep(1000);  //wait one second
                     } catch (InterruptedException ex) {
+                        log.debug("ending because interrupted");
                         return;  //stop waiting if slot is found or error occurs
                     }
-                    String msg = "No response to slot request for {}, attempt {}";
+                    String msg = "No response to slot request for {}, attempt {}"; // NOI18N
                     if (attempts < maxAttempts) {
                         slotManager.slotFromLocoAddress(address.getNumber(), list);
-                        msg += ", trying again.";
+                        msg += ", trying again."; // NOI18N
                     }
                     log.debug(msg, address, attempts);
                     attempts++;
                 }
-                log.error("No response to slot request for {} after {} attempts.", address, attempts - 1);
+                log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
                 failedThrottleRequest(address, "Failed to get response from command station");
             }
         }
-        Thread thr = new Thread(new RetrySetup((DccLocoAddress) address, this));
-        thr.start();
-        waitingForNotification.put(((DccLocoAddress) address).getNumber(), thr);
+        
+        retrySetupThread = new Thread(new RetrySetup((DccLocoAddress) address, this));
+        retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
+        retrySetupThread.start();
+        waitingForNotification.put(((DccLocoAddress) address).getNumber(), retrySetupThread);
     }
 
+    volatile Thread retrySetupThread;
+    
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
 
     /**
      * LocoNet does have a Dispatch function
      *
      */
+    @Override
     public boolean hasDispatchFunction() {
         return true;
     }
@@ -103,6 +112,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
      */
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128
                 | DccThrottle.SpeedStepMode28
@@ -115,6 +125,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * throttle for all ThrottleListeners of that address and notifies them via
      * the ThrottleListener.notifyThrottleFound method.
      */
+    @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
@@ -133,6 +144,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Address 128 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -141,6 +153,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Address 127 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -148,6 +161,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -159,6 +173,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         return (num >= 128);
     }
 
+    @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             LocoNetThrottle lnt = (LocoNetThrottle) t;
@@ -169,6 +184,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
+    @Override
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         // set status to common
         LocoNetThrottle lnt = (LocoNetThrottle) t;
@@ -183,6 +199,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         super.releaseThrottle(t, l);
     }
 
+    @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
@@ -217,6 +234,20 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         if (waitingForNotification.containsKey(address)) {
             waitingForNotification.get(address).interrupt();
             waitingForNotification.remove(address);
+        }
+    }
+    
+    /**
+     * Dipose of this manager, typically for testing
+     */
+    void dispose() {
+        if (retrySetupThread != null) {
+            try {
+                retrySetupThread.interrupt();
+                retrySetupThread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            }
         }
     }
 

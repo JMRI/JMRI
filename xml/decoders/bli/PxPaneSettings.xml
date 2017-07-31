@@ -25,6 +25,7 @@
         <text> </text>
       </label>
       <display item="Smoke Unit"/>
+      <display item="Smoke Unit Logic"/>
     </column>
     <column>
       <row>
@@ -40,121 +41,71 @@
         <text> </text>
       </label>
       <row>
-        <display item="Smoke Unit Fan Chuff Time" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Smoke Unit Fan Chuff Time" layout="above" label=""/>
+        <display item="Smoke Unit Fan Rev Speed" layout="above" label=""/>
+        <display item="Smoke Unit Fan Minimal Speed" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
         <display item="Smoke Unit Fan Chuff Time" layout="above" format="hslider"/>
+        <display item="Smoke Unit Fan Rev Speed" layout="above" format="hslider"/>
+        <display item="Smoke Unit Fan Minimal Speed" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
       </label>
       <row>
-        <display item="Smoke Unit Chuff Heater Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Smoke Unit Chuff Heater Power" layout="above" label=""/>
+        <display item="Smoke Unit Idle Set Point" layout="above" label=""/>
+        <display item="Smoke Unit Fan Idle Speed" layout="above" label=""/>
+        <display item="Smoke Unit Fan Maximum Speed" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
         <display item="Smoke Unit Chuff Heater Power" layout="above" format="hslider"/>
+        <display item="Smoke Unit Idle Set Point" layout="above" format="hslider"/>
+        <display item="Smoke Unit Fan Idle Speed" layout="above" format="hslider"/>
+        <display item="Smoke Unit Fan Maximum Speed" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
       </label>
       <row>
-        <display item="Smoke Unit Idle Heater Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Smoke Unit Idle Heater Power" layout="above" label=""/>
+        <display item="Smoke Unit Chuff Set Point" layout="above" label=""/>
+        <display item="Smoke Unit Minimal Heater Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
         <display item="Smoke Unit Idle Heater Power" layout="above" format="hslider"/>
+        <display item="Smoke Unit Chuff Set Point" layout="above" format="hslider"/>
+        <display item="Smoke Unit Minimal Heater Power" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
       </label>
       <row>
-        <display item="Smoke Unit Fan Idle Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Smoke Unit Fan Idle Power" layout="above" label=""/>
+        <display item="Smoke Unit Rev Heater Power" layout="above" label=""/>
+        <display item="Smoke Unit Maximum Heater Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
         <display item="Smoke Unit Fan Idle Power" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Smoke Unit Fan Rev Speed" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Smoke Unit Fan Rev Speed" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Smoke Unit Fan Idle Speed" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Smoke Unit Fan Idle Speed" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Smoke Unit Rev Heater Power" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
         <display item="Smoke Unit Rev Heater Power" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
+        <display item="Smoke Unit Maximum Heater Power" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
       </label>
       <row>
-        <display item="Smoke Unit Idle Heater Power" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Smoke Unit Idle Heater Power" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Fan Normal Chuff Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Fan Normal Chuff Power" layout="above" label=""/>
+        <display item="Smoke Unit Power On Delay" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
         <display item="Fan Normal Chuff Power" layout="above" format="hslider"/>
+        <display item="Smoke Unit Power On Delay" layout="above" format="hslider"/>
         <label>
           <text> </text>
         </label>
@@ -163,9 +114,7 @@
         <text> </text>
       </label>
       <row>
-        <display item="Fan Loaded Chuff Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Fan Loaded Chuff Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
@@ -178,9 +127,7 @@
         <text> </text>
       </label>
       <row>
-        <display item="Fan Steam Cock Chuff Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Fan Steam Cock Chuff Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
@@ -193,9 +140,7 @@
         <text> </text>
       </label>
       <row>
-        <display item="Fan Rod Knock Chuff Power" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Fan Rod Knock Chuff Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
@@ -208,28 +153,11 @@
         <text> </text>
       </label>
       <row>
-        <display item="Motor Load Chuff Power Filter" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Whistle Smoke Unit Heater Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
-        <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Motor Load Power Filter" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Motor Load Power Filter" layout="above" format="hslider"/>
+        <display item="Whistle Smoke Unit Heater Power" layout="above" format="hslider"/>
         <label>
           <text> </text>
         </label>
@@ -238,28 +166,11 @@
         <text> </text>
       </label>
       <row>
-        <display item="Grid Blower Brake Motor Decrease Time" layout="above" label="">
-          <label/>
-        </display>
+        <display item="Whistle Smoke Unit Fan Power" layout="above" label=""/>
         <label>
           <text> </text>
         </label>
-        <display item="Grid Blower Brake Motor Decrease Time" layout="above" format="hslider"/>
-        <label>
-          <text> </text>
-        </label>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Track Sounds Maximum Speed Step" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Track Sounds Maximum Speed Step" layout="above" format="hslider"/>
+        <display item="Whistle Smoke Unit Fan Power" layout="above" format="hslider"/>
         <label>
           <text> </text>
         </label>
@@ -281,5 +192,86 @@
       <display item="Broadcast Stop Packet Count"/>
       <display item="Fatal OverCurrent Config"/>
       <display item="Fatal OverCurrent Sensitivity"/>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Motor Load Chuff Power Filter" layout="above" label=""/>
+        <display item="Motor Load Power Filter" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
+        <display item="Motor Load Power Filter" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Grid Blower Brake Motor Decrease"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Grid Blower Brake Motor Decrease Time" layout="above" label=""/>
+        <display item="Brake Squeal Decel Rate" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Grid Blower Brake Motor Decrease Time" layout="above" format="hslider"/>
+        <display item="Brake Squeal Decel Rate" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Track Sounds Maximum Speed Step" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Track Sounds Maximum Speed Step" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Depleting Coal Drop Time" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Depleting Coal Drop Time" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Depleting Coal Save Position" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Depleting Coal Save Position" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
     </column>
 </pane>

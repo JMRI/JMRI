@@ -1,10 +1,9 @@
-// XBeeInterface.java
 package jmri.jmrix.ieee802154.xbee;
 
 /**
  * Interface to send/receive xbee information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
   */
 public interface XBeeInterface {
 
@@ -17,4 +16,4 @@ public interface XBeeInterface {
 }
 
 
-/* @(#)XBeeInterface.java */
+

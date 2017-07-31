@@ -2,10 +2,10 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialNode class
@@ -187,7 +187,7 @@ public class SerialNodeTest extends TestCase {
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 8, m.getNumDataElements());
         Assert.assertEquals("node address", 70, m.getElement(0));
-        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'
         Assert.assertEquals("out byte 1", 17, (m.getElement(2) & 0xff));
         Assert.assertEquals("out byte 2", 0, (m.getElement(3) & 0xff));
         Assert.assertEquals("out byte 3", 68, (m.getElement(4) & 0xff));
@@ -199,7 +199,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesInitial() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS2", "ab");
         SerialSensor s3 = new SerialSensor("CS3", "abc");
         b.registerSensor(s1, 0);
@@ -218,7 +218,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChanges2ndByte() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -238,7 +238,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesShortReply() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -264,7 +264,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesEmptyReply() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -364,6 +364,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -373,6 +374,7 @@ public class SerialNodeTest extends TestCase {
         memo.setTrafficController(stcs);
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();

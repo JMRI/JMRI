@@ -1,4 +1,3 @@
-// ModifyLocationsAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -38,8 +37,8 @@ public class ModifyLocationsAction extends AbstractAction {
             f.initComponents(l);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

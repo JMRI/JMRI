@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for Frames displaying communications monitor information
+ * Abstract base class for Frames displaying communications monitor information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
  * @author	Chuck Catania  Copyright (C) 2014, 2016
@@ -80,11 +80,11 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-    String rawDataCheck = this.getClass().getName()+".RawData";
-    String timeStampCheck = this.getClass().getName()+".TimeStamp";
-    String deltaTCheck = this.getClass().getName()+".DeltaT";
-    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
-    String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
+    String timeStampCheck = this.getClass().getName() + ".TimeStamp"; // NOI18N
+    String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop"; // NOI18N
+    String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
+    String deltaTCheck = this.getClass().getName()+".DeltaT"; //NOI18N
     jmri.UserPreferencesManager p;
     
     protected Border packetDisplayBorder = BorderFactory.createEtchedBorder();
@@ -104,6 +104,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         self = this;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -149,10 +150,10 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             }
         });
 
-        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane")); // NOI18N
+        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane", Bundle.getMessage("ButtonAddMessage"))); // NOI18N
 
         // fix a width for current character set
-        JTextField t = new JTextField(80);
+        JTextField t = new JTextField(200);
         int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
         int y = jScrollPane1.getPreferredSize().height + 10 * t.getPreferredSize().height;
 
@@ -369,6 +370,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     synchronized (self) {
                         monTextPane.append(linesBuffer.toString());
@@ -531,6 +533,14 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         return linesBuffer.toString();
     }
 
+    /** 
+     * Get access to the main text area. This is intended
+     * for use in e.g. scripting to extend the behavior of the window.
+     */
+    public final synchronized JTextArea getTextArea() {
+        return monTextPane;
+    }
+    
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *

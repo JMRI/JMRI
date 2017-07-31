@@ -7,6 +7,4 @@ package jmri.jmrix.xpa.swing.xpamon;
  */
 public class XpaMonAction extends XpaMonPane.Default {
 
-
 }
-

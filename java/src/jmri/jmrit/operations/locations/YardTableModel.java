@@ -1,4 +1,3 @@
-// YardTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -28,6 +27,9 @@ public class YardTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("YardName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

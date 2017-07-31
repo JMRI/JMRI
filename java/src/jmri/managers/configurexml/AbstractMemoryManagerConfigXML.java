@@ -33,6 +33,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * @param o Object to store, of type MemoryManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element memories = new Element("memories");
         setStoreElementClass(memories);
@@ -55,8 +56,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
-                Element elem = new Element("memory")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("memory");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common part
@@ -92,6 +92,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      */
     abstract public void setStoreElementClass(Element memories);
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -133,6 +134,8 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(memoryList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create Memory: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
             }
@@ -145,6 +148,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.memoryManagerInstance().getXMLOrder();
     }

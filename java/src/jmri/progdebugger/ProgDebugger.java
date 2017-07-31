@@ -5,8 +5,11 @@ import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -63,7 +66,7 @@ public class ProgDebugger implements AddressedProgrammer {
 
     /**
      * Get the CV value directly, without going through the usual indirect
-     * protocol. Used for e.g. testing.
+     * protocol. Used, for example, while testing.
      * <p>
      * Does not change the "lastRead" and "lastReadCv" results.
      *
@@ -319,6 +322,16 @@ public class ProgDebugger implements AddressedProgrammer {
         log.debug("getCanWrite(" + addr + ") returns " + (Integer.parseInt(addr) <= writeLimit));
         return Integer.parseInt(addr) <= writeLimit;
     }
+
+    /**
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
 
     /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.

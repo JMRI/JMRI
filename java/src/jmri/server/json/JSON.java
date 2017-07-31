@@ -114,6 +114,10 @@ public final class JSON {
      * {@value #PROPERTIES}
      */
     public static final String PROPERTIES = "properties"; // NOI18N
+    /**
+     * {@value #DEFAULT}
+     */
+    public static final String DEFAULT = "default"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -178,6 +182,26 @@ public final class JSON {
      * {@value #NETWORK_SERVICES}
      */
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
+    /**
+     * {@value #CONFIG_PROFILES}
+     */
+    public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String UNIQUE_ID = "uniqueId"; // NOI18N
+    /**
+     * {@value #IS_ACTIVE_PROFILE}
+     */
+    public static final String IS_ACTIVE_PROFILE = "isActiveProfile"; // NOI18N
+    /**
+     * {@value #IS_AUTO_START}
+     */
+    public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
 
     /* JSON data types */
     /**
@@ -212,7 +236,7 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
-    
+
     /* JSON panel tokens */
     /**
      * {@value #CONTROL_PANEL}
@@ -222,6 +246,10 @@ public final class JSON {
      * {@value #LAYOUT_PANEL}
      */
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
+    /**
+     * {@value #SWITCHBOARD_PANEL}
+     */
+    public static final String SWITCHBOARD_PANEL = "Switchboard"; // NOI18N
     /**
      * {@value #PANEL_PANEL}
      */

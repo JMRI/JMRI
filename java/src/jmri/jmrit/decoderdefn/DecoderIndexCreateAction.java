@@ -8,7 +8,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Update the decoder index and store
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2011
+ * @author Bob Jacobsen Copyright (C) 2001, 2011
  * @see jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends JmriAbstractAction {

@@ -9,8 +9,8 @@ import javax.annotation.Nonnull;
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>
@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
 public interface Programmer {
 
@@ -229,12 +229,33 @@ public interface Programmer {
      */
     public boolean getCanWrite(String addr);
 
+    /**
+     * Learn about whether the programmer does any kind of verification of write operations
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return The confirmation behavior that can be counted on (might be better in some cases)
+     */
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr);
+    
+    enum WriteConfirmMode {
+        /** No verification available, writes are blind */
+        NotVerified,
+        
+        /** Programmer signals error if there's no reply from the device */
+        DecoderReply,
+        
+        /** Programmer does a read after write to verify */
+        ReadAfterWrite
+    }
+    
     public void addPropertyChangeListener(PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
+    @Nonnull
     public String decodeErrorCode(int i);
 
 }

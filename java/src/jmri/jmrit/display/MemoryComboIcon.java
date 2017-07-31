@@ -64,13 +64,12 @@ public class MemoryComboIcon extends PositionableJPanel
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
 
+    @Override
     public JComboBox<String> getTextComponent() {
         return _comboBox;
     }
 
     class ComboModel extends DefaultComboBoxModel<String> {
-
-        private static final long serialVersionUID = 2915042785923780735L;
 
         ComboModel() {
             super();
@@ -80,6 +79,7 @@ public class MemoryComboIcon extends PositionableJPanel
             super(l);
         }
 
+        @Override
         public void addElement(String obj) {
             if (getIndexOf(obj) >= 0) {
                 return;
@@ -88,6 +88,7 @@ public class MemoryComboIcon extends PositionableJPanel
             updateMemory();
         }
 
+        @Override
         public void insertElementAt(String obj, int idx) {
             if (getIndexOf(obj) >= 0) {
                 return;
@@ -165,17 +166,20 @@ public class MemoryComboIcon extends PositionableJPanel
     /**
      * Display
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         updateMemory();
     }
 
     // update icon as state of Memory changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("value")) {
             displayState();
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedMemory == null) {
@@ -195,14 +199,11 @@ public class MemoryComboIcon extends PositionableJPanel
         getMemory().setValue(_comboBox.getSelectedItem());
     }
 
+    @Override
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -295173723551846563L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -215,20 +216,19 @@ public class MemoryComboIcon extends PositionableJPanel
      */
     DefaultListModel<String> _listModel;
 
+    @Override
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2458542268881073784L;
             JList<String> list;
             JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);
 
+            @Override
             protected void addAdditionalButtons(JPanel p) {
                 _listModel = new DefaultListModel<String>();
                 bDel.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent a) {
                         int idx = list.getSelectedIndex();
                         if (idx >= 0) {
@@ -237,6 +237,7 @@ public class MemoryComboIcon extends PositionableJPanel
                     }
                 });
                 bAdd.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent a) {
                         String text = textfield.getText();
                         if (text == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
@@ -276,6 +277,7 @@ public class MemoryComboIcon extends PositionableJPanel
         makeIconEditorFrame(this, "Memory", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
@@ -311,12 +313,14 @@ public class MemoryComboIcon extends PositionableJPanel
         _model.setSelectedItem(getMemory().getValue());
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         _comboBox.setFocusable(false);
         _comboBox.transferFocus();
         super.mouseExited(e);
     }
 
+    @Override
     void cleanup() {
         if (namedMemory != null) {
             getMemory().removePropertyChangeListener(this);

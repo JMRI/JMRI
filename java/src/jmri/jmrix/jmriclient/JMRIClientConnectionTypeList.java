@@ -1,5 +1,7 @@
-// JMRIClientConnectionTypeList.java
 package jmri.jmrix.jmriclient;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid JMRIClient Connection Types
@@ -9,6 +11,7 @@ package jmri.jmrix.jmriclient;
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2014
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class JMRIClientConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String JMRI = "JMRI (Network)";

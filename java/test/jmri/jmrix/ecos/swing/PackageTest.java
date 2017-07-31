@@ -32,9 +32,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.monitor.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.preferences.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.statusframe.PackageTest.class));
-
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosComponentFactoryTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosNamedPaneActionTest.class));
 
         return suite;
     }

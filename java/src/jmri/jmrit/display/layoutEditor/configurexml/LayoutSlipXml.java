@@ -27,6 +27,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LayoutSlip
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LayoutSlip p = (LayoutSlip) o;
@@ -122,6 +123,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (p.getTurnoutBName().length() > 0) {
             element.addContent(new Element("turnoutB").addContent(p.getTurnoutBName()));
         }
+
         Element states = new Element("states");
         Element state = new Element("A-C");
         state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_AC)));
@@ -156,11 +158,12 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Load, starting with the levelxing element, then all the other data
+     * Load, starting with the LayoutSlip element, then all the other data
      *
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
@@ -222,14 +225,14 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert levelxing a coords attribute");
+            log.error("failed to convert LayoutSlip a coords attribute");
         }
         l.setCoordsA(new Point2D.Double(x, y));
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert levelxing b coords attribute");
+            log.error("failed to convert LayoutSlip b coords attribute");
         }
         l.setCoordsB(new Point2D.Double(x, y));
 

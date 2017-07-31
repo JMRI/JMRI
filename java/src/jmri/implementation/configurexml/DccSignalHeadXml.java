@@ -1,4 +1,3 @@
-// DccSignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -35,14 +34,13 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DccSignalHead p = (DccSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -113,6 +111,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

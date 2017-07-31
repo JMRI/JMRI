@@ -9,10 +9,10 @@ import javax.annotation.Nonnull;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track. Request
+ * <LI>Global, previously "Service Mode" or on a programming track. Request
  * these from an instance of {@link GlobalProgrammerManager}.
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main". Request
- * these from an instance of this interface.
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main".
+ * Request these from an instance of this interface.
  * </UL>
  * You get a {@link Programmer} object from a ProgrammerManager, which in turn
  * can be located from the {@link InstanceManager}.
@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 3.9.6
  */
 public interface AddressedProgrammerManager {
@@ -62,6 +62,8 @@ public interface AddressedProgrammerManager {
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used
      * elsewhere.
+     *
+     * @param p the programmer to release
      */
     public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p);
 
@@ -77,6 +79,7 @@ public interface AddressedProgrammerManager {
      * Convenience method to check whether you'll be able to get an Addressed
      * Mode programmer for a specific address
      *
+     * @param address the address to get a programmer for
      * @return false if there's no chance of getting one
      */
     public boolean isAddressedModePossible(@Nonnull LocoAddress address);
@@ -89,23 +92,30 @@ public interface AddressedProgrammerManager {
      * programmer.
      * <p>
      * If the order is significant, earlier modes are better.
+     *
+     * @return the programming modes or an empty list
      */
     @Nonnull
     public List<ProgrammingMode> getDefaultModes();
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface controls, so it should
+     * return a user-provided name for this particular one.
+     *
+     * @return the name for the programmer
      */
     @Nonnull
     public String getUserName();
 
     /**
-     * toString() provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
-     * user-provided name for this particular one.
+     * Provides the human-readable representation for including
+     * ProgrammerManagers directly in user interface controls, so it should
+     * return a user-provided name for this particular one.
+     *
+     * @return the name for the programmer
      */
     @Nonnull
+    @Override
     public String toString();
 }

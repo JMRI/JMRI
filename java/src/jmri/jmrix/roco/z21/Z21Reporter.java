@@ -1,19 +1,15 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.Reporter;
 import jmri.RailCom; 
-import jmri.IdTag; 
 import jmri.RailComManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 
 /**
  * Z21Reporter implements the Reporter Manager interface
  * for Roco Z21 systems.
- * <P>
+ * <p>
  * Reports from this reporter are of the type jmri.RailCom.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -25,9 +21,9 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
     // referesh the RailCom data (this does not appear to happen automatically).
     private static final int refreshTimeoutValue = 15000; 
 
-
     /**  
-     * Create a new Z21Reporter
+     * Create a new Z21Reporter.
+     *
      * @param systemName the system name of the new reporter.
      * @param userName the user name of the new reporter.
      * @param memo an instance of Z21SystemConnectionMemo this manager 
@@ -43,7 +39,9 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
        refreshTimer();
     }
 
-    // request an update from the layout.
+    /**
+     *     request an update from the layout.
+     */
     private void requestUpdateFromLayout(){
        _memo.getTrafficController().sendz21Message(Z21Message.getLanRailComGetDataRequestMessage(),this);
     }
@@ -92,12 +90,13 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
          // we don't need to handle outgoing messages, so just ignore them.
     }
 
-    /*
+    /**
      * Set up the refreshTimer, and start it.
      */
     private void refreshTimer() {
         if (refreshTimer == null) {
             refreshTimer = new javax.swing.Timer(refreshTimeoutValue, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     // If the timer times out, send a request for status
                     requestUpdateFromLayout();
@@ -110,8 +109,10 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
         refreshTimer.start();
     }
 
+    @Override
     public void dispose(){
         super.dispose();
         refreshTimer.stop();
     }
+
 }

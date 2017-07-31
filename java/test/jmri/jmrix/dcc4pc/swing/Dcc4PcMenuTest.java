@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -17,7 +16,7 @@ import java.awt.GraphicsEnvironment;
  **/
 
 public class Dcc4PcMenuTest {
-        
+
    private Dcc4PcSystemConnectionMemo memo = null;
 
    @Test

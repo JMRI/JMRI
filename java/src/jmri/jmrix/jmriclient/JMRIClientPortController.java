@@ -1,11 +1,10 @@
-// JMRIClientPortController.java
 package jmri.jmrix.jmriclient;
 
 /**
  * Abstract base for classes representing a JMRIClient communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Paul Bender Copyright (C) 2010
   */
 public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -34,4 +33,4 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
 }
 
 
-/* @(#)JMRIClientPortController.java */
+

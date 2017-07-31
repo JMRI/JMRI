@@ -1,4 +1,3 @@
-// XBeeTurnoutManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.JmriException;
@@ -24,16 +23,19 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         this.prefix = prefix;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // for now, set this to false. multiple additions currently works 
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -75,6 +77,8 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * Validate system name for the current hardware configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     * @param systemName Xbee id format with pins
+     * @return true for valid formatted name
      */
     public boolean validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null

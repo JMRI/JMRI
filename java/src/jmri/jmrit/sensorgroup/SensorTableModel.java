@@ -36,14 +36,17 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         getManager().removePropertyChangeListener(this);
     }
 
+    @Override
     public Manager getManager() {
         return InstanceManager.sensorManagerInstance();
     }
 
+    @Override
     public int getRowCount() {
         return _sysNameList.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         if (r >= _sysNameList.length) {
             return null;
@@ -60,6 +63,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         if (r > _sysNameList.length) {
             return;
@@ -73,6 +77,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager

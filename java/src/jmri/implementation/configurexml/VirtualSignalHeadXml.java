@@ -23,6 +23,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         VirtualSignalHead p = (VirtualSignalHead) o;
 
@@ -30,7 +31,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -56,6 +56,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -9,15 +9,17 @@ import jmri.Sensor;
 /**
  * Provides an edit panel for a sensor object
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SensorEditAction extends BeanEditAction {
 
+    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
     } //IN18N
 
     SensorDebounceEditAction debounce;
+    SensorPullUpEditAction pullup;
 
     @Override
     protected void initPanels() {
@@ -25,12 +27,17 @@ public class SensorEditAction extends BeanEditAction {
         debounce = new SensorDebounceEditAction();
         debounce.setBean(bean);
         bei.add(debounce.sensorDebounce(null));
+        pullup = new SensorPullUpEditAction();
+        pullup.setBean(bean);
+        bei.add(pullup.sensorPullUp(null));
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }

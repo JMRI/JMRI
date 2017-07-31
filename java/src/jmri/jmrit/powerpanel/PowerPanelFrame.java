@@ -6,7 +6,7 @@ import jmri.util.JmriJFrame;
 /**
  * Frame for controlling layout power via a PowerManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class PowerPanelFrame extends JmriJFrame {
 
@@ -26,6 +26,7 @@ public class PowerPanelFrame extends JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

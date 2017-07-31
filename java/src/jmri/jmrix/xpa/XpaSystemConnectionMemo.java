@@ -108,10 +108,6 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
     private TurnoutManager turnoutManager = null;
 
-
-
-
-
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -145,6 +141,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return null; // nothing, by default
    }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, XpaSystemConnectionMemo.class);
@@ -153,6 +150,5 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         }
         super.dispose();
     }
-
 
 }

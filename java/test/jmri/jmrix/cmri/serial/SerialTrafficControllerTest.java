@@ -6,10 +6,9 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.util.JUnitAppender;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,15 +17,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2006
  */
-public class SerialTrafficControllerTest extends TestCase {
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
-    public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
 
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = (SerialTrafficController)tc;
         SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC,c);
         SerialNode f = new SerialNode(3, SerialNode.SMINI,c);
         SerialNode d = new SerialNode(2, SerialNode.SMINI,c);
@@ -85,10 +80,12 @@ public class SerialTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
@@ -96,25 +93,29 @@ public class SerialTrafficControllerTest extends TestCase {
     SerialReply rcvdReply;
     SerialMessage rcvdMsg;
 
-    // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    // internal class to simulate a PortAdapter
+    class SerialPortAdapterScaffold extends SerialPortAdapter {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
+        protected SerialPortAdapterScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
@@ -126,16 +127,19 @@ public class SerialTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -147,29 +151,17 @@ public class SerialTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SerialTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
+    @Override
+    @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new SerialTrafficController();
     }
 
-    protected void tearDown() {
+    @Override
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

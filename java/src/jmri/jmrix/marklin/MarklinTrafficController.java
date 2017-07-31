@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
@@ -43,10 +44,12 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     MarklinSystemConnectionMemo adaptermemo;
 
     // The methods to implement the MarklinInterface
+    @Override
     public synchronized void addMarklinListener(MarklinListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeMarklinListener(MarklinListener l) {
         this.removeListener(l);
     }
@@ -60,6 +63,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * CommandStation implementation, not yet supported
      */
+    @Override
     public void sendPacket(byte[] packet, int count) {
 
     }
@@ -67,6 +71,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * Forward a MarklinMessage to all registered MarklinInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((MarklinListener) client).message((MarklinMessage) m);
     }
@@ -74,6 +79,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * Forward a MarklinReply to all registered MarklinInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((MarklinListener) client).reply((MarklinReply) r);
     }
@@ -81,6 +87,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
         sendMessage(m, reply);
     }
@@ -90,11 +97,13 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      super.forwardToPort(m, reply);
      }*/
     //Marklin doesn't support this function.
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return MarklinMessage.getProgMode();
     }
 
     //Marklin doesn't support this function!
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return MarklinMessage.getExitProgMode();
     }
@@ -124,11 +133,12 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;
 
+    @Override
     protected AbstractMRReply newReply() {
         MarklinReply reply = new MarklinReply();
         return reply;
@@ -141,6 +151,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     //In theory the replies should only be 13bytes long, so the EOM is completed when the reply can take no more data
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         return false;
     }
@@ -207,6 +218,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * Check Tams MC for updates.
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         if (disablePoll) {
             return null;
@@ -220,6 +232,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         if (disablePoll) {
             return null;
@@ -234,6 +247,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return null;
     }
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "Marklin-CS2";
@@ -241,6 +255,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "MC";

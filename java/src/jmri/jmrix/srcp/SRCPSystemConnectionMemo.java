@@ -107,10 +107,12 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return false; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
     }
 
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
@@ -142,4 +144,4 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

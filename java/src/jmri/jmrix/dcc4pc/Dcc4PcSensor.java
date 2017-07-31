@@ -1,4 +1,3 @@
-// Dcc4PcSensor.java
 package jmri.jmrix.dcc4pc;
 
 import jmri.implementation.AbstractSensor;
@@ -10,15 +9,10 @@ import jmri.implementation.AbstractSensor;
  * should be the only object that is sending messages for this sensor; more than
  * one Sensor object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson (C) 2012
  */
 public class Dcc4PcSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4792333997713777957L;
 
     public Dcc4PcSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -36,12 +30,14 @@ public class Dcc4PcSensor extends AbstractSensor {
     private void init(String id) {
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
     static String[] modeNames = null;
     static int[] modeValues = null;
 
+    @Override
     public void setOwnState(int state) {
         int stateConvert = UNKNOWN;
         realState = state;
@@ -97,5 +93,3 @@ public class Dcc4PcSensor extends AbstractSensor {
         return inputLine;
     }
 }
-
-/* @(#)Dcc4PcSensor.java */

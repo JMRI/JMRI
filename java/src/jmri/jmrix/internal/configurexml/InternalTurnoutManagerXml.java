@@ -1,5 +1,6 @@
 package jmri.jmrix.internal.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdom2.Element;
 
 /**
@@ -11,13 +12,14 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class InternalTurnoutManagerXml extends jmri.managers.configurexml.InternalTurnoutManagerXml {
 
     public InternalTurnoutManagerXml() {
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.AbstractListModel;
@@ -42,18 +41,17 @@ import org.slf4j.LoggerFactory;
  */
 public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    private static final long serialVersionUID = -6255531106871960794L;
-    private OBlock _block;
-    private CircuitBuilder _parent;
+    private final OBlock _block;
+    private final CircuitBuilder _parent;
     // mouse selections of track icons that define the path
-    private ArrayList<Positionable> _pathGroup = new ArrayList<Positionable>();
+    private ArrayList<Positionable> _pathGroup = new ArrayList<>();
 
-    private JTextField _pathName = new JTextField();
-    private JList<OPath> _pathList;   // Java 1.6; in Java 1.7, JList<OPath>
+    private final JTextField _pathName = new JTextField();
+    private JList<OPath> _pathList;
     private PathListModel _pathListModel;
 
     private boolean _pathChange = false;
-    private JTextField _length = new JTextField();
+    private final JTextField _length = new JTextField();
     private JToggleButton _units;
 
     static int STRUT_SIZE = 10;
@@ -86,7 +84,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
         setContentPane(border);
-        _pathList.setPreferredSize(new java.awt.Dimension(_pathList.getFixedCellWidth(), _pathList.getFixedCellHeight()*4));
+        _pathList.setPreferredSize(new java.awt.Dimension(_pathList.getFixedCellWidth(), _pathList.getFixedCellHeight() * 4));
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
@@ -105,11 +103,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel.setLayout(new FlowLayout());
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                if (!findErrors()) {
-                    closingEvent();
-                }
+        doneButton.addActionListener((ActionEvent a) -> {
+            if (!findErrors()) {
+                closingEvent();
             }
         });
         panel.add(doneButton);
@@ -133,7 +129,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(panel);
 
         _pathListModel = new PathListModel();
-        _pathList = new JList<OPath>();
+        _pathList = new JList<>();
         _pathList.setModel(_pathListModel);
         _pathList.addListSelectionListener(this);
         _pathList.setCellRenderer(new PathCellRenderer());
@@ -145,10 +141,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel.setLayout(new FlowLayout());
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
-        clearButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                clearListSelection();
-            }
+        clearButton.addActionListener((ActionEvent a) -> {
+            clearListSelection();
         });
         clearButton.setToolTipText(Bundle.getMessage("ToolTipClearList"));
         panel.add(clearButton);
@@ -163,28 +157,22 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                addPath();
-            }
+        addButton.addActionListener((ActionEvent a) -> {
+            addPath();
         });
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
-        
+
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                changePathName();
-            }
+        changeButton.addActionListener((ActionEvent a) -> {
+            changePathName();
         });
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                deletePath();
-            }
+        deleteButton.addActionListener((ActionEvent a) -> {
+            deletePath();
         });
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePath"));
         panel.add(deleteButton);
@@ -198,22 +186,18 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pp.add(CircuitBuilder.makeTextBoxPanel(
                 false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
-        _length.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event) {
-                _pathChange = true;
-            }            
+        _length.addActionListener((ActionEvent event) -> {
+            _pathChange = true;
         });
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                changeUnits();
-            }
+        _units.addActionListener((ActionEvent event) -> {
+            changeUnits();
         });
         pp.add(_units);
         pathPanel.add(pp);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel l = new JLabel(Bundle.getMessage("enterNewPath"));
@@ -250,37 +234,33 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     private void changeUnits() {
-        String len =_length.getText();
-        if (len==null || len.length()==0) {
+        String len = _length.getText();
+        if (len == null || len.length() == 0) {
             if (_block.isMetric()) {
                 _units.setText("cm");
             } else {
                 _units.setText("in");
-            }                   
+            }
             return;
         }
         try {
             float f = Float.parseFloat(len);
             if (_units.isSelected()) {
-                _length.setText(Float.toString(f/2.54f));
+                _length.setText(Float.toString(f / 2.54f));
                 _units.setText("in");
             } else {
-                _length.setText(Float.toString(f*2.54f));
+                _length.setText(Float.toString(f * 2.54f));
                 _units.setText("cm");
-            }                   
+            }
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", len),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);                    
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3285719502798567675L;
-
+        @Override
         public Component getListCellRendererComponent(
                 JList<? extends OPath> list, // the list
                 OPath value, // value to display
@@ -306,12 +286,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     class PathListModel extends AbstractListModel<OPath> {
 
-        private static final long serialVersionUID = 5542865970112078810L;
-
+        @Override
         public int getSize() {
             return _block.getPaths().size();
         }
 
+        @Override
         public OPath getElementAt(int index) {
             return (OPath) _block.getPaths().get(index);
         }
@@ -321,24 +301,25 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         clearPath();
         OPath path = _pathList.getSelectedValue();
         if (path != null) {
             _pathName.setText(path.getName());
             if (_units.isSelected()) {
-                _length.setText(Float.toString(path.getLengthIn()));                
+                _length.setText(Float.toString(path.getLengthIn()));
             } else {
-                _length.setText(Float.toString(path.getLengthCm()));                                
+                _length.setText(Float.toString(path.getLengthCm()));
             }
             showPath(path);
         } else {
             checkForSavePath();
             _pathName.setText(null);
-            _length.setText("");                
+            _length.setText("");
         }
         int state = _block.getState() | OBlock.ALLOCATED;
-        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
+        _block.pseudoPropertyChange("state", 0, state);
     }
 
     private void showPath(OPath path) {
@@ -360,7 +341,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         if (log.isDebugEnabled()) {
             log.debug("makePathGroup for " + name + " CircuitGroup size= " + list.size());
         }
-        ArrayList<Positionable> pathGroup = new ArrayList<Positionable>();
+        ArrayList<Positionable> pathGroup = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Positionable pos = list.get(i);
             if (pos instanceof IndicatorTrack) {
@@ -387,8 +368,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     /**
-     * Sets the path icons for display
+     * Set the path icons for display.
      *
+     * @param pathChanged true if path has changed; false otherwise
      */
     protected void updatePath(boolean pathChanged) {
         // to avoid ConcurrentModificationException now set data
@@ -416,14 +398,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             return true;
         }
         java.util.List<Path> list = _block.getPaths();
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noPaths", _block.getDisplayName()),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
         }
         for (int i = 0; i < list.size(); i++) {
             OPath path = (OPath) list.get(i);
             ArrayList<Positionable> pathGp = makePathGroup(path);
-            if (pathGp.size() == 0) {
+            if (pathGp.isEmpty()) {
                 error = true;
                 break;
             }
@@ -478,11 +460,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                     }
                 }
             }
-        } else if (toPortal2 == null) {	//i.e. toPortal2 matches toPortal1==null
+        } else if (toPortal2 == null) { //i.e. toPortal2 matches toPortal1==null
             if (fromPortal1 != null && fromPortal1.equals(fromPortal2)) {
                 testSettings = true;
             }
-        } else if (fromPortal2 == null) {	//i.e. fromPortal2 matches toPortal1==null
+        } else if (fromPortal2 == null) { //i.e. fromPortal2 matches toPortal1==null
             if (fromPortal1 != null && fromPortal1.equals(toPortal2)) {
                 testSettings = true;
             }
@@ -494,7 +476,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             if (setting1.size() != setting2.size()) {
                 return false;
             }
-            if (setting1.size() == 0) {		// no turnouts in paths, but portals the same
+            if (setting1.isEmpty()) {  // no turnouts in paths, but portals the same
                 return true;
             }
             Iterator<BeanSetting> it = setting1.iterator();
@@ -512,13 +494,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return false;
     }
 
-    /**
-     * *********************** end setup *************************
-     */
+    //////////////////////////// end setup ////////////////////////////
     private void clearListSelection() {
         _pathList.clearSelection();
         int state = _block.getState() & ~OBlock.ALLOCATED;
-        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
+        _block.pseudoPropertyChange("state", 0, state);
         _length.setText("");
     }
 
@@ -526,7 +506,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
      * Make the OPath from the icons in the Iterator
      */
     private OPath makeOPath(String name, ArrayList<Positionable> pathGp, boolean showMsg) {
-        if (pathGp.size() == 0) {
+        if (pathGp.isEmpty()) {
             if (showMsg) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons"),
                         Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
@@ -534,7 +514,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             return null;
         }
         Iterator<Positionable> it = pathGp.iterator();
-        ArrayList<BeanSetting> settings = new ArrayList<BeanSetting>();
+        ArrayList<BeanSetting> settings = new ArrayList<>();
         Portal fromPortal = null;
         Portal toPortal = null;
         boolean hasTrack = false;
@@ -617,8 +597,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     /**
-     * Create or update the selected path named in the text field
-     * Checks that icons have been selected for the path
+     * Create or update the selected path named in the text field Checks that
+     * icons have been selected for the path
      */
     private void addPath() {
         String name = _pathName.getText();
@@ -648,7 +628,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         OPath path = makeOPath(name, _pathGroup, true);
         if (path == null) {
-            return;		// proper OPath cannot be made
+            return;  // proper OPath cannot be made
         }
         if (otherPath == null) {
             // is this path already defined?
@@ -664,7 +644,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         // match icons to current selections
         changePathNameInIcons(name, path);
 
-        if (otherPath != null) {		// same path
+        if (otherPath != null) {  // same path
             if (!sameName) {
                 int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("samePath",
                         otherPath.getName(), name), Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION,
@@ -700,34 +680,34 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 oldPath.addSetting(it.next());
             }
             toPortal.addPath(oldPath);
-            if (fromPortal!=null) {
-                fromPortal.addPath(oldPath);                
+            if (fromPortal != null) {
+                fromPortal.addPath(oldPath);
             }
         } else {
-            _block.addPath(path);		// OBlock adds path to portals and checks for duplicate path names
+            _block.addPath(path);  // OBlock adds path to portals and checks for duplicate path names
             setPathLength(path);
         }
         _pathList.setSelectedValue(path, true);
         _pathListModel.dataChange();
     }
-    
+
     private boolean setPathLength(OPath path) {
         float f = 0.0f;
         try {
             String num = _length.getText();
-            if (num==null || num.length()==0) {
+            if (num == null || num.length() == 0) {
                 num = "0.0";
             }
             f = Float.parseFloat(num);
             if (_units.isSelected()) {
-                path.setLength(f*25.4f);
+                path.setLength(f * 25.4f);
             } else {
-                path.setLength(f*10f);                        
-            }                   
+                path.setLength(f * 10f);
+            }
         } catch (NumberFormatException nfe) {
             f = -1.0f;
         }
-        if (f<0.0f) {
+        if (f < 0.0f) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", _length.getText()),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return false;
@@ -757,7 +737,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         // Change the path name in the track icons
         java.util.List<Positionable> list = _parent.getCircuitGroup();
         // cannot do remove/add path on the fly due to conncurrent access with Iterator
-        ArrayList<IndicatorTrack> changeGroup = new ArrayList<IndicatorTrack>();
+        ArrayList<IndicatorTrack> changeGroup = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) instanceof IndicatorTrack) {
                 IndicatorTrack icon = (IndicatorTrack) list.get(i);
@@ -815,13 +795,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }
         }
         int state = _block.getState() & ~OBlock.ALLOCATED;
-        _pathGroup = new ArrayList<Positionable>();
-        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
+        _pathGroup = new ArrayList<>();
+        _block.pseudoPropertyChange("state", 0, state);
     }
 
-    /**
-     * ************ callbacks from main frame ****************
-     */
+    //////////////////////// callbacks from main frame ////////////////////////
     protected java.util.List<Positionable> getPathGroup() {
         return _pathGroup;
     }

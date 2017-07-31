@@ -1,5 +1,6 @@
 package jmri.util.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -88,7 +89,7 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="font sizes are really quantized")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="font sizes are really quantized")
     public static synchronized void prepareFontLists() {
 
         if (prepared) {

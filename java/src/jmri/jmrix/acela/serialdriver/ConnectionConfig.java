@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.acela.serialdriver;
 
 import javax.swing.JButton;
@@ -11,7 +10,7 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
   *
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
@@ -33,6 +32,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton("Configure nodes");
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -44,15 +44,15 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     }
 
+    @Override
     public String name() {
         return "Acela";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();
         }
     }
 }
-
-/* @(#)ConnectionConfig.java */

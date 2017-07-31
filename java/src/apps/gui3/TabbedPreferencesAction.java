@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Tabbed Preferences Action for dealing with all the preferences in a single
  * view with a list option to the left hand side.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -78,24 +78,23 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         }
 
         if (f == null) {
-            f = new TabbedPreferencesFrame() {};
-            Runnable r = new Runnable() {
-                public void run() {
-                    try {
-                        setWait(true);
-                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
-                            Thread.sleep(50);
+            f = new TabbedPreferencesFrame();
+            new Thread(() -> {
+                final Object waiter = new Object();
+                try {
+                    setWait(true);
+                    while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                        synchronized (waiter) {
+                            waiter.wait(50);
                         }
-                        SwingUtilities.updateComponentTreeUI(f);
-                        showPreferences();
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                        setWait(false);
                     }
+                    SwingUtilities.updateComponentTreeUI(f);
+                    showPreferences();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    setWait(false);
                 }
-            };
-            Thread thr = new Thread(r);
-            thr.start();
+            }).start();
         } else {
             showPreferences();
         }
@@ -129,6 +128,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

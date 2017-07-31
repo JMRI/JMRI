@@ -19,6 +19,7 @@ abstract public class TamsPanel extends jmri.util.swing.JmriPanel implements Tam
      */
     protected TamsSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(TamsSystemConnectionMemo memo) {
         this.memo = memo;
     }

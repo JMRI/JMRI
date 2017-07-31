@@ -5,13 +5,14 @@ import java.awt.event.ActionEvent;
 /**
  * Swing action to create and register a SensorTable GUI in a JPanel
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
 
     public SensorTablePanel() {
     }
 
+    @Override
     public void initComponents() throws Exception {
         createModel();
         init(m);

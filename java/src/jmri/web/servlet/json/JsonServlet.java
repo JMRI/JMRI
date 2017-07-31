@@ -1,4 +1,3 @@
-// JsonServlet.java
 package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
@@ -9,6 +8,7 @@ import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,12 +17,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.ServiceLoader;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.server.json.JsonException;
@@ -35,6 +35,8 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide JSON formatted responses for requests to requests for information
@@ -57,6 +59,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2012, 2013, 2016
  */
+@WebServlet(name = "JsonServlet",
+        urlPatterns = {"/json"})
+@ServiceProvider(service = HttpServlet.class)
 public class JsonServlet extends WebSocketServlet {
 
     private transient ObjectMapper mapper;
@@ -129,15 +134,15 @@ public class JsonServlet extends WebSocketServlet {
             return;
         }
 
-        String[] rest = request.getPathInfo().split("/"); // NOI18N
-        String type = (rest.length > 1) ? rest[1] : null;
+        String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
+        String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         if (type != null) {
             response.setContentType(UTF8_APPLICATION_JSON);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
-            final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], StandardCharsets.UTF_8.name()) : null;
+            ServletUtil.getDefault().setNonCachingHeaders(response);
+            final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], "UTF-8"));
+                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], UTF8));
             }
             JsonNode reply = null;
             try {
@@ -147,7 +152,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGetList(type, request.getLocale()));
+                                array.addAll(service.doGetList(type, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -233,11 +238,11 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getInstance().setNonCachingHeaders(response);
+        ServletUtil.getDefault().setNonCachingHeaders(response);
 
-        String[] rest = request.getPathInfo().split("/"); // NOI18N
-        String type = (rest.length > 1) ? rest[1] : null;
-        String name = (rest.length > 2) ? rest[2] : null;
+        String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
+        String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
+        String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
         JsonNode data;
         JsonNode reply = null;
         try {
@@ -320,11 +325,11 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getInstance().setNonCachingHeaders(response);
+        ServletUtil.getDefault().setNonCachingHeaders(response);
 
-        String[] rest = request.getPathInfo().split("/"); // NOI18N
-        String type = (rest.length > 1) ? rest[1] : null;
-        String name = (rest.length > 2) ? rest[2] : null;
+        String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
+        String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
+        String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
         JsonNode data;
         JsonNode reply = null;
         try {
@@ -397,11 +402,11 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getInstance().setNonCachingHeaders(response);
+        ServletUtil.getDefault().setNonCachingHeaders(response);
 
-        String[] rest = request.getPathInfo().split("/"); // NOI18N
-        String type = (rest.length > 1) ? rest[1] : null;
-        String name = (rest.length > 2) ? rest[2] : null;
+        String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
+        String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
+        String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
         JsonNode reply = mapper.createObjectNode();
         try {
             if (type != null) {

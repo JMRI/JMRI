@@ -1,5 +1,7 @@
-// SerialConnectionTypeList.java
 package jmri.jmrix.powerline;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid Powerline Connection Types
@@ -8,6 +10,7 @@ package jmri.jmrix.powerline;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String POWERLINE = "Powerline";

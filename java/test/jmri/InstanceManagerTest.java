@@ -130,7 +130,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testAutoCreateNotOK() {
         try {
-        NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
+            InstanceManager.getDefault(NoAutoCreate.class);
             Assert.fail("Expected NullPointerException not thrown");
         } catch (NullPointerException ex) {
             // passes
@@ -214,11 +214,13 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

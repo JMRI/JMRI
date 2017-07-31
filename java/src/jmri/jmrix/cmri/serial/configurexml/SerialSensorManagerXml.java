@@ -20,18 +20,18 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SerialSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }

@@ -1,4 +1,3 @@
-/* UhlenbrockSlotManager.java */
 package jmri.jmrix.loconet;
 
 import jmri.CommandStation;
@@ -55,7 +54,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  * <P>
- * @author	Lisby Copyright (C) 2014
+ * @author Lisby Copyright (C) 2014
  * 
  */
 public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
@@ -67,6 +66,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /**
      * Provide Uhlenbrock-specific slot implementation
      */
+    @Override
     protected void loadSlots() {
         // initialize slot array
         for (int i = 0; i < NUM_SLOTS; i++) {
@@ -74,6 +74,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackByte1(int Byte1) {
         //    log.info("Uhlenbrock checkLackByte1 "+Byte1);
         if ((Byte1 & 0xED) == 0x6D) {
@@ -83,6 +84,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackTaskAccepted(int Byte2) {
         //    log.info("Uhlenbrock checkLackTaskAccepted "+Byte2);
         if (Byte2 == 1 // task accepted
@@ -94,6 +96,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackAcceptedBlind(int Byte2) {
         //    log.info("Uhlenbrock checkLackAcceptedBlind "+Byte2);
         if (Byte2 == 0x40 || Byte2 == 0x7F) {
@@ -109,6 +112,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      *
      * @param m incoming message
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         // see if message for Intellibox-II functions F9 thru F12
@@ -131,45 +135,45 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * table below contains value observed from an Intellibox II when doing
      * programming on main.
      *
-     * Address	CV	Value	Element Decimal	Hex	Decimal	Hex	Decimal	Hex	0	1	2	3	4	5
-     * 6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30 1
-     * 01	2	02	1	01	ED	1F	1	49	42	71	5E	1	0	2	70	0	1	0	0	10	0	0	0	0	0	0	0	0	0	0
-     * 0	0	0	0	4A 1	01	115	73	127	7F	ED	1F	1	49	42	71	5E	1	0	73	70	0	7F	0	0	10	0
-     * 0	0	0	0	0	0	0	0	0	0	0	0	0	45 56	38	2	02	1	01	ED	1F	1	49	42	71	5E	38	0	2
-     * 70	0	1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	73 87	57	255	FF	1	01	ED	1F	1	49
-     * 42	79	5E	57	0	7F	70	0	1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	69 87	57	255
-     * FF	127	7F	ED	1F	1	49	42	79	5E	57	0	7F	70	0	7F	0	0	10	0	0	0	0	0	0	0	0	0	0
-     * 0	0	0	0	17 87	57	255	FF	255	FF	ED	1F	1	49	42	79	5E	57	0	7F	72	0	7F	0	0	10
-     * 0	0	0	0	0	0	0	0	0	0	0	0	0	0	15 87	57	256	100	1	01	ED	1F	1	49	42	71	5E	57
-     * 0	0	70	1	1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1F 87	57	256	100	127	7F	ED
-     * 1F	1	49	42	71	5E	57	0	0	70	1	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61 87
-     * 57	256	100	255	FF	ED	1F	1	49	42	71	5E	57	0	0	72	1	7F	0	0	10	0	0	0	0	0	0	0
-     * 0	0	0	0	0	0	0	63 87	57	513	201	1	01	ED	1F	1	49	42	71	5E	57	0	1	70	2	1	0	0
-     * 10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1D 87	57	513	201	127	7F	ED	1F	1	49	42	71
-     * 5E	57	0	1	70	2	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	63 87	57	513	201	255
-     * FF	ED	1F	1	49	42	71	5E	57	0	1	72	2	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-     * 61 87	57	1024	400	1	01	ED	1F	1	49	42	71	5E	57	0	0	70	4	1	0	0	10	0	0	0	0	0
-     * 0	0	0	0	0	0	0	0	0	1A 87	57	1024	400	127	7F	ED	1F	1	49	42	71	5E	57	0	0	70
-     * 4	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	64 87	57	1024	400	255	FF	ED	1F	1
-     * 49	42	71	5E	57	0	0	72	4	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	66 120	78
-     * 127	7F	127	7F	ED	1F	1	49	42	71	5E	78	0	7F	70	0	7F	0	0	10	0	0	0	0	0	0	0	0
-     * 0	0	0	0	0	0	30 120	78	255	FF	127	7F	ED	1F	1	49	42	79	5E	78	0	7F	70	0	7F	0
-     * 0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	38 120	78	255	FF	128	80	ED	1F	1	49	42	79
-     * 5E	78	0	7F	72	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	45 120	78	255	FF	254
-     * FE	ED	1F	1	49	42	79	5E	78	0	7F	72	0	7E	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-     * 3B 120	78	255	FF	255	FF	ED	1F	1	49	42	79	5E	78	0	7F	72	0	7F	0	0	10	0	0	0
-     * 0	0	0	0	0	0	0	0	0	0	0	3A 127	7F	3	03	1	01	ED	1F	1	49	42	71	5E	7F	0	3	70	0
-     * 1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	35 127	7F	3	03	127	7F	ED	1F	1	49	42
-     * 71	5E	7F	0	3	70	0	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	4B 127	7F	3	03
-     * 128	80	ED	1F	1	49	42	71	5E	7F	0	3	72	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0
-     * 0	36 255	FF	3	03	1	01	ED	1F	1	49	42	73	5E	7F	0	3	70	0	1	0	0	10	0	0	0	0	0
-     * 0	0	0	0	0	0	0	0	0	37 255	FF	255	FF	127	7F	ED	1F	1	49	42	7B	5E	7F	0	7F	70
-     * 0	7F	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	3D 255	FF	255	FF	128	80	ED	1F	1
-     * 49	42	7B	5E	7F	0	7F	72	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	40 256	100
-     * 2	02	1	01	ED	1F	1	49	42	71	5E	0	1	2	70	0	1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0
-     * 0	0	4A 256	100	255	FF	255	FF	ED	1F	1	49	42	79	5E	0	1	7F	72	0	7F	0	0	10	0
-     * 0	0	0	0	0	0	0	0	0	0	0	0	0	43 1000	3E8	3	03	1	01	ED	1F	1	49	42	73	5E	68	3
-     * 3	70	0	1	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	23
+     * Address  CV      Value   Element Decimal Hex     Decimal Hex     Decimal Hex     4       5
+     * 60       11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      30 1
+     * 01       2       02      1       01      ED      1F      1       49      42      71      5E      1       0       2       70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0
+     * 0        0       0       0       4A 1    01      115     73      127     7F      ED      1F      1       49      42      71      5E      1       0       73      70      0       7F      0       0       10      0
+     * 0        0       0       0       0       0       0       0       0       0       0       0       0       45 56   38      2       02      1       01      ED      1F      1       49      42      71      5E      38      0       2
+     * 70       0       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       73 87   57      255     FF      1       01      ED      1F      1       49
+     * 42       79      5E      57      0       7F      70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       69 87   57      255
+     * FF       127     7F      ED      1F      1       49      42      79      5E      57      0       7F      70      0       7F      0       0       10      0       0       0       0       0       0       0       0       0       0
+     * 0        0       0       0       17 87   57      255     FF      255     FF      ED      1F      1       49      42      79      5E      57      0       7F      72      0       7F      0       0       10
+     * 0        0       0       0       0       0       0       0       0       0       0       0       0       0       15 87   57      256     100     1       01      ED      1F      1       49      42      71      5E      57
+     * 0        0       70      1       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       1F 87   57      256     100     127     7F      ED
+     * 1F       1       49      42      71      5E      57      0       0       70      1       7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       61 87
+     * 57       256     100     255     FF      ED      1F      1       49      42      71      5E      57      0       0       72      1       7F      0       0       10      0       0       0       0       0       0       0
+     * 0        0       0       0       0       0       0       63 87   57      513     201     1       01      ED      1F      1       49      42      71      5E      57      0       1       70      2       1       0       0
+     * 10       0       0       0       0       0       0       0       0       0       0       0       0       0       0       1D 87   57      513     201     127     7F      ED      1F      1       49      42      71
+     * 5E       57      0       1       70      2       7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       63 87   57      513     201     255
+     * FF       ED      1F      1       49      42      71      5E      57      0       1       72      2       7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 61 87    57      1024    400     1       01      ED      1F      1       49      42      71      5E      57      0       0       70      4       1       0       0       10      0       0       0       0       0
+     * 0        0       0       0       0       0       0       0       0       1A 87   57      1024    400     127     7F      ED      1F      1       49      42      71      5E      57      0       0       70
+     * 4        7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       64 87   57      1024    400     255     FF      ED      1F      1
+     * 49       42      71      5E      57      0       0       72      4       7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       66 120  78
+     * 127      7F      127     7F      ED      1F      1       49      42      71      5E      78      0       7F      70      0       7F      0       0       10      0       0       0       0       0       0       0       0
+     * 0        0       0       0       0       0       30 120  78      255     FF      127     7F      ED      1F      1       49      42      79      5E      78      0       7F      70      0       7F      0
+     * 0        10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       38 120  78      255     FF      128     80      ED      1F      1       49      42      79
+     * 5E       78      0       7F      72      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       45 120  78      255     FF      254
+     * FE       ED      1F      1       49      42      79      5E      78      0       7F      72      0       7E      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 3B 120   78      255     FF      255     FF      ED      1F      1       49      42      79      5E      78      0       7F      72      0       7F      0       0       10      0       0       0
+     * 0        0       0       0       0       0       0       0       0       0       0       3A 127  7F      3       03      1       01      ED      1F      1       49      42      71      5E      7F      0       3       70      0
+     * 1        0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       35 127  7F      3       03      127     7F      ED      1F      1       49      42
+     * 71       5E      7F      0       3       70      0       7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       4B 127  7F      3       03
+     * 128      80      ED      1F      1       49      42      71      5E      7F      0       3       72      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 0        36 255  FF      3       03      1       01      ED      1F      1       49      42      73      5E      7F      0       3       70      0       1       0       0       10      0       0       0       0       0
+     * 0        0       0       0       0       0       0       0       0       37 255     FF      255     FF      127     7F      ED      1F      1       49      42      7B      5E      7F      0       7F      70
+     * 0        7F      0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       3D 255  FF      255     FF      128     80      ED      1F      1
+     * 49       42      7B      5E      7F      0       7F      72      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       40 256  100
+     * 2        02      1       01      ED      1F      1       49      42      71      5E      0       1       2       70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0
+     * 0        0       4A 256  100     255     FF      255     FF      ED      1F      1       49      42      79      5E      0       1       7F      72      0       7F      0       0       10      0
+     * 0        0       0       0       0       0       0       0       0       0       0       0       0       43 1000 3E8       3       03      1       01      ED      1F      1       49      42      73      5E      68      3
+     * 3        70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       23
      *
      * Element 0: OPC_IMM_PACKET Element 1: Always 1F Element 2: Always 01
      * Element 3: Always 49 Element 4: Always 42 Element 5: Basic value 71. Bit
@@ -206,29 +210,28 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * programming track. The table below contains value observed from an
      * Intellibox II when doing programming on programming track.
      *
-     * Operation	CV	Value	Byte # Decimal	Hex	Decimal	Hex	0	1	2	3	4	5	6	7	8	9	10
-     * 11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30 Read	1	01	ED
-     * 1F	1	49	42	71	72	1	0	0	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	65 Write
-     * 1	01	3	03	ED	1F	1	49	42	71	71	1	0	3	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0
-     * 0	0	65 Write	27	1B	254	FE	ED	1F	1	49	42	79	71	1B	0	7E	70	0	0	0	0	10	0	0	0
-     * 0	0	0	0	0	0	0	0	0	0	0	0A Write	545	221	255	FF	ED	1F	1	49	42	79	71	21	2	7F
-     * 70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	33 Read	393	189	ED	1F	1	49	42
-     * 73	72	9	1	0	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	6D Write	255	FF	1
-     * 01	ED	1F	1	49	42	73	71	7F	0	1	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-     * 1B Write	255	FF	127	7F	ED	1F	1	49	42	73	71	7F	0	7F	70	0	0	0	0	10	0	0	0	0
-     * 0	0	0	0	0	0	0	0	0	0	65 Write	255	FF	255	FF	ED	1F	1	49	42	7B	71	7F	0	7F	70
-     * 0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	6D Write	256	100	1	01	ED	1F	1	49
-     * 42	71	71	0	1	1	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	67 Write	256	100
-     * 127	7F	ED	1F	1	49	42	71	71	0	1	7F	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0
-     * 0	19 Write	256	100	255	FF	ED	1F	1	49	42	79	71	0	1	7F	70	0	0	0	0	10	0	0	0
-     * 0	0	0	0	0	0	0	0	0	0	0	11 Write	513	201	1	01	ED	1F	1	49	42	71	71	1	2	1	70
-     * 0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	65 Write	513	201	127	7F	ED	1F	1	49
-     * 42	71	71	1	2	7F	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1B Write	513
-     * 201	255	FF	ED	1F	1	49	42	79	71	1	2	7F	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0
-     * 0	0	0	13 Write	1024	400	1	01	ED	1F	1	49	42	71	71	0	4	1	70	0	0	0	0	10	0	0
-     * 0	0	0	0	0	0	0	0	0	0	0	0	62 Write	1024	400	127	7F	ED	1F	1	49	42	71	71	0	4
-     * 7F	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1C Write	1024	400	255	FF	ED
-     * 1F	1	49	42	79	71	0	4	7F	70	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	14
+     * Operation        CV      Value   Byte # Decimal  Hex     Decimal Hex     0       1       2       3       4       5       6       7       8       9       10
+     * 11       12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      30 Read 1       01      ED
+     * 1F       1       49      42      71      72      1       0       0       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       65 Write
+     * 1        01      3       03      ED      1F      1       49      42      71      71      1       0       3       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0
+     * 0        0       65 Write        27      1B      254     FE      ED      1F      1       49      42      79      71      1B      0       7E      70      0       0       0       0       10      0       0       0
+     * 0        0       0       0       0       0       0       0       0       0       0       0A Write        545     221     255     FF      ED      1F      1       49      42      79      71      21      2       7F
+     * 70       0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       33 Read 393     189     ED      1F      1       49      42
+     * 73       72      9       1       0       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       6D Write        n    * 01       ED      1F      1       49      42      73      71      7F      0       1       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 1B Write 255     FF      127     7F      ED      1F      1       49      42      73      71      7F      0       7F      70      0       0       0       0       10      0       0       0       0
+     * 0        0       0       0       0       0       0       0       0       0       65 Write        255     FF      255     FF      ED      1F      1       49      42      7B      71      7F      0       7F      70
+     * 0        0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       6D Write        256     100     1       01      ED      1F      1       49
+     * 42       71      71      0       1       1       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       67 Write        256     100
+     * 127      7F      ED      1F      1       49      42      71      71      0       1       7F      70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 0        19 Write        256     100     255     FF      ED      1F      1       49      42      79      71      0       1       7F      70      0       0       0       0       10      0       0       0
+     * 0        0       0       0       0       0       0       0       0       0       0       11 Write        513     201     1       01      ED      1F      1       49      42      71      71      1       2       1       70
+     * 0        0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       65 Write        513     201     127     7F      ED      1F      1       49
+     * 42       71      71      1       2       7F      70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       1B Write        513
+     * 201      255     FF      ED      1F      1       49      42      79      71      1       2       7F      70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0
+     * 0        0       0       13 Write        1024    400     1       01      ED      1F      1       49      42      71      71      0       4       1       70      0       0       0       0       10      0       0
+     * 0        0       0       0       0       0       0       0       0       0       0       0       62 Write        1024    400     127     7F      ED      1F      1       49      42      71      71      0       4
+     * 7F       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       1C Write        1024    400     255     FF      ED
+     * 1F       1       49      42      79      71      0       4       7F      70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       14
      *
      * Element 0: OPC_IMM_PACKET Element 1: Always 1F Element 2: Always 01
      * Element 3: Always 49 Element 4: Always 42 Element 5: Basic value 71. Bit
@@ -261,6 +264,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /*
      * Internal method to create the LocoNetMessage for programmer task start 
      */
+    @Override
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
         switch (pcmd) {
             case 0x67:
@@ -279,6 +283,9 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
                 return progOnProgrammingTrackMessage(0x72, 0, cvnum); // read on PT in DirectByteMode
             case 0x13:
                 return progOnProgrammingTrackMessage(0x6C, 0, cvnum); // read on PT in RegisterMoode or AddressMode
+            default:
+                log.warn("Unhandled programming type: {}", pcmd);
+                break;
         }
         // We are probably being asked to read CV on main track, which is not suppoorted by IB. So get out of programming mode.
         return stopIBComPT();
@@ -341,4 +348,3 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class.getName());
 
 }
-/* @(#)UhlenbrockSlotManager.java */

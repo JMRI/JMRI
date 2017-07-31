@@ -80,10 +80,15 @@
             &lt;thrown&gt; and &lt;closed&gt;</p>
 
             <p><strong>feedback mode:</strong> some of the
-            available feedback modes are: &lt;DIRECT&gt;, &lt;ONE
-            SENSOR&gt;, &lt;TWO SENSOR&gt;, and &lt;MONITORING&gt;.
+            available feedback modes are: &lt;DIRECT&gt;, &lt;DELAYED&gt;,
+            &lt;ONE SENSOR&gt;, &lt;TWO SENSOR&gt;, and &lt;MONITORING&gt;.
             A turnout using DIRECT mode does not have feedback from
-            the layout. ONE SENSOR use one sensor on the layout to
+            the layout. 
+            When a close or throw command is executed the JMRI program
+            assumes that the command always completes immediately. 
+            DELAYED simulates the turnout operation taking a few seconds
+            to complete.
+            ONE SENSOR use one sensor on the layout to
             provide feedback on he state of the turnout. TWO SENSOR
             uses two sensors for feedback, one for closed and one
             for thrown. MONITORING gets feedback from the system by

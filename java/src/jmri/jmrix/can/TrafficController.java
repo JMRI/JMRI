@@ -1,4 +1,3 @@
-// TrafficController.java
 package jmri.jmrix.can;
 
 /**
@@ -23,6 +22,3 @@ abstract public class TrafficController extends AbstractCanTrafficController {
     }
 
 }
-
-
-/* @(#)GcTrafficController.java */

@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -49,6 +48,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * <p>
      * Makes them into the local messages and then queues in order
      */
+    @Override
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
         s.reset();
         X10Sequence.Command c;
@@ -90,6 +90,9 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     /**
      * Turn a 1-16 device number into a mask bit
+     * @param devicemask mask value
+     * @param device     X10 device code
+     * @return           bit mask for device code
      */
     int setDeviceBit(int devicemask, int device) {
         return devicemask | (0x10000 >> device);
@@ -97,6 +100,10 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     /**
      * Format a message and send it
+     * @param housecode  X10 housecode value
+     * @param devicemask X10 devicemask
+     * @param c          X10 cmd code
+     * @param l          listener
      */
     void formatAndSend(int housecode, int devicemask,
             X10Sequence.Function c, SerialListener l) {
@@ -132,6 +139,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * This system provides 16 dim steps
      */
+    @Override
     public int getNumberOfIntensitySteps() {
         return 16;
     }
@@ -139,10 +147,12 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Get a message of a specific length for filling in.
      */
+    @Override
     public SerialMessage getSerialMessage(int length) {
         return new SpecificMessage(length);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -150,6 +160,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
@@ -160,6 +171,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      *
      * @return true if the reply is complete
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // count number of FF bytes
         // if 16 FF, byte 17 is 0x01, expect total of 22 bytes, direct msg
@@ -199,4 +211,4 @@ public class SpecificTrafficController extends SerialTrafficController {
 }
 
 
-/* @(#)SpecificTrafficController.java */
+

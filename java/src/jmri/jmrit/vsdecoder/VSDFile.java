@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.io.BufferedOutputStream;
@@ -46,7 +46,7 @@ public class VSDFile extends ZipFile {
 
     protected Element root;
     protected boolean initialized = false;
-    private String _statusMsg = Bundle.getMessage("VSDFileStatusOK");
+    private String _statusMsg = Bundle.getMessage("ButtonOK"); // File Status = OK
 
     ZipInputStream zis;
 
@@ -335,7 +335,7 @@ public class VSDFile extends ZipFile {
             }
         }
         log.debug("File Validation Successful.");
-        return (new ValidateStatus(true, Bundle.getMessage("VSDFileStatusOK")));
+        return (new ValidateStatus(true, Bundle.getMessage("ButtonOK"))); //  File Status = OK
     }
 
     protected boolean validateRequiredElement(Element el, String name) {

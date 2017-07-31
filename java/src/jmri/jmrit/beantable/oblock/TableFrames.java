@@ -111,6 +111,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -124,6 +125,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         printItem = new JMenuItem(Bundle.getMessage("PrintPortalTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -137,6 +139,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         printItem = new JMenuItem(Bundle.getMessage("PrintSignalTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -150,6 +153,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         printItem = new JMenuItem(Bundle.getMessage("PrintXRef"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -210,6 +214,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
         _showWarnItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 String cmd = event.getActionCommand();
                 setShowWarnings(cmd);
@@ -321,6 +326,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu"));
         _openMenu.add(openBlock);
         openBlock.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _blockTableFrame.setVisible(true);
                 try {
@@ -334,6 +340,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu"));
         _openMenu.add(openPortal);
         openPortal.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _portalTableFrame.setVisible(true);
                 try {
@@ -347,6 +354,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu"));
         _openMenu.add(openXRef);
         openXRef.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _blockPortalXRefFrame.setVisible(true);
                 try {
@@ -360,6 +368,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu"));
         _openMenu.add(openSignal);
         openSignal.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _signalTableFrame.setVisible(true);
                 try {
@@ -373,6 +382,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JMenu openBlockPath = new JMenu(Bundle.getMessage("OpenBlockPathMenu"));
         ActionListener openFrameAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String sysName = e.getActionCommand();
                 openBlockPathFrame(sysName);
@@ -396,6 +406,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
             openTurnoutPath.add(openTurnoutMenu);
             openFrameAction = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String pathTurnoutName = e.getActionCommand();
                     openPathTurnoutFrame(pathTurnoutName);
@@ -424,8 +435,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
-                OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
-                OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
+            OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
+            OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
         _oBlockTable.setDragEnabled(true);
 
         // Use XTableColumnModel so we can control which columns are visible
@@ -519,7 +530,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);
-        
+
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -552,7 +563,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalTable = new JTable(_blockPortalXRefModel);
         _blockPortalTable.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _blockPortalTable.setDragEnabled(true);
-        
+
         _blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         _blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
         for (int i = 0; i < _blockPortalXRefModel.getColumnCount(); i++) {
@@ -588,7 +599,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL}));
         _signalTable.setDragEnabled(true);
-        
+
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -653,9 +664,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathModel.init();
         JTable blockPathTable = new JTable(blockPathModel);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
-                BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
+            BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
-        
+
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -801,6 +812,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _falseValue = falseValue;
         }
 
+        @Override
         public java.awt.Component getTableCellRendererComponent(JTable table,
                 Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
@@ -824,11 +836,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* InternalFrameListener implementatiom
      * *****************
      */
+    @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
         //log.debug("Internal frame closing: "+frame.getTitle());
     }
 
+    @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
         String name = frame.getName();
@@ -850,6 +864,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
+    @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         /*  JInternalFrame frame = (JInternalFrame)e.getSource();
          if (log.isDebugEnabled()) log.debug("Internal frame Opened: "+
@@ -857,6 +872,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
          frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")"); */
     }
 
+    @Override
     public void internalFrameIconified(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
         String name = frame.getName();
@@ -874,16 +890,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
+    @Override
     public void internalFrameDeiconified(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
         //log.debug("Internal frame deiconified: "+frame.getTitle());
     }
 
+    @Override
     public void internalFrameActivated(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
         //log.debug("Internal frame activated: "+frame.getTitle());
     }
 
+    @Override
     public void internalFrameDeactivated(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
         //log.debug("Internal frame deactivated: "+frame.getTitle());

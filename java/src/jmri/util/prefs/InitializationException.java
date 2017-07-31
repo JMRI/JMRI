@@ -19,6 +19,11 @@ public class InitializationException extends Exception {
         this.localizedMessage = localized;
     }
 
+    public InitializationException(Throwable cause) {
+        super(cause);
+        this.localizedMessage = cause.getLocalizedMessage();
+    }
+
     @Override
     public String getLocalizedMessage() {
         return (this.localizedMessage == null) ? this.getMessage() : this.localizedMessage;

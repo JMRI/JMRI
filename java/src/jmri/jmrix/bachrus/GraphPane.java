@@ -1,4 +1,3 @@
-// GraphPane.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BasicStroke;
@@ -23,15 +22,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for graph of loco speed curves
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
   */
 public class GraphPane extends JPanel implements Printable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 260997228988676886L;
 
     final int PAD = 40;
 
@@ -43,8 +37,6 @@ public class GraphPane extends JPanel implements Printable {
     protected Color[] colors = {Color.RED, Color.BLUE, Color.BLACK};
 
     protected boolean _grid = false;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     // Use a default 28 step profile
     public GraphPane() {
@@ -91,18 +83,19 @@ public class GraphPane extends JPanel implements Printable {
 
     void setUnitsMph() {
         units = Speed.MPH;
-        setYLabel(rb.getString("SpeedMPH"));
+        setYLabel(Bundle.getMessage("SpeedMPH"));
     }
 
     void setUnitsKph() {
         units = Speed.KPH;
-        setYLabel(rb.getString("SpeedKPH"));
+        setYLabel(Bundle.getMessage("SpeedKPH"));
     }
 
     public int getUnits() {
         return units;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGraph(g);
@@ -265,6 +258,7 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
+    @Override
     public int print(Graphics g, PageFormat pf, int page) throws
             PrinterException {
 

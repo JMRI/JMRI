@@ -3,13 +3,10 @@ package jmri.jmrix.powerline.swing.packetgen;
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.powerline.SerialTrafficControlScaffold;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of SerialPacketGenPane
@@ -23,7 +20,6 @@ public class SerialPacketGenPaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         SerialPacketGenPane action = new SerialPacketGenPane();
         Assert.assertNotNull("exists", action);
     }

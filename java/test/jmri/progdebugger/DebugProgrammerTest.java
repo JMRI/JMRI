@@ -22,6 +22,7 @@ public class DebugProgrammerTest extends TestCase {
     public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
         Programmer p = new ProgDebugger();
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -44,6 +45,7 @@ public class DebugProgrammerTest extends TestCase {
     public void testWriteReadString() throws jmri.ProgrammerException, InterruptedException {
         Programmer p = new ProgDebugger();
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -70,6 +72,7 @@ public class DebugProgrammerTest extends TestCase {
     public void testKnowsWrite() throws jmri.ProgrammerException {
         ProgDebugger p = new ProgDebugger();
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -90,6 +93,7 @@ public class DebugProgrammerTest extends TestCase {
     public void testKnowsWriteString() throws jmri.ProgrammerException {
         ProgDebugger p = new ProgDebugger();
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;

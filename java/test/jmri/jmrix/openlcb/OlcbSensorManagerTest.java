@@ -1,9 +1,6 @@
 package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
-public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {
@@ -44,6 +41,20 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
         Sensor t = l.provideSensor("MSx010203040506070" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
+    }
+
+    @Override
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("MSx010203040506070" + getNumToTest1());
+        Sensor t2 = l.provideSensor("MSx010203040506070" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
     }
 
     @Test

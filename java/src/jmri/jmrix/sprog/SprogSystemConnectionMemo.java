@@ -64,15 +64,16 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Set the SPROG mode for this connection
-     * 
+     * Set the SPROG mode for this connection.
+     *
+     * @param mode selected mode
      */
     public void setSprogMode(SprogMode mode) {
         sprogMode = mode;
     }
 
     /**
-     * Return the SPROG mode for this connection
+     * Return the SPROG mode for this connection.
      * 
      * @return SprogMode 
      */
@@ -82,7 +83,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SprogMode sprogMode;// = SprogMode.SERVICE;
 
     /**
-     * Return the SPROG version object for this connection
+     * Return the SPROG version object for this connection.
      * 
      * @return SprogVersion
      */
@@ -91,7 +92,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Set the SPROG version object for this connection
+     * Set the SPROG version object for this connection.
+     *
+     * @param version type and version class
      */
     public void setSprogVersion(SprogVersion version) {
         sprogVersion = version;
@@ -100,7 +103,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SprogVersion sprogVersion;
 
     /**
-     * Return the type of SPROG connected
+     * Return the type of SPROG connected.
      * 
      * @return SprogType
      */
@@ -111,7 +114,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
+     *
+     * @return current tc for this connection
      */
     public SprogTrafficController getSprogTrafficController() {
         return st;
@@ -126,7 +131,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private Thread slotThread;
 
     /**
-     * Configure the programming manager and "command station" objects
+     * Configure the programming manager and "command station" objects.
      */
     public void configureCommandStation() {
         log.debug("start command station queuing thread");
@@ -136,15 +141,19 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         switch (sprogMode) {
             case OPS:
                 slotThread = new Thread(commandStation);
+                slotThread.setName("SPROG slot thread");
                 slotThread.start();
                 break;
             case SERVICE:
+                break;
+            default:
+                log.error("Unhandled sprogMode: {}", sprogMode);
                 break;
         }
     }
 
     /*
-     * Get the command station object associated with this connection
+     * Get the command station object associated with this connection.
      */
     public SprogCommandStation getCommandStation(){
          return commandStation;
@@ -183,6 +192,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     return true;
                 case SERVICE:
                     return false;
+                default:
+                    log.error("Unhandled sprogMode: {}", sprogMode);
+                    break;
             }
         }
         return false; // nothing, by default
@@ -220,10 +232,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Configure the common managers for Sprog connections. This puts the common
-     * manager config in one place. This method is static so that it can be
+     * Configure the common managers for Sprog connections.
+     * <p>
+     * This puts the common manager config in one place.
+     * This method is static so that it can be
      * referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * hexfile.HexFileFrame and locormi.LnMessageClient.
      */
     public void configureManagers() {
 
@@ -245,7 +259,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 sprogThrottleManager = new jmri.jmrix.sprog.SprogThrottleManager(this);
                 jmri.InstanceManager.setThrottleManager(sprogThrottleManager);
                 break;
-
+            default:
+                log.warn("Unhandled programming mode: {}", sprogMode);
+                break;
         }
 
     }
@@ -281,6 +297,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return sprogCSThrottleManager;
             case SERVICE:
                 return sprogThrottleManager;
+            default:
+                log.warn("Unhandled programming mode: {}", sprogMode);
+                break;
         }
         return null;
     }
@@ -289,11 +308,13 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return sprogTurnoutManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, SprogSystemConnectionMemo.class);
@@ -306,7 +327,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SprogVersionQuery svq = null;
    
     /*
-     * return an SprogVersionQuery object for this connection.
+     * Return an SprogVersionQuery object for this connection.
      */
     public SprogVersionQuery getSprogVersionQuery(){
        if(svq == null ) {

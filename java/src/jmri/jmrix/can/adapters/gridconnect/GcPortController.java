@@ -1,4 +1,3 @@
-// GcPortController.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import java.io.DataInputStream;
@@ -8,7 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Abstract base for classes representing a GridConnect communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland 2008
   */
 public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortController {
@@ -39,4 +38,4 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
 }
 
 
-/* @(#)GcPortController.java */
+

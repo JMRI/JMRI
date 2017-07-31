@@ -1,4 +1,3 @@
-// TrainRoadOptionsAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
@@ -18,7 +17,7 @@ public class TrainRoadOptionsAction extends AbstractAction {
         this.frame = frame;
     }
 
-    TrainEditFrame frame;	// the parent frame that is launching the TrainEditBuildOptionsFrame.
+    TrainEditFrame frame; // the parent frame that is launching the TrainEditBuildOptionsFrame.
 
     TrainRoadOptionsFrame f = null;
 
@@ -33,4 +32,4 @@ public class TrainRoadOptionsAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainRoadOptionsAction.java */
+

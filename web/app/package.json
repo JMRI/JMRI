@@ -1,0 +1,19 @@
+{
+  "name": "jmri",
+  "version": "1.0.0",
+  "description": "Angular JMRI Web Application",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JMRI Community",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "angular": "1.6.4",
+    "angular-patternfly": "3.23.3",
+    "angular-resource": "1.6.4",
+    "angular-route": "1.6.4",
+    "angular-translate": "2.15.1",
+    "angular-websocket": "2.0.1"
+  }
+}

@@ -1,10 +1,3 @@
-/**
- * NceTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.NceTurnoutManager class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.nce;
 
 import jmri.Turnout;
@@ -15,7 +8,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+/**
+ * Tests for the jmri.jmrix.nce.NceTurnoutManager class
+ *
+ * @author	Bob Jacobsen
+ */
+public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private NceInterfaceScaffold nis = null;
 
@@ -36,10 +34,12 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
         return "NT" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("NT21", "my name");

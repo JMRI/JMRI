@@ -10,7 +10,12 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    DuplexGroupInfoPanelTest.class,
+    DuplexGroupScanPanelTest.class,
+    DuplexGroupTabbedPanelTest.class,
+    LnDplxGrpInfoImplTest.class,
+    LnIPLImplementationTest.class
 })
 public class PackageTest {
 }

@@ -1,8 +1,7 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.xnetsimulator;
 
 /**
- * Handle configuring an XPressNet layout connection via a XNetSimulator
+ * Handle configuring an XpressNet layout connection via a XNetSimulator
  * adapter.
  * <P>
  * This uses the {@link XNetSimulatorAdapter} class to do the actual connection.
@@ -29,23 +28,28 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
-        return "XPressNet Simulator";
+        return Bundle.getMessage("XNetSimulatorName");
     }
 
-    String manufacturerName = "Lenz";
+    String manufacturerName = "Lenz"; // NOI18N
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new XNetSimulatorAdapter();
         }
     }
+
 }

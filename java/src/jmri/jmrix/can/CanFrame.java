@@ -1,4 +1,3 @@
-// CanFrame.java
 package jmri.jmrix.can;
 
 /**
@@ -29,5 +28,3 @@ public interface CanFrame {
     public int getElement(int n);
 
 }
-
-/* @(#)CanFrame.java */

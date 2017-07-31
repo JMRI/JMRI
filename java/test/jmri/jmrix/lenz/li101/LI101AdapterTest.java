@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz.li101;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * LI101AdapterTest.java
@@ -12,36 +12,22 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class LI101AdapterTest extends TestCase {
+public class LI101AdapterTest {
 
+    @Test
     public void testCtor() {
         LI101Adapter a = new LI101Adapter();
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public LI101AdapterTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LI101AdapterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LI101AdapterTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

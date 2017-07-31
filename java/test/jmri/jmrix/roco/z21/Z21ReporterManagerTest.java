@@ -3,30 +3,32 @@ package jmri.jmrix.roco.z21;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for Z21ReporterManager class.
+ * The class being tested only has one reporter, hence some tests pulled down.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class Z21ReporterManagerTest {
+public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
-   @Test
-   public void ConstructorTest(){
-      Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-      Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
-      memo.setTrafficController(tc);
-      Assert.assertNotNull("Z21ReporterManager constructor",new Z21ReporterManager(memo));
-   }
+    @Override
+    public String getSystemName(String i) {
+        return "ZR" + i;
+    }
 
    @Before
+    @Override
    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
+        memo.setTrafficController(tc);
+        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
+        l = new Z21ReporterManager(memo);
    }
 
    @After
@@ -34,5 +36,13 @@ public class Z21ReporterManagerTest {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
    }
+
+    @Override
+    protected int maxN() { return 1; }
+    
+    @Override
+    protected String getNameToTest1() {
+        return "1";
+    }
 
 }

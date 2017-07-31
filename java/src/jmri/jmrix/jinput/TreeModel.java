@@ -1,9 +1,8 @@
-// TreeModel.java
 package jmri.jmrix.jinput;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Arrays;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -33,14 +32,9 @@ import org.slf4j.LoggerFactory;
  * Class is final because it starts a survey thread, which runs while
  * constructor is still active.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
-  */
+ * @author Bob Jacobsen Copyright 2008, 2010
+ */
 public final class TreeModel extends DefaultTreeModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2231559816159123031L;
 
     private TreeModel() {
 
@@ -48,15 +42,18 @@ public final class TreeModel extends DefaultTreeModel {
         dRoot = (DefaultMutableTreeNode) getRoot();  // this is used because we can't store the DMTN we just made during the super() call
 
         // load initial USB objects
-        loadSystem();
+        boolean pass = loadSystem();
 
-        // If you don't call loadSystem, the following line was 
+        // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         // start the USB gathering
-        (new Runner()).start();
+        runner = new Runner();
+        runner.setName("jinput.TreeModel loader");
+        runner.start();
     }
-
+    Runner runner;
+    
     /**
      * Add a node to the tree if it doesn't already exist
      *
@@ -83,7 +80,9 @@ public final class TreeModel extends DefaultTreeModel {
 
     /**
      * Provide access to the model. There's only one, because access to the USB
-     * subsystem is required
+     * subsystem is required.
+     *
+     * @return the default instance of the TreeModel; creating it if necessary
      */
     static public TreeModel instance() {
         if (instanceValue == null) {
@@ -92,6 +91,13 @@ public final class TreeModel extends DefaultTreeModel {
         return instanceValue;
     }
 
+    // intended for test routines only
+    void terminateThreads() throws InterruptedException {
+        if (runner == null) return;
+        runner.interrupt();
+        runner.join();
+    }
+    
     static private TreeModel instanceValue = null;
 
     class Runner extends Thread {
@@ -120,15 +126,15 @@ public final class TreeModel extends DefaultTreeModel {
                     EventQueue queue = controllers[i].getEventQueue();
 
                     // Create an event object to pass down to get populated with the information.
-                    // The underlying system may not hold the data in a JInput friendly way, 
+                    // The underlying system may not hold the data in a JInput friendly way,
                     // so it only gets converted when asked for.
                     Event event = new Event();
 
-                    // Now we read from the queue until it's empty. 
-                    // The 3 main things from the event are a time stamp 
-                    // (it's in nanos, so it should be accurate, 
-                    // but only relative to other events. 
-                    // It's purpose is for knowing the order events happened in. 
+                    // Now we read from the queue until it's empty.
+                    // The 3 main things from the event are a time stamp
+                    // (it's in nanos, so it should be accurate,
+                    // but only relative to other events.
+                    // It's purpose is for knowing the order events happened in.
                     // Then we can get the component that this event relates to, and the new value.
                     while (queue.getNextEvent(event)) {
                         Component comp = event.getComponent();
@@ -171,9 +177,8 @@ public final class TreeModel extends DefaultTreeModel {
     // note they might not arrive for a while
     Controller[] ca;
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public Controller[] controllers() {
-        return ca;
+        return Arrays.copyOf(ca, ca.length);
     }
 
     /**
@@ -216,10 +221,21 @@ public final class TreeModel extends DefaultTreeModel {
         }
     }
 
-    void loadSystem() {
+    /**
+     * @return true for success
+     */
+    boolean loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
-        ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-        log.info("Found " + ca.length + " controllers");
+        log.debug("start looking for controllers");
+        try {
+            ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
+            log.debug("Found " + ca.length + " controllers");
+        } catch (Exception ex) { // this is probably ClassNotFoundException, but that's not part of the interface
+            // could not load some component(s)
+            log.debug("Found no controllers, handled Exception", ex);
+            ca = null;
+            return false;
+        }
 
         for (int i = 0; i < ca.length; i++) {
             // Get this controllers components (buttons and axis)
@@ -243,6 +259,8 @@ public final class TreeModel extends DefaultTreeModel {
                 dNode.setValue(0.0f);
             }
         }
+
+        return true;
     }
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);

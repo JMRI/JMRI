@@ -14,7 +14,9 @@ import org.junit.runners.Suite;
     Z21XNetSimulatorAdapterTest.class,
     ConnectionConfigTest.class,
     jmri.jmrix.roco.z21.simulator.configurexml.PackageTest.class,
-    Z21SimulatorLocoDataTest.class
+    Z21SimulatorLocoDataTest.class,
+    Z21SimulatorTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

@@ -13,17 +13,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Track an occupied block to its adjacent blocks.
  *
- * @author	Pete Cressman Copyright (C) 2013
+ * @author Pete Cressman Copyright (C) 2013
  */
 public class Tracker {
 
-//	OBlock _currentBlock;
-//	OBlock _prevBlock;
+// OBlock _currentBlock;
+// OBlock _prevBlock;
     private String _trainName;
-    private ArrayList<OBlock> _headRange;	// blocks reachable from head block
-    private ArrayList<OBlock> _tailRange;	// blocks reachable from tail block
-    private ArrayList<OBlock> _lostRange;	// reachable block occupied by someone else
-    private LinkedList<OBlock> _occupies;	// blocks occupied by train
+    private ArrayList<OBlock> _headRange; // blocks reachable from head block
+    private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
+    private ArrayList<OBlock> _lostRange; // reachable block occupied by someone else
+    private LinkedList<OBlock> _occupies; // blocks occupied by train
     private Portal _headPortal;
     private Portal _tailPortal;
     private long _time;
@@ -36,12 +36,15 @@ public class Tracker {
     private Font _markerFont;
 
     /**
-     * Must Call setupCheck() after constructor to check environment of train
+     * Must call setupCheck() after creating Tracker to check environment of
+     * train.
      *
+     * @param block the block to track
+     * @param name  the name of the train being tracked
      */
     Tracker(OBlock block, String name) {
         _trainName = name;
-        _occupies = new LinkedList<OBlock>();
+        _occupies = new LinkedList<>();
         _markerForeground = block.getMarkerForeground();
         _markerBackground = block.getMarkerBackground();
         _markerFont = block.getMarkerFont();
@@ -85,7 +88,7 @@ public class Tracker {
                 OBlock b = iter.next();
                 if (b.getDisplayName().equals(selection)) {
                     showBlockValue(b);
-                    _occupies.addLast(b);	// make additional block the tail
+                    _occupies.addLast(b); // make additional block the tail
                     _headPortal = getPortalBetween(getHeadBlock(), getTailBlock());
                     _tailPortal = _headPortal;
                     break;
@@ -242,7 +245,7 @@ public class Tracker {
         }
     }
 
-    /**
+    /*
      * Note: Caller will modify List
      */
     protected List<OBlock> getRange() {
@@ -304,24 +307,25 @@ public class Tracker {
         Iterator<Portal> iter = list.iterator();
         while (iter.hasNext()) {
             OBlock b = iter.next().getOpposingBlock(block);
-            if ((b.getState() & OBlock.DARK) !=0) {
-                _occupies.remove(b);                
+            if ((b.getState() & OBlock.UNDETECTED) != 0) {
+                _occupies.remove(b);
                 removeName(b);
                 _lostRange.add(b);  // needed to find on recovery
             }
         }
         removeName(block);
     }
+
     private void removeName(OBlock block) {
         if (_trainName.equals(block.getValue())) {
             block.setValue(null);
             block.setState(block.getState() & ~OBlock.RUNNING);
-        }        
+        }
     }
 
     protected int move(OBlock block, int state) {
         if (log.isDebugEnabled()) {
-            log.debug("move( " + block.getDisplayName() + ", " + state+")");
+            log.debug("move( " + block.getDisplayName() + ", " + state + ")");
         }
         if ((state & OBlock.OCCUPIED) != 0) {
             if (_occupies.contains(block)) {
@@ -391,11 +395,11 @@ public class Tracker {
      *
      */
     private boolean recovery(OBlock block) {
-        if (_occupies.size()==0) {
+        if (_occupies.size() == 0) {
             Iterator<OBlock> it = _headRange.iterator();
             while (it.hasNext()) {
                 OBlock b = it.next();
-                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                     _lostRange.add(b);
                     if (log.isDebugEnabled()) {
                         log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
@@ -405,16 +409,16 @@ public class Tracker {
             it = _tailRange.iterator();
             while (it.hasNext()) {
                 OBlock b = it.next();
-                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                     _lostRange.add(b);
                     if (log.isDebugEnabled()) {
                         log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
                     }
                 }
-            }            
+            }
         }
         if (log.isDebugEnabled()) {
-            log.debug("recovery( " + block.getDisplayName() + ") + _lostRange.size()= "+ _lostRange.size());
+            log.debug("recovery( " + block.getDisplayName() + ") + _lostRange.size()= " + _lostRange.size());
         }
         if (_lostRange == null || _lostRange.size() == 0) {
             return false;
@@ -433,6 +437,7 @@ public class Tracker {
         return true;
     }
 
+    @Override
     public String toString() {
         return _trainName;
     }

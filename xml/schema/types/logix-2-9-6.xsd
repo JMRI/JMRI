@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -115,7 +113,7 @@
                   <xs:attribute name="type" type="xs:integer" use="required" />
                   <xs:attribute name="systemName"  use="required">
                     <xs:simpleType>
-                      <xs:annotation><xs:documentation>Allow single space, emitted by old code</xs:documentation></xs:annotation>
+                      <xs:annotation><xs:documentation>Allow single or empty space, emitted by old code</xs:documentation></xs:annotation>
                       <xs:union>
                         <xs:simpleType>
                           <xs:restriction base="systemNameType" />
@@ -123,6 +121,7 @@
                         <xs:simpleType>
                           <xs:restriction base="xs:string">
                             <xs:enumeration value=" "/>
+                            <xs:enumeration value=""/>
                           </xs:restriction>  
                         </xs:simpleType>
                       </xs:union>

@@ -1,10 +1,13 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
+import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -85,8 +88,8 @@ import org.slf4j.LoggerFactory;
  * </dd>
  * </dl>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Dave Heap Copyright (C) 2016
  */
 public class FnMapPanelESU extends JPanel {
 
@@ -117,17 +120,16 @@ public class FnMapPanelESU extends JPanel {
     GridBagLayout gl = null;
     GridBagConstraints cs = null;
     VariableTableModel _varModel;
-
     /**
      * Titles for blocks of items
      */
-    final String[] outBlockName = new String[]{"Input Conditions", "Physical Outputs", "Logical Outputs", "Sounds"};
+    final String[] outBlockName = new String[4];
 
     /**
      * Number of items per block
      */
     final int[] outBlockLength = new int[]{36, 16, 16, 24};
-
+    final int MAX_ITEMS = IntStream.of(outBlockLength).sum();
     /**
      * Number of bits per block item
      */
@@ -136,22 +138,18 @@ public class FnMapPanelESU extends JPanel {
     final int[] outBlockStartCol = new int[outBlockLength.length]; // Starting column column of block
     final int[] outBlockUsed = new int[outBlockLength.length]; // Number of used items per block
     final JTextField[][] summaryLine = new JTextField[MAX_ROWS][outBlockLength.length];
-
     /**
      * <p>
-     * Default column labels.</p>
+     * Default item labels.</p>
      * <dl>
-     * <dt>Two rows are available for column labels</dt>
+     * <dt>Two rows are available for item labels</dt>
      * <dd>Use the '|' character to designate a row break</dd>
      * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model"
      * element from the decoder definition file.</p>
      */
-    final String[] itemDescESU = new String[]{"Motion|Drive|Stop", "Direction|Forward|Reverse", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28", "Wheel Sensor", "Sensor 1", "Sensor 2", "Sensor 3", "Sensor 4", "Head light[1]", "Rear light[1]", "Aux 1[1]", "Aux 2[1]", "Aux 3", "Aux 4", "Aux 5", "Aux 6", "Aux 7", "Aux 8", "Aux 9", "Aux 10", "Head light[2]", "Rear light[2]", "Aux 1[2]", "Aux 2[2]", "Momentum off", "Shunt mode", "Dynamic brake", "Uncouple Cycle", "|", "Fire box", "Dim lights", "Grade cross", "Smoke gen", "Notch up", "Notch down", "Sound fade", "Brk sql off", "Doppler effect", "Volume & mute", "Shift mode", "Sound slot 1", "Sound slot 2", "Sound slot 3", "Sound slot 4", "Sound slot 5", "Sound slot 6", "Sound slot 7", "Sound slot 8", "Sound slot 9", "Sound slot 10", "Sound slot 11", "Sound slot 12", "Sound slot 13", "Sound slot 14", "Sound slot 15", "Sound slot 16", "Sound slot 17", "Sound slot 18", "Sound slot 19", "Sound slot 20", "Sound slot 21", "Sound slot 22", "Sound slot 23", "Sound slot 24"
-    };
-
-    final int MAX_ITEMS = itemDescESU.length;
+    final String[] itemDescESU = new String[MAX_ITEMS];
     final String[] itemLabel = new String[MAX_ITEMS];
     final String[][] itemName = new String[MAX_ITEMS][3];
     final boolean[] itemIsUsed = new boolean[MAX_ITEMS];
@@ -168,6 +166,45 @@ public class FnMapPanelESU extends JPanel {
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry, CvTableModel cvModel) {
         log.debug("ESU Function map starts");
         _varModel = v;
+
+        // get block names
+        for (int i = 0; i < outBlockName.length; i++) {
+            outBlockName[i] = Bundle.getMessage("FnMapESUBlockName_" + (i + 1));
+        }
+
+        {  // make item names
+            int item = 0;
+            itemDescESU[item++] = Bundle.getMessage("FnMap_STATE") + "|" + Bundle.getMessage("FnMap_DRIVE") + "|" + Bundle.getMessage("FnMap_STOP");
+            itemDescESU[item++] = Bundle.getMessage("FnMap_DIR") + "|" + Bundle.getMessage("FnMap_FWD") + "|" + Bundle.getMessage("FnMap_REV");
+            for (int i = 0; i <= 28; i++) {
+                itemDescESU[item++] = "F" + i;
+            }
+            itemDescESU[item++] = Bundle.getMessage("FnMap_WS");
+            for (int i = 1; i <= 4; i++) {
+                itemDescESU[item++] = Bundle.getMessage("FnMap_S") + " " + i;
+            }
+            itemDescESU[item++] = Bundle.getMessage("FnMap_HL") + "[1]";
+            itemDescESU[item++] = Bundle.getMessage("FnMap_RL") + "[1]";
+            for (int i = 1; i <= 10; i++) {
+                itemDescESU[item++] = Bundle.getMessage("FnMap_A") + " " + i + (i <= 2 ? "[1]" : "");
+            }
+            itemDescESU[item++] = Bundle.getMessage("FnMap_HL") + "[2]";
+            itemDescESU[item++] = Bundle.getMessage("FnMap_RL") + "[2]";
+            for (int i = 1; i <= 2; i++) {
+                itemDescESU[item++] = Bundle.getMessage("FnMap_A") + " " + i + "[2]";
+            }
+            for (int i = 1; i <= outBlockLength[2]; i++) {
+                try {
+                    itemDescESU[item] = Bundle.getMessage("FnMapESULogic_" + i);
+                } catch (MissingResourceException e) {
+                    itemDescESU[item] = "Error: missing label logical function " + i;
+                }
+                item++;
+            }
+            for (int i = 1; i <= outBlockLength[3]; i++) {
+                itemDescESU[item++] = Bundle.getMessage("FnMapSndSlot") + " " + i;
+            }
+        }
 
         // set up default names and labels
         for (int item = 0; item < MAX_ITEMS; item++) {
@@ -203,7 +240,7 @@ public class FnMapPanelESU extends JPanel {
         rowButton = new JRadioButton[numRows];
 
         // add row move buttons
-        AddRowMoveButtons();
+        addRowMoveButtons();
 
         cs.anchor = GridBagConstraints.LINE_END;
         saveAt(ROW_LABEL_ROW, firstOut - 1, new JLabel("Row"));
@@ -222,9 +259,9 @@ public class FnMapPanelESU extends JPanel {
                 rowButton[iRow].setActionCommand(String.valueOf(iRow));
                 rowButton[iRow].setToolTipText(Bundle.getMessage("FnMapESURowSelect"));
                 rowButton[iRow].addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        selectedRow = Integer.valueOf(e.getActionCommand());
-//                     log.info("selectedRow="+selectedRow);
+                        selectedRow = Integer.parseInt(e.getActionCommand());
                     }
                 });
                 group.add(rowButton[iRow]);
@@ -239,11 +276,11 @@ public class FnMapPanelESU extends JPanel {
             int item = 0;
             do {
                 JPanel blockPanel = new JPanel();
-                GridBagLayout blockPanelLay = new GridBagLayout();
+                GridBagLayout blockPanelLay;
                 GridBagConstraints blockPanelCs = new GridBagConstraints();
 
                 JPanel blockItemsSelectorPanel = new JPanel();
-                GridBagLayout bIsPlay = new GridBagLayout();
+                GridBagLayout bIsPlay;
                 GridBagConstraints bIsPcs = new GridBagConstraints();
 
                 // check for block separators
@@ -291,7 +328,7 @@ public class FnMapPanelESU extends JPanel {
                             // create a JDOM tree with some elements to add to _varModel
                             Element root = new Element("decoder-config");
                             Document doc = new Document(root);
-                            doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
+                            doc.setDocType(new DocType("decoder-config"));
 
                             // set up choices
                             String defChoice1 = "On";
@@ -364,15 +401,16 @@ public class FnMapPanelESU extends JPanel {
                         // hopefully we found it!
                         if (iVar >= 0) {
                             // try to find item  labels for itemLabel[item]
-                            if (itemName[item][0].startsWith("Sound slot")) {
+                            if (itemName[item][0].startsWith(Bundle.getMessage("FnMapSndSlot"))) {
                                 try {
-                                    itemLabel[item] = rosterEntry.getSoundLabel(Integer.valueOf(itemName[item][0].substring(("Sound slot" + " ").length())));
-                                } catch (Exception e) {
+                                    itemLabel[item] = rosterEntry.getSoundLabel(Integer.parseInt(itemName[item][0].substring((Bundle.getMessage("FnMapSndSlot") + " ").length())));
+                                } catch (NumberFormatException e) {
+                                    log.warn("Error for sound slot label \"{}\" in \"{}\"", itemName[item][0], item);
                                 }
                             } else if (itemName[item][0].matches("F\\d+")) {
                                 try {
-                                    itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1)));
-                                } catch (Exception e) {
+                                    itemLabel[item] = rosterEntry.getFunctionLabel(Integer.parseInt(itemName[item][0].substring(1)));
+                                } catch (NumberFormatException e) {
                                     log.warn("Error for function label \"{}\" in \"{}\"", itemName[item][0], item);
                                 }
                             }
@@ -382,7 +420,7 @@ public class FnMapPanelESU extends JPanel {
 
                             // generate a fullItemName
                             String fullItemName = itemName[item][0];
-                            if ( !itemLabel[item].equals("")) {
+                            if (!itemLabel[item].equals("")) {
                                 fullItemName = fullItemName + (": " + itemLabel[item]);
                             }
 
@@ -401,6 +439,7 @@ public class FnMapPanelESU extends JPanel {
                             }
                             if (cvObject != null) {
                                 cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         updateAllSummaryLines();
                                     }
@@ -446,11 +485,12 @@ public class FnMapPanelESU extends JPanel {
                 JButton button = new JButton("Change");
                 button.setActionCommand(iRow + "," + outBlockNum);
                 button.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         String params[] = e.getActionCommand().split(",");
                         JOptionPane.showMessageDialog(
-                                blockPanel, blockItemsScrollPane, "Row " + (Integer.valueOf(params[0]) + 1) + ", "
-                                + outBlockName[Integer.valueOf(params[1])], JOptionPane.PLAIN_MESSAGE);
+                                blockPanel, blockItemsScrollPane, "Row " + (Integer.parseInt(params[0]) + 1) + ", "
+                                + outBlockName[Integer.parseInt(params[1])], JOptionPane.PLAIN_MESSAGE);
                     }
                 });
                 blockPanelCs.anchor = GridBagConstraints.LINE_START;
@@ -482,9 +522,19 @@ public class FnMapPanelESU extends JPanel {
             }
         }
 
+        // Create formatted block labels
         for (int iBlock = 0; iBlock < outBlockLength.length; iBlock++) {
             if (outBlockUsed[iBlock] > 0) {
-                JLabel lx = new JLabel("<html><strong>&nbsp;" + outBlockName[iBlock] + "&nbsp;</strong></html>");
+                StringBuilder label = new StringBuilder("<html><strong>" + outBlockName[iBlock]);
+                try {
+                    String s = Bundle.getMessage("FnMapESUBlockDesc_" + (iBlock + 1));
+                    label.append("</strong><br>");
+                    label.append(s);
+                    label.append("</html>");
+                } catch (MissingResourceException e) {
+                    label.append("</strong></html>");
+                }
+                JLabel lx = new JLabel(label.toString());
                 GridBagConstraints csx = new GridBagConstraints();
                 csx.gridy = BLOCK_NAME_ROW;
                 csx.gridx = firstOut + iBlock;
@@ -517,7 +567,7 @@ public class FnMapPanelESU extends JPanel {
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
             if (itemIsUsed[item]) {
-                int value = Integer.valueOf(_varModel.getValString(iVarIndex[item][row]));
+                int value = Integer.parseInt(_varModel.getValString(iVarIndex[item][row]));
                 int state = _varModel.getState(iVarIndex[item][row]);
                 if ((item == outBlockStartCol[block]) || (priorityValue(state) > priorityValue(retState))) {
                     retState = state;
@@ -562,21 +612,22 @@ public class FnMapPanelESU extends JPanel {
     /**
      * Assigns a priority value to a given state.
      */
+    @SuppressFBWarnings({"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"})
     int priorityValue(int state) {
         int value = 0;
         switch (state) {
             case AbstractValue.UNKNOWN:
                 value++;
-                    //$FALL-THROUGH$
+            //$FALL-THROUGH$
             case AbstractValue.DIFF:
                 value++;
-                    //$FALL-THROUGH$
+            //$FALL-THROUGH$
             case AbstractValue.EDITED:
                 value++;
-                    //$FALL-THROUGH$
+            //$FALL-THROUGH$
             case AbstractValue.FROMFILE:
                 value++;
-                    //$FALL-THROUGH$
+            //$FALL-THROUGH$
             default:
                 return value;
         }
@@ -611,12 +662,11 @@ public class FnMapPanelESU extends JPanel {
             return;
         }
         int newRow = selectedRow + increment;
-//         log.info("selectedRow="+selectedRow+",newRow="+newRow);
         // now to swap the data
         for (int item = 0; item < MAX_ITEMS; item++) {
             if (itemIsUsed[item]) {
-                int selectedRowValue = Integer.valueOf(_varModel.getValString(iVarIndex[item][selectedRow]));
-                int newRowValue = Integer.valueOf(_varModel.getValString(iVarIndex[item][newRow]));
+                int selectedRowValue = Integer.parseInt(_varModel.getValString(iVarIndex[item][selectedRow]));
+                int newRowValue = Integer.parseInt(_varModel.getValString(iVarIndex[item][newRow]));
                 _varModel.setIntValue(iVarIndex[item][selectedRow], newRowValue);
                 _varModel.setIntValue(iVarIndex[item][newRow], selectedRowValue);
             }
@@ -630,15 +680,16 @@ public class FnMapPanelESU extends JPanel {
     /**
      * Adds the Row Move buttons at top and bottom
      */
-    void AddRowMoveButtons() {
+    void addRowMoveButtons() {
         {
             JButton button = new JButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/ArrowUp-16.png")));
             button.setActionCommand(String.valueOf(-1));
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    moveRow(Integer.valueOf(e.getActionCommand()));
+                    moveRow(Integer.parseInt(e.getActionCommand()));
                 }
             });
             cs.anchor = GridBagConstraints.CENTER;
@@ -650,8 +701,9 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    moveRow(Integer.valueOf(e.getActionCommand()));
+                    moveRow(Integer.parseInt(e.getActionCommand()));
                 }
             });
             cs.anchor = GridBagConstraints.CENTER;
@@ -663,8 +715,9 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    moveRow(Integer.valueOf(e.getActionCommand()));
+                    moveRow(Integer.parseInt(e.getActionCommand()));
                 }
             });
             cs.anchor = GridBagConstraints.CENTER;
@@ -676,8 +729,9 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    moveRow(Integer.valueOf(e.getActionCommand()));
+                    moveRow(Integer.parseInt(e.getActionCommand()));
                 }
             });
             cs.anchor = GridBagConstraints.CENTER;
@@ -698,7 +752,7 @@ public class FnMapPanelESU extends JPanel {
         Attribute a = model.getAttribute("numOuts");
         try {
             if (a != null) {
-                numItems = Integer.valueOf(a.getValue()).intValue();
+                numItems = Integer.parseInt(a.getValue());
             }
         } catch (Exception e) {
             log.error("error handling decoder's numOuts value");
@@ -710,7 +764,7 @@ public class FnMapPanelESU extends JPanel {
         a = model.getAttribute("numFns");
         try {
             if (a != null) {
-                numRows = Integer.valueOf(a.getValue()).intValue();
+                numRows = Integer.parseInt(a.getValue());
             }
         } catch (Exception e) {
             log.error("error handling decoder's numFns value");
@@ -734,7 +788,7 @@ public class FnMapPanelESU extends JPanel {
             String name = e.getAttribute("name").getValue();
             // if this a number, or a character name?
             try {
-                int outputNum = Integer.valueOf(name).intValue();
+                int outputNum = Integer.parseInt(name);
                 // yes, since it was converted.  All we do with
                 // these are store the label index (if it exists)
                 String at = LocaleSelector.getAttribute(e, "label");

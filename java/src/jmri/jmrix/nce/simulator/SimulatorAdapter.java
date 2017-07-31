@@ -42,29 +42,29 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  {@literal
-  Command	Description	#bytes rtn	Responses 
-  0x80 NOP, dummy instruction (1) !				
-  0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2		
-  0x82 read clock (2) <hours><minutes>	
-  0x83 Clock stop (1) !			
-  0x84 Clock start (1) !		
-  0x85 xx xx Set clock hr./min (1) !,3			
-  0x86 xx Set clock 12/24 (1) !,3		
-  0x87 xx Set clock ratio (1) !,3	
-  0x88 xxxx Dequeue packet by loco addr (1) !, 1,2	
-  0x89 Enable main trk, kill prog (1) !			
+  Command Description #bytes rtn Responses 
+  0x80 NOP, dummy instruction (1) !    
+  0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2  
+  0x82 read clock (2) <hours><minutes> 
+  0x83 Clock stop (1) !   
+  0x84 Clock start (1) !  
+  0x85 xx xx Set clock hr./min (1) !,3   
+  0x86 xx Set clock 12/24 (1) !,3  
+  0x87 xx Set clock ratio (1) !,3 
+  0x88 xxxx Dequeue packet by loco addr (1) !, 1,2 
+  0x89 Enable main trk, kill prog (1) !   
   0x8A yy Return status of AIU yy (4) <current hi byte> <current lo byte> <change hi byte> <change lo byte>
   0x8B Kill main trk, enable prog (1) !
-  0x8C dummy inst. returns	"!" followed CR/LF(3) !0x0D, 0x0A <br>
+  0x8C dummy inst. returns "!" followed CR/LF(3) !0x0D, 0x0A <br>
   0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !, 1,3<speed mode, 0 to 3>
-  0x8E aaaa nn<16 data bytes> Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if necessary	(1) !,4		
+  0x8E aaaa nn<16 data bytes> Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if necessary (1) !,4  
   0x8F aaaa Read 16 bytes, start at aaaa(16) 16 bytes
-  0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2		
+  0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2  
   0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2
   0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2
   0x93 ss<3 byte packet> Queue 3 byte packet to temp _Q send ss times (1) !
   0x94 ss<4 byte packet> Queue 4 byte packet to temp _Q send ss times (1) !
-  0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !		
+  0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !  
   0x96 ss<6 byte packet> Queue 6 byte packet to temp _Q send ss times (1) !
   0x97 aaaa xx Write 1 byte to aaaa (1) !
   0x98 aaaa xx xxWrite 2 bytes to aaaa (1) !
@@ -78,12 +78,12 @@ import org.slf4j.LoggerFactory;
   0xA0 aaaa xx Program CV aa with data xx in paged mode (1) !=success 0=program track
   0xA1 aaaa Read CV aaaa in paged mode Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !, 0,3
   0xA2<4 data bytes> Locomotive control command (1) !,1
-  0xA3<3 bytepacket> Queue 3 byte packet to TRK _Q (replaces any packet with same address if it exists)	(1) !,1
+  0xA3<3 bytepacket> Queue 3 byte packet to TRK _Q (replaces any packet with same address if it exists) (1) !,1
   0xA4<4 byte packet> Queue 4 byte packet to TRK _Q (1) !,1
   0xA5<5 byte packet> Queue 5 byte packet to TRK _Q (1) !,1
-  0xA6 rr dd Program register rr with dd (1) !=success	0=no program track
-  0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !,3	0=no program track 
-  0xA8 aaaa dd Program CV aaaa with dd in direct mode.	(1) !=success 0=no program track
+  0xA6 rr dd Program register rr with dd (1) !=success 0=no program track
+  0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !,3 0=no program track 
+  0xA8 aaaa dd Program CV aaaa with dd in direct mode. (1) !=success 0=no program track
   0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK.
   0xFF followed by 3 for can't read CV (2) !,3 
   0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes
@@ -92,8 +92,8 @@ import org.slf4j.LoggerFactory;
   0xAD <4 data bytes>Accy/signal and macro commands (1) !,1 
 }
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Paul Bender, Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class SimulatorAdapter extends NcePortController implements
@@ -123,6 +123,7 @@ public class SimulatorAdapter extends NcePortController implements
         super(new NceSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -142,6 +143,7 @@ public class SimulatorAdapter extends NcePortController implements
      * set up all of the other objects to simulate operation with an NCE command
      * station.
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
@@ -172,6 +174,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     // base class methods for the NcePortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -179,6 +182,7 @@ public class SimulatorAdapter extends NcePortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -186,6 +190,7 @@ public class SimulatorAdapter extends NcePortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -193,15 +198,18 @@ public class SimulatorAdapter extends NcePortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe.  This is the heart
@@ -278,78 +286,70 @@ public class SimulatorAdapter extends NcePortController implements
         int command = m.getElement(0);
         if (command < 0x80) // NOTE: NCE command station does not respond to
         {
-            return null;						// command less than 0x80 (times out)
+            return null;      // command less than 0x80 (times out)
         }
-        if (command < 0x80 || command > 0xBF) {	// Command is out of range
-            reply.setElement(0, NCE_ERROR);		// Nce command not supported
+        if (command > 0xBF) { // Command is out of range
+            reply.setElement(0, NCE_ERROR);  // Nce command not supported
             return reply;
         }
         switch (command) {
-            case NceBinaryCommand.SW_REV_CMD:		// Get Eprom revision
-                reply.setElement(0, 0x06); 			// Send Eprom revision 6 2 1
+            case NceBinaryCommand.SW_REV_CMD:  // Get Eprom revision
+                reply.setElement(0, 0x06);    // Send Eprom revision 6 2 1
                 reply.setElement(1, 0x02);
                 reply.setElement(2, 0x01);
                 break;
-            case NceBinaryCommand.READ_CLOCK_CMD:	// Read clock
-                reply.setElement(0, 0x12);			// Return fixed time
+            case NceBinaryCommand.READ_CLOCK_CMD: // Read clock
+                reply.setElement(0, 0x12);   // Return fixed time
                 reply.setElement(1, 0x30);
                 break;
-            case NceBinaryCommand.READ_AUI4_CMD:	// Read AUI 4 byte response
-                reply.setElement(0, 0xFF);			// fixed data for now
-                reply.setElement(1, 0xFF);			// fixed data for now
-                reply.setElement(2, 0x00);			// fixed data for now
-                reply.setElement(3, 0x00);			// fixed data for now
+            case NceBinaryCommand.READ_AUI4_CMD: // Read AUI 4 byte response
+                reply.setElement(0, 0xFF);   // fixed data for now
+                reply.setElement(1, 0xFF);   // fixed data for now
+                reply.setElement(2, 0x00);   // fixed data for now
+                reply.setElement(3, 0x00);   // fixed data for now
                 break;
-            case NceBinaryCommand.DUMMY_CMD:		// Dummy instruction
-                reply.setElement(0, NCE_OKAY);		// return ! CR LF
+            case NceBinaryCommand.DUMMY_CMD:  // Dummy instruction
+                reply.setElement(0, NCE_OKAY);  // return ! CR LF
                 reply.setElement(1, 0x0D);
                 reply.setElement(2, 0x0A);
                 break;
-            case NceBinaryCommand.READ16_CMD:		// Read 16 bytes
+            case NceBinaryCommand.READ16_CMD:  // Read 16 bytes
                 readMemory(m, reply, 16);
                 break;
-            case NceBinaryCommand.READ_AUI2_CMD:	// Read AUI 2 byte response
-                reply.setElement(0, 0x00);			// fixed data for now
-                reply.setElement(1, 0x00);			// fixed data for now
+            case NceBinaryCommand.READ_AUI2_CMD: // Read AUI 2 byte response
+                reply.setElement(0, 0x00);   // fixed data for now
+                reply.setElement(1, 0x00);   // fixed data for now
                 break;
-            case NceBinaryCommand.READ1_CMD:		// Read 1 bytes
+            case NceBinaryCommand.READ1_CMD:  // Read 1 bytes
                 readMemory(m, reply, 1);
                 break;
-            case NceBinaryCommand.WRITE1_CMD:		// Write 1 bytes
+            case NceBinaryCommand.WRITE1_CMD:  // Write 1 bytes
                 writeMemory(m, reply, 1, false);
                 break;
-            case NceBinaryCommand.WRITE2_CMD:		// Write 2 bytes
+            case NceBinaryCommand.WRITE2_CMD:  // Write 2 bytes
                 writeMemory(m, reply, 2, false);
                 break;
-            case NceBinaryCommand.WRITE4_CMD:		// Write 4 bytes
+            case NceBinaryCommand.WRITE4_CMD:  // Write 4 bytes
                 writeMemory(m, reply, 4, false);
                 break;
-            case NceBinaryCommand.WRITE8_CMD:		// Write 8 bytes
+            case NceBinaryCommand.WRITE8_CMD:  // Write 8 bytes
                 writeMemory(m, reply, 8, false);
                 break;
-            case NceBinaryCommand.WRITEn_CMD:		// Write n bytes
+            case NceBinaryCommand.WRITE_N_CMD:  // Write n bytes
                 writeMemory(m, reply, m.getElement(3), true);
                 break;
-            case NceBinaryCommand.ACC_CMD:			// accessory command
+            case NceBinaryCommand.ACC_CMD:   // accessory command
                 accessoryCommand(m, reply);
                 break;
             case NceMessage.READ_DIR_CV_CMD:
-                reply.setElement(0, 123);			// dummy data
-                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
-                reply.setElement(1, NCE_OKAY);  // forces succeed
-                break;
             case NceMessage.READ_PAGED_CV_CMD:
-                reply.setElement(0, 123);			// dummy data
-                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
-                reply.setElement(1, NCE_OKAY);  // forces succeed
-                break;
             case NceMessage.READ_REG_CMD:
-                reply.setElement(0, 123);			// dummy data
+                reply.setElement(0, 123);   // dummy data
                 //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
                 reply.setElement(1, NCE_OKAY);  // forces succeed
                 break;
             default:
-                reply.setElement(0, NCE_OKAY); 		// Nce okay reply!
+                reply.setElement(0, NCE_OKAY);   // Nce okay reply!
         }
         return reply;
     }
@@ -371,8 +371,8 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     private byte[] turnoutMemory = new byte[256];
-    private byte[] macroMemory = new byte[256 * 20 + 16];	// and a little padding
-    private byte[] consistMemory = new byte[256 * 6 + 16];	// and a little padding
+    private byte[] macroMemory = new byte[256 * 20 + 16]; // and a little padding
+    private byte[] consistMemory = new byte[256 * 6 + 16]; // and a little padding
 
     /* Read NCE memory.  This implementation simulates reading the NCE
      * command station memory.  There are three memory blocks that are
@@ -414,7 +414,7 @@ public class SimulatorAdapter extends NcePortController implements
             return reply;
         }
         for (int i = 0; i < num; i++) {
-            reply.setElement(i, 0x00);			// default fixed data
+            reply.setElement(i, 0x00);   // default fixed data
         }
         return reply;
     }
@@ -451,7 +451,7 @@ public class SimulatorAdapter extends NcePortController implements
                 macroMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
-        reply.setElement(0, NCE_OKAY); 		// Nce okay reply!
+        reply.setElement(0, NCE_OKAY);   // Nce okay reply!
         return reply;
     }
 
@@ -463,7 +463,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     private NceReply accessoryCommand(NceMessage m, NceReply reply) {
-        if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04) {		// 0x03 = close, 0x04 = throw
+        if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04) {  // 0x03 = close, 0x04 = throw
             String operation = "close";
             if (m.getElement(3) == 0x04) {
                 operation = "throw";
@@ -486,12 +486,12 @@ public class SimulatorAdapter extends NcePortController implements
             byte write = (byte) (read & clearMask & 0xFF);
 
             if (operation.equals("close")) {
-                write = (byte) (write + setMask);	// set bit if closed
+                write = (byte) (write + setMask); // set bit if closed
             }
             turnoutMemory[offset] = write;
             //log.debug("wrote:"+Integer.toHexString(write)); 
         }
-        reply.setElement(0, NCE_OKAY); 		// Nce okay reply!
+        reply.setElement(0, NCE_OKAY);   // Nce okay reply!
         return reply;
     }
 

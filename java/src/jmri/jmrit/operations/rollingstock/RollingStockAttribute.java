@@ -1,4 +1,3 @@
-// RollingStockAttribute.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ public class RollingStockAttribute {
         // Need to reload all listeners for the tests to work.
         // Only tests currently call dispose()
         // remove all listeners
-//		for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
-//			pcs.removePropertyChangeListener(p);
+//  for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
+//   pcs.removePropertyChangeListener(p);
     }
 
     protected List<String> list = new ArrayList<String>();

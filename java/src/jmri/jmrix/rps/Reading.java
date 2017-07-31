@@ -1,5 +1,6 @@
-// Reading.java
 package jmri.jmrix.rps;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 
 /**
@@ -19,7 +20,7 @@ package jmri.jmrix.rps;
 @net.jcip.annotations.Immutable
 public class Reading {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values) {
         this.id = id;
         this.values = values;
@@ -27,7 +28,7 @@ public class Reading {
         this.time = 0;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values, String raw) {
         this.id = id;
         this.values = values;
@@ -35,7 +36,7 @@ public class Reading {
         this.time = 0;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values, int time) {
         this.id = id;
         this.values = values;
@@ -94,13 +95,14 @@ public class Reading {
     final double[] values;
     final int time; // in msec since epoch
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION") // We accept the poor performance
+    @Override
     public String toString() {
-        String r = "Reading id=" + getID() + " values=";
+        StringBuilder b = new StringBuilder();
+        b.append("Reading id=").append(getID()).append(" values=");
         for (int i = 1; i <= getNValues(); i++) {
-            r += "" + (int) getValue(i) + ((i != (getNValues())) ? "," : " ");
+            b.append(getValue(i)).append(i != getNValues() ? "," : " ");
         }
-        return r;
+        return b.toString();
     }
 
     /**
@@ -115,4 +117,4 @@ public class Reading {
     final Object rawData;
 }
 
-/* @(#)Reading.java */
+

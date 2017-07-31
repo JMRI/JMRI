@@ -1,5 +1,7 @@
-// Mx1ConnectionTypeList.java
 package jmri.jmrix.zimo;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid Zimo Connection Types
@@ -8,6 +10,7 @@ package jmri.jmrix.zimo;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class Mx1ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ZIMO = "Zimo";

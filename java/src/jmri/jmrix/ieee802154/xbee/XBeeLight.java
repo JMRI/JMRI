@@ -4,7 +4,6 @@ import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.io.IOLine;
-import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOValue;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
@@ -36,6 +35,9 @@ public class XBeeLight extends AbstractLight {
     /**
      * Create a Light object, with system and user names and a reference to the
      * traffic controller.
+     * @param systemName Xbee system id : pin id
+     * @param userName User friendly name
+     * @param controller tc for connection for this node
      */
     public XBeeLight(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
@@ -103,6 +105,7 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
+    @Override
     protected void doNewState(int oldState, int newState) {
         try  {
             if((newState == Light.ON) ) {

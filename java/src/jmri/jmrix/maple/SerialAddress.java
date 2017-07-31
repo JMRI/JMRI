@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.maple;
 
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * input or output bit (001-9999) Note: with Maple, all panels (nodes) have the
  * same address space, so there is no node number in the address.
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004 - 2009
+ * @author Dave Duchamp, Copyright (C) 2004 - 2009
  */
 public class SerialAddress {
 
@@ -280,4 +279,4 @@ public class SerialAddress {
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
-/* @(#)SerialAddress.java */
+

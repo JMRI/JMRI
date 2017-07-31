@@ -131,8 +131,7 @@ are a vestige of older version control systems; they can be ignored or deleted.
 <p>
 There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
-of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
-<code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
+of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
 
 <a name="commonkeys"><p>
 You are advised to start a new language translation by completing the highest level bundles, starting with the
@@ -184,7 +183,7 @@ Please see the
 for more info on how to include those characters in your .properties files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
 <p>An example is the 
-<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a> 
 file, which contains diacritical letters for the Czech translation. 
 <p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
 by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
@@ -302,11 +301,21 @@ than providing multiple lines in the code itself.
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
 English, as should messages sent to the logging system. Keys for 
-the translation bundles are another example. 
+the translation bundles should also stay in English. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
 <pre style="font-family: monospace;">
-  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+           Sensor thisSensorVariableNameIsInEnglish;
+
+           String message = "THAT_ONE_MESSAGE";  // NOI18N
+           JLabel jl1 = new JLabel(Bundle.getMessage(message));
+
+           JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
+
+           log.debug("The process failed account of user error"); // NOI18N
+
+           // This comment is in English and need not be annotated w.r.t. internationalization
+
 </pre>
 
 <h3>Adding a new Bundle</h3>

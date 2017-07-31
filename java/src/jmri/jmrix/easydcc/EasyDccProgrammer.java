@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Implements the jmri.Programmer interface via commands for the EasyDcc
  * powerstation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
@@ -35,12 +35,13 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
+    @Override
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -69,6 +70,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         readCV(CV, p);
     }
 
+    @Override
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -128,10 +130,12 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
+    @Override
     public void message(EasyDccMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(EasyDccReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -168,6 +172,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

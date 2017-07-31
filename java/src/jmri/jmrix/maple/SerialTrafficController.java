@@ -1,5 +1,6 @@
 package jmri.jmrix.maple;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -22,13 +23,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
  * @since 2.3.7
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
+@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
@@ -57,10 +58,12 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     private OutputBits mOutputBits = null;
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
@@ -72,11 +75,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // dummy routine - Maple System devices do not require initialization
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode doesnt make sense for Maple serial");
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         // can happen during error recovery, null is OK
         return null;
@@ -85,6 +90,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -92,6 +98,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialReply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SerialListener) client).reply((SerialReply) m);
     }
@@ -103,13 +110,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     // initialization not needed ever
+    @Override
     protected boolean getMustInit(int i) {
         return false;
     }
 
     // With the Maple Systems Protocol, output packets are limited to 99 bits.  If there are more than 
     //    99 bits configured, multiple output packets must be sent.  The following cycle through that
-    //	  process.
+    //   process.
     private boolean mNeedSend = true;
     private int mStartBitNumber = 1;
     // Similarly the poll command can only poll 99 input bits at a time, so more packets may be needed.
@@ -127,6 +135,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Handles output and polling for Maple Serial Nodes from within the running
      * thread
      */
+    @Override
     protected synchronized AbstractMRMessage pollMessage() {
         // ensure validity of call - are nodes in yet?
         if (getNumNodes() <= 0) {
@@ -191,15 +200,16 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         wrTimeoutCount = 0;
     }
 
+    @Override
     protected void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         if (m.getElement(3) == 'W' && m.getElement(4) == 'C') {
             wrTimeoutCount++;    // should not happen
         } else if (m.getElement(3) == 'R' && m.getElement(4) == 'C') {
             if (mNeedAdditionalPollPacket) {
-//				log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
+//    log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
                 getNode(curSerialNodeIndex).handleTimeout(m, l);
             } else {
-//				log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
+//    log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
                 getNode(curSerialNodeIndex - 1).handleTimeout(m, l);
             }
         } else {
@@ -207,6 +217,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected void resetTimeout(AbstractMRMessage m) {
         if (mCurrentNodeIndexInPoll < 0) {
             wrTimeoutCount = 0;    // should never happen - outputs should not be timed
@@ -217,6 +228,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }
@@ -224,6 +236,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
@@ -246,7 +259,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     static volatile protected SerialTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     @Deprecated
@@ -254,16 +267,19 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
         return false;
     }
 
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         boolean first = true;
@@ -322,6 +338,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // don't skip anything
     }
@@ -332,6 +349,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         return 0;
     }
@@ -342,6 +360,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
@@ -352,6 +371,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();
         return len;

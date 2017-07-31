@@ -9,7 +9,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 /**
  * Swing action to get SPROG firmware version
  *
- * @author	Andrew crosland Copyright (C) 2004
+ * @author	Andrew Crosland Copyright (C) 2004
  */
 public class SprogVersionAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class SprogVersionAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SprogVersionFrame
         SprogVersionFrame f = new SprogVersionFrame(_memo);
@@ -34,6 +35,3 @@ public class SprogVersionAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class.getName());
 
 }
-
-
-/* @(#)SprogVersionAction.java */

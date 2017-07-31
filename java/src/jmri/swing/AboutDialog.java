@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AboutDialog extends JDialog {
 
-    ConnectionConfig[] connection = {null, null, null, null};
-
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
 
@@ -71,12 +69,13 @@ public class AboutDialog extends JDialog {
         return pane;
     }
 
-    String checkCopyright(String name) {
-        if (name.toUpperCase().equals("DECODERPRO"))
-            name = name+"\u00ae";
+    protected String checkCopyright(String name) {
+        if (name.toUpperCase().equals("DECODERPRO")) {
+            name = name + "\u00ae";
+        }
         return name;
     }
-    
+
     protected JPanel infoPane() {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -104,5 +103,6 @@ public class AboutDialog extends JDialog {
         c.setAlignmentX(Component.CENTER_ALIGNMENT); // doesn't work
         p.add(c);
     }
+
     private static final Logger log = LoggerFactory.getLogger(AboutDialog.class.getName());
 }

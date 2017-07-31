@@ -24,7 +24,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
     // combo box
-    JComboBox<TrainSchedule> comboBox;
+    private JComboBox<TrainSchedule> comboBox = null;
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
@@ -33,16 +33,29 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
 
-    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
+    TrainScheduleManager trainScheduleManager = null;
 
     public TrainsScheduleEditFrame() {
         super();
+
+        trainScheduleManager = TrainScheduleManager.instance();
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new GridBagLayout());
 
         trainScheduleManager.addPropertyChangeListener(this);
-        comboBox = trainScheduleManager.getComboBox();
+
+        initComponents();
+    }
+
+    @Override
+    public void initComponents() {
+        try {
+           comboBox = trainScheduleManager.getComboBox();
+        } catch(IllegalArgumentException iae) {
+           comboBox = new JComboBox<TrainSchedule>();
+           trainScheduleManager.updateComboBox(comboBox);
+        }
 
         // row 1
         addItem(addTextBox, 2, 2);
@@ -80,7 +93,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         String s = addTextBox.getText();
         s = s.trim();
         if (s.equals("")) {
-            return;	// done
+            return; // done
         }
         if (ae.getSource() == addButton) {
             trainScheduleManager.newSchedule(s);

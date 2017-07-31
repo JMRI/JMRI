@@ -27,15 +27,20 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.speedprofile.PackageTest");
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfilePanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileTableTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileActionTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

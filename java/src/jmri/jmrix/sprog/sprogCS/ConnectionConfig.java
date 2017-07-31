@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.util.SystemType;
@@ -26,14 +25,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
-        return "SPROG Command Station";
+        return Bundle.getMessage("SprogCSTitle");
     }
 
+    @Override
     public String getManufacturer() {
         return adapter.getManufacturer();
     }
 
+    @Override
     public void setManufacturer(String manu) {
         adapter.setManufacturer(manu);
     }
@@ -56,11 +58,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SprogCSSerialDriverAdapter();
         } 
     }
 }
-
-/* @(#)ConnectionConfig.java */

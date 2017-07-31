@@ -1,6 +1,6 @@
-// EcosTurnout.java
 package jmri.jmrix.ecos;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -13,16 +13,11 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
-  */
+ */
 public class EcosTurnout extends AbstractTurnout
         implements EcosListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5048966966311573172L;
 
     String prefix;
 
@@ -32,7 +27,7 @@ public class EcosTurnout extends AbstractTurnout
     int extended = 0;
 
     /**
-     * Ecos turnouts use the NMRA number (0-2044) as their numerical
+     * ECoS turnouts use the NMRA number (0-2044) as their numerical
      * identification in the system name.
      *
      * @param number DCC address of the turnout
@@ -65,7 +60,7 @@ public class EcosTurnout extends AbstractTurnout
         _validFeedbackModes = modeValues;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -133,12 +128,13 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -164,7 +160,7 @@ public class EcosTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newCommandedState" to indicate it's
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
@@ -182,10 +178,10 @@ public class EcosTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
-     * <P>
+     *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
@@ -196,11 +192,12 @@ public class EcosTurnout extends AbstractTurnout
         newKnownState(state);
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
     /**
-     * ECOS turnouts can be inverted
+     * @return ECoS turnouts can be inverted
      */
     @Override
     public boolean canInvert() {
@@ -301,6 +298,7 @@ public class EcosTurnout extends AbstractTurnout
     // to listen for status changes from Ecos system
     int newstate = UNKNOWN;
     int newstateext = UNKNOWN;
+    @Override
     public void reply(EcosReply m) {
 
         String msg = m.toString();
@@ -391,11 +389,11 @@ public class EcosTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
-}
 
-/* @(#)EcosTurnout.java */
+}

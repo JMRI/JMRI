@@ -31,6 +31,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param o Object to store, of type ReporterManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
@@ -53,8 +54,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
-                Element elem = new Element("reporter")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
@@ -113,6 +113,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }

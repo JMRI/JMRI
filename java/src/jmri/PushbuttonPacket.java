@@ -18,13 +18,13 @@ import org.slf4j.LoggerFactory;
  *
  * From the CVP user manual:
  *
- * Function	CV514 Lock all inputs	0 Unlock 1	1 Unlock 2	4 Unlock 3	16 Unlock 4
- * 64 Unlock all	85 Enable 2 button	255
+ * Function CV514 Lock all inputs 0 Unlock 1 1 Unlock 2 4 Unlock 3 16 Unlock 4
+ * 64 Unlock all 85 Enable 2 button 255
  *
  * This routine assumes that for two button operations the following table is
  * true:
  *
- * Lock all inputs	0 Unlock 1	3 Unlock 2	12 Unlock 3	48 Unlock 4	192 Unlock all
+ * Lock all inputs 0 Unlock 1 3 Unlock 2 12 Unlock 3 48 Unlock 4 192 Unlock all
  * 255
  *
  * Each CVP can operate up to four turnouts, luckly for us, they are sequential.
@@ -52,7 +52,9 @@ public class PushbuttonPacket {
         Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(prefix + turnoutNum);
         byte[] bl;
 
-        if (t.getDecoderName().equals(unknown)) {
+        if (t == null || t.getDecoderName() == null ) {
+            return null;
+        } else if (t.getDecoderName().equals(unknown)) {
             return null;
         } else if (t.getDecoderName().equals(NCEname)) {
             if (locked) {
@@ -87,8 +89,8 @@ public class PushbuttonPacket {
     private static int CVPturnoutLockout(String prefix, int turnoutNum) {
 
         int CVdata = 0;
-        int oneButton = 1;							// one pushbutton enable
-        int twoButton = 3;							// two pushbutton enable
+        int oneButton = 1;       // one pushbutton enable
+        int twoButton = 3;       // two pushbutton enable
         int modTurnoutNum = (turnoutNum - 1) & 0xFFC; // mask off bits, there are 4 turnouts per
         // decoder
 
@@ -98,7 +100,7 @@ public class PushbuttonPacket {
             modTurnoutNum++;
             Turnout t = InstanceManager.turnoutManagerInstance()
                     .getBySystemName(prefix + modTurnoutNum);
-            if (t != null) {
+            if (t != null && t.getDecoderName() != null) {
                 if (t.getDecoderName().equals(CVP_1Bname)) {
                     // do nothing button already = oneButton
                 } else if (t.getDecoderName().equals(CVP_2Bname)) {

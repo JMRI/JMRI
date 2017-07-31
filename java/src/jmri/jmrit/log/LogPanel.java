@@ -1,4 +1,3 @@
-// LogPanel.java
 package jmri.jmrit.log;
 
 import java.awt.FlowLayout;
@@ -10,14 +9,10 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface for adding an item to the log file.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
   */
 public class LogPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6095030332169881375L;
     // member declarations
     javax.swing.JLabel label = new javax.swing.JLabel("Message:");
     javax.swing.JButton sendButton = new javax.swing.JButton("Add");
@@ -35,6 +30,7 @@ public class LogPanel extends JPanel {
 
         sendButton.setToolTipText("Add message to the log file");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

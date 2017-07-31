@@ -28,6 +28,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SingleTurnoutSignalHead p = (SingleTurnoutSignalHead) o;
 
@@ -35,7 +36,6 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -124,8 +124,12 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Load a turnout.
+     * Needs to handle two types of element: turnoutname is new form, turnout is
+     * old form.
+     *
+     * @param o Object read from storage, of type Turnout
+     * @return Turnout bean
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
@@ -140,6 +144,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

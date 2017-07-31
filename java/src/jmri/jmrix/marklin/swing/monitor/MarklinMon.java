@@ -4,7 +4,7 @@ import jmri.jmrix.marklin.MarklinConstants;
 import jmri.jmrix.marklin.MarklinReply;
 
 /**
- * class to convert Marklin Can bus messages to a human readable form
+ * Class to convert Marklin Can bus messages to a human readable form
  */
 public class MarklinMon {
 
@@ -26,7 +26,7 @@ public class MarklinMon {
                 sb.append("4, Engine/accessory command");
                 break;
             default:
-                sb.append("Unknown");
+                sb.append(Bundle.getMessage("StateUnknown"));
         }
         sb.append(" Command: ");
         int command = r.getCommand();
@@ -50,10 +50,10 @@ public class MarklinMon {
             sb.append("Accessory");
             switch (r.getElement(9)) {
                 case 0x00:
-                    sb.append("Set Thrown");
+                    sb.append(Bundle.getMessage("SetTurnoutState", Bundle.getMessage("TurnoutStateThrown")));
                     break;
                 case 0x01:
-                    sb.append("Set Closed");
+                    sb.append(Bundle.getMessage("SetTurnoutState", Bundle.getMessage("TurnoutStateClosed")));
                     break;
                 default:
                     sb.append("Unknown state command " + r.getElement(9));
@@ -68,23 +68,23 @@ public class MarklinMon {
             sb.append("Feedback");
         }
         if (r.isResponse()) {
-            sb.append(" Reply");
+            sb.append(" " + Bundle.getMessage("ReplyMessage"));
         } else {
-            sb.append(" Request Message");
+            sb.append(" " + Bundle.getMessage("RequestMessage"));
         }
         long addr = r.getAddress();
         if (addr >= MarklinConstants.MM1START && addr <= MarklinConstants.MM1END) {
             if (addr == 0) {
                 sb.append(" Broadcast");
             } else {
-                sb.append(" to MM Loco Address " + addr);
+                sb.append(" " + Bundle.getMessage("MonTrafToLocoAddress", addr));
             }
         } else if (addr >= MarklinConstants.MM1FUNCTSTART && addr <= MarklinConstants.MM1FUNCTEND) {
             addr = addr - MarklinConstants.MM1FUNCTSTART;
             sb.append(" to MM Function decoder " + addr);
         } else if (addr >= MarklinConstants.MM1LOCOSTART && addr <= MarklinConstants.MM1LOCOEND) {
             addr = addr - MarklinConstants.MM1LOCOSTART;
-            sb.append(" to MM Loco Address " + addr);
+            sb.append(" " + Bundle.getMessage("MonTrafToLocoAddress", addr));
         } else if (addr >= MarklinConstants.SX1START && addr <= MarklinConstants.SX1END) {
             addr = addr - MarklinConstants.SX1START;
             sb.append(" to SX Address " + addr);

@@ -1,12 +1,12 @@
 package jmri.jmrix.bachrus;
 
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  *
  * Removed Runnable implementation and methods for it
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
@@ -33,10 +33,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     // The methods to implement the SpeedoInterface
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addSpeedoListener(SpeedoListener l) {
         // add only if not already registered
         if (l == null) {
@@ -47,6 +49,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         }
     }
 
+    @Override
     public synchronized void removeSpeedoListener(SpeedoListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -85,6 +88,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
+
     private SpeedoPortController controller = null;
 
     /**
@@ -113,7 +117,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * static function returning the SpeedoTrafficController instance to use.
+     * Get the SpeedoTrafficController instance to use.
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
@@ -128,7 +132,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
-
 
     /*
      * Speedo replies end with ";"
@@ -149,10 +152,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
 
     /**
-     * serialEvent - respond to an event triggered by RXTX. In this case we are
+     * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
-     * reference. AJB Jan 2010
+     * reference.
+     * @author AJB Jan 2010
      */
+    @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
             case SerialPortEvent.BI:
@@ -188,11 +193,14 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 }
 
                 break;
+            default:
+                log.warn("Unhandled event type: {}", event.getEventType());
+                break;
         }
     }
 
     /**
-     * Send the current reply - built using data from seriaEvent
+     * Send the current reply - built using data from seriaEvent.
      */
     private void sendreply() {
         //send the reply
@@ -208,6 +216,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 SpeedoReply msgForLater = thisReply;
                 SpeedoTrafficController myTC = thisTC;
 
+                @Override
                 public void run() {
                     myTC.notifyReply(msgForLater);
                 }
@@ -217,4 +226,5 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         //Create a new reply, ready to be filled
         this.reply = new SpeedoReply();
     }
+
 }

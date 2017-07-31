@@ -1,4 +1,3 @@
-// TwoByteMacroEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -13,14 +12,9 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * underlying data, so we provide this as an escape claus for unrecognized
  * content.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 class TwoByteMacroEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5363908602077121350L;
 
     public TwoByteMacroEditor(SdfMacro inst) {
         super(inst);
@@ -33,5 +27,3 @@ class TwoByteMacroEditor extends SdfMacroEditor {
     }
 
 }
-
-/* @(#)TwoByteMacroEditor.java */

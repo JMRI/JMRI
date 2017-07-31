@@ -3,7 +3,6 @@ package jmri.jmrix.roco.z21;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -62,6 +61,12 @@ public class Z21MessageTest {
     }
 
     @Test
+    public void toMonitorStringSerialNumberRequest(){
+        Z21Message m = Z21Message.getSerialNumberRequestMessage();
+        Assert.assertEquals("Monitor String","Z21 Serial Number Request",m.toMonitorString());
+    }
+
+    @Test
     public void GetHardwareInfoRequest(){
         Z21Message m = Z21Message.getLanGetHardwareInfoRequestMessage();
         Assert.assertEquals("length", 4, m.getNumDataElements());
@@ -69,6 +74,12 @@ public class Z21MessageTest {
         Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x1A, m.getElement(2) & 0xFF);
         Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringGetHardwareInfoRequest(){
+        Z21Message m = Z21Message.getLanGetHardwareInfoRequestMessage();
+        Assert.assertEquals("Monitor String","Z21 Version Request",m.toMonitorString());
     }
 
     @Test
@@ -83,6 +94,12 @@ public class Z21MessageTest {
     }
 
     @Test
+    public void toMonitorStringLanLogoffRequest(){
+        Z21Message m = Z21Message.getLanLogoffRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 30 00",m.toMonitorString());
+    }
+
+    @Test
     public void GetBroadCastFlagsRequest(){
         Z21Message m = Z21Message.getLanGetBroadcastFlagsRequestMessage();
         Assert.assertEquals("length", 4, m.getNumDataElements());
@@ -90,6 +107,12 @@ public class Z21MessageTest {
         Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x51, m.getElement(2) & 0xFF);
         Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringGetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanGetBroadcastFlagsRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 51 00",m.toMonitorString());
     }
 
     @Test
@@ -108,6 +131,12 @@ public class Z21MessageTest {
     }
 
     @Test
+    public void toMonitorStringSetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
+        Assert.assertEquals("Monitor String","08 00 50 00 04 03 02 01",m.toMonitorString());
+    }
+
+    @Test
     public void GetRailComDataRequest(){
         Z21Message m = Z21Message.getLanRailComGetDataRequestMessage();
         Assert.assertEquals("length", 4, m.getNumDataElements());
@@ -115,6 +144,12 @@ public class Z21MessageTest {
         Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x89, m.getElement(2) & 0xFF);
         Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringRailComDataRequest(){
+        Z21Message m = Z21Message.getLanRailComGetDataRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 89 00",m.toMonitorString());
     }
 
 

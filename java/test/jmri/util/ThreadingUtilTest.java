@@ -29,6 +29,7 @@ public class ThreadingUtilTest extends TestCase {
         
         new Thread(
             new Runnable() {
+                @Override
                 public void run() {
                     // now on another thread
                     // switch back to Layout thread
@@ -51,6 +52,7 @@ public class ThreadingUtilTest extends TestCase {
         
         javax.swing.SwingUtilities.invokeLater(
             new Runnable() {
+                @Override
                 public void run() {
                     // now on Swing thread
                     // switch back to Layout thread
@@ -66,6 +68,34 @@ public class ThreadingUtilTest extends TestCase {
 
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
+    }
+
+    public void testThreadingDelayGUI() {
+        done = false;
+        
+        ThreadingUtil.runOnGUIDelayed( ()-> { 
+            done = true; 
+        }, 200 );
+
+        // ensure not done now
+        Assert.assertTrue(!done);
+        
+        // wait for separate thread to do it's work before confirming test
+        JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
+    }
+
+    public void testThreadingDelayLayout() {
+        done = false;
+        
+        ThreadingUtil.runOnLayoutDelayed( ()-> { 
+            done = true; 
+        }, 200 );
+
+        // ensure not done now
+        Assert.assertTrue(!done);
+        
+        // wait for separate thread to do it's work before confirming test
+        JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
     }
 
 
@@ -87,11 +117,13 @@ public class ThreadingUtilTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

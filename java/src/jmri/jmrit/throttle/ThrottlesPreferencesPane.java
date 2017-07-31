@@ -16,11 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author lionel
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
     private JCheckBox cbUseToolBar;
@@ -170,14 +172,14 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbUseRosterImage.addActionListener(al);
         cbEnableAutoLoad.addActionListener(al);
 
-        jbSave.setText(Bundle.getMessage("ThrottlesPrefsSave"));
+        jbSave.setText(Bundle.getMessage("ButtonSave"));
         jbSave.addActionListener(this::jbSaveActionPerformed);
         jbSave.setVisible(false);
 
         jbCancel.setText(Bundle.getMessage("ThrottlesPrefsReset"));
         jbCancel.addActionListener(this::jbCancelActionPerformed);
 
-        jbApply.setText(Bundle.getMessage("ThrottlesPrefsApply"));
+        jbApply.setText(Bundle.getMessage("ButtonApply"));
         jbApply.addActionListener(this::jbApplyActionPerformed);
 
         setLayout(new GridBagLayout());
@@ -274,7 +276,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     public void setContainer(JFrame f) {
         m_container = f;
         jbSave.setVisible(true);
-        jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
+        jbCancel.setText(Bundle.getMessage("ButtonCancel"));
     }
 
     @Override

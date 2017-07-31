@@ -21,9 +21,10 @@ public class ListAction extends AbstractAction {
     }
 
     public ListAction(CMRISystemConnectionMemo memo) {
-        this("List C/MRI Assignments",memo);
+        this(Bundle.getMessage("MenuItemAssignments"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ListFrame f = new ListFrame(_memo);
         try {

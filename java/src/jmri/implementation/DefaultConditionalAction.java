@@ -87,22 +87,30 @@ public class DefaultConditionalAction implements ConditionalAction {
         if (!(getClass() == obj.getClass())) {
             return false;
         } else {
-            DefaultConditionalAction p = (DefaultConditionalAction)obj;
-            if (p._option != this._option) return false;
-            if (p._type != this._type) return false;
-            if (p._actionData != this._actionData) return false;
+            DefaultConditionalAction p = (DefaultConditionalAction) obj;
+            if ((p._option != this._option)
+                    || (p._type != this._type)
+                    || (p._actionData != this._actionData)) {
+                return false;
+            }
 
-            if (p._namedBean == null &&  this._namedBean != null) return false;
-            if (p._namedBean != null &&  this._namedBean == null) return false;
-            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+            if ((p._namedBean == null && this._namedBean != null)
+                    || (p._namedBean != null && this._namedBean == null)
+                    || (p._namedBean != null && this._namedBean != null && !p._namedBean.equals(this._namedBean))) {
+                return false;
+            }
 
-            if (p._deviceName == null &&  this._deviceName != null) return false;
-            if (p._deviceName != null &&  this._deviceName == null) return false;
-            if (p._deviceName != null &&  this._deviceName != null && !p._deviceName.equals(this._deviceName)) return false;
+            if ((p._deviceName == null && this._deviceName != null)
+                    || (p._deviceName != null && this._deviceName == null)
+                    || (p._deviceName != null && this._deviceName != null && !p._deviceName.equals(this._deviceName))) {
+                return false;
+            }
 
-            if (p._actionString == null &&  this._actionString != null) return false;
-            if (p._actionString != null &&  this._actionString == null) return false;
-            if (p._actionString != null &&  this._actionString != null && !p._actionString.equals(this._actionString)) return false;
+            if ((p._actionString == null && this._actionString != null)
+                    || (p._actionString != null && this._actionString == null)
+                    || (p._actionString != null && this._actionString != null && !p._actionString.equals(this._actionString))) {
+                return false;
+            }
 
         }
         return true;
@@ -110,9 +118,11 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     @Override
     public int hashCode() {
-        int hash = _option*1000+_type*1000*1000+_actionData;
-        if (_deviceName!=null) hash += _deviceName.hashCode();
-        
+        int hash = _option * 1000 + _type * 1000 * 1000 + _actionData;
+        if (_deviceName != null) {
+            hash += _deviceName.hashCode();
+        }
+
         return hash;
     }
 
@@ -226,10 +236,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * The consequent device or element type
      */
+    @Override
     public int getType() {
         return _type;
     }
 
+    @Override
     public void setType(int type) {
         _type = type;
     }
@@ -237,6 +249,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Sets type from user's name for it
      */
+    @Override
     public void setType(String type) {
         _type = stringToActionType(type);
     }
@@ -244,6 +257,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Name of the device or element that is effected
      */
+    @Override
     public String getDeviceName() {
         if (_namedBean != null) {
             return _namedBean.getName();
@@ -255,6 +269,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _deviceName;
     }
 
+    @Override
     public void setDeviceName(String deviceName) {
         _deviceName = deviceName;
         NamedBean bean = getIndirectBean(_deviceName);
@@ -268,6 +283,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
+    @Override
     public NamedBeanHandle<?> getNamedBean() {
         if (_indirectAction) {
             Memory m = (Memory) (_namedBean.getBean());
@@ -282,13 +298,14 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _namedBean;
     }
 
+    @Override
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return (NamedBean) getNamedBean().getBean();
+            return getNamedBean().getBean();
         }
         setDeviceName(_deviceName); //ReApply name as that will create namedBean, save replicating it here
         if (_namedBean != null) {
-            return (NamedBean) getNamedBean().getBean();
+            return getNamedBean().getBean();
         }
         return null;
     }
@@ -296,10 +313,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Options on when action is taken
      */
+    @Override
     public int getOption() {
         return _option;
     }
 
+    @Override
     public void setOption(int option) {
         _option = option;
     }
@@ -307,10 +326,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Integer data for action
      */
+    @Override
     public int getActionData() {
         return _actionData;
     }
 
+    @Override
     public void setActionData(int actionData) {
         _actionData = actionData;
     }
@@ -318,6 +339,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Sets action data from user's name for it
      */
+    @Override
     public void setActionData(String actionData) {
         _actionData = stringToActionData(actionData);
     }
@@ -325,6 +347,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * String data for action
      */
+    @Override
     public String getActionString() {
         if (_actionString == null) {
             _actionString = getTypeString();
@@ -332,6 +355,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _actionString;
     }
 
+    @Override
     public void setActionString(String actionString) {
         _actionString = actionString;
     }
@@ -339,6 +363,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * get timer for delays and other timed events
      */
+    @Override
     public Timer getTimer() {
         return _timer;
     }
@@ -346,14 +371,17 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set timer for delays and other timed events
      */
+    @Override
     public void setTimer(Timer timer) {
         _timer = timer;
     }
 
+    @Override
     public boolean isTimerActive() {
         return _timerActive;
     }
 
+    @Override
     public void startTimer() {
         if (_timer != null) {
             _timer.start();
@@ -363,6 +391,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
+    @Override
     public void stopTimer() {
         if (_timer != null) {
             _timer.stop();
@@ -373,6 +402,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set listener for delays and other timed events
      */
+    @Override
     public ActionListener getListener() {
         return _listener;
     }
@@ -380,6 +410,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set listener for delays and other timed events
      */
+    @Override
     public void setListener(ActionListener listener) {
         _listener = listener;
     }
@@ -387,12 +418,15 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * get Sound file
      */
+    @Override
     public Sound getSound() {
         return _sound;
     }
 
     /**
-     * set Sound file
+     * Set the sound file.
+     *
+     * @param sound the new sound file
      */
     protected void setSound(Sound sound) {
         _sound = sound;
@@ -404,6 +438,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * return String name of this consequent type
      */
+    @Override
     public String getTypeString() {
         return getActionTypeString(_type);
     }
@@ -411,16 +446,21 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * return String name of the option for this consequent type
      */
+    @Override
     public String getOptionString(boolean type) {
         return getOptionString(_option, type);
     }
 
+    @Override
     public String getActionDataString() {
         return getActionDataString(_type, _actionData);
     }
 
     /**
      * Convert Variable Type to Text String
+     *
+     * @param t the type
+     * @return a human readable description of the type or an empty String
      */
     public static String getItemTypeString(int t) {
         switch (t) {
@@ -450,12 +490,18 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("Script"));
             case Conditional.ITEM_TYPE_OTHER:
                 return (rbx.getString("Other"));
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
     /**
-     * Convert Consequent Type to Text String
+     * Convert Consequent Type to Text String.
+     *
+     * @param t the type
+     * @return a human readable description of the type or an empty String
      */
     public static String getActionTypeString(int t) {
         switch (t) {
@@ -559,13 +605,20 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("ActionSetBlockOutOfService"));
             case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
                 return (rbx.getString("ActionBlockInService"));
+            default:
+                // fall through
+                break;
         }
         log.warn("Unexpected parameter to getActionTypeString(" + t + ")");
         return ("");
     }
 
     /**
-     * Convert consequent option to String
+     * Convert consequent option to String.
+     *
+     * @param opt  the option
+     * @param type true if option is a change; false if option is a trigger
+     * @return a human readable description of the option or an empty String
      */
     public static String getOptionString(int opt, boolean type) {
         switch (opt) {
@@ -587,14 +640,19 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else {
                     return (rbx.getString("OnTrigger"));
                 }
+            default:
+                // fall through
+                break;
         }
         log.warn("Unexpected parameter to getOptionString(" + opt + ")");
         return "";
     }
 
     /**
-     * Identifies action Type from Text String Note: if string does not
-     * correspond to an action type as defined in ConditionalAction, returns 0.
+     * Get action type from a String.
+     *
+     * @param str the string to get the type for
+     * @return the type or 0 if str is not a recognized action
      */
     public static int stringToActionType(String str) {
         if (str != null) {
@@ -609,13 +667,15 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Identifies action Data from Text String Note: if string does not
-     * correspond to an action Data as defined in ConditionalAction, returns -1.
+     * Get action Data from a String.
+     *
+     * @param str the string to get the action data for
+     * @return the action data of -1 is str is not recognized
      */
     public static int stringToActionData(String str) {
-        if (str.equals(rbx.getString("TurnoutClosed"))) {
+        if (str.equals(Bundle.getMessage("TurnoutStateClosed"))) {
             return Turnout.CLOSED;
-        } else if (str.equals(rbx.getString("TurnoutThrown"))) {
+        } else if (str.equals(Bundle.getMessage("TurnoutStateThrown"))) {
             return Turnout.THROWN;
         } else if (str.equals(Bundle.getMessage("SensorStateActive"))) {
             return Sensor.ACTIVE;
@@ -681,9 +741,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ACTION_DELAYED_TURNOUT:
             case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                 if (data == Turnout.CLOSED) {
-                    return (rbx.getString("TurnoutClosed"));
+                    return (Bundle.getMessage("TurnoutStateClosed"));
                 } else if (data == Turnout.THROWN) {
-                    return (rbx.getString("TurnoutThrown"));
+                    return (Bundle.getMessage("TurnoutStateThrown"));
                 } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
                 }
@@ -741,6 +801,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return (rbx.getString("AudioSourceFadeOut"));
                     case Audio.CMD_RESET_POSITION:
                         return (rbx.getString("AudioResetPosition"));
+                    default:
+                        log.error("Unhandled Audio operation command: {}", data);
+                        break;
                 }
                 break;
             case Conditional.ACTION_CONTROL_TRAIN:
@@ -751,10 +814,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else {
                     return (rbx.getString("WarrantAbort"));
                 }
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
+    @Override
     public String description(boolean triggerType) {
         String str = getOptionString(triggerType) + ", " + getTypeString();
         if (_deviceName.length() > 0) {
@@ -811,7 +878,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("onWarrant") + " \"" + _deviceName + "\" "
                             + rbx.getString("to") + " " + getActionDataString();
                     break;
-                default: break; // nothing needed for others
+                default:
+                    break; // nothing needed for others
             }
         }
         if (_actionString.length() > 0) {
@@ -860,7 +928,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onBlock")
                             + " \"" + _deviceName + "\".";
                     break;
-                default: break; // nothing needed for others
+                default:
+                    break; // nothing needed for others
             }
         }
         switch (_type) {
@@ -872,7 +941,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                 str = str + " " + rbx.getString("to") + " "
                         + LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
                 break;
-                default: break; // nothing needed for others
+            default:
+                break; // nothing needed for others
         }
         return str;
     }

@@ -1,5 +1,6 @@
 package apps.gui3.dp3;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -40,7 +41,6 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
 import jmri.jmrit.symbolicprog.DccAddressVarHandler;
 import jmri.jmrit.symbolicprog.EnumVariableValue;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implements jmri.ProgListener, jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
 
@@ -99,6 +99,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     JmriJFrame f;
     CombinedLocoSelTreePane combinedLocoSelTree;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         log.debug("Pane programmer requested"); // NOI18N
@@ -144,6 +145,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         p = new PaneProgFrame(decoderFile, re,
                                 title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                                 null, false) {
+                            @Override
                             protected JPanel getModePane() {
                                 return null;
                             }
@@ -168,7 +170,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         re.setDecoderFamily(decoderFile.getFamily());
                         re.setDecoderModel(decoderFile.getModel());
                         re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
-                        //re.writeFile(cvModel, iCvModel, variableModel );
                         // note that we're leaving the filename null
                         // add the new roster entry to the in-memory roster
                         Roster.getDefault().addEntry(re);
@@ -198,6 +199,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     JPanel pan = super.layoutDecoderSelection();
                     dTree.removeTreeSelectionListener(dListener);
                     dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
+                        @Override
                         public void valueChanged(TreeSelectionEvent e) {
                             if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                                     && // check that this isn't just a model
@@ -243,6 +245,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
                     go2 = new JButton(Bundle.getMessage("OpenProgrammer")); // NOI18N
                     go2.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             log.debug("Open programmer pressed"); // NOI18N
                             openButton();
@@ -260,7 +263,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     });
                     go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                     go2.setEnabled(false);
-                    go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE")); // NOI18N
+                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco")); // NOI18N
                     bottomPanel.add(go2, BorderLayout.EAST);
 
                     return pane3a;
@@ -296,6 +299,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     String lastSelectedProgrammer = this.getClass().getName() + ".SelectedProgrammer"; // NOI18N
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked"); // NOI18N
     }
@@ -322,6 +326,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     int longAddress;
     String address = "3";
 
+    @Override
     synchronized public void programmingOpReply(int value, int status) {
         switch (teststatus) {
             case 1:
@@ -386,7 +391,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     JPanel rosterPanel = null;//new JPanel();
     jmri.Programmer mProgrammer;
     CvTableModel cvModel = null;
-    IndexedCvTableModel iCvModel = null;
     VariableTableModel variableModel;
     DccAddressPanel dccAddressPanel;
     Element modelElem = null;
@@ -404,6 +408,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             rosterIdField.setText(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
             saveBasicRoster = new JButton(Bundle.getMessage("Save")); // NOI18N
             saveBasicRoster.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     try {
                         log.debug("saveBasicRoster button pressed, calls saveRosterEntry");
@@ -436,10 +441,8 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
 
         cvModel = new CvTableModel(statusLabel, mProgrammer);
-        iCvModel = new IndexedCvTableModel(statusLabel, mProgrammer);
 
-        variableModel = new VariableTableModel(statusLabel, new String[]{"Name", "Value"},
-                cvModel, iCvModel);
+        variableModel = new VariableTableModel(statusLabel, new String[]{"Name", "Value"}, cvModel);
         if (decoderFile != null) {
             Element decoderRoot = null;
             try {
@@ -460,6 +463,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         };  // XmlFile is abstract
 
         java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 updateDccAddress();
             }
@@ -495,7 +499,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             List<Element> paneList = base.getChildren("pane"); // NOI18N
             log.debug("will process {} pane definitions", paneList.size()); // NOI18N
             String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(0), "name");
-            progPane = new ThisProgPane(this, name, paneList.get(0), cvModel, iCvModel, variableModel, modelElem);
+            progPane = new ThisProgPane(this, name, paneList.get(0), cvModel, variableModel, modelElem);
 
             progPane.setVariableValue("Short Address", cv1); // NOI18N
             progPane.setVariableValue("Long Address", longAddress); // NOI18N
@@ -526,6 +530,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     (addMode == null ? "<null>" : addMode.getValueString()));
         }
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+            @Override
             protected void doPrimary() {
                 longMode = false;
                 if (primaryAddr != null && !primaryAddr.getValueString().equals("")) {
@@ -533,6 +538,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                 }
             }
 
+            @Override
             protected void doExtended() {
                 // long address
                 if (!extendAddr.getValueString().equals("")) {
@@ -551,7 +557,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
             justification = "saveBasicRoster protected by ctor invocation, Swing thread when needed")  // NOI18N
     JButton saveBasicRoster;
 
@@ -607,7 +613,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         synchronized (this) {
             re.setDccAddress("" + address);  // NOI18N
             re.setLongAddress(!shortAddr);
-            re.writeFile(cvModel, iCvModel, variableModel);
+            re.writeFile(cvModel, variableModel);
 
             // mark this as a success
             variableModel.setFileDirty(false);
@@ -627,10 +633,12 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     VariableValue extendAddr = null;
     EnumVariableValue addMode = null;
 
+    @Override
     public boolean isBusy() {
         return false;
     }
 
+    @Override
     public void paneFinished() {
     }
 
@@ -643,12 +651,15 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
      * @param enable Are reads possible? If false, so not enable the read
      *               buttons.
      */
+    @Override
     public void enableButtons(boolean enable) {
     }
 
+    @Override
     public void prepGlassPane(javax.swing.AbstractButton activeButton) {
     }
 
+    @Override
     synchronized public jmri.util.BusyGlassPane getBusyGlassPane() {
         return new jmri.util.BusyGlassPane(new ArrayList<JComponent>(),
                 new ArrayList<Rectangle>(),
@@ -657,8 +668,8 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     class ThisProgPane extends PaneProgPane {
 
-        public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
-            super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
+        public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
+            super(parent, name, pane, cvModel, varModel, modelElem, re);
             bottom.remove(readChangesButton);
             bottom.remove(writeChangesButton);
             writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite")); // NOI18N
@@ -667,6 +678,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             bottom.revalidate();
             readAllButton.removeItemListener(l2);
             readAllButton.addItemListener(l2 = new ItemListener() {
+                @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet")); // NOI18N
@@ -687,6 +699,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             });
             writeAllButton.removeItemListener(l4);
             writeAllButton.addItemListener(l4 = new ItemListener() {
+                @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet")); // NOI18N
@@ -727,6 +740,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             }
         }
 
+        @Override
         public void dispose() {
             bottom.remove(saveBasicRoster);
             super.dispose();

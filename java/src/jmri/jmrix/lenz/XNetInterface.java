@@ -1,4 +1,3 @@
-// XNetInterface
 package jmri.jmrix.lenz;
 
 /**
@@ -22,14 +21,13 @@ package jmri.jmrix.lenz;
  * that messages will be returned in any particular thread. See the XNetListener
  * doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrix.lenz.XNetListener
  * @see jmri.jmrix.lenz.XNetTrafficController
- *
  */
 public interface XNetInterface {
 
-    /*
+    /**
      * Request a message be sent to the attached XNet. Return is immediate,
      * with the message being queued for eventual sending.  If you're interested
      * in a reply, you need to register a XNetListener object to watch the
@@ -60,13 +58,13 @@ public interface XNetInterface {
      */
     void addXNetListener(int mask, XNetListener l);
 
-    /*
+    /**
      * Stop notification of things happening on the XNet. Note that mask and XNetListener
      * must match a previous request exactly.
      */
     void removeXNetListener(int mask, XNetListener listener);
 
-    /*
+    /**
      * Check whether an implementation is operational. True indicates OK.
      */
     public boolean status();
@@ -115,12 +113,9 @@ public interface XNetInterface {
     public static final int CONSIST = 32;
 
     /**
-     * Mask value to request notification of messages associated with consists
+     * Mask value to request notification of messages associated with the interface
      *
      */
     public static final int INTERFACE = 64;
 
 }
-
-
-/* @(#)XNetInterface.java */

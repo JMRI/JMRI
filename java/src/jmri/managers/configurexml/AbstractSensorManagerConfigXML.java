@@ -32,6 +32,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @param o Object to store, of type SensorManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element sensors = new Element("sensors");
         return store(o, sensors);
@@ -62,9 +63,12 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             String inverted = s.getInverted() ? "true" : "false";
 
             Element elem = new Element("sensor")
-                    .setAttribute("systemName", sname) // deprecated for 2.9.* series
                     .setAttribute("inverted", inverted);
             elem.addContent(new Element("systemName").addContent(sname));
+
+            // store common part
+            storeCommon(s, elem);
+
             log.debug("store sensor " + sname);
             if (s.useDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
@@ -76,8 +80,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
-            // store common part
-            storeCommon(s, elem);
+            if(tm.isPullResistanceConfigurable()){
+               // store the sensor's value for pull resistance.
+               elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
+            }
 
             sensors.addContent(elem);
 
@@ -151,14 +157,16 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         for (int i = 0; i < sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
-                creationErrorEncountered("Unexpected missing system name while loading sensors",
-                        null, null, null);
+                handleException("Unexpected missing system name while loading sensors",
+                        null, null, null, null);
                 result = false;
                 break;
             }
             boolean inverted = false;
 
             String userName = getUserName(sensorList.get(i));
+
+            checkNameNormalization(sysName, userName, tm);
 
             if (sensorList.get(i).getAttribute("inverted") != null) {
                 if (sensorList.get(i).getAttribute("inverted").getValue().equals("true")) {
@@ -175,8 +183,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 s = tm.newSensor(sysName, userName);
             } catch (IllegalArgumentException e) {
-                creationErrorEncountered("Could not create sensor",
-                        sysName, userName, null);
+                handleException("Could not create sensor", null, sysName, userName, null);
                 result = false;
                 continue;
             }
@@ -211,10 +218,18 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 }
             }
             s.setInverted(inverted);
+
+            if(sensorList.get(i).getChild("pullResistance")!=null){
+               String pull = sensorList.get(i).getChild("pullResistance")
+                                       .getText();
+               log.debug("setting pull to {} for sensor {}",pull,s);
+               s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+           }
         }
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }

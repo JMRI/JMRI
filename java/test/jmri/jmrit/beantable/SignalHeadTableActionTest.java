@@ -1,47 +1,59 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
-import jmri.Turnout;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
-  */
-public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
+ */
+public class SignalHeadTableActionTest extends AbstractTableActionBase {
 
+    @Test
     public void testCreate() {
-        new SignalHeadTableAction();
+        Assert.assertNotNull(a);
     }
 
-    public void testInvoke() {
+    @Override
+    public String getTableFrameName(){
+       return Bundle.getMessage("TitleSignalTable");
+    }
+
+    @Test
+    public void testAddAndInvoke() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add a few signals and see if they exist
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DoubleTurnoutSignalHead("IH2", "double example 1-2",
-                        new NamedBeanHandle<Turnout>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT1")),
-                        new NamedBeanHandle<Turnout>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT2"))
+                        new NamedBeanHandle<>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT1")),
+                        new NamedBeanHandle<>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT2"))
                 ));
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new QuadOutputSignalHead("IH4", "quad example 11-14",
-                        new NamedBeanHandle<Turnout>("IT11", InstanceManager.turnoutManagerInstance().provideTurnout("IT11")),
-                        new NamedBeanHandle<Turnout>("IT12", InstanceManager.turnoutManagerInstance().provideTurnout("IT12")),
-                        new NamedBeanHandle<Turnout>("IT13", InstanceManager.turnoutManagerInstance().provideTurnout("IT13")),
-                        new NamedBeanHandle<Turnout>("IT14", InstanceManager.turnoutManagerInstance().provideTurnout("IT14"))
+                        new NamedBeanHandle<>("IT11", InstanceManager.turnoutManagerInstance().provideTurnout("IT11")),
+                        new NamedBeanHandle<>("IT12", InstanceManager.turnoutManagerInstance().provideTurnout("IT12")),
+                        new NamedBeanHandle<>("IT13", InstanceManager.turnoutManagerInstance().provideTurnout("IT13")),
+                        new NamedBeanHandle<>("IT14", InstanceManager.turnoutManagerInstance().provideTurnout("IT14"))
                 ));
 
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new SE8cSignalHead(
-                        new NamedBeanHandle<Turnout>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT21")),
-                        new NamedBeanHandle<Turnout>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT22")),
+                        new NamedBeanHandle<>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT21")),
+                        new NamedBeanHandle<>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT22")),
                         "SE8c from handles")
         );
 
@@ -50,42 +62,44 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
         );
 
         new SignalHeadTableAction().actionPerformed(null);
-        flushAWT();
-
-        JFrame f = jmri.util.JmriJFrame.getFrame(Bundle.getMessage("TitleSignalTable"));
-        Assert.assertTrue("found frame", f != null);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalTable"), true, true);
+        Assert.assertNotNull("found frame", f);
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public SignalHeadTableActionTest(String s) {
-        super(s);
+    @Override
+    @Test
+    public void testGetClassDescription(){
+         Assert.assertEquals("Signal Head Table Action class description","Signal Head Table",a.getClassDescription());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SignalHeadTableActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SignalHeadTableActionTest.class);
-        return suite;
+    /**
+     * Check the return value of includeAddButton.  The table generated by 
+     * this action includes an Add Button.
+     */
+    @Override
+    @Test
+    public void testIncludeAddButton(){
+         Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
+        a = new SignalHeadTableAction();
     }
 
-    protected void tearDown() throws Exception {
+    @Override
+    @After
+    public void tearDown() {
+        a = null;
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 }

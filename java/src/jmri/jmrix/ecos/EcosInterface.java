@@ -1,11 +1,10 @@
-// EcosInterface.java
 package jmri.jmrix.ecos;
 
 /**
- * Define interface for sending and receiving messages to the ECOS command
+ * Define interface for sending and receiving messages to the ECoS command
  * station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
   */
 public interface EcosInterface {
 
@@ -27,6 +26,5 @@ public interface EcosInterface {
      * @param l Listener to be notified of reply.
      */
     void sendEcosMessage(EcosMessage m, EcosListener l);
-}
 
-/* @(#)EcosInterface.java */
+}

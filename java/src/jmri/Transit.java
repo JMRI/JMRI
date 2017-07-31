@@ -1,5 +1,7 @@
 package jmri;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.implementation.AbstractNamedBean;
@@ -8,28 +10,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class providing the basic implementation of a Transit.
+ * A Transit is a group of Sections representing a specified path through a
+ * layout.
  * <P>
- * Transits represent a group of Sections representing a specified path through
- * a layout.
- * <P>
- * A Transit may have the following states. IDLE - indicating that it is
- * available for "assignment" ASSIGNED - linked to a train to form an
- * ActiveTrain
+ * A Transit may have the following states:
+ * <dl>
+ * <dt>IDLE</dt>
+ * <dd>available for assignment to a train</dd>
+ * <dt>ASSIGNED</dt>
+ * <dd>linked to a train in an {@link jmri.jmrit.dispatcher.ActiveTrain}</dd>
+ * </dl>
  * <P>
  * When assigned to a Transit, options may be set for the assigned Section. The
- * Section and its options are kept in a TransitSection object.
+ * Section and its options are kept in a {@link jmri.TransitSection} object.
  * <P>
- * To accomodate passing sidings and other track features, there may be
- * alternate Sections connecting two Sections in a Transit. If so, one Section
- * is assigned as primary, and other Sections are assigned as alternates.
+ * To accommodate passing sidings and other track features, there may be
+ * multiple Sections connecting two other Sections in a Transit. If so, one
+ * Section is assigned as primary, and the other connecting Sections are
+ * assigned as alternates.
  * <P>
  * A Section may be in a Transit more than once, for example if a train is to
- * make two or more loops around before going elsewhere.
+ * make two or more loops around a layout before going elsewhere.
  * <P>
- * A Transit is normally traversed in the forward direction, i.e., the direction
- * of increasing Section Numbers. When a Transit traversal is started up, it is
- * always started in the forward direction. However, to accommodate
+ * A Transit is normally traversed in the forward direction, that is, the
+ * direction of increasing Section Numbers. When a Transit traversal is started
+ * up, it is always started in the forward direction. However, to accommodate
  * point-to-point (back and forth) route designs, the direction of travel in a
  * Transit may be "reversed". While the Transit direction is "reversed", the
  * direction of travel is the direction of decreasing Section numbers. Whether a
@@ -49,10 +54,27 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2008-2011
+ * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class Transit extends AbstractNamedBean
-        implements java.io.Serializable {
+public class Transit extends AbstractNamedBean {
+
+    /**
+     * The idle, or available for assignment to an ActiveTrain state.
+     */
+    public static final int IDLE = 0x02;
+    /**
+     * The assigned to an ActiveTrain state.
+     */
+    public static final int ASSIGNED = 0x04;
+
+    /*
+     * Instance variables (not saved between runs)
+     */
+    private int mState = Transit.IDLE;
+    private final ArrayList<TransitSection> mTransitSectionList = new ArrayList<>();
+    private int mMaxSequence = 0;
+    private final ArrayList<Integer> blockSecSeqList = new ArrayList<>();
+    private final ArrayList<Integer> destBlocksSeqList = new ArrayList<>();
 
     public Transit(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -63,44 +85,35 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Constants representing the state of the Transit. A Transit can be either:
-     * IDLE - available for assignment to an ActiveTrain, or ASSIGNED - assigned
-     * to an ActiveTrain
+     * Query the state of this Transit.
+     *
+     * @return {@link #IDLE} or {@link #ASSIGNED}
      */
-    public static final int IDLE = 0x02;
-    public static final int ASSIGNED = 0x04;
-
-    /**
-     * Instance variables (not saved between runs)
-     */
-    private int mState = Transit.IDLE;
-    private ArrayList<TransitSection> mTransitSectionList = new ArrayList<TransitSection>();
-    private int mMaxSequence = 0;
-
-    /**
-     * Query the state of the Transit
-     */
+    @Override
     public int getState() {
         return mState;
     }
 
     /**
-     * Set the state of the Transit
+     * Set the state of this Transit.
+     *
+     * @param state {@link #IDLE} or {@link #ASSIGNED}
      */
+    @Override
     public void setState(int state) {
         if ((state == Transit.IDLE) || (state == Transit.ASSIGNED)) {
             int old = mState;
             mState = state;
-            firePropertyChange("state", Integer.valueOf(old), Integer.valueOf(mState));
+            firePropertyChange("state", old, mState);
         } else {
             log.error("Attempt to set Transit state to illegal value - " + state);
         }
     }
 
     /**
-     * Add a TransitSection to the Transit Section sequence numnbers are set
-     * automatically as Sections are added. Returns "true" if Section was added.
-     * Returns "false" if Section does not connect to the current Section.
+     * Add a section to this Transit.
+     *
+     * @param s the section to add
      */
     public void addTransitSection(TransitSection s) {
         mTransitSectionList.add(s);
@@ -108,50 +121,49 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Get a copy of this Transit's TransitSection list
+     * Get the list of TransitSections.
+     *
+     * @return a copy of the internal list of TransitSections or an empty list
      */
     public ArrayList<TransitSection> getTransitSectionList() {
-        ArrayList<TransitSection> list = new ArrayList<TransitSection>();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            list.add(mTransitSectionList.get(i));
-        }
-        return list;
+        return new ArrayList<>(mTransitSectionList);
     }
 
     /**
-     * Get the maximum sequence number used in this Transit
+     * Get the maximum sequence number used in this Transit.
+     *
+     * @return the maximum sequence
      */
     public int getMaxSequence() {
         return mMaxSequence;
     }
 
     /**
-     * Remove all TransitSections
+     * Remove all TransitSections in this Transit.
      */
     public void removeAllSections() {
         mTransitSectionList.clear();
     }
 
     /**
-     * Test if a Section is in the Transit
+     * Check if a Section is in this Transit.
+     *
+     * @param s the section to check for
+     * @return true if the section is present; false otherwise
      */
     public boolean containsSection(Section s) {
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
-            if (ts.getSection() == s) {
-                return true;
-            }
-        }
-        return false;
+        return mTransitSectionList.stream().anyMatch((ts) -> (ts.getSection() == s));
     }
 
     /**
-     * Get a List of Sections with a given sequence number
+     * Get a List of Sections with a given sequence number.
+     *
+     * @param seq the sequence number
+     * @return the list of of matching sections or an empty list if none
      */
     public ArrayList<Section> getSectionListBySeq(int seq) {
-        ArrayList<Section> list = new ArrayList<Section>();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+        ArrayList<Section> list = new ArrayList<>();
+        for (TransitSection ts : mTransitSectionList) {
             if (seq == ts.getSequenceNumber()) {
                 list.add(ts.getSection());
             }
@@ -160,12 +172,14 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Get a List of Transit Sections with a given sequence number
+     * Get a List of TransitSections with a given sequence number.
+     *
+     * @param seq the sequence number
+     * @return the list of of matching sections or an empty list if none
      */
     public ArrayList<TransitSection> getTransitSectionListBySeq(int seq) {
-        ArrayList<TransitSection> list = new ArrayList<TransitSection>();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+        ArrayList<TransitSection> list = new ArrayList<>();
+        for (TransitSection ts : mTransitSectionList) {
             if (seq == ts.getSequenceNumber()) {
                 list.add(ts);
             }
@@ -174,26 +188,30 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Get a List of sequence numbers for a given Section
+     * Get a List of sequence numbers for a given Section.
+     *
+     * @param s the section to match
+     * @return the list of matching sequence numbers or an empty list if none
      */
     public ArrayList<Integer> getSeqListBySection(Section s) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+        ArrayList<Integer> list = new ArrayList<>();
+        for (TransitSection ts : mTransitSectionList) {
             if (s == ts.getSection()) {
-                list.add(Integer.valueOf(ts.getSequenceNumber()));
+                list.add(ts.getSequenceNumber());
             }
         }
         return list;
     }
 
     /**
-     * Test if a Block is in the Transit
+     * Check if a Block is in this Transit.
+     *
+     * @param block the block to check for
+     * @return true if block is present; false otherwise
      */
-    public boolean containsBlock(Block b) {
-        ArrayList<Block> bList = getInternalBlocksList();
-        for (int i = 0; i < bList.size(); i++) {
-            if (b == bList.get(i)) {
+    public boolean containsBlock(Block block) {
+        for (Block b : getInternalBlocksList()) {
+            if (b == block) {
                 return true;
             }
         }
@@ -201,13 +219,15 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Count the number of times a Block is in this Transit
+     * Get the number of times a Block is in this Transit.
+     *
+     * @param block the block to check for
+     * @return the number of times block is present; 0 if block is not present
      */
-    public int getBlockCount(Block b) {
-        ArrayList<Block> bList = getInternalBlocksList();
+    public int getBlockCount(Block block) {
         int count = 0;
-        for (int i = 0; i < bList.size(); i++) {
-            if (b == bList.get(i)) {
+        for (Block b : getInternalBlocksList()) {
+            if (b == block) {
                 count++;
             }
         }
@@ -215,11 +235,14 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Returns a Section from one of its Blocks and its sequence number
+     * Get a Section from one of its Blocks and its sequence number.
+     *
+     * @param b   the block within the Section
+     * @param seq the sequence number of the Section
+     * @return the Section or null if no matching Section is present
      */
-    public Section getSectionFromBlockAndSeq(jmri.Block b, int seq) {
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+    public Section getSectionFromBlockAndSeq(Block b, int seq) {
+        for (TransitSection ts : mTransitSectionList) {
             if (ts.getSequenceNumber() == seq) {
                 Section s = ts.getSection();
                 if (s.containsBlock(b)) {
@@ -231,12 +254,14 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Returns a Section from one of its EntryPoint Blocks and its sequence
-     * number
+     * Get Section from one of its EntryPoint Blocks and its sequence number.
+     *
+     * @param b   the connecting block to the Section
+     * @param seq the sequence number of the Section
+     * @return the Section or null if no matching Section is present
      */
-    public Section getSectionFromConnectedBlockAndSeq(jmri.Block b, int seq) {
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+    public Section getSectionFromConnectedBlockAndSeq(Block b, int seq) {
+        for (TransitSection ts : mTransitSectionList) {
             if (ts.getSequenceNumber() == seq) {
                 Section s = ts.getSection();
                 if (s.connectsToBlock(b)) {
@@ -248,12 +273,16 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Gets the direction of a Section in the transit from its sequence number
-     * Returns 0 if direction was not found.
+     * Get the direction of a Section in the transit from its sequence number.
+     *
+     * @param s   the Section to check
+     * @param seq the sequence number of the Section
+     * @return the direction of the Section (one of {@link jmri.Section#FORWARD}
+     *         or {@link jmri.Section#REVERSE} or zero if s and seq are not in a
+     *         TransitSection together
      */
     public int getDirectionFromSectionAndSeq(Section s, int seq) {
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+        for (TransitSection ts : mTransitSectionList) {
             if ((ts.getSection() == s) && (ts.getSequenceNumber() == seq)) {
                 return ts.getDirection();
             }
@@ -262,12 +291,14 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Gets a TransitSection in the transit from its Section and Section
-     * sequence number Returns null if TransitSection was not found.
+     * Get a TransitSection in the transit from its Section and sequence number.
+     *
+     * @param s   the Section to check
+     * @param seq the sequence number of the Section
+     * @return the transit section or null if not found
      */
     public TransitSection getTransitSectionFromSectionAndSeq(Section s, int seq) {
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
+        for (TransitSection ts : mTransitSectionList) {
             if ((ts.getSection() == s) && (ts.getSequenceNumber() == seq)) {
                 return ts;
             }
@@ -276,68 +307,70 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Get a list of all blocks internal to this Transit Since Sections may be
+     * Get a list of all blocks internal to this Transit. Since Sections may be
      * present more than once, blocks may be listed more than once. The sequence
      * numbers of the Section the Block was found in are accumulated in a
      * parallel list, which can be accessed by immediately calling
-     * getBlockSeqList().
+     * {@link #getBlockSeqList()}.
+     *
+     * @return the list of all blocks or an empty list if none are present
      */
     public ArrayList<Block> getInternalBlocksList() {
-        ArrayList<Block> list = new ArrayList<Block>();
+        ArrayList<Block> list = new ArrayList<>();
         blockSecSeqList.clear();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
-            ArrayList<Block> bList = ts.getSection().getBlockList();
-            for (int j = 0; j < bList.size(); j++) {
-                list.add(bList.get(j));
-                blockSecSeqList.add(Integer.valueOf(ts.getSequenceNumber()));
-            }
-        }
-        return list;
-    }
-    // The following is mainly for internal use, but is available if requested immediately after
-    //      getInternalBlocksList or getEntryBlocksList.
-    private ArrayList<Integer> blockSecSeqList = new ArrayList<Integer>();
-
-    public ArrayList<Integer> getBlockSeqList() {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < blockSecSeqList.size(); i++) {
-            list.add(blockSecSeqList.get(i));
-        }
+        mTransitSectionList.forEach((ts) -> {
+            ts.getSection().getBlockList().stream().forEach((b) -> {
+                list.add(b);
+                blockSecSeqList.add(ts.getSequenceNumber());
+            });
+        });
         return list;
     }
 
     /**
+     * Get a list of sequence numbers in this Transit. This list is generated by
+     * calling {@link #getInternalBlocksList()} or
+     * {@link #getEntryBlocksList()}.
+     *
+     * @return the list of all sequence numbers or an empty list if no blocks
+     *         are present
+     */
+    public ArrayList<Integer> getBlockSeqList() {
+        return new ArrayList<>(blockSecSeqList);
+    }
+
+    /**
      * Get a list of all entry blocks to this Transit. These are Blocks that a
-     * train might enter from and be going in the Transit's direction. The
+     * train might enter from and be going in the direction of this Transit. The
      * sequence numbers of the Section the Block will enter are accumulated in a
      * parallel list, which can be accessed by immediately calling
-     * getBlockSeqList().
+     * {@link #getBlockSeqList()}.
+     *
+     * @return the list of all blocks or an empty list if none are present
      */
     public ArrayList<Block> getEntryBlocksList() {
-        ArrayList<Block> list = new ArrayList<Block>();
+        ArrayList<Block> list = new ArrayList<>();
         ArrayList<Block> internalBlocks = getInternalBlocksList();
         blockSecSeqList.clear();
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            TransitSection ts = mTransitSectionList.get(i);
-            List<EntryPoint> ePointList = null;
+        for (TransitSection ts : mTransitSectionList) {
+            List<EntryPoint> ePointList;
             if (ts.getDirection() == Section.FORWARD) {
                 ePointList = ts.getSection().getForwardEntryPointList();
             } else {
                 ePointList = ts.getSection().getReverseEntryPointList();
             }
-            for (int j = 0; j < ePointList.size(); j++) {
-                Block b = (ePointList.get(j)).getFromBlock();
+            for (EntryPoint ep : ePointList) {
+                Block eb = ep.getFromBlock();
                 boolean isInternal = false;
-                for (int k = 0; k < internalBlocks.size(); k++) {
-                    if (b == internalBlocks.get(k)) {
+                for (Block ib : internalBlocks) {
+                    if (eb == ib) {
                         isInternal = true;
                     }
                 }
                 if (!isInternal) {
                     // not an internal Block, keep it
-                    list.add(b);
-                    blockSecSeqList.add(Integer.valueOf(ts.getSequenceNumber()));
+                    list.add(eb);
+                    blockSecSeqList.add(ts.getSequenceNumber());
                 }
             }
         }
@@ -346,23 +379,30 @@ public class Transit extends AbstractNamedBean
 
     /**
      * Get a list of all destination blocks that can be reached from a specified
-     * starting block, "startBlock". "startInTransit" should be set "true" if
-     * "startBlock" is in the Transit, and "false" otherwise. The sequence
-     * numbers of the Section the Block was found in are accumulated in a
-     * parallel list, which can be accessed by immediately calling
-     * getDestBlocksSeqList(). Note: A train may not terminate in the same
-     * Section in which it starts! Note: A train must terminate in a block
-     * within the transit!
+     * starting block. The sequence numbers of the Sections destination blocks
+     * were found in are accumulated in a parallel list, which can be accessed
+     * by immediately calling {@link #getDestBlocksSeqList()}.
+     * <p>
+     * <strong>Note:</strong> A train may not terminate in the same Section in
+     * which it starts.
+     * <p>
+     * <strong>Note:</strong> A train must terminate in a block within the
+     * transit.
+     *
+     * @param startBlock     the starting block to find destinations for
+     * @param startInTransit true if startBlock is within this Transit; false
+     *                       otherwise
+     * @return a list of destination blocks or an empty list if none exist
      */
     public ArrayList<Block> getDestinationBlocksList(Block startBlock, boolean startInTransit) {
-        ArrayList<Block> list = new ArrayList<Block>();
+        ArrayList<Block> list = new ArrayList<>();
         destBlocksSeqList.clear();
         if (startBlock == null) {
             return list;
         }
         // get the sequence number of the Section of the starting Block
         int startSeq = -1;
-        ArrayList<Block> startBlocks = null;
+        ArrayList<Block> startBlocks;
         if (startInTransit) {
             startBlocks = getInternalBlocksList();
         } else {
@@ -371,12 +411,12 @@ public class Transit extends AbstractNamedBean
         // programming note: the above calls initialize blockSecSeqList.
         for (int k = 0; ((k < startBlocks.size()) && (startSeq == -1)); k++) {
             if (startBlock == startBlocks.get(k)) {
-                startSeq = (blockSecSeqList.get(k)).intValue();
+                startSeq = (blockSecSeqList.get(k));
             }
         }
         ArrayList<Block> internalBlocks = getInternalBlocksList();
         for (int i = internalBlocks.size(); i > 0; i--) {
-            if (((blockSecSeqList.get(i - 1)).intValue()) > startSeq) {
+            if (blockSecSeqList.get(i - 1) > startSeq) {
                 // could stop in this block, keep it
                 list.add(internalBlocks.get(i - 1));
                 destBlocksSeqList.add(blockSecSeqList.get(i - 1));
@@ -384,10 +424,17 @@ public class Transit extends AbstractNamedBean
         }
         return list;
     }
-    private ArrayList<Integer> destBlocksSeqList = new ArrayList<Integer>();
 
+    /**
+     * Get a list of destination block sequence numbers in this Transit. This
+     * list is generated by calling
+     * {@link #getDestinationBlocksList(jmri.Block, boolean)}.
+     *
+     * @return the list of all destination block sequence numbers or an empty
+     *         list if no destination blocks are present
+     */
     public ArrayList<Integer> getDestBlocksSeqList() {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < destBlocksSeqList.size(); i++) {
             list.add(destBlocksSeqList.get(i));
         }
@@ -395,15 +442,16 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Determines whether this Transit is capable of continuous running. That
-     * is, after an Active Train completes the Transit, can it automatically be
-     * set up to start again? To be resetable, the first Section and the last
-     * Section must be the same Section, and the first and last Sections must be
-     * defined to run in the same direction. If the last Section is an alternate
-     * Section, the previous Section is tested. However, if the Active Train
-     * does not complete it's Transit in the same Section it started in, the
-     * restart will not take place. Returns 'true' if continuous running is
-     * possible, returns 'false' otherwise.
+     * Check if this Transit is capable of continuous running. A Transit is
+     * capable of continuous running if, after an Active Train completes the
+     * Transit, it can automatically be restarted. To be restartable, the first
+     * Section and the last Section must be the same Section, and the first and
+     * last Sections must be defined to run in the same direction. If the last
+     * Section is an alternate Section, the previous Section is tested. However,
+     * if the Active Train does not complete it's Transit in the same Section it
+     * started in, the restart will not take place.
+     *
+     * @return true if continuous running is possible; otherwise false
      */
     public boolean canBeResetWhenDone() {
         TransitSection firstTS = mTransitSectionList.get(0);
@@ -438,9 +486,11 @@ public class Transit extends AbstractNamedBean
      * Sections of the Transit for the direction defined in this Transit. Signal
      * Heads are not required at anchor point block boundaries where both blocks
      * are within the same Section, and for turnouts with two or more
-     * connections in the same Section. Returns "true" if everything is OK.
-     * Sends message to the user if a signal head is missing, and returns
-     * 'false'. Quits looking after finding the first missing signal head.
+     * connections in the same Section.
+     *
+     * @param panel the panel to check against
+     * @return 0 if all Sections have all required signals or the number of
+     *         Sections missing required signals; -1 if the panel is null
      */
     public int checkSignals(LayoutEditor panel) {
         if (panel == null) {
@@ -448,9 +498,8 @@ public class Transit extends AbstractNamedBean
             return -1;
         }
         int numErrors = 0;
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            int n = mTransitSectionList.get(i).getSection().placeDirectionSensors(panel);
-            numErrors = numErrors + n;
+        for (TransitSection ts : mTransitSectionList) {
+            numErrors = numErrors + ts.getSection().placeDirectionSensors(panel);
         }
         return numErrors;
     }
@@ -459,6 +508,9 @@ public class Transit extends AbstractNamedBean
      * Validates connectivity through the Transit. Returns the number of errors
      * found. Sends log messages detailing the errors if break in connectivity
      * is detected. Checks all Sections before quitting.
+     *
+     * @param panel the panel containing Sections to validate
+     * @return number of invalid sections or -1 if panel if null
      */
     public int validateConnectivity(LayoutEditor panel) {
         if (panel == null) {
@@ -477,11 +529,13 @@ public class Transit extends AbstractNamedBean
     }
 
     /**
-     * Initializes blocking sensors for Sections in this Transit This should be
+     * Initialize blocking sensors for Sections in this Transit. This should be
      * done before any Sections are allocated for this Transit. Only Sections
-     * that are FREE are initialized, so as not to interfere with running active
-     * trains. If any Section does not have blocking sensors, warning messages
-     * are logged. Returns 0 if no errors, number of errors otherwise.
+     * that are {@link jmri.Section#FREE} are initialized, so as not to
+     * interfere with running active trains. If any Section does not have
+     * blocking sensors, warning messages are logged.
+     *
+     * @return 0 if no errors, number of errors otherwise.
      */
     public int initializeBlockingSensors() {
         int numErrors = 0;
@@ -496,7 +550,7 @@ public class Transit extends AbstractNamedBean
                     log.warn("Missing forward blocking sensor for section " + s.getSystemName());
                     numErrors++;
                 }
-            } catch (jmri.JmriException reason) {
+            } catch (JmriException reason) {
                 log.error("Exception when initializing forward blocking Sensor for Section " + s.getSystemName());
                 numErrors++;
             }
@@ -509,7 +563,7 @@ public class Transit extends AbstractNamedBean
                     log.warn("Missing reverse blocking sensor for section " + s.getSystemName());
                     numErrors++;
                 }
-            } catch (jmri.JmriException reason) {
+            } catch (JmriException reason) {
                 log.error("Exception when initializing reverse blocking Sensor for Section " + s.getSystemName());
                 numErrors++;
             }
@@ -518,15 +572,15 @@ public class Transit extends AbstractNamedBean
     }
 
     public void removeTemporarySections() {
-        ArrayList<TransitSection> toBeRemoved = new ArrayList<TransitSection>();
+        ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
             if (ts.isTemporary()) {
                 toBeRemoved.add(ts);
             }
         }
-        for (TransitSection ts : toBeRemoved) {
+        toBeRemoved.forEach((ts) -> {
             mTransitSectionList.remove(ts);
-        }
+        });
     }
 
     public boolean removeLastTemporarySection(Section s) {
@@ -544,23 +598,22 @@ public class Transit extends AbstractNamedBean
 
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTransit");
     }
 
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+    @Override
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             NamedBean nb = (NamedBean) evt.getOldValue();
             if (nb instanceof Section) {
                 if (containsSection((Section) nb)) {
-                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoTransitSection", getDisplayName()), e); //IN18N
+                    throw new PropertyVetoException(Bundle.getMessage("VetoTransitSection", getDisplayName()), evt);
                 }
-
             }
-
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
+            // ignore this property
         }
     }
     private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());

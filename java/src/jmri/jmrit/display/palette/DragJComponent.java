@@ -1,4 +1,3 @@
-// DragJComponent.java
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
@@ -36,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman Copyright 2011
+ * @author Pete Cressman Copyright 2011
  *
  */
 public abstract class DragJComponent extends JPanel implements DragGestureListener, DragSourceListener, Transferable {
@@ -68,6 +67,7 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     /**
      * ************** DragGestureListener **************
      */
+    @Override
     public void dragGestureRecognized(DragGestureEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("DragJLabel.dragGestureRecognized ");
@@ -80,24 +80,29 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     /**
      * ************** DragSourceListener ***********
      */
+    @Override
     public void dragDropEnd(DragSourceDropEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("DragJLabel.dragDropEnd ");
         }
     }
 
+    @Override
     public void dragEnter(DragSourceDragEvent e) {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.DragSourceDragEvent ");
     }
 
+    @Override
     public void dragExit(DragSourceEvent e) {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.dragExit ");
     }
 
+    @Override
     public void dragOver(DragSourceDragEvent e) {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.dragOver ");
     }
 
+    @Override
     public void dropActionChanged(DragSourceDragEvent e) {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.dropActionChanged ");
     }
@@ -105,11 +110,13 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     /**
      * ************* Transferable ********************
      */
+    @Override
     public DataFlavor[] getTransferDataFlavors() {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferDataFlavors ");
         return new DataFlavor[]{_dataFlavor, DataFlavor.stringFlavor};
     }
 
+    @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
         //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
         return _dataFlavor.equals(flavor);

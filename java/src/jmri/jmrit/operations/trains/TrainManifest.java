@@ -1,4 +1,3 @@
-// TrainManifest.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -244,7 +243,7 @@ public class TrainManifest extends TrainCommon {
                         if (train.isShowArrivalAndDepartureTimesEnabled()) {
                             if (rl == train.getRoute().getDepartsRouteLocation()) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{train.getDepartureTime()});
+                                        .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                             } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});
@@ -313,7 +312,9 @@ public class TrainManifest extends TrainCommon {
     }
 
     private void newLine(PrintWriter file, String string) {
-        newLine(file, string, IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, IS_MANIFEST);
+        }
     }
 
 }

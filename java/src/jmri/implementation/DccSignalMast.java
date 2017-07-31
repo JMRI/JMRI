@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$dsm:basic:one-searchlight:(123)
+ * IF$dsm:basic:one-searchlight(123)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$dsm - defines signal masts of this type
@@ -146,6 +146,7 @@ public class DccSignalMast extends AbstractSignalMast {
      31. "Dark" */
     protected int packetRepeatCount = 3;
 
+    @Override
     public void setAspect(String aspect) {
 
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
@@ -156,6 +157,7 @@ public class DccSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
 
+    @Override
     public void setLit(boolean newLit) {
         if (!allowUnLit() || newLit == getLit()) {
             return;
@@ -206,4 +208,4 @@ public class DccSignalMast extends AbstractSignalMast {
 
 }
 
-/* @(#)DccSignalMast.java */
+

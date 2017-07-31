@@ -1,142 +1,123 @@
+package jmri.jmrix.nce.ncemon;
+
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceInterfaceScaffold;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import apps.tests.Log4JFixture;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JmriJFrame;
+import jmri.jmrix.AbstractMonPaneScaffold;
+
 /**
- * NceMonPanelTest.java
- *
- * Description:	JUnit tests for the NceProgrammer class
+ * JUnit tests for the NceProgrammer class
  *
  * @author	Bob Jacobsen
  */
-package jmri.jmrix.nce.ncemon;
+public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-import java.util.Vector;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceTrafficController;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    private NceSystemConnectionMemo memo = null;
 
-public class NceMonPanelTest extends TestCase {
-
-    NceInterfaceScaffold controller;  // holds dummy NceTrafficController for testing
-
+    @Test
     public void testCreate() {
-        controller = new NceInterfaceScaffold();
-        NceMonPanel f = new NceMonPanel();
-        Assert.assertNotNull("exists", f);
+        Assert.assertNotNull("exists", pane);
     }
 
-// Following are timing-specific, occasionally fail, so commented out    
-/*     public void testMsg() { */
-    /*         NceMessage m = new NceMessage(3); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('L'); */
-    /*         m.setElement(1, '0'); */
-    /*         m.setElement(2, 'A'); */
-    /*          */
-    /*         NceMonPanel f = new NceMonPanel(); */
-    /*          */
-    /*         f.message(m); */
-    /*          */
-    /*         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getPanelText().length()); */
-    /*         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getPanelText()); */
-    /*     } */
-    /*      */
-    /*     public void testReply() { */
-    /*         NceReply m = new NceReply(); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('C'); */
-    /*         m.setElement(1, 'o'); */
-    /*         m.setElement(2, ':'); */
-    /*          */
-    /*         NceMonPanel f = new NceMonPanel(); */
-    /*          */
-    /*         f.reply(m); */
-    /*          */
-    /*         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getPanelText()); */
-    /*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getPanelText().length()); */
-    /*     } */
-    public void testWrite() {
+    @Test
+    @Ignore("see comments below for corrections required.")
+    public void testMsg() { 
+             // Prior to JUnit4 conversion, this test method was commented out with a note reading
+             // Following are timing-specific, occasionally fail, so commented out
+             NceMessage m = new NceMessage(3);
+             m.setBinary(false);
+             m.setOpCode('L');
+             m.setElement(1, '0');
+             m.setElement(2, 'A');
+              
+             ((NceMonPanel)pane).message(m); 
+             
+             // The following assertions need to be re-written.  There is no
+             // current method for retrieving the text panel from the NceMonPanel.
+             //Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), ((NceMonPanel)pane).getPanelText().length()); 
+             //Assert.assertEquals("display", "cmd: \"L0A\"\n", ((NceMonPanel)pane).getPanelText()); 
+         } 
 
-        // infrastructure objects
-        NceInterfaceScaffold t = new NceInterfaceScaffold();
-        Assert.assertNotNull("exists", t);
+    @Test
+    @Ignore("see comments below for corrections required.")
+         public void testReply() { 
+             // Prior to JUnit4 conversion, this test method was commented out with a note reading
+             // Following are timing-specific, occasionally fail, so commented out
+             NceReply m = new NceReply(memo.getNceTrafficController());
+             m.setBinary(false); 
+             m.setOpCode('C'); 
+             m.setElement(1, 'o'); 
+             m.setElement(2, ':'); 
+              
+             ((NceMonPanel)pane).reply(m);
+              
+             // The following assertions need to be re-written.  There is no
+             // current method for retrieving the text panel from the NceMonPanel.
+             //Assert.assertEquals("display", "rep: \"Co:\"\n", ((NceMonPanel)pane).getPanelText()); 
+             //Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), ((NceMonPanel)pane).getPanelText().length());
+         } 
+   // Test checking the AutoScroll checkbox.
+    // for some reason the EcosMonPane has the checkbox value reversed on
+    // startup compared to other AbstractMonPane derivatives.
+    @Override
+    @Test
+    public void checkAutoScrollCheckBox(){
+         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
+
+         // for Jemmy to work, we need the pane inside of a frame
+         JmriJFrame f = new JmriJFrame();
+         try{
+            pane.initComponents();
+         } catch(Exception ex) {
+           Assert.fail("Could not load pane: " + ex);
+         }
+         f.add(pane);
+         // set title if available
+         if (pane.getTitle() != null) {
+             f.setTitle(pane.getTitle());
+         }
+         f.pack();
+         f.setVisible(true);
+         Assert.assertTrue(s.getAutoScrollCheckBoxValue());
+         s.checkAutoScrollCheckBox();
+         Assert.assertFalse(s.getAutoScrollCheckBoxValue());
+         f.setVisible(false);
+         f.dispose();
     }
 
-    // service internal class to handle transmit/receive for tests
-    class NceInterfaceScaffold extends NceTrafficController {
 
-        public NceInterfaceScaffold() {
-        }
 
-        // override some NceInterfaceController methods for test purposes
-        public boolean status() {
-            return true;
-        }
-
-        /**
-         * record messages sent, provide access for making sure they are OK
-         */
-        public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
-
-        public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
-            if (log.isDebugEnabled()) {
-                log.debug("sendNceMessage [" + m + "]");
-            }
-            // save a copy
-            outbound.addElement(m);
-        }
-
-        // test control member functions
-        /**
-         * forward a message to the listeners, e.g. test receipt
-         */
-        protected void sendTestMessage(NceMessage m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [" + m + "]");
-            }
-            notifyMessage(m, null);
-            return;
-        }
-
-        protected void sendTestReply(NceReply m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [" + m + "]");
-            }
-            notifyReply(m, null);
-            return;
-        }
-
-        /*
-         * Check number of listeners, used for testing dispose()
-         */
-        public int numListeners() {
-            return cmdListeners.size();
-        }
-
+    @Override
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        NceInterfaceScaffold tc = new NceInterfaceScaffold();
+        memo = new NceSystemConnectionMemo();
+        memo.setNceTrafficController(tc);
+        jmri.InstanceManager.store(memo, NceSystemConnectionMemo.class);
+        pane = new NceMonPanel();
+        ((NceMonPanel)pane).initContext(memo);
     }
 
-    // from here down is testing infrastructure
-    public NceMonPanelTest(String s) {
-        super(s);
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceMonPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceMonPanelTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(NceMonPanelTest.class.getName());
 
 }

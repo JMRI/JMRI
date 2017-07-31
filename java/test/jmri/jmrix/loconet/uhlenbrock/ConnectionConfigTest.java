@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.uhlenbrock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,7 +15,7 @@ public class ConnectionConfigTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
+      Assert.assertNotNull("ConnectionConfig constructor", new ConnectionConfig());
    }
 
    @Before

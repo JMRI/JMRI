@@ -19,7 +19,6 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -38,7 +37,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
@@ -72,12 +70,12 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    public static final double ICON_SCALE = 0.15;
+    public static final double ICON_SCALE = 0.010;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
 
@@ -92,7 +90,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     JScrollPane _treePane;
     JTree _dTree;
     DefaultTreeModel _model;
-    ArrayList<CatalogTree> _branchModel = new ArrayList<CatalogTree>();
+    ArrayList<CatalogTree> _branchModel = new ArrayList<>();
 
     public CatalogPanel() {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
@@ -119,6 +117,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         add(makeButtonPanel());
     }
 
+    @Override
     public void setToolTipText(String tip) {
         if (_dTree != null) {
             _dTree.setToolTipText(tip);
@@ -147,10 +146,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
         //_dTree.setDropMode(DropMode.ON);
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        _dTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                updatePanel();
-            }
+        _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
+            updatePanel();
         });
         _dTree.setExpandsSelectedPaths(true);
         _treePane.setViewportView(_dTree);
@@ -159,8 +156,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public void updatePanel() {
         if (log.isDebugEnabled()) {
-            log.debug("updatePanel: _dTree.isSelectionEmpty()= " + _dTree.isSelectionEmpty()
-                    + ", _dTree.getSelectionPath() is null " + (_dTree.getSelectionPath() == null));
+            log.debug("updatePanel: _dTree.isSelectionEmpty()= {} _dTree.getSelectionPath() is {}null",
+                    _dTree.isSelectionEmpty(), (_dTree.getSelectionPath() == null) ? "" : "not ");
         }
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             try {
@@ -168,7 +165,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             } catch (OutOfMemoryError oome) {
                 resetPanel();
                 if (log.isDebugEnabled()) {
-                    log.debug("setIcons threw OutOfMemoryError " + oome);
+                    log.debug("setIcons threw OutOfMemoryError {}", oome);
                 }
             }
         } else {
@@ -180,18 +177,22 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * Create a new model and add it to the main root.
      * <p>
      * Can be called from off the GUI thread.
+     *
+     * @param systemName the system name for the catalog
+     * @param userName   the user name for the catalog
+     * @param path       the path on the new branch
      */
     public void createNewBranch(String systemName, String userName, String path) {
 
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName(systemName);
         if (tree != null) {
-            jmri.util.ThreadingUtil.runOnGUI(()->{
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
                 addTree(tree);
             });
         } else {
             final CatalogTree t = manager.newCatalogTree(systemName, userName);
-            jmri.util.ThreadingUtil.runOnGUI(()->{
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
                 t.insertNodes(path);
                 addTree(t);
             });
@@ -200,6 +201,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Extend the Catalog by adding a tree to the root.
+     *
+     * @param tree the tree to add to the catalog
      */
     public void addTree(CatalogTree tree) {
         String name = tree.getSystemName();
@@ -219,8 +222,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
     @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
-            log.debug("addTreeBranch called for node= " + node.toString()
-                    + ", has " + node.getChildCount() + " children");
+            log.debug("addTreeBranch called for node= {}, has {} children.",
+                    node.toString(), node.getChildCount());
         }
         //String name = node.toString(); 
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
@@ -303,6 +306,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Insert a new node into the displayed tree.
+     *
+     * @param name   the name of the new node
+     * @param parent the parent of name
+     * @return true if the node was inserted
      */
     @SuppressWarnings("unchecked")
     public boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
@@ -330,6 +337,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Delete a node from the displayed tree.
+     *
+     * @param node the node to delete
      */
     public void removeNodeFromModel(CatalogTreeNode node) {
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
@@ -341,6 +350,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
     /**
      * Make a change to a node in the displayed tree. Either its name or the
      * contents of its leaves (image references)
+     *
+     * @param node the node to change
+     * @param name new name for the node
+     * @return true if the change was successful
      */
     public boolean nodeChange(CatalogTreeNode node, String name) {
         CatalogTreeNode cNode = getCorrespondingNode(node);
@@ -351,7 +364,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         node.setUserObject(name);
         tree.nodeChanged(cNode);
         _model.nodeChanged(node);
-        updatePanel();
         ImageIndexEditor.indexChanged(true);
         updatePanel();
         return true;
@@ -362,8 +374,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
      */
     private boolean nameOK(CatalogTreeNode node, String name) {
         TreeNode[] nodes = node.getPath();
-        for (int i = 0; i < nodes.length; i++) {
-            if (name.equals(nodes[i].toString())) {
+        for (TreeNode node1 : nodes) {
+            if (name.equals(node1.toString())) {
                 return false;
             }
         }
@@ -399,23 +411,17 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
         JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
         JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
-        whiteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                _currentBackground = Color.white;
-                setBackground(_preview);
-            }
+        whiteButton.addActionListener((ActionEvent e) -> {
+            _currentBackground = Color.white;
+            setBackground(_preview);
         });
-        grayButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                _currentBackground = _grayColor;
-                setBackground(_preview);
-            }
+        grayButton.addActionListener((ActionEvent e) -> {
+            _currentBackground = _grayColor;
+            setBackground(_preview);
         });
-        darkButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                _currentBackground = new Color(150, 150, 150);
-                setBackground(_preview);
-            }
+        darkButton.addActionListener((ActionEvent e) -> {
+            _currentBackground = new Color(150, 150, 150);
+            setBackground(_preview);
         });
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
@@ -439,10 +445,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
     public void setBackground(Container container) {
         container.setBackground(_currentBackground);
         Component[] comp = container.getComponents();
-        for (int i = 0; i < comp.length; i++) {
-            comp[i].setBackground(_currentBackground);
-            if (comp[i] instanceof java.awt.Container) {
-                setBackground((Container) comp[i]);
+        for (Component comp1 : comp) {
+            comp1.setBackground(_currentBackground);
+            if (comp1 instanceof java.awt.Container) {
+                setBackground((Container) comp1);
             }
         }
         container.invalidate();
@@ -454,8 +460,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
             return;
         }
         Component[] comp = _preview.getComponents();
-        for (int i = 0; i < comp.length; i++) {
-            comp[i].removeMouseListener(this);
+        for (Component comp1 : comp) {
+            comp1.removeMouseListener(this);
         }
         _preview.removeAll();
         setBackground(_preview);
@@ -464,18 +470,19 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public class MemoryExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+        @Override
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
-            log.error("Exception from setIcons: " + e, e);
+            log.error("MemoryExceptionHandler: {}", e);
         }
     }
 
-    protected boolean _noMemory = false;
+    private boolean _noMemory = false;
 
     /**
      * Display the icons in the preview panel
      */
-    protected String setIcons() throws OutOfMemoryError {
+    private String setIcons() {
         Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         resetPanel();
         CatalogTreeNode node = getSelectedNode();
@@ -538,49 +545,37 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             c.insets = new Insets(5, 5, 0, 0);
 
-//            JLabel image = null;
-            JLabel nameLabel = null;
+            JLabel nameLabel;
             if (_noDrag) {
-//                image = new JLabel();
-                nameLabel = new JLabel(leaf.getName());
+                nameLabel = new JLabel();
             } else {
                 try {
-//                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                     nameLabel = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                 } catch (java.lang.ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
+                    log.warn("Unable to create drag label", cnfe);
                     continue;
                 }
             }
-//            image.setOpaque(true);
-//            image.setName(leaf.getName());
-//            image.setBackground(_currentBackground);
-//            image.setIcon(icon);
-            nameLabel.setText(leaf.getName());
+//            nameLabel.setText(leaf.getName());
             nameLabel.setName(leaf.getName());
+//            nameLabel.setVerticalTextPosition(JLabel.TOP);
             nameLabel.setBackground(_currentBackground);
             nameLabel.setIcon(icon);
 
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-//            JPanel iPanel = new JPanel();
-//            iPanel.add(image);
-//            p.add(iPanel);
             p.add(nameLabel);
-            JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                    new Object[]{printDbl(scale, 2)}));
+            JLabel label = new JLabel(Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2)));
+            p.add(label);
+            label = new JLabel(leaf.getName());
             p.add(label);
             if (_noDrag) {
                 p.addMouseListener(this);
             }
             gridbag.setConstraints(p, c);
-            if (_noMemory) {
-                continue;
-            }
             _preview.add(p);
             if (log.isDebugEnabled()) {
-                log.debug(leaf.getName() + " inserted at (" + c.gridx + ", " + c.gridy
-                        + ") w= " + icon.getIconWidth() + ", h= " + icon.getIconHeight());
+                log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
             }
         }
         c.gridy++;
@@ -590,8 +585,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.add(bottom);
 
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
-        return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
-                new Object[]{node.getUserObject(), Integer.valueOf(leaves.size())});
+        return Bundle.getMessage("numImagesInNode", node.getUserObject(), leaves.size());
     }
 
     public static CatalogPanel makeDefaultCatalog() {
@@ -631,7 +625,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Utility
+     * Utility returns a number as a string
+     *
+     * @param z             double
+     * @param decimalPlaces number of decimal places
+     * @return String
      */
     public static String printDbl(double z, int decimalPlaces) {
         if (Double.isNaN(z) || decimalPlaces > 8) {
@@ -639,7 +637,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         } else if (decimalPlaces <= 0) {
             return Integer.toString((int) Math.rint(z));
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (z < 0) {
             sb.append('-');
         }
@@ -668,9 +666,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return sb.toString();
     }
 
-    /**
-     */
-    public void setSelectedNode(String[] names) {
+    protected void setSelectedNode(String[] names) {
         _dTree.setExpandsSelectedPaths(true);
         CatalogTreeNode[] path = new CatalogTreeNode[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -679,9 +675,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _dTree.setSelectionPath(new TreePath(path));
     }
 
-    /**
-     */
-    public void scrollPathToVisible(String[] names) {
+    protected void scrollPathToVisible(String[] names) {
         _dTree.setExpandsSelectedPaths(true);
         CatalogTreeNode[] path = new CatalogTreeNode[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -692,13 +686,14 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Return the node the user has selected.
+     *
+     * @return CatalogTreeNode
      */
-    public CatalogTreeNode getSelectedNode() {
+    protected CatalogTreeNode getSelectedNode() {
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             // somebody has been selected
             if (log.isDebugEnabled()) {
-                log.debug("getSelectedNode with "
-                        + _dTree.getSelectionPath().toString());
+                log.debug("getSelectedNode with {}", _dTree.getSelectionPath().toString());
             }
             TreePath path = _dTree.getSelectionPath();
             return (CatalogTreeNode) path.getLastPathComponent();
@@ -706,24 +701,35 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return null;
     }
 
-    void delete(NamedIcon icon) {
+    private void delete(NamedIcon icon) {
         CatalogTreeNode node = getSelectedNode();
+        if (log.isDebugEnabled()) {
+            log.debug("delete icon {} from node {}", icon.getName(), node.toString());
+        }
         node.deleteLeaf(icon.getName(), icon.getURL());
         updatePanel();
+        ImageIndexEditor.indexChanged(true);
     }
 
-    void rename(NamedIcon icon) {
+    private void rename(NamedIcon icon) {
         String name = JOptionPane.showInputDialog(getParentFrame(this),
                 Bundle.getMessage("newIconName"), icon.getName(),
                 JOptionPane.QUESTION_MESSAGE);
         if (name != null && name.length() > 0) {
             CatalogTreeNode node = getSelectedNode();
+            if (log.isDebugEnabled()) {
+                log.debug("rename icon {} to {} from node {}", icon.getName(), name, node.toString());
+            }
             CatalogTreeLeaf leaf = node.getLeaf(icon.getName(), icon.getURL());
             if (leaf != null) {
                 leaf.setName(name);
             }
-            getParentFrame(this).invalidate();
-            updatePanel();
+            TreePath path = _dTree.getSelectionPath();
+            // deselect to refresh panel
+            _dTree.setSelectionPath(null);
+            _dTree.setSelectionPath(path);
+//            updatePanel();
+            ImageIndexEditor.indexChanged(true);
         }
     }
 
@@ -740,7 +746,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      */
     private void showPopUp(MouseEvent e, NamedIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("showPopUp " + icon.toString());
+            log.debug("showPopUp {}", icon.toString());
         }
         JPopupMenu popup = new JPopupMenu();
         popup.add(new JMenuItem(icon.getName()));
@@ -748,12 +754,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("RenameIcon")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1598669233012552574L;
             NamedIcon icon;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rename(icon);
             }
@@ -766,12 +769,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("DeleteIcon")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2412374302278407718L;
             NamedIcon icon;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 delete(icon);
             }
@@ -784,18 +784,23 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger()) {
             Container con = (Container) e.getSource();
@@ -807,10 +812,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     class DropJTree extends JTree implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6754039215423513840L;
         DataFlavor dataFlavor;
 
         DropJTree(TreeModel model) {
@@ -818,28 +819,33 @@ public class CatalogPanel extends JPanel implements MouseListener {
             try {
                 dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.warn("Unable to create data flavor", cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
             //if (log.isDebugEnabled()) log.debug("DropJTree ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragExit ");
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragEnter ");
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragOver ");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dropActionChanged ");
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();
@@ -847,7 +853,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(dataFlavor);
                     Point pt = e.getLocation();
                     if (log.isDebugEnabled()) {
-                        log.debug("DropJTree.drop: Point= (" + pt.x + ", " + pt.y + ")");
+                        log.debug("DropJTree.drop: Point= ({}, {})", pt.x, pt.y);
                     }
                     TreePath path = _dTree.getPathForLocation(pt.x, pt.y);
                     if (path != null) {
@@ -857,15 +863,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
                         nodeChange(node, node.toString());
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropJTree.drop COMPLETED for " + icon.getURL());
+                            log.debug("DropJTree.drop COMPLETED for {}", icon.getURL());
                         }
                         return;
                     }
                 }
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            } catch (UnsupportedFlavorException ufe) {
-                ufe.printStackTrace();
+            } catch (IOException | UnsupportedFlavorException ex) {
+                log.warn("unable to drag and drop", ex);
             }
             if (log.isDebugEnabled()) {
                 log.debug("DropJTree.drop REJECTED!");

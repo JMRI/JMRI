@@ -28,10 +28,22 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        // GUI tests start here
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
-        }
+        suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DispatcherActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OptionsFileTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainInfoFileTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainInfoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ActivateTrainFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoTrainsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoAllocateTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoTurnoutsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OptionsMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveTrainTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AllocatedSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AllocationRequestTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AllocationPlanTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoActiveTrainTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoTrainActionTest.class));
         return suite;
     }
 

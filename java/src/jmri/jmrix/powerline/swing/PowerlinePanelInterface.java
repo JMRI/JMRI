@@ -1,4 +1,3 @@
-// PowerlinePanelInterface.java
 package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
@@ -18,6 +17,8 @@ public interface PowerlinePanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo Connection details memo
+     * @throws Exception pass lower exceptions upwards
      */
     public void initComponents(SerialSystemConnectionMemo memo) throws Exception;
 

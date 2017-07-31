@@ -1,4 +1,3 @@
-// LocoNetBluetoothAdapter.java
 package jmri.jmrix.loconet.bluetooth;
 
 import java.io.DataInputStream;
@@ -36,14 +35,15 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     public LocoNetBluetoothAdapter(LocoNetSystemConnectionMemo adapterMemo) {
         super(adapterMemo);
-        option1Name = "CommandStation";
-        option2Name = "TurnoutHandle";
+        option1Name = "CommandStation"; // NOI18N
+        option2Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Command station type:", commandStationNames, false));
         options.put(option2Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }
 
     Vector<String> portNameVector = null;
     
+    @Override
     public Vector<String> getPortNames() {
         portNameVector = new Vector<String>();
         try {
@@ -61,6 +61,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         return portNameVector;
     }
     
+    @Override
     public String openPort(String portName, String appName) {
         int[] responseCode = new int[] { -1 };
         Exception[] exception = new Exception[] { null };
@@ -165,6 +166,9 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
                 log.error("Service search on " + portName + " ended prematurely");
                 return "Search for " + portName + " ended unexpectedly";
+            default:
+                log.warn("Unhandled response code: {}", responseCode[0]);
+                break;
             }
             log.error("Unknown error when connecting to " + portName);
             return "Unknown error when connecting to " + portName;

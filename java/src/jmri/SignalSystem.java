@@ -1,10 +1,12 @@
 package jmri;
 
+import java.util.Enumeration;
+
 /**
  * A SignalSystem defines a signaling system by representing the properties of
  * various signal aspects it contains.
  * <p>
- * At present, the signal aspects are denumerated by Strings, not by specific
+ * At present, the signal aspects are enumerated by Strings, not by specific
  * objects; this table exists to attach properties to those Strings.
  * <p>
  * Setting or getting the "state" of one of these will throw an error.
@@ -26,7 +28,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public interface SignalSystem extends NamedBean {
 
@@ -35,21 +37,26 @@ public interface SignalSystem extends NamedBean {
     public Object getProperty(String aspect, String key);
 
     /**
-     * Add an image or icon type available for use with this signalling system
+     * Add an image or icon type available for use with this signaling system.
+     *
+     * @param type the image type
      */
     public void setImageType(String type);
 
     /**
      * Returns a list of the image/icon sets available for use with this
-     * signalling system. If no specific image types are provided for then an
-     * empty list is returned.
+     * signaling system.
+     *
+     * @return all image types or an empty list
      */
-    public java.util.Enumeration<String> getImageTypeList();
+    public Enumeration<String> getImageTypeList();
 
     /**
      * Get all aspects currently defined.
+     *
+     * @return all aspects or an empty list
      */
-    public java.util.Enumeration<String> getAspects();
+    public Enumeration<String> getAspects();
 
     /**
      * Get all keys currently defined on any aspect.
@@ -57,11 +64,16 @@ public interface SignalSystem extends NamedBean {
      * Each key only appears once, even if used on more than one aspect.
      * <p>
      * Note that a given key may or may not appear on a given aspect.
+     *
+     * @return all keys or an empty list
      */
-    public java.util.Enumeration<String> getKeys();
+    public Enumeration<String> getKeys();
 
     /**
      * Is this aspect known?
+     *
+     * @param aspect the aspect to check
+     * @return true if known; false otherwise
      */
     public boolean checkAspect(String aspect);
 

@@ -3,6 +3,7 @@ package jmri.jmrit;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -167,6 +168,7 @@ public class DccLocoAddressSelector extends JPanel {
 
         p.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         changeFontSizes();
                     }
@@ -217,6 +219,7 @@ public class DccLocoAddressSelector extends JPanel {
      * Provide a common setEnable call for the GUI components in the
      * selector
      */
+    @Override
     public void setEnabled(boolean e) {
         text.setEditable(e);
         text.setEnabled(e);
@@ -272,6 +275,16 @@ public class DccLocoAddressSelector extends JPanel {
         }
         boxUsed = true;
         return box;
+    }
+
+    /*
+     * Override the addKeyListener method in JPanel so that we can set the
+     * text box as the object listening for keystrokes
+     */
+    @Override
+    public void addKeyListener(KeyListener l){
+       super.addKeyListener(l);
+       text.addKeyListener(l);
     }
 
     final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");

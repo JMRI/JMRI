@@ -1,6 +1,6 @@
-// SerialReply.java
 package jmri.jmrix.grapevine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Contains the data payload of a serial reply packet. Note that its _only_ the
  * payload.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -35,10 +35,12 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0) & 0x7F;
     }
 
+    @Override
     public boolean isUnsolicited() {
         return true;
     } //always unsolicited!
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
@@ -97,7 +99,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * the Message method.
      */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String format() {
         int b1 = -1;
         int b2 = -1;
@@ -115,6 +117,10 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
             // fall through
             case 1:
                 b1 = getElement(0) & 0xff;
+                break;
+            default:
+                log.warn("Unhandled number of elements: {}", getNumDataElements());
+                break;
         }
 
         return SerialMessage.staticFormat(b1, b2, b3, b4);
@@ -124,4 +130,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

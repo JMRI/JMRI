@@ -27,20 +27,24 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.jmriclient.JMRiClientTest");  // no tests in this class itself
         suite.addTest(new TestSuite(JMRIClientMessageTest.class));
         suite.addTest(new TestSuite(JMRIClientReplyTest.class));
-        suite.addTest(new TestSuite(JMRIClientTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutTest.class));
         suite.addTest(new TestSuite(JMRIClientSensorTest.class));
         suite.addTest(new TestSuite(JMRIClientReporterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSensorManagerTest.class));
-        suite.addTest(new TestSuite(JMRIClientReporterManagerTest.class));
-        suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.networkdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.configurexml.PackageTest.class));
         suite.addTest(jmri.jmrix.jmriclient.json.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientLightTest.class));
         return suite;
     }
 

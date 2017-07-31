@@ -1,11 +1,3 @@
-/**
- * XNetPowerManager.java
- *
- * Description:	PowerManager implementation for controlling layout power
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Paul Bender Copyright (C) 2003-2010
-  */
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -13,6 +5,12 @@ import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * PowerManager implementation for controlling layout power.
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+ */
 public class XNetPowerManager implements PowerManager, XNetListener {
 
     public XNetPowerManager(XNetSystemConnectionMemo memo) {
@@ -24,14 +22,16 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         tc.sendXNetMessage(XNetMessage.getCSStatusRequestMessage(), this);
     }
 
+    @Override
     public String getUserName() {
-        return "XPressNet";
+        return userName;
     }
 
-    String userName = "XPressNet";
+    String userName = Bundle.getMessage("MenuXpressNet");
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
         checkTC();
@@ -42,14 +42,16 @@ public class XNetPowerManager implements PowerManager, XNetListener {
             // send EMERGENCY_OFF
             tc.sendXNetMessage(XNetMessage.getEmergencyOffMsg(), this);
         }
-        firePropertyChange("Power", null, null);
+        firePropertyChange("Power", null, null); // NOI18N
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeXNetListener(XNetInterface.CS_INFO, this);
         tc = null;
@@ -64,6 +66,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -72,6 +75,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -80,9 +84,10 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
     // to listen for Broadcast messages related to track power.
     // There are 5 messages to listen for
+    @Override
     public void message(XNetReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message recieved: " + m.toString());
+            log.debug("Message received: " + m.toString());
         }
         // First, we check for a "normal operations resumed message"
         // This indicates the power to the track is ON
@@ -139,11 +144,17 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
+    @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -154,6 +165,3 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
 
 }
-
-
-/* @(#)XNetPowerManager.java */

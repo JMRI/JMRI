@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  *
  * This was a copy of simple turnout control.
  *
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Ken Cameron Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -80,6 +80,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         statusButton.setVisible(true);
         statusButton.setToolTipText(rb.getString("LightGetStatusToolTip"));
         statusButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 statusButtonActionPerformed(e);
             }
@@ -106,6 +107,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         onButton.setVisible(true);
         onButton.setToolTipText(rb.getString("LightOnButtonToolTip"));
         onButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 onButtonActionPerformed(e);
             }
@@ -115,6 +117,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         offButton.setVisible(true);
         offButton.setToolTipText(rb.getString("LightOffButtonToolTip"));
         offButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 offButtonActionPerformed(e);
             }
@@ -152,15 +155,17 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         intensityButton.setVisible(true);
         intensityButton.setToolTipText(rb.getString("LightSetButtonToolTip"));
         intensityButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 intensityButtonActionPerformed(e);
             }
         });
 
-        applyButton.setText(rb.getString("LightApplyButton"));
+        applyButton.setText(rb.getString("LightApplyButton")); // TODO reuse ButtonApply from NamedBeanBundle and add a Bundle() method here
         applyButton.setVisible(true);
         applyButton.setToolTipText(rb.getString("LightApplyButtonToolTip"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 applyButtonActionPerformed(e);
             }
@@ -368,6 +373,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
     }
 
     // update state field in GUI as state of light changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("recv propertyChange: " + e.getPropertyName() + " " + e.getOldValue() + " -> " + e.getNewValue());

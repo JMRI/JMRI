@@ -29,6 +29,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableShape p = (PositionableShape) o;
 
@@ -43,8 +44,9 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the common contents
+     * Default implementation for storing the common contents.
      *
+     * @param p       the shape to store
      * @param element Element in which contents are stored
      */
     public void storeCommonAttributes(PositionableShape p, Element element) {
@@ -108,6 +110,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;
@@ -216,7 +219,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
             } else {
                 return new Color(red, green, blue, alpha);
             }
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
             log.warn("failed to convert color attribute for " + name + " - " + e);
         }
         return null;
@@ -229,7 +232,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 int num = attr.getIntValue();
                 return num;
             }
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert integer attribute for " + name + " - " + e);
         }
         return 0;
@@ -242,7 +245,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 float num = attr.getFloatValue();
                 return num;
             }
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert integer attribute for " + name + " - " + e);
         }
         return 0;

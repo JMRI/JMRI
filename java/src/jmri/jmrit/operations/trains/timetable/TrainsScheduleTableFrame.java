@@ -1,4 +1,3 @@
-// TrainsScheduleTableFrame.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Color;
@@ -46,11 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    // public static SwingShutDownTask trainDirtyTask;
-
-    public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
-    public static final String TIME = Bundle.getMessage("Time");
-
     TrainManager trainManager = TrainManager.instance();
     TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
     LocationManager locationManager = LocationManager.instance();
@@ -63,10 +57,11 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 
     // radio buttons
-    JRadioButton sortByName = new JRadioButton(NAME);
-    JRadioButton sortByTime = new JRadioButton(TIME);
+    JRadioButton sortByName = new JRadioButton(Bundle.getMessage("Name"));
+    JRadioButton sortByTime = new JRadioButton(Bundle.getMessage("Time"));
 
     JRadioButton noneButton = new JRadioButton(Bundle.getMessage("None"));
+    JRadioButton anyButton = new JRadioButton(Bundle.getMessage("Any"));
 
     // radio button groups
     ButtonGroup schGroup = new ButtonGroup();
@@ -210,6 +205,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         addRadioButtonAction(sortByName);
 
         addRadioButtonAction(noneButton);
+        addRadioButtonAction(anyButton);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -243,9 +239,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
-        } else if (ae.getSource() == noneButton) {
+        } else if (ae.getSource() == noneButton || ae.getSource() == anyButton) {
             enableButtons(false);
-            commentTextArea.setText(""); // no text for the noneButton
+            commentTextArea.setText(""); // no text for the noneButton or anyButton
             // must be one of the schedule radio buttons
         } else {
             enableButtons(true);
@@ -331,9 +327,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
      */
     private void updateControlPanel() {
         schedule.removeAll();
-        noneButton.setName(""); // Name holds schedule id for the selected radio button
+        noneButton.setName(TrainSchedule.NONE); // Name holds schedule id for the selected radio button
         noneButton.setSelected(true);
-        commentTextArea.setText(""); // no text for the noneButton
+        commentTextArea.setText(""); // no text for the noneButton or anyButton
         enableButtons(false);
         schedule.add(noneButton);
         schGroup.add(noneButton);
@@ -356,6 +352,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 }
             }
         }
+        anyButton.setName(TrainSchedule.ANY); // Name holds schedule id for the selected radio button
+        schedule.add(anyButton);
+        schGroup.add(anyButton);
+        anyButton.setSelected(trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY));
         schedule.revalidate();
     }
 
@@ -440,21 +440,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             printButton.setToolTipText(Bundle.getMessage("PrintSelectedTip"));
         }
     }
-
-//    private void buildSwitchList() {
-//        TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-//        for (Location location : locationManager.getLocationsByNameList()) {
-//            if (location.isSwitchListEnabled()) {
-//                trainSwitchLists.buildSwitchList(location);
-//                // // print or print changes
-//                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
-//                    trainSwitchLists.printSwitchList(location, trainManager.isPrintPreviewEnabled());
-//                }
-//            }
-//        }
-//        // set trains switch lists printed
-//        trainManager.setTrainsSwitchListStatus(Train.PRINTED);
-//    }
 
     private void updateSwitchListButton() {
         log.debug("update switch list button");

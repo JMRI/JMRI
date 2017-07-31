@@ -2,12 +2,15 @@ package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    LayoutBlockRouteTableModelTest.class,
+    LayoutBlockRouteTableTest.class,
+    LayoutBlockThroughPathsTableModelTest.class,
+    LayoutBlockRouteTableActionTest.class,
+    LayoutBlockNeighbourTableModelTest.class
 })
 
 

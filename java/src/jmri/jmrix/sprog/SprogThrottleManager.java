@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SPROG implementation of a ThrottleManager.
- * <P>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * <p>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
@@ -37,6 +37,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         throttleInUse = false;
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so set the address and immediately trigger the callback
@@ -63,25 +64,26 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * What speed modes are supported by this system? value should be or of
-     * possible modes specified by the DccThrottle interface
+     * What speed modes are supported by this system? Value should be one of
+     * possible modes specified by the DccThrottle interface.
      */
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
     /**
-     * Addresses 0-10239 can be long
-     *
+     * Addresses 0-10239 can be long.
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return ((address >= 0) && (address <= 10239));
     }
 
     /**
-     * The short addresses 1-127 are available
-     *
+     * The short addresses 1-127 are available.
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return ((address >= 1) && (address <= 127));
     }
@@ -89,10 +91,12 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             throttleInUse = false;

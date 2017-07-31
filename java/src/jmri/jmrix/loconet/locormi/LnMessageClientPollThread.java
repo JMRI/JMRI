@@ -15,9 +15,11 @@ class LnMessageClientPollThread extends Thread {
     LnMessageClientPollThread(LnMessageClient lnParent) {
         parent = lnParent;
         this.setDaemon(true);
+        this.setName("LnMessageClientPollThread "+lnParent);
         this.start();
     }
 
+    @Override
     public void run() {
         try {
             Object[] lnMessages = null;

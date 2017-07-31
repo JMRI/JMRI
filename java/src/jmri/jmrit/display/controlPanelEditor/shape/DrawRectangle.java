@@ -46,28 +46,12 @@ public class DrawRectangle extends DrawFrame {
         p.add(pp);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         _widthText.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _shape.setWidth(Integer.parseInt(_widthText.getText()));                
                 updateShape();
             }
         });
-        _widthText.addMouseMotionListener( new MouseMotionListener() {
-            public void mouseDragged( MouseEvent e) {               
-                updateShape();
-            }
-            public void mouseMoved(MouseEvent e) {
-                _shape.setWidth(Integer.parseInt(_widthText.getText()));
-            }
-        });
-/*        _widthText.addFocusListener( new FocusListener() {
-            public void focusGained(FocusEvent e) {               
-                updateShape();
-            }
-            public void focusLost(FocusEvent e) {
-                _shape.setWidth(Integer.parseInt(_widthText.getText()));                
-                updateShape();                
-            }
-        });*/
 
         pp = new JPanel();
         _heightText = new JTextField(6);
@@ -78,18 +62,26 @@ public class DrawRectangle extends DrawFrame {
         pp.add(new JLabel(Bundle.getMessage("height")));
         p.add(pp);
         _heightText.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _shape.setHeight(Integer.parseInt(_heightText.getText()));
                 updateShape();
             }
         });
-        _heightText.addMouseMotionListener( new MouseMotionListener() {
+        p.addMouseMotionListener( new MouseMotionListener() {
+            @Override
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
+            @Override
             public void mouseMoved(MouseEvent e) {
-                _shape.setHeight(Integer.parseInt(_heightText.getText()));
-                updateShape();
+                int w = Integer.parseInt(_widthText.getText());
+                int h = Integer.parseInt(_heightText.getText());
+                if (w!=_shape.getWidth() || h!=_shape.getHeight()) {
+                    _shape.setHeight(h);
+                    _shape.setWidth(w);
+                    updateShape();                    
+                }
             }
         });
 
@@ -140,9 +132,11 @@ public class DrawRectangle extends DrawFrame {
         _height = pos.getHeight();
     }
 
+    @Override
     void setDisplayWidth(int w) {
         _widthText.setText(Integer.toString(w));        
     }
+    @Override
     void setDisplayHeight(int h) {
         _heightText.setText(Integer.toString(h));        
     }

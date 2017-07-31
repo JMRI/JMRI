@@ -1,12 +1,11 @@
 package jmri;
 
 import apps.gui3.TabbedPreferences;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -61,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
 public class InstanceManager {
@@ -69,7 +68,7 @@ public class InstanceManager {
     protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
     private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
     // data members to hold contact with the property listeners
-    private static final HashSet<PropertyChangeListener> listeners = new HashSet<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /* properties */
     /**
@@ -124,6 +123,7 @@ public class InstanceManager {
         log.debug("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
         }
         return (List<T>) managerLists.get(type);
     }
@@ -150,7 +150,9 @@ public class InstanceManager {
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         ArrayList<T> l = (ArrayList<T>) getList(type);
+        int index = l.indexOf(item);
         l.remove(item);
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
@@ -177,6 +179,8 @@ public class InstanceManager {
      * @see #getOptionalDefault(java.lang.Class)
      */
     @Nonnull
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", 
+            justification = "FindBugs 3.0.1 flags the Objects.requireNonNull call as having a possible null argument, which is the entire point")
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
         return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
@@ -319,38 +323,45 @@ public class InstanceManager {
     }
 
     /**
-     * Remove notification on changes to specific types
+     * Remove notification on changes to specific types.
      *
-     * @param l The listener to remove.
+     * @param l The listener to remove
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        getDefault().pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * Remove notification on changes to specific types.
+     *
+     * @param propertyName the property being listened for
+     * @param l            The listener to remove
+     */
+    public static synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.removePropertyChangeListener(propertyName, l);
+    }
+
+    /**
+     * Register for notification on changes to specific types.
+     *
+     * @param l The listener to add
+     */
+    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(l);
     }
 
     /**
      * Register for notification on changes to specific types
      *
-     * @param l The listener to add.
+     * @param propertyName the property being listened for
+     * @param l            The listener to add
      */
-    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.add(l);
-        }
+    public static synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(propertyName, l);
     }
 
     protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        HashSet<PropertyChangeListener> set;
-        synchronized (InstanceManager.class) {
-            set = new HashSet<>(listeners);
-        }
-        // forward to all listeners
-        set.stream().forEach((listener) -> {
-            listener.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
-        });
+        getDefault().pcs.firePropertyChange(property, oldValue, newValue);
     }
 
     /**
@@ -365,11 +376,23 @@ public class InstanceManager {
         return "default-" + clazz.getName();
     }
 
+    /**
+     * Get the property name included in the
+     * {@link java.beans.PropertyChangeEvent} thrown when the list for a
+     * specific class is changed.
+     *
+     * @param clazz the class being listened for
+     * @return the property name
+     */
+    public static String getListPropertyName(Class<?> clazz) {
+        return "list-" + clazz.getName();
+    }
+
     /* ****************************************************************************
      *                   Primary Accessors - Left (for now)
      *
      *          These are so extensively used that we're leaving for later
-     *                      Please don't create any more of these 
+     *                      Please don't create any more of these
      * ****************************************************************************/
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
@@ -419,7 +442,7 @@ public class InstanceManager {
     /* ****************************************************************************
      *                   Primary Accessors - Deprecated for removal
      *
-     *                      Please don't create any more of these 
+     *                      Please don't create any more of these
      * ****************************************************************************/
     // Simplification order - for each type, starting with those not in the jmri package:
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
@@ -431,6 +454,7 @@ public class InstanceManager {
      * @return the default audio manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public AudioManager audioManagerInstance() {
         return getDefault(AudioManager.class);
     }
@@ -441,6 +465,7 @@ public class InstanceManager {
      * @return the default block manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public BlockManager blockManagerInstance() {
         return getDefault(BlockManager.class);
     }
@@ -451,6 +476,7 @@ public class InstanceManager {
      * @return the default clock control instance. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ClockControl clockControlInstance() {
         return getDefault(ClockControl.class);
     }
@@ -461,6 +487,7 @@ public class InstanceManager {
      * @return the default conditional manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ConditionalManager conditionalManagerInstance() {
         return getDefault(ConditionalManager.class);
     }
@@ -471,6 +498,7 @@ public class InstanceManager {
      * @return the default logix manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public LogixManager logixManagerInstance() {
         return getDefault(LogixManager.class);
     }
@@ -481,6 +509,7 @@ public class InstanceManager {
      * @return the default power manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public PowerManager powerManagerInstance() {
         return getDefault(PowerManager.class);
     }
@@ -502,6 +531,7 @@ public class InstanceManager {
      * @return the default reporter manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ReporterManager reporterManagerInstance() {
         return getDefault(ReporterManager.class);
     }
@@ -512,6 +542,7 @@ public class InstanceManager {
      * @return the default roster icon factory. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public RosterIconFactory rosterIconFactoryInstance() {
         return getDefault(RosterIconFactory.class);
     }
@@ -522,6 +553,7 @@ public class InstanceManager {
      * @return the default route manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public RouteManager routeManagerInstance() {
         return getDefault(RouteManager.class);
     }
@@ -532,6 +564,7 @@ public class InstanceManager {
      * @return the default section manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SectionManager sectionManagerInstance() {
         return getDefault(SectionManager.class);
     }
@@ -542,6 +575,7 @@ public class InstanceManager {
      * @return the default signal group manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SignalGroupManager signalGroupManagerInstance() {
         return getDefault(SignalGroupManager.class);
     }
@@ -552,6 +586,7 @@ public class InstanceManager {
      * @return the default signal head manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SignalHeadManager signalHeadManagerInstance() {
         return getDefault(SignalHeadManager.class);
     }
@@ -562,6 +597,7 @@ public class InstanceManager {
      * @return the default signal mast manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SignalMastManager signalMastManagerInstance() {
         return getDefault(SignalMastManager.class);
     }
@@ -572,6 +608,7 @@ public class InstanceManager {
      * @return the default signal system manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SignalSystemManager signalSystemManagerInstance() {
         return getDefault(SignalSystemManager.class);
     }
@@ -583,6 +620,7 @@ public class InstanceManager {
      *         instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public SignalMastLogicManager signalMastLogicManagerInstance() {
         return getDefault(SignalMastLogicManager.class);
     }
@@ -593,6 +631,7 @@ public class InstanceManager {
      * @return the default preferences panel. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public TabbedPreferences tabbedPreferencesInstance() {
         return getDefault(TabbedPreferences.class);
     }
@@ -603,6 +642,7 @@ public class InstanceManager {
      * @return the default transit manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public TransitManager transitManagerInstance() {
         return getDefault(TransitManager.class);
     }
@@ -619,6 +659,7 @@ public class InstanceManager {
      * @return the default consist manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ConsistManager consistManagerInstance() {
         return getDefault(ConsistManager.class);
     }
@@ -629,6 +670,7 @@ public class InstanceManager {
      * @return the default command station. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public CommandStation commandStationInstance() {
         return getDefault(CommandStation.class);
     }
@@ -639,6 +681,7 @@ public class InstanceManager {
      * @return the default configure manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ConfigureManager configureManagerInstance() {
         return getDefault(ConfigureManager.class);
     }
@@ -649,6 +692,7 @@ public class InstanceManager {
      * @return the default shutdown manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public ShutDownManager shutDownManagerInstance() {
         return getDefault(ShutDownManager.class);
     }
@@ -659,6 +703,7 @@ public class InstanceManager {
      * @return the default catalog tree manager. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public CatalogTreeManager catalogTreeManagerInstance() {
         return getDefault(CatalogTreeManager.class);
     }
@@ -669,6 +714,7 @@ public class InstanceManager {
      * @return the default Timebase. May not be the only instance.
      * @deprecated 4.5.1
      */
+    @Deprecated
     static public Timebase timebaseInstance() {
         return getDefault(Timebase.class);
     }
@@ -727,7 +773,7 @@ public class InstanceManager {
 
     //
     // This updates the consist manager, which must be
-    // either built into instances of calling code or a 
+    // either built into instances of calling code or a
     // new service, before this can be deprecated.
     //
     static public void setCommandStation(CommandStation p) {
@@ -755,8 +801,8 @@ public class InstanceManager {
     }
 
     //
-    // This provides notification services, which 
-    // must be migrated before this method can be 
+    // This provides notification services, which
+    // must be migrated before this method can be
     // deprecated.
     //
     static public void setConsistManager(ConsistManager p) {
@@ -777,12 +823,12 @@ public class InstanceManager {
     //
     // Note: Also provides consist manager services on store operation.
     // Do we need a new mechanism for this? Or just move this code to
-    // the 30+ classes that reference it? Or maybe have a default of the 
+    // the 30+ classes that reference it? Or maybe have a default of the
     // DccConsistManager that's smarter?
     //
     //
-    // This provides notification services, which 
-    // must be migrated before this method can be 
+    // This provides notification services, which
+    // must be migrated before this method can be
     // deprecated.
     //
     static public void setProgrammerManager(ProgrammerManager p) {
@@ -824,7 +870,7 @@ public class InstanceManager {
     }
 
     /* ****************************************************************************
-     *                   Old Style Setters - Deprecated and migrated, 
+     *                   Old Style Setters - Deprecated and migrated,
      *                                       just here for other users
      *
      *                     Check Jython scripts before removing
@@ -861,5 +907,26 @@ public class InstanceManager {
     // }
 
     /* *************************************************************************** */
+    /**
+     * Default constructor for the InstanceManager.
+     */
+    public InstanceManager() {
+        // do nothing
+    }
+
+    /**
+     * Get the default instance of the InstanceManager. This is used for
+     * verifying the source of events fired by the InstanceManager.
+     *
+     * @return the default instance of the InstanceManager, creating it if
+     *         needed
+     */
+    @Nonnull
+    public static synchronized InstanceManager getDefault() {
+        return InstanceManager.getOptionalDefault(InstanceManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(InstanceManager.class, new InstanceManager());
+        });
+    }
+
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }

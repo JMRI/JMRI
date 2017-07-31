@@ -1,11 +1,10 @@
-// XpaMessage.java
 package jmri.jmrix.xpa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an XPressNet command station via an XPA and a modem.
+ * Encodes a message to an XpressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
   */
@@ -70,19 +69,23 @@ public class XpaMessage implements jmri.jmrix.Message {
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (byte) (v & 0x7F);
     }
 
     // display format
+    @Override
     public String toString() {
         StringBuffer s = new StringBuffer();
         for (int i = 0; i < _nDataChars; i++) {
@@ -209,5 +212,3 @@ public class XpaMessage implements jmri.jmrix.Message {
     private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
-
-/* @(#)XpaMessage.java */

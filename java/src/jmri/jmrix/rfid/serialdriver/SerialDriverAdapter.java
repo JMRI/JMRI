@@ -1,15 +1,10 @@
 package jmri.jmrix.rfid.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
@@ -28,6 +23,13 @@ import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to RFID devices via a serial comm port. Derived from the
@@ -44,9 +46,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
     public SerialDriverAdapter() {
         super(new RfidSystemConnectionMemo());
-        option1Name = "Adapter";
-        option2Name = "Concentrator-Range";
-        option3Name = "Protocol";
+        option1Name = "Adapter"; // NOI18N
+        option2Name = "Concentrator-Range"; // NOI18N
+        option3Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false));
@@ -67,7 +69,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             // try to set it for serial
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -113,6 +115,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             if (log.isDebugEnabled()) {
+                log.debug("Setup SerialPortEventListener for debugging");
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
                     @Override
@@ -183,7 +186,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
@@ -252,15 +255,15 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             log.info("set protocol to CORE-ID");
             String opt2 = getOptionState(option2Name);
             switch (opt2) {
-                case "A-H" :
+                case "A-H":
                     log.info("set concentrator range to 'A-H' at position 1");
                     protocol = new CoreIdRfidProtocol('A', 'H', 1);
                     break;
-                case "I-P" :
+                case "I-P":
                     log.info("set concentrator range to 'I-P' at position 1");
                     protocol = new CoreIdRfidProtocol('I', 'P', 1);
                     break;
-                default :
+                default:
                     // unrecognised concentrator range - warn
                     log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
                     protocol = new CoreIdRfidProtocol();
@@ -336,8 +339,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
+     * @throws UnsupportedCommOperationException if unable to configure port
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
 
@@ -357,22 +361,18 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
         activeSerialPort.setFlowControlMode(flow);
+        activeSerialPort.setRTS(true);
     }
 
-    /**
-     * Get an array of valid baud rates.
-     *
-     * @return list of rates
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Set the baud rate.
      *
+     * @param rate the baud rate to set
      */
     @Override
     public void configureBaudRate(String rate) {

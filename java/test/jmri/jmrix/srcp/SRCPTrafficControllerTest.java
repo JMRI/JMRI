@@ -1,9 +1,7 @@
 package jmri.jmrix.srcp;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * SRCPTrafficControllerTest.java
@@ -12,38 +10,19 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPTrafficControllerTest extends TestCase {
-
-    public void testCtor() {
-        SRCPTrafficController m = new SRCPTrafficController();
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public SRCPTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPTrafficControllerTest.class);
-        return suite;
-    }
+public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new SRCPTrafficController();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 }

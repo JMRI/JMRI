@@ -34,7 +34,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     // Instead, you usually get a (Object) representation for display in
     // a table, etc. Modification of the state of that object then
     // gets reflected back, causing the underlying CV objects to change.
-    abstract public Component getCommonRep();	// and thus should be called a limited number of times
+    abstract public Component getCommonRep(); // and thus should be called a limited number of times
 
     abstract public Component getNewRep(String format); // this one is returning a new object
 
@@ -161,6 +161,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     // handle incoming parameter notification
+    @Override
     abstract public void propertyChange(java.beans.PropertyChangeEvent e);
 
     abstract public void dispose();
@@ -309,6 +310,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public void setToRead(boolean state) {
         boolean newState = state;
 
@@ -334,6 +336,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public boolean isToRead() {
         return _cvMap.get(getCvNum()).isToRead();
     }
@@ -342,6 +345,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public void setToWrite(boolean state) {
         boolean newState = state;
 
@@ -367,6 +371,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public boolean isToWrite() {
         return _cvMap.get(getCvNum()).isToWrite();
     }

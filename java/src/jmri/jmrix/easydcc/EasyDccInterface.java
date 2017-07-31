@@ -1,10 +1,9 @@
-// EasyDccInterface.java
 package jmri.jmrix.easydcc;
 
 /**
  * Layout interface, similar to command station
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public interface EasyDccInterface {
 
@@ -18,4 +17,4 @@ public interface EasyDccInterface {
 }
 
 
-/* @(#)EasyDccInterface.java */
+

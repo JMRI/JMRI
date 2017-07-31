@@ -1,4 +1,3 @@
-// JMRIClientMonFrame.java
 package jmri.jmrix.jmriclient.swing.mon;
 
 import jmri.jmrix.jmriclient.JMRIClientListener;
@@ -9,14 +8,10 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 /**
  * Frame displaying (and logging) JMRIClient command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
   */
 public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2892712948852673352L;
     protected JMRIClientTrafficController tc = null;
 
     public JMRIClientMonFrame(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
@@ -24,25 +19,30 @@ public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements J
         tc = memo.getJMRIClientTrafficController();
     }
 
+    @Override
     protected String title() {
         return "JMRIClient Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         tc.addJMRIClientListener(this);
     }
 
+    @Override
     public void dispose() {
         tc.removeJMRIClientListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(JMRIClientMessage l) {  // receive a message and log it
 
         nextLine("cmd: " + l.toString(), "");
     }
 
+    @Override
     public synchronized void reply(JMRIClientReply l) {  // receive a reply message and log it
         nextLine("rep: " + l.toString(), "");
     }

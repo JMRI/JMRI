@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +50,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Rodney Black Copyright (C) 2011
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
         justification = "CarManager only provides Car Objects") // NOI18N
 public class Train implements java.beans.PropertyChangeListener {
     /*
@@ -331,21 +332,7 @@ public class Train implements java.beans.PropertyChangeListener {
             rl.addPropertyChangeListener(this);
             return rl.getFormatedDepartureTime();
         }
-        if (!Setup.is12hrFormatEnabled()) {
-            return _departureTime;
-        }
-        // time is in the format of hour:minute AM or PM
-        String am_pm = " " + Bundle.getMessage("AM");
-        // 12 noon is 12 PM
-        int h = Integer.parseInt(getDepartureTimeHour());
-        if (h >= 12) {
-            am_pm = " " + Bundle.getMessage("PM");
-            h = h - 12;
-        }
-        if (h == 0) {
-            h = 12;
-        }
-        return Integer.toString(h) + ":" + getDepartureTimeMinute() + am_pm;
+        return (parseTime(getDepartTimeMinutes()));
     }
 
     /**
@@ -397,7 +384,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * location return -1.
      * @param routeLocation The RouteLocation.
      *
-     * @return expected arrival time
+     * @return expected arrival time in minutes (append AM or PM if 12 hour format)
      */
     public String getExpectedArrivalTime(RouteLocation routeLocation) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
@@ -507,6 +494,11 @@ public class Train implements java.beans.PropertyChangeListener {
         return minutes;
     }
 
+    /**
+     * Returns time in hour:minute format
+     * @param minutes number of minutes from midnight
+     * @return hour:minute (optionally AM:PM format)
+     */
     private String parseTime(int minutes) {
         int hours = 0;
         int days = 0;
@@ -606,10 +598,10 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return Train's route name.
      */
     public String getTrainRouteName() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return NONE;
         }
-        return _route.getName();
+        return getRoute().getName();
     }
 
     /**
@@ -625,10 +617,10 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected RouteLocation getTrainDepartsRouteLocation() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return null;
         }
-        return _route.getDepartsRouteLocation();
+        return getRoute().getDepartsRouteLocation();
     }
 
     public String getTrainDepartsDirection() {
@@ -652,10 +644,10 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected RouteLocation getTrainTerminatesRouteLocation() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return null;
         }
-        return _route.getTerminatesRouteLocation();
+        return getRoute().getTerminatesRouteLocation();
     }
 
     /**
@@ -2125,7 +2117,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Road and number of caboose.
      */
-    public @Nonnull String getCabooseRoadAndNumber() {
+    @Nonnull public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);
@@ -2917,7 +2909,7 @@ public class Train implements java.beans.PropertyChangeListener {
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
-            //	log.debug("Number of active threads: {}", numberOfThreads);
+            // log.debug("Number of active threads: {}", numberOfThreads);
             for (String scriptPathname : scripts) {
                 try {
                     JmriScriptEngineManager.getDefault()
@@ -3004,19 +2996,18 @@ public class Train implements java.beans.PropertyChangeListener {
     public boolean printManifestIfBuilt() {
         if (isBuilt()) {
             boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
-            printManifest(isPreview);
+            return (printManifest(isPreview));
         } else {
             log.debug("Need to build train (" + getName() + ") before printing manifest");
             return false;
         }
-        return true;
     }
 
     /**
      * Print manifest for train.
      * @param isPreview True if preview.
      *
-     * @return true if print successful.
+     * @return true if print successful, false if train print file not found.
      */
     public boolean printManifest(boolean isPreview) {
         if (isModified()) {
@@ -3032,7 +3023,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         File file = TrainManagerXml.instance().getTrainManifestFile(getName());
         if (!file.exists()) {
-            log.warn("Manifest file missing for train {}", getName());
+            log.warn("Manifest file missing for train ({})", getName());
             return false;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
@@ -3868,21 +3859,21 @@ public class Train implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
         }
-        if (_route != null) {
+        if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
-                _current = _route.getLocationById(a.getValue());
+                _current = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_START)) != null) {
-                _leg2Start = _route.getLocationById(a.getValue());
+                _leg2Start = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_START)) != null) {
-                _leg3Start = _route.getLocationById(a.getValue());
+                _leg3Start = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_END)) != null) {
-                _end2Leg = _route.getLocationById(a.getValue());
+                _end2Leg = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_END)) != null) {
-                _leg3End = _route.getLocationById(a.getValue());
+                _leg3End = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.DEPARTURE_TRACK)) != null) {
                 Location location = LocationManager.instance().getLocationByName(getTrainDepartsName());

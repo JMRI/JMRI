@@ -1,0 +1,23 @@
+<div class="utilization-trend-chart-pf" ng-class="{'data-unavailable-pf': chartData.dataAvailable === false}">
+  <h3>{{config.title}}</h3>
+  <div class="current-values">
+    <h1 class="available-count pull-left">{{currentValue}}</h1>
+    <div class="available-text pull-left">
+      <div>
+        <span>{{currentText}}</span>
+      </div>
+      <div>
+        <span> of {{chartData.total}} {{config.units}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="donut-chart-pf">
+    <div pf-donut-pct-chart ng-if="chartData.dataAvailable !== false" config="donutConfig" data="chartData" center-label="centerLabel"></div>
+    <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="231"></div>
+  </div>
+  <div ng-if="chartData.dataAvailable !== false" class="sparkline-chart">
+    <div pf-sparkline-chart config="sparklineConfig" chart-data="chartData" chart-height="sparklineChartHeight" show-x-axis="showSparklineXAxis" show-y-axis="showSparklineYAxis"></div>
+  </div>
+  <span class="pull-left legend-text">{{legendLeftText}}</span>
+  <span class="pull-right legend-text">{{legendRightText}}</span>
+</div>

@@ -10,7 +10,6 @@ import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import junit.framework.Test;
@@ -345,6 +344,7 @@ public class BlockManagerXmlTest extends TestCase {
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
 
         Sensor s2 = new AbstractSensor("IS2") {
+            @Override
             public void requestUpdateFromLayout() {
             }
         };
@@ -357,9 +357,11 @@ public class BlockManagerXmlTest extends TestCase {
         p21.setFromBlockDirection(Path.RIGHT);
         p21.setToBlockDirection(Path.LEFT);
         p21.addSetting(new BeanSetting(new jmri.implementation.AbstractTurnout("IT1") {
+            @Override
             public void turnoutPushbuttonLockout(boolean b) {
             }
 
+            @Override
             public void forwardCommandChangeToLayout(int i) {
             }
         },
@@ -400,19 +402,15 @@ public class BlockManagerXmlTest extends TestCase {
         Assert.assertNotNull(m7);
 
         // allow listeners to process, but keep it quick by looking for desired result
-        for (int i = 0; i < 25; i++) {
-            JUnitUtil.releaseThread(this);
-            if (m1.getAspect().equals("Advance Approach")
+        JUnitUtil.waitFor(()->{
+                return (m1.getAspect().equals("Advance Approach")
                     && m2.getAspect().equals("Clear")
                     && m3.getAspect().equals("Clear")
                     && m4.getAspect().equals("Clear")
                     && m5.getAspect().equals("Approach")
                     && m6.getAspect().equals("Stop")
-                    && m7.getAspect().equals("Stop")) {
-                break;
-            }
-        }
-        JUnitUtil.releaseThread(this);
+                    && m7.getAspect().equals("Stop"));
+            },"Mast state ended as \""+m1.getAspect()+"\" \""+m2.getAspect()+"\" \""+m3.getAspect()+"\" \""+m4.getAspect()+"\" \""+m5.getAspect()+"\" \""+m6.getAspect()+"\" \""+m7.getAspect()+"\", desired state AA/C/C/C/A/S/S");
 
         // check for expected mast state 
         Assert.assertEquals("Signal 1", "Advance Approach", InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
@@ -443,10 +441,12 @@ public class BlockManagerXmlTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

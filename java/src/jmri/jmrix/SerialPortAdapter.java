@@ -1,12 +1,14 @@
 package jmri.jmrix;
 
+import java.util.Vector;
 import org.slf4j.Logger;
+import purejavacomm.PortInUseException;
 
 /**
  * Enables basic setup of a serial interface for a jmrix implementation.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @see jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -14,7 +16,7 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Provide a vector of valid port names, each a String.
      */
-    public java.util.Vector<String> getPortNames();
+    public Vector<String> getPortNames();
 
     /**
      * Open a specified port. The appname argument is to be provided to the
@@ -25,12 +27,14 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter
      */
+    @Override
     public void configure();
 
     /**
      * Query the status of this connection. If all OK, at least as far as is
      * known, return true
      */
+    @Override
     public boolean status();
 
     /**
@@ -39,6 +43,7 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     public void setPort(String s);
 
+    @Override
     public String getCurrentPortName();
 
     /**
@@ -58,24 +63,28 @@ public interface SerialPortAdapter extends PortAdapter {
      * Set the first port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption1(String value);
 
     /**
      * Set the second port option. Only to be used after construction, but
      * before the openPort call
      */
+    @Override
     public void configureOption2(String value);
 
     /**
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value);
 
     /**
      * Set the fourth port option. Only to be used after construction, but
      * before the openPort call
      */
+    @Override
     public void configureOption4(String value);
 
     /**
@@ -83,15 +92,17 @@ public interface SerialPortAdapter extends PortAdapter {
      *
      * @see jmri.jmrix.AbstractSerialPortController
      */
-    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log);
+    public String handlePortBusy(PortInUseException p, String portName, Logger log);
 
     /**
      * Return the System Manufacturers Name
      */
+    @Override
     public String getManufacturer();
 
     /**
      * Set the System Manufacturers Name
      */
+    @Override
     public void setManufacturer(String Manufacturer);
 }

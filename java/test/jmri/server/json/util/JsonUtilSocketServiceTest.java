@@ -1,6 +1,9 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,12 +12,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.jmris.json.JsonServerPreferences;
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,8 +47,7 @@ public class JsonUtilSocketServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
-        ProfileManager.getDefault().setActiveProfile(profile);
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
@@ -108,6 +106,8 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
         instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
         Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
+        instance.onList(JSON.CONFIG_PROFILES, empty, locale);
+        Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
     }
 
     /**
