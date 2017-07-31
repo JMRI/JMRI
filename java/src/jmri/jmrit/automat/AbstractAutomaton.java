@@ -136,6 +136,8 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE", 
+                justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
             inThread = true;
