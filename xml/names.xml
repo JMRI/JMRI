@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id$ -->
 <names-config>
    <!-- This file defines the proper values for "item" attributes in JMRI   -->
    <!-- DecoderPro programmer and decoder definition files.  As such, it    -->

@@ -35,7 +35,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -67,7 +67,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Sensors
+     * of Sensors.
      */
     @Override
     protected void createModel() {
@@ -86,7 +86,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    JTextField sysName = new JTextField(40);
+    JTextField sysNameTextField = new JTextField(40);
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -104,7 +104,7 @@ public class SensorTableAction extends AbstractTableAction {
 
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSensor"));
-            //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
             ActionListener okListener = new ActionListener() {
@@ -145,10 +145,10 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            sysName.setName("sysName");
+            sysNameTextField.setName("sysNameTextField");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
@@ -170,7 +170,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         if (numberOfSensors >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", numberOfSensors),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
@@ -178,7 +178,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysName.getText();
+        String curAddress = sysNameTextField.getText().trim();
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -200,10 +200,10 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
 
-            String user = userName.getText();
+            String user = userName.getText().trim();
             if ((x != 0) && user != null && !user.equals("")) {
                 user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
@@ -220,10 +220,30 @@ public class SensorTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
+        // show tooltip for selected system connection
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        log.debug("Connection choice = [{}]", connectionChoice);
+        switch (connectionChoice) {
+            case "MERG": // Bundle key: AddEntryToolTipMERG
+            case "C/MRI":
+            case "XpressNet":
+            case "NCE":
+            case "DCC++":
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddInputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) + "<br>" +
+                        Bundle.getMessage("AddInputEntryToolTip" + connectionChoice) + "</html>");
+                break;
+            default: // LocoNet and others: "enter a number"
+                log.debug("Default tooltip");
+                sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+        }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
@@ -231,7 +251,7 @@ public class SensorTableAction extends AbstractTableAction {
                     return;
                 }
             }
-        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
         }
     }
@@ -421,7 +441,7 @@ public class SensorTableAction extends AbstractTableAction {
                 showDebounceChanged();
             }
         });
-        f.addToBottomBox(showPullUpBox, systemPrefix); 
+        f.addToBottomBox(showPullUpBox, systemPrefix);
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
         showPullUpBox.addActionListener(new ActionListener() {
             @Override

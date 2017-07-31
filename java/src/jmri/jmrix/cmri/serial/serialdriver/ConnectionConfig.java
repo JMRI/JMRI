@@ -49,7 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         details.add(b);
 
         setInstance();
-        b = new JButton("Configure C/MRI nodes");
+        b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
         b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);

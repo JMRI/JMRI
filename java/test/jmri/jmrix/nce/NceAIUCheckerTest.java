@@ -36,6 +36,6 @@ public class NceAIUCheckerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceAIUCheckerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceAIUCheckerTest.class.getName());
 
 }

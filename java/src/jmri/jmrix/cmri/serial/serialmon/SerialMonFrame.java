@@ -31,7 +31,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     protected String title() {
-        return "CMRI Serial Command Monitor";
+        return Bundle.getMessage("SerialCommandMonTitle");
     }
 
     @Override

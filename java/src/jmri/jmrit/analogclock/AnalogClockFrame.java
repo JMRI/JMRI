@@ -195,14 +195,17 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Draw hour hand rotated to appropriate angle
             // Calculation mimics the AffineTransform class calculations in Graphics2D
             // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+            double minuteAngleRad = Math.toRadians(minuteAngle);
             for (int i = 0; i < scaledMinuteX.length; i++) {
-                rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(toRadians(minuteAngle)) - scaledMinuteY[i] * Math.sin(toRadians(minuteAngle)));
-                rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(toRadians(minuteAngle)) + scaledMinuteY[i] * Math.cos(toRadians(minuteAngle)));
+                rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(minuteAngleRad) - scaledMinuteY[i] * Math.sin(minuteAngleRad));
+                rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(minuteAngleRad) + scaledMinuteY[i] * Math.cos(minuteAngleRad));
             }
             scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
+
+            double hourAngleRad = Math.toRadians(hourAngle);
             for (int i = 0; i < scaledHourX.length; i++) {
-                rotatedHourX[i] = (int) (scaledHourX[i] * Math.cos(toRadians(hourAngle)) - scaledHourY[i] * Math.sin(toRadians(hourAngle)));
-                rotatedHourY[i] = (int) (scaledHourX[i] * Math.sin(toRadians(hourAngle)) + scaledHourY[i] * Math.cos(toRadians(hourAngle)));
+                rotatedHourX[i] = (int) (scaledHourX[i] * Math.cos(hourAngleRad) - scaledHourY[i] * Math.sin(hourAngleRad));
+                rotatedHourY[i] = (int) (scaledHourX[i] * Math.sin(hourAngleRad) + scaledHourY[i] * Math.cos(hourAngleRad));
             }
             scaledHourHand = new Polygon(rotatedHourX, rotatedHourY, rotatedHourX.length);
 
@@ -221,23 +224,17 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             g.drawString(amPm, -amPmFontM.stringWidth(amPm) / 2, faceSize / 5);
         }
 
-        // Method to convert degrees to radians
-        // Math.toRadians was not available until Java 1.2
-        double toRadians(double degrees) {
-            return degrees / 180.0 * Math.PI;
-        }
-
         // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
         int dotX(double radius, double angle) {
             int xDist;
-            xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
+            xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
             return xDist;
         }
 
         // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
         int dotY(double radius, double angle) {
             int yDist;
-            yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
+            yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
             return yDist;
         }
 

@@ -33,6 +33,6 @@ public class StoreXmlConfigActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigActionTest.class.getName());
 
 }

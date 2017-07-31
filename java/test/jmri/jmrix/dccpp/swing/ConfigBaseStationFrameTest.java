@@ -32,6 +32,7 @@ public class ConfigBaseStationFrameTest {
 
         ConfigBaseStationFrame t = new ConfigBaseStationFrame(new DCCppSensorManager(tc,memo.getSystemPrefix()),new DCCppTurnoutManager(tc,memo.getSystemPrefix()),tc);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -47,6 +48,6 @@ public class ConfigBaseStationFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class.getName());
 
 }

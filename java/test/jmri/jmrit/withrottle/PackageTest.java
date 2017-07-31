@@ -39,8 +39,8 @@ public class PackageTest extends TestCase {
         suite.addTest(TrackPowerControllerTest.suite());
         suite.addTest(TurnoutControllerTest.suite());
         suite.addTest(WiFiConsistFileTest.suite());
-        suite.addTest(WiFiConsistTest.suite());
-        suite.addTest(WiFiConsistManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistManagerTest.class));
         suite.addTest(WiThrottleManagerTest.suite());
         suite.addTest(WiThrottlePreferencesTest.suite());
         suite.addTest(WiThrottlesListModelTest.suite());

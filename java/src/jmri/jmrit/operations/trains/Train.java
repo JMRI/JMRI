@@ -332,21 +332,7 @@ public class Train implements java.beans.PropertyChangeListener {
             rl.addPropertyChangeListener(this);
             return rl.getFormatedDepartureTime();
         }
-        if (!Setup.is12hrFormatEnabled()) {
-            return _departureTime;
-        }
-        // time is in the format of hour:minute AM or PM
-        String am_pm = " " + Bundle.getMessage("AM");
-        // 12 noon is 12 PM
-        int h = Integer.parseInt(getDepartureTimeHour());
-        if (h >= 12) {
-            am_pm = " " + Bundle.getMessage("PM");
-            h = h - 12;
-        }
-        if (h == 0) {
-            h = 12;
-        }
-        return Integer.toString(h) + ":" + getDepartureTimeMinute() + am_pm;
+        return (parseTime(getDepartTimeMinutes()));
     }
 
     /**
@@ -398,7 +384,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * location return -1.
      * @param routeLocation The RouteLocation.
      *
-     * @return expected arrival time
+     * @return expected arrival time in minutes (append AM or PM if 12 hour format)
      */
     public String getExpectedArrivalTime(RouteLocation routeLocation) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
@@ -508,6 +494,11 @@ public class Train implements java.beans.PropertyChangeListener {
         return minutes;
     }
 
+    /**
+     * Returns time in hour:minute format
+     * @param minutes number of minutes from midnight
+     * @return hour:minute (optionally AM:PM format)
+     */
     private String parseTime(int minutes) {
         int hours = 0;
         int days = 0;
@@ -3005,19 +2996,18 @@ public class Train implements java.beans.PropertyChangeListener {
     public boolean printManifestIfBuilt() {
         if (isBuilt()) {
             boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
-            printManifest(isPreview);
+            return (printManifest(isPreview));
         } else {
             log.debug("Need to build train (" + getName() + ") before printing manifest");
             return false;
         }
-        return true;
     }
 
     /**
      * Print manifest for train.
      * @param isPreview True if preview.
      *
-     * @return true if print successful.
+     * @return true if print successful, false if train print file not found.
      */
     public boolean printManifest(boolean isPreview) {
         if (isModified()) {
@@ -3033,7 +3023,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         File file = TrainManagerXml.instance().getTrainManifestFile(getName());
         if (!file.exists()) {
-            log.warn("Manifest file missing for train {}", getName());
+            log.warn("Manifest file missing for train ({})", getName());
             return false;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {

@@ -158,8 +158,8 @@ public class Profile implements Comparable<Profile> {
      * Set the name for this profile while constructing the profile.
      * <p>
      * Overriding classing must use this method to set the name in a constructor
-     * since this method passes this Profile object to an object excepting a
-     * completely constructed Profile.
+     * since {@link #setName(java.lang.String)} passes this Profile object to an
+     * object expecting a completely constructed Profile.
      *
      * @param name the new name
      */
@@ -316,7 +316,7 @@ public class Profile implements Comparable<Profile> {
                 return true;
             }
             // version 1
-            if ((new File(path, PROPERTIES)).canRead()) {
+            if ((new File(path, PROPERTIES)).canRead() && !path.getName().equals(PROFILE)) {
                 return true;
             }
         }

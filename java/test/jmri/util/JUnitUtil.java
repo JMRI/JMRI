@@ -1,11 +1,14 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -97,7 +100,9 @@ public class JUnitUtil {
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self currently ignored
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
@@ -257,9 +262,6 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // clear system connections
-        jmri.jmrix.SystemConnectionMemo.reset();
-
         // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
             {
@@ -368,6 +370,23 @@ public class JUnitUtil {
 
     public static void initDefaultSignalMastManager() {
         InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
+    }
+
+    public static void initDebugCommandStation() {
+        jmri.CommandStation cs = new jmri.CommandStation(){
+            public void sendPacket(@Nonnull byte[] packet, int repeats){
+            }
+
+            public String getUserName(){
+               return "testCS";
+            }
+
+            public String getSystemPrefix(){
+               return "I";
+            }
+
+        };
+        InstanceManager.setDefault(jmri.CommandStation.class,cs);
     }
 
     public static void initDebugThrottleManager() {
@@ -531,6 +550,26 @@ public class JUnitUtil {
      */
     public static void setGUITestOutput(TestOut output) {
         org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
+    }
+
+    public static void resetWindows(boolean logWindow) {
+        // close any open remaining windows from earlier tests
+        for (Frame frame : Frame.getFrames()) {
+            if (frame.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
+                }
+                ThreadingUtil.runOnGUI( () -> { frame.dispose(); } );
+            }
+        }
+        for (Window window : Window.getWindows()) {
+            if (window.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
+                }
+                ThreadingUtil.runOnGUI( () -> { window.dispose(); } );
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

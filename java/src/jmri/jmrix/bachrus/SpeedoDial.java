@@ -186,11 +186,12 @@ public class SpeedoDial extends JPanel {
         // Draw pointer rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+        double speedAngleRadians = Math.toRadians(speedAngle);
         for (int i = 0; i < scaledMinuteX.length; i++) {
-            rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(toRadians(speedAngle))
-                    - scaledMinuteY[i] * Math.sin(toRadians(speedAngle)));
-            rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(toRadians(speedAngle))
-                    + scaledMinuteY[i] * Math.cos(toRadians(speedAngle)));
+            rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(speedAngleRadians)
+                    - scaledMinuteY[i] * Math.sin(speedAngleRadians));
+            rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(speedAngleRadians)
+                    + scaledMinuteY[i] * Math.cos(speedAngleRadians));
         }
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
         g2.fillPolygon(scaledMinuteHand);
@@ -230,23 +231,17 @@ public class SpeedoDial extends JPanel {
         g2.drawString(speedString, -digitsFontM.stringWidth(speedString) / 2, 2 * faceSize / 5);
     }
 
-    // Method to convert degrees to radians
-    // Math.toRadians was not available until Java 1.2
-    float toRadians(float degrees) {
-        return degrees / 180.0F * (float) Math.PI;
-    }
-
     // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
     int dotX(float radius, float angle) {
         int xDist;
-        xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
+        xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
         return xDist;
     }
 
     // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
     int dotY(float radius, float angle) {
         int yDist;
-        yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
+        yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
         return yDist;
     }
 

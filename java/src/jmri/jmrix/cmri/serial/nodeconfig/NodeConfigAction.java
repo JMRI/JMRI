@@ -22,7 +22,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction(CMRISystemConnectionMemo memo) {
-        this("Configure C/MRI Nodes", memo);
+        this(Bundle.getMessage("ConfigureNodesTitle"), memo);
     }
 
     @Override

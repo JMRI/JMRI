@@ -430,7 +430,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // caboose or FRED is placed at end of the train
                     // passenger trains are already blocked in the car list
                     if (car.getTrack() != null && car.getRouteLocation() == rl && car.getRouteDestination() != rl
-                            && (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
+                            && (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName()))
                             && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) 
                                     || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
                                     || car.isPassenger())) {
@@ -476,7 +476,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 }
                 // car in train if track null, second check is for yard master window
                 if (car.getTrack() == null || car.getTrack() != null && (car.getRouteLocation() != rl)) {
-                    if (Setup.isSortByTrackEnabled() && !car.getDestinationTrack().getName().equals(track.getName())) {
+                    if (Setup.isSortByTrackNameEnabled() && !car.getDestinationTrack().getName().equals(track.getName())) {
                         continue;
                     }
                     // we have set outs
@@ -511,7 +511,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     }
                     // local move?
                 } else if (car.getTrack() != null && car.getRouteLocation() == rl
-                        && (!Setup.isSortByTrackEnabled() || car.getTrack().getName().equals(track.getName()))) {
+                        && (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
                     movePane.setVisible(true);
                     if (!rollingStock.contains(car)) {
                         rollingStock.add(car);
@@ -543,7 +543,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 }
             }
             // if not sorting by track, we're done
-            if (!Setup.isSortByTrackEnabled()) {
+            if (!Setup.isSortByTrackNameEnabled()) {
                 break;
             }
         }

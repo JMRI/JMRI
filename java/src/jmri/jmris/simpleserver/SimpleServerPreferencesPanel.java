@@ -12,10 +12,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Randall Wood Copyright (C) 2012
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class SimpleServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JSpinner port;
@@ -166,7 +168,7 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
      */
     @Override
     public boolean isPreferencesValid() {
-        return false;
+        return true;
     }
 
 }

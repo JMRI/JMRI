@@ -57,6 +57,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     }
 
     /**
+     * @return current connection instance
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

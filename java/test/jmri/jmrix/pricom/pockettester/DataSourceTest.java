@@ -21,6 +21,7 @@ public class DataSourceTest {
         Assert.assertTrue("no instance after ctor", DataSource.instance() == null);
         d.initComponents();
         Assert.assertTrue("valid instance after init", DataSource.instance() != null);
+        d.dispose();
     }
 
     // test version handling
@@ -38,6 +39,7 @@ public class DataSourceTest {
         f.nextLine(message);
         Assert.assertTrue("show version ", message.equals(f.version.getText()));
 
+        f.dispose();
     }
 
     // avoid spurious error messages

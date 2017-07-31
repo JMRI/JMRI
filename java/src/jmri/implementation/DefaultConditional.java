@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse i18n 2016
  */
 public class DefaultConditional extends AbstractNamedBean
-        implements Conditional, java.io.Serializable {
+        implements Conditional {
 
     public static final boolean PARKS_DEBUG = false;
 
@@ -174,6 +174,7 @@ public class DefaultConditional extends AbstractNamedBean
             clone.setNum2(variable.getNum2());
             clone.setTriggerActions(variable.doTriggerActions());
             clone.setState(variable.getState());
+            clone.setGuiName(variable.getGuiName());
             variableList.add(clone);
         }
         return variableList;
@@ -618,7 +619,7 @@ public class DefaultConditional extends AbstractNamedBean
                 Warrant w = null;
                 NamedBean nb = null;
                 if (action.getNamedBean() != null) {
-                    nb = (NamedBean) action.getNamedBean().getBean();
+                    nb = action.getNamedBean().getBean();
                 }
                 int value = 0;
                 Timer timer = null;
@@ -1074,11 +1075,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
-                            if (!w.setTrainId(getActionString(action))) {
-                                String s = "Unable to find train Id " + getActionString(action) + " in Roster  - " + action.getDeviceName();
-                                log.info(s);
-                                errorList.add(s); // could be serious - display error to UI
-                            }
+                            w.getSpeedUtil().setDccAddress(getActionString(action));
                             actionCount++;
                         }
                         break;
@@ -1096,7 +1093,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
-                            jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getInstance();
+                            jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
                                 w.stopWarrant(true);
@@ -1129,7 +1126,7 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
                             if (!w.controlRunTrain(action.getActionData())) {
-                                log.info("Train " + w.getTrainId() + " not running  - " + devName);
+                                log.info("Train " + w.getSpeedUtil().getRosterId() + " not running  - " + devName);
                             }
                             actionCount++;
                         }

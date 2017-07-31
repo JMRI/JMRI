@@ -33,6 +33,6 @@ public class LocoSelPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoSelPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoSelPaneTest.class.getName());
 
 }

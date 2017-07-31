@@ -57,6 +57,6 @@ public class AbstractNodeTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNodeTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractNodeTest.class.getName());
 
 }

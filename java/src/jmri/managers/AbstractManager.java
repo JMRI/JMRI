@@ -58,7 +58,8 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     abstract public int getXMLOrder();
 
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         return getSystemPrefix() + typeLetter() + s;
     }
 

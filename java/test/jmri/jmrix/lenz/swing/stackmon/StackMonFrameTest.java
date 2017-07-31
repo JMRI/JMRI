@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StackMonFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
+ * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
  *
  * @author	Paul Bender
  */
@@ -24,6 +22,7 @@ public class StackMonFrameTest {
 
         StackMonFrame f = new StackMonFrame(memo);
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J

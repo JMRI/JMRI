@@ -22,7 +22,7 @@ public class SerialPacketGenAction extends AbstractAction {
     }
 
     public SerialPacketGenAction(CMRISystemConnectionMemo memo) {
-        this("Send C/MRI message",memo);
+        this(Bundle.getMessage("SendCommandTitle"),memo);
     }
 
     @Override

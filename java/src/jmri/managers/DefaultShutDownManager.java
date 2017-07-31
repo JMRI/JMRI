@@ -42,6 +42,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     private static boolean shuttingDown = false;
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
     private final ArrayList<ShutDownTask> tasks = new ArrayList<>();
+    protected final Thread shutdownHook;
 
     /**
      * Create a new shutdown manager.
@@ -53,14 +54,16 @@ public class DefaultShutDownManager implements ShutDownManager {
         // calling System.exit() within a shutdown hook will cause the
         // application to hang.
         // This shutdown hook also allows OS X Application->Quit to trigger our
-        // shutdown tasks, since that simply calls System.exit(); 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-
-            @Override
-            public void run() {
-                DefaultShutDownManager.this.shutdown(0, false);
-            }
+        // shutdown tasks, since that simply calls System.exit();
+        this.shutdownHook = new Thread(() -> {
+            DefaultShutDownManager.this.shutdown(0, false);
         });
+        try {
+            Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+        } catch (IllegalStateException ex) {
+            // this is thrown only if System.exit() has already been called,
+            // so ignore
+        }
     }
 
     @Override
@@ -75,7 +78,10 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     @Override
     synchronized public void deregister(ShutDownTask s) {
-        Objects.requireNonNull(s, "Shutdown task cannot be null.");
+        if (s == null) {
+            // silently ignore null task
+            return;
+        }
         if (this.tasks.contains(s)) {
             this.tasks.remove(s);
         }

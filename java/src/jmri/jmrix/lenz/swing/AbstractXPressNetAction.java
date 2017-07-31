@@ -10,8 +10,7 @@ import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
- * Abstract action to create and register a swing object for XPressNet systems.
- * <P>
+ * Abstract action to create and register a swing object for XpressNet systems.
  *
  * @author Paul Bender Copyright (C) 2016 
  */
@@ -25,13 +24,13 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     public AbstractXPressNetAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LI101 Configuration Manager", memo);
+        this(Bundle.getMessage("MenuItemLI101ConfigurationManager"), memo);
     }
 
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
      *
-     * @return the SystemConnectionMemo or null if not bound.
+     * @return the SystemConnectionMemo or null if not bound
      */
     @CheckForNull
     @Override

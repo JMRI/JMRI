@@ -33,6 +33,6 @@ public class DefaultBackupTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultBackupTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultBackupTest.class.getName());
 
 }

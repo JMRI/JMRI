@@ -35,13 +35,13 @@ public class LI101ActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LI101Action action = new LI101Action("LI101 Configuration Manager",memo);
+        LI101Action action = new LI101Action(Bundle.getMessage("MenuItemLI101ConfigurationManager"),memo);
         action.actionPerformed(null);
         // wait for frame with "LI101 Configuration Utility" in title, 
         // case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame("LI101 Configuration Utility", false, false);
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLI101ConfigurationManager"), false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LI101Frame.class.getName(), frame.getClass().getName());

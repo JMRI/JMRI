@@ -334,6 +334,8 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -372,6 +374,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -406,6 +409,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -446,6 +450,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -486,6 +491,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -538,6 +544,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -577,6 +584,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -617,6 +625,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -659,6 +668,7 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -702,6 +712,7 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -744,6 +755,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -781,6 +793,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

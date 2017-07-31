@@ -38,6 +38,6 @@ public class ChangeTracksFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class.getName());
 
 }

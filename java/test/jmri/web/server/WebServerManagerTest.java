@@ -1,5 +1,6 @@
 package jmri.web.server;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,15 +20,15 @@ public class WebServerManagerTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
-    public void tearDown(){
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

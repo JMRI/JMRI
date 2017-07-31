@@ -1,11 +1,12 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
-import gnu.io.SerialPort;
 import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
@@ -27,9 +28,10 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         // define command station options
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
 
-        validSpeeds = new String[]{"19200", "38400", "57600", "115200"};
+        validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
+                Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
         configureBaudRate("115200"); //Set the default baud rate
     }
@@ -81,7 +83,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
      * Local method to do specific configuration, overridden in class
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,

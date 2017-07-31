@@ -188,7 +188,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
-            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "M")); // override tooltip with bean specific letter, doesn't work
+            sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);
@@ -215,7 +215,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
         if (numberOfMemory >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", numberOfMemory),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Memories"), numberOfMemory),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;

@@ -169,8 +169,16 @@ public class BlockOrder {
         return 0;
     }
 
+    /**
+     * Get the signal protecting entry into the block of this blockorder
+     * @return signal
+     */
     protected jmri.NamedBean getSignal() {
-        return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);
+        Portal portal = getEntryPortal();
+        if (portal != null) {            
+            return portal.getSignalProtectingBlock(_block);
+        }
+        return null;
     }
     
 /* Why is this here?

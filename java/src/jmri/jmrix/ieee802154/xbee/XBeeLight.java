@@ -35,6 +35,9 @@ public class XBeeLight extends AbstractLight {
     /**
      * Create a Light object, with system and user names and a reference to the
      * traffic controller.
+     * @param systemName Xbee system id : pin id
+     * @param userName User friendly name
+     * @param controller tc for connection for this node
      */
     public XBeeLight(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);

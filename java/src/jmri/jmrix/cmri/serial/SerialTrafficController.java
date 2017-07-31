@@ -2,10 +2,15 @@ package jmri.jmrix.cmri.serial;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import jmri.InstanceManager;
+import jmri.Light;
+import jmri.Sensor;
+import jmri.Turnout;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,7 +169,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             m.setTimeout( getXmitTimeout() );  // no need to wait for output to answer
 //          m.setTimeout(xmitTimeout);  // no need to wait for output to answer
             // reset poll pointer update, so next increment will poll from here
-             curSerialNodeIndex = previousPollPointer;
+            curSerialNodeIndex = previousPollPointer;
             return m;
         }
         

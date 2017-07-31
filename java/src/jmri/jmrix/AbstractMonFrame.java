@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for Frames displaying communications monitor information
+ * Abstract base class for Frames displaying communications monitor information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
  * @author	Chuck Catania  Copyright (C) 2014, 2016
@@ -150,10 +150,10 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             }
         });
 
-        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane")); // NOI18N
+        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane", Bundle.getMessage("ButtonAddMessage"))); // NOI18N
 
         // fix a width for current character set
-        JTextField t = new JTextField(80);
+        JTextField t = new JTextField(200);
         int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
         int y = jScrollPane1.getPreferredSize().height + 10 * t.getPreferredSize().height;
 
@@ -533,6 +533,14 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         return linesBuffer.toString();
     }
 
+    /** 
+     * Get access to the main text area. This is intended
+     * for use in e.g. scripting to extend the behavior of the window.
+     */
+    public final synchronized JTextArea getTextArea() {
+        return monTextPane;
+    }
+    
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *

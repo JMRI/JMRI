@@ -1,14 +1,16 @@
 package jmri.managers;
 
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +22,10 @@ import org.slf4j.LoggerFactory;
 public class DefaultShutDownManagerTest {
 
     @Test
-    @Ignore("Causes Exception and hang on appveyor")
     public void testCTor() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        // remove the default shutdown hook to prevent crashes stopping tests
+        Runtime.getRuntime().removeShutdownHook(dsdm.shutdownHook);
         Assert.assertNotNull("exists", dsdm);
     }
 
@@ -70,21 +73,29 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testIsShuttingDown() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        Frame frame = null;
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new Frame("Shutdown test frame");
+        }
         Assert.assertFalse(dsdm.isShuttingDown());
         dsdm.shutdown(0, false);
         Assert.assertTrue(dsdm.isShuttingDown());
+        if (frame != null) {
+            frame.dispose();
+        }
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(true);
+        JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
@@ -100,6 +111,6 @@ public class DefaultShutDownManagerTest {
         return tasks;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class.getName());
 
 }

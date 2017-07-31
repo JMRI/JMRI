@@ -38,6 +38,6 @@ public class TrackRoadEditActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackRoadEditActionTest.class.getName());
 
 }

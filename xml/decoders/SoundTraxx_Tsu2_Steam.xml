@@ -67,13 +67,13 @@
             <authorinitials>DGH</authorinitials>
             <revremark>Change product ID to values in CVs 253(high byte) and 256(low byte)</revremark>
         </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2017-07-13</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Added TSU-4400 model</revremark>
+        </revision>
     </revhistory>
-    <version author="Michael Mosher" version="1" lastUpdated="20160529"/>
-    <!-- Version 1:   Based on Tsunami2 Steam Technical Reference version 1.0    -->
-    <!-- Version 1.1: Add new reset values for Tsunami2                          -->
-    <!-- Version 2: Added TSU-2200 model                                         -->
-    <!-- Version 3: Added TSU-21PNEM model                                      -->
-    <!--                                                                         -->
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
@@ -181,6 +181,41 @@
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Pneum|Doors">
+                    <label xml:lang="it">Porte|Pneum</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Pantograph| ">
+                    <label xml:lang="it">Pantografo| </label>
+                </output>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="Stop|Bell">
+                    <label xml:lang="it">Fermare|Campana</label>
+                </output>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="35" width="18" height="6" units="mm"/>
             </model>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>

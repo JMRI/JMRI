@@ -23,7 +23,7 @@ public class SerialMonAction extends AbstractAction {
     }
 
     public SerialMonAction(CMRISystemConnectionMemo memo) {
-        this("C/MRI monitor",memo);
+        this(Bundle.getMessage("SerialCommandMonTitle"),memo);
     }
 
     @Override

@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
     NceMacroEditPanelTest.class,
     NceMacroGenPanelTest.class,
     NceMacroBackupTest.class,
-    NceMacroRestoreTest.class
+    NceMacroRestoreTest.class,
+    BundleTest.class
 })
 
 /**

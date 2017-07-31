@@ -249,7 +249,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
+        InstanceManager.setProgrammerManager(
                 getProgrammerManager());
 
         InstanceManager.setReporterManager(

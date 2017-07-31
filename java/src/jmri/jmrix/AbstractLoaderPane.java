@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
- * @author B. Milhaupt Copyright (C) 2013, 2014
+ * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         implements ActionListener {
@@ -49,6 +49,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     // GUI member declarations
     JLabel inputFileName = new JLabel("");
 
+    protected JButton selectButton;
     protected JButton loadButton;
     protected JButton verifyButton;  // protected so subclass can set invisible
     protected JButton abortButton;
@@ -102,7 +103,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
+            selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
             selectButton.addActionListener((ActionEvent e) -> {
                 inputContent = new MemoryContents();
                 setDefaultFieldValues();
@@ -352,6 +353,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+        selectButton.setEnabled(false);
     }
 
     protected void doVerify() {
@@ -362,6 +364,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+        selectButton.setEnabled(false);
     }
 
     /**
@@ -392,6 +395,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+        selectButton.setEnabled(true);
     }
 
     /**
@@ -414,6 +418,8 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+        selectButton.setEnabled(true);
+
     }
 
     // boolean used to abort the threaded operation
@@ -493,6 +499,11 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         } else {
             disableDownloadVerifyButtons();
         }
+    }
+    
+    public void clearInputFileName() {
+        inputFileName.setText("");
+        inputFileName.setToolTipText("");
     }
 
     @Override

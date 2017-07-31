@@ -72,6 +72,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1142,14 +1143,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
+        JMenuItem jmi = null;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
-            edit.add("x = " + pm.getOriginalX());
-            edit.add("y = " + pm.getOriginalY());
+
+            jmi = edit.add("x = " + pm.getOriginalX());
+            jmi.setEnabled(false);
+
+            jmi = edit.add("y = " + pm.getOriginalY());
+            jmi.setEnabled(false);
+
             edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            edit.add("x = " + p.getX());
-            edit.add("y = " + p.getY());
+            jmi = edit.add("x = " + p.getX());
+            jmi.setEnabled(false);
+
+            jmi = edit.add("y = " + p.getY());
+            jmi.setEnabled(false);
+
             edit.add(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
@@ -1345,7 +1356,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
+        JMenuItem jmi = edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
+        jmi.setEnabled(false);
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
@@ -2618,7 +2630,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _contents.clear();
         }
         removeAll();
-        super.dispose();
+        this.dispose();
     }
 
     /*
@@ -2778,7 +2790,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             rect = p.getBounds(rect);
             if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
-                double rad = p.getDegrees() * Math.PI / 180.0;
+                // since this object is rotated we have to transform the point
+                // we're testing into the coordinate space of this object before
+                // we can test if it is in our objects bounds.
+                double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
                 double[] pt = new double[2];
                 // bit shift to avoid Findbugs paranoia
@@ -2788,13 +2803,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 x = pt[0] + rect.x + (rect.width >>> 1);
                 y = pt[1] + rect.y + (rect.height >>> 1);
             }
-            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x * _paintScale,
-                    rect.y * _paintScale,
-                    rect.width * _paintScale,
-                    rect.height * _paintScale);
-            if (rect2D.contains(x, y) && (p.getDisplayLevel() > BKG || event.isControlDown())) {
+            Rectangle2D rect2D = MathUtil.scale(MathUtil.RectangleToRectangle2D(rect), _paintScale);
+            int level = p.getDisplayLevel();
+            if (rect2D.contains(x, y) && (level > BKG || event.isControlDown())) {
                 boolean added = false;
-                int level = p.getDisplayLevel();
                 for (int k = 0; k < selections.size(); k++) {
                     if (level >= selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);
