@@ -10,7 +10,7 @@ package jmri;
  *
  * @author Randall Wood Copyright 2017
  */
-interface Disposable {
+public interface Disposable {
 
     /**
      * Called when disposing of a disposable.
