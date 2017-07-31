@@ -7,7 +7,9 @@ import jmri.InstanceInitializer;
 public class AbstractInstanceInitializer implements InstanceInitializer {
 
     /**
-     * The default implementation always throws an IllegalArgumentException.
+     * The default implementation always throws an IllegalArgumentException. If
+     * called by an overriding method, the last line of the overriding method
+     * should be {@code return super.getDefault(type);}.
      *
      * {@inheritDoc }
      */

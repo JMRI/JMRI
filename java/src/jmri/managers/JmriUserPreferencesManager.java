@@ -68,6 +68,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
 
+    /**
+     * Get the default UserPreferencesManager or create a new one if none
+     * exists. Load user preferences if needed.
+     *
+     * @return the default UserPreferencesManager
+     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault()}
+     * with {@code UserPreferencesManager.class} as the argument instead.
+     */
+    @Deprecated
     public static UserPreferencesManager getInstance() {
         return JmriUserPreferencesManager.getDefault();
     }
@@ -77,7 +86,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
+     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault()}
+     * with {@code UserPreferencesManager.class} as the argument instead.
      */
+    @Deprecated
     public static UserPreferencesManager getDefault() {
         return InstanceManager.getOptionalDefault(UserPreferencesManager.class).orElseGet(() -> {
             JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
@@ -605,8 +617,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Object t;
             try {
                 t = cl.newInstance();
-            } catch ( IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
-                log.error("setClassDescription({}) failed in newInstance", strClass, ex.toString());
+            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                log.error("setClassDescription({}) failed in newInstance", strClass, ex);
                 return;
             }
             boolean classDesFound;
@@ -945,9 +957,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                         this.allowSave = true;
                         this.savePreferences(); // write new preferences format immediately
                     } catch (JmriException e) {
-                        log.error("Unhandled problem loading configuration: " + e);
+                        log.error("Unhandled problem loading configuration: {}", e.getMessage());
                     } catch (NullPointerException e) {
-                        log.error("NPE when trying to load user pref " + file);
+                        log.error("NPE when trying to load user pref {}", file);
                     }
                 } else {
                     // if we got here, there is no saved user preferences
