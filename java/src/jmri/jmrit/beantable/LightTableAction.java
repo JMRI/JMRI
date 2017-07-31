@@ -536,6 +536,7 @@ public class LightTableAction extends AbstractTableAction {
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
+    String connectionChoice = "";
 
     // parts for supporting variable intensity, transition
     JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity") + "  ");
@@ -749,6 +750,10 @@ public class LightTableAction extends AbstractTableAction {
         labelNumToAdd.setEnabled(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
@@ -766,6 +771,7 @@ public class LightTableAction extends AbstractTableAction {
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
                 fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+                break;
         }
 
         addFrame.pack();
@@ -1123,12 +1129,10 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1141,7 +1145,7 @@ public class LightTableAction extends AbstractTableAction {
         // Check if the User Name has been changed
         String uName = userName.getText();
         if (uName.equals("")) {
-            uName = null;   // a blank field means no user name
+            uName = null; // a blank field means no user name
         }
         String prevUName = g.getUserName();
         if ((uName != null) && !(uName.equals(prevUName))) {
@@ -2144,4 +2148,5 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+
 }
