@@ -8,7 +8,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public interface SignalMastLogicManager extends Manager {
+public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
 
     /*public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/
     /**

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager implements PropertyChangeListener, VetoableChangeListener {
+public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener {
 
     public BlockManager() {
         super();
