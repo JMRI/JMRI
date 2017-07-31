@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -151,10 +152,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        driveSignal = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
-        if (driveSignal.getBean() == null) {
+        SignalHead driveHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        if (driveHead == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
+            return;
         }
+        driveSignal = nbhm.getNamedBeanHandle(name, driveHead);
     }
 
     /**
@@ -323,9 +326,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal1 = null;
             return;
         }
-        watchedSignal1 = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
-        if (watchedSignal1.getBean() == null) {
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        if (head != null) {
+            watchedSignal1 = nbhm.getNamedBeanHandle(name, head);
+        } else {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
+            watchedSignal1 = null;
         }
         protectWithFlashing = useFlash;
     }
@@ -347,9 +353,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal1Alt = null;
             return;
         }
-        watchedSignal1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
-        if (watchedSignal1Alt.getBean() == null) {
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        if (head != null) {
+            watchedSignal1Alt = nbhm.getNamedBeanHandle(name, head);
+        } else {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
+            watchedSignal1Alt = null;
         }
     }
 
@@ -371,9 +380,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal2 = null;
             return;
         }
-        watchedSignal2 = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
-        if (watchedSignal2.getBean() == null) {
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        if (head != null) {
+            watchedSignal2 = nbhm.getNamedBeanHandle(name, head);
+        } else {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
+            watchedSignal2 = null;
         }
     }
 
@@ -394,9 +406,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal2Alt = null;
             return;
         }
-        watchedSignal2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
-        if (watchedSignal2Alt.getBean() == null) {
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        if (head != null) {
+            watchedSignal2Alt = nbhm.getNamedBeanHandle(name, head);
+        } else {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
+            watchedSignal2Alt = null;
         }
     }
 
@@ -422,6 +437,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor1 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor1_") + name + rb.getString("_was_not_found!"));
+            watchedSensor1 = null;
         }
 
     }
@@ -447,6 +463,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor1Alt_") + name + rb.getString("_was_not_found!"));
+            watchedSensor1Alt = null;
         }
 
     }
@@ -472,6 +489,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor2 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2_") + name + rb.getString("_was_not_found!"));
+            watchedSensor2 = null;
         }
 
     }
@@ -497,6 +515,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2Alt_") + name + rb.getString("_was_not_found!"));
+            watchedSensor2Alt = null;
         }
     }
 
@@ -585,7 +604,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     String name;
+    @CheckForNull // can be null if called with invalide signal name - need a better solution
+                  // for this, maybe throw IllegalArgumentException, but that needs to be 
+                  // handled in the GUI more reasonably
     NamedBeanHandle<SignalHead> driveSignal = null;
+    
     NamedBeanHandle<Sensor> watchSensor1 = null;
     NamedBeanHandle<Sensor> watchSensor2 = null;
     NamedBeanHandle<Sensor> watchSensor3 = null;
@@ -1147,23 +1170,21 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return;
     }
 
-    static ArrayList<BlockBossLogic> bblList = null;
+    static ArrayList<BlockBossLogic> bblList;
 
     public static Enumeration<BlockBossLogic> entries() {
-        setup(); // ensure we've been registered
         return Collections.enumeration(bblList);
     }
 
-    private static void setup() {
-        if (bblList == null) {
-            bblList = new ArrayList<BlockBossLogic>();
-            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-            if (cm != null) {
-                cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
-            }
+    //  ensure proper registration
+    static {
+        bblList = new ArrayList<BlockBossLogic>();
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
         }
     }
-
+    
     /**
      * Ensure that this BlockBossLogic object is available for later retrieval
      */
@@ -1191,7 +1212,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     public static BlockBossLogic getStoppedObject(SignalHead sh) {
         BlockBossLogic b = null;
-        setup();
 
         for (BlockBossLogic bbl : bblList) {
             if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
@@ -1222,7 +1242,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     @Nonnull
     public static BlockBossLogic getExisting(@Nonnull String signal) {
-        return getExisting(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal));
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
+        if (head == null) {
+            log.error("SignalHead {} doesn't exist, BlockBossLogic.getExisting(\"{}\") cannot continue", signal, signal);
+            throw new IllegalArgumentException("Requested signal head doesn't exist");
+        }
+        return getExisting(head);
     }
 
     /**
@@ -1236,8 +1261,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     @Nonnull
     public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
-        setup();
-
         for (BlockBossLogic bbl : bblList) {
             if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
                 return bbl;

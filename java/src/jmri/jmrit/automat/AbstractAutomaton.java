@@ -2,6 +2,7 @@ package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.beans.*;
 import java.util.concurrent.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -392,8 +393,8 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitSensorChange starts: " + mSensor.getSystemName());
         }
         // register a listener
-        java.beans.PropertyChangeListener l;
-        mSensor.addPropertyChangeListener(l = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
@@ -458,8 +459,8 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitSensorState starts: " + mSensor.getSystemName() + " " + state);
         }
         // register a listener
-        java.beans.PropertyChangeListener l;
-        mSensor.addPropertyChangeListener(l = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
@@ -517,11 +518,11 @@ public class AbstractAutomaton implements Runnable {
         }
         // register listeners
         int i;
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mSensors.length];
+        PropertyChangeListener[] listeners
+                = new PropertyChangeListener[mSensors.length];
         for (i = 0; i < mSensors.length; i++) {
 
-            mSensors[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
+            mSensors[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
                     log.debug("notify waitSensorState[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -565,8 +566,8 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
         // register listener
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 log.debug("notify waitWarrantRunState of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
@@ -607,8 +608,8 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
         // register listener
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 log.debug("notify waitWarrantBlock of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
@@ -652,17 +653,19 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitWarrantBlockChange returns immediately");
             return null;
         }
-        // register listenerod
-        blockChanged = false;
-        blockName = null;
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        // register listeners
+        synchronized (self) {
+            blockChanged = false;
+            blockName = null;
+        }
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 if (e.getPropertyName().equals("blockChange")) {
                     blockChanged = true;
                     blockName = ((OBlock) e.getNewValue()).getDisplayName();
                 }
-                if (e.getPropertyName().equals("runMode") && e.getNewValue() != (Integer) Warrant.MODE_RUN) {
+                if (e.getPropertyName().equals("runMode") && ! Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue()) ) {
                     blockChanged = true;
                     blockName = null;
                 }
@@ -705,11 +708,11 @@ public class AbstractAutomaton implements Runnable {
         }
         // register listeners
         int i;
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mTurnouts.length];
+        PropertyChangeListener[] listeners
+                = new PropertyChangeListener[mTurnouts.length];
         for (i = 0; i < mTurnouts.length; i++) {
 
-            mTurnouts[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
+            mTurnouts[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
                     log.debug("notify waitTurnoutConsistent[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -810,10 +813,10 @@ public class AbstractAutomaton implements Runnable {
         waitChangeQueue.clear();
         
         // register listeners
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mInputs.length];
+        PropertyChangeListener[] listeners
+                = new PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
-            mInputs[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
+            mInputs[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 waitChangeQueue.offer(e);
             });
 
@@ -828,7 +831,7 @@ public class AbstractAutomaton implements Runnable {
                 for (int j = 0 ; j < mInputs.length; j++) {
                     if ( initialState[j] != mInputs[j].getState() ) {
                         log.debug("notify that input {} changed when initial on-layout check was finally done", j);
-                        waitChangeQueue.offer(new java.beans.PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState()));
+                        waitChangeQueue.offer(new PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState()));
                         break;
                     }
                 }
@@ -839,12 +842,14 @@ public class AbstractAutomaton implements Runnable {
         // wait for notify from a listener
         startWait();
 
+        PropertyChangeEvent prompt;
         try {
             if (maxDelay < 0) {
-                waitChangeQueue.take();
+                prompt = waitChangeQueue.take();
             } else {
-                waitChangeQueue.poll(maxDelay, TimeUnit.MILLISECONDS);
+                prompt = waitChangeQueue.poll(maxDelay, TimeUnit.MILLISECONDS);
             }
+            log.trace("wantChange continues from {}", prompt.getSource());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());
@@ -860,8 +865,8 @@ public class AbstractAutomaton implements Runnable {
 
     NamedBean[] waitChangePrecheckBeans = null;
     int[] waitChangePrecheckStates  = null;
-    java.util.concurrent.BlockingQueue<java.beans.PropertyChangeEvent> waitChangeQueue = 
-            new java.util.concurrent.ArrayBlockingQueue<java.beans.PropertyChangeEvent>(5);
+    java.util.concurrent.BlockingQueue<PropertyChangeEvent> waitChangeQueue = 
+            new java.util.concurrent.ArrayBlockingQueue<PropertyChangeEvent>(5);
 
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
