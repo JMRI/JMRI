@@ -60,6 +60,7 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.ValidatedTextField;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -945,7 +946,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysNameTextField = new JTextField(40);
+
+    ValidatedTextField sysNameTextField = new ValidatedTextField(40, false, "^[0-9]$", "Invalid entry for system name in Add Turnout pane"); // initially allow only digits
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -1001,7 +1003,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         prefixBox.addItem(manuName);
                     }
                 }
-                if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
+                if (p.getComboBoxLastSelection(systemSelectionCombo) != null) { // pick up user pref
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
                 }
             } else {
@@ -1547,15 +1549,40 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         String sName = null;
+        String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+        boolean _valid = false;
+        int entry = 0;
         String curAddress = sysNameTextField.getText().trim();
-        //String[] turnoutList = turnManager.formatRangeOfAddresses(sysNameTextField.getText().trim(), numberOfTurnouts, getTurnoutPrefixFromName());
-        //if (turnoutList == null)
-        //    return;
+        // Add some entry pattern checking now, before assembling sName and handing it to the turnoutManager? TODO
+        switch (prefix) {
+            case ("L"): // LocoNet
+                try {
+                    entry = Integer.parseInt(curAddress);
+                    _valid = true;
+                } catch (NumberFormatException ex) {
+                    _valid = false; // not an integer value
+                }
+                if (!_valid || entry < 0 || entry > 4096) {
+                    JOptionPane.showMessageDialog(addFrame,
+                            Bundle.getMessage("ShouldBeNumber", Bundle.getMessage("LabelHardwareAddress")) + "\n" +
+                                    Bundle.getMessage("AddOutputEntryToolTipLocoNet"),
+                            Bundle.getMessage("ErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    _valid = false; // outside valid range
+                    return;
+                }
+                break;
+            default:
+                debug.info(prefix);
+                // no mask documented, continue without checking
+                break;
+        }
+
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;
         boolean useLastType = false;
-        String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+
         for (int x = 0; x < numberOfTurnouts; x++) {
             try {
                 curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
@@ -1568,8 +1595,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                 //The next address is already in use, therefore we stop.
                 break;
             }
-            //We have found another turnout with the same address, therefore we need to go onto the next address.
+            // We have found another turnout with the same address, therefore we need to go on to the next address.
+
+            // Compose the proposed system name from parts:
             sName = prefix + InstanceManager.turnoutManagerInstance().typeLetter() + curAddress;
+            // test for a Light by the same hardware address (number):
             String testSN = prefix + "L" + curAddress;
             jmri.Light testLight = InstanceManager.lightManagerInstance().
                     getBySystemName(testSN);
@@ -1592,8 +1622,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                 }
             }
-            // Ask about two bit turnout control if appropriate
 
+            // Ask about two bit turnout control if appropriate (eg. MERG)
             if (!useLastBit) {
                 iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
                 if ((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())) {
@@ -1619,7 +1649,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(ex, sName);
+                    handleCreateException(ex, sName); // displays message to the user
                     return; // without creating
                 }
 
@@ -1640,7 +1670,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
                         if (JOptionPane.showConfirmDialog(addFrame,
                                 Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
-                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all, // I18N TODO see above for existing keys
+                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all
                         {
                             useLastType = true;
                         }
@@ -1650,23 +1680,24 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 t.setControlType(iType);
             }
+            // end of for loop creating Turnouts
         }
-        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
-        // show tooltip for selected system connection
+        // show tooltip in the Add Turnout pane to match system connection selected from combobox
         String connectionChoice = (String) prefixBox.getSelectedItem();
-        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
         log.debug("Connection choice = [{}]", connectionChoice);
+
         switch (connectionChoice) {
-            case "MERG": // Bundle key: AddEntryToolTipMERG
+            case "MERG":
             case "C/MRI":
             case "XpressNet":
             case "NCE":
@@ -1676,10 +1707,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 sysNameTextField.setToolTipText("<html>" +
                         Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) + "<br>" +
                         Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
+
+                sysNameTextField.setValidateRegExp("^[a-zA-Z0-9]{3,}$"); // manipulate validationRegExp in ValidatedTextField
                 break;
-            default: // LocoNet and others: "enter a number"
+            default: // LocoNet and others: "enter a number" reset to initial "^[0-9]$"
                 log.debug("Default tooltip");
                 sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                // validates integer entry
+                sysNameTextField.setValidateRegExp("^[0-9]$"); // manipulate validationRegExp in ValidatedTextField
                 break;
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
