@@ -63,9 +63,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
-public class InstanceManager {
+public final class InstanceManager {
 
-    protected static volatile InstanceManager defaultInstanceManager = null;
+    // the default instance of the InstanceManager
+    private static volatile InstanceManager defaultInstanceManager = null;
     // data members to hold contact with the property listeners
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
@@ -118,16 +119,9 @@ public class InstanceManager {
      * @return A list of type Objects registered with the manager or an empty
      *         list.
      */
-    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
     static public <T> List<T> getList(@Nonnull Class<T> type) {
-        log.debug("Get list of type {}", type.getName());
-        HashMap list = getDefault().managerLists;
-        if (list.get(type) == null) {
-            list.put(type, new ArrayList<>());
-            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
-        }
-        return (List<T>) list.get(type);
+        return getDefault().getInstances(type);
     }
 
     /**
@@ -137,8 +131,7 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(@Nonnull Class<T> type) {
-        log.debug("Reset type {}", type.getName());
-        getDefault().managerLists.put(type, new ArrayList<>());
+        getDefault().clear(type);
     }
 
     /**
@@ -154,6 +147,9 @@ public class InstanceManager {
         List<T> l = (ArrayList<T>) getList(type);
         int index = l.indexOf(item);
         l.remove(item);
+        if (item instanceof Disposable) {
+            getDefault().dispose((Disposable) item);
+        }
         getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
@@ -316,18 +312,18 @@ public class InstanceManager {
     static public String contentsToString() {
 
         StringBuilder retval = new StringBuilder();
-        for (Class<?> c : getDefault().managerLists.keySet()) {
+        getDefault().managerLists.keySet().stream().forEachOrdered((c) -> {
             retval.append("List of ");
             retval.append(c);
             retval.append(" with ");
             retval.append(Integer.toString(getList(c).size()));
             retval.append(" objects\n");
-            for (Object o : getList(c)) {
+            getList(c).stream().forEachOrdered((o) -> {
                 retval.append("    ");
                 retval.append(o.getClass().toString());
                 retval.append("\n");
-            }
-        }
+            });
+        });
         return retval.toString();
     }
 
@@ -925,6 +921,69 @@ public class InstanceManager {
                 this.initializers.put(cls, provider);
             });
         });
+    }
+
+    /**
+     * Get a list of all registered objects of type T.
+     *
+     * @param <T>  type of the class
+     * @param type class Object for type T
+     * @return a list of registered T instances with the manager or an empty
+     *         list
+     */
+    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
+    @Nonnull
+    public <T> List<T> getInstances(@Nonnull Class<T> type) {
+        log.debug("Get list of type {}", type.getName());
+        if (managerLists.get(type) == null) {
+            managerLists.put(type, new ArrayList<>());
+            pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
+        }
+        return (List<T>) managerLists.get(type);
+    }
+
+    /**
+     * Call {@link jmri.Disposable#dispose()} on the passed in Object if and
+     * only if the passed in Object is not held in any lists.
+     *
+     * @param disposable the Object to dispose of
+     */
+    private void dispose(@Nonnull Disposable disposable) {
+        boolean canDispose = true;
+        for (List<?> list : this.managerLists.values()) {
+            if (list.contains(disposable)) {
+                canDispose = false;
+                break;
+            }
+        }
+        if (canDispose) {
+            disposable.dispose();
+        }
+    }
+
+    /**
+     * Clear all managed instances from this InstanceManager.
+     */
+    public void clearAll() {
+        log.debug("Clearing InstanceManager");
+        managerLists.keySet().forEach((type) -> {
+            clear(type);
+        });
+    }
+
+    /**
+     * Clear all managed instances of a particular type from this
+     * InstanceManager.
+     *
+     * @param type the type to clear
+     */
+    public void clear(@Nonnull Class<?> type) {
+        log.debug("Clearing managers of {}", type.getName());
+        getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
+            dispose((Disposable) o);
+        });
+        // Should this be sending notifications of removed instances to listeners?
+        managerLists.put(type, new ArrayList<>());
     }
 
     /**
