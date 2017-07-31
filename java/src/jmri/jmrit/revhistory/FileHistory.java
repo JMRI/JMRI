@@ -1,6 +1,7 @@
 package jmri.jmrit.revhistory;
 
 import java.util.ArrayList;
+import jmri.InstanceManagerAutoDefault;
 
 /**
  * Memo class to remember a file revision history.
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
-public class FileHistory {
+public class FileHistory implements InstanceManagerAutoDefault {
 
     ArrayList<OperationMemo> list = new ArrayList<OperationMemo>();
 
