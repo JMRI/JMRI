@@ -131,8 +131,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     /**
      * Create a default object, without contents.
+     * Used when registering a dummy with the configuration system.
      */
-    public BlockBossLogic() {
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR", 
+                justification = "Private ctor used to create dummy object for registration; object never asked to do anything")
+        private BlockBossLogic() {
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
@@ -141,7 +144,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Create an object to drive a specific signal.
      *
-     * @param name System or user name of the driven signal.
+     * @param name System or user name of the driven signal, which must exist
      */
     public BlockBossLogic(String name) {
         super(name + rb.getString("_BlockBossLogic"));
@@ -155,7 +158,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         SignalHead driveHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         if (driveHead == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
-            return;
+            throw new IllegalArgumentException("SignalHead \""+name+"\" does not exist");
         }
         driveSignal = nbhm.getNamedBeanHandle(name, driveHead);
     }
@@ -166,10 +169,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @return system name of the driven signal
      */
     public String getDrivenSignal() {
-        if (driveSignal != null) {
-            return driveSignal.getName();
-        }
-        return "Unknown";
+        return driveSignal.getName();
     }
 
     public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean() {
@@ -604,10 +604,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     String name;
-    @CheckForNull // can be null if called with invalide signal name - need a better solution
-                  // for this, maybe throw IllegalArgumentException, but that needs to be 
-                  // handled in the GUI more reasonably
-    NamedBeanHandle<SignalHead> driveSignal = null;
+    
+    @Nonnull NamedBeanHandle<SignalHead> driveSignal;
     
     NamedBeanHandle<Sensor> watchSensor1 = null;
     NamedBeanHandle<Sensor> watchSensor2 = null;

@@ -625,8 +625,8 @@ public class AbstractAutomaton implements Runnable {
 
     }
 
-    private boolean blockChanged = false;
-    private String blockName = null;
+    private volatile boolean blockChanged = false;
+    private volatile String blockName = null;
 
     /**
      * Wait for a warrant to either enter a new block or to stop running.
@@ -654,21 +654,20 @@ public class AbstractAutomaton implements Runnable {
             return null;
         }
         // register listeners
-        synchronized (self) {
-            blockChanged = false;
-            blockName = null;
-        }
+        blockName = null;
+        blockChanged = false;
+
         PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("blockChange")) {
+                blockChanged = true;
+                blockName = ((OBlock) e.getNewValue()).getDisplayName();
+            }
+            if (e.getPropertyName().equals("runMode") && ! Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue()) ) {
+                blockName = null;
+                blockChanged = true;
+            }
             synchronized (self) {
-                if (e.getPropertyName().equals("blockChange")) {
-                    blockChanged = true;
-                    blockName = ((OBlock) e.getNewValue()).getDisplayName();
-                }
-                if (e.getPropertyName().equals("runMode") && ! Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue()) ) {
-                    blockChanged = true;
-                    blockName = null;
-                }
                 log.debug("notify waitWarrantBlockChange of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
