@@ -180,8 +180,8 @@ public class PositionableShape extends PositionableJComponent
                     RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                     RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//                     RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         }
 
         g2d.setClip(null);
