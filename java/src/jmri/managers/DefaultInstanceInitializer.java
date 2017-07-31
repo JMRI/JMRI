@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import jmri.AudioManager;
 import jmri.BlockManager;
@@ -26,6 +25,7 @@ import jmri.SignalMastManager;
 import jmri.SignalSystemManager;
 import jmri.Timebase;
 import jmri.TurnoutManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
@@ -55,7 +55,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since 2.9.4
  */
 @ServiceProvider(service = InstanceInitializer.class)
-public class DefaultInstanceInitializer implements InstanceInitializer {
+public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
@@ -156,13 +156,13 @@ public class DefaultInstanceInitializer implements InstanceInitializer {
             return VSDecoderManager.instance();
         }
 
-        // Nothing found
-        throw new IllegalArgumentException();
+        return super.getDefault(type);
     }
 
     @Override
     public Set<Class<?>> getInitalizes() {
-        Set<Class<?>> set = new HashSet<>(Arrays.asList(
+        Set<Class<?>> set = super.getInitalizes();
+        set.addAll(Arrays.asList(
                 AudioManager.class,
                 BlockManager.class,
                 CatalogTreeManager.class,
