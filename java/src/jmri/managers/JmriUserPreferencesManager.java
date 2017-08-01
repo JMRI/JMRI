@@ -73,7 +73,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault()}
+     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
      * with {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
@@ -86,7 +86,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault()}
+     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
      * with {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
