@@ -215,7 +215,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
      * If not existing, create a new instance.
      *
      * @return reference to currently active AudioManager
-     * @deprecated since 4.9.1; use
+     * @deprecated since 4.9.2; use
      * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
      * argument {@code AudioManager.class} instead
      */
