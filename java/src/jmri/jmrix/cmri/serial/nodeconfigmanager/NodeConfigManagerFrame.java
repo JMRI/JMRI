@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
 
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerBundle");
+//    ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerBundle");
 
-    ArrayList<SerialNode> cmriNode = new  ArrayList<SerialNode>();  //c2
+    ArrayList<SerialNode> cmriNode = new  ArrayList<>();  //c2
     public int numConfigNodes = 0;
     
     public int numBits = 48;  // number of bits in assignment table
@@ -261,7 +261,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         numoutbytesColumn.setResizable(false);
 
         TableColumn selectColumn = assignmentColumnModel.getColumn(NodeTableModel.SELECT_COLUMN);
-        JComboBox comboBox = new JComboBox();
+        JComboBox<String> comboBox = new JComboBox<>();
         comboBox.addItem(Bundle.getMessage("SelectSelect"));
         comboBox.addItem(Bundle.getMessage("SelectEdit"));
         comboBox.addItem(Bundle.getMessage("SelectInfo"));
@@ -430,7 +430,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 		}
 	writer.increaseLineSpacing(20);
 		// print the assignments
-	((NodeTableModel)nodeTableModel).printTable(writer,colWidth);
+	(nodeTableModel).printTable(writer,colWidth);
    }
 
 
@@ -567,7 +567,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 default:
                 return String.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) 
         {
             if (c==SELECT_COLUMN)
@@ -665,7 +665,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int NODEDESC_COLUMN = 8;
         public static final int NUM_COLUMNS = NODEDESC_COLUMN+1;
         
-        private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","SLOW POLL"};
+//        private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","SLOW POLL"};
 
         /**
         * Method to print or print preview the assignment table.
@@ -875,7 +875,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   "+Bundle.getMessage("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox();
+        nodeTypeBox = new JComboBox<>();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
@@ -984,8 +984,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         receiveDelayField.setToolTipText(Bundle.getMessage("TipDelay"));
         receiveDelayField.setText("0");
         panel12.add(cardSizeText);
-        cardSizeBox = new JComboBox();
-        cardSize8Box = new JComboBox();
+        cardSizeBox = new JComboBox<>();
+        cardSize8Box = new JComboBox<>();
         panel12.add(cardSizeBox);
         panel12.add(cardSize8Box);
         cardSizeBox.addItem(Bundle.getMessage("CardSize24"));
@@ -1056,7 +1056,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cardConfigTable.setRowSelectionAllowed(false);
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,95));  //c2
 		
-        JComboBox cardTypeCombo = new JComboBox();
+        JComboBox<String> cardTypeCombo = new JComboBox<>();
         cardTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
         cardTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
         cardTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
@@ -1118,7 +1118,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         osnodeConfigTable.setRowSelectionAllowed(false);
         osnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(170,95)); //160
 		
-        JComboBox osnodeTypeCombo = new JComboBox();
+        JComboBox<String> osnodeTypeCombo = new JComboBox<>();
         osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
         osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
         osnodeTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
@@ -1153,7 +1153,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cpnodeConfigTable.setRowSelectionAllowed(false);
         cpnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200,130)); //160
 		
-        JComboBox cpnodeTypeCombo = new JComboBox();
+        JComboBox<String> cpnodeTypeCombo = new JComboBox<>();
         cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
         cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeInput"));
         cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
@@ -1446,7 +1446,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // register any orphan sensors that this node may have
         //----------------------------------------------------
         if (_memo != null && _memo.getSensorManager() != null)
-            ((SerialSensorManager)_memo.getSensorManager()).registerSensorsForNode(curNode);
+            (_memo.getSensorManager()).registerSensorsForNode(curNode);
         
         // reset text displays after succefully adding node
         //-------------------------------------------------
@@ -1794,7 +1794,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
-            return;
         }
         else {
             statusText1.setText(Bundle.getMessage("NotesDel3"));

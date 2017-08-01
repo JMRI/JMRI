@@ -156,7 +156,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             log.debug("send init message: " + m);
             m.setTimeout(500);  // wait for init to finish (milliseconds)
          // m.setTimeout( getInitTimeout() );  //c2
-            n.setPollStatus(n.POLLSTATUS_INIT); //c2
+            n.setPollStatus(SerialNode.POLLSTATUS_INIT); //c2
 
             return m;
         }
@@ -181,13 +181,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         //-------------------------------------
 //        SerialNode n = (SerialNode) SerialTrafficController.instance().getNode(curSerialNodeIndex);
         if (!n.getPollingEnabled()) {
-             n.setPollStatus(n.POLLSTATUS_IDLE);
+             n.setPollStatus(SerialNode.POLLSTATUS_IDLE);
               return null;
          }
         else 
         if (getNode(curSerialNodeIndex).getSensorsActive()) {
-           if (n.getPollStatus() != n.POLLSTATUS_POLLING)
-               n.setPollStatus(n.POLLSTATUS_POLLING);
+           if (n.getPollStatus() != SerialNode.POLLSTATUS_POLLING)
+               n.setPollStatus(SerialNode.POLLSTATUS_POLLING);
            
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
@@ -218,7 +218,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
          if (n.getPollingEnabled())  //c2 
          {
-             n.setPollStatus(n.POLLSTATUS_TIMEOUT);
+             n.setPollStatus(SerialNode.POLLSTATUS_TIMEOUT);
 //             CMRInetMetricsData.incMetricErrValue(CMRInetMetricsData.CMRInetMetricTimeout);
          }
             setMustInit(curSerialNodeIndex, true);
