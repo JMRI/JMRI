@@ -211,13 +211,12 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(AddSensorPanel.this,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSensorAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(AddSensorPanel.this,
+                Bundle.getMessage("ErrorSensorAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
+
 }

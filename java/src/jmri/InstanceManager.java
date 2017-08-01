@@ -1,12 +1,11 @@
 package jmri;
 
 import apps.gui3.TabbedPreferences;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,7 +68,7 @@ public class InstanceManager {
     protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
     private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
     // data members to hold contact with the property listeners
-    private static final HashSet<PropertyChangeListener> listeners = new HashSet<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /* properties */
     /**
@@ -124,6 +123,7 @@ public class InstanceManager {
         log.debug("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
         }
         return (List<T>) managerLists.get(type);
     }
@@ -150,7 +150,9 @@ public class InstanceManager {
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         ArrayList<T> l = (ArrayList<T>) getList(type);
+        int index = l.indexOf(item);
         l.remove(item);
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
@@ -177,6 +179,8 @@ public class InstanceManager {
      * @see #getOptionalDefault(java.lang.Class)
      */
     @Nonnull
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", 
+            justification = "FindBugs 3.0.1 flags the Objects.requireNonNull call as having a possible null argument, which is the entire point")
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
         return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
@@ -319,38 +323,45 @@ public class InstanceManager {
     }
 
     /**
-     * Remove notification on changes to specific types
+     * Remove notification on changes to specific types.
      *
-     * @param l The listener to remove.
+     * @param l The listener to remove
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        getDefault().pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * Remove notification on changes to specific types.
+     *
+     * @param propertyName the property being listened for
+     * @param l            The listener to remove
+     */
+    public static synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.removePropertyChangeListener(propertyName, l);
+    }
+
+    /**
+     * Register for notification on changes to specific types.
+     *
+     * @param l The listener to add
+     */
+    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(l);
     }
 
     /**
      * Register for notification on changes to specific types
      *
-     * @param l The listener to add.
+     * @param propertyName the property being listened for
+     * @param l            The listener to add
      */
-    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.add(l);
-        }
+    public static synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(propertyName, l);
     }
 
     protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        HashSet<PropertyChangeListener> set;
-        synchronized (InstanceManager.class) {
-            set = new HashSet<>(listeners);
-        }
-        // forward to all listeners
-        set.stream().forEach((listener) -> {
-            listener.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
-        });
+        getDefault().pcs.firePropertyChange(property, oldValue, newValue);
     }
 
     /**
@@ -363,6 +374,18 @@ public class InstanceManager {
      */
     public static String getDefaultsPropertyName(Class<?> clazz) {
         return "default-" + clazz.getName();
+    }
+
+    /**
+     * Get the property name included in the
+     * {@link java.beans.PropertyChangeEvent} thrown when the list for a
+     * specific class is changed.
+     *
+     * @param clazz the class being listened for
+     * @return the property name
+     */
+    public static String getListPropertyName(Class<?> clazz) {
+        return "list-" + clazz.getName();
     }
 
     /* ****************************************************************************
@@ -425,21 +448,11 @@ public class InstanceManager {
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
     //   2) Remove the setter from here, get tests to build & run
     //   3) Remove the accessor from here, get tests to build & run
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default audio manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public AudioManager audioManagerInstance() {
-        return getDefault(AudioManager.class);
-    }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default block manager. May not be the only instance.
+     * @return the default block manager. May not be the only instance. In use by scripts.
      * @deprecated 4.5.1
      */
     @Deprecated
@@ -448,40 +461,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default clock control instance. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ClockControl clockControlInstance() {
-        return getDefault(ClockControl.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default conditional manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ConditionalManager conditionalManagerInstance() {
-        return getDefault(ConditionalManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default logix manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public LogixManager logixManagerInstance() {
-        return getDefault(LogixManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly. In use by scripts.
      *
      * @return the default power manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -503,7 +483,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default reporter manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -514,7 +494,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default roster icon factory. May not be the only instance.
      * @deprecated 4.5.1
@@ -525,7 +505,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default route manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -536,7 +516,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default section manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -544,84 +524,6 @@ public class InstanceManager {
     @Deprecated
     static public SectionManager sectionManagerInstance() {
         return getDefault(SectionManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal group manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalGroupManager signalGroupManagerInstance() {
-        return getDefault(SignalGroupManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal head manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalHeadManager signalHeadManagerInstance() {
-        return getDefault(SignalHeadManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastManager signalMastManagerInstance() {
-        return getDefault(SignalMastManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal system manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalSystemManager signalSystemManagerInstance() {
-        return getDefault(SignalSystemManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast logic manager. May not be the only
-     *         instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastLogicManager signalMastLogicManagerInstance() {
-        return getDefault(SignalMastLogicManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default preferences panel. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TabbedPreferences tabbedPreferencesInstance() {
-        return getDefault(TabbedPreferences.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default transit manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TransitManager transitManagerInstance() {
-        return getDefault(TransitManager.class);
     }
 
     /* ****************************************************************************
@@ -644,45 +546,12 @@ public class InstanceManager {
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default command station. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CommandStation commandStationInstance() {
-        return getDefault(CommandStation.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
      * @return the default configure manager. May not be the only instance.
      * @deprecated 4.5.1
      */
     @Deprecated
     static public ConfigureManager configureManagerInstance() {
         return getDefault(ConfigureManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default shutdown manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ShutDownManager shutDownManagerInstance() {
-        return getDefault(ShutDownManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default catalog tree manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CatalogTreeManager catalogTreeManagerInstance() {
-        return getDefault(CatalogTreeManager.class);
     }
 
     /**
@@ -720,17 +589,6 @@ public class InstanceManager {
         log.debug(" setTurnoutManager");
         ((jmri.managers.AbstractProxyManager) getDefault(TurnoutManager.class)).addManager(p);
         //store(p, TurnoutManager.class);
-    }
-
-    /**
-     * @param p shutdown manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setShutDownManager(ShutDownManager p) {
-        store(p, ShutDownManager.class);
-        setDefault(ShutDownManager.class, p);
     }
 
     static public void setThrottleManager(ThrottleManager p) {
@@ -846,43 +704,26 @@ public class InstanceManager {
         //store(p, SensorManager.class);
     }
 
-    /* ****************************************************************************
-     *                   Old Style Setters - Deprecated and migrated,
-     *                                       just here for other users
-     *
-     *                     Check Jython scripts before removing
-     * ****************************************************************************/
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
-    // */
-    //@Deprecated
-    //static public void setConditionalManager(ConditionalManager p) {
-    //    store(p, ConditionalManager.class);
-    //    setDefault(ConditionalManager.class, p);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setLogixManager(LogixManager p) {
-    //    store(p, LogixManager.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setTabbedPreferences(TabbedPreferences p) {
-    //    store(p, TabbedPreferences.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-    // * directly.
-    // */
-    // @Deprecated
-    // static public void setPowerManager(PowerManager p) {
-    //     store(p, PowerManager.class);
-    // }
-
     /* *************************************************************************** */
+    /**
+     * Default constructor for the InstanceManager.
+     */
+    public InstanceManager() {
+        // do nothing
+    }
+
+    /**
+     * Get the default instance of the InstanceManager. This is used for
+     * verifying the source of events fired by the InstanceManager.
+     *
+     * @return the default instance of the InstanceManager, creating it if
+     *         needed
+     */
+    @Nonnull
+    public static synchronized InstanceManager getDefault() {
+        return InstanceManager.getOptionalDefault(InstanceManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(InstanceManager.class, new InstanceManager());
+        });
+    }
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }

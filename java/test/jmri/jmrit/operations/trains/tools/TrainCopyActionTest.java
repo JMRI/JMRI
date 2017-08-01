@@ -33,6 +33,6 @@ public class TrainCopyActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class.getName());
 
 }

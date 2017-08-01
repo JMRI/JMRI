@@ -37,6 +37,6 @@ public class YardmasterFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardmasterFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(YardmasterFrameTest.class.getName());
 
 }

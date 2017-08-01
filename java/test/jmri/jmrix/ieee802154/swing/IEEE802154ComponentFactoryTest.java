@@ -34,6 +34,6 @@ public class IEEE802154ComponentFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IEEE802154ComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IEEE802154ComponentFactoryTest.class.getName());
 
 }

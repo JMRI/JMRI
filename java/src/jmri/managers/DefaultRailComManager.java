@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
-public class DefaultRailComManager extends AbstractManager
+public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
         implements RailComManager {
 
     public DefaultRailComManager() {

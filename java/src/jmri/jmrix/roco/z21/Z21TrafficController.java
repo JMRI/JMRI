@@ -318,9 +318,11 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
+        } catch (java.lang.InterruptedException ie) {
+            if(threadStopRequest) return;
+            log.error("Unexpected exception in invokeAndWait:" + ie,ie);
         } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+            log.error("Unexpected exception in invokeAndWait:" + e,e);
         }
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");

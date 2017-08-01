@@ -46,9 +46,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
     public SerialDriverAdapter() {
         super(new RfidSystemConnectionMemo());
-        option1Name = "Adapter";
-        option2Name = "Concentrator-Range";
-        option3Name = "Protocol";
+        option1Name = "Adapter"; // NOI18N
+        option2Name = "Concentrator-Range"; // NOI18N
+        option3Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false));

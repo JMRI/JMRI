@@ -154,7 +154,7 @@ public class OBlockTest {
     @Test
     public void testAddPortal() {
         OBlock b = blkMgr.createNewOBlock("OB0", "");
-        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);;
+        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal p = portalMgr.providePortal("foop");
         b.addPortal(p);
         Assert.assertEquals("No portals", 0, b.getPortals().size());

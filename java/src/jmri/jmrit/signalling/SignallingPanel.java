@@ -2002,7 +2002,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case STATE_COLUMN:
                     if ((String) type != null) {
                         //convertRowIndexToModel(row) not needed
-                        log.debug("setValueAt (rowConverted={}; value={})", r, (String) type);
+                        log.debug("setValueAt (rowConverted={}; value={})", r, type);
                         signalMastList.get(r).setSetToState((String) type);
                         fireTableRowsUpdated(r, r);
                     }

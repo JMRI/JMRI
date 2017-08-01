@@ -39,6 +39,6 @@ public class TrainsScriptActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class.getName());
 
 }

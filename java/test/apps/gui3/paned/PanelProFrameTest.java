@@ -34,6 +34,6 @@ public class PanelProFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelProFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PanelProFrameTest.class.getName());
 
 }

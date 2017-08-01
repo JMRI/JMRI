@@ -46,6 +46,6 @@ public class ManuallySetRouteTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManuallySetRouteTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ManuallySetRouteTest.class.getName());
 
 }

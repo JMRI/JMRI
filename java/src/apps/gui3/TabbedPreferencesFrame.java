@@ -4,6 +4,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.JmriJFrame;
 
 /**
@@ -24,9 +26,9 @@ public class TabbedPreferencesFrame extends JmriJFrame {
 
     public TabbedPreferencesFrame() {
         super();
-        add(getTabbedPreferences());
-        addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        super.add(getTabbedPreferences());
+        super.addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
+        super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     public void gotoPreferenceItem(String item, String sub) {
@@ -35,6 +37,26 @@ public class TabbedPreferencesFrame extends JmriJFrame {
 
     @Override
     public void windowClosing(WindowEvent e) {
+        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+        if (!getTabbedPreferences().isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+            for (PreferencesPanel panel : getTabbedPreferences().getPreferencesPanels().values()) {
+                if (!panel.isPreferencesValid()) {
+                    switch (JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                            Bundle.getMessage("InvalidPreferencesTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE)) {
+                        case JOptionPane.YES_OPTION:
+                            // abort window closing and return to broken preferences
+                            getTabbedPreferences().gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                            return;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                }
+            }
+        }
         if (getTabbedPreferences().isDirty()) {
             switch (JOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("UnsavedChangesMessage", getTabbedPreferences().getTitle()), // NOI18N

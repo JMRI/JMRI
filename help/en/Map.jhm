@@ -924,6 +924,8 @@
 
 <mapID target="html.hardware.tams.index" url="html/hardware/tams/index.shtml"/>
 
+<mapID target="html.doc.Technical.AppPreferences" url="html/doc/Technical/AppPreferences.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_TypeRoadLoadRestrictionsStaging" url="package/jmri/jmrit/operations/Operations.shtml#TypeRoadLoadRestrictionsStaging"/>
 
 <mapID target="html.apps.DecoderPro.MultiDecoder" url="html/apps/DecoderPro/MultiDecoder.shtml"/>
@@ -1844,6 +1846,8 @@
 
 <mapID target="html.hardware.roco.z21.index_hardware" url="html/hardware/roco/z21/index.shtml#hardware"/>
 
+<mapID target="manual.DecoderPro3.Comp_Speed_Talble_gotchas" url="manual/DecoderPro3/Comp_Speed_Talble.shtml#gotchas"/>
+
 <mapID target="package.jmri.jmrit.beantable.IdTagTable" url="package/jmri/jmrit/beantable/IdTagTable.shtml"/>
 
 <mapID target="package.jmri.jmrix.nce.boosterprog.BoosterProgPanel" url="package/jmri/jmrix/nce/boosterprog/BoosterProgPanel.shtml"/>
@@ -2376,6 +2380,8 @@
 
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_more" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#more"/>
 
+<mapID target="html.tools.uss.Conventions" url="html/tools/uss/Conventions.shtml"/>
+
 <mapID target="TemplateBar" url="TemplateBar.shtml"/>
 
 <mapID target="html.hardware.pi.index_hardware" url="html/hardware/pi/index.shtml#hardware"/>
@@ -2892,6 +2898,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane" url="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml"/>
+
 <mapID target="html.hardware.loconet.Digitrax_Setup" url="html/hardware/loconet/Digitrax.shtml#Setup"/>
 
 <mapID target="html.hardware.cmri.CMRI_sendcommand" url="html/hardware/cmri/CMRI.shtml#sendcommand"/>
@@ -3218,6 +3226,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_ScanningLimitations" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#ScanningLimitations"/>
 
+<mapID target="package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable" url="package/jmri/jmrix/ecos/swing/locodatabase/EcosLocoTable.shtml"/>
+
 <mapID target="manual.DecoderPro3.Start_DecoderPro_Top" url="manual/DecoderPro3/Start_DecoderPro.shtml#Top"/>
 
 <mapID target="html.doc.Technical.webupdate.UpdatingDocs" url="html/doc/Technical/webupdate/UpdatingDocs.shtml"/>
@@ -3507,6 +3517,8 @@
 <mapID target="package.jmri.jmrit.beantable.SectionAddEdit" url="package/jmri/jmrit/beantable/SectionAddEdit.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml"/>
 
 <mapID target="html.doc.Technical.I8N_numbers" url="html/doc/Technical/I8N.shtml#numbers"/>
 

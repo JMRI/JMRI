@@ -6,7 +6,6 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
@@ -173,7 +172,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    public synchronized void deregister(NamedBean s) {
+    public synchronized void deregister(Audio s) {
         super.deregister(s);
         if (s instanceof Audio) {
             // Decrement the relevant Audio object counter

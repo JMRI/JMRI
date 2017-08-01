@@ -5,11 +5,10 @@ import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * JUnit tests for the serial address functions in memo1.
- * 
+ *
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
@@ -37,7 +36,6 @@ public class SerialAddressTwoSystemTest extends TestCase {
         super.setUp();
 
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
 
         // replace the 1st SerialTrafficController
         stcs1 = new SerialTrafficControlScaffold();
@@ -259,7 +257,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         d.setCardTypeByAddress(3, SerialNode.OUTPUT_CARD);
         d.setCardTypeByAddress(4, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(5, SerialNode.OUTPUT_CARD);
-        
+
         SerialNode c = new SerialNode(10, SerialNode.SMINI,stcs1);
         Assert.assertNotNull("exists", c);
         Assert.assertTrue("valid config CL4007", memo1.validSystemNameConfig("CL4007", 'L',stcs1));
@@ -387,7 +385,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         // check that turnout was created correctly
         Assert.assertEquals("create CT18032 check 1", "CT18032", t2.getSystemName());
         Assert.assertEquals("create CT18032 check 2", 1, t2.getNumberOutputBits());
-        // create two new lights  
+        // create two new lights
         jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
         jmri.Light lgt1 = lMgr.newLight("CL18036", "userL36");
         jmri.Light lgt2 = lMgr.newLight("CL18037", "userL37");

@@ -38,7 +38,7 @@ import jmri.jmrit.audio.AudioFactory;
  * <P>
  * @author Matthew Harris Copyright (c) 2009
  */
-public interface AudioManager extends Manager {
+public interface AudioManager extends Manager<Audio> {
 
     /**
      * Define the maximum number of AudioListener objects that can be created

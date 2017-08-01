@@ -33,6 +33,6 @@ public class SimpleTimebaseXmlTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class.getName());
 
 }

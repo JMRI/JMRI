@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetReplyTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.XNetReply class
+ * Tests for the jmri.jmrix.lenz.XNetReply class
  *
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2004-2017	
@@ -139,7 +137,7 @@ public class XNetReplyTest {
     public void testSkipPrefix(){
        XNetReply m=new XNetReply("63 14 01 04 72");
        // skip prefix currently always returns -1, there is no prefix.
-       Assert.assertEquals("skipPrefix return value",-1,(long)m.skipPrefix(0));
+       Assert.assertEquals("skipPrefix return value",-1, m.skipPrefix(0));
     }
 
 
@@ -180,13 +178,13 @@ public class XNetReplyTest {
    @Test
     public void testToMonitorStringServiceModeDirectResponse(){
         XNetReply r = new XNetReply("63 14 01 04 72");
-        Assert.assertEquals("Monitor String","Service Mode: Direct Programming Mode Response: CV:1 Value: 4",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Direct Programming Mode Response: CV:1 Value:4",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModePagedResponse(){
         XNetReply r = new XNetReply("63 10 01 04 76");
-        Assert.assertEquals("Monitor String","Service Mode: Register or Paged Mode Response: CV:1 Value: 4",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Register or Paged Mode Response: CV:1 Value:4",r.toMonitorString());
     }
 
     // check is paged mode response
@@ -521,25 +519,25 @@ public class XNetReplyTest {
     public void testToMonitorStringFeedbackResponse() {
         // feedback message for turnout
         XNetReply r = new XNetReply("42 05 00 47");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with out Feedback  Turnout: 21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
         r = new XNetReply("42 05 05 42");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with out Feedback  Turnout: 21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
         r = new XNetReply("42 05 0A 4C");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with out Feedback  Turnout: 21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
         r = new XNetReply("42 05 0F 48");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with out Feedback  Turnout: 21 State: <Invalid>; Turnout: 22 State: <Invalid>",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: <invalid>; Turnout: 22 State: <invalid>",r.toMonitorString());
         r = new XNetReply("42 05 20 67");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with Feedback  Turnout: 21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
         r = new XNetReply("42 05 25 62");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with Feedback  Turnout: 21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
         r = new XNetReply("42 05 2A 6C");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with Feedback  Turnout: 21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
         r = new XNetReply("42 05 2F 68");
-        Assert.assertEquals("Monitor String","Feedback Response:Turnout with Feedback  Turnout: 21 State: <Invalid>; Turnout: 22 State: <Invalid>",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: <invalid>; Turnout: 22 State: <invalid>",r.toMonitorString());
         r = new XNetReply("42 05 48 0F");
-        Assert.assertEquals("Monitor String","Feedback Response:Feedback Encoder Base Address: 6 Contact: 1 State: Off; Contact: 2 State: Off; Contact: 3 State: Off; Contact: 4 State: On;",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Feedback Encoder Base Address: 6 Contact: 1 State: Off; Contact: 2 State: Off; Contact: 3 State: Off; Contact: 4 State: On; ",r.toMonitorString());
         r = new XNetReply("42 05 57 0F");
-        Assert.assertEquals("Monitor String","Feedback Response:Feedback Encoder Base Address: 6 Contact: 5 State: On; Contact: 6 State: On; Contact: 7 State: On; Contact: 8 State: Off;",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: Feedback Encoder Base Address: 6 Contact: 5 State: On; Contact: 6 State: On; Contact: 7 State: On; Contact: 8 State: Off; ",r.toMonitorString());
     }
 
     // throttle related replies.
@@ -605,51 +603,51 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringNormalLocoInfoResponse() {
         XNetReply r= new XNetReply("E4 04 00 04 00 E4");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,128 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 128 Speed Step Mode,Speed Step: 0. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
         r= new XNetReply("E4 04 04 04 00 E0");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,128 Speed Step Mode,Speed Step 3.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 128 Speed Step Mode,Speed Step: 3. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
         r= new XNetReply("E4 0A 00 04 00 EA");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,28 Speed Step Mode,Speed Step 0.  Address in use by another device. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 28 Speed Step Mode,Speed Step: 0. Address in use by another device. F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
         r= new XNetReply("E4 0A 0A 04 00 E0");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,28 Speed Step Mode,Speed Step 17.  Address in use by another device. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 28 Speed Step Mode,Speed Step: 17. Address in use by another device. F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
         r= new XNetReply("E4 01 00 1F FF F5");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,27 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 on F1 on F2 on F3 on F4 on F5 on F6 on F7 on F8 on F9 on F10 on F11 on F12 on ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 27 Speed Step Mode,Speed Step: 0. Address is Free for Operation. F0 On; F1 On; F2 On; F3 On; F4 On; F5 On; F6 On; F7 On; F8 On; F9 On; F10 On; F11 On; F12 On; ",r.toMonitorString());
         r= new XNetReply("E4 01 05 1F FF F0");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,27 Speed Step Mode,Speed Step 7.  Address is Free for Operation. F0 on F1 on F2 on F3 on F4 on F5 on F6 on F7 on F8 on F9 on F10 on F11 on F12 on ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 27 Speed Step Mode,Speed Step: 7. Address is Free for Operation. F0 On; F1 On; F2 On; F3 On; F4 On; F5 On; F6 On; F7 On; F8 On; F9 On; F10 On; F11 On; F12 On; ",r.toMonitorString());
         r= new XNetReply("E4 00 00 00 00 E4");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,14 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 off F1 off F2 off F3 off F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 14 Speed Step Mode,Speed Step: 0. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 Off; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
         r= new XNetReply("E4 00 04 00 00 E0");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,14 Speed Step Mode,Speed Step 3.  Address is Free for Operation. F0 off F1 off F2 off F3 off F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 14 Speed Step Mode,Speed Step: 3. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 Off; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
     }
  
     @Test
     public void testToMonitorStringMULocoInfoResponse() {
         XNetReply r = new XNetReply("E5 14 C1 04 00 00 34");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive in Multiple Unit Direction Forward,128 Speed Step Mode,Speed Step 64.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive in Multiple Unit,Forward,in 128 Speed Step Mode,Speed Step: 64. Address is Free for Operation.F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringMUEliteLocoInfoResponse() {
         XNetReply r = new XNetReply("E5 F8 C1 04 00 00 34");
-        Assert.assertEquals("Monitor String","Elite Speed/Direction Information: Locomotive 260Direction Reverse,14 Speed Step Mode,Speed Step 0.  Address is Free for Operation. ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Elite Speed/Direction Information: Locomotive 260,Reverse,in 14 Speed Step Mode,Speed Step: 0. Address is Free for Operation. ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringEliteLocoFnInfoResponse() {
         XNetReply r = new XNetReply("E5 F9 C1 04 00 00 34");
-        Assert.assertEquals("Monitor String","Elite Function Information: Locomotive 260F0 off F1 off F2 off F3 off F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Elite Function Information: Locomotive 260 F0 Off; F1 Off; F2 Off; F3 Off; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringMUBaseAddressInfoResponse() {
         XNetReply r = new XNetReply("E2 14 C1 37");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Multi Unit Base AddressDirection Forward,128 Speed Step Mode,Speed Step 64.  Address is Free for Operation. ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Multi Unit Base Address,Forward,in 128 Speed Step Mode,Speed Step: 64. Address is Free for Operation. ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHLocoInfoResponse() {
         XNetReply r = new XNetReply("E6 64 00 64 C1 C1 04 E2");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive in Double Header Direction Reverse,128 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 on F6 off F7 off F8 off F9 off F10 off F11 on F12 on  Second Locomotive in Double Header is: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive in Double Header,Reverse,in 128 Speed Step Mode,Speed Step: 0. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 On; F4 Off; F5 On; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 On; F12 On;  Second Locomotive in Double Header is: 260",r.toMonitorString());
     }
 
     @Test
@@ -687,35 +685,35 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringNormalLocoFunctionMomentaryResponse() {
         XNetReply r= new XNetReply("E3 50 54 04 E3");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive  Function Status: F0 Momentary F1 Continuous F2 Continuous F3 Momentary F4 Continuous F5 Continuous F6 Continuous F7 Momentary F8 Continuous F9 Continuous F10 Continuous F11 Continuous F12 Continuous ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive Function Status: F0 Momentary; F1 Continuous; F2 Continuous; F3 Momentary; F4 Continuous; F5 Continuous; F6 Continuous; F7 Momentary; F8 Continuous; F9 Continuous; F10 Continuous; F11 Continuous; F12 Continuous; ",r.toMonitorString());
         r= new XNetReply("E3 50 00 00 93");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive  Function Status: F0 Continuous F1 Continuous F2 Continuous F3 Continuous F4 Continuous F5 Continuous F6 Continuous F7 Continuous F8 Continuous F9 Continuous F10 Continuous F11 Continuous F12 Continuous ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive Function Status: F0 Continuous; F1 Continuous; F2 Continuous; F3 Continuous; F4 Continuous; F5 Continuous; F6 Continuous; F7 Continuous; F8 Continuous; F9 Continuous; F10 Continuous; F11 Continuous; F12 Continuous; ",r.toMonitorString());
         r= new XNetReply("E3 50 5F FF 13");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive  Function Status: F0 Momentary F1 Momentary F2 Momentary F3 Momentary F4 Momentary F5 Momentary F6 Momentary F7 Momentary F8 Momentary F9 Momentary F10 Momentary F11 Momentary F12 Momentary ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive Function Status: F0 Momentary; F1 Momentary; F2 Momentary; F3 Momentary; F4 Momentary; F5 Momentary; F6 Momentary; F7 Momentary; F8 Momentary; F9 Momentary; F10 Momentary; F11 Momentary; F12 Momentary; ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringNormalLocoFunctionHighMomentaryResponse() {
         XNetReply r= new XNetReply("E4 51 00 54 04 E5");
-        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Continuous F14 Continuous F15 Continuous F16 Continuous F17 Continuous F18 Continuous F19 Continuous F20 Continuous F21 Continuous F22 Continuous F23 Momentary F24 Continuous F25 Momentary F26 Continuous F27 Momentary F28 Continuous ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Continuous; F14 Continuous; F15 Continuous; F16 Continuous; F17 Continuous; F18 Continuous; F19 Continuous; F20 Continuous; F21 Continuous; F22 Continuous; F23 Momentary; F24 Continuous; F25 Momentary; F26 Continuous; F27 Momentary; F28 Continuous; ",r.toMonitorString());
         r= new XNetReply("E4 51 00 00 00 95");
-        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Continuous F14 Continuous F15 Continuous F16 Continuous F17 Continuous F18 Continuous F19 Continuous F20 Continuous F21 Continuous F22 Continuous F23 Continuous F24 Continuous F25 Continuous F26 Continuous F27 Continuous F28 Continuous ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Continuous; F14 Continuous; F15 Continuous; F16 Continuous; F17 Continuous; F18 Continuous; F19 Continuous; F20 Continuous; F21 Continuous; F22 Continuous; F23 Continuous; F24 Continuous; F25 Continuous; F26 Continuous; F27 Continuous; F28 Continuous; ",r.toMonitorString());
         r= new XNetReply("E4 51 FF FF FF 45");
-        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Momentary F14 Momentary F15 Momentary F16 Momentary F17 Momentary F18 Momentary F19 Momentary F20 Momentary F21 Momentary F22 Momentary F23 Momentary F24 Momentary F25 Momentary F26 Momentary F27 Momentary F28 Momentary ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive F13-F28 Momentary Status: F13 Momentary; F14 Momentary; F15 Momentary; F16 Momentary; F17 Momentary; F18 Momentary; F19 Momentary; F20 Momentary; F21 Momentary; F22 Momentary; F23 Momentary; F24 Momentary; F25 Momentary; F26 Momentary; F27 Momentary; F28 Momentary; ",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringNormalLocoFunctionHighResponse() {
         XNetReply r= new XNetReply("E3 52 54 04 E3");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 off F14 off F15 on F16 off F17 on F18 off F19 on F20 off F21 off F22 off F23 on F24 off F25 off F26 off F27 off F28 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 Off; F14 Off; F15 On; F16 Off; F17 On; F18 Off; F19 On; F20 Off; F21 Off; F22 Off; F23 On; F24 Off; F25 Off; F26 Off; F27 Off; F28 Off; ",r.toMonitorString());
         r= new XNetReply("E3 52 00 00 91");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 off F14 off F15 off F16 off F17 off F18 off F19 off F20 off F21 off F22 off F23 off F24 off F25 off F26 off F27 off F28 off ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 Off; F14 Off; F15 Off; F16 Off; F17 Off; F18 Off; F19 Off; F20 Off; F21 Off; F22 Off; F23 Off; F24 Off; F25 Off; F26 Off; F27 Off; F28 Off; ",r.toMonitorString());
         r= new XNetReply("E3 52 FF FF 91");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 on F14 on F15 on F16 on F17 on F18 on F19 on F20 on F21 on F22 on F23 on F24 on F25 on F26 on F27 on F28 on ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive F13-F28 Status: F13 On; F14 On; F15 On; F16 On; F17 On; F18 On; F19 On; F20 On; F21 On; F22 On; F23 On; F24 On; F25 On; F26 On; F27 On; F28 On; ",r.toMonitorString());
     }
 
 
-   // check is this a throttle takeover response
+   // check if this is a throttle takeover response
     @Test
     public void testIsThrottleTakenOverMessage() {
         // Normal Locomotive Information reply
@@ -902,7 +900,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringDataSentNoTimeslot(){
         XNetReply r = new XNetReply("01 08 09");
-        Assert.assertEquals("Monitor String","Request Sent While the CS is not providing a timeslot",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Request Sent while the CS is not providing a Timeslot",r.toMonitorString());
     }
 
     @Test
@@ -970,19 +968,19 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringBCEmergencyOff(){
         XNetReply r = new XNetReply("61 00 61");
-        Assert.assertEquals("Monitor String","Broadcast: Emergency Off (short circuit)",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Emergency Off (short circuit);",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCNormalOpers(){
         XNetReply r = new XNetReply("61 01 60");
-        Assert.assertEquals("Monitor String","Broadcast: Normal Operations Resumed",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Normal Operations Resumed;",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCServiceModeEntry(){
         XNetReply r = new XNetReply("61 02 63");
-        Assert.assertEquals("Monitor String","Broadcast: Service Mode Entry",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Service Mode Entry;",r.toMonitorString());
     }
 
     @Test
@@ -994,7 +992,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringServiceModeShortCircuit(){
         XNetReply r = new XNetReply("61 12 73");
-        Assert.assertEquals("Monitor String","Service Mode: Short Circuit",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Short Circuit;",r.toMonitorString());
     }
 
     @Test
@@ -1108,24 +1106,24 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIBaud1Reply(){
         XNetReply r = new XNetReply("F2 02 01 F1");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19200bps (default)",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19,200 bps (default)",r.toMonitorString());
     }
     @Test
     public void testToMonitorStringLIBaud2Reply(){
         XNetReply r = new XNetReply("F2 02 02 F2");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38400bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38,400 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud3Reply(){
         XNetReply r = new XNetReply("F2 02 03 F1");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57600bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57,600 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud4Reply(){
         XNetReply r = new XNetReply("F2 02 04 F4");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115200bps",r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115,200 bps",r.toMonitorString());
     }
 
     @Test
@@ -1137,9 +1135,9 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSStatusReply(){
         XNetReply r = new XNetReply("62 22 00 40");
-        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode ",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode; ",r.toMonitorString());
         r = new XNetReply("62 22 FF BF");
-        Assert.assertEquals("Monitor String","Command Station Status: Emergency Off Emergency Stop Service Mode Powering up Auto power-up Mode RAM check error!",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Status: Emergency Off; Emergency Stop; Service Mode; Powering up; Auto power-up Mode; RAM check error!",r.toMonitorString());
     }
 
     @Test
@@ -1171,31 +1169,31 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringSearchResponseNormalLoco(){
         XNetReply r = new XNetReply("E3 30 C1 04 11");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Normal Locomotive: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Normal Locomotive: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseDoubleHeaderLoco(){
         XNetReply r = new XNetReply("E3 31 C1 04 17");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Loco in Double Header: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in Double Header: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMUBaseLoco(){
         XNetReply r = new XNetReply("E3 32 00 04 C5");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, MU Base Address: 4",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: MU Base Address: 4",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMULoco(){
         XNetReply r = new XNetReply("E3 33 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Loco in MU: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in MU: 260",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseFail(){
         XNetReply r = new XNetReply("E3 34 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Search failed for: 260",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Search failed for: 260",r.toMonitorString());
     }
 
     // the following are invalid by the XpressNet Standard, but we want to
@@ -1245,7 +1243,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringInvalidFeedbackReply(){
         XNetReply r = new XNetReply("42 FF FF 42");
-        Assert.assertEquals("Monitor String","Feedback Response:255 255",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Feedback Response: 255 255",r.toMonitorString());
     }
 
     // The minimal setup for log4J

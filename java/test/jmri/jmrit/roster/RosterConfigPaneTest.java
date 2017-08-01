@@ -34,6 +34,6 @@ public class RosterConfigPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneTest.class.getName());
 
 }

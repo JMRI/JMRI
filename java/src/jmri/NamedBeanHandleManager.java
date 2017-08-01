@@ -51,22 +51,18 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    @CheckForNull
+    @Nonnull
     @CheckReturnValue
     public <T extends NamedBean> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         Objects.requireNonNull(bean, "bean must be nonnull");
         Objects.requireNonNull(name, "name must be nonnull");
         if (name.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("name cannot be empty in getNamedBeanHandle");
         }
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
 
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return h;
-            }
-        }
-        namedBeanHandles.add(temp);
+        if (! namedBeanHandles.contains(temp)) namedBeanHandles.add(temp);
+        
         return temp;
     }
 
@@ -96,7 +92,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
                 h.setName(newName);
             }
         }
-        updateListenerRef(oldName, newName, ((NamedBean) bean));
+        updateListenerRef(oldName, newName, bean);
     }
 
     /**
@@ -126,7 +122,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
                 h.setBean(newBean);
             }
         }
-        moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
+        moveListener(oldBean, newBean, name);
     }
 
     public void updateBeanFromUserToSystem(@Nonnull NamedBean bean) {
