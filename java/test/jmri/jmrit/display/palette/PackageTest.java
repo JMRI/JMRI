@@ -18,7 +18,9 @@ import org.junit.runners.Suite;
     IndicatorItemPanelTest.class,
     PortalItemPanelTest.class,
     RPSItemPanelTest.class,
-    TextItemPanelTest.class
+    TextItemPanelTest.class,
+    DecoratorPanelTest.class,
+    DetectionPanelTest.class
 })
 public class PackageTest {
 }
