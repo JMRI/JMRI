@@ -224,13 +224,15 @@ public class TransitManager extends AbstractManager implements PropertyChangeLis
         return list;
     }
 
-    static TransitManager _instance = null;
-
+    /**
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public TransitManager instance() {
-        if (_instance == null) {
-            _instance = new TransitManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(TransitManager.class);
     }
 
     @Override
