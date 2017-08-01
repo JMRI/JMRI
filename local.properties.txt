@@ -1,1 +1,0 @@
-git=/usr/local/bin/git
