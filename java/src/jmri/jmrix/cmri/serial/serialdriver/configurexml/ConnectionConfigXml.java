@@ -91,7 +91,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // CMRInet Options  c2
             //-----------------
             value = "";
-            for (int i=0; i<node.NUMCMRINETOPTS; i++) {
+            for (int i=0; i<SerialNode.NUMCMRINETOPTS; i++) {
                     value = value + Integer.toHexString((node.getCMRInetOpts(i)&0xF));
             }     
                 n.addContent(makeParameter("cmrinetoptions",""+value.toUpperCase()));
@@ -99,10 +99,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                
             // cpNode Options  Classic CMRI nodes do not have options
             //-------------------------------------------------------
-            if (node.getNodeType()==node.CPNODE || node.getNodeType()==node.CPMEGA)  //c2
+            if (node.getNodeType()==SerialNode.CPNODE || node.getNodeType()==SerialNode.CPMEGA)  //c2
             {
                 value = "";
-                for (int i=0; i<node.NUMCPNODEOPTS; i++) {
+                for (int i=0; i<SerialNode.NUMCPNODEOPTS; i++) {
                     value = value + Integer.toHexString((node.getcpnodeOpts(i)&0xF));
                 }           
                 n.addContent(makeParameter("cpnodeoptions",""+value.toUpperCase()));
@@ -142,6 +142,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         // --------------------------------------
         // Load the poll list sequence if present
         // --------------------------------------
+        SerialNode plNode;
         List<Element> pl = shared.getChildren("polllist");
         if(pl.size()!=0)
         {
@@ -153,7 +154,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                  {
                     StringTokenizer nodes = new StringTokenizer(pseq," ,");
                     SerialTrafficController tcPL = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
-                    SerialNode plNode = (SerialNode) tcPL.getNode(0);
+                    plNode = (SerialNode) tcPL.getNode(0);
                     while(nodes.hasMoreTokens())
                     {
                       tcPL.cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
@@ -248,7 +249,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 node.setCardTypeLocation(j, (ctl.charAt(j) - '0'));
             }
             
-            if (type==node.CPNODE || type==node.CPMEGA)  //c2
+            if (type==SerialNode.CPNODE || type==SerialNode.CPMEGA)  //c2
             {   
                 // cpNode Options
                 //---------------

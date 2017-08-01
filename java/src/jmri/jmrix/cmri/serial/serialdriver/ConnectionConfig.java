@@ -3,7 +3,8 @@ package jmri.jmrix.cmri.serial.serialdriver;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction; c2
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
@@ -12,6 +13,8 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Chuck Catania Copyright (C) 2017
+
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -37,7 +40,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
         setInstance();
         b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
-        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+//        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo())); //c2
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
