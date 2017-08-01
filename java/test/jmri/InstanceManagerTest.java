@@ -5,10 +5,13 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.managers.TurnoutManagerScaffold;
+import jmri.util.JUnitAppender;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test InstanceManager
@@ -58,7 +61,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // Testing new load store
     public void testGenericStoreAndGet() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
 
         InstanceManager.store(m1, PowerManager.class);
         m2 = InstanceManager.getDefault(PowerManager.class);
@@ -83,7 +86,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testGenericStoreAndGetTwoDifferentTypes() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
         TurnoutManager t1 = new TurnoutManagerScaffold();
         TurnoutManager t2;
 
@@ -98,7 +101,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testGenericStoreAndReset() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
 
         InstanceManager.store(m1, PowerManager.class);
         InstanceManager.reset(PowerManager.class);
@@ -136,6 +139,37 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         } catch (NullPointerException ex) {
             // passes
         }
+    }
+
+    public static class OkToDispose implements Disposable {
+
+        public static String message = "dispose called";
+        private static int times = 0;
+
+        @Override
+        public void dispose() {
+            times++;
+            log.warn(message + times);
+        }
+
+    }
+
+    public void testDisposable() {
+        OkToDispose d1 = new OkToDispose();
+
+        // register d1 in single list
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.deregister(d1, OkToDispose.class);
+        // dispose should have been called since registered in only one list
+        JUnitAppender.assertWarnMessage(OkToDispose.message + 1);
+        // register d1 in two lists
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.store(d1, Disposable.class);
+        InstanceManager.deregister(d1, OkToDispose.class);
+        // dispose should not have been called because removed from only one list
+        InstanceManager.deregister(d1, Disposable.class);
+        // dispose should be called again as removed from all lists
+        JUnitAppender.assertWarnMessage(OkToDispose.message + 2);
     }
 
     /**
@@ -274,4 +308,5 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         apps.tests.Log4JFixture.tearDown();
     }
 
+    private final static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class);
 }
