@@ -3,7 +3,7 @@
 #
 # Use a Nintendo Wiimote device as a throttle
 # You need to have Bluecove and WiiRemoteJ jars in your Java classpath, JMRI lib folder is a good place for that (copy both jars there)
-# See: http://bluecove.org/ and http://www.world-of-cha0s.hostrocket.com/WiiRemoteJ/  (despite hostname in URL, works great)
+# See: http://bluecove.org/ and https://github.com/micromu/WiiRemoteJ 
 #
 # once Jynstrument started (aka WiimoteThrottle.jyn **FOLDER** (no the py file) dropped into a throttle window toolbar
 # press 1+2 on the Wiimote you want to use, it should connect
@@ -32,8 +32,8 @@ speedSlowSpeed = 0.3
 speedCruiseSpeed = 0.8
 speedMaxSpeed = 1
 
-valueSpeedTimerRepeat = 125 # repeat time in ms for speed set task
-valueSpeedIncrement = 0.05
+valueSpeedTimerRepeat = 25 # repeat time in ms for speed set task
+valueSpeedIncrement = 0.01
 
 delay4double = 500 # delay for double tap on button (ms)
 

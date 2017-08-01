@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
+public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
 
     SignalMast source;
     SignalMast destination;
@@ -56,6 +56,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * @param source - The Signal Mast we are configuring an SML for
      */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
+        super(source.toString()); // default system name
         this.source = source;
         try {
             this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
@@ -2917,6 +2918,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
+
+    /**
+     * No valid integer state, always return a constant.
+     *
+     * @return Always zero
+     */
+    public int getState() { return 0; }
+    public void setState(int i) { }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
 }

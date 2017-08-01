@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public SectionManager() {
         super();
@@ -273,13 +273,13 @@ public class SectionManager extends AbstractManager implements PropertyChangeLis
         }
     }
 
-    static SectionManager _instance = null;
-
-    static public SectionManager instance() {
-        if (_instance == null) {
-            _instance = new SectionManager();
-        }
-        return (_instance);
+    /**
+     * @deprecated since 4.9.1; use
+     * {@link InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
+    static private SectionManager instance() {
+        return InstanceManager.getDefault(SectionManager.class);
     }
 
     @Override

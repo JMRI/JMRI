@@ -6,7 +6,6 @@ import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
@@ -182,7 +181,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
-    public synchronized void deregister(NamedBean s) {
+    public synchronized void deregister(Audio s) {
         super.deregister(s);
         if (s instanceof Audio) {
             // Decrement the relevant Audio object counter

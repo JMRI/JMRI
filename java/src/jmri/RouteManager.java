@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface RouteManager extends Manager {
+public interface RouteManager extends Manager<Route> {
 
     // to free resources when no longer used
     @Override

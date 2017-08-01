@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
+public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implements TurnoutManager {
 
     public ProxyTurnoutManager() {
         super();
@@ -48,7 +48,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     @Override
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    protected Turnout makeBean(int i, String systemName, String userName) {
         return ((TurnoutManager) getMgr(i)).newTurnout(systemName, userName);
     }
 

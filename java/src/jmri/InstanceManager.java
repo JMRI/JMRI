@@ -453,21 +453,11 @@ public final class InstanceManager {
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
     //   2) Remove the setter from here, get tests to build & run
     //   3) Remove the accessor from here, get tests to build & run
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default audio manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public AudioManager audioManagerInstance() {
-        return getDefault(AudioManager.class);
-    }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default block manager. May not be the only instance.
+     * @return the default block manager. May not be the only instance. In use by scripts.
      * @deprecated 4.5.1
      */
     @Deprecated
@@ -476,40 +466,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default clock control instance. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ClockControl clockControlInstance() {
-        return getDefault(ClockControl.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default conditional manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ConditionalManager conditionalManagerInstance() {
-        return getDefault(ConditionalManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default logix manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public LogixManager logixManagerInstance() {
-        return getDefault(LogixManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly. In use by scripts.
      *
      * @return the default power manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -531,7 +488,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default reporter manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -542,7 +499,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default roster icon factory. May not be the only instance.
      * @deprecated 4.5.1
@@ -553,7 +510,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default route manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -564,7 +521,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default section manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -572,84 +529,6 @@ public final class InstanceManager {
     @Deprecated
     static public SectionManager sectionManagerInstance() {
         return getDefault(SectionManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal group manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalGroupManager signalGroupManagerInstance() {
-        return getDefault(SignalGroupManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal head manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalHeadManager signalHeadManagerInstance() {
-        return getDefault(SignalHeadManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastManager signalMastManagerInstance() {
-        return getDefault(SignalMastManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal system manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalSystemManager signalSystemManagerInstance() {
-        return getDefault(SignalSystemManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast logic manager. May not be the only
-     *         instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastLogicManager signalMastLogicManagerInstance() {
-        return getDefault(SignalMastLogicManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default preferences panel. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TabbedPreferences tabbedPreferencesInstance() {
-        return getDefault(TabbedPreferences.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default transit manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TransitManager transitManagerInstance() {
-        return getDefault(TransitManager.class);
     }
 
     /* ****************************************************************************
@@ -672,45 +551,12 @@ public final class InstanceManager {
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default command station. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CommandStation commandStationInstance() {
-        return getDefault(CommandStation.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
      * @return the default configure manager. May not be the only instance.
      * @deprecated 4.5.1
      */
     @Deprecated
     static public ConfigureManager configureManagerInstance() {
         return getDefault(ConfigureManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default shutdown manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ShutDownManager shutDownManagerInstance() {
-        return getDefault(ShutDownManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default catalog tree manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CatalogTreeManager catalogTreeManagerInstance() {
-        return getDefault(CatalogTreeManager.class);
     }
 
     /**
@@ -748,17 +594,6 @@ public final class InstanceManager {
         log.debug(" setTurnoutManager");
         ((jmri.managers.AbstractProxyManager) getDefault(TurnoutManager.class)).addManager(p);
         //store(p, TurnoutManager.class);
-    }
-
-    /**
-     * @param p shutdown manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setShutDownManager(ShutDownManager p) {
-        store(p, ShutDownManager.class);
-        setDefault(ShutDownManager.class, p);
     }
 
     static public void setThrottleManager(ThrottleManager p) {
@@ -874,43 +709,6 @@ public final class InstanceManager {
         //store(p, SensorManager.class);
     }
 
-    /* ****************************************************************************
-     *                   Old Style Setters - Deprecated and migrated,
-     *                                       just here for other users
-     *
-     *                     Check Jython scripts before removing
-     * ****************************************************************************/
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
-    // */
-    //@Deprecated
-    //static public void setConditionalManager(ConditionalManager p) {
-    //    store(p, ConditionalManager.class);
-    //    setDefault(ConditionalManager.class, p);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setLogixManager(LogixManager p) {
-    //    store(p, LogixManager.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setTabbedPreferences(TabbedPreferences p) {
-    //    store(p, TabbedPreferences.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-    // * directly.
-    // */
-    // @Deprecated
-    // static public void setPowerManager(PowerManager p) {
-    //     store(p, PowerManager.class);
-    // }
-
     /* *************************************************************************** */
     /**
      * Default constructor for the InstanceManager.
@@ -1000,6 +798,5 @@ public final class InstanceManager {
         }
         return defaultInstanceManager;
     }
-
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
