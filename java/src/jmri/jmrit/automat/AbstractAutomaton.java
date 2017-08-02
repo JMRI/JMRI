@@ -2,13 +2,13 @@ package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.beans.*;
-import java.util.concurrent.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
-import javax.annotation.Nonnull;
-
 import jmri.BasicRosterEntry;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -505,7 +505,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensors Array of sensors to watch
      * @param state    State to check (static value from jmri.Sensors)
      */
-    public synchronized void waitSensorState(@Nonnull Sensor[] mSensors, @Nonnull int state) {
+    public synchronized void waitSensorState(@Nonnull Sensor[] mSensors, int state) {
         if (!inThread) {
             log.warn("waitSensorState invoked from invalid context");
         }
