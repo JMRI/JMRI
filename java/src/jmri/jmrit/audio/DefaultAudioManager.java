@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide the concrete implementation for the Internal Audio Manager.
- *
+ * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -157,7 +157,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(AudioManager.class).cleanUp();
+                        InstanceManager.getDefault(AudioManager.class).dispose();
                         return true;
                     }
                 };
@@ -198,10 +198,14 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    public void cleanUp() {
+    public void dispose() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
-        activeAudioFactory.cleanup();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.cleanup();
+            activeAudioFactory = null;
+        }
+        super.dispose();
     }
 
     @Override

@@ -24,7 +24,7 @@ import jmri.jmrit.audio.AudioFactory;
  * <P>
  * Much of the book-keeping is implemented in the AbstractAudioManager class,
  * which can form the basis for a system-specific implementation.
- *
+ * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -38,7 +38,7 @@ import jmri.jmrit.audio.AudioFactory;
  * <P>
  * @author Matthew Harris Copyright (c) 2009
  */
-public interface AudioManager extends Manager<Audio> {
+public interface AudioManager extends Manager<Audio>, Disposable {
 
     /**
      * Define the maximum number of AudioListener objects that can be created
@@ -159,13 +159,16 @@ public interface AudioManager extends Manager<Audio> {
     public List<String> getSystemNameList(char subType);
 
     /**
-     * Perform any initialisation operations
+     * Perform any initialisation operations.
      */
     public void init();
 
     /**
-     * Perform any clean-up operations
+     * Perform any clean-up operations.
+     *
+     * @deprecated since 4.9.2 use {@link Disposable#dispose()} instead
      */
+    @Deprecated
     public void cleanUp();
 
 }
