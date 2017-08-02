@@ -42,7 +42,7 @@ import javax.annotation.Nonnull;
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
  */
-public interface MemoryManager extends Manager {
+public interface MemoryManager extends Manager<Memory> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a

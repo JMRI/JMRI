@@ -33,6 +33,6 @@ public class MrcPacketsTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPacketsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcPacketsTest.class.getName());
 
 }

@@ -37,7 +37,11 @@ public class PackageTest extends TestCase {
 <<<<<<< HEAD
 =======
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+<<<<<<< HEAD
 >>>>>>> JMRI/master
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosNamedPaneActionTest.class));
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         return suite;
     }

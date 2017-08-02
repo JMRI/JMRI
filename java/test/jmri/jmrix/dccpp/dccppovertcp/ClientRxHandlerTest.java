@@ -64,7 +64,11 @@ public class ClientRxHandlerTest {
 >>>>>>> JMRI/master
 =======
     
+<<<<<<< HEAD
 >>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+=======
+    // private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
 }

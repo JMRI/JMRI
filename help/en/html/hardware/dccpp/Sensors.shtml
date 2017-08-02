@@ -57,7 +57,32 @@
           <li>Click "OK"</li>
           <li>Optionally click "Edit" on the new sensor's row and edit the sensor's configuration within JMRI</li>
       </ol>
-      
+
+      <table>
+            <tbody><tr>
+                <th>Entry</th>
+                <th>Meaning</th>
+                <th>makes System Name</th>
+                <th>Mask</th>
+                <th>Equivalent</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+            </tr>
+            <tr>
+                <td>4:3</td>
+                <td>(converts to 50)</td>
+                <td>DCCPP50</td>
+                <td>node : pin</td>
+                <td> </td>
+                <td>0</td>
+                <td> </td>
+            </tr>
+        </tbody>
+      </table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
       <h3>3: Configure the Base Station</h3>
       
       <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store

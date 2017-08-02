@@ -373,10 +373,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case TRAIN_NAME_COLUMN:
             return w.getTrainName();
         case ADDRESS_COLUMN:
-            if (w.getDccAddress() != null) {
-                return w.getDccAddress().toString();
-            }
-            break;
+            return w.getSpeedUtil().getAddress();
         case ALLOCATE_COLUMN:
             if (w.isTotalAllocated()) {
                 return new NamedIcon(
@@ -466,7 +463,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case ADDRESS_COLUMN:
             String addr = (String) value;
-            if (!w.setDccAddress(addr)) {
+            if (!w.getSpeedUtil().setDccAddress(addr)) {
                 msg = Bundle.getMessage("BadDccAddress", addr);                
             }
             break;
@@ -553,7 +550,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
-        fireTableRowsUpdated(row, row);                    
+        if (row < getRowCount()) {
+            fireTableRowsUpdated(row, row);                    
+        }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"),

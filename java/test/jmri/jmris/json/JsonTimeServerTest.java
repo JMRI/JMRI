@@ -60,6 +60,6 @@ public class JsonTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonTimeServerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonTimeServerTest.class.getName());
 
 }

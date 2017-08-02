@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerPreferences;
 
@@ -16,7 +17,7 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Randall Wood
  */
-public class ServletUtil {
+public class ServletUtil implements InstanceManagerAutoDefault {
 
     public static final String UTF8 = StandardCharsets.UTF_8.toString(); // NOI18N
     // media types
@@ -39,9 +40,9 @@ public class ServletUtil {
      */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + WebServerPreferences.getDefault().getRailRoadName() + "<!--"; // NOI18N
+            return "-->" + InstanceManager.getDefault(WebServerPreferences.class).getRailRoadName() + "<!--"; // NOI18N
         }
-        return WebServerPreferences.getDefault().getRailRoadName();
+        return InstanceManager.getDefault(WebServerPreferences.class).getRailRoadName();
     }
 
     /**
@@ -91,14 +92,14 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(clazz, "active"); // NOI18N
-        if (WebServerPreferences.getDefault().allowRemoteConfig()) {
+        if (InstanceManager.getDefault(WebServerPreferences.class).allowRemoteConfig()) {
             navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
         } else {
             navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
         }
-        if (!WebServerPreferences.getDefault().isReadonlyPower()) {
+        if (!InstanceManager.getDefault(WebServerPreferences.class).isReadonlyPower()) {
             navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;
@@ -119,25 +120,29 @@ public class ServletUtil {
      * Get the default ServletUtil instance.
      *
      * @return the default instance of ServletUtil
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
+     * argument {@code ServletUtil.class} instead
      */
+    @Deprecated
     public static ServletUtil getDefault() {
-        return InstanceManager.getOptionalDefault(ServletUtil.class).orElseGet(() -> {
-            return InstanceManager.setDefault(ServletUtil.class, new ServletUtil());
-        });
+        return InstanceManager.getDefault(ServletUtil.class);
     }
 
     /**
      * Set HTTP headers to prevent caching.
      *
      * @param response the response to set headers in
+     * @return the date used for headers setting expiration and modification times
      */
-    public void setNonCachingHeaders(HttpServletResponse response) {
+    public Date setNonCachingHeaders(HttpServletResponse response) {
         Date now = new Date();
         response.setDateHeader("Date", now.getTime()); // NOI18N
         response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
         response.setDateHeader("Expires", now.getTime()); // NOI18N
         response.setHeader("Cache-control", "no-cache, no-store"); // NOI18N
         response.setHeader("Pragma", "no-cache"); // NOI18N
+        return now;
     }
 
     /**

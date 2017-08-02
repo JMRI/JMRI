@@ -475,7 +475,7 @@ public interface Turnout extends NamedBean {
     /**
      * Get a human readable representation of the locking decoder type for this turnout.
      *
-     * @return the name of the decoder type
+     * @return the name of the decoder type; null indicates none defined
      */
     @CheckForNull
     public String getDecoderName();

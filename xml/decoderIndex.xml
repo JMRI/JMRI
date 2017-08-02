@@ -2,12 +2,17 @@
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <!--Written by JMRI version 4.7.3ish+jake+20170415T2202Z+R6344d4702d on Sat Apr 15 15:02:29 PDT 2017 $Id$-->
   <decoderIndex version="810">
 =======
   <!--Written by JMRI version 4.7.8ish+jake+20170711T2319Z+R0a4f3f64c1 on Tue Jul 11 16:19:47 PDT 2017-->
   <decoderIndex version="820">
 >>>>>>> JMRI/master
+=======
+  <!--Written by JMRI version 4.9.1ish+jake+20170723T2130Z+R17742ddc35 on Sun Jul 23 14:30:27 PDT 2017-->
+  <decoderIndex version="822">
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12727,8 +12732,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12762,8 +12766,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12797,8 +12800,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12832,8 +12834,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12867,8 +12868,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13220,8 +13220,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13257,8 +13256,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13294,8 +13292,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13331,8 +13328,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13368,8 +13364,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -14146,6 +14141,130 @@
           </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
+        <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="292" comment="Model 885017">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="263" comment="Model 885018">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="294" comment="Model 885019">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
         <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
@@ -14553,6 +14672,41 @@
           </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
+        <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -14687,6 +14841,41 @@
             <label xml:lang="it">Accoppiatore| </label>
           </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>

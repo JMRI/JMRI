@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public class DefaultLogixManager extends AbstractManager
+public class DefaultLogixManager extends AbstractManager<Logix>
         implements LogixManager, java.beans.PropertyChangeListener {
 
     public DefaultLogixManager() {

@@ -388,9 +388,13 @@
                     <reuseForks>false</reuseForks>
                     -->
                     <!-- uncomment to really ensure tests are independent -->
+<<<<<<< HEAD
                     <runOrder>random</runOrder>
 <<<<<<< HEAD
 =======
+=======
+                    <!-- <runOrder>random</runOrder> -->
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>

@@ -39,6 +39,6 @@ public class AbstractXNetInitializationManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManagerTest.class.getName());
 
 }

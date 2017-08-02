@@ -33,6 +33,6 @@ public class EcosLocoAddressTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressTest.class.getName());
 
 }

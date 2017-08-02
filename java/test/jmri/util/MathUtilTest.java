@@ -253,7 +253,7 @@ public class MathUtilTest extends TestCase {
             passed = (fabs(t - c) <= tolerance);
 =======
             while (t >= +limits) {t -= limits;}
-            while (t < 0.0) {t += limits;};
+            while (t < 0.0) {t += limits;}
             double c = MathUtil.normalizeAngleDEG(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
@@ -314,7 +314,7 @@ public class MathUtilTest extends TestCase {
                 double t = a - b;
                 while (t >= theMax) {t -= theRange;}
                 while (t < theMin) {t += theRange;}
-                if (t < 0.0) { t = -t;};
+                if (t < 0.0) { t = -t;}
                 double c = MathUtil.absDiffAngleDEG(a, b);
                 Assert.assertEquals(t, c, tolerance);
                 passed = (math.fabs(t - c) <= tolerance);
@@ -338,6 +338,7 @@ public class MathUtilTest extends TestCase {
             for (double b = -3.3 * limits; b < +3.3 * limits; b += limits / 15.0) {
                 for (double c = -3.3 * limits; c < +3.3 * limits; c += limits / 15.0) {
                     double t = a;
+<<<<<<< HEAD
                     if (t < b) {t = b;};
                     if (t > c) {t = c;};
 <<<<<<< HEAD
@@ -345,6 +346,10 @@ public class MathUtilTest extends TestCase {
                     Assert.assertEquals(t, d, tolerance);
                     passed = (fabs(t - d) <= tolerance);
 =======
+=======
+                    if (t < b) {t = b;}
+                    if (t > c) {t = c;}
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
                     double d = MathUtil.pin(a, b, c);
                     Assert.assertEquals(t, d, tolerance);
                     passed = (math.fabs(t - d) <= tolerance);

@@ -33,6 +33,6 @@ public class DefaultUserMessagePreferencesXmlTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXmlTest.class.getName());
 
 }

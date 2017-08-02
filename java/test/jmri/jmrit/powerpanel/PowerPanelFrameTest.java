@@ -36,6 +36,6 @@ public class PowerPanelFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class.getName());
 
 }

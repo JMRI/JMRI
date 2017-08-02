@@ -33,6 +33,6 @@ public class ModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ModelTest.class.getName());
 
 }

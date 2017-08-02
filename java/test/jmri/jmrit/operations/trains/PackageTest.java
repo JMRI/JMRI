@@ -66,7 +66,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditBuildOptionsActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainLoadOptionsActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainRoadOptionsActionTest.class));
+<<<<<<< HEAD
 >>>>>>> JMRI/master
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainIconAnimationTest.class));
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         return suite;
     }
 

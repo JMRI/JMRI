@@ -33,6 +33,6 @@ public class SchedulesResetHitsActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesResetHitsActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SchedulesResetHitsActionTest.class.getName());
 
 }

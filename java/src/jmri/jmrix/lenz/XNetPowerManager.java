@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * PowerManager implementation for controlling layout power
  *
@@ -12,6 +13,8 @@
  * @author Paul Bender Copyright (C) 2003-2010
  */
 >>>>>>> JMRI/master
+=======
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -19,6 +22,12 @@ import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * PowerManager implementation for controlling layout power.
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+ */
 public class XNetPowerManager implements PowerManager, XNetListener {
 
     public XNetPowerManager(XNetSystemConnectionMemo memo) {
@@ -156,7 +165,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     // listen for the messages to the LI100/LI101
 =======
     /**
-     * Listen for the messages to the LI100/LI101
+     * Listen for the messages to the LI100/LI101.
      */
 >>>>>>> JMRI/master
     @Override

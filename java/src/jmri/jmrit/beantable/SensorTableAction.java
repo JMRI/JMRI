@@ -86,7 +86,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    JTextField sysName = new JTextField(40);
+    JTextField sysNameTextField = new JTextField(40);
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -97,6 +97,7 @@ public class SensorTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -145,10 +146,10 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            sysName.setName("sysName");
-            userName.setName("userName");
-            prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            sysNameTextField.setName("sysNameTextField"); // NOI18N
+            userName.setName("userName"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
+            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
@@ -178,7 +179,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysName.getText().trim();
+        String curAddress = sysNameTextField.getText().trim();
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -220,10 +221,35 @@ public class SensorTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
+        // show tooltip for selected system connection
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
+        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        log.debug("Connection choice = [{}]", connectionChoice);
+        switch (connectionChoice) {
+            case "MERG": // Bundle key: AddEntryToolTipMERG
+            case "C/MRI":
+            case "XpressNet":
+            case "NCE":
+            case "DCC++":
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddInputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) + "<br>" +
+                        Bundle.getMessage("AddInputEntryToolTip" + connectionChoice) + "</html>");
+                break;
+            default: // LocoNet and others: "enter a number"
+                log.debug("Default tooltip");
+                sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                break;
+        }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
@@ -231,18 +257,16 @@ public class SensorTableAction extends AbstractTableAction {
                     return;
                 }
             }
-        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
         }
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSensorAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorSensorAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {

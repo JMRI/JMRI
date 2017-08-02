@@ -33,6 +33,6 @@ public class LocoIOModeListTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOModeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoIOModeListTest.class.getName());
 
 }

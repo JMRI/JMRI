@@ -35,6 +35,6 @@ public class SprogVersionActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogVersionActionTest.class.getName());
 
 }

@@ -76,6 +76,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoAddressComparatorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MouseInputAdapterInstallerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NamedBeanComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NonNullArrayListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NoArchiveFileFilterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OrderedPropertiesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PhysicalLocationPanelTest.class));
@@ -95,7 +96,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(JLogoutputFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
+<<<<<<< HEAD
 >>>>>>> JMRI/master
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));

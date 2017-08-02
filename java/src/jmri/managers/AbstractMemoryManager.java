@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractMemoryManager extends AbstractManager
+public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
 
     @Override

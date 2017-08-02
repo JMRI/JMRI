@@ -24,7 +24,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
     }
 
     public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Generate XpressNet message", memo);
+        this(Bundle.getMessage("PacketGenFrameTitle"), memo);
     }
 
     @Override
@@ -45,4 +45,3 @@ public class PacketGenAction extends AbstractXPressNetAction {
     private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 
 }
-

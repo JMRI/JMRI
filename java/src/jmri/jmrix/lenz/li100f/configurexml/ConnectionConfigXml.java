@@ -2,12 +2,12 @@ package jmri.jmrix.lenz.li100f.configurexml;
 
 import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.li100f.ConnectionConfig;
-import jmri.jmrix.lenz.li100f.LI100Adapter;
+import jmri.jmrix.lenz.li100f.LI100fAdapter;
 
 /**
- * Handle XML persistance of layout connections by persistening the LI100Adapter
+ * Handle XML persistance of layout connections by persistening the LI100fAdapter
  * (and connections). Note this is named as the XML version of a
- * ConnectionConfig object, but it's actually persisting the LI100Adapter.
+ * ConnectionConfig object, but it's actually persisting the LI100fAdapter.
  * <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
@@ -24,7 +24,7 @@ public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
     @Override
     protected void getInstance() {
         if (adapter == null) {
-            adapter = new LI100Adapter();
+            adapter = new LI100fAdapter();
         }
     }
 

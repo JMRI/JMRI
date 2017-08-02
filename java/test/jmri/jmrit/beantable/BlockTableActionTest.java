@@ -121,6 +121,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         a = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
 
 }

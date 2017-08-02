@@ -900,7 +900,7 @@ public class BlockTableAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
-            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "B")); // override tooltip with bean specific letter, doesn't work
+            sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
@@ -1060,12 +1060,10 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorBlockAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorBlockAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
     //private boolean noWarn = false;
 
@@ -1075,7 +1073,9 @@ public class BlockTableAction extends AbstractTableAction {
         Object[] options = {Bundle.getMessage("ButtonRemove"),
                 Bundle.getMessage("ButtonKeep")};
 
-        int retval = JOptionPane.showOptionDialog(f, Bundle.getMessage("BlockPathMessage"), Bundle.getMessage("BlockPathSaveTitle"),
+        int retval = JOptionPane.showOptionDialog(f,
+                Bundle.getMessage("BlockPathMessage"),
+                Bundle.getMessage("BlockPathSaveTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
@@ -1104,4 +1104,5 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+
 }

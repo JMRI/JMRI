@@ -33,6 +33,6 @@ public class MarklinSensorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorTest.class.getName());
 
 }

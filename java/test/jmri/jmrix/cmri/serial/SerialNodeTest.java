@@ -2,10 +2,10 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialNode class
@@ -187,7 +187,7 @@ public class SerialNodeTest extends TestCase {
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 8, m.getNumDataElements());
         Assert.assertEquals("node address", 70, m.getElement(0));
-        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'
         Assert.assertEquals("out byte 1", 17, (m.getElement(2) & 0xff));
         Assert.assertEquals("out byte 2", 0, (m.getElement(3) & 0xff));
         Assert.assertEquals("out byte 3", 68, (m.getElement(4) & 0xff));
@@ -368,7 +368,6 @@ public class SerialNodeTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();

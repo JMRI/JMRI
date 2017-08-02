@@ -12,24 +12,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.Manager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.ReporterManager;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastManager;
-import jmri.TurnoutManager;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.util.NamedBeanComparator;
-import jmri.util.SystemNameComparator;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import jmri.*;
+import jmri.jmrit.logix.*;
+import jmri.jmrit.signalling.*;
+import jmri.jmrit.signalling.entryexit.*;
+import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
 
     protected ArrayList<NamedBean> _pickList;
     protected String _name;
@@ -72,7 +61,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static HashMap<String, Integer> _listMap = new HashMap<String, Integer>();
 
-    static public int getNumInstances(String type) {
+    static public int getNumInstances(@Nonnull String type) {
         Integer num = _listMap.get(type.toLowerCase());
         log.debug("getNumInstances of {} num={}", type, num);
         if (num != null) {
@@ -95,9 +84,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      */
     @Deprecated
     public void init() {
-        //log.debug("manager "+getManager());
-        //getManager().addPropertyChangeListener(this);   // for adds and deletes
-        //makePickList();
     }
 
     /**
@@ -106,6 +92,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      * @param index row of table
      * @return bean at index or null if index is out of range
      */
+    @CheckForNull
     public NamedBean getBeanAt(int index) {
         if (index >= _pickList.size()) {
             return null;
@@ -113,7 +100,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return _pickList.get(index);
     }
 
-    public int getIndexOf(NamedBean bean) {
+    public int getIndexOf(@Nonnull NamedBean bean) {
         for (int i = 0; i < _pickList.size(); i++) {
             if (_pickList.get(i).equals(bean)) {
                 return i;
@@ -122,6 +109,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return -1;
     }
 
+    @Nonnull
     public List<NamedBean> getBeanList() {
         return _pickList;
     }
@@ -165,16 +153,19 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     @Override
-    public NamedBean getBySystemName(String name) {
+    @CheckForNull
+    public NamedBean getBySystemName(@Nonnull String name) {
         return getManager().getBeanBySystemName(name);
     }
 
     @Override
-    protected NamedBean getByUserName(String name) {
+    @CheckForNull
+    protected NamedBean getByUserName(@Nonnull String name) {
         return getManager().getBeanByUserName(name);
     }
 
     @Override
+    @Nonnull
     abstract public Manager getManager();
 
     /**
@@ -183,9 +174,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      * @param name the name for the bean
      * @return the bean or null if not made
      */
-    abstract public NamedBean addBean(String name);
+    @CheckForNull
+    abstract public NamedBean addBean(@Nonnull String name);
 
-    abstract public NamedBean addBean(String sysName, String userName);
+    @CheckForNull
+    abstract public NamedBean addBean(@Nonnull String sysName, String userName);
 
     /**
      * Check if beans can be added by this model.
@@ -201,7 +194,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     @Override
-    public void clickOn(NamedBean t) {
+    public void clickOn(@Nonnull NamedBean t) {
     }
 
     @Override
@@ -356,12 +349,13 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return _table;
     }
 
-    public void makeSorter(JTable table) {
+    public void makeSorter(@Nonnull JTable table) {
         _sorter = new TableRowSorter<>(this);
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         table.setRowSorter(_sorter);
     }
 
+    @Nonnull
     public JTable getTable() {
         return _table;
     }
@@ -371,7 +365,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         getManager().removePropertyChangeListener(this);
     }
 
-    public static PickListModel turnoutPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Turnout> turnoutPickModelInstance() {
         Integer num = _listMap.get("turnout");
         if (num != null) {
             _listMap.put("turnout", num + 1);
@@ -381,7 +376,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new TurnoutPickModel();
     }
 
-    public static PickListModel sensorPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Sensor> sensorPickModelInstance() {
         Integer num = _listMap.get("sensor");
         if (num != null) {
             _listMap.put("sensor", num + 1);
@@ -391,7 +387,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new SensorPickModel();
     }
 
-    public static PickListModel multiSensorPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Sensor> multiSensorPickModelInstance() {
         Integer num = _listMap.get("multisensor");
         if (num != null) {
             _listMap.put("multisensor", num + 1);
@@ -401,7 +398,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new MultiSensorPickModel();
     }
 
-    public static PickListModel signalHeadPickModelInstance() {
+    @Nonnull
+    public static PickListModel<SignalHead> signalHeadPickModelInstance() {
         Integer num = _listMap.get("signalhead");
         if (num != null) {
             _listMap.put("signalhead", num + 1);
@@ -411,7 +409,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new SignalHeadPickModel();
     }
 
-    public static PickListModel signalMastPickModelInstance() {
+    @Nonnull
+    public static PickListModel<SignalMast> signalMastPickModelInstance() {
         Integer num = _listMap.get("signalmast");
         if (num != null) {
             _listMap.put("signalmast", num + 1);
@@ -421,7 +420,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new SignalMastPickModel();
     }
 
-    public static PickListModel memoryPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Memory> memoryPickModelInstance() {
         Integer num = _listMap.get("memory");
         if (num != null) {
             _listMap.put("memory", num + 1);
@@ -431,7 +431,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new MemoryPickModel();
     }
 
-    public static PickListModel blockPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Block> blockPickModelInstance() {
         Integer num = _listMap.get("block");
         if (num != null) {
             _listMap.put("block", num + 1);
@@ -441,7 +442,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new BlockPickModel();
     }
 
-    public static PickListModel reporterPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Reporter> reporterPickModelInstance() {
         Integer num = _listMap.get("reporter");
         if (num != null) {
             _listMap.put("reporter", num + 1);
@@ -451,7 +453,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new ReporterPickModel();
     }
 
-    public static PickListModel lightPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Light> lightPickModelInstance() {
         Integer num = _listMap.get("light");
         if (num != null) {
             _listMap.put("light", num + 1);
@@ -461,7 +464,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new LightPickModel();
     }
 
-    public static PickListModel oBlockPickModelInstance() {
+    @Nonnull
+    public static PickListModel<OBlock> oBlockPickModelInstance() {
         Integer num = _listMap.get("oBlock");
         if (num != null) {
             _listMap.put("oBlock", num + 1);
@@ -471,7 +475,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new OBlockPickModel();
     }
 
-    public static PickListModel warrantPickModelInstance() {
+    @Nonnull
+    public static PickListModel<Warrant> warrantPickModelInstance() {
         Integer num = _listMap.get("warrant");
         if (num != null) {
             _listMap.put("warrant", num + 1);
@@ -481,6 +486,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new WarrantPickModel();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public static PickListModel conditionalPickModelInstance() {
         Integer num = _listMap.get("conditional");
@@ -495,6 +501,10 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 =======
 >>>>>>> JMRI/master
     public static PickListModel entryExitPickModelInstance() {
+=======
+    @Nonnull
+    public static PickListModel<DestinationPoints> entryExitPickModelInstance() {
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         Integer num = _listMap.get("entryExit");
         if (num != null) {
             _listMap.put("entryExit", num + 1);
@@ -506,16 +516,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     private final static Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
 
-    static class TurnoutPickModel extends PickListModel {
+    static class TurnoutPickModel extends PickListModel<Turnout> {
 
-        TurnoutManager manager;
+        TurnoutManager manager = InstanceManager.turnoutManagerInstance();
 
         TurnoutPickModel() {
             _name = rb.getString("TitleTurnoutTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Turnout> getManager() {
             manager = InstanceManager.turnoutManagerInstance();
             return manager;
         }
@@ -536,16 +546,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class SensorPickModel extends PickListModel {
+    static class SensorPickModel extends PickListModel<Sensor> {
 
-        SensorManager manager;
+        SensorManager manager = InstanceManager.sensorManagerInstance();
 
         SensorPickModel() {
             _name = rb.getString("TitleSensorTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Sensor> getManager() {
             manager = InstanceManager.sensorManagerInstance();
             return manager;
         }
@@ -590,16 +600,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class SignalHeadPickModel extends PickListModel {
+    static class SignalHeadPickModel extends PickListModel<SignalHead> {
 
-        SignalHeadManager manager;
+        SignalHeadManager manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
 
         SignalHeadPickModel() {
             _name = rb.getString("TitleSignalTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<SignalHead> getManager() {
             manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return manager;
         }
@@ -624,16 +634,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class SignalMastPickModel extends PickListModel {
+    static class SignalMastPickModel extends PickListModel<SignalMast> {
 
-        SignalMastManager manager;
+        SignalMastManager manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
 
         SignalMastPickModel() {
             _name = rb.getString("TitleSignalMastTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<SignalMast> getManager() {
             manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
             return manager;
         }
@@ -658,16 +668,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class MemoryPickModel extends PickListModel {
+    static class MemoryPickModel extends PickListModel<Memory> {
 
-        MemoryManager manager;
+        MemoryManager manager = InstanceManager.memoryManagerInstance();
 
         MemoryPickModel() {
             _name = rb.getString("TitleMemoryTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Memory> getManager() {
             manager = InstanceManager.memoryManagerInstance();
             return manager;
         }
@@ -688,16 +698,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class BlockPickModel extends PickListModel {
+    static class BlockPickModel extends PickListModel<Block> {
 
-        BlockManager manager;
+        BlockManager manager = InstanceManager.getDefault(jmri.BlockManager.class);
 
         BlockPickModel() {
             _name = rb.getString("TitleBlockTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Block> getManager() {
             manager = InstanceManager.getDefault(jmri.BlockManager.class);
             return manager;
         }
@@ -718,16 +728,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class ReporterPickModel extends PickListModel {
+    static class ReporterPickModel extends PickListModel<Reporter> {
 
-        ReporterManager manager;
+        ReporterManager manager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
         ReporterPickModel() {
             _name = rb.getString("TitleReporterTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Reporter> getManager() {
             manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
@@ -748,16 +758,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class LightPickModel extends PickListModel {
+    static class LightPickModel extends PickListModel<Light> {
 
-        LightManager manager;
+        LightManager manager = InstanceManager.lightManagerInstance();
 
         LightPickModel() {
             _name = rb.getString("TitleLightTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Light> getManager() {
             manager = InstanceManager.lightManagerInstance();
             return manager;
         }
@@ -778,16 +788,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class OBlockPickModel extends PickListModel {
+    static class OBlockPickModel extends PickListModel<OBlock> {
 
-        OBlockManager manager;
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
 
         OBlockPickModel() {
             _name = rb.getString("TitleBlockTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<OBlock> getManager() {
             manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             return manager;
         }
@@ -808,16 +818,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    static class WarrantPickModel extends PickListModel {
+    static class WarrantPickModel extends PickListModel<Warrant> {
 
-        WarrantManager manager;
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
 
         WarrantPickModel() {
             _name = rb.getString("TitleWarrantTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Warrant> getManager() {
             manager = InstanceManager.getDefault(WarrantManager.class);
             return manager;
         }
@@ -839,6 +849,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
+<<<<<<< HEAD
     static class ConditionalPickModel extends PickListModel {
 
         ConditionalManager manager;
@@ -897,15 +908,18 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class EntryExitPickModel extends PickListModel {
+=======
+    static class EntryExitPickModel extends PickListModel<DestinationPoints> {
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
-        EntryExitPairs manager;
+        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
         EntryExitPickModel() {
             _name = rb.getString("TitleEntryExitTable");
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<DestinationPoints> getManager() {
             manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
             return manager;
         }

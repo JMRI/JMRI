@@ -19,14 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
+import jmri.*;
 import jmri.jmrit.dispatcher.ActiveTrain;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -37,7 +30,7 @@ import jmri.jmrit.signalling.EntryExitPairs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
+public class DestinationPoints extends jmri.implementation.AbstractNamedBean implements NamedBean {
 
     @Override
     public String getBeanType() {

@@ -20,7 +20,7 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
         JUnitUtil.resetInstanceManager();
         tc = new AbstractCanTrafficController(){
            @Override
-           protected void setInstance() {};
+           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
