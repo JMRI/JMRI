@@ -822,7 +822,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
 //                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
@@ -908,7 +908,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
 //                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
@@ -1037,7 +1037,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                         RenderingHints.VALUE_ANTIALIAS_ON);
                 g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                         RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-//                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
 //                         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             }
 
