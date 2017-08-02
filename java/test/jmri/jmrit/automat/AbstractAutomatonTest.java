@@ -200,6 +200,8 @@ public class AbstractAutomatonTest {
         a.start();
         JUnitUtil.waitFor(()->{return running;}, "waiting");
         
+        a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
+        
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
         
