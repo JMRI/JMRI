@@ -251,6 +251,15 @@
         <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+        <!-- cucumber and it's dependencies -->
+        <pathelement location="${libdir}/cucumber-core-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-java-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
+        <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
+        <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
+        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
     </path>
 
     <!-- path to run regular executables -->
