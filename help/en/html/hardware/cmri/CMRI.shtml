@@ -1049,8 +1049,8 @@
 
       <a name="tools" id="tools"></a>
       <h2>JMRI C/MRI Tools</h2>
-      <img src="images/CMRImenu416.png"
-      alt="Config Pane" align="right" height="162" width="213">
+      <img src="images/CMRImenu.png"
+      alt="Config Pane" align="right" height="165" width="213">
 
       <p>The C/MRI menu contains 5 tools: <a name="monitor" id=
       "monitor"></a></p>

@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
+public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
         super();
@@ -62,7 +63,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
 
         if (! namedBeanHandles.contains(temp)) namedBeanHandles.add(temp);
-        
+
         return temp;
     }
 
@@ -82,7 +83,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
 
         /*Gather a list of the beans in the system with the oldName ref.
          Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name 
+         when a rename is performed it doesn't delete the bean with the old name
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
@@ -150,12 +151,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
     @CheckReturnValue
     public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return true;
-            }
-        }
-        return false;
+        return namedBeanHandles.stream().anyMatch((h) -> (temp.equals(h)));
     }
 
     @CheckForNull
@@ -176,7 +172,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
 
     /**
      * Moves a propertyChangeListener from one bean to another, where the
-     * listerner reference matches the currentName.
+     * listener reference matches the currentName.
      */
     private void moveListener(@Nonnull NamedBean oldBean, @Nonnull NamedBean newBean, @Nonnull String currentName) {
         java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxySensorManager extends AbstractProxyManager
+public class ProxySensorManager extends AbstractProxyManager<Sensor>
         implements SensorManager {
 
     public ProxySensorManager() {

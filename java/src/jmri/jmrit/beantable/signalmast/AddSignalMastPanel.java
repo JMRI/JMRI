@@ -677,10 +677,10 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         } catch (org.jdom2.JDOMException e) {
-            mastBox.addItem("Failed to create definition, did you select a system?");
+            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox1"));
             log.warn("in loadMastDefinitions", e);
         } catch (java.io.IOException | URISyntaxException e) {
-            mastBox.addItem("Failed to read definition, did you select a system?");
+            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox2"));
             log.warn("in loadMastDefinitions", e);
         }
 
@@ -1196,9 +1196,7 @@ public class AddSignalMastPanel extends JPanel {
 
     void handleCreateException(String sysName) {
         JOptionPane.showMessageDialog(AddSignalMastPanel.this,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSignalMastAddFailed"),
-                        new Object[]{sysName}),
+                Bundle.getMessage("ErrorSignalMastAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
     }
