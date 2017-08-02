@@ -9,16 +9,16 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
 
 /**
- * Tests for ConnectionConfig class.
+ * Tests for RaspberryPiConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class ConnectionConfigTest {
+public class RaspberryPiConnectionConfigTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
+      Assert.assertNotNull("ConnectionConfig constructor",new RaspberryPiConnectionConfig());
    }
 
    @Before

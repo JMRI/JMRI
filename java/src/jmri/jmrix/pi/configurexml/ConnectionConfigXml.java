@@ -1,7 +1,7 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
-import jmri.jmrix.pi.ConnectionConfig;
+import jmri.jmrix.pi.RaspberryPiConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle XML persistance of layout connections by persistening
  * the RaspberryPiAdapter. Note this is named as the XML version of
- * a ConnectionConfig object, but it's actually persisting the 
- * RaspberryPiAdapter.
- * <P>
+ a RaspberryPiConnectionConfig object, but it's actually persisting the 
+ RaspberryPiAdapter.
+ <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write,
  * as that class is the one actually registered. Reads are brought
  * here directly via the class attribute in the XML.
@@ -35,12 +35,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     protected void getInstance(Object object) {
         log.debug("getInstance with Parameter called");
-        adapter=(RaspberryPiAdapter)((ConnectionConfig) object).getAdapter();
+        adapter=(RaspberryPiAdapter)((RaspberryPiConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
-        this.register(new ConnectionConfig(adapter));
+        this.register(new RaspberryPiConnectionConfig(adapter));
     }
 
     /**

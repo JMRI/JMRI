@@ -1,4 +1,3 @@
-
 package jmri.jmrix.pi;
 
 import java.awt.event.ActionEvent;
@@ -12,23 +11,22 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuring a Raspberry Pi layout connection.
  * <P>
- * This uses the {@link RaspberryPiAdapter} class to do the actual
- * connection.
+ * This uses the {@link RaspberryPiAdapter} class to do the actual connection.
  *
- * @author      Paul Bender  Copyright (C) 2015
-  *
+ * @author Paul Bender Copyright (C) 2015
+ *
  * @see RaspberryPiAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
 
     private boolean disabled = false;
     private RaspberryPiAdapter adapter = null;
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(RaspberryPiAdapter p){
+    public RaspberryPiConnectionConfig(RaspberryPiAdapter p) {
         super();
         adapter = p;
     }
@@ -36,16 +34,15 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
-    public ConnectionConfig() {
+    public RaspberryPiConnectionConfig() {
         super();
         adapter = new RaspberryPiAdapter();
     }
 
-
     protected boolean init = false;
 
     @Override
-    protected void checkInitDone(){
+    protected void checkInitDone() {
         if (log.isDebugEnabled()) {
             log.debug("init called for " + name());
         }
@@ -92,6 +89,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
+
                 @Override
                 public void focusGained(FocusEvent e) {
                 }
@@ -103,7 +101,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     @Override
-    public void updateAdapter(){
+    public void updateAdapter() {
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -112,70 +110,70 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     @Override
-    protected void showAdvancedItems(){
+    protected void showAdvancedItems() {
     }
 
     @Override
-    public void loadDetails(final javax.swing.JPanel details){
-       _details = details;
-       setInstance();
-       if(!init) {
-          if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
-            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-            NUMOPTIONS = NUMOPTIONS + 2;
-          }
-          addStandardDetails(adapter,false,NUMOPTIONS);
-          init = false;
-          checkInitDone();
-       } 
+    public void loadDetails(final javax.swing.JPanel details) {
+        _details = details;
+        setInstance();
+        if (!init) {
+            if (adapter.getSystemConnectionMemo() != null) {
+                systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+                NUMOPTIONS = NUMOPTIONS + 2;
+            }
+            addStandardDetails(adapter, false, NUMOPTIONS);
+            init = false;
+            checkInitDone();
+        }
     }
 
     @Override
-    protected void setInstance(){
-       if(adapter==null){
-          adapter = new RaspberryPiAdapter();
-       }
+    protected void setInstance() {
+        if (adapter == null) {
+            adapter = new RaspberryPiAdapter();
+        }
     }
 
     @Override
-    public jmri.jmrix.PortAdapter getAdapter(){
-      return adapter;
+    public jmri.jmrix.PortAdapter getAdapter() {
+        return adapter;
     }
 
     @Override
-    public String getInfo() { return "GPIO"; }
-
-    @Override
-    public String getManufacturer(){
-      return RaspberryPiConnectionTypeList.PI;
+    public String getInfo() {
+        return "GPIO";
     }
 
     @Override
-    public void setManufacturer(String manufacturer){
+    public String getManufacturer() {
+        return RaspberryPiConnectionTypeList.PI;
     }
 
     @Override
-    public String name(){
-       return getConnectionName();
+    public void setManufacturer(String manufacturer) {
     }
 
     @Override
-    public String getConnectionName(){
-       return "Raspberry Pi GPIO";
+    public String name() {
+        return getConnectionName();
     }
 
     @Override
-    public boolean getDisabled(){
-       return disabled;
+    public String getConnectionName() {
+        return "Raspberry Pi GPIO";
     }
 
     @Override
-    public void setDisabled(boolean disable){
-       this.disabled=disable;
+    public boolean getDisabled() {
+        return disabled;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+    @Override
+    public void setDisabled(boolean disable) {
+        this.disabled = disable;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class.getName());
 }
-
-
