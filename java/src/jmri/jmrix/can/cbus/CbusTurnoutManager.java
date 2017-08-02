@@ -100,4 +100,21 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
         return range;
     }
+
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getAddToolTip() {
+        return Bundle.getMessage("AddEntryToolTip");
+    }
+
+    /**
+     * Provide a connection specific entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getAddMask() {
+        return "^[a-zA-Z0-9]{3,}$";
+    }
+
 }

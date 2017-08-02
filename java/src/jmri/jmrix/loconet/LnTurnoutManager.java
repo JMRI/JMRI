@@ -179,5 +179,22 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getAddToolTip() {
+        return Bundle.getMessage("AddEntryToolTip");
+    }
+
+    /**
+     * Provide a connection specific entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getAddMask() {
+        return "^[0-9]{1,4}$";
+        // LocoNet: "enter a number", validates basic integer entry
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
 }
