@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractReporterManager extends AbstractManager
+public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
 
     @Override

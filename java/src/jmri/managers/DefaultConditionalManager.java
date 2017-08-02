@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
  */
-public class DefaultConditionalManager extends AbstractManager
+public class DefaultConditionalManager extends AbstractManager<Conditional>
         implements ConditionalManager, java.beans.PropertyChangeListener {
 
     public DefaultConditionalManager() {
@@ -122,7 +122,7 @@ public class DefaultConditionalManager extends AbstractManager
      * unlike the usual NamedBean support
      */
     @Override
-    protected void handleUserNameUniqueness(jmri.NamedBean s) {
+    protected void handleUserNameUniqueness(jmri.Conditional s) {
         // eventually needs error checking and reporting
     }
 

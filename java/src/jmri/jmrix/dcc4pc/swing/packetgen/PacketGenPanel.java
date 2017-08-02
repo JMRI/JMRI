@@ -11,6 +11,8 @@ import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Dcc4Pc messages
@@ -98,7 +100,11 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             loc = loc + 2;
         }
         m.setForChildBoard(childBoardBox.isSelected());
-        memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
+        if(memo.getDcc4PcTrafficController()!=null){
+            memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
+        } else {
+            log.error("no Traffic Controller Found");
+        }
     }
 
     @Override
@@ -112,11 +118,8 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     @Override
     public void reply(Dcc4PcReply r) {
     } // ignore replies
-
-    @Override
-    public void processingData() {
-    }
-
+    
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
     /**
      * Nested class to create one of these using old-style defaults
      */

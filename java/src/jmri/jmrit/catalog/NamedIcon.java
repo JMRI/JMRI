@@ -398,7 +398,7 @@ public class NamedIcon extends ImageIcon {
         int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
         AffineTransform t;
         if (false) {
-            //TODO: Test to see if the "else" case is necessary…
+            // TODO: Test to see if the "else" case is necessary
             t = AffineTransform.getTranslateInstance(
                 h * Math.sin(rad) - w * Math.cos(rad),
                 -w * Math.sin(rad) - h * Math.cos(rad));

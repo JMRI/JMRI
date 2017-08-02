@@ -189,10 +189,12 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li>Egbert Broerse, who worked on translations, improved
-        the signaling help and website content, contributed the
-        Rio Grande 1965 signal definition and greatly improved the GUI
-        for adding turnouts and signals.</li>
+        <li>Egbert Broerse, who worked on translations, added
+        Switchboards, graphic state display in the tables,
+        the Output Matrix signal mast and the Rio Grande 1965
+        signal definition, localized hardware connection tools and 
+        improved the signaling help, website content and
+        the GUI for adding turnouts and signals.</li>
 
         <li>Dick Bronson, who created the great LocoBuffer-II and
         worked hard to make sure it worked well with JMRI. He also
@@ -769,7 +771,11 @@
         our tech documentation, and updated the OpenLCB support to
         their version 0.7</li>
 
-        <li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
+        <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
+        generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
+        where we integrate our code and build the packages that we release to 
+        our users.
+        </li>
 
         <li>Simon Reader, who improved the throttle, added a check
         for completed status to Routes, and added the "invert"

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalGroupManager extends AbstractManager
+public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         implements SignalGroupManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalGroupManager() {

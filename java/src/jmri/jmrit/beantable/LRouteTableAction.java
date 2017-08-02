@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -510,9 +511,7 @@ public class LRouteTableAction extends AbstractTableAction {
         _userName.setText(logix.getUserName());
         String logixSysName = logix.getSystemName();
         int numConditionals = logix.getNumConditionals();
-        if (log.isDebugEnabled()) {
-            log.debug("setupEdit: logixSysName= " + logixSysName + ", numConditionals= " + numConditionals);
-        }
+        log.debug("setupEdit: logixSysName= {}, numConditionals= {}", logixSysName, numConditionals);
         for (int i = 0; i < numConditionals; i++) {
             String cSysName = logix.getConditionalByNumberOrder(i);
             switch (getRouteConditionalType(logixSysName, cSysName)) {
@@ -601,10 +600,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         soundFile.setText(action.getActionString());
                         continue;
                     default:
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         continue;
                 }
                 String name = action.getDeviceName();
@@ -614,10 +613,10 @@ public class LRouteTableAction extends AbstractTableAction {
                     elt = _outputMap.get(key);
                 }
                 if (elt == null) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     elt.setIncluded(true);
                     elt.setState(action.getActionData());
@@ -625,10 +624,10 @@ public class LRouteTableAction extends AbstractTableAction {
                     if (k == 0) {
                         onChange = change;
                     } else if (change != onChange) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("OnChangeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -676,10 +675,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         break;
                     default:
                         if (!LOGIX_INITIALIZER.equals(variable.getName())) {
-                            javax.swing.JOptionPane.showMessageDialog(
+                            JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -698,10 +697,10 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 if (elt == null) {
                     if (!LOGIX_INITIALIZER.equals(name)) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                         new Object[]{variable.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     elt.setIncluded(true);
@@ -724,10 +723,10 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_SET_SENSOR) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     String key = SENSOR_TYPE + name;
@@ -736,16 +735,16 @@ public class LRouteTableAction extends AbstractTableAction {
                         element = _alignMap.get(key);
                     }
                     if (element == null) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
 
                     } else if (!name.equals(action.getDeviceName())) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn2"),
                                         new Object[]{action.toString(), action.getDeviceName(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
 
                     } else {
                         element.setIncluded(true);
@@ -786,10 +785,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         break;
                     default:
                         if (!LOGIX_INITIALIZER.equals(variable.getName())) {
-                            javax.swing.JOptionPane.showMessageDialog(
+                            JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -820,19 +819,19 @@ public class LRouteTableAction extends AbstractTableAction {
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
             ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
                                 new Object[]{Integer.toString(tList.size()), c.getSystemName(),
                                     Integer.toString(actionList.size())}),
-                        rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
             }
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_LOCK_TURNOUT) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn2"),
                                     new Object[]{action.getDeviceName(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     boolean found = false;
@@ -845,10 +844,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                     }
                     if (!found) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn3"),
                                         new Object[]{name, c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -1268,9 +1267,9 @@ public class LRouteTableAction extends AbstractTableAction {
 
     void showMessage(String msg) {
 
-        javax.swing.JOptionPane.showMessageDialog(
+        JOptionPane.showMessageDialog(
                 _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                JOptionPane.WARNING_MESSAGE);
     }
 
     boolean checkNewNamesOK() {
@@ -1533,9 +1532,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
             }
             if (actionList.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, rbx.getString("noAction"),
-                        rbx.getString("addErr"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                        rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } else {
@@ -1600,9 +1599,9 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         }
         if (numConds == 1) {
-            javax.swing.JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     _addFrame, rbx.getString("noVars"),
-                    rbx.getString("addErr"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -1741,10 +1740,10 @@ public class LRouteTableAction extends AbstractTableAction {
             if (vList.size() > 0) {
                 numConds = makeAlignConditional(numConds, aList, vList, logix, sName, uName);
             } else {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
@@ -1884,12 +1883,10 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(_addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLRouteAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(_addFrame,
+                Bundle.getMessage("ErrorLRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
