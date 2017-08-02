@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.util.StringUtil;
@@ -84,12 +85,12 @@ public class DirectoryResource extends Resource {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(this.locale, "Directory.html"))), // NOI18N
                 String.format(this.locale,
                         Bundle.getMessage(this.locale, "HtmlTitle"), // NOI18N
-                        ServletUtil.getInstance().getRailroadName(false),
+                        InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                         title
                 ),
-                ServletUtil.getInstance().getNavBar(this.locale, base),
-                ServletUtil.getInstance().getRailroadName(false),
-                ServletUtil.getInstance().getFooter(this.locale, base),
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, base),
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, base),
                 title,
                 table
         );

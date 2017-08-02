@@ -110,6 +110,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      */
     public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        this.station = station;       
 
         central = new TurnoutCentralSection(normalIndicator, reversedIndicator, normalInput, reversedInput);
 
@@ -117,12 +118,9 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         central.initializeLamps(tm.provideTurnout(layoutTO));        
         field.initializeState(tm.provideTurnout(layoutTO)); 
-        
-        this.station = station;       
     }
     
     public void addLocks(List<Lock> locks) { 
-        central.addLocks(locks);
         field.addLocks(locks); 
     }
     
@@ -164,9 +162,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
 
         NamedBeanHandle<Sensor> hNormalInput;
         NamedBeanHandle<Sensor> hReversedInput;
-
-        List<Lock> locks;
-        public void addLocks(List<Lock> locks) { this.locks = locks; }
 
         enum State {
             SHOWING_NORMAL,
@@ -263,7 +258,6 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         public TurnoutFieldSection(String layoutTO) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
             TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-            SensorManager sm = InstanceManager.getDefault(SensorManager.class);
                     
             hLayoutTO = hm.getNamedBeanHandle(layoutTO, tm.provideTurnout(layoutTO));
         

@@ -63,6 +63,8 @@ public class Siglet extends AbstractAutomaton {
      */
     @Override
     protected boolean handle() {
+        // write down state to compare later for changes
+        waitChangePrecheck(inputs);
         // update the result
         setOutput();
         // wait for changes

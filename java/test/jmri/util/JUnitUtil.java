@@ -262,18 +262,8 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // clear system connections
-        jmri.jmrix.SystemConnectionMemo.reset();
-
-        // create a new instance manager & use initializer to clear static list of state
-        new InstanceManager() {
-            {
-                managerLists.clear();
-            }
-        };
-
-        // add the NamedBeanHandleManager, which is always needed
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        // clear all instances from the static InstanceManager
+        InstanceManager.getDefault().clearAll();
     }
 
     public static void resetTurnoutOperationManager() {

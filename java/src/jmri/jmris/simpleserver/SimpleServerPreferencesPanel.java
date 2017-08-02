@@ -168,7 +168,7 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
      */
     @Override
     public boolean isPreferencesValid() {
-        return false;
+        return true;
     }
 
 }

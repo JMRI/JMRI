@@ -37,7 +37,9 @@
       and patterns, and point to examples of current best
       practices. <a id="namedbeans" name="namedbeans"></a></p>
 
-      <h2>Names, NamedBeans, and Managers</h2>The "NamedBean"
+      <a id="NamedBean" name="minApp"></a>
+      <h2>Names, NamedBeans, and Managers</h2>
+      The "NamedBean"
       concept is basic to JMRI. A <a href=
       "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       is a basic JMRI object that represents something, typically
@@ -93,6 +95,46 @@
       the <code>NamedBeanHandle</code> will get updated and you're next <code>getBean()</code> call will get the
       right reference.
       
+
+      <a id="SPI" name="minApp"></a>
+      <h2>Service Providers</h2>
+      Java provides a capability, using a 
+      "Service Provider Interface", 
+      that allows us to reduce the complexity of our
+      code by having the code itself discover what pieces
+      are available and need to be installed.
+      
+      <p>
+      For example, by annotating a class with
+      <pre><code>
+      @ServiceProvider(service = PreferencesManager.class)
+      </code></pre> 
+      the 
+      JMRI Preferences System
+      automatically will discover that the class uses the preferences
+      and should be hooked up.  This means that we don't have to 
+      modify the Preferences classes to look up each new class using them, 
+      and that we can (eventually) more incrementally build and distribute JMRI.
+      
+      <p>
+      Available patterns (links are to the JavaDoc for the interface or class 
+      specifying the functionality):
+      <dl>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt><dd></dd>
+      <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">HttpServlet</a></dt>
+        <dd>(Note this is a Java-defined interface, not a JMRI-defined one)</dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
+        <dd>Provides a way for the JMRI InstanceManager to create an instance of the class when one is requested</dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt><dd></dd>
+      </dl>
+
+      <a id="Organization" name="minApp"></a>
       <h2>Code Organization</h2>
 
       <p>At the highest level, we separate test code from
@@ -185,7 +227,9 @@
         </dd>
       </dl>The "checkdepends.csh" development tool script is meant
       to check some for inadvertant dependencies, but we're far
-      from clearing it. <!--#include virtual="/Footer" -->
+      from clearing it. 
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

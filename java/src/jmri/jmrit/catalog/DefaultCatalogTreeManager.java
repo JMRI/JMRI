@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  *
  */
-public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
+public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager<CatalogTree>
         implements jmri.CatalogTreeManager {
 
     public DefaultCatalogTreeManager() {

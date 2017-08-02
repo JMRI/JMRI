@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SwitchboardEditorXmlTest.class
+   SwitchboardEditorXmlTest.class,
+   SwitchboardEditor$BeanSwitchXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.switchboardEditor.configurexml package.

@@ -35,8 +35,8 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     public LocoNetBluetoothAdapter(LocoNetSystemConnectionMemo adapterMemo) {
         super(adapterMemo);
-        option1Name = "CommandStation";
-        option2Name = "TurnoutHandle";
+        option1Name = "CommandStation"; // NOI18N
+        option2Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Command station type:", commandStationNames, false));
         options.put(option2Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }

@@ -506,8 +506,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private int upperLeftX = 0;
     private int upperLeftY = 0;
+
     private float mainlineTrackWidth = 4.0F;
     private float sideTrackWidth = 2.0F;
+
     private Color defaultTrackColor = Color.black;
     private Color defaultOccupiedTrackColor = Color.red;
     private Color defaultAlternativeTrackColor = Color.white;
@@ -1143,7 +1145,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     //note: panel width & height comes from the saved (xml) panel (file) on disk
                     setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
                             prefsWindowLocation.x, prefsWindowLocation.y,
-                            panelWidth, panelHeight);
+                            panelWidth, panelHeight, true);
                 }
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
         });     //SwingUtilities.invokeLater
@@ -3441,196 +3443,99 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return setZoom(newScale);
     }   //zoomOut
 
-//
-//
-//
-    private double zoomToFit() {
-        double result = getZoom();
-
+    //
+    // TODO: make this public? (might be useful!)
+    //
+    private Rectangle2D calculateMinimumLayoutBounds() {
         // calculate a union of the bounds of everything on the layout
-        Rectangle2D bounds = new Rectangle2D.Double();
+        Rectangle2D result = new Rectangle2D.Double();
 
-        for (PositionableLabel o : backgroundImage) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
+        // combine all (onscreen) Components into a list of Components
+        List<Component> listOfComponents = new ArrayList<Component>();
+        listOfComponents.addAll(backgroundImage);
+        listOfComponents.addAll(sensorImage);
+        listOfComponents.addAll(signalHeadImage);
+        listOfComponents.addAll(markerImage);
+        listOfComponents.addAll(labelImage);
+        listOfComponents.addAll(clocks);
+        listOfComponents.addAll(multiSensors);
+        listOfComponents.addAll(signalList);
+        listOfComponents.addAll(memoryLabelList);
+        listOfComponents.addAll(blockContentsLabelList);
+        listOfComponents.addAll(sensorList);
+        listOfComponents.addAll(signalMastList);
+
+        // combine their bounds
+        for (Component o : listOfComponents) {
+            if (result.isEmpty()) {
+                result = o.getBounds();
             } else {
-                bounds = bounds.createUnion(o.getBounds());
+                result = result.createUnion(o.getBounds());
             }
         }
 
-        for (SensorIcon o : sensorImage) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
+        // combine all (onscreen) LayoutTracks into a list of LayoutTracks
+        List<LayoutTrack> listOfLayoutTracks = new ArrayList<LayoutTrack>();
+        listOfLayoutTracks.addAll(turnoutList);
+        listOfLayoutTracks.addAll(trackList);
+        listOfLayoutTracks.addAll(pointList);
+        listOfLayoutTracks.addAll(xingList);
+        listOfLayoutTracks.addAll(slipList);
+        listOfLayoutTracks.addAll(turntableList);
 
-        for (SignalHeadIcon o : signalHeadImage) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
+        // combine their bounds
+        for (LayoutTrack o : listOfLayoutTracks) {
+            if (result.isEmpty()) {
+                result = o.getBounds();
             } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (LocoIcon o : markerImage) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (PositionableLabel o : labelImage) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (AnalogClock2Display o : clocks) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (MultiSensorIcon o : multiSensors) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (LayoutTurnout o : turnoutList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (TrackSegment o : trackList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (PositionablePoint o : pointList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (LevelXing o : xingList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (LayoutSlip o : slipList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (LayoutTurntable o : turntableList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (SignalHeadIcon o : signalList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (MemoryIcon o : memoryLabelList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (BlockContentsIcon o : blockContentsLabelList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (SensorIcon o : sensorList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
-            }
-        }
-
-        for (SignalMastIcon o : signalMastList) {
-            if (bounds.isEmpty()) {
-                bounds = o.getBounds();
-            } else {
-                bounds = bounds.createUnion(o.getBounds());
+                result = result.createUnion(o.getBounds());
             }
         }
 
         // put a grid size margin around it
-        bounds = MathUtil.inset(bounds, -gridSize1st);
+        result = MathUtil.inset(result, -gridSize1st);
 
-        // don't let the orgin go negative
-        bounds = new Rectangle2D.Double(
-                Math.max(bounds.getX(), 0), Math.max(bounds.getY(), 0),
-                bounds.getWidth(), bounds.getHeight());
+        return result;
+    }   // calculateMinimumPanelBounds
+
+    //
+    //
+    //
+    private double zoomToFit() {
+        Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
+
+        upperLeftX = (int) layoutBounds.getX();
+        upperLeftY = (int) layoutBounds.getY();
+        panelWidth = (int) layoutBounds.getWidth() + upperLeftX;
+        panelHeight = (int) layoutBounds.getHeight() + upperLeftY;
+        setTargetPanelSize(panelWidth, panelHeight);
+
+        layoutBounds = new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
 
         // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
-        scrollBounds = new Rectangle2D.Double(
-                Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
-                scrollBounds.getWidth(), scrollBounds.getHeight());
-
-        // calculate the horzontial and vertical scales
-        double scaleWidth = scrollPane.getWidth() / bounds.getWidth();
-        double scaleHeight = scrollPane.getHeight() / bounds.getHeight();
-
-        // use the smallest of the two as our new zoom
-        result = Math.min(scaleWidth, scaleHeight);
-
-        // set the new zoom (return value may be different)
-        result = setZoom(result);
-
-        // calculate new scroll bounds
-        scrollBounds = MathUtil.scale(scrollBounds, result);
 
         // don't let its orgin go negative
-        scrollBounds = new Rectangle2D.Double(
-                Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
-                scrollBounds.getWidth(), scrollBounds.getHeight());
+        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+
+        // calculate the horzontial and vertical scales
+        double scaleWidth = scrollPane.getWidth() / layoutBounds.getWidth();
+        double scaleHeight = scrollPane.getHeight() / layoutBounds.getHeight();
+
+        // set the new zoom to the smallest of the two
+        double results = setZoom(Math.min(scaleWidth, scaleHeight));
+
+        // calculate new scroll bounds
+        scrollBounds = MathUtil.scale(layoutBounds, results);
+
+        // don't let its orgin go negative
+        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
 
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
-        return result;
+        return results;
     }   //zoomToFit
 
     //
@@ -4905,10 +4810,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         upperLeftX = pt.x;
         upperLeftY = pt.y;
 
+        // TODO: figure out why this isn't working...
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
             String windowFrameRef = getWindowFrameRef();
 
-            //the restore code for this isn't working...
             prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
             prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
 
@@ -5423,7 +5328,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
-                    //TODO: highlight all free connection points
+                    //TODO: highlight all free connection points?
                 } else {    //TODO: auto-add anchor point?
                     foundObject = null;
                     beginObject = null;
@@ -5487,7 +5392,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // all matching items are then added to the resulting ArrayList
-    private static List forEachItemInListOfListsDo(
+    private static List testEachItemInListOfLists(
             List<List> listOfListsOfObjects,
             Predicate<Object> tester) {
         List result = new ArrayList();
@@ -5861,6 +5766,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     log.warn("No item selected in panel edit mode");
                 }
+                Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
+                // move upperLeftX and upperLeftX if necessary
+                upperLeftX = Math.min(upperLeftX, (int) layoutBounds.getX());
+                upperLeftY = Math.min(upperLeftY, (int) layoutBounds.getY());
+
+                // expand panelWidth and panelHeight if necessary
+                int newWidth = (int) (layoutBounds.getWidth() + layoutBounds.getX());
+                int newHeight = (int) (layoutBounds.getHeight() + layoutBounds.getY());
+                if ((panelWidth < newWidth) || (panelHeight < newHeight)) {
+                    panelWidth = newWidth;
+                    panelHeight = newHeight;
+                    setTargetPanelSize(panelWidth, panelHeight);
+                }
+
                 selectedObject = null;
                 repaint();
             } else if ((event.isPopupTrigger() || delayedPopupTrigger) && !isDragging) {
@@ -9892,6 +9811,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 backgroundImage.add((PositionableLabel) l);
             }
         }
+
+        Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
+        // move upperLeftX and upperLeftX if necessary
+        upperLeftX = Math.min(upperLeftX, (int) layoutBounds.getX());
+        upperLeftY = Math.min(upperLeftY, (int) layoutBounds.getY());
+
+        // expand panelWidth and panelHeight if necessary
+        int newWidth = (int) (layoutBounds.getWidth() + layoutBounds.getX());
+        int newHeight = (int) (layoutBounds.getHeight() + layoutBounds.getY());
+        if ((panelWidth < newWidth) || (panelHeight < newHeight)) {
+            panelWidth = newWidth;
+            panelHeight = newHeight;
+            setTargetPanelSize(panelWidth, panelHeight);
+        }
     }   //putItem
 
     /**
@@ -10345,17 +10278,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
-        upperLeftX = x;
-        upperLeftY = y;
+        setLayoutDimensions(windowW, windowH, x, y, panelW, panelH, false);
+    }
+    public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH, boolean merge) {
         windowWidth = windowW;
         windowHeight = windowH;
-        panelWidth = panelW;
-        panelHeight = panelH;
-        setTargetPanelSize(panelWidth, panelHeight);
-        setLocation(upperLeftX, upperLeftY);
         setSize(windowWidth, windowHeight);
-        log.debug(
-                "setLayoutDimensions Position - " + upperLeftX + "," + upperLeftY + " windowSize - " + windowWidth + "," + windowHeight + " panelSize - " + panelWidth + ","
+
+        if (merge) {
+            Rectangle2D panelBounds = calculateMinimumLayoutBounds();
+
+            upperLeftX = Math.min(x, (int) panelBounds.getX());
+            upperLeftY = Math.min(y, (int) panelBounds.getY());
+
+            panelWidth = Math.max(panelW, (int) panelBounds.getWidth());
+            panelHeight = Math.max(panelH, (int) panelBounds.getHeight());
+        } else {
+            upperLeftX = x;
+            upperLeftY = y;
+
+            panelWidth = panelW;
+            panelHeight = panelH;
+        }
+        setLocation(upperLeftX, upperLeftY);
+        setTargetPanelSize(panelWidth, panelHeight);
+
+        log.debug("setLayoutDimensions Position - " + upperLeftX + ","
+                + upperLeftY + " windowSize - " + windowWidth + ","
+                + windowHeight + " panelSize - " + panelWidth + ","
                 + panelHeight);
     }   //setLayoutDimensions
 
@@ -10962,12 +10912,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int wideMod = gridSize1st * gridSize2nd;
         int wideMin = gridSize1st / 2;
 
-        Dimension dim = getSize();
-        double maxX = dim.width;
-        double maxY = dim.height;
+        //Dimension dim = getSize();
+        // granulize puts these on gridSize1st increments
+        double minX = MathUtil.granulize(upperLeftX, gridSize1st);
+        double minY = MathUtil.granulize(upperLeftY, gridSize1st);
+        double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
+        double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
-        Point2D startPt = new Point2D.Double(0.0, gridSize1st);
-        Point2D stopPt = new Point2D.Double(maxX, gridSize1st);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -10975,35 +10926,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(narrow);
 
         //draw horizontal lines
-        double pix = gridSize1st;
-
+        double pix = minY + gridSize1st;
         while (pix < maxY) {
-            startPt.setLocation(0.0, pix);
-            stopPt.setLocation(maxX, pix);
-
             if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
-                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.draw(new Line2D.Double(minX, pix, maxX, pix));
                 g2.setStroke(narrow);
             } else {
-                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.draw(new Line2D.Double(minX, pix, maxX, pix));
             }
             pix += gridSize1st;
         }
 
         //draw vertical lines
-        pix = gridSize1st;
-
+        pix = minX + gridSize1st;
         while (pix < maxX) {
-            startPt.setLocation(pix, 0.0);
-            stopPt.setLocation(pix, maxY);
-
             if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
-                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.draw(new Line2D.Double(pix, minY, pix, maxY));
                 g2.setStroke(narrow);
             } else {
-                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.draw(new Line2D.Double(pix, minY, pix, maxY));
             }
             pix += gridSize1st;
         }
