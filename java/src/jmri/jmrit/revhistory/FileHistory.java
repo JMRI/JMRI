@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * These can be nested: A revision can come with a history.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class FileHistory {
 
@@ -77,6 +76,7 @@ public class FileHistory {
         return retval;
     }
 
+    @Override
     public String toString() {
         return toString("");
     }

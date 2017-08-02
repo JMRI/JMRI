@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -47,13 +29,25 @@ import javax.swing.table.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * GUI to define OBlocks
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
+ *
+ * @author	Pete Cressman (C) 2010
+ */
 public class DnDJTable extends JTable implements DropTargetListener,
         DragGestureListener, DragSourceListener, Transferable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6622218098364227729L;
     public static final String TableCellFlavorMime = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection";
     public static final DataFlavor TABLECELL_FLAVOR = new DataFlavor(
@@ -156,6 +150,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                 int col = columnAtPoint(pt);
                 int row = rowAtPoint(pt);
                 if (col >= 0 && row >= 0) {
+                    row = convertRowIndexToModel(row);
                     TableCellSelection sel = (TableCellSelection) tr.getTransferData(TABLECELL_FLAVOR);
                     data = (String) sel.getTransferData(DataFlavor.stringFlavor);
                     model.setValueAt(data, row, col);
@@ -231,6 +226,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             int row = getSelectedRow();
             int col = getSelectedColumn();
             if (col >= 0 && row >= 0) {
+                row = convertRowIndexToModel(row);
                 return getValueAt(row, col);
             }
         }
@@ -296,10 +292,6 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
     class DnDHandler extends TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8476413554238761109L;
         JTable _table;
 
         DnDHandler(JTable table) {
@@ -318,6 +310,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             if (col < 0 || row < 0) {
                 return null;
             }
+            row = table.convertRowIndexToModel(row);
             //if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
             //                                    getName()+" from ("+row+", "+col+") data= \""
             //                                    +table.getModel().getValueAt(row, col)+"\"");
@@ -366,6 +359,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     int col = table.getSelectedColumn();
                     int row = table.getSelectedRow();
                     if (col >= 0 && row >= 0) {
+                        row = table.convertRowIndexToView(row);
                         String data = (String) tr.getTransferData(DataFlavor.stringFlavor);
                         model.setValueAt(data, row, col);
                         model.fireTableDataChanged();

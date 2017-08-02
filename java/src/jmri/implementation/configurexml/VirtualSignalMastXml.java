@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for a DefaultSignalMastManager objects.
+ * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class VirtualSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -26,6 +26,7 @@ public class VirtualSignalMastXml
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         VirtualSignalMast p = (VirtualSignalMast) o;
         Element e = new Element("virtualsignalmast");
@@ -83,12 +84,13 @@ public class VirtualSignalMastXml
             }
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
 
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

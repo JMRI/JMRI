@@ -1,5 +1,6 @@
 package jmri.jmrit.audio;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -89,14 +90,14 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "OK to write to static variable mixer as we are cleaning up")
     public void cleanup() {
         // Stop the command thread
         super.cleanup();
 
         // Get the active AudioManager
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
         List<String> audios = am.getSystemNameList();

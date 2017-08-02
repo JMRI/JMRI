@@ -18,7 +18,7 @@ import jmri.implementation.DefaultConditionalAction;
  * separate lock/unlocked indication by showing occupied if the associated
  * turnout has been unlocked.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicator implements Constants {
 
@@ -47,18 +47,18 @@ public class OsIndicator implements Constants {
     public void instantiate() {
         // find/create Logix
         String nameP = namePrefix + output;
-        Logix l = InstanceManager.logixManagerInstance().
+        Logix l = InstanceManager.getDefault(jmri.LogixManager.class).
                 getLogix(nameP);
         if (l == null) {
-            l = InstanceManager.logixManagerInstance().
+            l = InstanceManager.getDefault(jmri.LogixManager.class).
                     createNewLogix(nameP, "");
         }
         l.deActivateLogix();
         // Find/create conditional and add
-        Conditional c = InstanceManager.conditionalManagerInstance()
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                 .getConditional(l, nameP + "C1");
         if (c == null) {
-            c = InstanceManager.conditionalManagerInstance()
+            c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                     .createNewConditional(nameP + "C1", "");
             l.addConditional(nameP + "C1", -1);
         }
@@ -82,7 +82,7 @@ public class OsIndicator implements Constants {
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                 Conditional.ACTION_SET_TURNOUT, output,
                 Turnout.THROWN, " "));
-        c.setAction(actionList);										// string data
+        c.setAction(actionList);          // string data
 
         // and put it back in operation
         l.activateLogix();
@@ -101,14 +101,14 @@ public class OsIndicator implements Constants {
 
         // findLogix
         String nameP = namePrefix + output;
-        Logix l = InstanceManager.logixManagerInstance().
+        Logix l = InstanceManager.getDefault(jmri.LogixManager.class).
                 getLogix(nameP);
         if (l == null) {
             throw new jmri.JmriException("Logix does not exist");
         }
 
         // Find/create conditional and add
-        Conditional c = InstanceManager.conditionalManagerInstance()
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                 .getConditional(l, nameP + "C1");
         if (c == null) {
             throw new jmri.JmriException("Conditional does not exist");

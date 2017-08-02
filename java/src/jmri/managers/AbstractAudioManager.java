@@ -1,5 +1,8 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -77,6 +80,16 @@ public abstract class AbstractAudioManager extends AbstractManager
         return (rv);
     }
 
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
+        if (systemName == null) {
+            log.error("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+        }
+    }
+
     @Override
     public Audio newAudio(String systemName, String userName) throws AudioException {
         if (log.isDebugEnabled()) {
@@ -84,11 +97,8 @@ public abstract class AbstractAudioManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName) // NOI18N
                     + ";" + ((userName == null) ? "null" : userName)); // NOI18N
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName)); // NOI18N
-            return null;
-        }
+        checkSystemName(systemName, userName);
+
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.SOURCE))
@@ -128,8 +138,11 @@ public abstract class AbstractAudioManager extends AbstractManager
         s = createNewAudio(systemName, userName);
 
         // save in the maps
-        if (!(s == null)) {
+        if (s != null) {
             register(s);
+        } else {
+            // must have failed to create
+            throw new IllegalArgumentException("can't create audio with System Name \""+systemName+"\"");
         }
 
         return s;
@@ -139,13 +152,14 @@ public abstract class AbstractAudioManager extends AbstractManager
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @param systemName Audio object system name (e.g. IAS1, IAB4)
+     * @param systemName Audio object system name (for example IAS1, IAB4)
      * @param userName   Audio object user name
      * @return never null
      * @throws AudioException if error occurs during creation
      */
     abstract protected Audio createNewAudio(String systemName, String userName) throws AudioException;
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameAudio");
     }

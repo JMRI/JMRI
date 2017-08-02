@@ -1,4 +1,3 @@
-// SignallingAction.java
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
@@ -8,17 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignallingFrame object
+ * Swing action to create and register a SignallingFrame object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9089310555904109131L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingAction(String s) {
@@ -32,12 +26,12 @@ public class SignallingAction extends AbstractAction {
     public void setMast(jmri.SignalMast source, jmri.SignalMast dest) {
         this.source = source;
         this.dest = dest;
-
     }
 
     jmri.SignalMast source = null;
     jmri.SignalMast dest = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingFrame f = new SignallingFrame();
         try {
@@ -50,6 +44,3 @@ public class SignallingAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SignallingAction.class.getName());
 }
-
-
-/* @(#)SignallingAction.java */

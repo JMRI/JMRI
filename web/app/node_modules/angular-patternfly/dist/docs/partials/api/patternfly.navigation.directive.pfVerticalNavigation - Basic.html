@@ -1,0 +1,596 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/navigation/examples/vertical-navigation-basic.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/navigation/examples/vertical-navigation-basic.js#L568" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfVerticalNavigation - Basic</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.navigation</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Directive for vertical navigation. This sets up the nav bar header with the collapse button (hamburger) and the
+application brand image (or text) as well as the vertical navigation bar containing the navigation items. This
+directive supports primary, secondary, and tertiary navigation with options to allow pinning of the secondary and
+tertiary navigation menus as well as the option for persistent secondary menus.
+<br><br>
+The remaining parts of the navbar header can be transcluded.
+<br><br>
+Tha navigation items are marked active based on the current location and the href value for the item. If not using
+href&#39;s on the items to navigate, set update-active-items-on-click to &quot;true&quot;.
+<br><br>
+This directive works in conjunction with the main content container if the &#39;container-pf-nav-pf-vertical&#39; class
+selector is added to the main content container.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-vertical-navigation - -basic
+     brand-src="{string}"
+     brand-alt="{string}"
+     show-badges="{boolean}"
+     persistent-secondary="{boolean}"
+     hidden-icons="{boolean}"
+     items="{array}"
+     navigate-callback="{function}"
+     item-click-callback="{function}"
+     update-active-items-on-click="{boolean}"
+     ignore-mobile="{boolean}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>brandSrc</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>src for brand image</p>
+</div></td></tr><tr><td>brandAlt</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Text for product name when brand image is not available</p>
+</div></td></tr><tr><td>showBadges</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Flag if badges are used on navigation items, default: false</p>
+</div></td></tr><tr><td>persistentSecondary</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Flag to use persistent secondary menus, default: false</p>
+</div></td></tr><tr><td>hiddenIcons</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Flag to not show icons on the primary menu, default: false</p>
+</div></td></tr><tr><td>items</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>List of navigation items</p>
+<ul style='list-style-type: none'>
+<li>.title          - (string) Name of item to be displayed on the menu
+<li>.iconClass      - (string) Classes for icon to be shown on the menu (ex. &quot;fa fa-dashboard&quot;)
+<li>.href           - (string) href link to navigate to on click
+<li>.children       - (array) Submenu items (same structure as top level items)
+<li>.badges         -  (array) Badges to display for the item, badges with a zero count are not displayed.
+  <ul style='list-style-type: none'>
+  <li>.count        - (number) Count to display in the badge
+  <li>.iconClass    - (string) Class to use for showing an icon before the count
+  <li>.tooltip      - (string) Tooltip to display for the badge
+  <li>.badgeClass:  - (string) Additional class(es) to add to the badge container
+  </ul>
+</ul></div></td></tr><tr><td>navigateCallback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>function(item) Callback method invoked on a navigation item click (one with no submenus)</p>
+</div></td></tr><tr><td>itemClickCallback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>function(item) Callback method invoked on an item click</p>
+</div></td></tr><tr><td>updateActiveItemsOnClick</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Flag if active items should be marked on click rather than on navigation change, default: false</p>
+</div></td></tr><tr><td>ignoreMobile</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><p>Flag if mobile state should be ignored (use only if absolutely necessary) default: false</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-basic-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.navigation" source-edit-deps="angular.js patternfly.utils patternfly.filters patternfly.sort patternfly.views script.js add_content.js hide-show.js" source-edit-html="index.html-37" source-edit-css="" source-edit-js="script.js-38 add_content.js hide-show.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-37" ng-html-wrap-loaded="patternfly.navigation angular.js patternfly.utils patternfly.filters patternfly.sort patternfly.views script.js add_content.js hide-show.js"></pre>
+<script type="text/ng-template" id="index.html-37">
+<div>
+  <button class="btn btn-primary" id="showVerticalNav" onclick="showVerticalNav">Show Vertical Navigation</button>
+  <label class="example-info-text">This will display the vertical nav bar and some mock content over the content of this page.</label>
+  <label class="example-info-text">Exit the demo to return back to this page.</label>
+</div>
+<div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout hidden" ng-controller="vertNavController">
+  <div pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"
+       show-badges="true" pinnable-menus="true" update-active-items-on-click="true"
+       navigate-callback="handleNavigateClick">
+    <div>
+      <ul class="nav navbar-nav">
+      <li><button id="hideVerticalNav" class="hide-vertical-nav">Exit Vertical Navigation Demo</button></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-iconic">
+        <li class="dropdown">
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle nav-item-iconic" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span title="Help" class="fa pficon-help"></span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle nav-item-iconic" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span title="Username" class="fa pficon-user"></span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><a href="#">Preferences</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
+    <div id="includedContent"></div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-38"></pre>
+<script type="text/ng-template" id="script.js-38">
+angular.module('patternfly.navigation').controller('vertNavController', ['$scope',
+  function ($scope) {
+    $scope.navigationItems = [
+      {
+         title: "Dashboard",
+         iconClass: "fa fa-dashboard",
+         href: "#/dashboard"
+      },
+      {
+         title: "Dolor",
+         iconClass : "fa fa-shield",
+         href: "#/dolor",
+         badges: [
+           {
+             count: 1283,
+             tooltip: "Total number of items"
+           }
+         ]
+      },
+      {
+         title: "Ipsum",
+         iconClass: "fa fa-space-shuttle",
+         children: [
+            {
+               title: "Intellegam",
+               children: [
+                  {
+                     title: "Recteque",
+                     href: "#/ipsum/intellegam/recteque",
+                     badges: [
+                       {
+                         count: 6,
+                         tooltip: "Total number of error items",
+                         badgeClass: 'example-error-background'
+                       }
+                     ]
+                  },
+                  {
+                     title: "Suavitate",
+                     href: "#/ipsum/intellegam/suavitate",
+                     badges: [
+                       {
+                         count: 2,
+                         tooltip: "Total number of items"
+                       }
+                     ]
+                  },
+                  {
+                     title: "Vituperatoribus",
+                     href: "#/ipsum/intellegam/vituperatoribus",
+                     badges: [
+                       {
+                         count: 18,
+                         tooltip: "Total number of warning items",
+                         badgeClass: 'example-warning-background'
+                       }
+                     ]
+                  }
+               ]
+            },
+            {
+               title: "Copiosae",
+               children: [
+                  {
+                     title: "Exerci",
+                     href: "#/ipsum/copiosae/exerci",
+                     badges: [
+                       {
+                         count: 2,
+                         tooltip: "Total number of error items",
+                         iconClass: 'pficon pficon-error-circle-o'
+                       },
+                       {
+                         count: 6,
+                         tooltip: "Total number warning error items",
+                         iconClass: 'pficon pficon-warning-triangle-o'
+                       }
+                     ]
+                  },
+                  {
+                     title: "Quaeque",
+                     href: "#/ipsum/copiosae/quaeque",
+                     badges: [
+                       {
+                         count: 0,
+                         tooltip: "Total number of error items",
+                         iconClass: 'pficon pficon-error-circle-o'
+                       },
+                       {
+                         count: 4,
+                         tooltip: "Total number warning error items",
+                         iconClass: 'pficon pficon-warning-triangle-o'
+                       }
+                     ]
+                  },
+                  {
+                     title: "Utroque",
+                     href: "#/ipsum/copiosae/utroque",
+                     badges: [
+                       {
+                         count: 1,
+                         tooltip: "Total number of error items",
+                         iconClass: 'pficon pficon-error-circle-o'
+                       },
+                       {
+                         count: 2,
+                         tooltip: "Total number warning error items",
+                         iconClass: 'pficon pficon-warning-triangle-o'
+                       }
+                     ]
+                  }
+               ]
+            },
+            {
+               title: "Patrioque",
+               children: [
+                  {
+                     title: "Novum",
+                     href: "#/ipsum/patrioque/novum"
+                  },
+                  {
+                     title: "Pericula",
+                     href: "#/ipsum/patrioque/pericula"
+                  },
+                  {
+                     title: "Gubergren",
+                     href: "#/ipsum/patrioque/gubergren"
+                  }
+               ]
+            },
+            {
+               title: "Accumsan",
+               href: "#/ipsum/Accumsan",
+               badges: [
+                 {
+                   count: 2,
+                   tooltip: "Total number of error items",
+                   iconClass: 'pficon pficon-error-circle-o'
+                 },
+                 {
+                   count: 6,
+                   tooltip: "Total number warning error items",
+                   iconClass: 'pficon pficon-warning-triangle-o'
+                 }
+               ]
+            }
+         ]
+      },
+      {
+         title: "Amet",
+         iconClass: "fa fa-paper-plane",
+         children: [
+            {
+               title: "Detracto",
+               children: [
+                  {
+                     title: "Delicatissimi",
+                     href: "#/amet/detracto/delicatissimi"
+                  },
+                  {
+                     title: "Aliquam",
+                     href: "#/amet/detracto/aliquam"
+                  },
+                  {
+                     title: "Principes",
+                     href: "#/amet/detracto/principes"
+                  }
+               ]
+            },
+            {
+               title: "Mediocrem",
+               children: [
+                  {
+                     title: "Convenire",
+                     href: "#/amet/mediocrem/convenire"
+                  },
+                  {
+                     title: "Nonumy",
+                     href: "#/amet/mediocrem/nonumy"
+                  },
+                  {
+                     title: "Deserunt",
+                     href: "#/amet/mediocrem/deserunt"
+                  }
+               ]
+            },
+            {
+               title: "Corrumpit",
+               children: [
+                  {
+                     title: "Aeque",
+                     href: "#/amet/corrumpit/aeque"
+                  },
+                  {
+                     title: "Delenit",
+                     href: "#/amet/corrumpit/delenit"
+                  },
+                  {
+                     title: "Qualisque",
+                     href: "#/amet/corrumpit/qualisque"
+                  }
+               ]
+            },
+            {
+               title: "urbanitas",
+               href: "#/amet/urbanitas"
+            }
+         ]
+      },
+      {
+         title: "Adipscing",
+         iconClass: "fa fa-graduation-cap",
+         href: "#/adipscing"
+      },
+      {
+         title: "Lorem",
+         iconClass: "fa fa-gamepad",
+         href: "#/lorem"
+      },
+      {
+         title: "Exit Demo"
+      }
+    ];
+    $scope.handleNavigateClick = function (item) {
+      if (item.title === "Exit Demo") {
+        angular.element(document.querySelector("#verticalNavLayout")).addClass("hidden");
+      }
+    };
+  }
+]);
+</script>
+</div>
+<div class="tab-pane" title="add_content.js">
+<pre class="prettyprint linenums" ng-set-text="add_content.js"></pre>
+<script type="text/ng-template" id="add_content.js">
+  $(document).ready(function() {
+    $("#includedContent")[0].innerHTML = '\
+    <div class="row row-cards-pf"> \
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+          <h4 class="card-pf-title" style="height: 17px;" id="example_\-ipsum\-">\
+          <span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">0</span> Ipsum\
+          </h4>\
+          <div class="card-pf-body" style="height: 50px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+          <h4 class="card-pf-title" style="height: 17px;" id="example_\-\-">\
+            <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">20</span> Amet</a>\
+          </h4>\
+          <div class="card-pf-body" style="height: 50px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>\
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-warning-triangle-o"></span>1</a></span>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+          <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+            <h4 class="card-pf-title" style="height: 17px;" id="example_\-\-">\
+              <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">9</span> Adipiscing</a>\
+            </h4>\
+            <div class="card-pf-body" style="height: 50px;">\
+              <p class="card-pf-aggregate-status-notifications">\
+                <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>\
+              </p>\
+            </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+          <h4 class="card-pf-title" style="height: 17px;" id="example_\-\-">\
+            <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">12</span> Lorem</a>\
+          </h4>\
+          <div class="card-pf-body" style="height: 50px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+    </div>\
+    <div class="row row-cards-pf">\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
+          <h4 class="card-pf-title" style="height: 42px;" id="example_\-\-ipsum\-">\
+            <span class="fa fa-rebel"></span>\
+            <span class="card-pf-aggregate-status-count">0</span> Ipsum\
+          </h4>\
+          <div class="card-pf-body" style="height: 24px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
+          <h4 class="card-pf-title" style="height: 42px;" id="example_\-\-\-amet\-\-">\
+            <a href="#">\
+              <span class="fa fa-paper-plane"></span>\
+              <span class="card-pf-aggregate-status-count">20</span> Amet\
+            </a>\
+          </h4>\
+          <div class="card-pf-body" style="height: 24px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
+          <h4 class="card-pf-title" style="height: 42px;" id="example_\-\-\-adipiscing\-\-">\
+            <a href="#">\
+              <span class="pficon pficon-cluster"></span>\
+              <span class="card-pf-aggregate-status-count">9</span> Adipiscing\
+            </a>\
+          </h4>\
+          <div class="card-pf-body" style="height: 24px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6 col-md-3">\
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini" style="height: 59px;">\
+          <h4 class="card-pf-title" style="height: 42px;" id="example_\-\-\-lorem\-\-">\
+            <a href="#">\
+              <span class="pficon pficon-image"></span>\
+              <span class="card-pf-aggregate-status-count">12</span> Lorem\
+            </a>\
+          </h4>\
+          <div class="card-pf-body" style="height: 24px;">\
+            <p class="card-pf-aggregate-status-notifications">\
+              <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>\
+            </p>\
+          </div>\
+        </div>\
+      </div>\
+    </div>\
+    <div class="row row-cards-pf">\
+      <div class="col-xs-12 col-sm-6">\
+        <div class="card-pf" style="height: 360px;">\
+          <div class="card-pf-heading">\
+            <h4 class="card-pf-title" style="height: 17px;" id="example_\-top-utilized\-">\
+              Top Utilized\
+            </h4>\
+          </div>\
+          <div class="card-pf-body" style="height: 280px;">\
+            <div class="progress-description">\
+              Ipsum\
+            </div>\
+            <div class="progress progress-label-top-right">\
+              <div class="progress-bar progress-bar-danger" role="progressbar"style="width: 95%;" data-toggle="tooltip" title="95% Used">\
+                <span><strong>190.0 of 200.0 GB</strong> Used</span>\
+              </div>\
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 5%;" data-toggle="tooltip" title="5% Available">\
+                <span class="sr-only">5% Available</span>\
+              </div>\
+            </div>\
+            <div class="progress-description">\
+              Amet\
+            </div>\
+            <div class="progress progress-label-top-right">\
+              <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Used">\
+                <span><strong>100.0 of 200.0 GB</strong> Used</span>\
+              </div>\
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="50% Available">\
+                <span class="sr-only">50% Available</span>\
+              </div>\
+            </div>\
+            <div class="progress-description">\
+              Adipiscing\
+            </div>\
+            <div class="progress progress-label-top-right">\
+              <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 70%;" data-toggle="tooltip" title="70% Used">\
+                <span><strong>140.0 of 200.0 GB</strong> Used</span>\
+              </div>\
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 30%;" data-toggle="tooltip" title="30% Available">\
+                <span class="sr-only">30% Available</span>\
+              </div>\
+            </div>\
+            <div class="progress-description">\
+              Lorem\
+            </div>\
+            <div class="progress progress-label-top-right">\
+              <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 76.5%;" data-toggle="tooltip" title="76.5% Used">\
+                <span><strong>153.0 of 200.0 GB</strong> Used</span>\
+              </div>\
+              <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 23.5%;" data-toggle="tooltip" title="23.5% Available">\
+                <span class="sr-only">23.5% Available</span>\
+              </div>\
+            </div>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="col-xs-12 col-sm-6">\
+        <div class="card-pf" style="height: 360px;">\
+          <div class="card-pf-heading">\
+            <h4 class="card-pf-title" style="height: 17px;" id="example_\-quotas\-">\
+              Quotas\
+            </h4>\
+          </div>\
+          <div class="card-pf-body" style="height: 280px;">\
+            <div class="progress-container progress-description-left progress-label-right">\
+              <div class="progress-description">\
+                Ipsum\
+              </div>\
+              <div class="progress">\
+                <div class="progress-bar" role="progressbar" style="width: 25%;" data-toggle="tooltip" title="25% Used">\
+                  <span><strong>115 of 460</strong> MHz</span>\
+                </div>\
+                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 75%;" data-toggle="tooltip" title="75% Available">\
+                  <span class="sr-only">75% Available</span>\
+                </div>\
+              </div>\
+            </div>\
+            <div class="progress-container progress-description-left progress-label-right">\
+              <div class="progress-description">\
+                Amet\
+              </div>\
+              <div class="progress">\
+                <div class="progress-bar" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Used">\
+                  <span><strong>8 of 16</strong> GB</span>\
+                </div>\
+                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 50%;" data-toggle="tooltip" title="8 GB Available">\
+                  <span class="sr-only">50% Available</span>\
+                </div>\
+              </div>\
+            </div>\
+            <div class="progress-container progress-description-left progress-label-right">\
+              <div class="progress-description">\
+                Adipiscing\
+              </div>\
+              <div class="progress">\
+                <div class="progress-bar" role="progressbar" style="width: 62.5%;" data-toggle="tooltip" title="62.5% Used">\
+                  <span><strong>5 of 8</strong> Total</span>\
+                </div>\
+                <div class="progress-bar progress-bar-remaining" role="progressbar" style="width: 37.5%;" data-toggle="tooltip" title="37.5% Available">\
+                  <span class="sr-only">37.5% Available</span>\
+                </div>\
+              </div>\
+            </div>\
+            <div class="progress-container progress-description-left progress-label-right">\
+              <div class="progress-description">\
+                Lorem\
+              </div>\
+              <div class="progress">\
+                <div class="progress-bar" role="progressbar" style="width: 100%;" data-toggle="tooltip" title="100% Used">\
+                  <span><strong>2 of 2</strong> Total</span>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+        </div>\
+      </div>\
+    </div>\
+    ';
+  });
+</script>
+</div>
+<div class="tab-pane" title="hide-show.js">
+<pre class="prettyprint linenums" ng-set-text="hide-show.js"></pre>
+<script type="text/ng-template" id="hide-show.js">
+  $(document).ready(function() {
+    $(document).on('click', '#showVerticalNav', function() {
+      $(document.getElementById("verticalNavLayout")).removeClass("hidden");
+    });
+    $(document).on('click', '#hideVerticalNav', function() {
+      $(document.getElementById("verticalNavLayout")).addClass("hidden");
+    });
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.navigation" ng-set-html="index.html-37" ng-eval-javascript="script.js-38 add_content.js hide-show.js"></div>
+</div></div>
+</div>

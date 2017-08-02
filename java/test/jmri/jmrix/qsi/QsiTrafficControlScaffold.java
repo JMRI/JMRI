@@ -9,18 +9,14 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version
  */
 public class QsiTrafficControlScaffold extends QsiTrafficController {
 
     public QsiTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some QsiTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -30,6 +26,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
      */
     public Vector<QsiMessage> outbound = new Vector<QsiMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendQsiMessage [" + m + "]");

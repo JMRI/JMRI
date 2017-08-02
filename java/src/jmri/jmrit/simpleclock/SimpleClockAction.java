@@ -1,4 +1,3 @@
-// SimpleClockAction.java
 package jmri.jmrit.simpleclock;
 
 import java.awt.event.ActionEvent;
@@ -9,15 +8,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SimpleClockFrame object
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class SimpleClockAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3576996090549666302L;
 
     public SimpleClockAction(String s) {
         super(s);
@@ -27,6 +20,7 @@ public class SimpleClockAction extends AbstractAction {
         super("Fast Clock Setup");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         SimpleClockFrame f = new SimpleClockFrame();
@@ -40,5 +34,3 @@ public class SimpleClockAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(SimpleClockAction.class.getName());
 }
-
-/* @(#)SimpleClockAction.java */

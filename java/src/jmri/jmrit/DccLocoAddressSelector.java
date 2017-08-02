@@ -3,6 +3,7 @@ package jmri.jmrit;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -37,7 +38,7 @@ public class DccLocoAddressSelector extends JPanel {
 
     public DccLocoAddressSelector() {
         super();
-        if ((InstanceManager.throttleManagerInstance() != null)
+        if ((InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique()) {
             configureBox(InstanceManager.throttleManagerInstance().getAddressTypes());
         } else {
@@ -89,7 +90,7 @@ public class DccLocoAddressSelector extends JPanel {
 
         // ask the Throttle Manager to handle this!
         LocoAddress.Protocol protocol;
-        if (InstanceManager.throttleManagerInstance() != null) {
+        if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String) box.getSelectedItem());
             return (DccLocoAddress) InstanceManager.throttleManagerInstance().getAddress(text.getText(), protocol);
         }
@@ -109,7 +110,7 @@ public class DccLocoAddressSelector extends JPanel {
                 box.setSelectedItem(jmri.LocoAddress.Protocol.OPENLCB.getPeopleName());
             } else {
                 text.setText("" + a.getNumber());
-                if (InstanceManager.throttleManagerInstance() != null) {
+                if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
                     box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
                 } else {
                     box.setSelectedItem(a.getProtocol().getPeopleName());
@@ -160,13 +161,14 @@ public class DccLocoAddressSelector extends JPanel {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(text);
         if (!locked
-                || ((InstanceManager.throttleManagerInstance() != null)
+                || ((InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique())) {
             p.add(box);
         }
 
         p.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         changeFontSizes();
                     }
@@ -217,6 +219,7 @@ public class DccLocoAddressSelector extends JPanel {
      * Provide a common setEnable call for the GUI components in the
      * selector
      */
+    @Override
     public void setEnabled(boolean e) {
         text.setEditable(e);
         text.setEnabled(e);
@@ -272,6 +275,16 @@ public class DccLocoAddressSelector extends JPanel {
         }
         boxUsed = true;
         return box;
+    }
+
+    /*
+     * Override the addKeyListener method in JPanel so that we can set the
+     * text box as the object listening for keystrokes
+     */
+    @Override
+    public void addKeyListener(KeyListener l){
+       super.addKeyListener(l);
+       text.addKeyListener(l);
     }
 
     final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");

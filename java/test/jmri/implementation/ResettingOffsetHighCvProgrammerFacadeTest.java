@@ -3,7 +3,7 @@ package jmri.implementation;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Test the ResettingOffsetHighCvProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013, 2014
- * @version $Revision: 24246 $
+ * 
  */
 public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
 
@@ -29,6 +29,7 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
 
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -53,6 +54,7 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
 
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -76,6 +78,7 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         dp.setTestWriteLimit(256);
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -19,10 +18,12 @@ public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.ecos.configurexml.EcosTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -1,5 +1,8 @@
 package jmri.profile;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,8 +28,17 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.profile.PackageTest");  // no tests in this class itself
+        suite.addTest(new JUnit4TestAdapter(ProfileTest.class));
         suite.addTest(new TestSuite(ProfileUtilsTest.class));
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileListCellRendererTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileFileFilterTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileFileViewTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileListModelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfilePreferencesPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileTableModelTest.class));
+        suite.addTest(new JUnit4TestAdapter(SearchPathTableModelTest.class));
         return suite;
     }
 
@@ -41,4 +53,35 @@ public class PackageTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
+=======
+=======
+>>>>>>> JMRI/master
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    ProfileTest.class,
+    ProfileUtilsTest.class,
+    BundleTest.class,
+    ProfileListCellRendererTest.class,
+    ProfileFileFilterTest.class,
+    ProfileFileViewTest.class,
+    ProfileListModelTest.class,
+    ProfileManagerTest.class,
+    ProfilePreferencesPanelTest.class,
+    ProfileTableModelTest.class,
+<<<<<<< HEAD
+    SearchPathTableModelTest.class
+})
+public class PackageTest {
+>>>>>>> JMRI/master
+=======
+    SearchPathTableModelTest.class,
+    ProfileConfigurationTest.class,
+    ProfilePropertiesTest.class,
+    NullProfileTest.class
+})
+public class PackageTest {
+>>>>>>> JMRI/master
 }

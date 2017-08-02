@@ -2,40 +2,35 @@ package jmri.jmrix.lenz;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
  * @author	Paul Bender Copyright (c) 2003
  */
-public class XNetSensorManagerTest extends TestCase {
+public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+        
+    private XNetInterfaceScaffold xnis; 
 
-    public void testXNetSensorCreate() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        XNetSensorManager l = new XNetSensorManager(xnis, "X");
-        jmri.InstanceManager.setSensorManager(l);
-
+    @Override
+    public String getSystemName(int i) {
+        return "XS" + i;
     }
 
+    @Test
+    public void testXNetCTor() {
+        Assert.assertNotNull(l);
+    }
+
+    @Test
     public void testByAddress() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
-        // create and register the manager object
-        XNetSensorManager l = new XNetSensorManager(xnis, "X");
-
         // sample sensor object
         Sensor t = l.newSensor("XS22", "test");
 
@@ -44,14 +39,9 @@ public class XNetSensorManagerTest extends TestCase {
         Assert.assertTrue(t == l.getBySystemName("XS22"));
     }
 
+    @Test
+    @Override
     public void testMisses() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
-        // create and register the manager object
-        XNetSensorManager l = new XNetSensorManager(xnis, "X");
-
         // sample turnout object
         Sensor s = l.newSensor("XS22", "test");
         Assert.assertNotNull("exists", s);
@@ -61,15 +51,10 @@ public class XNetSensorManagerTest extends TestCase {
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testXNetMessages() {
-        // prepare an interface, register
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        // create and register the manager object
-        XNetSensorManager l = new XNetSensorManager(xnis, "X");
-
         // send messages for feedbak encoder 22
-        // notify the XPressNet that somebody else changed it...
+        // notify the XpressNet that somebody else changed it...
         XNetReply m1 = new XNetReply();
         m1.setElement(0, 0x42);     // Opcode for feedback response
         m1.setElement(1, 0x02);     // The feedback encoder address
@@ -83,13 +68,8 @@ public class XNetSensorManagerTest extends TestCase {
         Assert.assertTrue(null != l.getBySystemName("XS22"));
     }
 
+    @Test
     public void testAsAbstractFactory() {
-        // prepare an interface, register
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        // create and register the manager object in a new instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        XNetSensorManager l = new XNetSensorManager(xnis, "X");
         jmri.InstanceManager.setSensorManager(l);
 
         // ask for a Sensor, and check type
@@ -115,31 +95,37 @@ public class XNetSensorManagerTest extends TestCase {
 
     }
 
+    @Test
+    public void testGetSystemPrefix(){
+        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    }
+
+    @Test
+    public void testAllowMultipleAdditions(){
+        Assert.assertTrue(l.allowMultipleAdditions("foo"));
+    }
+
+
     // from here down is testing infrastructure
-    public XNetSensorManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetSensorManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetSensorManagerTest.class);
-        return suite;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        // prepare an interface
+        xnis = new XNetInterfaceScaffold(new LenzCommandStation());
+        // create and register the manager object
+        l = new XNetSensorManager(xnis, "X");
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

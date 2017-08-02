@@ -3,8 +3,6 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009, 2010, 2015                -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -226,7 +224,15 @@
                   </xs:sequence>
                   <xs:attribute name="nmraListDate" type="xs:string"/>                  
                   <xs:attribute name="updated" type="xs:string"/>                  
-                  <xs:attribute name="lastadd" type="xs:int"/>                  
+                  <xs:attribute name="lastadd" type="xs:string">                  
+                    <xs:annotation><xs:documentation>
+                        Comma-separated list of numbers recently added; next time
+                        you update, check to see if these entries have had 
+                        names changed to correct NMRA transcription errors. Also can be 
+                        useful to look near these values for new additions to the
+                        NMRA list. 
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="familyList" minOccurs="1" maxOccurs="1" >
@@ -432,6 +438,7 @@
                 <xs:enumeration value="NMRAmedium"/>
                 <xs:enumeration value="NMRAlarge"/>
                 <xs:enumeration value="9pin"/>
+                <xs:enumeration value="Wires"/>
                 <xs:enumeration value="21MTC"/>
                 <xs:enumeration value="Next18"/>
                 <xs:enumeration value="PluX8"/>
@@ -792,29 +799,6 @@
           <xs:selector xpath="label"/>
           <xs:field xpath="@xml:lang"/>
         </xs:unique>
-      </xs:element>
-      <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation><xs:documentation>
-                Specifies programmer mode(s) for use during reset
-              </xs:documentation></xs:annotation>
-            </xs:element>
-            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" >
-              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-            </xs:element>
-          </xs:sequence>
-          <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CVname" type="cvNameType"/>
-          <xs:attribute name="CV" type="xs:string"/>
-          <xs:attribute name="PI" type="xs:string"/>
-          <xs:attribute name="SI" type="xs:string"/>
-          <xs:attribute name="default" type="xs:string"/>
-          <xs:attribute name="comment" type="xs:string"/>
-          <xs:attribute name="item" type="xs:string"/>
-          <xs:attribute ref="xml:base" />
-        </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="mode" type="modeType"/>

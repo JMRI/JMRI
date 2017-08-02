@@ -1,8 +1,6 @@
-// LayoutBlockNeighbourTableModel.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -14,16 +12,8 @@ import org.slf4j.LoggerFactory;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4104722631566472444L;
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int NEIGHBOURCOL = 0;
     static final int DIRECTIONCOL = 1;
@@ -41,10 +31,12 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         lBlock.addPropertyChangeListener(this);
     }
 
+    @Override
     public int getRowCount() {
         return lBlock.getNumberOfNeighbours();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOL;
     }
@@ -53,15 +45,15 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     public String getColumnName(int col) {
         switch (col) {
             case NEIGHBOURCOL:
-                return rb.getString("Neighbour");
+                return Bundle.getMessage("Neighbour");
             case DIRECTIONCOL:
-                return rb.getString("Direction");
+                return Bundle.getMessage("Direction");
             case MUTUALCOL:
-                return rb.getString("Mutual");
+                return Bundle.getMessage("Mutual");
             case RELATCOL:
-                return rb.getString("TrafficFlow");
+                return Bundle.getMessage("TrafficFlow");
             case METRICCOL:
-                return rb.getString("Metric");
+                return Bundle.getMessage("Metric");
 
             default:
                 return "<UNKNOWN>";
@@ -85,6 +77,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         return false;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -108,6 +101,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         if (lBlock == null) {
@@ -120,9 +114,9 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
             case MUTUALCOL:
                 Boolean mutual = lBlock.isNeighbourMutual(row);
                 if (mutual) {
-                    return rb.getString("Yes");
+                    return Bundle.getMessage("ButtonYes");
                 }
-                return rb.getString("No");
+                return Bundle.getMessage("ButtonNo");
             case DIRECTIONCOL:
                 return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getNeighbourDirection(row)));
             case METRICCOL:

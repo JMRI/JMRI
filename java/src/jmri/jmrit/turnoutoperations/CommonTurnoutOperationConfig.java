@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import java.awt.Dimension;
@@ -15,15 +12,10 @@ import jmri.TurnoutOperation;
  * Extension of TurnoutOperationConfig to handle config for common aspects of
  * some subclasses
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4672869740466183146L;
     JSpinner intervalSpinner;   // actually a JSpinner
     JSpinner maxTriesSpinner;   // actually a JSpinner
     CommonTurnoutOperation myOp;
@@ -74,6 +66,7 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
      * called when OK button pressed in config panel, to retrieve and set new
      * values
      */
+    @Override
     public void endConfigure() {
         int newInterval = ((Integer) intervalSpinner.getValue()).intValue();
         myOp.setInterval(newInterval);

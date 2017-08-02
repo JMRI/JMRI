@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 
 package jmri.jmrix.pi;
 
@@ -17,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * connection.
  *
  * @author      Paul Bender  Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see RaspberryPiAdapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
@@ -94,6 +92,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
             });

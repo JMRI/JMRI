@@ -1,12 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * FacelessServer.java Copied from UserInterface, but with the UI stuff removed.
- * Sets up to advertise service, and creates a thread for it to run in.
- *
- * @author Brett Hoffman Copyright (C) 2009, 2010
- * @version $Revision: 20499 $
- */
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -22,15 +15,22 @@ import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//	listen() has to run in a separate thread.
+/**
+ * Copied from UserInterface, but with the UI stuff removed.
+ * Sets up to advertise service, and creates a thread for it to run in.
+ *
+ * listen() has to run in a separate thread.
+ *
+ * @author Brett Hoffman Copyright (C) 2009, 2010
+ */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
-    UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
+    UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
 
-//	Server iVars
+// Server iVars
     int port;
     ZeroConfService service;
     boolean isListen = true;
@@ -42,7 +42,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             deviceList = new ArrayList<DeviceServer>(1);
         }
         createServerThread();
-    }	//	End of constructor
+    } // End of constructor
 
     public void createServerThread() {
         FacelessThread s = new FacelessThread(this);
@@ -53,7 +53,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     public void listen() {
         int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
 
-        try {	//Create socket on available port
+        try { //Create socket on available port
             socket = new ServerSocket(socketPort);
         } catch (IOException e1) {
             log.error("New ServerSocket Failed during listen()");
@@ -90,11 +90,13 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 
     }
 
+    @Override
     public void notifyDeviceConnected(DeviceServer device) {
 
         deviceList.add(device);
     }
 
+    @Override
     public void notifyDeviceDisconnected(DeviceServer device) {
         if (deviceList.size() < 1) {
             return;
@@ -112,6 +114,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
      * Received an UDID, filter out any duplicate.
      *
      */
+    @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
 
         //  Filter duplicate connections
@@ -128,6 +131,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
     }
 
+    @Override
     public String getSelectedRosterGroup() {
 //        return rosterGroupSelector.getSelectedRosterGroup();
         return null;

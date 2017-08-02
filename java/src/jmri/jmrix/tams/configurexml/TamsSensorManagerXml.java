@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class TamsSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -22,10 +21,12 @@ public class TamsSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.tams.configurexml.TamsSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

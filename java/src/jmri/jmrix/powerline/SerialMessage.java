@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.powerline;
 
 /**
@@ -16,7 +15,6 @@ package jmri.jmrix.powerline;
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
@@ -37,6 +35,8 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
+     * @param m sequence to send
+     * @param l expected reply length
      *
      */
     public SerialMessage(String m, int l) {
@@ -60,6 +60,7 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l expected reply length
      */
     public SerialMessage(byte[] a, int l) {
         super(String.valueOf(a));
@@ -100,4 +101,4 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 }
 
-/* @(#)SerialMessage.java */
+

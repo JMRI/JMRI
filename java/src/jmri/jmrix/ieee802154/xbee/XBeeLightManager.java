@@ -1,4 +1,3 @@
-// XBeeLightManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Light;
@@ -11,14 +10,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3033596888763946284L;
 
     protected String prefix = null;
 
@@ -29,16 +22,19 @@ public class XBeeLightManager extends AbstractLightManager {
         this.prefix = prefix;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // for now, set this to false. multiple additions currently works 
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public Light createNewLight(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -71,6 +67,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
@@ -101,7 +98,11 @@ public class XBeeLightManager extends AbstractLightManager {
             int seperator = systemName.indexOf(":");
             encoderAddress = systemName.substring(getSystemPrefix().length() + 1, seperator);
         } else {
-            encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            if(systemName.length()>(getSystemPrefix().length()+1)) {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            } else {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1);
+            }
         }
         log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         return encoderAddress;
@@ -139,6 +140,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }

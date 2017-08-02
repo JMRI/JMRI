@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.tmcc;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -21,10 +19,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "T";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
@@ -56,12 +56,21 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * @return current instance of connection
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
         }
         return _instance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialTurnoutManager _instance = null;
 
     //Turnout address format is more than a simple number.
@@ -69,8 +78,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that creates an array of systems names to allow bulk creation of
      * turnouts.
+     * @param start initial turnout name
+     * @param numberToAdd fixed at 1 currently
+     * @param prefix connection prefix
+     * @return array of new turnout names
      */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
+    //further work needs to be done on how to format a number of TMCC turnouts, therefore this method will only return one entry.
     public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
         numberToAdd = 1;
         String range[] = new String[numberToAdd];
@@ -80,6 +93,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName;
 
@@ -108,6 +122,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int bitNum = 0;
     int nAddress = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -159,5 +174,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-/* @(#)SerialTurnoutManager.java */

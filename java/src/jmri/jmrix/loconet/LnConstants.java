@@ -85,7 +85,7 @@ package jmri.jmrix.loconet;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
  * @author  Ron W. Auld
  * @author  John Kabat
  * @author  Alain Le Marchand
@@ -184,10 +184,10 @@ public final class LnConstants {
 
     /** Encode consisting status as a string */
     public final static String CONSIST_STAT(int s) {
-        return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist"
-                : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP"
-                        : (((s & CONSIST_MASK) == CONSIST_SUB) ? "Sub Consist"
-                                : "Not Consisted"));
+        return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
+                : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" // NOI18N
+                        : (((s & CONSIST_MASK) == CONSIST_SUB) ? "Sub Consist" // NOI18N
+                                : "Not Consisted")); // NOI18N
     }
 
     /** Mask for locomotive use determination. 
@@ -206,10 +206,10 @@ public final class LnConstants {
 
     /**Encode loco status as a string */
     public final static String LOCO_STAT(int s) { 
-        return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use"
-                : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle"
-                        : (((s & LOCOSTAT_MASK) == LOCO_COMMON) ? "Common"
-                                : "Free"));
+        return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
+                : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
+                        : (((s & LOCOSTAT_MASK) == LOCO_COMMON) ? "Common" // NOI18N
+                                : "Free")); // NOI18N
     }
 
     /** Mask for decoder type encoding for this slot.
@@ -232,12 +232,12 @@ public final class LnConstants {
     public final static int DEC_MODE_28 = 0;
 
     public final static String DEC_MODE(int s) { // encode decoder type as a string
-        return ((s & DEC_MODE_MASK) == DEC_MODE_128A) ? "128 (Allow Adv. consisting)"
-                : (((s & DEC_MODE_MASK) == DEC_MODE_28A) ? "28 (Allow Adv. consisting)"
-                        : (((s & DEC_MODE_MASK) == DEC_MODE_128) ? "128"
-                                : (((s & DEC_MODE_MASK) == DEC_MODE_14) ? "14"
-                                        : (((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)"
-                                                : "28"))));
+        return ((s & DEC_MODE_MASK) == DEC_MODE_128A) ? "128 (Allow Adv. consisting)" // NOI18N
+                : (((s & DEC_MODE_MASK) == DEC_MODE_28A) ? "28 (Allow Adv. consisting)" // NOI18N
+                        : (((s & DEC_MODE_MASK) == DEC_MODE_128) ? "128" // NOI18N
+                                : (((s & DEC_MODE_MASK) == DEC_MODE_14) ? "14" // NOI18N
+                                        : (((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)" // NOI18N
+                                                : "28")))); // NOI18N
     }
 
     /* values for track status encoding for this slot */
@@ -373,40 +373,40 @@ public final class LnConstants {
     /** Encode LocoNet Opcode as a string */
     public final static String OPC_NAME(int opcode) {
         switch (opcode) {
-            case OPC_GPBUSY     : return "OPC_GPBUSY";
-            case OPC_GPOFF      : return "OPC_GPOFF";
-            case OPC_GPON       : return "OPC_GPON";
-            case OPC_IDLE       : return "OPC_IDLE";
-            case OPC_LOCO_SPD   : return "OPC_LOCO_SPD";
-            case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF";
-            case OPC_LOCO_SND   : return "OPC_LOCO_SND";
-            case OPC_SW_REQ     : return "OPC_SW_REQ";
-            case OPC_SW_REP     : return "OPC_SW_REP";
-            case OPC_INPUT_REP  : return "OPC_INPUT_REP";
-            case OPC_UNKNOWN    : return "OPC_UNKNOWN";
-            case OPC_LONG_ACK   : return "OPC_LONG_ACK";
-            case OPC_SLOT_STAT1 : return "OPC_SLOT_STAT1";
-            case OPC_CONSIST_FUNC: return "OPC_CONSIST_FUNC";
-            case OPC_UNLINK_SLOTS: return "OPC_UNLINK_SLOTS";
-            case OPC_LINK_SLOTS : return "OPC_LINK_SLOTS";
-            case OPC_MOVE_SLOTS : return "OPC_MOVE_SLOTS";
-            case OPC_RQ_SL_DATA : return "OPC_RQ_SL_DATA";
-            case OPC_SW_STATE   : return "OPC_SW_STATE";
-            case OPC_SW_ACK     : return "OPC_SW_ACK";
-            case OPC_LOCO_ADR   : return "OPC_LOCO_ADR";
-            case OPC_MULTI_SENSE: return "OPC_MULTI_SENSE";
-            case OPC_PANEL_QUERY: return "OPC_PANEL_QUERY";
-            case OPC_PANEL_RESPONSE: return "OPC_PANEL_RESPONSE";
-            case OPC_LISSY_UPDATE: return "OPC_LISSY_UPDATE";
-            case OPC_PEER_XFER  : return "OPC_PEER_XFER";
-            case OPC_ALM_READ   : return "OPC_ALM_READ";
-            case OPC_SL_RD_DATA : return "OPC_SL_RD_DATA";
-            case OPC_IMM_PACKET : return "OPC_IMM_PACKET";
-            case OPC_IMM_PACKET_2: return "OPC_IMM_PACKET_2";
-            case OPC_WR_SL_DATA : return "OPC_WR_SL_DATA";
+            case OPC_GPBUSY     : return "OPC_GPBUSY"; // NOI18N
+            case OPC_GPOFF      : return "OPC_GPOFF"; // NOI18N
+            case OPC_GPON       : return "OPC_GPON"; // NOI18N
+            case OPC_IDLE       : return "OPC_IDLE"; // NOI18N
+            case OPC_LOCO_SPD   : return "OPC_LOCO_SPD"; // NOI18N
+            case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF"; // NOI18N
+            case OPC_LOCO_SND   : return "OPC_LOCO_SND"; // NOI18N
+            case OPC_SW_REQ     : return "OPC_SW_REQ"; // NOI18N
+            case OPC_SW_REP     : return "OPC_SW_REP"; // NOI18N
+            case OPC_INPUT_REP  : return "OPC_INPUT_REP"; // NOI18N
+            case OPC_UNKNOWN    : return "OPC_UNKNOWN"; // NOI18N
+            case OPC_LONG_ACK   : return "OPC_LONG_ACK"; // NOI18N
+            case OPC_SLOT_STAT1 : return "OPC_SLOT_STAT1"; // NOI18N
+            case OPC_CONSIST_FUNC: return "OPC_CONSIST_FUNC"; // NOI18N
+            case OPC_UNLINK_SLOTS: return "OPC_UNLINK_SLOTS"; // NOI18N
+            case OPC_LINK_SLOTS : return "OPC_LINK_SLOTS"; // NOI18N
+            case OPC_MOVE_SLOTS : return "OPC_MOVE_SLOTS"; // NOI18N
+            case OPC_RQ_SL_DATA : return "OPC_RQ_SL_DATA"; // NOI18N
+            case OPC_SW_STATE   : return "OPC_SW_STATE"; // NOI18N
+            case OPC_SW_ACK     : return "OPC_SW_ACK"; // NOI18N
+            case OPC_LOCO_ADR   : return "OPC_LOCO_ADR"; // NOI18N
+            case OPC_MULTI_SENSE: return "OPC_MULTI_SENSE"; // NOI18N
+            case OPC_PANEL_QUERY: return "OPC_PANEL_QUERY"; // NOI18N
+            case OPC_PANEL_RESPONSE: return "OPC_PANEL_RESPONSE"; // NOI18N
+            case OPC_LISSY_UPDATE: return "OPC_LISSY_UPDATE"; // NOI18N
+            case OPC_PEER_XFER  : return "OPC_PEER_XFER"; // NOI18N
+            case OPC_ALM_READ   : return "OPC_ALM_READ"; // NOI18N
+            case OPC_SL_RD_DATA : return "OPC_SL_RD_DATA"; // NOI18N
+            case OPC_IMM_PACKET : return "OPC_IMM_PACKET"; // NOI18N
+            case OPC_IMM_PACKET_2: return "OPC_IMM_PACKET_2"; // NOI18N
+            case OPC_WR_SL_DATA : return "OPC_WR_SL_DATA"; // NOI18N
             // case OPC_WR_SL_DATA_EXP: return "OPC_WR_SL_DATA_EXP"; // duplicates 0xEE
             // case OPC_ALM_WRITE: return "OPC_ALM_WRITE"; // duplicates 0xEE
-            default: return "<unknown>";
+            default: return "<unknown>"; // NOI18N
         }
     }
     
@@ -462,11 +462,16 @@ public final class LnConstants {
 // reverse-engineered constants
     public final static int RE_IPL_MFR_DIGITRAX = 0x00;
     public final static int RE_IPL_MFR_ALL = 0x00;
+    public final static int RE_IPL_DIGITRAX_HOST_LNRP = 0x01;
     public final static int RE_IPL_DIGITRAX_HOST_UT4 = 0x04;
-    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
-    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
-    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_WTL12 = 0x0c;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
+    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
     public final static int RE_IPL_DIGITRAX_HOST_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_SLAVE_RF24 = 0x18;
     public final static int RE_IPL_DIGITRAX_SLAVE_ALL = 0x00;

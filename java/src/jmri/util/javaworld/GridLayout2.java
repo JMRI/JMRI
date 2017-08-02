@@ -12,11 +12,6 @@ import java.awt.Insets;
 // Grid Layout which allows components of differrent sizes
 public class GridLayout2 extends GridLayout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8884906324113712308L;
-
     public GridLayout2() {
         this(1, 0, 0, 0);
     }
@@ -29,6 +24,7 @@ public class GridLayout2 extends GridLayout {
         super(rows, cols, hgap, vgap);
     }
 
+    @Override
     public Dimension preferredLayoutSize(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();
@@ -67,6 +63,7 @@ public class GridLayout2 extends GridLayout {
         }
     }
 
+    @Override
     public Dimension minimumLayoutSize(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();
@@ -105,6 +102,7 @@ public class GridLayout2 extends GridLayout {
         }
     }
 
+    @Override
     public void layoutContainer(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();

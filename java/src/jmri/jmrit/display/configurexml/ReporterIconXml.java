@@ -8,7 +8,6 @@ import org.jdom2.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision$
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -21,6 +20,7 @@ public class ReporterIconXml extends PositionableLabelXml {
      * @param o Object to store, of type ReporterIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         ReporterIcon p = (ReporterIcon) o;
@@ -44,13 +44,14 @@ public class ReporterIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         Editor ed = (Editor) o;
         ReporterIcon l = new ReporterIcon(ed);
 
         loadTextInfo(l, element);
 
-        l.setReporter(jmri.InstanceManager.reporterManagerInstance().getReporter(
+        l.setReporter(jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(
                 element.getAttribute("reporter").getValue()));
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);

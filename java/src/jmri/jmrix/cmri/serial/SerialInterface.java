@@ -1,11 +1,9 @@
-// SerialInterface.java
 package jmri.jmrix.cmri.serial;
 
 /**
  * Interface to send/receive serial C/MRI information
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SerialInterface {
 
@@ -17,6 +15,3 @@ public interface SerialInterface {
 
     void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
 }
-
-
-/* @(#)SerialInterface.java */

@@ -1,25 +1,32 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -28,6 +35,7 @@ import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,14 +62,13 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision$
  */
-public class LevelXing {
+public class LevelXing extends LayoutTrack {
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    // defined constants 
+    // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
@@ -69,7 +76,6 @@ public class LevelXing {
     private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
-    private String ident = "";
     private String blockNameAC = "";
     private String blockNameBD = "";
 
@@ -96,10 +102,10 @@ public class LevelXing {
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
-    final public static int POINTA = 0x01;
-    final public static int POINTB = 0x10;
-    final public static int POINTC = 0x20;
-    final public static int POINTD = 0x30;
+    public static final int POINTA = 0x01;
+    public static final int POINTB = 0x10;
+    public static final int POINTC = 0x20;
+    public static final int POINTD = 0x30;
 
     /**
      * constructor method
@@ -111,13 +117,25 @@ public class LevelXing {
         center = c;
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
+    // this should only be used for debugging...
+>>>>>>> JMRI/master
+    public String toString() {
+        return "LevelXing " + ident;
+    }
+
     /**
      * Accessor methods
      */
+<<<<<<< HEAD
     public String getID() {
         return ident;
     }
 
+=======
+>>>>>>> JMRI/master
     public String getBlockNameAC() {
         return blockNameAC;
     }
@@ -141,6 +159,9 @@ public class LevelXing {
             case POINTD:
                 namedBean = signalDHeadNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -162,6 +183,9 @@ public class LevelXing {
                 break;
             case POINTD:
                 namedBean = signalDMastNamed;
+                break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
                 break;
         }
         if (namedBean != null) {
@@ -185,6 +209,9 @@ public class LevelXing {
             case POINTD:
                 namedBean = sensorDNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -205,7 +232,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalAHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -226,7 +253,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalBHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -247,7 +274,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalCHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -268,7 +295,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalDHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -356,10 +383,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalAMastNamed = null;
         }
     }
@@ -384,10 +411,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalBMastNamed = null;
         }
     }
@@ -412,10 +439,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalCMastNamed = null;
         }
     }
@@ -440,10 +467,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalDMastNamed = null;
         }
     }
@@ -468,10 +495,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorANamed = null;
         }
     }
@@ -496,10 +523,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorBNamed = null;
         }
     }
@@ -524,10 +551,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorCNamed = null;
         }
     }
@@ -552,50 +579,86 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorDNamed = null;
         }
     }
 
+<<<<<<< HEAD
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
-            case LayoutEditor.LEVEL_XING_A:
+=======
+    /**
+     * get the object connected to this track for the specified connection type
+     * @param connectionType the specified connection type
+     * @return the object connected to this slip for the specified connection type
+     * @throws jmri.JmriException - if the connectionType is invalid
+     */
+    @Override
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        switch (connectionType) {
+>>>>>>> JMRI/master
+            case LEVEL_XING_A:
                 return connectA;
-            case LayoutEditor.LEVEL_XING_B:
+            case LEVEL_XING_B:
                 return connectB;
-            case LayoutEditor.LEVEL_XING_C:
+            case LEVEL_XING_C:
                 return connectC;
-            case LayoutEditor.LEVEL_XING_D:
+            case LEVEL_XING_D:
                 return connectD;
+            default:
+<<<<<<< HEAD
+                log.warn("Unhandled loc: {}", location);
+=======
+                log.warn("Unhandled loc: {}", connectionType);
+>>>>>>> JMRI/master
+                break;
         }
-        log.error("Invalid Point Type " + location); //I18IN
+        log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
+<<<<<<< HEAD
     public void setConnection(int location, Object o, int type) throws jmri.JmriException {
-        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
+        if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
         }
         switch (location) {
-            case LayoutEditor.LEVEL_XING_A:
+=======
+    /**
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
+     * @throws jmri.JmriException - if connectionType or type are invalid
+     */
+    @Override
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to LevelXing - " + type);
+            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+        }
+        switch (connectionType) {
+>>>>>>> JMRI/master
+            case LEVEL_XING_A:
                 connectA = o;
                 break;
-            case LayoutEditor.LEVEL_XING_B:
+            case LEVEL_XING_B:
                 connectB = o;
                 break;
-            case LayoutEditor.LEVEL_XING_C:
+            case LEVEL_XING_C:
                 connectC = o;
                 break;
-            case LayoutEditor.LEVEL_XING_D:
+            case LEVEL_XING_D:
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Point Type " + location); //I18IN
-                throw new jmri.JmriException("Invalid Point");
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 
@@ -617,28 +680,28 @@ public class LevelXing {
 
     public void setConnectA(Object o, int type) {
         connectA = o;
-        if ((connectA != null) && (type != LayoutEditor.TRACK)) {
+        if ((connectA != null) && (type != TRACK)) {
             log.error("unexpected type of A connection to levelXing - " + type);
         }
     }
 
     public void setConnectB(Object o, int type) {
         connectB = o;
-        if ((connectB != null) && (type != LayoutEditor.TRACK)) {
+        if ((connectB != null) && (type != TRACK)) {
             log.error("unexpected type of B connection to levelXing - " + type);
         }
     }
 
     public void setConnectC(Object o, int type) {
         connectC = o;
-        if ((connectC != null) && (type != LayoutEditor.TRACK)) {
+        if ((connectC != null) && (type != TRACK)) {
             log.error("unexpected type of C connection to levelXing - " + type);
         }
     }
 
     public void setConnectD(Object o, int type) {
         connectD = o;
-        if ((connectD != null) && (type != LayoutEditor.TRACK)) {
+        if ((connectD != null) && (type != TRACK)) {
             log.error("unexpected type of D connection to levelXing - " + type);
         }
     }
@@ -689,6 +752,50 @@ public class LevelXing {
         double x = center.getX() - dispB.getX();
         double y = center.getY() - dispB.getY();
         return new Point2D.Double(x, y);
+    }
+
+    /**
+     * return the coordinates for a specified connection type
+     *
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case LEVEL_XING_CENTER:
+                break;
+            case LEVEL_XING_A:
+                result = getCoordsA();
+                break;
+            case LEVEL_XING_B:
+                result = getCoordsB();
+                break;
+            case LEVEL_XING_C:
+                result = getCoordsC();
+                break;
+            case LEVEL_XING_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this crossing
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
+        return result;
     }
 
     /**
@@ -825,7 +932,7 @@ public class LevelXing {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -896,6 +1003,57 @@ public class LevelXing {
         dispB = pt;
     }
 
+    /**
+     * find the hit (location) type for a point
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
+     * @return the location type for the point (or NONE)
+     * @since 7.4.3
+     */
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+
+        if (!requireUnconnected) {
+            //check the center point
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.LEVEL_XING_CENTER;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectA() == null)) {
+            //check the A connection point
+            if (r.contains(getCoordsA())) {
+                result = LayoutTrack.LEVEL_XING_A;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectB() == null)) {
+            //check the B connection point
+            if (r.contains(getCoordsB())) {
+                //mouse was pressed on this connection point
+                result = LayoutTrack.LEVEL_XING_B;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectC() == null)) {
+            //check the C connection point
+            if (r.contains(getCoordsC())) {
+                result = LayoutTrack.LEVEL_XING_C;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectD() == null)) {
+            //check the D connection point
+            if (r.contains(getCoordsD())) {
+                result = LayoutTrack.LEVEL_XING_D;
+            }
+        }
+        return result;
+    }
+
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
     public String connectBName = "";
@@ -944,45 +1102,53 @@ public class LevelXing {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e, boolean isEditable) {
+    protected void showPopUp(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        if (isEditable) {
-            popup.add(rb.getString("LevelCrossing"));
+        if (layoutEditor.isEditable()) {
+            JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
+            jmi.setEnabled(false);
+
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {
-                popup.add(rb.getString("NoBlock1"));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                popup.add(rb.getString("Block1ID") + ": " + getLayoutBlockAC().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
                 blockACAssigned = true;
             }
+            jmi.setEnabled(false);
+
             if ((blockNameBD == null) || (blockNameBD.equals(""))) {
-                popup.add(rb.getString("NoBlock2"));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                popup.add(rb.getString("Block2ID") + ": " + getLayoutBlockBD().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(rb.getString("Edit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8490425994057269937L;
+            jmi.setEnabled(false);
 
+            if (hidden) {
+                jmi = popup.add(rb.getString("Hidden"));
+            } else {
+                jmi = popup.add(rb.getString("NotHidden"));
+            }
+            jmi.setEnabled(false);
+
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     editLevelXing(instance);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1216686035755517232L;
-
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLevelXing(instance)) {
                         // Returned true if user did not cancel
@@ -993,11 +1159,7 @@ public class LevelXing {
             });
             if (blockACAssigned && blockBDAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5921583917110184757L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1014,11 +1176,7 @@ public class LevelXing {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockACAssigned && !blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 427905878591367756L;
-
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1026,11 +1184,7 @@ public class LevelXing {
                     });
                 } else if (!blockACAssigned && blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = -5685864388071905471L;
-
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1039,11 +1193,7 @@ public class LevelXing {
                 } else if (blockACAssigned && blockBDAssigned) {
                     JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
                     viewRouting.add(new AbstractAction(blockNameAC) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 5552420913563275699L;
-
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameAC, getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1051,11 +1201,7 @@ public class LevelXing {
                     });
 
                     viewRouting.add(new AbstractAction(blockNameBD) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 3150885462721531952L;
-
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1073,11 +1219,7 @@ public class LevelXing {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -128208913452543142L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1087,11 +1229,7 @@ public class LevelXing {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5004853444955075643L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1153,16 +1291,20 @@ public class LevelXing {
     }
 
     // variables for Edit Level Crossing pane
-    JmriJFrame editLevelXingFrame = null;
-    JTextField block1Name = new JTextField(16);
-    JTextField block2Name = new JTextField(16);
-    JButton xingEditDone;
-    JButton xingEditCancel;
-    JButton xingEdit1Block;
-    JButton xingEdit2Block;
-    boolean editOpen = false;
-    boolean needsRedraw = false;
-    boolean needsBlockUpdate = false;
+    private JmriJFrame editLevelXingFrame = null;
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
+
+    private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private JButton xingEditDone;
+    private JButton xingEditCancel;
+    private JButton xingEdit1Block;
+    private JButton xingEdit2Block;
+    private boolean editOpen = false;
+    private boolean needsRedraw = false;
+    private boolean needsBlockUpdate = false;
 
     /**
      * Edit a Level Crossing
@@ -1179,66 +1321,101 @@ public class LevelXing {
             editLevelXingFrame.setLocation(50, 30);
             Container contentPane = editLevelXingFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            panel33.add(hiddenBox);
+            contentPane.add(panel33);
+
             // setup block 1 name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(rb.getString("Block1ID"));
+            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
-            panel1.add(block1Name);
-            block1Name.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel1.add(block1NameComboBox);
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(block1NameComboBox, false, true);
+            } else {
+                block1NameComboBox.setEditable(true);
+                block1NameComboBox.getEditor().setItem("");
+                block1NameComboBox.setSelectedIndex(-1);
+            }
+=======
+            layoutEditor.setupComboBox(block1NameComboBox, false, true);
+>>>>>>> JMRI/master
+            block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
+
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(rb.getString("Block2ID"));
+            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
-            panel2.add(block2Name);
-            block2Name.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel2.add(block2NameComboBox);
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(block2NameComboBox, false, true);
+            } else {
+                block2NameComboBox.setEditable(true);
+                block2NameComboBox.getEditor().setItem("");
+                block2NameComboBox.setSelectedIndex(-1);
+            }
+=======
+            layoutEditor.setupComboBox(block2NameComboBox, false, true);
+>>>>>>> JMRI/master
+            block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
+
             // set up Edit 1 Block and Edit 2 Block buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
-            panel4.add(xingEdit1Block = new JButton(rb.getString("EditBlock1")));
-            xingEdit1Block.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit1BlockPressed(e);
-                }
+            panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
+            xingEdit1Block.addActionListener((ActionEvent e) -> {
+                xingEdit1BlockPressed(e);
             });
-            xingEdit1Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
-            panel4.add(xingEdit2Block = new JButton(rb.getString("EditBlock2")));
-            xingEdit2Block.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit2BlockPressed(e);
-                }
+            panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
+            xingEdit2Block.addActionListener((ActionEvent e) -> {
+                xingEdit2BlockPressed(e);
             });
-            xingEdit2Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(xingEditDone = new JButton(rb.getString("Done")));
-            xingEditDone.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    xingEditDonePressed(e);
-                }
+            panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
+            xingEditDone.addActionListener((ActionEvent e) -> {
+                xingEditDonePressed(e);
             });
-            xingEditDone.setToolTipText(rb.getString("DoneHint"));
+            xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
+                rootPane.setDefaultButton(xingEditDone);
+            });
+
             // Cancel
-            panel5.add(xingEditCancel = new JButton(rb.getString("Cancel")));
-            xingEditCancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    xingEditCancelPressed(e);
-                }
+            panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            xingEditCancel.addActionListener((ActionEvent e) -> {
+                xingEditCancelPressed(e);
             });
-            xingEditCancel.setToolTipText(rb.getString("CancelHint"));
+            xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
+
+        hiddenBox.setSelected(hidden);
+
         // Set up for Edit
-        block1Name.setText(blockNameAC);
-        block2Name.setText(blockNameBD);
+        block1NameComboBox.setText(blockNameAC);
+        block2NameComboBox.setText(blockNameBD);
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 xingEditCancelPressed(null);
             }
@@ -1251,23 +1428,25 @@ public class LevelXing {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        if (!blockNameAC.equals(block1Name.getText().trim())) {
+        String newName = block1NameComboBox.getUserName();
+        if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
                 blockAC.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
-                blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                if (blockAC != null) {
+            blockNameAC = newName;
+            if (blockNameAC.length() > 0) {
+                try {
+                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
                     if ((blockAC != null) && (blockAC == blockBD)) {
                         blockAC.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1Name.setText("");
+                    block1NameComboBox.setText("");
+                    block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
                 blockAC = null;
@@ -1281,7 +1460,7 @@ public class LevelXing {
         if (blockAC == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockAC.editLayoutBlock(editLevelXingFrame);
@@ -1290,23 +1469,34 @@ public class LevelXing {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        if (!blockNameBD.equals(block2Name.getText().trim())) {
+        String newName = block2NameComboBox.getUserName();
+        if (-1 != block2NameComboBox.getSelectedIndex()) {
+            newName = block2NameComboBox.getSelectedDisplayName();
+        } else {
+<<<<<<< HEAD
+            newName = (null != newName) ? newName.trim() : "";
+=======
+            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
+>>>>>>> JMRI/master
+        }
+        if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
                 blockBD.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
-                blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                if (blockBD != null) {
+            blockNameBD = newName;
+            if (blockNameBD.length() > 0) {
+                try {
+                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
                     if ((blockBD != null) && (blockAC == blockBD)) {
                         blockBD.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2Name.setText("");
+                    block2NameComboBox.setText("");
+                    block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
                 blockBD = null;
@@ -1320,7 +1510,7 @@ public class LevelXing {
         if (blockBD == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockBD.editLayoutBlock(editLevelXingFrame);
@@ -1329,23 +1519,25 @@ public class LevelXing {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        if (!blockNameAC.equals(block1Name.getText().trim())) {
+        String newName = block1NameComboBox.getUserName();
+        if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
                 blockAC.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
-                blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                if (blockAC != null) {
+            blockNameAC = newName;
+            if (blockNameAC.length() > 0) {
+                try {
+                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
                     if ((blockAC != null) && (blockAC == blockBD)) {
                         blockAC.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
-                    block1Name.setText("");
+                    block1NameComboBox.setText("");
+                    block1NameComboBox.setSelectedIndex(-1);
                 }
             } else {
                 blockAC = null;
@@ -1355,23 +1547,25 @@ public class LevelXing {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        if (!blockNameBD.equals(block2Name.getText().trim())) {
+        newName = block2NameComboBox.getUserName();
+        if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
                 blockBD.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
-                blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                if (blockBD != null) {
+            blockNameBD = newName;
+            if (blockNameBD.length() > 0) {
+                try {
+                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
                     if ((blockBD != null) && (blockAC == blockBD)) {
                         blockBD.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
-                    block2Name.setText("");
+                    block2NameComboBox.setText("");
+                    block2NameComboBox.setSelectedIndex(-1);
                 }
             } else {
                 blockBD = null;
@@ -1381,6 +1575,14 @@ public class LevelXing {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
+
+        // set hidden
+        boolean oldHidden = hidden;
+        hidden = hiddenBox.isSelected();
+        if (oldHidden != hidden) {
+            needsRedraw = true;
+        }
+
         editOpen = false;
         editLevelXingFrame.setVisible(false);
         editLevelXingFrame.dispose();
@@ -1446,9 +1648,9 @@ public class LevelXing {
             sml.add(sm);
             return;
         }
-        SignalMastLogic sl = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+        SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
             if (s != null) {
                 s.setConflictingLogic(sm, this);
             }
@@ -1466,7 +1668,7 @@ public class LevelXing {
             return;
         }
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
             if (s != null) {
                 s.removeConflictingLogic(sm, this);
             }
@@ -1508,6 +1710,110 @@ public class LevelXing {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
+<<<<<<< HEAD
+=======
+    /**
+     * draw this level crossing
+     *
+     * @param g2 the graphics port to draw to
+     */
+>>>>>>> JMRI/master
+    public void draw(Graphics2D g2) {
+        if (isMainlineBD() && (!isMainlineAC())) {
+            drawXingAC(g2);
+            drawXingBD(g2);
+        } else {
+            drawXingBD(g2);
+            drawXingAC(g2);
+        }
+<<<<<<< HEAD
+    }   // draw(Graphics2D g2)
 
+
+    private void drawXingAC(Graphics2D g2) {
+        // set color - check for an AC block
+        LayoutBlock b = getLayoutBlockAC();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        // set track width for AC block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
+        // draw AC segment
+=======
+    }   // drawHidden(Graphics2D g2)
+
+    private void drawXingAC(Graphics2D g2) {
+        // set color for an AC block
+        setColorForTrackBlock(g2, getLayoutBlockAC());
+        // set track width for AC block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
+        // drawHidden AC segment
+>>>>>>> JMRI/master
+        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+    }
+
+    private void drawXingBD(Graphics2D g2) {
+        // set color - check for an BD block
+<<<<<<< HEAD
+        LayoutBlock b = getLayoutBlockBD();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        // set track width for BD block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
+        // draw BD segment
+        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    }
+
+=======
+        setColorForTrackBlock(g2, getLayoutBlockBD());
+        // set track width for BD block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
+        // drawHidden BD segment
+        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    }
+
+    public void drawEditControls(Graphics2D g2) {
+        Point2D pt = getCoordsCenter();
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
+        pt = getCoordsA();
+        if (getConnectA() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
+        pt = getCoordsB();
+        if (getConnectB() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
+        pt = getCoordsC();
+        if (getConnectC() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
+        pt = getCoordsD();
+        if (getConnectD() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+    }
+>>>>>>> JMRI/master
+    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 }

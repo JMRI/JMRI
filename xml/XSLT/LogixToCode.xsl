@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Stylesheet to convert the Logix in a JMRI panel file to code -->
 

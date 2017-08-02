@@ -1,4 +1,3 @@
-// RosterRecorder.java
 package jmri.jmrit.roster;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,33 +9,34 @@ import org.slf4j.LoggerFactory;
  * Watches a Roster and writes it to file when a change is seen.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- * @see jmri.jmrit.roster.RosterEntry
+ * @author Bob Jacobsen Copyright (C) 2010
+  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
 public class RosterRecorder extends Thread {
 
     public RosterRecorder() {
-        Roster roster = Roster.instance();  // forces roster to be loaded
+        Roster roster = Roster.getDefault();  // forces roster to be loaded
 
         // listen for any new entries
         roster.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 changedRoster(e);
             }
         });
 
         // listen to each entry
-        for (int i = 0; i < roster.numEntries(); i++) {
-            watchEntry(roster.getEntry(i));
-        }
+        roster.getAllEntries().forEach((entry) -> {
+            watchEntry(entry);
+        });
 
     }
 
     void watchEntry(RosterEntry e) {
         log.debug("watchEntry");
         e.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 changedEntry(e);
             }
@@ -75,7 +75,7 @@ public class RosterRecorder extends Thread {
      * Trigger the next roster write
      */
     void forceWrite() {
-        if (queue.offer(Roster.instance())) {
+        if (queue.offer(Roster.getDefault())) {
             log.debug("forceWrite queued OK");
         } else {
             log.error("forceWrite failed to queue roster write");
@@ -83,6 +83,7 @@ public class RosterRecorder extends Thread {
     }
 
     // the actual thread code starts here
+    @Override
     public void run() {
         while (true) {  // loop until daemon thread ends
             // wait roster to write
@@ -107,7 +108,7 @@ public class RosterRecorder extends Thread {
 
             // write final result
             log.debug("writeRosterFile start");
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
             log.debug("writeRosterFile end");
         }
     }

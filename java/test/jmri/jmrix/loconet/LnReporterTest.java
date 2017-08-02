@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -94,11 +94,13 @@ public class LnReporterTest extends TestCase {
     jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

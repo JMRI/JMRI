@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.util.Arrays;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -8,22 +9,23 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement SignalHead for the MERG Signal Driver 2.
  * <p>
- * The Signal Driver , runs off of the output of a steady State Accessory
- * decoder. and can be configured to run 2, 3 or 4 Aspect signals. With 2 or 3
- * aspect signals being able to have a feather included.
- *
- * The driver is designed to be used with UK based signals
- *
+ * The Signal Driver, runs off of the output of a steady State Accessory
+ * decoder. Can be configured to run 2, 3 or 4 Aspect signals. With 2 or 3
+ * aspect signals it may have a feather included.
+ * <p>
+ * The driver is designed to be used with UK based signals.
+ * <p>
  * The class assigns turnout positions for RED, YELLOW, GREEN and Double Yellow
- * aspects. THE SD2 does not support flashing double yellow aspects on turnouts,
+ * aspects. THE SD2 does not support flashing double yellow aspects on turnouts, so
  * an alternative method is required to do this, as per the MERG SD2
- * documentation. nb As there is no Double Yellow asigned within JMRI, we use
- * the Lunar instead.
- * <P>
+ * documentation.
+ * <p>
+ * As there is no Double Yellow asigned within JMRI, we use the Lunar instead.
+ * <p>
  * For more info on the signals, see
- * <A HREF="http://www.merg.info">http://www.merg.info</a>.
+ * <a href="http://www.merg.info">http://www.merg.info</a>.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class MergSD2SignalHead extends DefaultSignalHead {
 
@@ -63,13 +65,15 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         } else {
             setAppearance(YELLOW);
         }
-
     }
 
-    /*
-     * Modified from DefaultSignalHead
-     * removed software flashing!!!
+    /**
+     * Set the Signal Head Appearance.
+     * Modified from DefaultSignalHead. Removed option for software flashing.
+     *
+     * @param newAppearance integer representing a valid Appearance for this head
      */
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -109,6 +113,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -119,6 +124,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         switch (mAppearance) {
@@ -166,6 +172,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mInput1 = null;
         mInput2 = null;
@@ -194,7 +201,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     /**
-     * Return the number of aspects for a given signal.
+     * Return the number of aspects for this signal.
+     *
+     * @return the number of aspects
      */
     public int getAspects() {
         return mAspects;
@@ -205,39 +214,48 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     /**
-     * Returns whether the signal is a home or a distant/Repeater signal default
-     * is true.
+     * Return whether this signal is a home or a distant/Repeater signal.
+     *
+     * @return true if signal is set up as Home signal (default); false if Distant
      */
     public boolean getHome() {
         return mHome;
     }
 
     /**
-     * Sets the first turnout used on the driver Relates to the section directly
-     * infront of the Signal {@literal (2, 3 & 4 aspect Signals)}
+     * Set the first turnout used on the driver. Relates to the section directly
+     * in front of the Signal {@literal (2, 3 & 4 aspect Signals)}.
+     *
+     * @param t turnout (named bean handel) to use as input 1
      */
     public void setInput1(NamedBeanHandle<Turnout> t) {
         mInput1 = t;
     }
 
     /**
-     * Sets the second turnout used on the driver Relates to the section in
-     * front of the next Signal (3 and 4 aspect Signal)
+     * Set the second turnout used on the driver. Relates to the section in
+     * front of the next Signal (3 and 4 aspect Signal).
+     *
+     * @param t turnout (named bean handel) to use as input 2
      */
     public void setInput2(NamedBeanHandle<Turnout> t) {
         mInput2 = t;
     }
 
     /**
-     * Sets the third turnout used on the driver Relates to the section directly
-     * in front the third Signal (4 aspect Signal)
+     * Set the third turnout used on the driver. Relates to the section directly
+     * in front the third Signal (4 aspect Signal).
+     *
+     * @param t turnout (named bean handel) to use as input 3
      */
     public void setInput3(NamedBeanHandle<Turnout> t) {
         mInput3 = t;
     }
 
     /**
-     * Sets the number of aspects on the signal, valid aspects 2,3,4
+     * Set the number of aspects on the signal.
+     *
+     * @param i the number of aspects on mast; valid values: 2, 3, 4
      */
     public void setAspects(int i) {
         mAspects = i;
@@ -248,7 +266,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     /**
-     * Set wheather the signal is a home or distance/repeater signal
+     * Set whether the signal is a home or distance/repeater signal.
+     *
+     * @param boo true if configuring as a Home signal, false for a Distant
      */
     public void setHome(boolean boo) {
         mHome = boo;
@@ -299,45 +319,46 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
         if (!mHome) {
-            return validStates2AspectDistant;
+            return Arrays.copyOf(validStates2AspectDistant, validStates2AspectDistant.length);
         } else {
             switch (mAspects) {
                 case 2:
-                    return validStates2AspectHome;
+                    return Arrays.copyOf(validStates2AspectHome, validStates2AspectHome.length);
                 case 3:
-                    return validStates3Aspect;
+                    return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
                 case 4:
-                    return validStates4Aspect;
+                    return Arrays.copyOf(validStates4Aspect, validStates4Aspect.length);
                 default:
                     log.warn("Unexpected number of apsects: " + mAspects);
-                    return validStates3Aspect;
+                    return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
             }
         }
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
         if (!mHome) {
-            return validStateNames2AspectDistant;
+            return Arrays.copyOf(validStateNames2AspectDistant, validStateNames2AspectDistant.length);
         } else {
             switch (mAspects) {
                 case 2:
-                    return validStateNames2AspectHome;
+                    return Arrays.copyOf(validStateNames2AspectHome, validStateNames2AspectHome.length);
                 case 3:
-                    return validStateNames3Aspect;
+                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
                 case 4:
-                    return validStateNames4Aspect;
+                    return Arrays.copyOf(validStateNames4Aspect, validStateNames3Aspect.length);
                 default:
                     log.warn("Unexpected number of apsects: " + mAspects);
-                    return validStateNames3Aspect;
+                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
             }
         }
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getInput1() != null && t.equals(getInput1().getBean())) {
             return true;

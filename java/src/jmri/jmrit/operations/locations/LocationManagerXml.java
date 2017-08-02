@@ -1,8 +1,8 @@
-// LocationManagerXml.java
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Load and stores locations and schedules for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision$
  */
 public class LocationManagerXml extends OperationsXml {
 
@@ -22,30 +21,27 @@ public class LocationManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static LocationManagerXml _instance = null;
-
     public static synchronized LocationManagerXml instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("LocationManagerXml creating instance");
-            }
+        LocationManagerXml instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
+        if (instance == null) {
+            log.debug("LocationManagerXml creating instance");
             // create and load
-            _instance = new LocationManagerXml();
-            _instance.load();
+            instance = new LocationManagerXml();
+            jmri.InstanceManager.setDefault(LocationManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManagerXml returns instance {}", _instance);
+            log.debug("LocationManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -108,9 +104,7 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "For testing")
-    public void dispose(){
-        _instance = null;
+    public void dispose() {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());

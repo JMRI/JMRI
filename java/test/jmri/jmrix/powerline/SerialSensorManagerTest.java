@@ -1,9 +1,10 @@
 package jmri.jmrix.powerline;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.Sensor;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the SerialSensorManager class.
@@ -11,11 +12,93 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
+ * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends TestCase {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+    @Override
+    public String getSystemName(int i) {
+        return "PSP" + i;
+    }
 
+    /**
+     * Number of sensor to test. Made a separate method so it can be overridden
+     * in subclasses that do or don't support various numbers
+     */
+    protected int getNumToTest1() {
+        return 8;
+    }
+
+    protected int getNumToTest2() {
+        return 9;
+    }
+
+    @Test
     public void testSensorCreationAndRegistration() {
+        l.provideSensor("PSA3");
+
+        l.provideSensor("PSA11");
+
+        l.provideSensor("PSP8");
+
+        l.provideSensor("PSP9");
+
+        l.provideSensor("PSK13");
+
+        l.provideSensor("PSJ6");
+
+        l.provideSensor("PSA15");
+
+        l.provideSensor("PSB5");
+
+        l.provideSensor("PSH7");
+
+        l.provideSensor("PSI7");
+
+        l.provideSensor("PSJ7");
+    }
+
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        // powerline systems require a module letter(?) which
+        // isn't provided by makeSystemName();      
+        Sensor t = l.provideSensor("PSP" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Override
+    @Test
+    public void testUpperLower() {
+        // powerline systems require a module letter(?) which
+        // isn't provided by makeSystemName();      
+        Sensor t = l.provideSensor("PSP" + getNumToTest1());
+        String name = t.getSystemName();
+        Assert.assertNull(l.getSensor(name.toLowerCase()));
+    }
+
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("PSP" + getNumToTest1());
+        Sensor t2 = l.provideSensor("PSP" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // replace the SerialTrafficController to get clean reset
         SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
             SerialTrafficController test() {
@@ -24,57 +107,25 @@ public class SerialSensorManagerTest extends TestCase {
         }.test();
         Assert.assertNotNull("exists", t);
 
-        SerialSensorManager s = new SerialSensorManager(t) {
+        SerialSystemConnectionMemo m = new SerialSystemConnectionMemo();
+
+        m.setSerialAddress(new SerialAddress(m));
+
+        t.setAdapterMemo(m);
+
+        l = new SerialSensorManager(t) {
+            @Override
             public void reply(SerialReply r) {
             }
         };
-        s.provideSensor("PSA3");
-
-        s.provideSensor("PSA11");
-
-        s.provideSensor("PSP8");
-
-        s.provideSensor("PSP9");
-
-        s.provideSensor("PSK13");
-
-        s.provideSensor("PSJ6");
-
-        s.provideSensor("PSA15");
-
-        s.provideSensor("PSB5");
-
-        s.provideSensor("PSH7");
-
-        s.provideSensor("PSI7");
-
-        s.provideSensor("PSJ7");
     }
 
-    // from here down is testing infrastructure
-    public SerialSensorManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialSensorManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialSensorManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
+
 
 }

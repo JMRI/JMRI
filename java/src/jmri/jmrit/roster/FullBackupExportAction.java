@@ -26,7 +26,6 @@ import jmri.util.swing.WindowInterface;
 public class FullBackupExportAction
         extends JmriAbstractAction {
 
-    private static final long serialVersionUID = 1L;
     // parent component for GUI
 
     public FullBackupExportAction(String s, WindowInterface wi) {
@@ -48,8 +47,9 @@ public class FullBackupExportAction
         _parent = parent;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        Roster roster = Roster.instance();
+        Roster roster = Roster.getDefault();
 
         ZipOutputStream zipper = null;
 
@@ -75,13 +75,12 @@ public class FullBackupExportAction
             zipper = new ZipOutputStream(new FileOutputStream(filename));
 
             // create a zip file roster entry for each entry in the main roster
-            for (int index = 0; index < roster.numEntries(); index++) {
-                RosterEntry entry = roster.getEntry(index);
+            for (RosterEntry entry : roster.getAllEntries()) {
                 copyFileToStream(entry.getPathName(), "roster", zipper, entry.getId());
             }
 
             // Now the full roster entry
-            copyFileToStream(Roster.defaultRosterFilename(), null, zipper, null);
+            copyFileToStream(Roster.getDefault().getRosterIndexPath(), null, zipper, null);
 
             zipper.setComment("Roster file saved from DecoderPro " + jmri.Version.name());
 
@@ -150,6 +149,7 @@ public class FullBackupExportAction
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

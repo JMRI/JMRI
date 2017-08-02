@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -37,8 +40,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -50,24 +56,35 @@ import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.LightManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
 import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Route;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.picker.PickSinglePanel;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -76,13 +93,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Logix Table.
  * <P>
- * Also contains the windows to create, edit, and delete a Logix. Also contains
- * the window to define and edit a Conditional.
+ * Also contains the panes to create, edit, and delete a Logix. Also contains
+ * the pane to define and edit a Conditional.
  * <P>
  * Most of the text used in this GUI is in LogixTableBundle.properties, accessed
  * via rbx, and the remainder of the text is in BeanTableBundle.properties,
- * accessed via rb (the latter can easily be converted to the Bundle.getMessage() method)
- *
+ * accessed via the Bundle.getMessage() method.
+ * <p>
  * Methods and Members for 'state variables' and 'actions' removed to become
  * their own objects - 'ConditionalVariable' and 'ConditionalAction' in jmri
  * package. Two more types of logic for a Conditional to use in its antecedent
@@ -91,38 +108,55 @@ import org.slf4j.LoggerFactory;
  * operations). The 'OR's an 'AND's types are unambiguous and do not require
  * parentheses. The 'Mixed' type uses a TextField for the user to insert
  * parenthees. Jan 22, 2009 - Pete Cressman
- *
+ * <p>
  * Conditionals now have two policies to trigger execution of their action
- * lists. 1. the previous policy - Trigger on change of state only 2. the new
- * default - Trigger on any enabled state calculation Jan 15, 2011 - Pete
- * Cressman
- *
+ * lists:<br>
+ * 1. the previous policy - Trigger on change of state only <br>
+ * 2. the new default - Trigger on any enabled state calculation
+ * Jan 15, 2011 - Pete Cressman
+ * <p>
+ * Two additional action and variable name selection methods have been added:
+ * 1) Single Pick List
+ * 2) Combo Box Selection
+ * The traditional tabbed Pick List with text entry is the default method.
+ * The Options menu has been expanded to list the 3 methods.
+ * Mar 27, 2017 - Dave Sand
+ * <p>
+ * Add a Browse Option to the Logix Select Menu
+ * This will display a window that creates a formatted list of the contents of the
+ * seletcted Logix with each Conditional, Variable and Action.
+ * The code is courtesy of Chuck Catania and is used with his permission.
+ * Apr 2, 2017 - Dave Sand
+ * <p>
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
+ * @author Dave Sand copyright (c) 2017
  */
 public class LogixTableAction extends AbstractTableAction {
 
     /**
-     * Create an action with a specific title.
-     * <P>
-     * Note that the argument is the Action title, not the title of the
-     * resulting frame. Perhaps this should be changed?
+     * Constructor to create a LogixManager instance.
      *
+     * @param s the Action title, not the title of the
+     * resulting frame. Perhaps this should be changed?
      */
     public LogixTableAction(String s) {
         super(s);
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getNullableDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getNullableDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
         }
     }
 
+    /**
+     * Constructor to create a LogixManager instance with default title.
+     */
     public LogixTableAction() {
         this(Bundle.getMessage("TitleLogixTable"));
     }
@@ -130,13 +164,16 @@ public class LogixTableAction extends AbstractTableAction {
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     // *********** Methods for Logix Table Window ********************
+
     /**
      * Create the JTable DataModel, along with the changes (overrides of
-     * BeanTableDataModel) for the specific case of a Logix table. Note: Table
-     * Models for the Conditional table in the Edit Logix window, and the State
-     * Variable table in the Edit Conditional window are at the end of this
-     * module.
+     * BeanTableDataModel) for the specific case of a Logix table.
+     * <p>
+     * Note: Table Models for the Conditional table in the Edit Logix window,
+     * and the State Variable table in the Edit Conditional window are at
+     * the end of this module.
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             // overlay the state column with the edit column
@@ -144,6 +181,7 @@ public class LogixTableAction extends AbstractTableAction {
             static public final int EDITCOL = DELETECOL;
             protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
+            @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
                     return ""; // no heading on "Edit"
@@ -154,6 +192,7 @@ public class LogixTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == EDITCOL) {
                     return String.class;
@@ -164,6 +203,7 @@ public class LogixTableAction extends AbstractTableAction {
                 return super.getColumnClass(col);
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 // override default value for SystemName and UserName columns
                 if (col == SYSNAMECOL) {
@@ -181,6 +221,7 @@ public class LogixTableAction extends AbstractTableAction {
                 return super.getPreferredWidth(col);
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == EDITCOL) {
                     return true;
@@ -191,6 +232,7 @@ public class LogixTableAction extends AbstractTableAction {
                 return super.isCellEditable(row, col);
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonSelect");
@@ -205,14 +247,32 @@ public class LogixTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
                     // set up to edit
                     String sName = (String) getValueAt(row, SYSNAMECOL);
                     if (Bundle.getMessage("ButtonEdit").equals(value)) {
                         editPressed(sName);
+<<<<<<< HEAD
+                        
+                    } else if (rbx.getString("BrowserButton").equals(value)) {
+                      conditionalRowNumber = row;
+                      browserPressed(sName);
+                      
                     } else if (Bundle.getMessage("ButtonCopy").equals(value)) {
                         copyPressed(sName);
+                        
+=======
+
+                    } else if (rbx.getString("BrowserButton").equals(value)) {
+                      conditionalRowNumber = row;
+                      browserPressed(sName);
+
+                    } else if (Bundle.getMessage("ButtonCopy").equals(value)) {
+                        copyPressed(sName);
+
+>>>>>>> JMRI/master
                     } else if (Bundle.getMessage("ButtonDelete").equals(value)) {
                         deletePressed(sName);
                     }
@@ -229,9 +289,12 @@ public class LogixTableAction extends AbstractTableAction {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
-             * Deactivate the Logix and remove it's conditionals
+             * <p>
+             * Deactivates the Logix and remove it's conditionals.
+             *
+             * @param bean of the Logix to delete
              */
+            @Override
             void doDelete(NamedBean bean) {
                 Logix l = (Logix) bean;
                 l.deActivateLogix();
@@ -239,6 +302,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _logixManager.deleteLogix(l);
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(enabledString)) {
                     return true;
@@ -246,28 +310,29 @@ public class LogixTableAction extends AbstractTableAction {
                 return super.matchPropertyName(e);
             }
 
+            @Override
             public Manager getManager() {
-                return InstanceManager.logixManagerInstance();
+                return InstanceManager.getDefault(jmri.LogixManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.logixManagerInstance().getBySystemName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
-                return InstanceManager.logixManagerInstance().getByUserName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }
-            /* public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }*/
+            @Override
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
@@ -276,12 +341,20 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             /**
-             * Replace delete button with comboBox
+             * Replace delete button with comboBox to edit/delete/copy/select Logix.
+             *
+             * @param table name of the Logix JTable holding the column
              */
+            @Override
             protected void configDeleteColumn(JTable table) {
                 JComboBox<String> editCombo = new JComboBox<String>();
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));
+<<<<<<< HEAD
+				editCombo.addItem(rbx.getString("BrowserButton"));
+=======
+                editCombo.addItem(rbx.getString("BrowserButton"));
+>>>>>>> JMRI/master
                 editCombo.addItem(Bundle.getMessage("ButtonCopy"));
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
@@ -289,41 +362,60 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             // Not needed - here for interface compatibility
+            @Override
             public void clickOn(NamedBean t) {
             }
 
+            @Override
             public String getValue(String s) {
                 return "";
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameLogix");
             }
         };
     }
 
-    // set title for Logix table
+    /**
+     * Set title of Logix table.
+     */
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
-    /*    
-     public void addToFrame(BeanTableFrame f) {
-     // Hack into Logix frame to add my junk. (pwc)
-     f.addToBottomBox(extraPanel, this.getClass().getName());
-     }
-    
-     */ public void setMenuBar(BeanTableFrame f) {
-        JMenu menu = new JMenu(Bundle.getMessage("OptionsMenu"));
+
+    /**
+     * Insert 2 table specific menus.
+     * <p>
+     * Accounts for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the new menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, which adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
+    @Override
+    public void setMenuBar(BeanTableFrame f) {
+        loadSelectionMode();
+
+        JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
-        /*
-         if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
-         _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-         getPreferenceState("beantable.LRouteTableAction.remindRoute");
-         */
+        int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
+
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
         r.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 enableAll(true);
             }
@@ -331,21 +423,65 @@ public class LogixTableAction extends AbstractTableAction {
         enableButtonGroup.add(r);
         r.setSelected(true);
         menu.add(r);
+<<<<<<< HEAD
+        
+=======
+
+>>>>>>> JMRI/master
         r = new JRadioButtonMenuItem(rbx.getString("DisableAll"));
         r.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 enableAll(false);
             }
         });
         enableButtonGroup.add(r);
         menu.add(r);
-        menuBar.add(menu);
+
+        menu.addSeparator();
+
+        ButtonGroup modeButtonGroup = new ButtonGroup();
+        r = new JRadioButtonMenuItem(rbx.getString("UseMultiPick"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USEMULTI);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USEMULTI);
+
+        r = new JRadioButtonMenuItem(rbx.getString("UseSinglePick"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USESINGLE);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USESINGLE);
+
+        r = new JRadioButtonMenuItem(rbx.getString("UseComboNameBoxes"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USECOMBO);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USECOMBO);
+
+        menuBar.add(menu, pos + offset);
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));
         menu.setMnemonic(KeyEvent.VK_T);
 
         JMenuItem item = new JMenuItem(rbx.getString("OpenPickListTables"));
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 OpenPickListTable();
             }
@@ -354,6 +490,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         item = new JMenuItem(rbx.getString("FindOrphans"));
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 findOrphansPressed(e);
             }
@@ -362,6 +499,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         item = new JMenuItem(rbx.getString("EmptyConditionals"));
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 findEmptyPressed(e);
             }
@@ -372,6 +510,7 @@ public class LogixTableAction extends AbstractTableAction {
         item.addActionListener(new ActionListener() {
             BeanTableFrame parent;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 new RefDialog(parent);
             }
@@ -382,9 +521,69 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }.init(f));
         menu.add(item);
-        menuBar.add(menu);
+
+        item = new JMenuItem(rbx.getString("DisplayWhereUsed"));
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                makeWhereUsedWindow();
+            }
+        });
+        menu.add(item);
+
+        menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
     }
 
+    /**
+     * Get the saved mode selection, default to the tranditional tabbed pick list.
+     * <p>
+     * During the menu build process, the corresponding menu item is set to selected.
+     * @since 4.7.3
+     */
+    void loadSelectionMode() {
+        Object modeName = InstanceManager.getDefault(jmri.UserPreferencesManager.class).getProperty(getClassName(), "Selection Mode");
+        if (modeName == null) {
+            _selectionMode = SelectionMode.USEMULTI;
+        } else {
+            String currentMode = (String) modeName;
+            switch (currentMode) {
+                case "USEMULTI":
+                    _selectionMode = SelectionMode.USEMULTI;
+                    break;
+                case "USESINGLE":
+                    _selectionMode = SelectionMode.USESINGLE;
+                    break;
+                case "USECOMBO":
+                    _selectionMode = SelectionMode.USECOMBO;
+                    break;
+                default:
+                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);
+                    _selectionMode = SelectionMode.USEMULTI;
+            }
+<<<<<<< HEAD
+        }        
+=======
+        }
+>>>>>>> JMRI/master
+    }
+
+    /**
+     * Save the mode selection.  Called by menu item change events.
+     * @since 4.7.3
+<<<<<<< HEAD
+     * @param newMode The SelectionMode enum constant 
+=======
+     * @param newMode The SelectionMode enum constant
+>>>>>>> JMRI/master
+     */
+    void setSelectionMode(SelectionMode newMode) {
+        _selectionMode = newMode;
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setProperty(getClassName(), "Selection Mode", newMode.toString());
+    }
+
+    /**
+     * Open a new Pick List to drag Actions from to form Logix Conditionals.
+     */
     void OpenPickListTable() {
         if (_pickTables == null) {
             _pickTables = new jmri.jmrit.picker.PickFrame(rbx.getString("TitlePickList"));
@@ -394,10 +593,22 @@ public class LogixTableAction extends AbstractTableAction {
         _pickTables.toFront();
     }
 
+    /**
+     * Find empty Conditional entries, called from menu.
+     *
+     * @see Maintenance#findEmptyPressed(Frame)
+     * @param e the event heard
+     */
     void findEmptyPressed(ActionEvent e) {
         Maintenance.findEmptyPressed(f);
     }
 
+    /**
+     * Find orphaned entries, called from menu.
+     *
+     * @see Maintenance#findOrphansPressed(Frame)
+     * @param e the event heard
+     */
     void findOrphansPressed(ActionEvent e) {
         Maintenance.findOrphansPressed(f);
     }
@@ -417,6 +628,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton referenceButton = new JButton(rbx.getString("ReferenceButton"));
             panel.add(referenceButton);
             referenceButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deviceReportPressed(e);
                 }
@@ -425,7 +637,7 @@ public class LogixTableAction extends AbstractTableAction {
             extraPanel.add(panel);
             setContentPane(extraPanel);
             pack();
-//            setLocationRelativeTo((java.awt.Component)_pos);
+            // setLocationRelativeTo((java.awt.Component)_pos);
             setVisible(true);
         }
 
@@ -443,11 +655,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LogixTable";
     }
 
     // *********** variable definitions ********************
+
     // Multi use variables
     ConditionalManager _conditionalManager = null; // set when LogixAction is created
 
@@ -457,7 +671,7 @@ public class LogixTableAction extends AbstractTableAction {
     boolean _suppressIndirectRef = false;
     jmri.jmrit.picker.PickFrame _pickTables;
 
-    // current focus variables
+    // Current focus variables
     Logix _curLogix = null;
     int numConditionals = 0;
     int conditionalRowNumber = 0;
@@ -465,12 +679,11 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Add Logix Variables
     JmriJFrame addLogixFrame = null;
-    JTextField _systemName = new JTextField(10);
-    JTextField _addUserName = new JTextField(10);
+    JTextField _systemName = new JTextField(20); // N11N
+    JTextField _addUserName = new JTextField(20); // N11N
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
-    jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     JButton create;
 
@@ -483,6 +696,14 @@ public class LogixTableAction extends AbstractTableAction {
     JTextField editUserName = new JTextField(20);
     ConditionalTableModel conditionalTableModel = null;
     JLabel status = new JLabel(" ");
+
+    // Select Conditional Variables
+    JPanel _selectLogixPanel = null;
+    JPanel _selectConditionalPanel = null;
+    private JComboBox<String> _selectLogixBox = new JComboBox<String>();
+    private JComboBox<String> _selectConditionalBox = new JComboBox<String>();
+    private ArrayList<String> _selectLogixList = new ArrayList<String>();
+    private ArrayList<String> _selectConditionalList = new ArrayList<String>();
 
     // Edit Conditional Variables
     boolean inEditConditionalMode = false;
@@ -499,10 +720,320 @@ public class LogixTableAction extends AbstractTableAction {
     private JPanel _antecedentPanel;
     private int _logicType = Conditional.ALL_AND;
     private String _antecedent = null;
-    private boolean _newItem = false;   // marks a new Action or Variable object added
+    private boolean _newItem = false; // marks a new Action or Variable object was added
+
+    // Conditional Browser Variables
+    JmriJFrame condBrowserFrame = null;
+    JTextArea condText = null;
 
     /**
-     * * Conponents of Edit Variable Windows
+     * Input selection names
+     * @since 4.7.3
+<<<<<<< HEAD
+     */ 
+=======
+     */
+>>>>>>> JMRI/master
+    public enum SelectionMode {
+        /** Use the traditional text field, with the tabbed Pick List available for drag-n-drop */
+        USEMULTI,
+        /** Use the traditional text field, but with a single Pick List that responds with a click */
+        USESINGLE,
+        /** Use combo boxes to select names instead of a text field. */
+        USECOMBO;
+    }
+    SelectionMode _selectionMode;
+<<<<<<< HEAD
+    
+=======
+
+>>>>>>> JMRI/master
+    // Single pick list name selection variables
+    PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
+    JFrame _pickSingleFrame = null;
+    JTable _pickTable = null;               // Current pick table
+    PickSingleListener _pickListener = null;
+<<<<<<< HEAD
+
+    /**
+     * Listen for Pick Single table click events.
+     * <p>
+     * When a table row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
+     */
+    class PickSingleListener implements ListSelectionListener {
+        int saveItemType = -1;          // Current table type
+        boolean dragNdrop = false;      // Not currently used
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            // Drag and drop can be controlled programmtically.
+            if (dragNdrop) {
+                return;
+            }
+
+            // Determine the current sub-panel type: Variable or Action, ignore item state changes if neither is active
+            String chkMode = "None";
+            if (_editVariableFrame == null) {
+                if (_editActionFrame == null) {
+                    return;         // There is no active variable or action input frame
+                } else {
+                    chkMode = "Action";
+                }
+            } else {
+                chkMode = "Variable";
+            }
+
+            int selectedRow = _pickTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                int selectedCol = _pickTable.getSelectedColumn();
+                String newName = (String) _pickTable.getValueAt(selectedRow, selectedCol);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'", selectedRow, selectedCol, newName);
+                }
+
+                // Set the appropriate name field
+                if (chkMode.equals("Action")) {
+                    _actionNameField.setText(newName);
+                } else if (chkMode.equals("Variable")) {
+                    _variableNameField.setText(newName);
+                }
+            }
+        }
+        
+        public int getItemType() {
+            return saveItemType;
+        }
+
+        public void setItemType(int itemType) {
+            saveItemType = itemType;
+        }
+
+        public void setDragDrop(boolean dNd) {
+            dragNdrop = dNd;
+        }
+    }
+
+    // Combo boxes for name selection and their JPanel variables
+    // These are shared by the conditional and action selection processs
+    JmriBeanComboBox _sensorNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _turnoutNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _lightNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _sigheadNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _sigmastNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _memoryNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _warrantNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _oblockNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _conditionalNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(ConditionalManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _logixNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+//    JmriBeanComboBox _entryexitNameBox = new JmriBeanComboBox(
+//            InstanceManager.getDefault(EntryExitManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+
+    JPanel _actionComboNamePanel;
+    JPanel _variableComboNamePanel;
+    boolean _nameBoxListenersDone = false;
+
+    /**
+=======
+
+    /**
+     * Listen for Pick Single table click events.
+     * <p>
+     * When a table row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
+     */
+    class PickSingleListener implements ListSelectionListener {
+        int saveItemType = -1;          // Current table type
+        boolean dragNdrop = false;      // Not currently used
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            // Drag and drop can be controlled programmtically.
+            if (dragNdrop) {
+                return;
+            }
+
+            // Determine the current sub-panel type: Variable or Action, ignore item state changes if neither is active
+            String chkMode = "None";
+            if (_editVariableFrame == null) {
+                if (_editActionFrame == null) {
+                    return;         // There is no active variable or action input frame
+                } else {
+                    chkMode = "Action";
+                }
+            } else {
+                chkMode = "Variable";
+            }
+
+            int selectedRow = _pickTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                int selectedCol = _pickTable.getSelectedColumn();
+                String newName = (String) _pickTable.getValueAt(selectedRow, selectedCol);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'", selectedRow, selectedCol, newName);
+                }
+
+                // Set the appropriate name field
+                if (chkMode.equals("Action")) {
+                    _actionNameField.setText(newName);
+                } else if (chkMode.equals("Variable")) {
+                    _variableNameField.setText(newName);
+                }
+            }
+        }
+
+        public int getItemType() {
+            return saveItemType;
+        }
+
+        public void setItemType(int itemType) {
+            saveItemType = itemType;
+        }
+
+        public void setDragDrop(boolean dNd) {
+            dragNdrop = dNd;
+        }
+    }
+
+    // Combo boxes for name selection and their JPanel variables
+    // These are shared by the conditional and action selection processs
+    JmriBeanComboBox _sensorNameBox;
+    JmriBeanComboBox _turnoutNameBox;
+    JmriBeanComboBox _lightNameBox;
+    JmriBeanComboBox _sigheadNameBox;
+    JmriBeanComboBox _sigmastNameBox;
+    JmriBeanComboBox _memoryNameBox;
+    JmriBeanComboBox _warrantNameBox;
+    JmriBeanComboBox _oblockNameBox;
+    JmriBeanComboBox _logixNameBox;
+//    JmriBeanComboBox _entryexitNameBox = new JmriBeanComboBox(
+//            InstanceManager.getDefault(EntryExitManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+
+    /**
+     * Defer creation of the JmriBeanComboBox objects until needed.
+     * <p>
+     * These are big, and more importantly they require supralinear update work
+     * every time one of their objects is added to a manager.  Delaying their 
+     * creation until the table is used saves a lot of time at e.g. initialization and file reading.
+     */
+    void initNameBoxObjects() {
+        if (_sensorNameBox == null) _sensorNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_turnoutNameBox == null) _turnoutNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_lightNameBox == null) _lightNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_sigheadNameBox == null) _sigheadNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_sigmastNameBox == null) _sigmastNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_memoryNameBox == null) _memoryNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_warrantNameBox == null) _warrantNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_oblockNameBox == null) _oblockNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        if (_logixNameBox == null) _logixNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    }
+    
+    JPanel _actionComboNamePanel;
+    JPanel _variableComboNamePanel;
+    boolean _nameBoxListenersDone = false;
+
+    /**
+>>>>>>> JMRI/master
+     * Listen for name combo box selection events.
+     * <p>
+     * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
+     */
+    class NameBoxListener implements ItemListener {
+
+        String _nameType;               // sensor, turnout, memory, etc.
+        boolean _programEvent = false;  // When true, program code created the event.  This way we don't update the field that just supplied the new value.
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            // Determine the current sub-panel type: Variable or Action, ignore item state changes if neither is active
+            String chkMode = "None";
+            if (_editVariableFrame == null) {
+                if (_editActionFrame == null) {
+                    return;             // There is no active variable or action input frame
+                } else {
+                    chkMode = "Action";
+                }
+            } else {
+                chkMode = "Variable";
+            }
+
+            // Get the combo box, the display name and the new state
+            int newState = e.getStateChange();
+            Object src = e.getSource();
+            if (!(src instanceof JmriBeanComboBox)) {
+                return;
+            }
+            JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
+            String newName = srcBox.getSelectedDisplayName();
+
+            if (newState == ItemEvent.SELECTED && !_programEvent) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Name ComboBox Item Event: type = '{}', mode = '{}', name = '{}'", _nameType, chkMode, newName);
+                }
+
+                // Set the appropriate name field
+                if (chkMode.equals("Action")) {
+                    _actionNameField.setText(newName);
+                } else if (chkMode.equals("Variable")) {
+                    _variableNameField.setText(newName);
+                }
+            }
+            _programEvent = false;
+        }
+
+        public void setNameType(String type) {
+            _nameType = type;
+        }
+
+        public void setProgramEvent() {
+            _programEvent = true;
+        }
+    }
+
+    NameBoxListener _sensorNameListener;
+    NameBoxListener _turnoutNameListener;
+    NameBoxListener _lightNameListener;
+    NameBoxListener _sigheadNameListener;
+    NameBoxListener _sigmastNameListener;
+    NameBoxListener _memoryNameListener;
+
+    NameBoxListener _warrantNameListener;
+    NameBoxListener _oblockNameListener;
+<<<<<<< HEAD
+    NameBoxListener _conditionalNameListener;
+=======
+>>>>>>> JMRI/master
+    NameBoxListener _logixNameListener;
+    NameBoxListener _entryexitNameListener;
+
+// warrent
+// oblock
+// entry exit (var only)
+
+    /**
+     * Components of Edit Variable panes
      */
     JmriJFrame _editVariableFrame = null;
     JComboBox<String> _variableTypeBox;
@@ -521,7 +1052,7 @@ public class LogixTableAction extends AbstractTableAction {
     JPanel _variableData2Panel;
 
     /**
-     * * Conponents of Edit Action Windows
+     * Conponents of Edit Action panes
      */
     JmriJFrame _editActionFrame = null;
     JComboBox<String> _actionItemTypeBox;
@@ -541,12 +1072,14 @@ public class LogixTableAction extends AbstractTableAction {
     JPanel _setPanel;
     JPanel _textPanel;
 
-    /* Listener for _actionTypeBox
+    /**
+     * Listener for _actionTypeBox.
      */
     class ActionTypeListener implements ActionListener {
 
         int _itemType;
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             int select1 = _actionItemTypeBox.getSelectedIndex();
             int select2 = _actionTypeBox.getSelectedIndex() - 1;
@@ -593,11 +1126,19 @@ public class LogixTableAction extends AbstractTableAction {
 
     static final int STRUT = 10;
 
+    // Save conditional reference target names before updating
+    private TreeSet<String> _saveTargetNames = new TreeSet<String>();
+    private HashMap<String, ArrayList<String>> _saveTargetList = new HashMap<>();
+
     // *********** Methods for Add Logix Window ********************
+
     /**
-     * Responds to the Add button in Logix table Creates and/or initializes the
-     * Add Logix window
+     * Respond to the Add button in Logix table Creates and/or initializes the
+     * Add Logix pane.
+     *
+     * @param e The event heard
      */
+    @Override
     protected void addPressed(ActionEvent e) {
         // possible change
         if (!checkFlags(null)) {
@@ -611,6 +1152,7 @@ public class LogixTableAction extends AbstractTableAction {
             create = new JButton(Bundle.getMessage("ButtonCreate"));
             panel5.add(create);
             create.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
@@ -620,13 +1162,18 @@ public class LogixTableAction extends AbstractTableAction {
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);
-        if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-            _autoSystemName.setSelected(true);
-        }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+        });
     }
 
     /**
-     * shared method for window to create or copy Logix Returns the button panel
+     * Create or copy Logix frame.
+     *
+     * @param titleId property key to fetch as title of the frame
+     * @param messageId part 1 of property key to fetch as user instruction on pane,
+     *                  either 1 or 2 is added to form the whole key
+     * @return the button JPanel
      */
     JPanel makeAddLogixFrame(String titleId, String messageId) {
         addLogixFrame = new JmriJFrame(rbx.getString(titleId));
@@ -688,6 +1235,7 @@ public class LogixTableAction extends AbstractTableAction {
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         panel5.add(cancel);
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelAddPressed(e);
             }
@@ -695,6 +1243,7 @@ public class LogixTableAction extends AbstractTableAction {
         cancel.setToolTipText(rbx.getString("CancelLogixButtonHint"));
 
         addLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 cancelAddPressed(null);
             }
@@ -703,6 +1252,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         _autoSystemName.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         autoSystemName();
                     }
@@ -710,6 +1260,10 @@ public class LogixTableAction extends AbstractTableAction {
         return panel5;
     }
 
+    /**
+     * Enable/disable fields for data entry when user selects to have system name
+     * automatically generated.
+     */
     void autoSystemName() {
         if (_autoSystemName.isSelected()) {
             _systemName.setEnabled(false);
@@ -721,8 +1275,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button in Add Logix window Note: Also get there if
-     * the user closes the Add Logix window
+     * Respond to the Cancel button in Add Logix window.
+     * <p>
+     * Note: Also get there if the user closes the Add Logix window.
+     * @param e The event heard
      */
     void cancelAddPressed(ActionEvent e) {
         addLogixFrame.setVisible(false);
@@ -734,17 +1290,26 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Respond to the Copy Logix button in Add Logix window.
+     * <p>
+     * Provides a pane to set new properties of the copy.
+     *
+     * @param sName system name of Logix to be copied
+     */
     void copyPressed(String sName) {
         if (!checkFlags(sName)) {
             return;
         }
         Runnable t = new Runnable() {
+            @Override
             public void run() {
                 JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
                 // Create Logix
                 JButton create = new JButton(Bundle.getMessage("ButtonCopy"));
                 panel5.add(create);
                 create.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         copyLogixPressed(e);
                     }
@@ -752,9 +1317,9 @@ public class LogixTableAction extends AbstractTableAction {
                 addLogixFrame.pack();
                 addLogixFrame.setVisible(true);
                 _autoSystemName.setSelected(false);
-                if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-                    _autoSystemName.setSelected(true);
-                }
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+                });
             }
         };
         if (log.isDebugEnabled()) {
@@ -767,8 +1332,13 @@ public class LogixTableAction extends AbstractTableAction {
 
     String _logixSysName;
 
+    /**
+     * Copy the Logix as configured in the Copy set up pane.
+     *
+     * @param e the event heard
+     */
     void copyLogixPressed(ActionEvent e) {
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText().trim(); // N11N
         if (uName.length() == 0) {
             uName = null;
         }
@@ -782,7 +1352,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (!checkLogixSysName()) {
                 return;
             }
-            String sName = _systemName.getText().trim();
+            String sName = _systemName.getText().trim(); // N11N
             // check if a Logix with this name already exists
             boolean createLogix = true;
             targetLogix = _logixManager.getBySystemName(sName);
@@ -797,7 +1367,7 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 createLogix = false;
                 String userName = targetLogix.getUserName();
-                if (userName.length() > 0) {
+                if (userName != null && userName.length() > 0) {
                     _addUserName.setText(userName);
                     uName = userName;
                 }
@@ -827,6 +1397,13 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
     }
 
+    /**
+     * Copy a given Conditional from one Logix to another.
+     *
+     * @param cSysName system name of the Conditional
+     * @param srcLogix original Logix containing the Conditional
+     * @param targetLogix target Logix to copy to
+     */
     void copyConditionalToLogix(String cSysName, Logix srcLogix, Logix targetLogix) {
         Conditional cOld = _conditionalManager.getBySystemName(cSysName);
         if (cOld == null) {
@@ -841,7 +1418,7 @@ public class LogixTableAction extends AbstractTableAction {
         String cNewSysName = targetLogix.getSystemName() + "C" + Integer.toString(num);
         // add to Logix at the end of the calculate order
         String cNewUserName = java.text.MessageFormat.format(rbx.getString("CopyOf"), cOldUserName);
-        if (cOldUserName.length() == 0) {
+        if (cOldUserName != null && cOldUserName.length() == 0) {
             cNewUserName += "C" + Integer.toString(num);
         }
         do {
@@ -870,8 +1447,20 @@ public class LogixTableAction extends AbstractTableAction {
         cNew.setStateVariables(cOld.getCopyOfStateVariables());
         cNew.setAction(cOld.getCopyOfActions());
         targetLogix.addConditional(cNewSysName, -1);
+
+        // Update where used with the copy results
+        _saveTargetNames.clear();
+        TreeSet<String> newTargetNames = new TreeSet<String>();
+        loadReferenceNames(cOld.getCopyOfStateVariables(), newTargetNames);
+        updateWhereUsed(newTargetNames, cNewSysName);
     }
 
+    /**
+     * Check and warn if a string is already in use as the user name of a Logix.
+     *
+     * @param uName the suggested name
+     * @return true if not in use
+     */
     boolean checkLogixUserName(String uName) {
         // check if a Logix with the same user name exists
         if (uName != null && uName.trim().length() > 0) {
@@ -887,9 +1476,19 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check validity of Logix system name.
+     * <p>
+     * Fixes name if it doesn't start with "IX".
+     * </p>
+     * @return false if name has length &lt; 1 after displaying a dialog
+     */
     boolean checkLogixSysName() {
-        // check validity of Logix system name
-        String sName = _systemName.getText().trim();
+<<<<<<< HEAD
+        String sName = _systemName.getText().trim(); // N11N
+=======
+        String sName = _systemName.getText().toUpperCase().trim(); // N11N
+>>>>>>> JMRI/master
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
@@ -907,6 +1506,13 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check if another Logix editing session is currently open
+     * or no system name is provided.
+     *
+     * @param sName system name of Logix to be copied
+     * @return true if a new session may be started
+     */
     boolean checkFlags(String sName) {
         if (inEditMode) {
             // Already editing a Logix, ask for completion of that edit
@@ -943,16 +1549,21 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Create Logix button in Add Logix window
+     * Respond to the Create Logix button in Add Logix window.
+     *
+     * @param e The event heard
      */
     void createPressed(ActionEvent e) {
         // possible change
         _showReminder = true;
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText().trim(); // N11N
         if (uName.length() == 0) {
             uName = null;
         }
-        String sName = _systemName.getText().trim();
+<<<<<<< HEAD
+        String sName = _systemName.getText().trim(); // N11N
+=======
+>>>>>>> JMRI/master
         if (_autoSystemName.isSelected()) {
             if (!checkLogixUserName(uName)) {
                 return;
@@ -962,6 +1573,8 @@ public class LogixTableAction extends AbstractTableAction {
             if (!checkLogixSysName()) {
                 return;
             }
+            // Get validated system name
+            String sName = _systemName.getText(); // N11N
             // check if a Logix with this name already exists
             Logix x = null;
             try {
@@ -969,7 +1582,7 @@ public class LogixTableAction extends AbstractTableAction {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
             if (x != null) {
                 // Logix already exists
@@ -993,7 +1606,9 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
         // create the Edit Logix Window
         makeEditLogixWindow();
-        prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        });
     }
 
     void handleCreateException(String sysName) {
@@ -1004,9 +1619,13 @@ public class LogixTableAction extends AbstractTableAction {
                 Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    // *********** Methods for Edit Logix Window ********************
+
+    // *********** Methods for Edit Logix Pane ********************
+
     /**
-     * Responds to the Edit button pressed in Logix table
+     * Respond to the Edit button pressed in Logix table.
+     *
+     * @param sName system name of Logix to be edited
      */
     void editPressed(String sName) {
         if (!checkFlags(sName)) {
@@ -1018,6 +1637,7 @@ public class LogixTableAction extends AbstractTableAction {
         // create the Edit Logix Window
         // Use separate operation so window is created on top
         Runnable t = new Runnable() {
+            @Override
             public void run() {
                 makeEditLogixWindow();
             }
@@ -1029,9 +1649,14 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * creates and/or initializes the Edit Logix window
+     * Create and/or initialize the Edit Logix pane.
      */
     void makeEditLogixWindow() {
+<<<<<<< HEAD
+=======
+        initNameBoxObjects();
+>>>>>>> JMRI/master
+        setNameBoxListeners();      // Setup the name box components.
         //if (log.isDebugEnabled()) log.debug("makeEditLogixWindow ");
         editUserName.setText(_curLogix.getUserName());
         // clear conditional table if needed
@@ -1123,6 +1748,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton newConditionalButton = new JButton(rbx.getString("NewConditionalButton"));
             panel42.add(newConditionalButton);
             newConditionalButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     newConditionalPressed(e);
                 }
@@ -1132,6 +1758,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton reorderButton = new JButton(rbx.getString("ReorderButton"));
             panel42.add(reorderButton);
             reorderButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     reorderPressed(e);
                 }
@@ -1141,6 +1768,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton calculateButton = new JButton(rbx.getString("CalculateButton"));
             panel42.add(calculateButton);
             calculateButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     calculatePressed(e);
                 }
@@ -1157,6 +1785,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton done = new JButton(Bundle.getMessage("ButtonDone"));
             panel5.add(done);
             done.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     donePressed(e);
                 }
@@ -1166,6 +1795,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));
             panel5.add(delete);
             delete.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deletePressed(e);
                 }
@@ -1175,6 +1805,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
 
         editLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (inEditMode) {
                     donePressed(null);
@@ -1188,7 +1819,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Display reminder to save
+     * Display reminder to save.
      */
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
@@ -1198,7 +1829,7 @@ public class LogixTableAction extends AbstractTableAction {
          javax.swing.JOptionPane.INFORMATION_MESSAGE);
          }*/
         if (_showReminder) {
-            if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
+            if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
                                 getClassName(),
@@ -1208,7 +1839,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Reorder Button in the Edit Logix window
+     * Respond to the Reorder Button in the Edit Logix pane.
+     *
+     * @param e The event heard
      */
     void reorderPressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1223,7 +1856,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the First/Next (Delete) Button in the Edit Logix window
+     * Respond to the First/Next (Delete) Button in the Edit Logix window.
+     *
+     * @param row index of the row to put as next in line (instead of the one that was supposed to be next)
      */
     void swapConditional(int row) {
         _curLogix.swapConditional(_nextInOrder, row);
@@ -1237,6 +1872,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Responds to the Calculate Button in the Edit Logix window
+     *
+     * @param e The event heard
      */
     void calculatePressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1268,9 +1905,13 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Done button in the Edit Logix window Note: also get here
+     * Respond to the Done button in the Edit Logix window.
+     * <p>
+     * Note: We also get here
      * if the Edit Logix window is dismissed, or if the Add button is pressed in
      * the Logic Table with an active Edit Logix window.
+     *
+     * @param e The event heard
      */
     void donePressed(ActionEvent e) {
         if (_curLogix == null) {
@@ -1286,7 +1927,7 @@ public class LogixTableAction extends AbstractTableAction {
             return;
         }
         // Check if the User Name has been changed
-        String uName = editUserName.getText().trim();
+        String uName = editUserName.getText().trim(); // N11N
         if (!(uName.equals(_curLogix.getUserName()))) {
             // user name has changed - check if already in use
             if (uName.length() > 0) {
@@ -1307,7 +1948,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         // complete update and activate Logix
         finishDone();
-    }  /* donePressed */
+    }
 
 
     void finishDone() {
@@ -1324,6 +1965,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public void setMessagePreferencesDetails() {
         HashMap<Integer, String> options = new HashMap< Integer, String>(3);
         options.put(0x00, Bundle.getMessage("DeleteAsk"));
@@ -1335,18 +1977,24 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete combo selection Logix window
+     * Respond to the Delete combo selection Logix window.
+     *
+     * @param sName system name of bean to be deleted
      */
     void deletePressed(String sName) {
         if (!checkFlags(sName)) {
             return;
         }
+        if (!checkConditionalReferences(sName)) {
+            return;
+        }
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
         if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);
+                deleteSourceWhereUsed();
             }
         } else {
             final JDialog dialog = new JDialog();
@@ -1376,6 +2024,7 @@ public class LogixTableAction extends AbstractTableAction {
             container.add(button);
 
             noButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     //there is no point in remebering this the user will never be
                     //able to delete a bean!
@@ -1387,12 +2036,14 @@ public class LogixTableAction extends AbstractTableAction {
             });
 
             yesButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (p != null && remember.isSelected()) {
                         p.setMultipleChoiceOption(getClassName(), "delete", 0x02);
                     }
                     if (x != null) {
                         _logixManager.deleteLogix(x);
+                        deleteSourceWhereUsed();
                     }
                     dialog.dispose();
                 }
@@ -1420,10 +2071,15 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete button in the Edit Logix window
+     * Respond to the Delete button in the Edit Logix window.
+     *
+     * @param e The event heard
      */
     void deletePressed(ActionEvent e) {
         if (checkEditConditional()) {
+            return;
+        }
+        if (!checkConditionalReferences(_curLogix.getSystemName())) {
             return;
         }
         _showReminder = true;
@@ -1431,11 +2087,14 @@ public class LogixTableAction extends AbstractTableAction {
         // delete this Logix
         _logixManager.deleteLogix(x);
         _curLogix = null;
+        deleteSourceWhereUsed();
         finishDone();
     }
 
     /**
-     * Responds to the New Conditional Button in Edit Logix Window
+     * Respond to the New Conditional Button in Edit Logix Window.
+     *
+     * @param e The event heard
      */
     void newConditionalPressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1476,11 +2135,14 @@ public class LogixTableAction extends AbstractTableAction {
         // clear action items
         _actionList = new ArrayList<ConditionalAction>();
         _variableList = new ArrayList<ConditionalVariable>();
+        _saveTargetNames.clear();
         makeEditConditionalWindow();
     }
 
     /**
-     * Responds to Edit Button in the Conditional table of the Edit Logix Window
+     * Respond to Edit Button in the Conditional table of the Edit Logix Window.
+     *
+     * @param rx index (row number) of Conditional te be edited
      */
     void editConditionalPressed(int rx) {
         if (inEditConditionalMode) {
@@ -1502,13 +2164,29 @@ public class LogixTableAction extends AbstractTableAction {
         conditionalRowNumber = rx;
         // get action variables
         _actionList = _curConditional.getCopyOfActions();
+        loadReferenceNames(_variableList, _saveTargetNames);
         makeEditConditionalWindow();
     }  /* editConditionalPressed */
 
+    /**
+     * Build a tree set from conditional references.
+     * @since 4.7.4
+     * @param varList The ConditionalVariable list that might contain conditional references
+     * @param treeSet A tree set to be built from the varList data
+     */
+    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
+        treeSet.clear();
+        for (ConditionalVariable var : varList) {
+            if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
+                treeSet.add(var.getName());
+            }
+        }
+    }
 
     /**
-     * Checks if edit of a conditional is in progress Returns true after sending
-     * message if this is the case
+     * Check if edit of a conditional is in progress.
+     *
+     * @return true if this is the case, after showing dialog to user
      */
     boolean checkEditConditional() {
         if (inEditConditionalMode) {
@@ -1540,6 +2218,12 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check form of Conditional systemName.
+     *
+     * @param sName system name of bean to be checked
+     * @return false if sName is empty string or null
+     */
     boolean checkConditionalSystemName(String sName) {
         if ((sName != null) && (!(sName.equals("")))) {
             Conditional p = _conditionalManager.getBySystemName(sName);
@@ -1552,14 +2236,78 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    // ********************* Edit Conditional Window and Methods *******************
+
     /**
-     * ********************* Edit Conditional Window and
-     * Methods*******************
+<<<<<<< HEAD
+=======
+     * Check for conditional references
+     *
+     * @since 4.7.4
+     * @param logixName The Logix under consideration
+     * @return true if no references
      */
+    boolean checkConditionalReferences(String logixName) {
+        _saveTargetList.clear();
+        Logix x = _logixManager.getLogix(logixName);
+        int numConditionals = x.getNumConditionals();
+        if (numConditionals > 0) {
+            for (int i = 0; i < numConditionals; i++) {
+                String csName = x.getConditionalByNumberOrder(i);
+
+                // If the conditional is a where used source, retain it for later
+                ArrayList<String> targetList = InstanceManager.getDefault(jmri.ConditionalManager.class).getTargetList(csName);
+                if (targetList.size() > 0) {
+                    _saveTargetList.put(csName, targetList);
+                }
+
+                // If the conditional is a where used target, check scope
+                ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsed(csName);
+                if (refList != null) {
+                    for (String refName : refList) {
+                        Logix xRef = _conditionalManager.getParentLogix(refName);
+                        String xsName = xRef.getSystemName();
+                        if (logixName.equals(xsName)) {
+                            // Member of the same Logix
+                            continue;
+                        }
+
+                        // External references have to be removed before the Logix can be deleted.
+                        Conditional c = x.getConditional(csName);
+                        Conditional cRef = xRef.getConditional(refName);
+                        String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
+                            cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
+                        javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+                                java.text.MessageFormat.format(rbx.getString("Error11"), (Object[]) msgs),
+                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     /**
-     * Creates and/or initializes the Edit Conditional window Note: you can get
-     * here via the New Conditional button (newConditionalPressed) or via an
-     * Edit button in the Conditional table of the Edit Logix window.
+     * Remove target/source where used entries after a Logix delete
+     * @since 4.7.4
+     */
+    void deleteSourceWhereUsed() {
+        _saveTargetList.forEach((refName, targetList) -> {
+            for (String targetName : targetList) {
+                InstanceManager.getDefault(jmri.ConditionalManager.class).removeWhereUsed(targetName, refName);
+            }
+        });
+    }
+
+    // ********************* Edit Conditional Window and Methods *******************
+
+    /**
+>>>>>>> JMRI/master
+     * Create and/or initialize the Edit Conditional window.
+     * <p>
+     * Note: you can get here via the New Conditional button (newConditionalPressed)
+     * or via an Edit button in the Conditional table of the Edit Logix window.
      */
     void makeEditConditionalWindow() {
         // deactivate this Logix
@@ -1598,6 +2346,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton helpButton = new JButton(Bundle.getMessage("MenuHelp"));
             _antecedentPanel.add(helpButton);
             helpButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     helpPressed(e);
                 }
@@ -1615,11 +2364,11 @@ public class LogixTableAction extends AbstractTableAction {
             // initialize and populate Combo boxes for table of state variables
             _notOperatorBox = new JComboBox<String>();
             _notOperatorBox.addItem(" ");
-            _notOperatorBox.addItem(rbx.getString("LogicNOT"));
+            _notOperatorBox.addItem(Bundle.getMessage("LogicNOT"));
 
             _andOperatorBox = new JComboBox<String>();
-            _andOperatorBox.addItem(rbx.getString("LogicAND"));
-            _andOperatorBox.addItem(rbx.getString("LogicOR"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicAND"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicOR"));
             // initialize table of state variables
             _variableTableModel = new VariableTableModel();
             JTable variableTable = new JTable(_variableTableModel);
@@ -1689,6 +2438,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton addVariableButton = new JButton(rbx.getString("AddVariableButton"));
             panel42.add(addVariableButton);
             addVariableButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addVariablePressed(e);
                 }
@@ -1698,6 +2448,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton checkVariableButton = new JButton(rbx.getString("CheckVariableButton"));
             panel42.add(checkVariableButton);
             checkVariableButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     checkVariablePressed(e);
                 }
@@ -1707,11 +2458,12 @@ public class LogixTableAction extends AbstractTableAction {
 
             // logic type area
             _operatorBox = new JComboBox<String>(new String[]{
-                rbx.getString("LogicAND"),
-                rbx.getString("LogicOR"),
-                rbx.getString("LogicMixed")});
+                    Bundle.getMessage("LogicAND"),
+                    Bundle.getMessage("LogicOR"),
+                    Bundle.getMessage("LogicMixed")});
             JPanel typePanel = makeEditPanel(_operatorBox, "LabelLogicType", "TypeLogicHint");
             _operatorBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     logicTypeChanged(e);
                 }
@@ -1722,7 +2474,7 @@ public class LogixTableAction extends AbstractTableAction {
 
             Border logicPanelBorder = BorderFactory.createEtchedBorder();
             Border logicPanelTitled = BorderFactory.createTitledBorder(
-                    logicPanelBorder, rbx.getString("TitleLogicalExpression"));
+                    logicPanelBorder, rbx.getString("TitleLogicalExpression") + " ");
             logicPanel.setBorder(logicPanelTitled);
             contentPane.add(logicPanel);
             // End of Logic Expression Section
@@ -1732,6 +2484,7 @@ public class LogixTableAction extends AbstractTableAction {
             ButtonGroup tGroup = new ButtonGroup();
             _triggerOnChangeButton = new JRadioButton(rbx.getString("triggerOnChange"));
             _triggerOnChangeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     _actionTableModel.fireTableDataChanged();
                 }
@@ -1740,6 +2493,7 @@ public class LogixTableAction extends AbstractTableAction {
             triggerPanel.add(_triggerOnChangeButton);
             JRadioButton triggerOnAny = new JRadioButton(rbx.getString("triggerOnAny"));
             triggerOnAny.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     _actionTableModel.fireTableDataChanged();
                 }
@@ -1808,6 +2562,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton addActionButton = new JButton(rbx.getString("addActionButton"));
             panel43.add(addActionButton);
             addActionButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addActionPressed(e);
                 }
@@ -1819,6 +2574,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton reorderButton = new JButton(rbx.getString("ReorderButton"));
             panel43.add(reorderButton);
             reorderButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     reorderActionPressed(e);
                 }
@@ -1839,6 +2595,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton updateConditional = new JButton(rbx.getString("UpdateConditionalButton"));
             panel5.add(updateConditional);
             updateConditional.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updateConditionalPressed(e);
                 }
@@ -1848,6 +2605,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton cancelConditional = new JButton(Bundle.getMessage("ButtonCancel"));
             panel5.add(cancelConditional);
             cancelConditional.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelConditionalPressed(e);
                 }
@@ -1857,6 +2615,7 @@ public class LogixTableAction extends AbstractTableAction {
             JButton deleteConditional = new JButton(Bundle.getMessage("ButtonDelete"));
             panel5.add(deleteConditional);
             deleteConditional.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteConditionalPressed(null);
                 }
@@ -1868,6 +2627,7 @@ public class LogixTableAction extends AbstractTableAction {
         // setup window closing listener
         editConditionalFrame.addWindowListener(
                 new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         cancelConditionalPressed(null);
                     }
@@ -1884,7 +2644,9 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Responds to the Add State Variable Button in the Edit Conditional window
+     * Respond to the Add State Variable Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void addVariablePressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -1916,8 +2678,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Check State Variable Button in the Edit Conditional
-     * window
+     * Respond to the Check State Variable Button in the Edit Conditional
+     * window.
+     *
+     * @param e the event heard
      */
     void checkVariablePressed(ActionEvent e) {
         for (int i = 0; i < _variableList.size(); i++) {
@@ -1927,7 +2691,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Negation column in the Edit Conditional window
+     * Respond to the Negation column in the Edit Conditional window.
+     *
+     * @param row index of the Conditional to change the setting on
+     * @param oper NOT (i18n) as negation of condition
      */
     void variableNegationChanged(int row, String oper) {
         ConditionalVariable variable = _variableList.get(row);
@@ -1935,7 +2702,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (oper == null) {
             variable.setNegation(false);
         } else {
-            variable.setNegation(oper.equals(rbx.getString("LogicNOT")));
+            variable.setNegation(oper.equals(Bundle.getMessage("LogicNOT")));
         }
         if (variable.isNegated() != state) {
             makeAntecedent();
@@ -1943,13 +2710,16 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Operator column in the Edit Conditional window
+     * Respond to the Operator column in the Edit Conditional window.
+     *
+     * @param row index of the Conditional to change the setting on
+     * @param oper AND or OR (i18n) as operand on the list of conditions
      */
     void variableOperatorChanged(int row, String oper) {
         ConditionalVariable variable = _variableList.get(row);
         int oldOper = variable.getOpern();
         if (row > 0) {
-            if (oper.equals(rbx.getString("LogicOR"))) {
+            if (oper.equals(Bundle.getMessage("LogicOR"))) {
                 variable.setOpern(Conditional.OPERATOR_OR);
             } else {
                 variable.setOpern(Conditional.OPERATOR_AND);
@@ -1960,11 +2730,12 @@ public class LogixTableAction extends AbstractTableAction {
         if (variable.getOpern() != oldOper) {
             makeAntecedent();
         }
-
     }
 
-    /*
-     * Responds to Add action button in the EditConditional window
+    /**
+     * Respond to Add action button in the EditConditional window.
+     *
+     * @param e The event heard
      */
     void addActionPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -1979,7 +2750,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Reorder Button in the Edit Conditional window
+     * Respond to the Reorder Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void reorderActionPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -2000,7 +2773,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the First/Next (Delete) Button in the Edit Conditional window
+     * Respond to the First/Next (Delete) Button in the Edit Conditional window.
+     *
+     * @param row index of the row to put as next in line (instead of the one that was supposed to be next)
      */
     void swapActions(int row) {
         ConditionalAction temp = _actionList.get(row);
@@ -2017,7 +2792,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Update Conditional Button in the Edit Conditional window
+     * Respond to the Update Conditional Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void updateConditionalPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -2058,8 +2835,8 @@ public class LogixTableAction extends AbstractTableAction {
             return;
         }
         // Check if the User Name has been changed
-        String uName = conditionalUserName.getText().trim();
-        if (uName != null && !(uName.equals(_curConditional.getUserName()))) {
+        String uName = conditionalUserName.getText().trim(); // N11N
+        if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
                 return;
@@ -2084,13 +2861,45 @@ public class LogixTableAction extends AbstractTableAction {
         _curConditional.setAction(_actionList);
         _curConditional.setLogicType(_logicType, _antecedent);
         _curConditional.setTriggerOnChange(_triggerOnChangeButton.isSelected());
+        TreeSet<String> newTargetNames = new TreeSet<String>();
+        loadReferenceNames(_variableList, newTargetNames);
+        updateWhereUsed(newTargetNames, _curConditional.getSystemName());
         cancelConditionalPressed(null);
     }
 
     /**
-     * Responds to the Cancel button in the Edit Conditional frame Does the
-     * cleanup from deleteConditionalPressed, updateConditionalPressed and
-     * editConditionalFrame window closer.
+<<<<<<< HEAD
+=======
+     * Update the conditional reference where used.
+     * <p>
+     * The difference between the saved target names and new target names
+     * is used to add/remove where used references.
+     * @since 4.7.4
+     * @param newTargetNames The conditional target names after updating
+     * @param refName The system name for the referencing conditional
+     */
+    void updateWhereUsed(TreeSet<String> newTargetNames, String refName) {
+        TreeSet<String> deleteNames = new TreeSet<>(_saveTargetNames);
+        deleteNames.removeAll(newTargetNames);
+        for (String deleteName : deleteNames) {
+            InstanceManager.getDefault(jmri.ConditionalManager.class).removeWhereUsed(deleteName, refName);
+        }
+
+        TreeSet<String> addNames = new TreeSet<>(newTargetNames);
+        addNames.removeAll(_saveTargetNames);
+        for (String addName : addNames) {
+            InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(addName, refName);
+        }
+    }
+
+    /**
+>>>>>>> JMRI/master
+     * Respond to the Cancel button in the Edit Conditional frame.
+     * <p>
+     * Does the cleanup from deleteConditionalPressed, updateConditionalPressed
+     * and editConditionalFrame window closer.
+     *
+     * @param e The event heard
      */
     void cancelConditionalPressed(ActionEvent e) {
         if (_pickTables != null) {
@@ -2114,7 +2923,7 @@ public class LogixTableAction extends AbstractTableAction {
                     rbx.getString("Error4") + nfe.toString() + rbx.getString("Error7"),
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-        // when user uses the escape key and returns to editing, interaction with 
+        // when user uses the escape key and returns to editing, interaction with
         // window closing event create strange environment
         inEditConditionalMode = false;
         if (editConditionalFrame != null) {
@@ -2128,7 +2937,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete Conditional Button in the Edit Conditional window
+     * Respond to the Delete Conditional Button in the Edit Conditional window.
+     *
+     * @param sName system name of Conditional to be deleted
      */
     void deleteConditionalPressed(String sName) {
         if (_curConditional == null) {
@@ -2138,21 +2949,21 @@ public class LogixTableAction extends AbstractTableAction {
         if (sName == null) {
             sName = _curConditional.getSystemName();
         }
-        if (sName == null) {
-            if (log.isDebugEnabled()) {
-                log.error("Unable to delete Conditional, null system name");
-            }
-            return;
-        }
-        _showReminder = true;
-        _curConditional = null;
-        numConditionals--;
+
         String[] msgs = _curLogix.deleteConditional(sName);
         if (msgs != null) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Error11"), (Object[]) msgs),
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        _showReminder = true;
+        _curConditional = null;
+        numConditionals--;
+
+        // Use an empty TreeSet to remove this conditional from the where used, if any
+        updateWhereUsed(new TreeSet<String>(), sName);
+
         // complete deletion
         cancelConditionalPressed(null);
         conditionalTableModel.fireTableRowsDeleted(conditionalRowNumber,
@@ -2165,8 +2976,15 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Respond to a change of Conditional Type in the Edit Conditional pane
+     * by showing/hiding the _antecedentPanel when Mixed is selected.
+     *
+     * @param e The event heard
+     * @return false if there is no change in operator
+     */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -2196,6 +3014,11 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Respond to Help button press in the Edit Conditional pane.
+     *
+     * @param e The event heard
+     */
     void helpPressed(ActionEvent e) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 new String[]{
@@ -2207,19 +3030,19 @@ public class LogixTableAction extends AbstractTableAction {
                     rbx.getString("LogicHelpText6"),
                     rbx.getString("LogicHelpText7")
                 },
-                rbx.getString("HelpButton"), javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("MenuHelp"), javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
-     * build the antecedent statement
+     * Build the antecedent statement.
      */
     void makeAntecedent() {
         String str = "";
         if (_variableList.size() != 0) {
-            String not = rbx.getString("LogicNOT").toLowerCase();
-            String row = rbx.getString("rowAbrev");
-            String and = " " + rbx.getString("LogicAND").toLowerCase() + " ";
-            String or = " " + rbx.getString("LogicOR").toLowerCase() + " ";
+            String not = Bundle.getMessage("LogicNOT").toLowerCase();
+            String row = "R"; //NOI18N
+            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
+            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             if (_variableList.get(0).isNegated()) {
                 str = not + " ";
             }
@@ -2237,7 +3060,7 @@ public class LogixTableAction extends AbstractTableAction {
                         break;
                 }
                 if (variable.isNegated()) {
-                    str = str + not;
+                    str = str + not + " ";
                 }
                 str = str + row + (i + 1);
                 if (i > 0 && i + 1 < _variableList.size()) {
@@ -2250,20 +3073,27 @@ public class LogixTableAction extends AbstractTableAction {
         _showReminder = true;
     }
 
+    /**
+     * Add a part to the antecedent statement.
+     *
+     * @param variable the current Conditional Variable, ignored in method
+     */
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedent = _antecedent + " " + rbx.getString("LogicOR").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             } else {
-                _antecedent = _antecedent + " " + rbx.getString("LogicAND").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
             }
         }
-        _antecedent = _antecedent + rbx.getString("rowAbrev") + _variableList.size();
+        _antecedent = _antecedent + "R" + _variableList.size(); //NOI18N
         _antecedentField.setText(_antecedent);
     }
 
     /**
-     * Check the antecedent and logic type
+     * Check the antecedent and logic type.
+     *
+     * @return false if antecedent can't be validated
      */
     boolean validateAntecedent() {
         if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
@@ -2283,12 +3113,19 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    // *********************** Methods for Edit Variable Pane *******************
+
     /**
-     * *********************** Methods for Edit Variable Window
-     * *******************
+     * Check if an editing session on (another) Logix is going on.
+     * <p>
+     * If it is, display a message to user and bring current editing pane to front.
+     *
+     * @return true if an _editActionFrame or _editVariableFrame exists
      */
     boolean alreadyEditingActionOrVariable() {
-        OpenPickListTable();
+        if (_selectionMode == SelectionMode.USEMULTI) {
+            OpenPickListTable();
+        }
         if (_editActionFrame != null) {
             // Already editing an Action, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
@@ -2309,31 +3146,35 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Creates and/or initializes the Edit a Variable window Note: you can get
-     * here via the New Variable button (addVariablePressed) or via an Edit
-     * button in the Variable table of the EditConditional window.
+     * Create and/or initialize the Edit a Variable pane.
+     * <p>
+     * Note: you can get here via the New Variable button (addVariablePressed)
+     * or via an Edit button in the Variable table of the EditConditional window.
+     *
+     * @param row index of item to be edited in _variableList
      */
     void makeEditVariableWindow(int row) {
+        initNameBoxObjects();
         if (alreadyEditingActionOrVariable()) {
             return;
         }
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
         _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"), true, true);
-//        _editVariableFrame.setLocation(10, 100);
+        //        _editVariableFrame.setLocation(10, 100);
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);
 
         Box panel1 = Box.createHorizontalBox();
         panel1.add(Box.createHorizontalGlue());
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Item Type
+        // Item Type
         _variableTypeBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
         panel1.add(makeEditPanel(_variableTypeBox, "LabelVariableType", "VariableTypeHint"));
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Item Name
+        // Item Name
         _variableNameField = new JTextField(30);
         _variableNamePanel = makeEditPanel(_variableNameField, "LabelItemName", null);
         _variableNamePanel.setMaximumSize(
@@ -2341,21 +3182,43 @@ public class LogixTableAction extends AbstractTableAction {
         _variableNamePanel.setVisible(false);
         panel1.add(_variableNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// State Box
+
+        // Arbitrary name combo box to facilitate the panel construction
+        _variableComboNamePanel = makeEditPanel(_sensorNameBox, "LabelItemName", null);
+        _variableComboNamePanel.setVisible(false);
+        panel1.add(_variableComboNamePanel);
+        panel1.add(Box.createHorizontalStrut(STRUT));
+
+<<<<<<< HEAD
+=======
+        // Combo box section for selecting conditional reference
+        //   First box selects the Logix, the second selects the conditional within the logix
+        _selectLogixBox.addItem("XXXXXXXXXXXXXXXXXXXXX");
+        _selectConditionalBox.addItem("XXXXXXXXXXXXXXXXXXXXX");
+        _selectLogixPanel = makeEditPanel(_selectLogixBox, "SelectLogix", null);
+        _selectConditionalPanel = makeEditPanel(_selectConditionalBox, "SelectConditional", null);
+        _selectLogixPanel.setVisible(false);
+        _selectConditionalPanel.setVisible(false);
+        panel1.add(_selectLogixPanel);
+        panel1.add(_selectConditionalPanel);
+        panel1.add(Box.createHorizontalStrut(STRUT));
+
+>>>>>>> JMRI/master
+        // State Box
         _variableStateBox = new JComboBox<String>();
         _variableStateBox.addItem("XXXXXXX");
         _variableStatePanel = makeEditPanel(_variableStateBox, "LabelVariableState", "VariableStateHint");
         _variableStatePanel.setVisible(false);
         panel1.add(_variableStatePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Aspects
+        // Aspects
         _variableSignalBox = new JComboBox<String>();
         _variableSignalBox.addItem("XXXXXXXXX");
         _variableSignalPanel = makeEditPanel(_variableSignalBox, "LabelVariableAspect", "VariableAspectHint");
         _variableSignalPanel.setVisible(false);
         panel1.add(_variableSignalPanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Compare operator
+        // Compare operator
         _variableComparePanel = new JPanel();
         _variableComparePanel.setLayout(new BoxLayout(_variableComparePanel, BoxLayout.X_AXIS));
         _variableCompareOpBox = new JComboBox<String>();
@@ -2364,14 +3227,15 @@ public class LogixTableAction extends AbstractTableAction {
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareOpBox, "LabelCompareOp", "CompareHintMemory"));
         _variableComparePanel.add(Box.createHorizontalStrut(STRUT));
-// Compare type
+        // Compare type
         _variableCompareTypeBox = new JComboBox<String>();
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
-            _variableCompareTypeBox.addItem(ConditionalVariable.getStateString(Conditional.ITEM_TO_MEMORY_TEST[i]));
+            _variableCompareTypeBox.addItem(ConditionalVariable.describeState(Conditional.ITEM_TO_MEMORY_TEST[i]));
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareTypeBox, "LabelCompareType", "CompareTypeHint"));
         _variableComparePanel.setVisible(false);
         _variableCompareTypeBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 compareTypeChanged(_variableCompareTypeBox.getSelectedIndex());
                 _editVariableFrame.pack();
@@ -2379,7 +3243,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         panel1.add(_variableComparePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Data 1
+        // Data 1
         _variableData1Field = new JTextField(30);
         _variableData1Panel = makeEditPanel(_variableData1Field, "LabelStartTime", "DataHintTime");
         _variableData1Panel.setMaximumSize(
@@ -2387,7 +3251,7 @@ public class LogixTableAction extends AbstractTableAction {
         _variableData1Panel.setVisible(false);
         panel1.add(_variableData1Panel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Data 2
+        // Data 2
         _variableData2Field = new JTextField(30);
         _variableData2Panel = makeEditPanel(_variableData2Field, "LabelEndTime", "DataHintTime");
         _variableData2Panel.setMaximumSize(
@@ -2399,16 +3263,19 @@ public class LogixTableAction extends AbstractTableAction {
         topPanel.add(panel1);
 
         ActionListener updateListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateVariablePressed();
             }
         };
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelEditVariablePressed();
             }
         };
         ActionListener deleteListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteVariablePressed();
             }
@@ -2422,6 +3289,7 @@ public class LogixTableAction extends AbstractTableAction {
         // note - this listener cannot be added before other action items
         // have been created
         _variableTypeBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 variableTypeChanged(_variableTypeBox.getSelectedIndex());
                 _editVariableFrame.pack();
@@ -2430,6 +3298,7 @@ public class LogixTableAction extends AbstractTableAction {
         // setup window closing listener
         _editVariableFrame.addWindowListener(
                 new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         cancelEditVariablePressed();
                     }
@@ -2439,23 +3308,26 @@ public class LogixTableAction extends AbstractTableAction {
         _editVariableFrame.setVisible(true);
     }
 
+    // *************************** Edit Action Window and methods **********************
+
     /**
-     * *************************** Edit Action Window and methods
-     * **********************
-     */
-    /**
-     * Creates and/or initializes the Edit Action window Note: you can get here
+     * Create and/or initialize the Edit Action window.
+     * <p>
+     * Note: you can get here
      * via the New Action button (addActionPressed) or via an Edit button in the
      * Action table of the EditConditional window.
+     *
+     * @param row index in the table of the Action to be edited
      */
     void makeEditActionWindow(int row) {
+        initNameBoxObjects();
         if (alreadyEditingActionOrVariable()) {
             return;
         }
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
         _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"), true, true);
-//        _editActionFrame.setLocation(10, 300);
+        //        _editActionFrame.setLocation(10, 300);
         JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);
 
         Box panel1 = Box.createHorizontalBox();
@@ -2474,6 +3346,12 @@ public class LogixTableAction extends AbstractTableAction {
                 new Dimension(50, _namePanel.getPreferredSize().height));
         _namePanel.setVisible(false);
         panel1.add(_namePanel);
+        panel1.add(Box.createHorizontalStrut(STRUT));
+
+        // Arbitrary name combo box to facilitate the panel construction
+        _actionComboNamePanel = makeEditPanel(_sensorNameBox, "LabelItemName", null);
+        _actionComboNamePanel.setVisible(false);
+        panel1.add(_actionComboNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         _actionTypeBox = new JComboBox<String>();
@@ -2521,8 +3399,9 @@ public class LogixTableAction extends AbstractTableAction {
         JPanel p = new JPanel();
         p.add(new JLabel(rbx.getString("LabelActionFile")));
         _setPanel.add(p);
-        _actionSetButton = new JButton(rbx.getString("FileButton")); // TODO replace by ...
+        _actionSetButton = new JButton("..."); // "File" replaced by ...
         _actionSetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 validateAction();
                 setFileLocation(e);
@@ -2530,6 +3409,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         _actionSetButton.setMaximumSize(_actionSetButton.getPreferredSize());
         _setPanel.add(_actionSetButton);
+        _actionSetButton.setToolTipText(rbx.getString("FileButtonHint"));
         _setPanel.add(Box.createVerticalGlue());
         _setPanel.setVisible(false);
         panel2.add(_setPanel);
@@ -2548,16 +3428,19 @@ public class LogixTableAction extends AbstractTableAction {
         topPanel.add(Box.createVerticalGlue());
 
         ActionListener updateListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateActionPressed();
             }
         };
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelEditActionPressed();
             }
         };
         ActionListener deleteListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteActionPressed();
             }
@@ -2568,8 +3451,9 @@ public class LogixTableAction extends AbstractTableAction {
 
         Container contentPane = _editActionFrame.getContentPane();
         contentPane.add(topPanel);
-        // note - this listener cannot be added until all items are entered into _actionItemTypeBox 
+        // note - this listener cannot be added until all items are entered into _actionItemTypeBox
         _actionItemTypeBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int select = _actionItemTypeBox.getSelectedIndex();
                 if (log.isDebugEnabled()) {
@@ -2582,6 +3466,7 @@ public class LogixTableAction extends AbstractTableAction {
         // setup window closing listener
         _editActionFrame.addWindowListener(
                 new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         cancelEditActionPressed();
                     }
@@ -2590,14 +3475,18 @@ public class LogixTableAction extends AbstractTableAction {
         initializeActionVariables();
         _editActionFrame.setVisible(true);
         _editActionFrame.pack();
-    } /* makeEditActionWindow */
+    }
 
+    // ***** Methods shared by Edit Variable and Edit Action Windows *********
 
     /**
-     * ***** Methods shared by Edit Variable and Edit Action Windows *********
-     */
-    /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane top part.
+     *
+     * @param frame JFrame to add to
+     * @param title property key for border title
+     * @param width fixed dimension to use
+     * @param height fixed dimension to use
+     * @return JPanel containing interface
      */
     JPanel makeTopPanel(JFrame frame, String title, int width, int height) {
         Container contentPane = frame.getContentPane();
@@ -2614,7 +3503,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane center part.
+     *
+     * @param comp Field or comboBox to include on sub pane
+     * @param label property key for label
+     * @param hint property key for tooltip for this sub pane
+     * @return JPanel containing interface
      */
     JPanel makeEditPanel(JComponent comp, String label, String hint) {
         JPanel panel = new JPanel();
@@ -2625,31 +3519,38 @@ public class LogixTableAction extends AbstractTableAction {
         if (hint != null) {
             panel.setToolTipText(rbx.getString(hint));
         }
-        comp.setMaximumSize(comp.getPreferredSize());  // override for  text fields
+        comp.setMaximumSize(comp.getPreferredSize());  // override for text fields
         panel.add(comp);
         panel.add(Box.createVerticalGlue());
         return panel;
     }
 
     /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane bottom part.
+     * <p>
+     * Called from {@link #makeEditVariableWindow(int)}
+     * @param updateListener listener for Update pressed
+     * @param cancelListener listener for Cancel pressed
+     * @param deleteListener listener for Delete pressed
+     * @return JPanel containing Update etc. buttons
      */
     JPanel makeButtonPanel(ActionListener updateListener,
             ActionListener cancelListener,
             ActionListener deleteListener) {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
-        panel3.add(updateAction);
-        panel3.add(Box.createHorizontalStrut(STRUT));
-        updateAction.addActionListener(updateListener);
-        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));
         panel3.add(cancelAction);
         panel3.add(Box.createHorizontalStrut(STRUT));
         cancelAction.addActionListener(cancelListener);
         cancelAction.setToolTipText(rbx.getString("CancelButtonHint"));
+
+        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
+        panel3.add(updateAction);
+        panel3.add(Box.createHorizontalStrut(STRUT));
+        updateAction.addActionListener(updateListener);
+        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton deleteAction = new JButton(Bundle.getMessage("ButtonDelete"));
         panel3.add(deleteAction);
@@ -2659,11 +3560,193 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * *********** Responses for Edit Action and Edit Variable Buttons
-     * **********
+     * Close a single panel picklist JFrame and related items.
+     * @since 4.7.3
      */
-    /*
-     * Responds to Update action button in the Edit Action window 
+    void closeSinglePanelPickList() {
+        if (_pickSingleFrame != null) {
+            _pickSingleFrame.setVisible(false);
+            _pickSingleFrame.dispose();
+            _pickSingleFrame = null;
+            _pickListener = null;
+            _pickTable = null;
+            _pickSingle = null;
+        }
+    }
+<<<<<<< HEAD
+    
+=======
+
+>>>>>>> JMRI/master
+    /**
+     * Create a single panel picklist JFrame for choosing action and variable names.
+     * <p>
+     * Called from {@link #actionItemChanged} and {@link #variableTypeChanged}
+     * @since 4.7.3
+     * @param itemType The selected variable or action type
+     * @param isVariable True if called by variableTypeChanged
+     */
+    void createSinglePanelPickList(int itemType, boolean isVariable) {
+        if (_pickListener != null) {
+            int saveType = _pickListener.getItemType();
+            if (saveType != itemType) {
+                // The type has changed, need to start over
+                closeSinglePanelPickList();
+            } else {
+                // The pick list has already been created
+                return;
+            }
+        }
+
+        switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:      // 1
+                _pickSingle = new PickSinglePanel(PickListModel.sensorPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_TURNOUT:     // 2
+                _pickSingle = new PickSinglePanel(PickListModel.turnoutPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_LIGHT:       // 3
+                _pickSingle = new PickSinglePanel(PickListModel.lightPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
+                _pickSingle = new PickSinglePanel(PickListModel.signalHeadPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
+                _pickSingle = new PickSinglePanel(PickListModel.signalMastPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_MEMORY:      // 6
+                _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_WARRANT:     // 8
+                _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:      // 10
+                _pickSingle = new PickSinglePanel(PickListModel.oBlockPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
+                _pickSingle = new PickSinglePanel(PickListModel.entryExitPickModelInstance());
+                break;
+//            case Conditional.ITEM_TYPE_BLOCK:     // Future ??
+//                _pickSingle = new PickSinglePanel(PickListModel.blockPickModelInstance());
+//                break;
+            default:
+<<<<<<< HEAD
+                if (itemType == Conditional.ITEM_TYPE_CONDITIONAL && isVariable) {
+                    _pickSingle = new PickSinglePanel(PickListModel.conditionalPickModelInstance());
+                    break;      // Conditional (type 7) Variable, no pick list for Action
+                }
+=======
+>>>>>>> JMRI/master
+                return;             // Skip any other items.
+        }
+
+        // Create the JFrame
+        _pickSingleFrame = new JmriJFrame(rbx.getString("SinglePickFrame"));
+        _pickSingleFrame.setContentPane(_pickSingle);
+        _pickSingleFrame.pack();
+        _pickSingleFrame.setVisible(true);
+        _pickSingleFrame.toFront();
+
+        // Set the table selection listener
+        _pickListener = new PickSingleListener();
+        _pickTable = _pickSingle.getTable();
+        _pickTable.getSelectionModel().addListSelectionListener(_pickListener);
+<<<<<<< HEAD
+        
+=======
+
+>>>>>>> JMRI/master
+        // Save the current item type
+        _pickListener.setItemType(itemType);
+    }
+
+    /**
+     * For each name combo box, enable first item blank and add the item change listener
+     * @since 4.7.3
+     */
+    void setNameBoxListeners() {
+<<<<<<< HEAD
+=======
+        initNameBoxObjects();
+>>>>>>> JMRI/master
+        if (_nameBoxListenersDone) {
+            return;
+        }
+
+        _sensorNameBox.setFirstItemBlank(true);
+        _turnoutNameBox.setFirstItemBlank(true);
+        _lightNameBox.setFirstItemBlank(true);
+        _sigheadNameBox.setFirstItemBlank(true);
+        _sigmastNameBox.setFirstItemBlank(true);
+        _memoryNameBox.setFirstItemBlank(true);
+        _warrantNameBox.setFirstItemBlank(true);
+        _oblockNameBox.setFirstItemBlank(true);
+<<<<<<< HEAD
+        _conditionalNameBox.setFirstItemBlank(true);
+=======
+>>>>>>> JMRI/master
+        _logixNameBox.setFirstItemBlank(true);
+//        _entryexitNameBox.setFirstItemBlank(true);
+
+        _sensorNameListener = new NameBoxListener();
+        _sensorNameListener.setNameType("sensor");
+        _sensorNameBox.addItemListener(_sensorNameListener);
+
+        _turnoutNameListener = new NameBoxListener();
+        _turnoutNameListener.setNameType("turnout");
+        _turnoutNameBox.addItemListener(_turnoutNameListener);
+
+        _lightNameListener = new NameBoxListener();
+        _lightNameListener.setNameType("light");
+        _lightNameBox.addItemListener(_lightNameListener);
+
+        _sigheadNameListener = new NameBoxListener();
+        _sigheadNameListener.setNameType("signalhead");
+        _sigheadNameBox.addItemListener(_sigheadNameListener);
+
+        _sigmastNameListener = new NameBoxListener();
+        _sigmastNameListener.setNameType("signalmast");
+        _sigmastNameBox.addItemListener(_sigmastNameListener);
+
+        _memoryNameListener = new NameBoxListener();
+        _memoryNameListener.setNameType("memory");
+        _memoryNameBox.addItemListener(_memoryNameListener);
+
+        _warrantNameListener = new NameBoxListener();
+        _warrantNameListener.setNameType("warrant");
+        _warrantNameBox.addItemListener(_warrantNameListener);
+
+        _oblockNameListener = new NameBoxListener();
+        _oblockNameListener.setNameType("oblock");
+        _oblockNameBox.addItemListener(_oblockNameListener);
+
+<<<<<<< HEAD
+        _conditionalNameListener = new NameBoxListener();
+        _conditionalNameListener.setNameType("conditional");
+        _conditionalNameBox.addItemListener(_conditionalNameListener);
+
+=======
+>>>>>>> JMRI/master
+        _logixNameListener = new NameBoxListener();
+        _logixNameListener.setNameType("logix");
+        _logixNameBox.addItemListener(_logixNameListener);
+
+//        _entryexitNameListener = new NameBoxListener();
+//        _entryexitNameListener.setNameType("entryexit");
+//        _entryexitNameBox.addItemListener(_entryexitNameListener);
+<<<<<<< HEAD
+        
+=======
+
+>>>>>>> JMRI/master
+        _nameBoxListenersDone = true;
+
+    }
+
+    // *********** Responses for Edit Action and Edit Variable Buttons **********
+
+    /**
+     * Respond to Update Action button in the Edit Action pane.
      */
     void updateActionPressed() {
         if (!validateAction()) {
@@ -2677,8 +3760,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /*
-     * Responds to Update action button in the Edit Action window 
+    /**
+     * Respond to Update Variable button in the Edit Action pane.
      */
     void updateVariablePressed() {
         if (!validateVariable()) {
@@ -2692,10 +3775,11 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /*
-     * Responds to Cancel action button and window closer of the 
-     * Edit Action window.  Also does cleanup of Update and Delete
-     * buttons.  
+    /**
+     * Respond to Cancel action button and window closer of the
+     * Edit Action window.
+     * <p>
+     * Also does cleanup of Update and Delete buttons.
      */
     void cancelEditActionPressed() {
         if (_newItem) {
@@ -2708,6 +3792,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Clean up Update and Delete Action buttons.
+     */
     void cleanUpAction() {
         _newItem = false;
         if (_editActionFrame != null) {
@@ -2715,14 +3802,15 @@ public class LogixTableAction extends AbstractTableAction {
             _editActionFrame.setVisible(false);
             _editActionFrame.dispose();
             _editActionFrame = null;
+            closeSinglePanelPickList();
         }
         _curActionRowNumber = -1;
     }
 
-    /*
-     * Responds to Cancel action button and window closer of the 
-     * Edit Variable window.  Also does cleanup of Update and Delete
-     * buttons.  
+    /**
+     * Respond to Cancel action button and window closer of the
+     * Edit Variable pane.
+     * <p>Also does cleanup of Update and Delete Variable buttons.
      */
     void cancelEditVariablePressed() {
         if (_newItem) {
@@ -2735,26 +3823,32 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Clean up Update and Delete Variable buttons.
+     */
     void cleanUpVariable() {
         _newItem = false;
         if (_editVariableFrame != null) {
             _editVariableFrame.setVisible(false);
             _editVariableFrame.dispose();
             _editVariableFrame = null;
+            closeSinglePanelPickList();
         }
         _curVariableRowNumber = -1;
     }
 
-    /*
-     * Responds to Delete action button in the Edit Action window 
+    /**
+     * Respond to Delete action button in the Edit Action window.
      */
     void deleteActionPressed() {
         deleteActionPressed(_curActionRowNumber);
     }
 
-    /*
-     * Responds to Delete action button in an action row of the
-     * Edit Conditional window 
+    /**
+     * Respond to Delete action button in an action row of the
+     * Edit Conditional pane.
+     *
+     * @param row index in table of action to be deleted
      */
     void deleteActionPressed(int row) {
         if (row != _curActionRowNumber && alreadyEditingActionOrVariable()) {
@@ -2769,16 +3863,18 @@ public class LogixTableAction extends AbstractTableAction {
         _showReminder = true;
     }
 
-    /*
-     * Responds to Delete action button in the Edit Variable window 
+    /**
+     * Respond to Delete action button in the Edit Variable window.
      */
     void deleteVariablePressed() {
         deleteVariablePressed(_curVariableRowNumber);
     }
 
     /**
-     * Responds to the Delete Button in the State Variable Table of the Edit
-     * Conditional window
+     * Respond to the Delete Button in the State Variable Table of the Edit
+     * Conditional window.
+     *
+     * @param row index in table of variable to be deleted
      */
     void deleteVariablePressed(int row) {
         if (row != _curVariableRowNumber && alreadyEditingActionOrVariable()) {
@@ -2802,7 +3898,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * set display to show current state variable (curVariable) parameters
+     * Set display to show current state variable (curVariable) parameters.
      */
     void initializeStateVariables() {
         int testType = _curVariable.getType();
@@ -2844,10 +3940,10 @@ public class LogixTableAction extends AbstractTableAction {
                         || Conditional.TYPE_SIGNAL_HEAD_LUNAR == testType
                         || Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
-                    loadJComboBoxWithSignalAspects(_variableSignalBox, _curVariable.getName());
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
+                    loadJComboBoxWithHeadAppearances(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(
-                            ConditionalVariable.getStateString(_curVariable.getType()));
+                            ConditionalVariable.describeState(_curVariable.getType()));
                     _variableSignalPanel.setVisible(true);
                 }
                 break;
@@ -2914,7 +4010,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
-    }       /* initializeStateVariables */
+    }
+
     /*
      String getConditionalUserName(String name) {
      Conditional c = _conditionalManager.getBySystemName(name);
@@ -2925,10 +4022,8 @@ public class LogixTableAction extends AbstractTableAction {
      }
 
      /**
-     * set display to show current action (curAction) parameters
+     * Set display to show current action (curAction) parameters.
      */
-
-
     void initializeActionVariables() {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
@@ -3015,7 +4110,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_HEAD_ACTION, actionType) + 1);
                 if (actionType == Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-                    loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+                    loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -3121,6 +4216,9 @@ public class LogixTableAction extends AbstractTableAction {
                         Conditional.ITEM_TO_OTHER_ACTION, actionType) + 1);
                 // ACTION_TRIGGER_ROUTE
                 break;
+            default:
+                log.error("Unhandled type: {}", itemType);
+                break;
         }
         _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
         _editActionFrame.pack();
@@ -3133,7 +4231,11 @@ public class LogixTableAction extends AbstractTableAction {
     JFileChooser defaultFileChooser = null;
 
     /**
-     * Responds to the Set button in the Edit Action window action section.
+     * Respond to the [...] button in the Edit Action window action section.
+     * <p>
+     * Ask user to select an audio or python script file on disk.
+     *
+     * @param e the event heard
      */
     void setFileLocation(ActionEvent e) {
         ConditionalAction action = _actionList.get(_curActionRowNumber);
@@ -3183,10 +4285,14 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to a change in an Action Type Box of Edit Action Window Set
-     * components visible for the selected type
+     * Respond to a change in an Action Type comboBox on the Edit Conditional Action pane.
+     * <p>
+     * Set components visible for the selected type.
+     *
+     * @param type index of the newly selected Action type
      */
     void actionItemChanged(int type) {
+        initNameBoxObjects();
         int actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
             log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);
@@ -3201,6 +4307,7 @@ public class LogixTableAction extends AbstractTableAction {
         _namePanel.setVisible(false);
         _actionPanel.setVisible(false);
         _optionPanel.setVisible(false);
+        _actionComboNamePanel.setVisible(false);
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (type == Conditional.TYPE_NONE && itemType == Conditional.TYPE_NONE) {
             return;
@@ -3208,11 +4315,11 @@ public class LogixTableAction extends AbstractTableAction {
         _actionTypePanel.setVisible(true);
         _actionTypeBox.removeAllItems();
         _actionBox.removeAllItems();
-        if (type != Conditional.TYPE_NONE) {  // actionItem listener choice overrides current item 
+        if (type != Conditional.TYPE_NONE) {  // actionItem listener choice overrides current item
             itemType = type;
         }
         if (itemType != Conditional.ACTION_TO_ITEM[actionType]) {
-            actionType = Conditional.ACTION_NONE;    // chosen item type does not support action type       
+            actionType = Conditional.ACTION_NONE;    // chosen item type does not support action type
         }
         if (actionType != Conditional.ACTION_NONE) {
             _optionPanel.setVisible(true);    // item type compatible with action type
@@ -3220,6 +4327,10 @@ public class LogixTableAction extends AbstractTableAction {
         _actionTypeBox.addItem("");
         _actionNameField.removeActionListener(actionSignalHeadNameListener);
         _actionNameField.removeActionListener(actionSignalMastNameListener);
+
+        if (_selectionMode == SelectionMode.USESINGLE) {
+            createSinglePanelPickList(itemType, false);
+        }
 
         switch (itemType) {
             case Conditional.ITEM_TYPE_TURNOUT:
@@ -3256,6 +4367,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_turnoutNameBox, _turnoutNameListener);
                 break;
             case Conditional.ITEM_TYPE_SENSOR:
                 for (int i = 0; i < Conditional.ITEM_TO_SENSOR_ACTION.length; i++) {
@@ -3284,6 +4398,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sensorNameBox, _sensorNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _actionNameField.addActionListener(actionSignalHeadNameListener);
@@ -3297,13 +4414,16 @@ public class LogixTableAction extends AbstractTableAction {
                     JLabel l = (JLabel) p.getComponent(0);
                     l.setText(rbx.getString("LabelActionSignal"));
 
-                    loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+                    loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
 
                     _actionPanel.setToolTipText(rbx.getString("SignalSetHint"));
                     _actionPanel.setVisible(true);
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sigheadNameBox, _sigheadNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 _actionNameField.addActionListener(actionSignalMastNameListener);
@@ -3324,6 +4444,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sigmastNameBox, _sigmastNameListener);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_ACTION.length; i++) {
@@ -3354,6 +4477,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintLight"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_lightNameBox, _lightNameListener);
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 for (int i = 0; i < Conditional.ITEM_TO_MEMORY_ACTION.length; i++) {
@@ -3372,6 +4498,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _shortTextPanel.setVisible(true);
                 _namePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_memoryNameBox, _memoryNameListener);
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_CLOCK_ACTION.length; i++) {
@@ -3393,6 +4522,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintLogix"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_logixNameBox, _logixNameListener);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 for (int i = 0; i < Conditional.ITEM_TO_WARRANT_ACTION.length; i++) {
@@ -3426,6 +4558,9 @@ public class LogixTableAction extends AbstractTableAction {
                     }
                     _shortTextPanel.setVisible(true);
                 }
+
+                // Set and swap name boxes
+                setActionNameBox(_warrantNameBox, _warrantNameListener);
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_OBLOCK_ACTION.length; i++) {
@@ -3441,6 +4576,9 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelBlockValue"));
                     _shortTextPanel.setVisible(true);
                 }
+
+                // Set and swap name boxes
+                setActionNameBox(_oblockNameBox, _oblockNameListener);
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 for (int i = 0; i < Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
@@ -3515,9 +4653,77 @@ public class LogixTableAction extends AbstractTableAction {
             log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth()
                     + " X " + _editActionFrame.getHeight());
         }
-    } /* actionItemChanged */
+    }
+<<<<<<< HEAD
 
+    /**
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by actionItemChanged
+     *
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setActionNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+        
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curAction.getDeviceName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
 
+        // Swap the name boxes
+        _actionComboNamePanel.remove(1);
+        _actionComboNamePanel.add(nameBox, null, 1);
+        _namePanel.setVisible(false);
+        _actionComboNamePanel.setVisible(true);
+    }
+
+=======
+
+    /**
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by actionItemChanged
+     *
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setActionNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curAction.getDeviceName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
+
+        // Swap the name boxes
+        _actionComboNamePanel.remove(1);
+        _actionComboNamePanel.add(nameBox, null, 1);
+        _namePanel.setVisible(false);
+        _actionComboNamePanel.setVisible(true);
+    }
+
+>>>>>>> JMRI/master
+    /**
+     * Check if Memory type in a Conditional was changed by the user.
+     * <p>
+     * Update GUI if it has. Called from {@link #makeEditVariableWindow(int)}
+     *
+     * @param selection index of the currently selected type in the _variableCompareTypeBox
+     */
     private void compareTypeChanged(int selection) {
         JPanel p = (JPanel) _variableData1Panel.getComponent(0);
         JLabel l = (JLabel) p.getComponent(0);
@@ -3533,16 +4739,24 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= "
                     + _variableTypeBox.getSelectedIndex()
                     + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");
 
             int itemType = _variableTypeBox.getSelectedIndex();
-            if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD || itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
-                // index 1 is Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS or Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS
-                if (_variableStateBox.getSelectedIndex() == 1) {
-                    loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+<<<<<<< HEAD
+            
+=======
+
+>>>>>>> JMRI/master
+            if (_variableStateBox.getSelectedIndex() == 1) {
+                if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
+                    loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
+                    _variableSignalPanel.setVisible(true);
+                } else if (itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
+                    loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -3550,6 +4764,11 @@ public class LogixTableAction extends AbstractTableAction {
             } else {
                 _variableSignalPanel.setVisible(false);
             }
+<<<<<<< HEAD
+            
+=======
+
+>>>>>>> JMRI/master
             _variableSignalBox.setMaximumSize(_variableSignalBox.getPreferredSize());
             if (_editVariableFrame != null) {
                 _editVariableFrame.pack();
@@ -3558,29 +4777,39 @@ public class LogixTableAction extends AbstractTableAction {
     };
 
     transient ActionListener variableSignalHeadNameListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
             log.debug("variableSignalHeadNameListener fires; _variableNameField : " + _variableNameField.getText().trim());
-            loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+            loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
         }
     };
 
     transient ActionListener actionSignalHeadNameListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
             log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
-            loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+            loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
         }
     };
 
-    void loadJComboBoxWithSignalAspects(JComboBox<String> box, String signalName) {
+    /**
+     * Fetch valid appearances for a given Signal Head.
+     * <p>
+     * Warn if head is not found.
+     *
+     * @param box the comboBox on the setup pane to fill
+     * @param signalHeadName user or system name of the Signal Head
+     */
+    void loadJComboBoxWithHeadAppearances(JComboBox<String> box, String signalHeadName) {
         box.removeAllItems();
-        log.debug("loadJComboBoxWithSignalAspects called with name: " + signalName);
-        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName);
+        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);
+        SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
         if (h == null) {
-            box.addItem(rbx.getString("PromptLoadSignalName"));
+            box.addItem(rbx.getString("PromptLoadHeadName"));
         } else {
             String[] v = h.getValidStateNames();
             for (int i = 0; i < v.length; i++) {
@@ -3591,6 +4820,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     transient ActionListener variableSignalMastNameListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
@@ -3600,6 +4830,7 @@ public class LogixTableAction extends AbstractTableAction {
     };
 
     transient ActionListener actionSignalMastNameListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
@@ -3608,10 +4839,18 @@ public class LogixTableAction extends AbstractTableAction {
         }
     };
 
+    /**
+     * Fetch valid aspects for a given Signal Mast.
+     * <p>
+     * Warn if mast is not found.
+     *
+     * @param box the comboBox on the setup pane to fill
+     * @param mastName user or system name of the Signal Mast
+     */
     void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);
-        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (m == null) {
             box.addItem(rbx.getString("PromptLoadMastName"));
         } else {
@@ -3624,11 +4863,138 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to change in variable type in State Variable Table in the Edit
-     * Conditional window Also used to set up for Edit of a Conditional with
-     * state variables.
+<<<<<<< HEAD
+=======
+     * Load the Logix selection box.  Set the selection to the current Logix
+     * @since 4.7.4
+     */
+    void loadSelectLogixBox() {
+        // Get the current Logix name for selecting the current combo box row
+        String cdlName = _curVariable.getName();
+        String lgxName;
+        if (cdlName.length() == 0 || (
+                _curVariable.getType() != Conditional.TYPE_CONDITIONAL_TRUE &&
+                _curVariable.getType() != Conditional.TYPE_CONDITIONAL_FALSE)
+                ) {
+            // Use the current logix name for "add" state variable
+            lgxName = _curLogix.getSystemName();
+        } else {
+            Logix x = _conditionalManager.getParentLogix(cdlName);
+            if (x == null) {
+                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);
+                lgxName = _curLogix.getSystemName();
+            } else {
+                lgxName = x.getSystemName();
+            }
+        }
+
+        _selectLogixBox.removeAllItems();
+        _selectLogixList.clear();
+
+        String itemKey = "";
+        for (String xName : _logixManager.getSystemNameList()) {
+            if (xName.equals("SYS")) {
+                // Cannot refer to sensor name groups
+                continue;
+            }
+            Logix x = _logixManager.getLogix(xName);
+            String uName = x.getUserName();
+            String itemName = "";
+            if (uName == null || uName.length() < 1) {
+                itemName = xName;
+            } else {
+                itemName = uName + " ( " + xName + " )";
+            }
+            _selectLogixBox.addItem(itemName);
+            _selectLogixList.add(xName);
+            if (lgxName.equals(xName)) {
+                itemKey = itemName;
+            }
+        }
+        _selectLogixBox.setSelectedItem(itemKey);
+        loadSelectConditionalBox(lgxName);
+    }
+
+    /**
+     * Load the Conditional selection box.  The first row is a prompt
+     * @since 4.7.4
+     * @param logixName The Logix system name for selecting the owned Conditionals
+     */
+    void loadSelectConditionalBox(String logixName) {
+        // Get the current Conditional name for selecting the current combo box row
+        String cdlName = _curVariable.getName();
+
+        _selectConditionalBox.removeAllItems();
+        _selectConditionalList.clear();
+
+        // Create the first row
+        String itemKey = rbx.getString("SelectFirstRow");
+        _selectConditionalBox.addItem(itemKey);
+        _selectConditionalList.add("-None-");
+
+        Logix x = _logixManager.getBySystemName(logixName);
+        if (x == null) {
+            log.error("Logix '{}' not found while building the conditional list", logixName);
+            return;
+        }
+        if (x.getNumConditionals() == 0) {
+            return;
+        }
+        for (String cName : _conditionalManager.getSystemNameListForLogix(x)) {
+            Conditional c = _conditionalManager.getConditional(cName);
+            if (_curConditional.getSystemName().equals(c.getSystemName())) {
+                // Don't add myself to the list
+                continue;
+            }
+            String uName = c.getUserName();
+            String itemName = "";
+            if (uName == null || uName.length() < 1) {
+                itemName = cName;
+            } else {
+                itemName = uName + " ( " + cName + " )";
+            }
+            _selectConditionalBox.addItem(itemName);
+            _selectConditionalList.add(cName);
+            if (cdlName.equals(cName)) {
+                itemKey = itemName;
+            }
+        }
+        _selectConditionalBox.setSelectedItem(itemKey);
+    }
+
+    transient ActionListener selectLogixBoxListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int lgxIndex = _selectLogixBox.getSelectedIndex();
+            if (lgxIndex >= 0 && lgxIndex < _selectLogixList.size()) {
+                String lgxName = _selectLogixList.get(lgxIndex);
+                loadSelectConditionalBox(lgxName);
+            }
+        }
+    };
+
+    transient ActionListener selectConditionalBoxListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int cdlIndex = _selectConditionalBox.getSelectedIndex();
+            if (cdlIndex > 0 && cdlIndex < _selectConditionalList.size()) {
+                String cdlName = _selectConditionalList.get(cdlIndex);
+                _variableNameField.setText(cdlName);
+            }
+        }
+    };
+
+    /**
+>>>>>>> JMRI/master
+     * Respond to change in variable type chosen in the State Variable Table
+     * in the Edit Conditional pane.
+     * <p>
+     * Also used to set up for Edit of a Conditional with state variables.
+     *
+     * @param itemType value representing the newly selected Conditional type, i.e. ITEM_TYPE_SENSOR
      */
     private void variableTypeChanged(int itemType) {
+        initNameBoxObjects();
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
             log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);
@@ -3639,10 +5005,26 @@ public class LogixTableAction extends AbstractTableAction {
         _variableSignalPanel.setVisible(false);
         _variableData1Panel.setVisible(false);
         _variableData2Panel.setVisible(false);
+        _variableComboNamePanel.setVisible(false);
+<<<<<<< HEAD
+=======
+        _selectLogixPanel.setVisible(false);
+        _selectConditionalPanel.setVisible(false);
+>>>>>>> JMRI/master
         _variableStateBox.removeAllItems();
         _variableNameField.removeActionListener(variableSignalHeadNameListener);
         _variableNameField.removeActionListener(variableSignalMastNameListener);
         _variableStateBox.removeActionListener(variableSignalTestStateListener);
+<<<<<<< HEAD
+=======
+        _selectLogixBox.removeActionListener(selectLogixBoxListener);
+        _selectConditionalBox.removeActionListener(selectConditionalBoxListener);
+>>>>>>> JMRI/master
+
+        if (_selectionMode == SelectionMode.USESINGLE) {
+            createSinglePanelPickList(itemType, true);
+        }
+
         switch (itemType) {
             case Conditional.TYPE_NONE:
                 return;
@@ -3650,37 +5032,46 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 for (int i = 0; i < Conditional.ITEM_TO_SENSOR_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SENSOR_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SENSOR_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_sensorNameBox, _sensorNameListener);
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_TURNOUT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_TURNOUT_TEST[i]));
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_turnoutNameBox, _turnoutNameListener);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintLight"));
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_LIGHT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_LIGHT_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_lightNameBox, _lightNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _variableNameField.addActionListener(variableSignalHeadNameListener);
                 _variableStateBox.addActionListener(variableSignalTestStateListener);
-                loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+                loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_HEAD_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[i]));
                 }
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _variableNamePanel.setVisible(true);
@@ -3690,6 +5081,9 @@ public class LogixTableAction extends AbstractTableAction {
                 } else {
                     _variableSignalPanel.setVisible(false);
                 }
+
+                // Set and swap name boxes
+                setVariableNameBox(_sigheadNameBox, _sigheadNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 _variableNameField.addActionListener(variableSignalMastNameListener);
@@ -3698,7 +5092,7 @@ public class LogixTableAction extends AbstractTableAction {
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_MAST_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_MAST_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_MAST_TEST[i]));
                 }
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _variableNamePanel.setVisible(true);
@@ -3708,6 +5102,9 @@ public class LogixTableAction extends AbstractTableAction {
                 } else {
                     _variableSignalPanel.setVisible(false);
                 }
+
+                // Set and swap name boxes
+                setVariableNameBox(_sigmastNameBox, _sigmastNameListener);
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 JPanel p = (JPanel) _variableData1Panel.getComponent(0);
@@ -3725,24 +5122,44 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableData1Panel.setToolTipText(rbx.getString("DataHintMemory"));
                 _variableData1Panel.setVisible(true);
                 _variableComparePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_memoryNameBox, _memoryNameListener);
                 break;
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintConditional"));
+                _selectLogixBox.addActionListener(selectLogixBoxListener);
+                _selectConditionalBox.addActionListener(selectConditionalBoxListener);
                 for (int i = 0; i < Conditional.ITEM_TO_CONDITIONAL_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_CONDITIONAL_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_CONDITIONAL_TEST[i]));
                 }
+<<<<<<< HEAD
                 _variableNamePanel.setVisible(true);
+=======
+                // Load the Logix and Conditional combo boxes
+                loadSelectLogixBox();
+                _selectLogixPanel.setPreferredSize(_selectLogixBox.getPreferredSize());
+                _selectConditionalPanel.setPreferredSize(_selectConditionalBox.getPreferredSize());
+                _selectLogixPanel.setVisible(true);
+                _selectConditionalPanel.setVisible(true);
+>>>>>>> JMRI/master
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_conditionalNameBox, _conditionalNameListener);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintWarrant"));
                 for (int i = 0; i < Conditional.ITEM_TO_WARRANT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_WARRANT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_WARRANT_TEST[i]));
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_warrantNameBox, _warrantNameListener);
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 p = (JPanel) _variableData1Panel.getComponent(0);
@@ -3761,12 +5178,15 @@ public class LogixTableAction extends AbstractTableAction {
                     _variableStateBox.addItem(names.next());
                 }
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_oblockNameBox, _oblockNameListener);
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 _variableNameField.setText(_curVariable.getName());
                 for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_ENTRYEXIT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_ENTRYEXIT_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -3775,18 +5195,70 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
-    } /* variableTypeChanged */
-
+    }
+<<<<<<< HEAD
 
     /**
-     * Validates Variable data from Edit Variable Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by variableItemChanged
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setVariableNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+        
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curVariable.getName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
+
+=======
+
+    /**
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by variableItemChanged
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setVariableNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curVariable.getName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
+
+>>>>>>> JMRI/master
+        // Swap the name boxes
+        _variableComboNamePanel.remove(1);
+        _variableComboNamePanel.add(nameBox, null, 1);
+        _variableNamePanel.setVisible(false);
+        _variableComboNamePanel.setVisible(true);
+    }
+
+    /**
+     * Validate Variable data from Edit Variable Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
-     * false immediately after finding an error, even if there might be more
+     * false immediately after finding the first error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false
      */
     boolean validateVariable() {
         String name = _variableNameField.getText().trim();
@@ -3859,6 +5331,12 @@ public class LogixTableAction extends AbstractTableAction {
                     return false;
                 }
                 _curVariable.setName(name);
+                Conditional c = _conditionalManager.getBySystemName(name);
+                if (c.getUserName().length() > 0) {
+                    _curVariable.setGuiName(c.getUserName());
+                } else {
+                    _curVariable.setGuiName(c.getSystemName());
+                }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 name = validateLightReference(name);
@@ -3986,14 +5464,14 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Validates Action data from Edit Action Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Validate Action data from Edit Action Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
      * false immediately after finding an error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
         int itemType = _actionItemTypeBox.getSelectedIndex();
@@ -4336,6 +5814,13 @@ public class LogixTableAction extends AbstractTableAction {
         return (true);
     }
 
+    /**
+     * Convert user setting in Conditional Action configuration pane to integer for processing.
+     *
+     * @param itemType value for current item type
+     * @param actionTypeSelection index of selected item in configuration comboBox
+     * @return integer representing the selected action
+     */
     static int getActionTypeFromBox(int itemType, int actionTypeSelection) {
         if (itemType < 0 || actionTypeSelection < 0) {
             return Conditional.ACTION_NONE;
@@ -4367,13 +5852,21 @@ public class LogixTableAction extends AbstractTableAction {
                 return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_OTHER:
                 return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
+            default:
+                // fall through
+                break;
         }
         return Conditional.ACTION_NONE;
     }
 
     // *********** Utility Methods ********************
+
     /**
-     * Checks if String is an integer or references an integer
+     * Check if String is an integer or references an integer.
+     *
+     * @param actionType Conditional action to check for, i.e. ACTION_SET_LIGHT_INTENSITY
+     * @param intReference string referencing a decimal for light intensity or the name of a memory
+     * @return true if either correct decimal format or a memory with the given name is present
      */
     boolean validateIntensityReference(int actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
@@ -4410,10 +5903,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return false;
     }
-    
+
     /**
-     * Checks text represents an integer suitable for percentage
-     * NumberFormatException
+     * Check if text represents an integer is suitable for percentage
+     * w/o NumberFormatException.
+     *
+     * @param time value to use as light intensity percentage
+     * @return true if time is an integer in range 0 - 100
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
@@ -4424,9 +5920,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return true;
     }
-    
+
     /**
-     * Checks if String is decimal or references a decimal
+     * Check if a string is decimal or references a decimal.
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param ref entry to check
+     * @return true if ref is itself a decimal or user will provide one from a Memory at run time
      */
     boolean validateTimeReference (int actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
@@ -4435,6 +5935,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         try {
             return validateTime(actionType, Float.valueOf(ref).floatValue());
+            // return true if ref is decimal within allowed range
         } catch (NumberFormatException e) {
             String memRef = ref;
             if (ref.length() > 1 && ref.charAt(0) == '@') {
@@ -4465,7 +5966,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Range check time (assumes seconds)
+     * Range check time entry (assumes seconds).
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param time value to be checked
+     * @return false if time &gt; 3600 (seconds) or too small
      */
     boolean validateTime(int actionType, float time) {
         float maxTime = 3600;     // more than 1 hour
@@ -4499,6 +6004,11 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Display an error message to user when an invalid number is provided in Conditional set up.
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     */
     void displayBadNumberReference(int actionType) {
         String errorNum = " ";
         switch (actionType) {
@@ -4531,7 +6041,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Memory reference of text.
+     * Check Memory reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Memory, null if not found
      */
     String validateMemoryReference(String name) {
         Memory m = null;
@@ -4550,7 +6065,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return name;
     }
-    
+
+    /**
+     * Check if user will provide a valid item name in a Memory variable
+     *
+     * @param memName Memory location to provide item name at run time
+     * @return false if user replies No
+     */
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
             int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
@@ -4563,11 +6084,16 @@ public class LogixTableAction extends AbstractTableAction {
                 _suppressIndirectRef = true;
             }
         }
-        return true;       
+        return true;
     }
 
     /**
-     * Checks Turnout reference of text.
+     * Check Turnout reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Turnout, null if not found
      */
     String validateTurnoutReference(String name) {
         Turnout t = null;
@@ -4588,18 +6114,23 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalHead reference of text.
+     * Check SignalHead reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding SignalHead, null if not found
      */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
-            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+            h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalHead"); //NOI18N
@@ -4609,18 +6140,27 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalMast reference of text.
+     * Check SignalMast reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Signal Mast, null if not found
      */
     String validateSignalMastReference(String name) {
         SignalMast h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
-            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+            try {
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(name);
+            } catch (IllegalArgumentException ex) {
+                h = null; // tested below
+            }
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalMast"); //NOI18N
@@ -4629,6 +6169,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check Warrant reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Warrant, null if not found
+     */
     String validateWarrantReference(String name) {
         Warrant w = null;
         if (name != null) {
@@ -4647,6 +6195,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check OBlock reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding OBlock, null if not found
+     */
     String validateOBlockReference(String name) {
         OBlock b = null;
         if (name != null) {
@@ -4666,20 +6222,24 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Sensor reference of text.
+     * Check Sensor reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Sensor, null if not found
      */
     String validateSensorReference(String name) {
         Sensor s = null;
         if (name != null) {
             if (name.length() > 0) {
-                s = InstanceManager.sensorManagerInstance().getByUserName(name);
+                s = InstanceManager.getDefault(jmri.SensorManager.class).getByUserName(name);
                 if (s != null) {
                     return name;
                 }
             }
-            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+            s = InstanceManager.getDefault(jmri.SensorManager.class).getBySystemName(name);
         }
-        s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
             messageInvalidActionItemName(name, "Sensor"); //NOI18N
             return null;
@@ -4688,7 +6248,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Light reference of text.
+     * Check Light reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Light, null if not found
      */
     String validateLightReference(String name) {
         Light l = null;
@@ -4709,7 +6274,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Conditional reference of text. Forces name to System name
+     * Check Conditional reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Conditional, null if not found
      */
     String validateConditionalReference(String name) {
         Conditional c = null;
@@ -4730,7 +6300,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Logix reference of text.
+     * Check Logix reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Logix, null if not found
      */
     String validateLogixReference(String name) {
         Logix l = null;
@@ -4751,18 +6326,23 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Route reference of text.
+     * Check Route reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Route, null if not found
      */
     String validateRouteReference(String name) {
         Route r = null;
         if (name != null) {
             if (name.length() > 0) {
-                r = InstanceManager.routeManagerInstance().getByUserName(name);
+                r = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
                 if (r != null) {
                     return name;
                 }
             }
-            r = InstanceManager.routeManagerInstance().getBySystemName(name);
+            r = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
         }
         if (r == null) {
             messageInvalidActionItemName(name, "Route"); //NOI18N
@@ -4771,16 +6351,24 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check an Audio reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding AudioManager, null if not found
+     */
     String validateAudioReference(String name) {
         Audio a = null;
         if (name != null) {
             if (name.length() > 0) {
-                a = InstanceManager.audioManagerInstance().getByUserName(name);
+                a = InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
                 if (a != null) {
                     return name;
                 }
             }
-            a = InstanceManager.audioManagerInstance().getBySystemName(name);
+            a = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
         if (a == null || (a.getSubType() != Audio.SOURCE && a.getSubType() != Audio.LISTENER)) {
             messageInvalidActionItemName(name, "Audio"); //NOI18N
@@ -4789,6 +6377,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check an EntryExit reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system name of the corresponding EntryExit pair, null if not found
+     */
     String validateEntryExitReference(String name) {
         NamedBean nb = null;
         if (name != null) {
@@ -4804,7 +6400,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * get Light instance.
+     * Get Light instance.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name user or system name of an existing light
+     * @return the Light object
      */
     Light getLight(String name) {
         if (name == null) {
@@ -4876,7 +6477,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Formats time to hh:mm given integer hour and minute
+     * Format time to hh:mm given integer hour and minute.
+     *
+     * @param hour value for time hours
+     * @param minute value for time minutes
+     * @return Formatted time string
      */
     public static String formatTime(int hour, int minute) {
         String s = "";
@@ -4899,8 +6504,13 @@ public class LogixTableAction extends AbstractTableAction {
         return s;
     }
 
+    // ********************** Error Dialogs *********************************
+
     /**
-     * ********************** Error Dialogs *********************************
+     * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
+     *
+     * @param name proposed appearance description
+     * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -4909,6 +6519,12 @@ public class LogixTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Send an Invalid Conditional Action name message for Edit Logix pane.
+     *
+     * @param name user or system name to look up
+     * @param itemType type of Bean to look for
+     */
     void messageInvalidActionItemName(String name, String itemType) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 java.text.MessageFormat.format(rbx.getString("Error22"),
@@ -4917,7 +6533,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sends a duplicate Conditional user name message for Edit Logix window
+     * Send a duplicate Conditional user name message for Edit Logix pane.
+     *
+     * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalUserName(String svName) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -4927,8 +6545,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     // *********** Special Table Models ********************
+
     /**
-     * Table model for Conditionals in Edit Logix window
+     * Table model for Conditionals in the Edit Logix pane.
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
@@ -4970,6 +6589,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -4982,16 +6602,20 @@ public class LogixTableAction extends AbstractTableAction {
         }
 
         /**
-         * Is this property event announcing a change this table should display?
-         * <P>
-         * Note that events will come both from the NamedBeans and also from the
-         * manager
+         * Check if this property event is announcing a change this table should display.
+         * <p>
+         * Note that events will come both from the NamedBeans and from the
+         * manager.
+         *
+         * @param e the event heard
+         * @return true if a change in State or Appearance was heard
          */
         boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
             return (e.getPropertyName().indexOf("State") >= 0 || e
                     .getPropertyName().indexOf("Appearance") >= 0);
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == BUTTON_COLUMN) {
                 return JButton.class;
@@ -4999,14 +6623,17 @@ public class LogixTableAction extends AbstractTableAction {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 4;
         }
 
+        @Override
         public int getRowCount() {
             return (numConditionals);
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
                 return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN));
@@ -5018,6 +6645,7 @@ public class LogixTableAction extends AbstractTableAction {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
@@ -5048,6 +6676,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int col) {
             int rx = r;
             if ((rx > numConditionals) || (_curLogix == null)) {
@@ -5087,12 +6716,13 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("False");
                         }
                     }
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             int rx = row;
             if ((rx > numConditionals) || (_curLogix == null)) {
@@ -5116,6 +6746,7 @@ public class LogixTableAction extends AbstractTableAction {
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             editConditionalPressed(row);
                         }
@@ -5125,20 +6756,47 @@ public class LogixTableAction extends AbstractTableAction {
                 }
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
-                if (_curLogix != null) {
-                    Conditional cn = _conditionalManager.getByUserName(_curLogix,
-                            uName.trim());
-                    if (cn == null) {
-                        _conditionalManager.getBySystemName(
-                                _curLogix.getConditionalByNumberOrder(rx))
-                                .setUserName(uName.trim());
-                        fireTableRowsUpdated(rx, rx);
-                    } else {
-                        String svName = _curLogix.getConditionalByNumberOrder(rx);
-                        if (cn != _conditionalManager.getBySystemName(svName)) {
-                            messageDuplicateConditionalUserName(cn
-                                    .getSystemName());
+<<<<<<< HEAD
+                Conditional cn = _conditionalManager.getByUserName(_curLogix,
+                        uName.trim()); // N11N
+                if (cn == null) {
+                    _conditionalManager.getBySystemName(
+                            _curLogix.getConditionalByNumberOrder(rx))
+                            .setUserName(uName.trim()); // N11N
+=======
+                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName.trim()); // N11N
+                if (cn == null) {
+                    String sName = _curLogix.getConditionalByNumberOrder(rx);
+                    Conditional cdl = _conditionalManager.getBySystemName(sName);
+                    cdl.setUserName(uName.trim()); // N11N
+>>>>>>> JMRI/master
+                    fireTableRowsUpdated(rx, rx);
+
+                    // Update any conditional references
+                    ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsed(sName);
+                    if (refList != null) {
+                        for (String ref : refList) {
+                            Conditional cRef = _conditionalManager.getBySystemName(ref);
+                            ArrayList<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
+                            for (ConditionalVariable var : varList) {
+                                // Find the affected conditional variable
+                                if (var.getName().equals(sName)) {
+                                    if (uName.length() > 0) {
+                                        var.setGuiName(uName);
+                                    } else {
+                                        var.setGuiName(sName);
+                                    }
+                                }
+                            }
+                            cRef.setStateVariables(varList);
                         }
+                    }
+                } else {
+                    // Duplicate user name
+                    String svName = _curLogix.getConditionalByNumberOrder(rx);
+                    if (cn != _conditionalManager.getBySystemName(svName)) {
+                        messageDuplicateConditionalUserName(cn
+                                .getSystemName());
                     }
                 }
             }
@@ -5146,7 +6804,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for State Variables in Edit Conditional window
+     * Table model for State Variables in Edit Conditional pane.
      */
     public class VariableTableModel extends AbstractTableModel {
 
@@ -5166,6 +6824,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         public static final int DELETE_COLUMN = 7;
 
+        @Override
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case ROWNUM_COLUMN:
@@ -5184,18 +6843,24 @@ public class LogixTableAction extends AbstractTableAction {
                     return JButton.class;
                 case DELETE_COLUMN:
                     return JButton.class;
+                default:
+                    // fall through
+                    break;
             }
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 8;
         }
 
+        @Override
         public int getRowCount() {
             return _variableList.size();
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             switch (c) {
                 case ROWNUM_COLUMN:
@@ -5214,10 +6879,14 @@ public class LogixTableAction extends AbstractTableAction {
                     return (true);
                 case DELETE_COLUMN:
                     return (true);
+                default:
+                    // fall through
+                    break;
             }
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case ROWNUM_COLUMN:
@@ -5236,6 +6905,9 @@ public class LogixTableAction extends AbstractTableAction {
                     return "";
                 case DELETE_COLUMN:
                     return "";
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -5247,6 +6919,7 @@ public class LogixTableAction extends AbstractTableAction {
             return 10;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (r >= _variableList.size()) {
                 return null;
@@ -5254,15 +6927,15 @@ public class LogixTableAction extends AbstractTableAction {
             ConditionalVariable variable = _variableList.get(r);
             switch (c) {
                 case ROWNUM_COLUMN:
-                    return (rbx.getString("rowAbrev") + (r + 1));
+                    return ("R" + (r + 1)); //NOI18N
                 case AND_COLUMN:
-                    if (r == 0 || _logicType == Conditional.MIXED) {
+                    if (r == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";
                     }
-                    return variable.getOpernString();
+                    return variable.getOpernString(); // also display Operand selection when set to Mixed
                 case NOT_COLUMN:
                     if (variable.isNegated()) {
-                        return rbx.getString("LogicNOT");
+                        return Bundle.getMessage("LogicNOT");
                     }
                     break;
                 case DESCRIPTION_COLUMN:
@@ -5273,8 +6946,11 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("True");
                         case Conditional.FALSE:
                             return rbx.getString("False");
-                        case Conditional.UNKNOWN:
-                            return rbx.getString("Unknown");
+                        case NamedBean.UNKNOWN:
+                            return Bundle.getMessage("BeanStateUnknown");
+                        default:
+                            log.warn("Unhandled state type: {}", variable.getState());
+                            break;
                     }
                     break;
                 case TRIGGERS_COLUMN:
@@ -5289,6 +6965,7 @@ public class LogixTableAction extends AbstractTableAction {
             return null;
         }
 
+        @Override
         public void setValueAt(Object value, int r, int c) {
             if (r >= _variableList.size()) {
                 return;
@@ -5308,7 +6985,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (state.equals(rbx.getString("False").toUpperCase().trim())) {
                         variable.setState(Conditional.FALSE);
                     } else {
-                        variable.setState(Conditional.UNKNOWN);
+                        variable.setState(NamedBean.UNKNOWN);
                     }
                     break;
                 case TRIGGERS_COLUMN:
@@ -5330,6 +7007,7 @@ public class LogixTableAction extends AbstractTableAction {
                             row = r;
                         }
 
+                @Override
                         public void run() {
                             makeEditVariableWindow(row);
                         }
@@ -5347,7 +7025,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Actions in Edit Conditional window
+     * Table model for Actions in Edit Conditional pane.
      */
     public class ActionTableModel extends AbstractTableModel {
 
@@ -5357,6 +7035,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         public static final int DELETE_COLUMN = 2;
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == EDIT_COLUMN || c == DELETE_COLUMN) {
                 return JButton.class;
@@ -5364,14 +7043,17 @@ public class LogixTableAction extends AbstractTableAction {
             return super.getColumnClass(c);
         }
 
+        @Override
         public int getColumnCount() {
             return 3;
         }
 
+        @Override
         public int getRowCount() {
             return _actionList.size();
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == DESCRIPTION_COLUMN) {
                 return false;
@@ -5382,6 +7064,7 @@ public class LogixTableAction extends AbstractTableAction {
             return true;
         }
 
+        @Override
         public String getColumnName(int col) {
             if (col == DESCRIPTION_COLUMN) {
                 return rbx.getString("LabelActionDescription");
@@ -5396,6 +7079,7 @@ public class LogixTableAction extends AbstractTableAction {
             return 20;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             if (row >= _actionList.size()) {
                 return null;
@@ -5415,10 +7099,14 @@ public class LogixTableAction extends AbstractTableAction {
                         return rbx.getString("ButtonNext");
                     }
                     return Integer.toString(row + 1);
+                default:
+                    // fall through
+                    break;
             }
             return null;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
                 // Use separate Runnable so window is created on top
@@ -5430,6 +7118,7 @@ public class LogixTableAction extends AbstractTableAction {
                         row = r;
                     }
 
+                    @Override
                     public void run() {
                         makeEditActionWindow(row);
                     }
@@ -5446,13 +7135,244 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLogixTable");
     }
 
+    @Override
     protected String getClassName() {
         return LogixTableAction.class.getName();
     }
+
+<<<<<<< HEAD
+=======
+// *********** Methods for Conditional References Window ********************
+
+    /**
+     * Builds the conditional references window when the Conditional Variable
+     * References menu item is selected.
+     * <p>
+     * This is a stand-alone window that can be closed at any time.
+     * @since 4.7.4
+     */
+    void makeWhereUsedWindow() {
+        JmriJFrame referenceListFrame = new JmriJFrame(rbx.getString("LabelRefTitle"));
+        Container contentPane = referenceListFrame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+        // build header information
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        panel1.add(new JLabel(rbx.getString("LabelRefTarget")));
+        panel1.add(new JLabel(rbx.getString("LabelRefSource")));
+        contentPane.add(panel1);
+
+        JScrollPane scrollPane = null;
+        condText = new javax.swing.JTextArea(50,50);
+
+        // Build the conditional references listing
+        buildWhereUsedListing();
+        scrollPane = new JScrollPane(condText);
+        contentPane.add(scrollPane);
+
+        referenceListFrame.pack();
+        referenceListFrame.setVisible(true);
+
+    }
+
+    /**
+     * Creates the conditional reference where used list. The source is
+     * {@link jmri.managers.DefaultConditionalManager#conditionalWhereUsed}
+     * @since 4.7.4
+     */
+    void buildWhereUsedListing() {
+        condText.setText(null);
+        HashMap<String, ArrayList<String>> whereUsed = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsedMap();
+        SortedSet<String> targets = new TreeSet<>(whereUsed.keySet());
+        targets.forEach((target) -> {
+            condText.append("\n" + target + "\t" + getWhereUsedName(target) + "\n");
+            ArrayList<String> refNames = whereUsed.get(target);
+            refNames.forEach((refName) -> {
+                condText.append("\t\t" + refName + "\t" + getWhereUsedName(refName) + "\n");
+            });
+        });
+        condText.setCaretPosition(0);
+        condText.setTabSize(2);
+        condText.setEditable(false);
+    }
+
+    String getWhereUsedName(String cName) {
+        return _conditionalManager.getBySystemName(cName).getUserName();
+    }
+
+
+>>>>>>> JMRI/master
+// *********** Methods for Conditional Browser Window ********************
+
+    /**
+     * Responds to the Browse button pressed in Logix table
+     * @param sName The selected Logix system name
+     */
+    void browserPressed(String sName) {
+        if (!checkFlags(sName)) {
+            return;
+        }
+<<<<<<< HEAD
+        
+=======
+>>>>>>> JMRI/master
+        // Logix was found, create the window
+        _curLogix =  _logixManager.getBySystemName(sName);
+        makeBrowserWindow();
+    }
+
+<<<<<<< HEAD
+ 	/**
+	 * Builds the text representing the current conditionals for the selected
+     * Logix statement
+	 */
+    void buildConditionalListing() {
+        String  showSystemName,
+        showUserName,
+=======
+    /**
+     * Builds the text representing the current conditionals for the selected
+     * Logix statement
+     */
+    void buildConditionalListing() {
+        String  showSystemName,
+>>>>>>> JMRI/master
+        showCondName,
+        condName,
+        operand,
+        tStr;
+<<<<<<< HEAD
+        
+        ConditionalVariable variable;
+        ConditionalAction action;
+        
+        numConditionals = _curLogix.getNumConditionals();
+        showSystemName  = _curLogix.getSystemName();
+        showUserName    = _curLogix.getUserName();
+        
+        condText.setText(null);
+        
+=======
+
+        ConditionalVariable variable;
+        ConditionalAction action;
+
+        numConditionals = _curLogix.getNumConditionals();
+        showSystemName  = _curLogix.getSystemName();
+
+        condText.setText(null);
+
+>>>>>>> JMRI/master
+        for (int rx = 0; rx < numConditionals; rx++) {
+            conditionalRowNumber = rx;
+            _curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+            _variableList = _curConditional.getCopyOfStateVariables();
+            _logixSysName = _curConditional.getSystemName();
+            _actionList = _curConditional.getCopyOfActions();
+<<<<<<< HEAD
+            
+=======
+
+>>>>>>> JMRI/master
+            showCondName = _curConditional.getUserName();
+            if (showCondName == null) {
+                showCondName = "";
+            }
+            showSystemName=_curConditional.getSystemName();
+
+            // If no user name for a conditional, create one using C + row number
+            if (showCondName.equals("")) {
+                showCondName = "C"+(rx+1);
+            }
+            condText.append("\n   "+showSystemName+"  "+showCondName+"\n");
+            if (_curConditional.getLogicType() == Conditional.MIXED) {
+               _antecedent = _curConditional.getAntecedentExpression();
+                condText.append("   "+rbx.getString("BrowserAntecedent")+" "+_antecedent+"\n");
+            }
+
+            for (int i = 0; i < _variableList.size(); i++) {
+                variable = _variableList.get(i);
+                tStr = "        ";
+                tStr = tStr + " R" + (i+1) + (i>9?"":"  ");  // Makes {Rx}bb or {Rxx}b
+                condText.append(tStr);
+<<<<<<< HEAD
+                
+=======
+
+>>>>>>> JMRI/master
+                operand = variable.getOpernString();
+                if (i==0) { // add the IF to the first conditional
+                    condText.append(rbx.getString("BrowserIF")+" "+operand+" ");
+                } else {
+                    condText.append(" "+operand+" ");
+                }
+                if (variable.isNegated()) {
+                    condText.append(rbx.getString("LogicNOT")+" ");
+                }
+<<<<<<< HEAD
+                
+=======
+
+>>>>>>> JMRI/master
+                condText.append(variable.toString()+"\n");
+            } // for _variableList
+
+            if (_actionList.size() > 0) {
+                condText.append("              "+rbx.getString("BrowserTHEN")+"\n");
+                for (int i=0; i<_actionList.size(); i++) {
+                    action = _actionList.get(i);
+                    condName=action.description(false);
+                    condText.append("                 "+condName+"\n");
+                }  // for _actionList
+            } else {
+                condText.append("            "+rbx.getString("BrowserNoAction")+"\n");
+            }
+        } // for numConditionals
+        condText.setCaretPosition(0);
+
+    }  // buildConditionalListing
+
+    /**
+     * creates and initializes the conditionals browser window
+     */
+    void makeBrowserWindow() {
+        condBrowserFrame = new JmriJFrame(rbx.getString("BrowserTitle"));
+        condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);
+
+        Container contentPane = condBrowserFrame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+        // LOGIX header information
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout());
+        String tStr = rbx.getString("BrowserLogix")+" "+_curLogix.getSystemName()+"    "+
+                                     _curLogix.getUserName()+"    "+
+                           (Boolean.valueOf(_curLogix.getEnabled()) ?
+                                rbx.getString("BrowserEnabled") :
+                                rbx.getString("BrowserDisabled"));
+        panel1.add(new JLabel(tStr));
+        contentPane.add(panel1);
+
+        JScrollPane scrollPane = null;
+        condText = new javax.swing.JTextArea(50,50);
+        condText.setEditable(false);
+        condText.setTabSize(4);
+
+        // Build the conditionals listing
+        buildConditionalListing();
+        scrollPane = new JScrollPane(condText);
+        contentPane.add(scrollPane);
+
+        condBrowserFrame.pack();
+        condBrowserFrame.setVisible(true);
+
+    }  // makeBrowserWindow
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }

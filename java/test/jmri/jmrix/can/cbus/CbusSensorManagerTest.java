@@ -2,48 +2,82 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import jmri.Sensor;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2008
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusSensorManagerTest extends TestCase {
+public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+        
+    private CanSystemConnectionMemo memo = null;
 
+    @Override
+    public String getSystemName(int i) {
+        return "MSX0A;+N15E" + i;
+    }
+
+    @Test
+    @Override
     public void testCreate() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TestTrafficController());
-        CbusSensorManager m = new CbusSensorManager(memo);
-        m.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6");
-        memo.dispose();
+        Assert.assertNotNull("creaesSensor",l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
-    // from here down is testing infrastructure
-    public CbusSensorManagerTest(String s) {
-        super(s);
+    @Test
+    @Override
+    public void testDefaultSystemName() {
+        // create
+        Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CbusSensorManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    @Override
+    public void testUpperLower() {
+        Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
+        String name = t.getSystemName();
+        Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CbusSensorManagerTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("MSX0A;+N15E" + getNumToTest1());
+        Sensor t2 = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(new TestTrafficController());
+        l = new CbusSensorManager(memo);
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l.dispose();
+        memo.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

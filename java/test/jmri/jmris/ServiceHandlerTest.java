@@ -1,9 +1,8 @@
-//ServiceHandlerTest.java
 package jmri.jmris;
 
 import java.io.IOException;
 import jmri.JmriException;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,8 +21,11 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetPowerServer(){
         AbstractPowerServer ps = new AbstractPowerServer(){
+            @Override
             public void sendStatus(int Status) throws IOException{}
+            @Override
             public void sendErrorStatus() throws IOException {}
+            @Override
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -35,10 +37,11 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetTurnoutServer(){
         AbstractTurnoutServer ts = new AbstractTurnoutServer(){
-            public void sendStatus(int Status) throws IOException{}
+            @Override
             public void sendStatus(String message, int Status) throws IOException{}
-            public void sendErrorStatus(String status,int errorcode) throws IOException {}
+            @Override
             public void sendErrorStatus(String status) throws IOException {}
+            @Override
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -50,10 +53,11 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetSensorServer(){
         AbstractSensorServer ts = new AbstractSensorServer(){
-            public void sendStatus(int Status) throws IOException{}
+            @Override
             public void sendStatus(String message, int Status) throws IOException{}
-            public void sendErrorStatus(String status,int errorcode) throws IOException {}
+            @Override
             public void sendErrorStatus(String status) throws IOException {}
+            @Override
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -66,8 +70,11 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetLightServer(){
         AbstractLightServer ts = new AbstractLightServer(){
+            @Override
             public void sendStatus(String lightName, int Status) throws IOException{}
+            @Override
             public void sendErrorStatus(String lightName) throws IOException {}
+            @Override
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -79,8 +86,11 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetProgrammerServer(){
         AbstractProgrammerServer ts = new AbstractProgrammerServer(){
+            @Override
             public void sendStatus(int CV, int value, int status) throws IOException{}
+            @Override
             public void sendNotAvailableStatus() throws IOException{}
+            @Override
             public void parseRequest(String statusString) throws JmriException,IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -92,11 +102,17 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetTimeServer(){
         AbstractTimeServer ts = new AbstractTimeServer(){
+            @Override
             public void sendTime() throws IOException{}
+            @Override
             public void sendRate() throws IOException{}
+            @Override
             public void sendStatus() throws IOException{}
+            @Override
             public void sendErrorStatus() throws IOException {}
+            @Override
             public void parseTime(String status) throws IOException {}
+            @Override
             public void parseRate(String status) throws IOException {}
         };
         ServiceHandler a = new ServiceHandler();
@@ -128,11 +144,13 @@ public class ServiceHandlerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

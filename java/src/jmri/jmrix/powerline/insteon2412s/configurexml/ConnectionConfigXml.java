@@ -15,7 +15,6 @@ import jmri.jmrix.powerline.insteon2412s.SpecificDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -23,10 +22,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new SpecificDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

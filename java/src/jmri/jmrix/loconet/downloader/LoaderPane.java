@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.loconet.downloader;
 
 import java.awt.Color;
@@ -38,10 +37,13 @@ import org.slf4j.LoggerFactory;
  * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015
+ * @author Bob Jacobsen Copyright (C) 2005, 2015
+<<<<<<< HEAD
  * @author B. Milhaupt Copyright (C) 2013, 2014
- * @version	$Revision$
- */
+=======
+ * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
+>>>>>>> JMRI/master
+  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
 
@@ -50,6 +52,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
@@ -57,13 +60,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     /** This gets invoked early. We don't want it to do anything, so 
-     * ew just fail to pass it up. Instead, we wait for the later call of
+     * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
+
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents(){
     }
         
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception {
         this.memo = memo; 
         super.initComponents();
@@ -71,6 +76,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * LnPanelInterface implementation creates standard form of title
+     * 
+     * @param menuTitle is a string containing the name of the tool
+     * @return a new string containing the connection's UserName plus the name 
+     *          of the tool
      */
     public String getTitle(String menuTitle) { return jmri.jmrix.loconet.swing.LnPanel.getTitleHelper(memo, menuTitle); }
 
@@ -86,6 +95,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JTextField software = new JTextField();
     JTextField delay = new JTextField();
     JTextField eestart = new JTextField();
+    JTextField eraseBlockSize = new JTextField();
 
     JRadioButton checkhardwareno = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareExact"));
@@ -119,20 +129,22 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     private static final int HW_FLAGS_MSK = 0x03;
 
     // some constant string declarations
-    private static final String MIN_VALUE_ZERO = "0";
-    private static final String MIN_EESTART_VALUE = "8";
-    private static final String MAX_VALUE_255 = "255";
-    private static final String MAX_VALUE_65535 = "65535";
-    private static final String MAX_EESTART_VALUE = "FFFFF8";
-    private static final String MIN_DELAY_VALUE = "5";
-    private static final String MAX_DELAY_VALUE = "500";
+    private static final String MIN_VALUE_ZERO = "0"; // NOI18N
+    private static final String MIN_EESTART_VALUE = "8"; // NOI18N
+    private static final String MAX_VALUE_255 = "255"; // NOI18N
+    private static final String MAX_VALUE_65535 = "65535"; // NOI18N
+    private static final String MAX_EESTART_VALUE = "FFFFF8"; // NOI18N
+    private static final String MIN_DELAY_VALUE = "5"; // NOI18N
+    private static final String MAX_DELAY_VALUE = "500"; // NOI18N
+    private static final String MIN_VALUE_64 = "64"; // NOI18N
+    private static final String MAX_VALUE_128 = "128"; // NOI18N
 
     public LoaderPane() {
     }
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.downloader.LoaderFrame";
+        return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; // NOI18N
     }
 
     @Override
@@ -381,6 +393,30 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             add(p);
         }
 
+        {
+            // create a panel for displaying/modifying the Erase Block Size
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(Bundle.getMessage("LabelEraseBlockSize")
+                    + " ")); //NOI18N
+            eraseBlockSize.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_64, MAX_VALUE_128));
+            p.add(eraseBlockSize);
+            eraseBlockSize.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (!intParameterIsValid(eraseBlockSize, 64, 128)) {
+                        status.setText(Bundle.getMessage("ErrorInvalidParameter"));
+                    }
+                    updateDownloadVerifyButtons();
+                }
+            });
+            add(p);
+        }
         add(new JSeparator());
 
     }
@@ -388,69 +424,99 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void handleOptionsInFileContent(MemoryContents inputContent){
         // get some key/value pairs from the input file (if available)
-        String text = inputContent.extractValueOfKey("Bootloader Version");
+        String text = inputContent.extractValueOfKey("Bootloader Version"); // NOI18N
         if (text != null) {
             bootload.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Manufacturer Code");
+        text = inputContent.extractValueOfKey("Manufacturer Code"); // NOI18N
         if (text != null) {
             mfg.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Developer Code");
+        text = inputContent.extractValueOfKey("Developer Code"); // NOI18N
         if (text != null) {
             developer.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Product Code");
+        text = inputContent.extractValueOfKey("Product Code"); // NOI18N
         if (text != null) {
             product.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Hardware Version");
+        text = inputContent.extractValueOfKey("Hardware Version"); // NOI18N
         if (text != null) {
             hardware.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Software Version");
+        text = inputContent.extractValueOfKey("Software Version"); // NOI18N
         if (text != null) {
             software.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("Options");
+        text = inputContent.extractValueOfKey("Options"); // NOI18N
         if (text != null) {
             try {
                 this.setOptionsRadiobuttons(text);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"),
+                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), // NOI18N
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
+                log.warn("Invalid dmf file 'Options' value {0}",text);
                 return;
             }
         }
 
-        text = inputContent.extractValueOfKey("Delay");
+        text = inputContent.extractValueOfKey("Delay"); // NOI18N
         if (text != null) {
             delay.setText(text);
         }
 
-        text = inputContent.extractValueOfKey("EEPROM Start Address");
+        text = inputContent.extractValueOfKey("EEPROM Start Address"); // NOI18N
         if (text != null) {
             eestart.setText(text);
+        }
+        
+        text = inputContent.extractValueOfKey("Erase Blk Size"); // NOI18N
+        if (text != null) {
+            eraseBlockSize.setText(text);
+            boolean interpretationProblem = false;
+            try {
+                int i = Integer.parseInt(text);
+                if ((i > 128) || (i < 64)) {
+                    interpretationProblem = true;
+                }
+            } catch (java.lang.NumberFormatException e) {
+                interpretationProblem = true;
+            }
+            
+            if (interpretationProblem == true) {
+                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                this.disableDownloadVerifyButtons();
+                // clear out the firmware image to ensure that the user won't 
+                // write it to the device
+                inputContent.clear();
+                setDefaultFieldValues();
+                clearInputFileName();        
+            }
         }
     }
 
     /**
      * Add filter(s) for possible types to the input file chooser.
+     * @param chooser - a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {
             javax.swing.filechooser.FileNameExtensionFilter filter
                     = new javax.swing.filechooser.FileNameExtensionFilter(
-                            Bundle.getMessage("FileFilterLabel",
+                            Bundle.getMessage("FileFilterLabel", // NOI18N
                                     "*.dfm, *.hex"), // NOI18N
                             "dmf", "hex");   // NOI18N
 
@@ -479,7 +545,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     checksoftwareno.setSelected(true);
                     break;
                 default:
-                    throw new NumberFormatException("Invalid Software Options: "
+                    throw new NumberFormatException("Invalid Software Options: " // NOI18N
                             + (control & SW_FLAGS_MSK));
             }
             switch (control & HW_FLAGS_MSK) {
@@ -499,11 +565,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     checkhardwaregreater.setSelected(true);
                     break;
                 default:
-                    throw new NumberFormatException("Invalid Hardware Options: "
+                    throw new NumberFormatException("Invalid Hardware Options: " // NOI18N
                             + (control & HW_FLAGS_MSK));
             }
         } catch (NumberFormatException ex) {
-            log.error("Invalid Option value: " + text);
+            log.error("Invalid Option value: " + text); // NOI18N
             throw new NumberFormatException(ex.getLocalizedMessage());
         }
     }
@@ -554,10 +620,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         try {
             mfgval = Integer.parseInt(mfg.getText());
             if (mfgval < 0 || mfgval > 0xff) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Manufacturer Number value " + mfg.getText());
+            log.error("sendSequence() failed due to bad Manufacturer Number value " + mfg.getText()); // NOI18N
             mfg.setForeground(Color.red);
             mfg.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -570,10 +636,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         try {
             developerval = Integer.parseInt(developer.getText());
             if (developerval < 0 || developerval > 0xff) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Developer Number value " + developer.getText());
+            log.error("sendSequence() failed due to bad Developer Number value " + developer.getText()); // NOI18N
             developer.setForeground(Color.red);
             developer.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -586,10 +652,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         try {
             prodval = Integer.parseInt(product.getText());
             if (prodval < 0 || prodval > 0xffff) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Product Code value " + product.getText());
+            log.error("sendSequence() failed due to bad Product Code value " + product.getText()); // NOI18N
             product.setForeground(Color.red);
             product.requestFocusInWindow();
             this.enableDownloadVerifyButtons();
@@ -603,10 +669,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         try {
             hardval = Integer.parseInt(hardware.getText());
             if (hardval < 0 || hardval > 0xff) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Hardware Version value " + hardware.getText());
+            log.error("sendSequence() failed due to bad Hardware Version value " + hardware.getText()); // NOI18N
             hardware.setForeground(Color.red);
             hardware.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -619,10 +685,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         try {
             softval = Integer.parseInt(software.getText());
             if (softval < 0 || softval > 0xff) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Software Version value " + software.getText());
+            log.error("sendSequence() failed due to bad Software Version value " + software.getText()); // NOI18N
             software.setForeground(Color.red);
             software.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -638,10 +704,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             delayval = Integer.parseInt(delay.getText());
             if ((delayval < Integer.parseInt(MIN_DELAY_VALUE))
                     || (delayval > Integer.parseInt(MAX_DELAY_VALUE))) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad Delay value " + delay.getText());
+            log.error("sendSequence() failed due to bad Delay value " + delay.getText()); // NOI18N
             delay.setForeground(Color.red);
             delay.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -655,10 +721,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             eestartval = Integer.parseInt(eestart.getText(), 16);
             if ((eestartval < Integer.parseInt(MIN_EESTART_VALUE, 16))
                     || (eestartval > Integer.parseInt(MAX_EESTART_VALUE, 16))) {
-                throw new NumberFormatException("out of range");
+                throw new NumberFormatException("out of range"); // NOI18N
             }
         } catch (NumberFormatException ex) {
-            log.error("sendSequence() failed due to bad EESTART value " + eestart.getText());
+            log.error("sendSequence() failed due to bad EESTART value " + eestart.getText()); // NOI18N
             eestart.setForeground(Color.red);
             eestart.requestFocusInWindow();
             enableDownloadVerifyButtons();
@@ -759,11 +825,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
+            doLongWait(location, 5);
             setAddr(location);
+            doLongWait(location, 2);
 
             do {
-                // wait for completion of last operation
-                doWait(location);
 
                 // send this data
                 sentmsgs++;
@@ -783,24 +849,29 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     updateGUI(100 * sentmsgs / totalmsgs);
                 }
 
+                // wait for completion of last operation
+                doWait(location);
+
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next < 0) {
                     break;   // no data left
                 }
                 next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
-                if (next != location) {
+                if ((next != location) || ((location & 0x3f) == 0x00)) {
                     // wait for completion
-                    doWait(next);
+                    doLongWait(next, 4);  // extra wait while device writes memory
                     // change to next location
                     setAddr(next);
+                    doLongWait(next, 2); // double wait after sending new address
+                    
                 }
                 location = next;
 
             } while (!isOperationAborted() && (location <= endaddr));
 
             // send end (after wait)
-            doWait(location);
+            doLongWait(location,4);
             sendOne(PXCT2ENDOPERATION, 0, 0, 0, 0, 0, 0, 0, 0);
 
             this.updateGUI(100); //draw bar to 100%
@@ -818,6 +889,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Send a command to resume at another address
+         * @param location to be written next
          */
         void setAddr(int location) {
             sendOne(PXCT2SENDADDRESS,
@@ -831,6 +903,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
          * Wait the specified time.
          *
          * 16*10/16.44 = 14 msec is the time it takes to send the message.
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
          */
         void doWait(int address) {
             try {
@@ -841,8 +915,31 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = delayval + 50 + 14;
                     } else {
                         tdelay = delayval + 4 + 14;
-                    }
+                    }                        
+                    // do the actual wait
+                    wait(tdelay);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
+        }
 
+        /**
+         * Wait the time appropriate for the address.
+         *
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
+         */
+        void doLongWait(int address, int multiplier) {
+            try {
+                synchronized (this) {
+                    // make sure enough time in EEPROM address space
+                    int tdelay;
+                    if (address >= eestartval) {
+                        tdelay = (delayval + 50 + 14) * multiplier;
+                    } else {
+                        tdelay = (delayval) * multiplier;
+                    }                        
                     // do the actual wait
                     wait(tdelay);
                 }
@@ -862,6 +959,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Update the GUI for progress
+         * @param value is the percentage of "doneness" to be displayed
          */
         void updateGUI(final int value) {
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -871,7 +969,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         log.debug("updateGUI with " + value);
                     }
                     // update progress bar
-                    bar.setValue(100 * sentmsgs / totalmsgs);
+                    bar.setValue(value);
                 }
             });
         }
@@ -881,19 +979,20 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void setDefaultFieldValues() {
         addressSizeButtonGroup.clearSelection();
-        bootload.setText("1");
-        mfg.setText("1");
-        developer.setText("1");
-        product.setText("1");
-        hardware.setText("1");
-        software.setText("1");
-        delay.setText("200");
-        eestart.setText("C00000");
-
+        bootload.setText("1"); // NOI18N
+        mfg.setText("1"); // NOI18N
+        developer.setText("1"); // NOI18N
+        product.setText("1"); // NOI18N
+        hardware.setText("1"); // NOI18N
+        software.setText("1"); // NOI18N
+        delay.setText("200"); // NOI18N
+        eestart.setText("C00000"); // NOI18N
+        eraseBlockSize.setText("64"); // NOI18N
+        
         try {
             setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
         } catch (NumberFormatException ex) {
-            throw (new java.lang.Error("SetCheckboxes Failed to update the GUI for known-good parameters"));
+            throw (new java.lang.Error("SetCheckboxes Failed to update the GUI for known-good parameters")); // NOI18N
         }
         parametersAreValid();
     }
@@ -991,8 +1090,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
         }
         eestart.updateUI();
-
+        
         allIsOk &= temp;
+
+        temp = intParameterIsValid(eraseBlockSize, 64, 128);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Erase Block Sizez is not valid: " + eraseBlockSize.getText());
+        }
+        
         if (allIsOk == true) {
             log.debug("No problems found when checking parameter values.");
         }
@@ -1019,6 +1125,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * based on the validity of the parameter values in the GUI and the state of
      * the memory contents object.
      */
+    @Override
     protected void updateDownloadVerifyButtons() {
         if (parametersAreValid() && !inputContent.isEmpty()) {
             enableDownloadVerifyButtons();
@@ -1027,6 +1134,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         updateDownloadVerifyButtons();
         log.info("ActionListener");

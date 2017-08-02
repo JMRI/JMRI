@@ -1,0 +1,13 @@
+<div class="card-view-pf">
+  <div class="card" ng-repeat="item in items"
+       ng-class="{'pf-selectable': selectItems, 'active': isSelected(item), 'disabled': checkDisabled(item)}">
+    <div class="card-content"
+         ng-click="itemClick($event, item)"
+         ng-dblclick="dblClick($event, item)">
+      <div pf-transclude="parent" ></div>
+    </div>
+    <div class="card-check-box" ng-if="config.showSelectBox">
+      <input type="checkbox" value="item.selected" ng-model="item.selected" ng-disabled="checkDisabled(item)" ng-change="checkBoxChange(item)"/>
+    </div>
+  </div>
+</div>

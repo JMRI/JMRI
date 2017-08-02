@@ -1,8 +1,14 @@
-// StringUtil.java
 package jmri.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Common utility methods for working with Strings.
@@ -15,7 +21,6 @@ import java.util.Iterator;
  * an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class StringUtil {
 
@@ -23,8 +28,12 @@ public class StringUtil {
      * Starting with two arrays, one of names and one of corresponding numeric
      * state values, find the state value that matches a given name string
      *
-     * @return -1 if not found
+     * @param name   the name to search for
+     * @param states the state values
+     * @param names  the name values
+     * @return the state or -1 if none found
      */
+    @CheckReturnValue
     static public int getStateFromName(String name, int[] states, String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (name.equals(names[i])) {
@@ -39,8 +48,13 @@ public class StringUtil {
      * state values, and one of masks for the state values, find the name
      * string(s) that match a given state value
      *
-     * @return empty array if none found
+     * @param state  the given state
+     * @param states the state values
+     * @param masks  the state masks
+     * @param names  the state names
+     * @return names matching the given state or an empty array
      */
+    @CheckReturnValue
     static public String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
         // first pass to count, get refs
         int count = 0;
@@ -53,9 +67,7 @@ public class StringUtil {
         }
         // second pass to create output array
         String[] output = new String[count];
-        for (int i = 0; i < count; i++) {
-            output[i] = temp[i];
-        }
+        System.arraycopy(temp, 0, output, 0, count);
         return output;
     }
 
@@ -64,9 +76,14 @@ public class StringUtil {
      * state values, find the name string that matches a given state value. Only
      * one may be returned.
      *
-     * @return null if not found
+     * @param state  the given state
+     * @param states the state values
+     * @param names  the state names
+     * @return the first matching name or null if none found
      */
-    static public String getNameFromState(int state, int[] states, String[] names) {
+    @CheckReturnValue
+    @CheckForNull
+    static public String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (state == states[i]) {
                 return names[i];
@@ -75,39 +92,48 @@ public class StringUtil {
         return null;
     }
 
-    static final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    private static final char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
-     * Convert an int to a exactly two hexadecimal characters
+     * Convert an integer to an exactly two hexadecimal characters string
      *
+     * @param val the integer value
      * @return String exactly two characters long
      */
+    @CheckReturnValue
+    @Nonnull
     static public String twoHexFromInt(int val) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(hexChars[(val & 0xF0) >> 4]);
-        sb.append(hexChars[val & 0x0F]);
+        StringBuilder sb = new StringBuilder();
+        sb.append(HEX_CHARS[(val & 0xF0) >> 4]);
+        sb.append(HEX_CHARS[val & 0x0F]);
         return sb.toString();
     }
 
     /**
-     * Quickly append an int to a String as exactly two hexadecimal characters
+     * Quickly append an integer to a String as exactly two hexadecimal
+     * characters
      *
      * @param val      Value to append in hex
      * @param inString String to be extended
      * @return String exactly two characters long
      */
-    static public String appendTwoHexFromInt(int val, String inString) {
-        StringBuffer sb = new StringBuffer(inString);
-        sb.append(hexChars[(val & 0xF0) >> 4]);
-        sb.append(hexChars[val & 0x0F]);
+    @CheckReturnValue
+    @Nonnull
+    static public String appendTwoHexFromInt(int val, @Nonnull String inString) {
+        StringBuilder sb = new StringBuilder(inString);
+        sb.append(StringUtil.twoHexFromInt(val));
         return sb.toString();
     }
 
     /**
      * Convert a small number to eight 1/0 characters.
      *
-     * @param msbLeft the MSB is on the left of the display
+     * @param val     the number to convert
+     * @param msbLeft true if the MSB is on the left of the display
+     * @return a string of binary characters
      */
+    @CheckReturnValue
+    @Nonnull
     static public String to8Bits(int val, boolean msbLeft) {
         String result = "";
         for (int i = 0; i < 8; i++) {
@@ -127,11 +153,13 @@ public class StringUtil {
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
-    static public String hexStringFromBytes(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
+    @CheckReturnValue
+    @Nonnull
+    static public String hexStringFromBytes(@Nonnull byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
-            sb.append(hexChars[(bytes[i] & 0xF0) >> 4]);
-            sb.append(hexChars[bytes[i] & 0x0F]);
+            sb.append(HEX_CHARS[(bytes[i] & 0xF0) >> 4]);
+            sb.append(HEX_CHARS[bytes[i] & 0x0F]);
             sb.append(' ');
         }
         return sb.toString();
@@ -144,7 +172,9 @@ public class StringUtil {
      * @return byte array, with one byte for each pair. Can be zero length, but
      *         will not be null.
      */
-    static public byte[] bytesFromHexString(String s) {
+    @CheckReturnValue
+    @Nonnull
+    static public byte[] bytesFromHexString(@Nonnull String s) {
         String ts = s + "  "; // ensure blanks on end to make scan easier
         int len = 0;
         // scan for length
@@ -188,93 +218,44 @@ public class StringUtil {
      * This is a lexagraphic sort; lower case goes to the end. Identical entries
      * are retained, so the output length is the same as the input length.
      *
+     * @param values the Strings to sort.
+     * @deprecated since 4.5.6; use
+     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
      */
-    static public void sort(String[] values) {
-        try {
-            java.util.Arrays.sort(values);
-        } catch (Throwable e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            bubblesort(values);
-        }
-    }
-
-    // Internal method to do a case-preserving sort of Strings
-    static private void bubblesort(String[] values) {
-        // no Java sort, so ugly bubble sort
-        for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
-            for (int j = values.length - 2; j >= i; j--) {
-                // check that the jth value is smaller than j+1th,
-                // else swap
-                if (0 < values[j].compareTo(values[j + 1])) {
-                    // swap
-                    String temp = values[j];
-                    values[j] = values[j + 1];
-                    values[j + 1] = temp;
-                }
-            }
-        }
-    }
-
-    // Internal method to do a case-blind sort of the .toString values
-    // of objects.
-    static private void bubblesort(Object[] values) {
-        for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
-            for (int j = values.length - 2; j >= i; j--) {
-                // check that the jth value is smaller than j+1th,
-                // else swap
-                if (0 < (values[j].toString()).compareTo(values[j + 1].toString())) {
-                    // swap
-                    Object temp = values[j];
-                    values[j] = values[j + 1];
-                    values[j + 1] = temp;
-                }
-            }
-        }
+    @Deprecated
+    static public void sort(@Nonnull String[] values) {
+        Arrays.sort(values);
     }
 
     /**
      * This is a case-blind sort. Identical entries are retained, so the output
      * length is the same as the input length.
      *
+     * @param values the Objects to sort
+     * @deprecated since 4.5.6; use
+     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
      */
-    static public void sort(Object[] values) {
-        try {
-            java.util.Arrays.sort(values);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            // no Java sort, so ugly bubble sort
-            bubblesort(values);
-        }
-    }
-
-    static void bubblesortUpper(Object[] values) {
-        for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
-            for (int j = values.length - 2; j >= i; j--) {
-                // check that the jth value is smaller than j+1th,
-                // else swap
-                if (0 < (values[j].toString().toUpperCase()).compareTo(values[j + 1].toString().toUpperCase())) {
-                    // swap
-                    Object temp = values[j];
-                    values[j] = values[j + 1];
-                    values[j + 1] = temp;
-                }
-            }
-        }
+    @Deprecated
+    static public void sort(@Nonnull Object[] values) {
+        Arrays.sort(values);
     }
 
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
      *
+     * @param values the Objects to sort
      */
-    static public void sortUpperCase(Object[] values) {
-        // no Java sort, so ugly bubble sort
-        bubblesortUpper(values);
+    static public void sortUpperCase(@Nonnull Object[] values) {
+        Arrays.sort(values, (Object o1, Object o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
     }
 
     /**
      * Sort String[] representing numbers, in ascending order.
      *
+     * @param values the Strings to sort
      */
-    static public void numberSort(String[] values) throws NumberFormatException {
+    static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
                 // check that the jth value is larger than j+1th,
@@ -293,35 +274,36 @@ public class StringUtil {
      * Join a collection of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @param delimiter the delimiter
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * @deprecated since 4.7.2; use
+     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * instead
      */
-    public static String join(Collection<String> s, String delimiter) {
-        StringBuffer buffer = new StringBuffer();
-        Iterator<String> iter = s.iterator();
-        while (iter.hasNext()) {
-            buffer.append(iter.next());
-            if (iter.hasNext()) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated
+    public static String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
+        return String.join(delimiter, s);
     }
 
     /**
      * Join an array of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @param delimiter the delimiter
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
+     * @deprecated since 4.5.6; use
+     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
+     * instead
      */
-    public static String join(String[] s, String delimiter) {
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < s.length; i++) {
-            buffer.append(s[i]);
-            if (i < s.length - 1) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+    @CheckReturnValue
+    @Deprecated
+    @Nonnull
+    public static String join(@Nonnull String[] s, @Nonnull String delimiter) {
+        return String.join(delimiter, s);
     }
 
     /**
@@ -331,8 +313,14 @@ public class StringUtil {
      *
      * @param input   String to split
      * @param divider Where to divide the input; this does not appear in output
+     * @return an array of Strings
+     * @deprecated since 4.5.6; use
+     * {@link java.lang.String#split(java.lang.String)} instead
      */
-    static public String[] split(String input, String divider) {
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated
+    static public String[] split(@Nonnull String input, @Nonnull String divider) {
         int size = 0;
         String temp = input;
 
@@ -370,26 +358,40 @@ public class StringUtil {
     }
 
     /**
+     * Quotes unmatched closed parentheses; matched ( ) pairs are left
+     * unchanged.
+     *
      * If there's an unmatched ), quote it with \, and quote \ with \ too.
+     *
+     * @param in String potentially containing unmatched closing parenthesis
+     * @return null if given null
      */
-    static public String parenQuote(String in) {
-        if (in.equals("")) {
-            return "";
+    @CheckReturnValue
+    @CheckForNull
+    static public String parenQuote(@CheckForNull String in) {
+        if (in == null || in.equals("")) {
+            return in;
         }
         StringBuilder result = new StringBuilder();
         int level = 0;
         for (int i = 0; i < in.length(); i++) {
             char c = in.charAt(i);
-            if (c == '(') {
-                level++;
-            } else if (c == '\\') {
-                result.append('\\');
-            } else if (c == ')') {
-                level--;
-                if (level < 0) {
-                    level = 0;
+            switch (c) {
+                case '(':
+                    level++;
+                    break;
+                case '\\':
                     result.append('\\');
-                }
+                    break;
+                case ')':
+                    level--;
+                    if (level < 0) {
+                        level = 0;
+                        result.append('\\');
+                    }
+                    break;
+                default:
+                    break;
             }
             result.append(c);
         }
@@ -398,10 +400,15 @@ public class StringUtil {
 
     /**
      * Undo parenQuote
+     *
+     * @param in the input String
+     * @return null if given null
      */
-    static String parenUnQuote(String in) {
-        if (in.equals("")) {
-            return "";
+    @CheckReturnValue
+    @CheckForNull
+    static String parenUnQuote(@CheckForNull String in) {
+        if (in == null || in.equals("")) {
+            return in;
         }
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < in.length(); i++) {
@@ -419,23 +426,31 @@ public class StringUtil {
         return new String(result);
     }
 
-    static public java.util.List<String> splitParens(String in) {
-        java.util.ArrayList<String> result = new java.util.ArrayList<String>();
-        if (in.equals("")) {
+    @CheckReturnValue
+    @Nonnull
+    static public java.util.List<String> splitParens(@CheckForNull String in) {
+        java.util.ArrayList<String> result = new java.util.ArrayList<>();
+        if (in == null || in.equals("")) {
             return result;
         }
         int level = 0;
         String temp = "";
         for (int i = 0; i < in.length(); i++) {
             char c = in.charAt(i);
-            if (c == '(') {
-                level++;
-            } else if (c == '\\') {
-                temp += c;
-                i++;
-                c = in.charAt(i);
-            } else if (c == ')') {
-                level--;
+            switch (c) {
+                case '(':
+                    level++;
+                    break;
+                case '\\':
+                    temp += c;
+                    i++;
+                    c = in.charAt(i);
+                    break;
+                case ')':
+                    level--;
+                    break;
+                default:
+                    break;
             }
             temp += c;
             if (level == 0) {
@@ -447,33 +462,54 @@ public class StringUtil {
     }
 
     /**
-     * Return String after replacing various special characters with their
-     * "escaped" counterpart, to facilitate use with web servers.
+     * Replace various special characters with their "escaped" counterpart in
+     * UTF-8 character encoding, to facilitate use with web servers.
      *
      * @param s String to escape
      * @return String with escaped values
+     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
+     * @deprecated since 4.9.1; use
+     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
+     * directly
      */
-    static public String escapeString(String s) {
-        return s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26").replaceAll("'", "%27").replaceAll("\"", "%22").replaceAll("<", "%3C").replaceAll(">", "%3E");
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated
+    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**
-     * Return String after replacing various escaped character with their
+     * Replace various escaped character in UTF-8 character encoding with their
      * "regular" counterpart, to facilitate use with web servers.
      *
      * @param s String to unescape
      * @return String with escaped values replaced with regular values
+     * @throws java.io.UnsupportedEncodingException if unable to unescape from
+     *                                              UTF-8
+     * @deprecated since 4.9.1; use
+     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
+     * directly
      */
-    static public String unescapeString(String s) {
-        return s.replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&").replaceAll("%27", "'").replaceAll("%22", "\"").replaceAll("%3C", "<").replaceAll("%3E", ">");
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated
+    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**
      * Convert an array of objects into a single string. Each object's toString
      * value is displayed within square brackets and separated by commas.
+     *
+     * @param <E> the array class
+     * @param v   the array to process
+     * @return a string; empty if the array was empty
      */
-    static public <E> String arrayToString(E[] v) {
-        StringBuffer retval = new StringBuffer();
+    @CheckReturnValue
+    @Nonnull
+    static public <E> String arrayToString(@Nonnull E[] v) {
+        StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (E e : v) {
             if (!first) {
@@ -490,9 +526,14 @@ public class StringUtil {
     /**
      * Convert an array of bytes into a single string. Each element is displayed
      * within square brackets and separated by commas.
+     *
+     * @param v the array of bytes
+     * @return the formatted String, or an empty String
      */
-    static public String arrayToString(byte[] v) {
-        StringBuffer retval = new StringBuffer();
+    @CheckReturnValue
+    @Nonnull
+    static public String arrayToString(@Nonnull byte[] v) {
+        StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (byte e : v) {
             if (!first) {
@@ -507,11 +548,16 @@ public class StringUtil {
     }
 
     /**
-     * Convert an array of ints into a single string. Each element is displayed
-     * within square brackets and separated by commas.
+     * Convert an array of integers into a single string. Each element is
+     * displayed within square brackets and separated by commas.
+     *
+     * @param v the array of integers
+     * @return the formatted String or an empty String
      */
-    static public String arrayToString(int[] v) {
-        StringBuffer retval = new StringBuffer();
+    @CheckReturnValue
+    @Nonnull
+    static public String arrayToString(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (int e : v) {
             if (!first) {

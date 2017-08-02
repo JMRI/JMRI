@@ -1,23 +1,21 @@
 package jmri.jmrit.display.layoutEditor;
 
-/**
- * An icon to display a status of a Block Object.<P>
- */
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// This is the same name as display.BlockContentsIcon, it follows 
-// on from the MemoryIcon
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+/**
+ * An icon to display a status of a Block Object.<P>
+ *
+ * This is the same name as display.BlockContentsIcon, it follows 
+ * on from the MemoryIcon
+ */
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5596807754781580059L;
     String defaultText = " ";
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
@@ -27,6 +25,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     LayoutBlock lBlock = null;
 
+    @Override
     public void setBlock(jmri.NamedBeanHandle<Block> m) {
         super.setBlock(m);
         if (getBlock() != null) {
@@ -34,6 +33,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         }
     }
 
+    @Override
     protected void addRosterToIcon(RosterEntry roster) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
             super.addRosterToIcon(roster);
@@ -83,7 +83,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
             getBlock().setDirection(dirA);
         }
         if (getBlock().getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occured
+            //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);

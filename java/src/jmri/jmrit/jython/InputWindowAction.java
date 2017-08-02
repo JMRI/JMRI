@@ -1,4 +1,3 @@
-// InputWindowAction.java
 package jmri.jmrit.jython;
 
 import java.awt.event.ActionEvent;
@@ -11,15 +10,9 @@ import jmri.util.JmriJFrame;
  * This Action runs creates an InputWindow for sending input to the global
  * jython interpreter
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class InputWindowAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7519659048278662430L;
 
     /**
      * Constructor just initializes parent class.
@@ -55,5 +48,3 @@ public class InputWindowAction extends AbstractAction {
 
     JFrame f;
 }
-
-/* @(#)InputWindowAction.java */

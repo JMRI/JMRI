@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Persist RPS polling information
  * <P>
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class PollingFile extends XmlFile {
 
@@ -166,5 +165,5 @@ public class PollingFile extends XmlFile {
     }
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(PollingFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollingFile.class.getName());
 }

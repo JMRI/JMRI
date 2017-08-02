@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 import jmri.NamedBean;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,13 +25,16 @@ public class NamedBeanTest extends TestCase {
      */
     protected NamedBean createInstance() {
         return new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -76,9 +79,11 @@ public class NamedBeanTest extends TestCase {
     public void testDispose() {
         NamedBean n = createInstance();
         n.addPropertyChangeListener(new PropertyChangeListener(){
+            @Override
             public void propertyChange(PropertyChangeEvent p) {}
         });
         n.addPropertyChangeListener(new PropertyChangeListener(){
+            @Override
             public void propertyChange(PropertyChangeEvent p) {}
         });
         Assert.assertEquals("start length", 2, n.getNumPropertyChangeListeners());

@@ -3,13 +3,13 @@ package jmri.jmrix.roco.z21;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,30 +19,24 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004
  * @author	Paul Bender Copyright 2016
  */
-public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    @Override
     public String getSystemName(int i) {
         return "XT" + i;
     }
 
     XNetInterfaceScaffold lnis;
 
-    public void testArraySort() {
-        String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ", "8456", str[0]);
-    }
-
+    @Test
+    @Override
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress("XT22", "user");
-        Assert.assertNotNull("exists", a);
-
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testz21XNetMessages() {
         // send messages for 21, 22
         // notify that somebody else changed it...
@@ -72,6 +66,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
+    @Test
     public void testAsAbstractFactory() {
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         // create and register the manager object
@@ -101,35 +96,21 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     }
 
-    // from here down is testing infrastructure
-    public Z21XNetTurnoutManagerTest(String s) {
-        super(s);
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21XNetTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21XNetTurnoutManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         // create and register the manager object
         l = new Z21XNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerTest.class.getName());

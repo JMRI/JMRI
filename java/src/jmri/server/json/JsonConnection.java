@@ -38,6 +38,8 @@ public class JsonConnection extends JmriConnection {
      * This method throws an IOException so the server or servlet holding the
      * connection open can respond to the exception.
      *
+     * @param message the object or array to send as a message
+     * @throws java.io.IOException if unable to send the message
      */
     public void sendMessage(JsonNode message) throws IOException {
         super.sendMessage(this.getObjectMapper().writeValueAsString(message));

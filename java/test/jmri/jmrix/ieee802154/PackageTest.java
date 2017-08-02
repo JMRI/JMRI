@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.ieee802154 package
  *
  * @author	Paul Bender
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -29,9 +28,27 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(IEEE802154MessageTest.class));
         suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
         suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
-        suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.PackageTest.class));
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154PortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         return suite;
     }
+
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 
 }

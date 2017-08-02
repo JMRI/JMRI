@@ -1,17 +1,19 @@
 package jmri.jmrix.roco.z21;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21Message class
  *
  * @author	Bob Jacobsen
  */
-public class Z21MessageTest extends TestCase {
+public class Z21MessageTest {
 
+    @Test
     public void testCtor() {
         Z21Message m = new Z21Message(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
@@ -19,6 +21,7 @@ public class Z21MessageTest extends TestCase {
     }
 
     // check opcode inclusion in message
+    @Test
     public void testOpCode() {
         Z21Message m = new Z21Message(5);
         m.setOpCode(4);
@@ -28,6 +31,7 @@ public class Z21MessageTest extends TestCase {
     }
 
     // Test the string constructor.
+    @Test
     public void testStringCtor() {
         Z21Message m = new Z21Message("0D 00 04 00 12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 12, m.getNumDataElements());
@@ -45,30 +49,118 @@ public class Z21MessageTest extends TestCase {
         Assert.assertEquals("11th byte", 0xB1, m.getElement(11) & 0xFF);
     }
 
-    // from here down is testing infrastructure
-    public Z21MessageTest(String s) {
-        super(s);
+    //Test some canned messages.
+    @Test
+    public void SerialNumberRequest(){
+        Z21Message m = Z21Message.getSerialNumberRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x10, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.Log4JFixture.initLogging();
-        String[] testCaseName = {"-noloading", Z21MessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void toMonitorStringSerialNumberRequest(){
+        Z21Message m = Z21Message.getSerialNumberRequestMessage();
+        Assert.assertEquals("Monitor String","Z21 Serial Number Request",m.toMonitorString());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21MessageTest.class);
-        return suite;
+    @Test
+    public void GetHardwareInfoRequest(){
+        Z21Message m = Z21Message.getLanGetHardwareInfoRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x1A, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
     }
+
+    @Test
+    public void toMonitorStringGetHardwareInfoRequest(){
+        Z21Message m = Z21Message.getLanGetHardwareInfoRequestMessage();
+        Assert.assertEquals("Monitor String","Z21 Version Request",m.toMonitorString());
+    }
+
+    @Test
+    public void LanLogoffRequest(){
+        Z21Message m = Z21Message.getLanLogoffRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x30, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+        Assert.assertFalse("reply expected",m.replyExpected());
+    }
+
+    @Test
+    public void toMonitorStringLanLogoffRequest(){
+        Z21Message m = Z21Message.getLanLogoffRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 30 00",m.toMonitorString());
+    }
+
+    @Test
+    public void GetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanGetBroadcastFlagsRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x51, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringGetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanGetBroadcastFlagsRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 51 00",m.toMonitorString());
+    }
+
+    @Test
+    public void SetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
+        Assert.assertEquals("length", 8, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x08, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x50, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+        Assert.assertEquals("5th byte", 0x04, m.getElement(4) & 0xFF);
+        Assert.assertEquals("6st byte", 0x03, m.getElement(5) & 0xFF);
+        Assert.assertEquals("7nd byte", 0x02, m.getElement(6) & 0xFF);
+        Assert.assertEquals("8rd byte", 0x01, m.getElement(7) & 0xFF);
+        Assert.assertFalse("reply expected",m.replyExpected());
+    }
+
+    @Test
+    public void toMonitorStringSetBroadCastFlagsRequest(){
+        Z21Message m = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
+        Assert.assertEquals("Monitor String","08 00 50 00 04 03 02 01",m.toMonitorString());
+    }
+
+    @Test
+    public void GetRailComDataRequest(){
+        Z21Message m = Z21Message.getLanRailComGetDataRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x89, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringRailComDataRequest(){
+        Z21Message m = Z21Message.getLanRailComGetDataRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 89 00",m.toMonitorString());
+    }
+
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After 
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -1,4 +1,3 @@
-// AutomatTableAction.java
 package jmri.jmrit.automat.monitor;
 
 import java.awt.event.ActionEvent;
@@ -7,15 +6,9 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a AutomatTable GUI
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2004, 2008
  */
 public class AutomatTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 247180783423184258L;
 
     public AutomatTableAction(String actionName) {
         super(actionName);
@@ -31,6 +24,7 @@ public class AutomatTableAction extends AbstractAction {
 
     AutomatTableFrame f;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create the frame
         f = new AutomatTableFrame(new AutomatTableDataModel());
@@ -39,4 +33,3 @@ public class AutomatTableAction extends AbstractAction {
     }
 
 }
-/* @(#)AutomatTableAction.java */

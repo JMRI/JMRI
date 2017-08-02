@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.symbolicframe;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.List;
 import javax.swing.Box;
@@ -18,7 +19,6 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ValueEditor;
 import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Frame providing a table-organized command station programmer from decoder
  * definition files
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
@@ -54,13 +54,9 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
     JTable cvTable = new JTable(cvModel);
     JScrollPane cvScroll = new JScrollPane(cvTable);
 
-    IndexedCvTableModel icvModel = new IndexedCvTableModel(progStatus, null);
-    JTable icvTable = new JTable(icvModel);
-    JScrollPane icvScroll = new JScrollPane(icvTable);
-
     VariableTableModel variableModel = new VariableTableModel(progStatus,
             new String[]{"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment"},
-            cvModel, icvModel);
+            cvModel);
     JTable variableTable = new JTable(variableModel);
     JScrollPane variableScroll = new JScrollPane(variableTable);
 
@@ -132,21 +128,25 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
         // add actions to buttons
         selectFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectFileButtonActionPerformed(e);
             }
         });
         storeFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writeFile();
             }
         });
         newCvButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cvModel.addCV(newCvNum.getText(), false, false, false);
             }
         });
         newVarButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 newVarButtonPerformed();
             }
@@ -175,9 +175,9 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
         tPane3.add(selectFileButton);
         tPane3.add(Box.createHorizontalGlue());
-        tPane3.add(new JLabel("Decoder Manufacturer: "));
+        tPane3.add(new JLabel("Decoder Manufacturer:"));
         tPane3.add(decoderMfg);
-        tPane3.add(new JLabel(" Model: "));
+        tPane3.add(new JLabel("Model:"));
         tPane3.add(decoderModel);
         tPane3.add(Box.createHorizontalGlue());
         tPane3.add(storeFileButton);
@@ -259,6 +259,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
     }
 
     // Close the window when the close box is clicked
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // check for various types of dirty - first table data not written back
         if (cvModel.decoderDirty() || variableModel.decoderDirty()) {
@@ -436,7 +437,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         variableModel.setFileDirty(false);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
+    @SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");
@@ -452,7 +453,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
             // This is taken in large part from "Java and XML" page 368
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation + "locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.getDefaultDtdLocation() + "locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>

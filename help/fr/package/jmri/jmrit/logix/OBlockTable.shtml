@@ -1,247 +1,447 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: OCanton Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Occupancy Canton Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: OCanton Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Occupancy Canton Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Les Tableaux Occupation de Cantons</h1>
 
-<H1>Les Tableaux Occupation de Cantons</H1>
+      <h2>Pr&eacute;sentation</h2>Les Tableaux Occupation de
+      Cantons ont &eacute;t&eacute; &eacute;labor&eacute;s pour
+      d&eacute;finir les &eacute;l&eacute;ments n&eacute;cessaires
+      &agrave; la cr&eacute;ation "Mandat" qui permettent aux
+      trains de rouler automatiquement sur les routes
+      pr&eacute;d&eacute;termin&eacute;es. il &eacute;tait
+      &eacute;galement un objectif de conception pour
+      g&eacute;n&eacute;rer ces routes automatiquement en se
+      contentant de pr&eacute;ciser l'origine et la destination des
+      trains. Par ailleurs, il a &eacute;t&eacute; con&ccedil;u
+      pour &ecirc;tre utilis&eacute; par Logix afin que les
+      utilisateurs puissent d&eacute;finir et commander les trains
+      automatis&eacute;s pour circuler &agrave; partir de panneaux
+      de l'&Eacute;diteur de panneaux de leur propre conception.
 
-<H2>Pr&#233;sentation</h2>
-Les Tableaux Occupation de Cantons ont &#233;t&#233; &#233;labor&#233;s pour d&#233;finir les &#233;l&#233;ments n&#233;cessaires &#224; la cr&#233;ation
-"Mandat" qui permettent aux trains de rouler automatiquement sur les routes pr&#233;d&#233;termin&#233;es. il &#233;tait
-&#233;galement un objectif de conception pour g&#233;n&#233;rer ces routes
-automatiquement en se contentant de pr&#233;ciser l'origine et la destination des trains. Par ailleurs,
-il a &#233;t&#233; con&#231;u pour &#234;tre utilis&#233; par Logix afin que les utilisateurs puissent d&#233;finir et commander les trains automatis&#233;s pour circuler &#224; partir de panneaux de l'&#201;diteur de panneaux de leur propre conception.
-   
-<H3>Que sont les Portails et Pourquoi les Utiliser ?</H3>
-Des Cantons d'occupation sont des portions de voie ayant une ou plusieurs capteurs pour d&#233;tecter l'occupation
-des trains.
-Ces Cantons sont g&#233;n&#233;ralement s&#233;par&#233;s par des coupures taill&#233;es dans la voie qui isolent les capteurs de d&#233;tection
-. Cependant ce n'est pas toujours le cas, puisque les capteurs optiques peuvent &#233;galement &#234;tre
-utilis&#233; pour d&#233;tecter l'occupation d'une section de voie. Cependant quelle que soit la m&#233;thode utilis&#233;e
-pour d&#233;terminer un Canton et les moyens de d&#233;tection de l'occupation, il est un moment o&#249; on 
-s&#233;pare un Canton d'un autre Canton. Cette ligne de d&#233;marcation
-entre deux Cantons, si un &#233;cart physique ou une ligne imaginaire, marque une transition
-d'un Canton &#224; l'autre. Ces points de transition sont
-appel&#233;s <b>Portails</b>.
-</p>
-<p>Sans doute vous avez cr&#233;&#233; les Cantons car il &#233;tait important pour
-vous savez quand un Canton a &#233;t&#233; &#233;vacu&#233; et un autre a &#233;t&#233; p&#233;n&#233;tr&#233;. Les Cantons sont utilis&#233;s
-pour fournir des verrouillages et des signaux r&#233;gissant qui sont plac&#233;s logiquement sur les points de portail
-. Si vous avez des signaux sur
-votre r&#233;seau, consid&#233;rez o&#249; ils se trouvent. Tr&#232;s probablement, ils sont plac&#233;s pr&#232;s des points de division entre les Cantons. Ainsi, peu importe le nom, les portails sont un concept important.
-</p>
+      <h3>Que sont les Portails et Pourquoi les Utiliser ?</h3>Des
+      Cantons d'occupation sont des portions de voie ayant une ou
+      plusieurs capteurs pour d&eacute;tecter l'occupation des
+      trains. Ces Cantons sont g&eacute;n&eacute;ralement
+      s&eacute;par&eacute;s par des coupures taill&eacute;es dans
+      la voie qui isolent les capteurs de d&eacute;tection .
+      Cependant ce n'est pas toujours le cas, puisque les capteurs
+      optiques peuvent &eacute;galement &ecirc;tre utilis&eacute;
+      pour d&eacute;tecter l'occupation d'une section de voie.
+      Cependant quelle que soit la m&eacute;thode utilis&eacute;e
+      pour d&eacute;terminer un Canton et les moyens de
+      d&eacute;tection de l'occupation, il est un moment o&ugrave;
+      on s&eacute;pare un Canton d'un autre Canton. Cette ligne de
+      d&eacute;marcation entre deux Cantons, si un &eacute;cart
+      physique ou une ligne imaginaire, marque une transition d'un
+      Canton &agrave; l'autre. Ces points de transition sont
+      appel&eacute;s <b>Portails</b>.
 
-<H3>Chemins &#224; Travers des Portails</h3>
-<p>Il peut y avoir plusieurs fa&#231;ons de parcourir un Canton. Un chemin dans un Canton entrera par un portail
-et sortir par un autre portail. Ou un chemin peut se conclure &#224; l'int&#233;rieur du Canton, le chemin
-est un embranchement. Encore une fois, les portails sont un concept utile pour indiquer ces points d'entr&#233;e et de sortie.
-</p>
-<p>Notez qu'un chemin doit
-avoir au moins un portail pour un point d'entr&#233;e/sortie et ne peut pas avoir plus de deux portails.
-Un  <b>chemin</b> est d&#233;fini sans ambigu&#239;t&#233; en pr&#233;cisant les aiguillages et leurs param&#232;tres pour
-qu'un train circule en toute s&#233;curit&#233; &#224; travers le Canton.
-</p>
-<H2>D&#233;finitions :</h2>
-Les Tableaux d'Occupation d&#233;finissent les &#233;l&#233;ments suivants:
-<UL>
-<UL>
-<LI>Les <b>Cantons</b> sont mis en &#339;uvre dans JMRI OCantons, qui sont des extensions des
-        Cantons JMRI. Ils ont les caract&#233;ristiques suivantes:
+      <p>Sans doute vous avez cr&eacute;&eacute; les Cantons car il
+      &eacute;tait important pour vous savez quand un Canton a
+      &eacute;t&eacute; &eacute;vacu&eacute; et un autre a
+      &eacute;t&eacute; p&eacute;n&eacute;tr&eacute;. Les Cantons
+      sont utilis&eacute;s pour fournir des verrouillages et des
+      signaux r&eacute;gissant qui sont plac&eacute;s logiquement
+      sur les points de portail . Si vous avez des signaux sur
+      votre r&eacute;seau, consid&eacute;rez o&ugrave; ils se
+      trouvent. Tr&egrave;s probablement, ils sont plac&eacute;s
+      pr&egrave;s des points de division entre les Cantons. Ainsi,
+      peu importe le nom, les portails sont un concept
+      important.</p>
+
+      <h3>Chemins &agrave; Travers des Portails</h3>
+
+      <p>Il peut y avoir plusieurs fa&ccedil;ons de parcourir un
+      Canton. Un chemin dans un Canton entrera par un portail et
+      sortir par un autre portail. Ou un chemin peut se conclure
+      &agrave; l'int&eacute;rieur du Canton, le chemin est un
+      embranchement. Encore une fois, les portails sont un concept
+      utile pour indiquer ces points d'entr&eacute;e et de
+      sortie.</p>
+
+      <p>Notez qu'un chemin doit avoir au moins un portail pour un
+      point d'entr&eacute;e/sortie et ne peut pas avoir plus de
+      deux portails. Un <b>chemin</b> est d&eacute;fini sans
+      ambigu&iuml;t&eacute; en pr&eacute;cisant les aiguillages et
+      leurs param&egrave;tres pour qu'un train circule en toute
+      s&eacute;curit&eacute; &agrave; travers le Canton.</p>
+
+      <h2>D&eacute;finitions :</h2>Les Tableaux d'Occupation
+      d&eacute;finissent les &eacute;l&eacute;ments suivants:
+
+      <div style="margin-left: 2em">
         <ul>
-                <li>Un OCanton a de 1 &#224; N Portails.</li>
-                <li>Bien qu'un OCanton puisse, il devrait avoir un capteur. S'il
-                a plus d'un capteur, ces capteurs doivent &#234;tre combin&#233;s par un
-                "OU" et d&#233;clencher un capteur interne unique pour le Canton.</Li>
-                <li>Un OCanton a de 1 &#224; M chemins.</li>
-                <li>Un OCanton a 0 &#224; K aiguillages.</li>
-       </ul ></li >
-        <LI>Les <b>Portails</b>qui s&#233;parent les Cantons. Ils ont les caract&#233;ristiques suivantes:
+          <li>Les <b>Cantons</b> sont mis en &oelig;uvre dans JMRI
+          OCantons, qui sont des extensions des Cantons JMRI. Ils
+          ont les caract&eacute;ristiques suivantes:
+
+            <ul>
+              <li>Un OCanton a de 1 &agrave; N Portails.</li>
+
+              <li>Bien qu'un OCanton puisse, il devrait avoir un
+              capteur. S'il a plus d'un capteur, ces capteurs
+              doivent &ecirc;tre combin&eacute;s par un "OU" et
+              d&eacute;clencher un capteur interne unique pour le
+              Canton.</li>
+
+              <li>Un OCanton a de 1 &agrave; M chemins.</li>
+
+              <li>Un OCanton a 0 &agrave; K aiguillages.</li>
+            </ul>
+          </li>
+
+          <li>Les <b>Portails</b>qui s&eacute;parent les Cantons.
+          Ils ont les caract&eacute;ristiques suivantes:
+
+            <ul>
+              <li>Un portail a exactement deux Cantons. (ni plus,
+              ni moins)</li>
+
+              <li>Un portail peut avoir de 0 &agrave; 2 m&acirc;ts
+              de signalisation. Si un portail a un signal, il fait
+              face &agrave; l'un de ses Cantons. Un second signal,
+              si il existe, fait face &agrave; l'autre Canton.
+              Chaque signal commande le d&eacute;placement d'un
+              train &agrave; la sortie du Canton auquel il est
+              confront&eacute; et donc l'entr&eacute;e du train
+              dans autre Canton.</li>
+            </ul>
+          </li>
+
+          <li>Les <b>Chemins</b>traversent un Canton. Ils sont mis
+          en &oelig;uvre dans JMRI OChemins, qui sont des
+          extensions des Chemins JMRI. Ils ont les
+          caract&eacute;ristiques suivantes :
+
+            <ul>
+              <li>Un chemin a 0 au N aiguillages.</li>
+
+              <li>Un chemin a au moins un et au plus deux
+              portails.</li>
+            </ul>
+          </li>
+        </ul>Les tableaux qui d&eacute;finissent ces
+        &eacute;l&eacute;ments sont contenus dans un cadre unique
+        qui peut &ecirc;tre r&eacute;duit ou ferm&eacute;. Les
+        cadres de tableau individuels peuvent &ecirc;tre
+        minimis&eacute;s dans ce cadre parent.
+
+        <h2>Tableau Canton d'Occupation Portail, Cadre
+        Chemin</h2>Chacun des tableaux Canton d'Occupation Portal,
+        Cadre Chemin doit avoir le dernier rang avec des
+        entr&eacute;es vides. La saisie de donn&eacute;es dans ces
+        entr&eacute;es en appuyant sur la touche "Entr&eacute;e" va
+        cr&eacute;er un nouvel &eacute;l&eacute;ment dans le
+        tableau. " Drag and Drop " et " copier-coller" sont mis en
+        &oelig;uvre pour fournir des moyens faciles de
+        d&eacute;placer le texte d'une tableau &agrave; une autre
+        table.
+
+        <h3>Colonnes dans le Tableau Canton d'Occupation
+        :</h3>Chaque Canton d'occupation de votre r&eacute;seau
+        doit &ecirc;tre saisi comme une rang&eacute;e de ce
+        tableau.
+
         <ul>
-                <li>Un portail a exactement deux Cantons. (ni plus, ni moins)</li>
-                <li>Un portail peut avoir de 0 &#224; 2 m&#226;ts de signalisation.
-                Si un portail a un signal, il fait face &#224; l'un de ses Cantons. Un second signal,
-                si il existe, fait face &#224; l'autre Canton. Chaque signal commande le d&#233;placement d'un train &#224;
-                la sortie du Canton auquel il est confront&#233; et donc l'entr&#233;e du train dans autre Canton.</li>
-       </ul ></li >
-        <LI>Les <b>Chemins</b>traversent un Canton. Ils sont mis en &#339;uvre dans JMRI OChemins, qui sont
-        des extensions des Chemins JMRI. Ils ont les caract&#233;ristiques suivantes :
-        <ul>
-                <li>Un chemin a 0 au N aiguillages.</li>
-                <li>Un chemin a au moins un et au plus deux portails.</li>
-       </ul ></li >
-</ul>
-Les tableaux qui d&#233;finissent ces &#233;l&#233;ments sont contenus dans un cadre unique qui peut &#234;tre
-r&#233;duit ou ferm&#233;. Les cadres de tableau individuels peuvent &#234;tre minimis&#233;s dans ce cadre parent.
+          <li><b>Nom du syst&egrave;me</b>: Le nom du
+          syst&egrave;me du la OCanton. La lettre de syst&egrave;me
+          "O", et la lettre Type "B" est utilis&eacute; pour
+          "OCanton" bien que la mise en &oelig;uvre ne soit pas
+          sp&eacute;cifique au syst&egrave;me. Si ces lettres ne
+          sont pas entr&eacute;s, ils sont automatiquement
+          ajout&eacute;s au d&eacute;but.</li>
 
-<H2>Tableau Canton d'Occupation  Portail, Cadre Chemin</h2>
-Chacun des tableaux Canton d'Occupation  Portal, Cadre Chemin doit avoir le dernier rang avec des entr&#233;es vides. La
-saisie de donn&#233;es dans ces entr&#233;es en appuyant sur la touche "Entr&#233;e" va cr&#233;er un nouvel &#233;l&#233;ment dans le tableau.
-" Drag and Drop " et " copier-coller" sont mis en &#339;uvre pour fournir des moyens faciles de d&#233;placer le texte d'une tableau &#224;
-une autre table.
-</p>
-<H3>Colonnes dans le Tableau Canton d'Occupation  :</h3>
-Chaque Canton d'occupation de votre r&#233;seau doit &#234;tre saisi comme une rang&#233;e de ce tableau.
-<ul>
-        <li><b>Nom du syst&#232;me</b>: Le nom du syst&#232;me du la OCanton. La lettre de syst&#232;me "O", et la
-         lettre Type "B" est utilis&#233; pour "OCanton" bien que la mise en &#339;uvre ne soit pas sp&#233;cifique au syst&#232;me.
-        Si ces lettres ne sont pas entr&#233;s, ils sont automatiquement ajout&#233;s au d&#233;but.</Li>
-        <li><b>Nom d'utilisateur</b>: Le nom utilisateur du OCanton.</li>
-        <li><b>Commentaire</b>:. Vous pouvez entrer n'importe quel texte dans ce domaine que vous souhaitez</li>
-        <li><b>Capteur</b>: Le capteur qui d&#233;tecte l'occupation du Canton</li>
-        <li><b>Longueur</b>: La longueur du Canton. Ceci est inclus pour assurer la compatibilit&#233;
-        avec les Cantons JMRI.</li>
-        <li><b>Unit&#233;s</b>: L'unit&#233; utilis&#233;e pour d&#233;terminer la longueur. ( pouces ou centim&#232;tres)
-        <li><b>Courbure</b>: La courbure s&#233;lectionn&#233; pour la voie. Celle-ci est incluse pour
-        Compatibilit&#233; avec les Cantons JMRI.</li>
-        <li><b>Chemins</b>: Un bouton qui ouvre le tableau <b>Canton -Chemin</b>o&#249; les chemins de
-        ce Canton sont entr&#233;s. Ce tableau est d&#233;crit ci-dessous.
-        <li>< b>Supprimer </b>: Un bouton pour supprimer le Canton. Pour rendre la suppression d&#233;finitive,
-        enregistrer votre fichier de configuration sur le disque</li>
-</ul>
-</ul>
-Ce tableau est tri&#233;e par le nom du syst&#232;me de la OCanton, Cela signifie que lorsqu'une nouvelle ligne est ajout&#233;e
-l'entr&#233;e passera &#224; sa postion dans le tri. Apr&#232;s &#234;tre entr&#233; un nouveau OCanton vous le trouverez peut-&#234;tre
-dans la partie sup&#233;rieure de la fen&#234;tre si vous avez besoin de faire une &#233;dition ult&#233;rieure .
+          <li><b>Nom d'utilisateur</b>: Le nom utilisateur du
+          OCanton.</li>
 
-<H3>Colonnes dans le Tableau Portail:</h3>
-Le tableau Portail comporte des colonnes pour les cantons qu'elle s&#233;pare. Vous n'avez pas besoin de vous pr&#233;occuper
-du sens de marche &#224; travers le portail. <i> Peu importe de quel c&#244;t&#233; du portail les noms des cantons sont
-entr&#233;s</i>, car les algorithmes qui calculent les itin&#233;raires de train sauront d&#233;chiffrer les bonnes
-entr&#233;es et sorties .</p>
-<ul>
-        <li><b>Nom Canton </b>: Nom utilisateur ou syst&#232;me du OCanton sur un c&#244;t&#233; du portail</li>
-        <li><b>Nom Portal</b>: Le nom du portail. Les noms des portails doivent &#234;tre uniques.</Li>
-        <li><b>Nom Canton</b>: Nom utilisateur ou syst&#232;me du OCanton de l'autre c&#244;t&#233; du portail</li>
-        <li><b>Supprimer</b>: Un bouton pour supprimer le Portail. Pour rendre la suppression d&#233;finitive, 
-        enregistrer votre fichier de configuration sur le disque</li>
-</ul>
-Ce tableau est tri&#233; par le nom du portail. Cela signifie que lorsqu'une nouvelle ligne est ajout&#233;e
-l'entr&#233;e passera &#224; sa postion dans le tri. Apr&#232;s avoir entr&#233; un nouveau portail vous le trouverez peut-&#234;tre en haut de la fen&#234;tre pour une &#233;dition ult&#233;rieure .</p>
+          <li><b>Commentaire</b>:. Vous pouvez entrer n'importe
+          quel texte dans ce domaine que vous souhaitez</li>
 
-<H3>Colonnes dans le Tableau Signal:</h3>
-Pour chaque signal sur votre r&#233;seau, cr&#233;er une entr&#233;e dans le Tableau  Signal. Ce signal va contr&#244;ler l'
-action de n'importe quel train sous Mandat - changer sa vitesse en fonction de l'indication du signal lorsque l'
-train atteint le portail, o&#249; le signal est plac&#233;. Autrement dit, le signal "prot&#232;ge" les Cantons -au del&#224;
-du portail. Le signal peut &#234;tre soit un <b>M&#226;tSignal</b> ou <b>T&#234;teSignal</b>.
-<ul>
-        <li><b>Nom du signal</b>: Entrez le nom du signal, soit le nom syst&#232;me ou utilisateur.
-        ( Dans le cas o&#249; le m&#234;me nom est utilis&#233; &#224; la fois pour un M&#226;tSignal et T&#234;teSignal, le M&#226;tSignal
+          <li><b>Capteur</b>: Le capteur qui d&eacute;tecte
+          l'occupation du Canton</li>
+
+          <li><b>Longueur</b>: La longueur du Canton. Ceci est
+          inclus pour assurer la compatibilit&eacute; avec les
+          Cantons JMRI.</li>
+
+          <li><b>Unit&eacute;s</b>: L'unit&eacute; utilis&eacute;e
+          pour d&eacute;terminer la longueur. ( pouces ou
+          centim&egrave;tres)</li>
+
+          <li><b>Courbure</b>: La courbure
+          s&eacute;lectionn&eacute; pour la voie. Celle-ci est
+          incluse pour Compatibilit&eacute; avec les Cantons
+          JMRI.</li>
+
+          <li><b>Chemins</b>: Un bouton qui ouvre le tableau
+          <b>Canton -Chemin</b>o&ugrave; les chemins de ce Canton
+          sont entr&eacute;s. Ce tableau est d&eacute;crit
+          ci-dessous.</li>
+
+          <li>&lt; b&gt;Supprimer : Un bouton pour supprimer le
+          Canton. Pour rendre la suppression d&eacute;finitive,
+          enregistrer votre fichier de configuration sur le
+          disque</li>
+        </ul>
+      </div>Ce tableau est tri&eacute;e par le nom du
+      syst&egrave;me de la OCanton, Cela signifie que lorsqu'une
+      nouvelle ligne est ajout&eacute;e l'entr&eacute;e passera
+      &agrave; sa postion dans le tri. Apr&egrave;s &ecirc;tre
+      entr&eacute; un nouveau OCanton vous le trouverez
+      peut-&ecirc;tre dans la partie sup&eacute;rieure de la
+      fen&ecirc;tre si vous avez besoin de faire une &eacute;dition
+      ult&eacute;rieure .
+
+      <h3>Colonnes dans le Tableau Portail:</h3>Le tableau Portail
+      comporte des colonnes pour les cantons qu'elle s&eacute;pare.
+      Vous n'avez pas besoin de vous pr&eacute;occuper du sens de
+      marche &agrave; travers le portail. <i>Peu importe de quel
+      c&ocirc;t&eacute; du portail les noms des cantons sont
+      entr&eacute;s</i>, car les algorithmes qui calculent les
+      itin&eacute;raires de train sauront d&eacute;chiffrer les
+      bonnes entr&eacute;es et sorties .
+
+      <ul>
+        <li><b>Nom Canton</b> : Nom utilisateur ou syst&egrave;me
+        du OCanton sur un c&ocirc;t&eacute; du portail</li>
+
+        <li><b>Nom Portal</b>: Le nom du portail. Les noms des
+        portails doivent &ecirc;tre uniques.</li>
+
+        <li><b>Nom Canton</b>: Nom utilisateur ou syst&egrave;me du
+        OCanton de l'autre c&ocirc;t&eacute; du portail</li>
+
+        <li><b>Supprimer</b>: Un bouton pour supprimer le Portail.
+        Pour rendre la suppression d&eacute;finitive, enregistrer
+        votre fichier de configuration sur le disque</li>
+      </ul>Ce tableau est tri&eacute; par le nom du portail. Cela
+      signifie que lorsqu'une nouvelle ligne est ajout&eacute;e
+      l'entr&eacute;e passera &agrave; sa postion dans le tri.
+      Apr&egrave;s avoir entr&eacute; un nouveau portail vous le
+      trouverez peut-&ecirc;tre en haut de la fen&ecirc;tre pour
+      une &eacute;dition ult&eacute;rieure .
+
+      <h3>Colonnes dans le Tableau Signal:</h3>Pour chaque signal
+      sur votre r&eacute;seau, cr&eacute;er une entr&eacute;e dans
+      le Tableau Signal. Ce signal va contr&ocirc;ler l' action de
+      n'importe quel train sous Mandat - changer sa vitesse en
+      fonction de l'indication du signal lorsque l' train atteint
+      le portail, o&ugrave; le signal est plac&eacute;. Autrement
+      dit, le signal "prot&egrave;ge" les Cantons -au del&agrave;
+      du portail. Le signal peut &ecirc;tre soit un
+      <b>M&acirc;tSignal</b> ou <b>T&ecirc;teSignal</b>.
+
+      <ul>
+        <li><b>Nom du signal</b>: Entrez le nom du signal, soit le
+        nom syst&egrave;me ou utilisateur. ( Dans le cas o&ugrave;
+        le m&ecirc;me nom est utilis&eacute; &agrave; la fois pour
+        un M&acirc;tSignal et T&ecirc;teSignal, le M&acirc;tSignal
         sera choisi,)</li>
-        <li><b>De (Approche) Canton</b>: Entrez le nom, soit le nom syst&#232;me ou utilisateur,
-        du canton auquel le signal est confront&#233;, Le signal commande le mouvement
-        d'un train sortant du Canton d'approche et entrant dans le Canton prot&#233;g&#233;.</li>
-        <li><b>( &#224; Travers) Portail</b>:, Saisissez le nom du portail o&#249; le signal est plac&#233;</li>
-        <li><b>Pour (Prot&#233;g&#233; ) Canton</b>: Entrez le nom, soit le nom syst&#232;me ou utilisateur,
-        du canton dont l'entr&#233;e est prot&#233;g&#233;e par le signal .</li>
-        <li><b>Delay (ms)</b>: (Facultatif) Entrez le temps en millisecondes pour retarder un changement de vitesse
-        qui peut &#234;tre exig&#233; par l'aspect de signal. (Voir la note ci-dessous)</li>
-</ul>
-        
-<H3>Comment l'Aspects du Signal ou l'Occupation Changent la Vitesse :</h3>
-Le Mandat d&#233;tecte l'aspect du signal lorsqu'il p&#233;n&#232;tre dans le Canton d<i>approche</i> et, si n&#233;cessaire,
-se pr&#233;pare &#224; changer la vitesse avant qu'il n'atteigne le Canton <i>prot&#233;g&#233;</i>, Tout changement de vitesse est
-diminu&#233;e vers la vitesse requise par le signal, Le <b>d&#233;lai</b> ci-dessus est le temps que le
-Train va attendre avant de commencer le changement de vitesse.</p>
-<p>
-De m&#234;me, lorsque le signal indique une vitesse libre ou acc&#233;l&#233;r&#233;e &#224; partir de l'arr&#234;t ou d'une vitesse r&#233;duite, la vitesse sera acc&#233;l&#233;r&#233;e &#224; la vitesse autoris&#233;e ou enregistr&#233;e .
 
-<H3>Colonnes dans les Tableaux Canton-Chemin :</h3>
-Chaque canton dans le Tableau Canton-Chemin aura un ou plusieurs chemins en lui. En appuyant sur le bouton <b>chemins</b >
- dans une rang&#233;e dans le Tableau Canton d'Occupation  ouvrira ce tableau. <i> La direction de la trajectoire
-import Peu</i>, 'de' et '&#224;' n'ont pas &#224; correspondre &#224; n'importe quel c&#244;t&#233; particulier
-du canton, Ils sont juste des noms de portail pour le chemin qui traverse de
-"ce portail" &#224; "ce portail" .</p>
-<ul>
-        <li><b>Du Portail</b>: Le nom du portail d'un point d'entr&#233;e/de sortie du chemin</li>
-        <li><b>Nom du chemin</b>: Le nom du chemin. Les noms de chemin doivent &#234;tre uniques au sein
-        du Canton. Par exemple, "Westbound principal" pourrait &#234;tre utilis&#233; comme nom dans tous les cantons de la
-        « Westbound principal" sur votre r&#233;seau .</Li>
-        <li><b>vers Nom Portail</b>: Le nom du portail de l'autre point d'entr&#233;e/de sortie du chemin</li>
-        <li><b>Aiguillages</b>: un bouton qui ouvre le Tableau <b>Canton-Chemin-Aiguillage</b> o&#249; les aiguillages
-        qui d&#233;finissent le chemin sont entr&#233;s. Ce tableau est d&#233;crit ci-dessous.
-        <li><< b>Supprimer</b>: Un bouton pour supprimer le chemin. Pour rendre la suppression d&#233;finitive, 
-        enregistrer votre fichier de configuration sur le disque</li>
-</ul>
-<H3>Colonnes dans les Tableaux Canton-Chemin-Aiguillage :</h3>
-Si le chemin traverse un Aiguillage, il est n&#233;cessaire d'avoir l'Aiguillage dans la position correcte
-pour traverser lchemin. Ce tableau est utilis&#233; pour d&#233;finir ces param&#232;tres. (Si le chemin
-ne traverse pas d'aiguillages, cette table est vide.) Remarque il y aura beaucoup de ces tableaux, un
-pour chaque voie dans chaque canton du Tableau Canton d'Occupation.
-<ul>
-        <li><b>Nom Syst&#232;me/utilisateur</b>: Le nom syst&#232;me ou utilisateur de l'Aiguillage  dans le chemin</li>
-        <li><b>R&#233;glage Aiguillage</b>: la position de l'aiguillage pour faire le chemin</li>
-        <li><< b>Supprimer</b>: Un bouton pour supprimer les param&#232;tres del' Aiguillage . Pour rendre la suppression d&#233;finitive, 
-        enregistrer votre fichier de configuration sur le disque</li>
-</ul>
-<H3>Colonnes dans le Tableau R&#233;f&#233;rences Crois&#233;es Canton-Portail:</h3>
-Il s'agit d'une seule table de lecture pour aider &#224; identifier tous les portails d'un canton. Il r&#233;pertorie tous
-les portails qui ont &#233;t&#233; d&#233;finis pour chaque canton,  regroup&#233;s sous chaque rubrique Canton. Il est ouvert
-par l'&#233;l&#233;ment de menu <b>R&#233;f&#233;rences Crois&#233;es Canton-Portail</b>. Voir ci-dessous .
+        <li><b>De (Approche) Canton</b>: Entrez le nom, soit le nom
+        syst&egrave;me ou utilisateur, du canton auquel le signal
+        est confront&eacute;, Le signal commande le mouvement d'un
+        train sortant du Canton d'approche et entrant dans le
+        Canton prot&eacute;g&eacute;.</li>
 
-<H2>Menus de Canton d'Occupation  Portail, Cadre chemin</h2>
-<H3>Le menu Fichier</h3>
-Ce menu contient les &#233;l&#233;ments de menu standard pour la sauvegarde des fichiers de configuration et les panneaux .
+        <li><b>( &agrave; Travers) Portail</b>:, Saisissez le nom
+        du portail o&ugrave; le signal est plac&eacute;</li>
 
-<H3> Le menu &#201;dition</h3>
-Ce menu contient les &#233;l&#233;ments de menu standard pour Couper, Copier et Coller.
+        <li><b>Pour (Prot&eacute;g&eacute; ) Canton</b>: Entrez le
+        nom, soit le nom syst&egrave;me ou utilisateur, du canton
+        dont l'entr&eacute;e est prot&eacute;g&eacute;e par le
+        signal .</li>
 
-<H3> Les menus Ouvrir les Tableaux</h3>
-Ce menu contient les &#233;l&#233;ments pour ouvrir les tableaux Canton d'Occupation  Portail, Cadre chemin .
-<ul>
-        <li><b>Afficher Tableau Canton d'Occupation</b>: Ouvre la fen&#234;tre Canton d'Occupation, si elle est r&#233;duite. ce tableau
-        ne peut pas &#234;tre ferm&#233;.</li>
-        <li><b>Voir Portal tableau</b>: Ouvre la fen&#234;tre Portail, si elle est r&#233;duite. ce tableau
-        ne peut pas &#234;tre ferm&#233;.</li>
-        <li>< b>Montrer R&#233;f&#233;rences Crois&#233;es Canton-Portail</b>: Ouvre une fen&#234;tre de tableau de r&#233;f&#233;rences crois&#233;es
-       Portail vers leur Canton
-        Il est organis&#233; par Canton, montrant tous les portails attach&#233;s au Canton. Il s'agit d'un
-        contrepoint au tableau Portail qui est organis&#233; par portail .</li>
-        <li><b>Ouvrir des Tableaux Canton-Chemin</b>: Il s'agit d'un menu en cascade qui ouvre une fen&#234;tre de chemin pour
-        un chemin &#224; partir d'un canton. Tr&#232;s probablement
-        il y aura donc beaucoup de ces fen&#234;tres si le menu est plus grand que l'&#233;cran.
-        Il est probablement plus facile d'ouvrir ces fen&#234;tres depuis le bouton <b>chemins</b> dans une rang&#233;e du tableau
-        Canton d'occupation.</Li>
-        <li><b>Ouvrir des tableaux Canton-Chemin-Aiguillage </b>: Il s'agit d' un menu en cascade qui ouvre une fen&#234;tre d'Aiguillage pour un chemin &#224; partir d'un canton. Tr&#232;s probablement
-        il y aura donc beaucoup de ces fen&#234;tres si le menu est plus grand que l'&#233;cran.
-        Il est probablement plus facile d'ouvrir ces fen&#234;tres &#224; partir du bouton <b >Aiguillage</b > dans une ligne de la fen&#234;tre du Tableau Canton-Chemin .</Li>
-</ul>
+        <li><b>Delay (ms)</b>: (Facultatif) Entrez le temps en
+        millisecondes pour retarder un changement de vitesse qui
+        peut &ecirc;tre exig&eacute; par l'aspect de signal. (Voir
+        la note ci-dessous)</li>
+      </ul>
 
-<H3> Le menu de Fen&#234;tres</h3>
-Ce menu contient les &#233;l&#233;ments de menu standard pour l'ouverture des cadres de fen&#234;tres JMRI .
+      <h3>Comment l'Aspects du Signal ou l'Occupation Changent la
+      Vitesse :</h3>Le Mandat d&eacute;tecte l'aspect du signal
+      lorsqu'il p&eacute;n&egrave;tre dans le Canton
+      d<i>approche</i> et, si n&eacute;cessaire, se pr&eacute;pare
+      &agrave; changer la vitesse avant qu'il n'atteigne le Canton
+      <i>prot&eacute;g&eacute;</i>, Tout changement de vitesse est
+      diminu&eacute;e vers la vitesse requise par le signal, Le
+      <b>d&eacute;lai</b> ci-dessus est le temps que le Train va
+      attendre avant de commencer le changement de vitesse.
 
-<H3> Le menu Aide</h3>
-Ce menu contient les &#233;l&#233;ments de menu standard de l'aide JMRI .
+      <p>De m&ecirc;me, lorsque le signal indique une vitesse libre
+      ou acc&eacute;l&eacute;r&eacute;e &agrave; partir de
+      l'arr&ecirc;t ou d'une vitesse r&eacute;duite, la vitesse
+      sera acc&eacute;l&eacute;r&eacute;e &agrave; la vitesse
+      autoris&eacute;e ou enregistr&eacute;e .</p>
 
-<H2> R&#233;f&#233;rences</h2>
-Pour en savoir plus sur comment OCantons, Portails et OChemins peuvent &#234;tre utilis&#233;s pour g&#233;n&#233;rer des itin&#233;raires de train et de faire des
-scripts de trains automatis&#233;s,  voir <a href="../logix/Warrant.shtml"> Mandats.</a>
-<p>
-Voir <a href="../logix/OBlockEdit.shtml"> Cr&#233;ation et modification OCantons, Portails et OChemins .</A>
-Pour plus de d&#233;tails sur l'utilisation de ces tableaux.
-<br>
+      <h3>Colonnes dans les Tableaux Canton-Chemin :</h3>Chaque
+      canton dans le Tableau Canton-Chemin aura un ou plusieurs
+      chemins en lui. En appuyant sur le bouton <b>chemins</b> dans
+      une rang&eacute;e dans le Tableau Canton d'Occupation ouvrira
+      ce tableau. <i>La direction de la trajectoire import Peu</i>,
+      'de' et '&agrave;' n'ont pas &agrave; correspondre &agrave;
+      n'importe quel c&ocirc;t&eacute; particulier du canton, Ils
+      sont juste des noms de portail pour le chemin qui traverse de
+      "ce portail" &agrave; "ce portail" .
 
-<! - # include virtual = " /Footer" ->
+      <ul>
+        <li><b>Du Portail</b>: Le nom du portail d'un point
+        d'entr&eacute;e/de sortie du chemin</li>
+
+        <li><b>Nom du chemin</b>: Le nom du chemin. Les noms de
+        chemin doivent &ecirc;tre uniques au sein du Canton. Par
+        exemple, "Westbound principal" pourrait &ecirc;tre
+        utilis&eacute; comme nom dans tous les cantons de la
+        &Acirc;&laquo; Westbound principal" sur votre r&eacute;seau
+        .</li>
+
+        <li><b>vers Nom Portail</b>: Le nom du portail de l'autre
+        point d'entr&eacute;e/de sortie du chemin</li>
+
+        <li><b>Aiguillages</b>: un bouton qui ouvre le Tableau
+        <b>Canton-Chemin-Aiguillage</b> o&ugrave; les aiguillages
+        qui d&eacute;finissent le chemin sont entr&eacute;s. Ce
+        tableau est d&eacute;crit ci-dessous.</li>
+
+        <li>&lt;&lt; b&gt;Supprimer: Un bouton pour supprimer le
+        chemin. Pour rendre la suppression d&eacute;finitive,
+        enregistrer votre fichier de configuration sur le
+        disque</li>
+      </ul>
+
+      <h3>Colonnes dans les Tableaux Canton-Chemin-Aiguillage
+      :</h3>Si le chemin traverse un Aiguillage, il est
+      n&eacute;cessaire d'avoir l'Aiguillage dans la position
+      correcte pour traverser lchemin. Ce tableau est
+      utilis&eacute; pour d&eacute;finir ces param&egrave;tres. (Si
+      le chemin ne traverse pas d'aiguillages, cette table est
+      vide.) Remarque il y aura beaucoup de ces tableaux, un pour
+      chaque voie dans chaque canton du Tableau Canton
+      d'Occupation.
+
+      <ul>
+        <li><b>Nom Syst&egrave;me/utilisateur</b>: Le nom
+        syst&egrave;me ou utilisateur de l'Aiguillage dans le
+        chemin</li>
+
+        <li><b>R&eacute;glage Aiguillage</b>: la position de
+        l'aiguillage pour faire le chemin</li>
+
+        <li>&lt;&lt; b&gt;Supprimer: Un bouton pour supprimer les
+        param&egrave;tres del' Aiguillage . Pour rendre la
+        suppression d&eacute;finitive, enregistrer votre fichier de
+        configuration sur le disque</li>
+      </ul>
+
+      <h3>Colonnes dans le Tableau R&eacute;f&eacute;rences
+      Crois&eacute;es Canton-Portail:</h3>Il s'agit d'une seule
+      table de lecture pour aider &agrave; identifier tous les
+      portails d'un canton. Il r&eacute;pertorie tous les portails
+      qui ont &eacute;t&eacute; d&eacute;finis pour chaque canton,
+      regroup&eacute;s sous chaque rubrique Canton. Il est ouvert
+      par l'&eacute;l&eacute;ment de menu
+      <b>R&eacute;f&eacute;rences Crois&eacute;es
+      Canton-Portail</b>. Voir ci-dessous .
+
+      <h2>Menus de Canton d'Occupation Portail, Cadre chemin</h2>
+
+      <h3>Le menu Fichier</h3>Ce menu contient les
+      &eacute;l&eacute;ments de menu standard pour la sauvegarde
+      des fichiers de configuration et les panneaux .
+
+      <h3>Le menu &Eacute;dition</h3>Ce menu contient les
+      &eacute;l&eacute;ments de menu standard pour Couper, Copier
+      et Coller.
+
+      <h3>Les menus Ouvrir les Tableaux</h3>Ce menu contient les
+      &eacute;l&eacute;ments pour ouvrir les tableaux Canton
+      d'Occupation Portail, Cadre chemin .
+
+      <ul>
+        <li><b>Afficher Tableau Canton d'Occupation</b>: Ouvre la
+        fen&ecirc;tre Canton d'Occupation, si elle est
+        r&eacute;duite. ce tableau ne peut pas &ecirc;tre
+        ferm&eacute;.</li>
+
+        <li><b>Voir Portal tableau</b>: Ouvre la fen&ecirc;tre
+        Portail, si elle est r&eacute;duite. ce tableau ne peut pas
+        &ecirc;tre ferm&eacute;.</li>
+
+        <li>&lt; b&gt;Montrer R&eacute;f&eacute;rences
+        Crois&eacute;es Canton-Portail: Ouvre une fen&ecirc;tre de
+        tableau de r&eacute;f&eacute;rences crois&eacute;es Portail
+        vers leur Canton Il est organis&eacute; par Canton,
+        montrant tous les portails attach&eacute;s au Canton. Il
+        s'agit d'un contrepoint au tableau Portail qui est
+        organis&eacute; par portail .</li>
+
+        <li><b>Ouvrir des Tableaux Canton-Chemin</b>: Il s'agit
+        d'un menu en cascade qui ouvre une fen&ecirc;tre de chemin
+        pour un chemin &agrave; partir d'un canton. Tr&egrave;s
+        probablement il y aura donc beaucoup de ces fen&ecirc;tres
+        si le menu est plus grand que l'&eacute;cran. Il est
+        probablement plus facile d'ouvrir ces fen&ecirc;tres depuis
+        le bouton <b>chemins</b> dans une rang&eacute;e du tableau
+        Canton d'occupation.</li>
+
+        <li><b>Ouvrir des tableaux Canton-Chemin-Aiguillage</b> :
+        Il s'agit d' un menu en cascade qui ouvre une fen&ecirc;tre
+        d'Aiguillage pour un chemin &agrave; partir d'un canton.
+        Tr&egrave;s probablement il y aura donc beaucoup de ces
+        fen&ecirc;tres si le menu est plus grand que
+        l'&eacute;cran. Il est probablement plus facile d'ouvrir
+        ces fen&ecirc;tres &agrave; partir du bouton
+        <b>Aiguillage</b> dans une ligne de la fen&ecirc;tre du
+        Tableau Canton-Chemin .</li>
+      </ul>
+
+      <h3>Le menu de Fen&ecirc;tres</h3>Ce menu contient les
+      &eacute;l&eacute;ments de menu standard pour l'ouverture des
+      cadres de fen&ecirc;tres JMRI .
+
+      <h3>Le menu Aide</h3>Ce menu contient les
+      &eacute;l&eacute;ments de menu standard de l'aide JMRI .
+
+      <h2>R&eacute;f&eacute;rences</h2>Pour en savoir plus sur
+      comment OCantons, Portails et OChemins peuvent &ecirc;tre
+      utilis&eacute;s pour g&eacute;n&eacute;rer des
+      itin&eacute;raires de train et de faire des scripts de trains
+      automatis&eacute;s, voir <a href=
+      "../logix/Warrant.shtml">Mandats.</a>
+
+      <p>Voir <a href="../logix/OBlockEdit.shtml">Cr&eacute;ation
+      et modification OCantons, Portails et OChemins .</a> Pour
+      plus de d&eacute;tails sur l'utilisation de ces
+      tableaux.<br></p>
+    </div>
+  </div>
 </body>
 </html>
-

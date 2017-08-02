@@ -1,5 +1,6 @@
 package jmri.jmrit.audio;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Audio;
@@ -121,7 +122,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Method used to initialise the manager
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
@@ -162,13 +163,13 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.audioManagerInstance().cleanUp();
+                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
                         return true;
                     }
                 };
             }
-            if (InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(audioShutDownTask);
+            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
             }
 
             initialised = true;
@@ -179,7 +180,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(NamedBean s) {
         super.deregister(s);

@@ -1,4 +1,3 @@
-// EcosComponentFactory.java
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
@@ -19,10 +18,12 @@ public class EcosComponentFactory extends jmri.jmrix.swing.ComponentFactory {
      * Provide a menu with all items attached to this system connection
      */
     //JMenu currentMenu;
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
         }
         return new EcosMenu(memo);
     }
+
 }

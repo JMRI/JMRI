@@ -1,4 +1,3 @@
-// OperationsSetupFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
@@ -10,7 +9,6 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of operation parameters
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
- * @version $Revision$
  */
 public class OperationsSetupFrame extends OperationsFrame {
 
@@ -23,7 +21,7 @@ public class OperationsSetupFrame extends OperationsFrame {
         super.initComponents();
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());

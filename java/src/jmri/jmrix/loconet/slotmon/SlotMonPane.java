@@ -10,25 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.jmrix.loconet.LocoNetBundle;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.util.JTableUtil;
 
 /**
- * Frame provinging a command station slot manager.
+ * Frame providing a command station slot manager.
  * <P>
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001
+  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5149412620444668985L;
     /**
      * Controls whether not-in-use slots are shown
      */
@@ -38,10 +32,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      */
     javax.swing.JCheckBox showSystemCheckBox = new javax.swing.JCheckBox();
 
-    JButton estopAllButton = new JButton(LocoNetBundle.bundle().getString("ButtonSlotMonEStopAll"));
+    JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
     //Added by Jeffrey Machacek 2013
-    JButton clearAllButton = new JButton(LocoNetBundle.bundle().getString("ButtonSlotMonClearAll"));
+    JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
     SlotMonDataModel slotModel;
     JTable slotTable;
     JScrollPane slotScroll;
@@ -50,34 +44,38 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         super();
     }
 
+    @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         slotModel = new SlotMonDataModel(128, 16, memo);
-        slotTable = JTableUtil.sortableDataModel(slotModel);
+        slotTable = new JTable(slotModel);
+        slotTable.setRowSorter(new TableRowSorter<>(slotModel));
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
-        showAllCheckBox.setText(LocoNetBundle.bundle().getString("TextSlotMonShowUnused"));
+        showAllCheckBox.setText(Bundle.getMessage("TextSlotMonShowUnused"));
         showAllCheckBox.setVisible(true);
         showAllCheckBox.setSelected(false);
-        showAllCheckBox.setToolTipText(LocoNetBundle.bundle().getString("TooltipSlotMonShowUnused"));
+        showAllCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowUnused"));
 
-        showSystemCheckBox.setText(LocoNetBundle.bundle().getString("TextSlotMonShowSystem"));
+        showSystemCheckBox.setText(Bundle.getMessage("TextSlotMonShowSystem"));
         showSystemCheckBox.setVisible(true);
         showSystemCheckBox.setSelected(false);
-        showSystemCheckBox.setToolTipText(LocoNetBundle.bundle().getString("TooltipSlotMonShowSystem"));
+        showSystemCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowSystem"));
 
         slotModel.configureTable(slotTable);
 
         // add listener object so checkboxes function
         showAllCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.showAllSlots(showAllCheckBox.isSelected());
                 slotModel.fireTableDataChanged();
             }
         });
         showSystemCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.showSystemSlots(showSystemCheckBox.isSelected());
                 slotModel.fireTableDataChanged();
@@ -86,30 +84,37 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // add listener object so stop all button functions
         estopAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.estopAll();
             }
         });
         estopAllButton.addMouseListener(new MouseListener() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 slotModel.estopAll();
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
             }
 
+            @Override
             public void mouseEntered(MouseEvent e) {
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
             }
 
+            @Override
             public void mouseClicked(MouseEvent e) {
             }
         });
 
         //Jeffrey 6/29/2013
         clearAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.clearAllSlots();
             }
@@ -141,14 +146,17 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame";
+        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSlotMonitor"));
+        return getTitle(Bundle.getMessage("MenuItemSlotMonitor"));
     }
 
+    @Override
     public void dispose() {
         slotModel.dispose();
         slotModel = null;
@@ -162,13 +170,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8377346674021280925L;
-
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemSlotMonitor"),
+            super(Bundle.getMessage("MenuItemSlotMonitor"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     SlotMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

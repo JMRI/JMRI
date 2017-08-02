@@ -1,4 +1,3 @@
-// TrainManifestOptionFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of the train manifest options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013
- * @version $Revision$
  */
 public class TrainManifestOptionFrame extends OperationsFrame {
 
@@ -38,7 +36,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
     JLabel logoURL = new JLabel("");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton addLogoButton = new JButton(Bundle.getMessage("AddLogo"));
     JButton removeLogoButton = new JButton(Bundle.getMessage("RemoveLogo"));
 

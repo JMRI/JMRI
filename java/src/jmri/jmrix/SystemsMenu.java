@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * currently-active system-specific tools, see {@link ActiveSystemsMenu}.
  *
  * @see ActiveSystemsMenu
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SystemsMenu extends JMenu {
 
@@ -36,15 +36,14 @@ public class SystemsMenu extends JMenu {
         // get ComponentFactory object(s) and create menus
         java.util.List<ComponentFactory> list
                 = jmri.InstanceManager.getList(ComponentFactory.class);
-        if (list != null) {
-            for (ComponentFactory memo : list) {
-                JMenu menu = memo.getMenu();
-                if (menu != null) {
-                    add(menu);
-                }
+
+        for (ComponentFactory memo : list) {
+            JMenu menu = memo.getMenu();
+            if (menu != null) {
+                add(menu);
             }
-            add(new javax.swing.JSeparator());
         }
+        add(new javax.swing.JSeparator());
 
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
@@ -79,7 +78,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.srcp.SystemMenu");
         addMenu("jmri.jmrix.tmcc.TMCCMenu");
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
-        // XPressNet Allows Multiple Connections now
+        // XpressNet Allows Multiple Connections now
         add(new jmri.jmrix.lenz.swing.XNetMenu(null));
         add(new jmri.jmrix.xpa.swing.XpaMenu(null));
         addMenu("jmri.jmrix.zimo.Mx1Menu");

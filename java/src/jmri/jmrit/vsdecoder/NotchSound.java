@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18481 $
+ * @author   Mark Underwood Copyright (C) 2011
  */
 class NotchSound extends SoundBite {
 

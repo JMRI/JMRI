@@ -3,33 +3,40 @@ package jmri.jmrix.cmri.serial.serialmon;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     protected String title() {
-        return "CMRI Serial Command Monitor";
+        return Bundle.getMessage("SerialCommandMonTitle");
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -74,6 +81,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

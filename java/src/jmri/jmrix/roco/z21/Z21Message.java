@@ -35,7 +35,7 @@ public class Z21Message extends AbstractMRMessage {
         setLength(i);
     }
 
-    // from an XPressNet message (used for protocol tunneling)
+    // from an XpressNet message (used for protocol tunneling)
     public Z21Message(jmri.jmrix.lenz.XNetMessage m) {
         this(m.getNumDataElements() + 4);
         this.setOpCode(0x0040);
@@ -77,13 +77,15 @@ public class Z21Message extends AbstractMRMessage {
         setBinary(true);
     }
 
+    @Override
     public void setOpCode(int i) {
         _dataChars[2] = (i & 0x00ff);
         _dataChars[3] = ((i & 0xff00) >> 8);
     }
 
+    @Override
     public int getOpCode() {
-        return (_dataChars[2] + (_dataChars[3] << 8));
+        return ( (0xff & _dataChars[2]) + ((0xff & _dataChars[3]) << 8));
     }
 
     public void setLength(int i) {
@@ -125,7 +127,7 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /*
-     * @return z21 message for serial number request.
+     * @return z21 message for a hardware information request.
      */
     public static Z21Message getLanGetHardwareInfoRequestMessage() {
         Z21Message retval = new Z21Message(4);
@@ -172,13 +174,13 @@ public class Z21Message extends AbstractMRMessage {
      * Brief descriptions of the flags are as follows (losely 
      * translated from German with the aid of google translate).
      * <UL>
-     * <LI>0x00000001 send XPressNet related information (track 
+     * <LI>0x00000001 send XpressNet related information (track
      * power on/off, programming mode, short circuit, broadcast stop, 
      * locomotive information, turnout information).</LI>
      * <LI>0x00000002 send data changes that occur on the RMBUS.</LI>
      * <LI>0x00000004 (deprecated by Roco) send Railcom Data</LI>
      * <LI>0x00000100 send changes in system state (such as track voltage)
-     * <LI>0x00010000 send changes to locomotives on XPressNet (must also have
+     * <LI>0x00010000 send changes to locomotives on XpressNet (must also have
      * 0x00000001 set.</LI>
      * <LI>0x01000000 forward LocoNet data to the client.  Does not send 
      * Locomotive or turnout data.</LI>
@@ -209,7 +211,35 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+
+    /**
+     * @return z21 message for LAN_RAILCOM_GETDATA request.
+     */
+    public static Z21Message getLanRailComGetDataRequestMessage() {
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x89);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
+
+
     public String toMonitorString() {
+        switch(getOpCode()){
+<<<<<<< HEAD
+           case 0x0040:
+               return "XPressNet Tunnel Message: " + new Z21XNetMessage(this).toMonitorString();       
+=======
+           case 0x0010:
+               return Bundle.getMessage("Z21MessageStringSerialNoRequest");
+           case 0x001A:
+               return Bundle.getMessage("Z21MessageStringVersionRequest");
+           case 0x0040:
+               return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
+>>>>>>> JMRI/master
+           default:
+        }
         return toString();
     }
 

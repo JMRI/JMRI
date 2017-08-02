@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a new throttle.
  *
- * @author	Lionel Jeanson Copyright 2009
+ * @author Lionel Jeanson Copyright 2009
  */
 public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 
     public LoadDefaultXmlThrottlesLayoutAction(String s, WindowInterface wi) {
         super(s, wi);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -27,7 +27,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
     public LoadDefaultXmlThrottlesLayoutAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -40,7 +40,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
     public LoadDefaultXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -54,6 +54,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         // load throttle preference 
         LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();

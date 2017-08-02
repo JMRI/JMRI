@@ -1,24 +1,18 @@
 package jmri.jmrit.withrottle;
 
-/**
- * WiThrottle GUI
- *
- * @author Brett Hoffman Copyright (C) 2009
- * @version $Revision$
- *
- */
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+/**
+ * WiThrottle GUI
+ *
+ * @author Brett Hoffman Copyright (C) 2009
+ *
+ */
 public class WiThrottleCreationAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6107790829195111275L;
 
     public WiThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -37,7 +31,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      */
     public WiThrottleCreationAction(String name) {
         super(name);
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -54,6 +48,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         GraphicsEnvironment.getLocalGraphicsEnvironment();
         // create GUI, unless running in headless mode
@@ -71,6 +66,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

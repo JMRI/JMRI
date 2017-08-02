@@ -1,14 +1,3 @@
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under
-// the terms of version 2 of the GNU General Public License as published
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-//
-// JMRI is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-// for more details.
 package jmri.implementation;
 
 import java.util.HashMap;
@@ -31,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$dsm:basic:one-searchlight:(123)
+ * IF$dsm:basic:one-searchlight(123)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$dsm - defines signal masts of this type
@@ -43,11 +32,8 @@ import org.slf4j.LoggerFactory;
  * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
  *
  * @author Kevin Dickerson Copyright (c) 2012
- * @version $Revision: 19173 $
  */
 public class DccSignalMast extends AbstractSignalMast {
-
-    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
     public DccSignalMast(String sys, String user) {
         super(sys, user);
@@ -75,21 +61,21 @@ public class DccSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of signal mast is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
-                for (int x = 0; x < connList.size(); x++) {
-                    jmri.CommandStation station = connList.get(x);
-                    if (station.getSystemPrefix().equals(commandStationPrefix)) {
-                        c = station;
-                        break;
-                    }
+
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                if (station.getSystemPrefix().equals(commandStationPrefix)) {
+                    c = station;
+                    break;
                 }
             }
+
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getNullableDefault(CommandStation.class);
                 log.error("No match against the command station for " + parts[0] + ", so will use the default");
             }
         }
@@ -160,6 +146,7 @@ public class DccSignalMast extends AbstractSignalMast {
      31. "Dark" */
     protected int packetRepeatCount = 3;
 
+    @Override
     public void setAspect(String aspect) {
 
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
@@ -170,6 +157,7 @@ public class DccSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
 
+    @Override
     public void setLit(boolean newLit) {
         if (!allowUnLit() || newLit == getLit()) {
             return;
@@ -205,8 +193,8 @@ public class DccSignalMast extends AbstractSignalMast {
     protected int dccSignalDecoderAddress;
 
     public static String isDCCAddressUsed(int addr) {
-        for (String val : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
             if (mast instanceof jmri.implementation.DccSignalMast) {
                 if (((DccSignalMast) mast).getDccSignalMastAddress() == addr) {
                     return ((DccSignalMast) mast).getDisplayName();
@@ -215,4 +203,9 @@ public class DccSignalMast extends AbstractSignalMast {
         }
         return null;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
+
 }
+
+

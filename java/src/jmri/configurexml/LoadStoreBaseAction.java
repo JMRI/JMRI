@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.util.FileChooserFilter;
@@ -17,7 +18,7 @@ import jmri.util.FileUtil;
  * JFileChooser. These bring the user back to the same place in the file system
  * each time an action is invoked.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
@@ -25,8 +26,8 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance() == null) {
-            InstanceManager.setConfigureManager(new JmriConfigurationManager());
+        if (!InstanceManager.getOptionalDefault(ConfigureManager.class).isPresent()) {
+            InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
         }
     }
 

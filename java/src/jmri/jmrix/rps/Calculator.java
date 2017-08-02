@@ -1,4 +1,3 @@
-// Calculator.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -11,8 +10,7 @@ import javax.vecmath.Point3d;
  * interface does not describe that.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public interface Calculator {
 
     public Measurement convert(Reading r);
@@ -23,4 +21,4 @@ public interface Calculator {
 
 }
 
-/* @(#)Calculator.java */
+

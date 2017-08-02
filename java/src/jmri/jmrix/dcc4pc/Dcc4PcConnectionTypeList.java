@@ -1,14 +1,16 @@
-// Dcc4PcConnectionTypeList.java
 package jmri.jmrix.dcc4pc;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid Dcc4Pc Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class Dcc4PcConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String DCC4PC = "DCC4PC";

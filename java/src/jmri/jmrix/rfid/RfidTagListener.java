@@ -1,7 +1,5 @@
 package jmri.jmrix.rfid;
 
-import jmri.IdTag;
-
 /**
  * Connect to an IdTag
  * <hr>
@@ -19,8 +17,9 @@ import jmri.IdTag;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public interface RfidTagListener {
+public interface RfidTagListener extends jmri.IdTagListener {
 
-    public void notify(IdTag r);
+    // Interface moved to IdTagListener.  kept until removed or extended.
+    // public void notify(IdTag r);
 
 }

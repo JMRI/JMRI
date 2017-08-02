@@ -10,7 +10,6 @@ import jmri.DccThrottle;
 import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Throttle;
-import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.jmrix.SystemConnectionMemo;
@@ -389,6 +388,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
        }
 
               // update the state of this throttle if any of the properties change
+      @Override
        public void propertyChange(java.beans.PropertyChangeEvent e) {
           if (log.isDebugEnabled()) {
               log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());

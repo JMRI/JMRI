@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -56,6 +56,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
         return (compare_type);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         int next;
         boolean compare = false;

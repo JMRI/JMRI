@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.maple.configurexml.SerialSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

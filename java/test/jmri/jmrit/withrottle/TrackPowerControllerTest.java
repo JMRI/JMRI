@@ -1,10 +1,9 @@
 package jmri.jmrit.withrottle;
 
-import jmri.util.JUnitUtil;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of TrackPowerController

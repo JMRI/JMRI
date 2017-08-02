@@ -22,18 +22,25 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 public class JTableUtil {
 
+    /**
+     *
+     * @param dataModel model for table
+     * @return a table
+     * @deprecated since 4.5.4; create a standard {@link javax.swing.JTable} and
+     * add a {@link javax.swing.RowSorter} to that table instead. If you need
+     * custom {@link javax.swing.table.TableCellEditor} selection behavior,
+     * provide custom TableCellEditors for the columns that need the custom
+     * behavior.
+     */
     @Deprecated
     static public JTable sortableDataModel(TableModel dataModel) {
 
         TableSorter sorter;
 
-        try {   // following might fail due to a missing method on Mac Classic
-            sorter = new TableSorter(dataModel);
-        } catch (Throwable e) {
-            return new JTable(dataModel);
-        }
+        sorter = new TableSorter(dataModel);
 
         JTable dataTable = new JTable(sorter) {
+            @Override
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
@@ -44,12 +51,7 @@ public class JTableUtil {
             }
         };
 
-        try {   // following might fail due to a missing method on Mac Classic
-            sorter.setTableHeader(dataTable.getTableHeader());
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            // nothing to do here
-            log.error("Unexpected error: " + e);
-        }
+        sorter.setTableHeader(dataTable.getTableHeader());
         return dataTable;
     }
 

@@ -13,7 +13,7 @@ public class ThrottlesPreferencesAction extends AbstractAction {
     public ThrottlesPreferencesAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -22,6 +22,7 @@ public class ThrottlesPreferencesAction extends AbstractAction {
         this("Throttles preferences");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesPreferences();
     }

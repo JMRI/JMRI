@@ -50,6 +50,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,9 +60,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -1375670900469426701L;
     private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
     /**
@@ -660,6 +661,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // Nothing to do since ProfileManager preferences are saved immediately
     }
 
+    @Override
+    public int getSortOrder() {
+        return 1000;
+    }
+
     public void dispose() {
         ProfileManager.getDefault().removePropertyChangeListener((PropertyChangeListener) profilesTbl.getModel());
     }
@@ -755,7 +761,6 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
      }
      }
      */
-
     private class SearchPathSelectionListener implements ListSelectionListener {
 
         @Override

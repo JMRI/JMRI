@@ -10,7 +10,7 @@ import jmri.util.swing.WindowInterface;
  *
  * Ignores WindowInterface.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class QuitAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -22,20 +22,23 @@ public class QuitAction extends jmri.util.swing.JmriAbstractAction {
         super(s, i, wi);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            jmri.InstanceManager.shutDownManagerInstance().shutdown();
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
         } catch (Exception ex) {
             System.err.println("Continuing after error in handleQuit: " + ex); // can't count on logging here
         }
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public void dispose() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

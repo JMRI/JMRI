@@ -44,6 +44,7 @@ public class OBlockManagerXml // extends XmlFile
      * @param o Object to store, of type BlockManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class", "jmri.jmrit.logix.configurexml.OBlockManagerXml");
@@ -209,15 +210,14 @@ public class OBlockManagerXml // extends XmlFile
     OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
-            block = _manager.provideOBlock(sysName);
-            if (block == null) {
+            try {
+                block = _manager.provideOBlock(sysName);
+                log.debug("found OBlock: ({}) {}", sysName, block);
+            } catch (IllegalArgumentException ex) {
                 block = _manager.createNewOBlock(sysName, null);
-                if (log.isDebugEnabled()) {
-                    log.debug("create OBlock: (" + sysName + ")");
-                }
-            } else {
-                _blockMap.put(sysName, block);
+                log.debug("create OBlock: ({})", sysName);
             }
+            _blockMap.put(sysName, block);
         }
         return block;
     }
@@ -268,6 +268,7 @@ public class OBlockManagerXml // extends XmlFile
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) throws Exception {
         log.error("load called. Invalid method.");
     }
@@ -320,16 +321,14 @@ public class OBlockManagerXml // extends XmlFile
         if (errSensor != null) {
             // sensor
             String name = errSensor.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             block.setErrorSensor(name);
         }
         Element reporter = elem.getChild("reporter");
         if (reporter != null) {
             // sensor
             String name = reporter.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             try {
-                Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
+                Reporter rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
                 if (rep != null) {
                     block.setReporter(rep);
                 }
@@ -565,6 +564,7 @@ public class OBlockManagerXml // extends XmlFile
         return path;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }

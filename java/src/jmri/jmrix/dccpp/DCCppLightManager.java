@@ -1,4 +1,3 @@
-// DCCppLightManager.java
 package jmri.jmrix.dccpp;
 
 import jmri.Light;
@@ -13,9 +12,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  *
- * @author	Paul Bender Copyright (C) 2008
- * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
+ * @author Paul Bender Copyright (C) 2008
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppLightManager extends AbstractLightManager {
 
@@ -28,8 +26,9 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for XPressNet
+     * Returns the system letter for DCC++
      */
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -39,6 +38,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
@@ -61,7 +61,7 @@ public class DCCppLightManager extends AbstractLightManager {
         if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
             // here if an illegal DCC++ light system name 
             log.error("illegal character in header field of DCC++ light system name: {} prefix {} type {}", 
-		      systemName, getSystemPrefix(), typeLetter());
+        systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
         // name must be in the DCCppLnnnnn format
@@ -87,6 +87,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0);
     }
@@ -97,6 +98,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }
@@ -107,6 +109,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * range box in the add Light window
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -122,5 +125,3 @@ public class DCCppLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class.getName());
 
 }
-
-/* @(#)DCCppLightManager.java */

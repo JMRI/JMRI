@@ -10,7 +10,7 @@ import javax.swing.JSeparator;
  * As a best practice, we are migrating the action names (constructor arguments)
  * out of this class and into the contructors themselves.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  * @author Matthew Harris copyright (c) 2009
  */
 public class ToolsMenu extends JMenu {
@@ -34,7 +34,7 @@ public class ToolsMenu extends JMenu {
         add(programmerMenu);
 
         // disable programmer menu if there's no programmer manager
-        if (jmri.InstanceManager.programmerManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null) {
             programmerMenu.setEnabled(false);
         }
 
@@ -63,6 +63,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
@@ -81,7 +82,7 @@ public class ToolsMenu extends JMenu {
         add(throttleMenu);
 
         // disable the throttle menu if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             throttleMenu.setEnabled(false);
         }
 
@@ -90,7 +91,7 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
         // disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.getDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
             consistAction.setEnabled(false);
         }
 

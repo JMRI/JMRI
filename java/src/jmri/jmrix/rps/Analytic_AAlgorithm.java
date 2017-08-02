@@ -1,6 +1,7 @@
-// Analytic_AAlgorithm.java
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound, int offset) {
@@ -27,9 +27,8 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound) {
-        this.sensors = sensors;
+        this.sensors = Arrays.copyOf(sensors, sensors.length);
         this.Vs = vsound;
 
         // load the algorithm variables
@@ -58,6 +57,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     double Yt = 0.0;
     double Zt = 0.0;
 
+    @Override
     public Measurement convert(Reading r) {
 
         if (log.isDebugEnabled()) {
@@ -126,6 +126,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     /**
      * Seed the conversion using an estimated position
      */
+    @Override
     public Measurement convert(Reading r, Point3d guess) {
         this.Xt = guess.x;
         this.Yt = guess.y;
@@ -137,6 +138,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     /**
      * Seed the conversion using a last measurement
      */
+    @Override
     public Measurement convert(Reading r, Measurement last) {
         if (last != null) {
             this.Xt = last.getX();
@@ -332,13 +334,13 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             this.z = z;
             this.vs = vs;
         }
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int code;
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         double x, y, z, vs;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
-/* @(#)Analytic_AAlgorithm.java */
+

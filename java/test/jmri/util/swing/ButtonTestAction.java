@@ -6,7 +6,6 @@ import javax.swing.JLabel;
  * Test for popping test window content.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -14,12 +13,15 @@ public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
         super(s, wi);
     }
 
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         jmri.util.swing.JmriPanel newPane = new jmri.util.swing.JmriPanel() {
+            @Override
             public String getHelpTarget() {
                 return "html.doc.Technical.JUnit";
             }
 
+            @Override
             public String getTitle() {
                 return "Button Test";
             }

@@ -2,8 +2,6 @@
 <!-- This is the common sidebar definition for (current) DP Manual pages -->
 <hr class="hide">
 
-<div id="mBody">
-
 <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 

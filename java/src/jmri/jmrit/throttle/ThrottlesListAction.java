@@ -13,7 +13,7 @@ public class ThrottlesListAction extends AbstractAction {
     public ThrottlesListAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -22,6 +22,7 @@ public class ThrottlesListAction extends AbstractAction {
         this("Throttles list");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
     }

@@ -1,4 +1,3 @@
-// SetupExcelProgramSwitchListFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.io.File;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * switch lists.
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 22249 $
+ * 
  */
 public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
@@ -26,8 +25,8 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
         generateCheckBox.setText(rb.getString("GenerateCsvSwitchList"));
         generateCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
-        fileNameTextField.setText(TrainCustomSwitchList.getFileName());
-        pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomSwitchList.getDirectoryName()).getPath()));
+        fileNameTextField.setText(TrainCustomSwitchList.instance().getFileName());
+        pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomSwitchList.instance().getDirectoryName()).getPath()));
         setTitle(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList"));
 
     }
@@ -36,24 +35,24 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
-            File f = selectFile(TrainCustomSwitchList.getDirectoryName());
+            File f = selectFile(TrainCustomSwitchList.instance().getDirectoryName());
             if (f != null) {
                 log.debug("User selected file: {}", f.getName());
                 fileNameTextField.setText(f.getName());
             }
         }
 
-        TrainCustomSwitchList.setFileName(fileNameTextField.getText());
+        TrainCustomSwitchList.instance().setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (TrainCustomSwitchList.manifestCreatorFileExists()) {
+            if (TrainCustomSwitchList.instance().excelFileExists()) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
-                        new Object[]{TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName()}),
+                        new Object[]{TrainCustomSwitchList.instance().getDirectoryName(), TrainCustomSwitchList.instance().getFileName()}),
                         Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName()}), Bundle
+                            TrainCustomSwitchList.instance().getDirectoryName(), TrainCustomSwitchList.instance().getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             }
         }

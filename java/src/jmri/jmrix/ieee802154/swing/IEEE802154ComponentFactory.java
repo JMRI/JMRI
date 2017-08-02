@@ -1,4 +1,3 @@
-// IEEE802154ComponentFactory.java
 package jmri.jmrix.ieee802154.swing;
 
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
@@ -6,8 +5,7 @@ import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 /**
  * Provide access to Swing components for the IEEE 802.15.4 subsystem.
  *
- * @author	Paul Bender Copyright (C) 2014
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2014
  */
 public class IEEE802154ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
@@ -20,6 +18,7 @@ public class IEEE802154ComponentFactory extends jmri.jmrix.swing.ComponentFactor
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
@@ -29,4 +28,4 @@ public class IEEE802154ComponentFactory extends jmri.jmrix.swing.ComponentFactor
 }
 
 
-/* @(#)IEEE802154ComponentFactory.java */
+

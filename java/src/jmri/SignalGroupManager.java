@@ -2,42 +2,35 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
- * Interface for obtaining information about signal systems.
+ * Interface for obtaining information about signal groups.
  * <p>
- * Each NamedBean here represents a single signal system. The actual objects are
- * SignalAspectTable objects; that's a current anachronism, soon to be fixed.
+ * Each NamedBean here represents a single signal group. The actual objects are
+ * SignalGroupTable objects; that's a current anachronism.
  * <P>
  * See the common implementation for information on how loaded, etc.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public interface SignalGroupManager extends Manager {
 
-    public SignalGroup getSignalGroup(String name);
+    @CheckForNull public SignalGroup getSignalGroup(@Nonnull String name);
 
-    public SignalGroup getBySystemName(String name);
+    @CheckForNull public SignalGroup getBySystemName(@Nonnull String name);
 
-    public SignalGroup getByUserName(String name);
+    @CheckForNull public SignalGroup getByUserName(@Nonnull String name);
 
-    //public SignalGroup provideSignalGroup(String systemName, String userName);
-    public SignalGroup newSignalGroup(String sys);
+    @Nonnull public SignalGroup newSignalGroup(@Nonnull String sys);
 
-    public SignalGroup provideSignalGroup(String systemName, String userName);
+    @Nonnull public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
 
-    public List<String> getSystemNameList();
+    @Nonnull@Override public List<String> getSystemNameList();
 
-    void deleteSignalGroup(SignalGroup s);
+    void deleteSignalGroup(@Nonnull SignalGroup s);
 }

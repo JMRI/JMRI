@@ -1,4 +1,3 @@
-// PM4Panel.java
 package jmri.jmrix.loconet.pm4;
 
 import java.awt.FlowLayout;
@@ -25,15 +24,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
+  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1373713395993058042L;
 
     public PM4Panel() {
         this(1);
@@ -42,7 +35,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public PM4Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address
+        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address // NOI18N
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
@@ -98,12 +91,14 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.pm4.PM4Frame";
+        return "package.jmri.jmrix.loconet.pm4.PM4Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemPM4Programmer"));
     }
 
     void setSpeedFromDisplay(int offset, JComboBox<String> box) {
@@ -133,6 +128,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         setSpeedFromDisplay(3, slow1);
@@ -165,6 +161,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         box.setSelectedIndex(index);
     }
 
+    @Override
     protected void updateDisplay() {
         setDisplaySpeed(3, slow1);
         rev1.setSelected(opsw[6]);
@@ -191,6 +188,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         current.setSelectedIndex(index);
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:
@@ -224,7 +222,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
             case 30:
                 return 0;   // done!
             default:
-                log.error("unexpected state " + state);
+                log.error("unexpected state " + state); // NOI18N
                 return 0;
         }
     }

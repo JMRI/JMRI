@@ -1,0 +1,28 @@
+package jmri.jmrix.cmri;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   CMRISystemConnectionMemoTest.class,
+   CMRIMenuTest.class,
+   jmri.jmrix.cmri.serial.PackageTest.class,
+   jmri.jmrix.cmri.swing.PackageTest.class,
+<<<<<<< HEAD
+   CMRIConnectionTypeListTest.class
+=======
+   CMRIConnectionTypeListTest.class,
+   BundleTest.class
+>>>>>>> JMRI/master
+})
+
+/**
+ * Tests for the jmri.jmrix.cmri package
+ *
+ * @author  Paul Bender	Copyright (C) 2016
+ */
+public class PackageTest{
+}

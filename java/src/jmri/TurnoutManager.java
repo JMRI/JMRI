@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -16,7 +17,7 @@ import javax.annotation.Nullable;
  * Each turnout has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (for example LocoNet or NCE) and address within that system.
  * <P>
  * Much of the book-keeping is implemented in the AbstractTurnoutManager class,
  * which can form the basis for a system-specific implementation.
@@ -36,7 +37,7 @@ import javax.annotation.Nullable;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Turnout
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -54,10 +55,11 @@ public interface TurnoutManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Turnout doesn't already exist and the
      *                                  manager cannot create the Turnout due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull
+    public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -66,23 +68,28 @@ public interface TurnoutManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @Nullable Turnout getTurnout(@Nonnull String name);
+    @CheckForNull
+    public Turnout getTurnout(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
      * already exists.
      *
+     * @param systemName the system name
      * @return requested Turnout object or null if none exists
      */
-    public @Nullable Turnout getBySystemName(@Nonnull String systemName);
+    @CheckForNull
+    public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
      * already exists.
      *
+     * @param userName the user name
      * @return requested Turnout object or null if none exists
      */
-    public @Nullable Turnout getByUserName(@Nonnull String userName);
+    @CheckForNull
+    public Turnout getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -106,40 +113,58 @@ public interface TurnoutManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Turnouts when you should be looking them up.
      *
-     * @return requested Turnout object (never null)
-     * @throws IllegalArgumentException if cannot create the Turnout due to e.g.
-     *                                  an illegal name or name that can't be
-     *                                  parsed.
+     * @param systemName the system name
+     * @param userName   the user name (optional)
+     * @return requested Turnout object, newly created if needed
+     * @throws IllegalArgumentException if cannot create the Turnout; likely due
+     *                                  to an illegal name or name that cannot
+     *                                  be parsed
      */
-    public @Nonnull Turnout newTurnout(@Nonnull String systemName, @Nullable String userName)  throws IllegalArgumentException;
+    @Nonnull
+    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
 
     /**
-     * Get a list of all Turnouts' system names.
+     * Get a list of all Turnout system names.
+     *
+     * @return the list of names or an empty list if no turnouts have been
+     *         defined
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull
+    @Override
+    public List<String> getSystemNameList();
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
-     * Allows text other than "CLOSED" to be use with certain hardware system to
-     * represent the Turnout.CLOSED state.
+     * Allows text other than "CLOSED" to be used with certain hardware system
+     * to represent the Turnout.CLOSED state.
+     *
+     * @return the textual representation of {@link jmri.Turnout#CLOSED}
      */
-    public @Nonnull String getClosedText();
+    @Nonnull
+    public String getClosedText();
 
     /**
      * Get text to be used for the Turnout.THROWN state in user communication.
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
+     *
+     * @return the textual representation of {@link jmri.Turnout#THROWN}
      */
-    public @Nonnull String getThrownText();
+    @Nonnull
+    public String getThrownText();
 
     /**
-     * Get a list of the valid TurnoutOPeration subtypes for use with turnouts
-     * of this system
+     * Get a list of the valid TurnoutOperation subtypes for use with turnouts
+     * of this system.
+     *
+     * @return a list of subtypes or an empty list if turnout operations are not
+     *         supported
      */
-    public @Nonnull String[] getValidOperationTypes();
+    @Nonnull
+    public String[] getValidOperationTypes();
 
     /**
-     * Get from the user, the number of addressed bits used to control a
+     * Get, from the user, the number of addressed bits used to control a
      * turnout. Normally this is 1, and the default routine returns one
      * automatically. Turnout Managers for systems that can handle multiple
      * control bits should override this method with one which asks the user to
@@ -148,17 +173,25 @@ public interface TurnoutManager extends Manager {
      * available (not assigned to another object). If the bits are not
      * available, this method should return 0 for number of control bits, after
      * informing the user of the problem.
+     *
+     * @param systemName the turnout system name
+     * @return the bit length for turnout control
      */
     public int askNumControlBits(@Nonnull String systemName);
 
     /**
-     * Determines if the manager supports multiple control bits, as the
-     * askNumControlBits will always return a value even if it is not supported
+     * Determine if the manager supports multiple control bits, as
+     * {@link #askNumControlBits(java.lang.String)} will always return a value
+     * even if it is not supported.
+     *
+     * @param systemName the turnout system name
+     * @return true if manager supports multiple control bits for the turnout;
+     *         false otherwise
      */
     public boolean isNumControlBitsSupported(@Nonnull String systemName);
 
     /**
-     * Get from the user, the type of output to be used bits to control a
+     * Get, from the user, the type of output to be used bits to control a
      * turnout. Normally this is 0 for 'steady state' control, and the default
      * routine returns 0 automatically. Turnout Managers for systems that can
      * handle pulsed control as well as steady state control should override
@@ -166,21 +199,31 @@ public interface TurnoutManager extends Manager {
      * to be used. The routine should return 0 for 'steady state' control, or n
      * for 'pulsed' control, where n specifies the duration of the pulse
      * (normally in seconds).
+     *
+     * @param systemName the turnout system name
+     * @return 0 for steady state or the number of seconds for a pulse control
      */
     public int askControlType(@Nonnull String systemName);
 
     /**
-     * Determines if the manager supports the handling of pulsed and steady
-     * state control as the askControlType will always return a value even if it
-     * is not supported
+     * Determine if the manager supports the handling of pulsed and steady state
+     * control as the {@link #askControlType(java.lang.String)} will always
+     * return a value even if it is not supported.
+     *
+     * @param systemName the turnout system name
+     * @return true if manager supports the control type returned by
+     *         {@link #askControlType(java.lang.String)}; false otherwise
+     *
      */
     public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
      * A method that determines if it is possible to add a range of turnouts in
-     * numerical order eg 10 to 30 will return true. where as if the address
-     * format is 1b23 this will return false.
+     * numerical order.
      *
+     * @param systemName the starting turnout system name; ignored in all known
+     *                   implementations
+     * @return true if a range of turnouts can be added; false otherwise
      */
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
@@ -189,14 +232,28 @@ public interface TurnoutManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix     - The System Prefix used to make up the systemName
-     * @param curAddress - The hardware address of the turnout we which to
-     *                   check.
+     * @param prefix     System prefix used in system name
+     * @param curAddress desired hardware address
+     * @return the next available address or null if none available
+     * @throws jmri.JmriException if unable to provide a turnout at the desired
+     *                            address due to invalid format for the current
+     *                            address or other reasons (some implementations
+     *                            do not throw an error, but notify the user via
+     *                            other means and return null)
      */
-    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @CheckForNull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     /**
-     * Returns a system name for a given hardware address and system prefix.
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name
+     * @return the complete turnout system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
      */
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
@@ -208,4 +265,3 @@ public interface TurnoutManager extends Manager {
 
     public String getDefaultClosedSpeed();
 }
-

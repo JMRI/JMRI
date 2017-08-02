@@ -16,7 +16,7 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2012
  * @author Andrew Crosland 2008
- * @version $Revision: 19698 $
+ * 
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -24,10 +24,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new SerialDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

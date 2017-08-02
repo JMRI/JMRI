@@ -1,4 +1,3 @@
-// ClientRxHandler.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.io.BufferedReader;
@@ -18,15 +17,14 @@ import org.slf4j.LoggerFactory;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
  */
 public final class ClientRxHandler extends Thread implements LocoNetListener {
 
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<LocoNetMessage> msgQueue;
-    Thread txThread;
+    final LinkedList<LocoNetMessage> msgQueue = new LinkedList<>();
+    volatile Thread txThread;
     String inString;
     String remoteAddress;
     LocoNetMessage lastSentMessage;
@@ -42,19 +40,19 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
     }
 
     @SuppressWarnings("null")
+    @Override
     public void run() {
 
         try {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            msgQueue = new LinkedList<LocoNetMessage>();
             LnTrafficController.instance().addLocoNetListener(~0, this);
 
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
             txThread.setPriority(Thread.MAX_PRIORITY);
-            txThread.setName("ClientTxHandler:" + remoteAddress);
+            txThread.setName("ClientTxHandler: " + remoteAddress);
             txThread.start();
 
             while (!isInterrupted()) {
@@ -73,22 +71,22 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
 
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
-                            case 0: /* 2 byte message */
+                            case 0: // 2 byte message
 
                                 msg = new LocoNetMessage(2);
                                 break;
 
-                            case 1: /* 4 byte message */
+                            case 1: // 4 byte message
 
                                 msg = new LocoNetMessage(4);
                                 break;
 
-                            case 2: /* 6 byte message */
+                            case 2: // 6 byte message
 
                                 msg = new LocoNetMessage(6);
                                 break;
 
-                            case 3: /* N byte message */
+                            case 3: // N byte message
 
                                 if (byte2 < 2) {
                                     log.error("ClientRxHandler: LocoNet message length invalid: "
@@ -96,6 +94,9 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                                             + Integer.toHexString(opCode));
                                 }
                                 msg = new LocoNetMessage(byte2);
+                                break;
+                            default:
+                                log.warn("Unhandled msg length: {}", (opCode & 0x60) >> 5);
                                 break;
                         }
                         if (msg == null) {
@@ -124,20 +125,19 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             log.debug("ClientRxHandler: IO Exception: ", ex);
         }
         LnTrafficController.instance().removeLocoNetListener(~0, this);
-        txThread.interrupt();
+        if (txThread != null) txThread.interrupt();
 
         txThread = null;
         inStream = null;
         outStream = null;
         msgQueue.clear();
-        msgQueue = null;
 
         try {
             clientSocket.close();
         } catch (IOException ex1) {
         }
 
-        Server.getInstance().removeClient(this);
+        LnTcpServer.getDefault().removeClient(this);
         log.info("ClientRxHandler: Exiting");
     }
 
@@ -159,6 +159,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             parentThread = creator;
         }
 
+        @Override
         public void run() {
 
             try {
@@ -211,6 +212,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         synchronized (msgQueue) {
             msgQueue.add(msg);
@@ -218,5 +220,16 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
     }
 
+    /**
+     * Kill this thread, usually for testing purposes
+     */
+    void dispose() {
+        try {
+            this.interrupt();
+            this.join();
+        } catch (InterruptedException ex) {
+            log.warn("dispose() interrupted");
+        }
+    }
     private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
 }

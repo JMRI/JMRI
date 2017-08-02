@@ -1,58 +1,67 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen, John Plocher 2008 -->
-<title>JMRI: Layout Automation</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Layout Automation</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<!-- Page Body -->
-<h2>JMRI Layout Automation</h2>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-JMRI applications provide a large number of ways of automating your layout, 
-ranging from simple fill-in forms to full-fledged scripting and 
-programming capabilities.  These include:
+      <h2>JMRI Layout Automation</h2>JMRI applications provide a
+      large number of ways of automating your layout, ranging from
+      simple fill-in forms to full-fledged scripting and
+      programming capabilities. These include:
 
-<dl>
+      <dl>
+        <dt><a href="../signaling/index.shtml">Signaling</a></dt>
 
-<dt><a href="../signaling/index.shtml">Signaling</a>
-<dd>JMRI provides signaling logic from simple to prototypical, which can be used to
-drive your signals in many applications.
+        <dd>JMRI provides signaling logic from simple to
+        prototypical, which can be used to drive your signals in
+        many applications.</dd>
 
-<dt><a href="../Routes.shtml">Routes</a>
-<dd>A simple form of automation is to define Routes, which allow you
-to simplify the control of your turnouts.
+        <dt><a href="../Routes.shtml">Routes</a></dt>
 
-<dt><a href="../Logix.shtml">Logix</a>
-<dd>Using JMRI Logix, you can specify actions to happen when
-various conditions occur on the layout.
+        <dd>A simple form of automation is to define Routes, which
+        allow you to simplify the control of your turnouts.</dd>
 
-<dt><a href="../scripting/index.shtml">Scripting</a>
-<dd>JMRI provides a very powerful scripting tool.  Based on a real
-programming language, it gives you access to all the JMRI capabilities.
+        <dt><a href="../Logix.shtml">Logix</a></dt>
 
-<dt><a href="viaJava.shtml">Writing your own code in Java</a>
-<dd>The JMRI libraries greatly simplify writing a program to 
-make your layout do exactly what you want.  
+        <dd>Using JMRI Logix, you can specify actions to happen
+        when various conditions occur on the layout.</dd>
 
-</dl>
+        <dt><a href="../scripting/index.shtml">Scripting</a></dt>
 
-<!--#include virtual="/Footer" -->
+        <dd>JMRI provides a very powerful scripting tool. Based on
+        a real programming language, it gives you access to all the
+        JMRI capabilities.</dd>
 
+        <dt><a href="viaJava.shtml">Writing your own code in
+        Java</a></dt>
+
+        <dd>The JMRI libraries greatly simplify writing a program
+        to make your layout do exactly what you want.</dd>
+      </dl><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

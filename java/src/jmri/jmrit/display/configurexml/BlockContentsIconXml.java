@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.BlockContentsIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 22821 $
  */
 public class BlockContentsIconXml extends PositionableLabelXml {
 
@@ -28,6 +27,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      * @param o Object to store, of type BlockContentsIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         BlockContentsIcon p = (BlockContentsIcon) o;
@@ -60,7 +60,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
 
             while (iterator.hasNext()) {
                 java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
-                String key = mi.getKey().toString();
+                String key = mi.getKey();
                 String value = mi.getValue().getName();
 
                 Element e2 = new Element("blockstate");
@@ -79,6 +79,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
 
         Editor ed = null;
@@ -106,7 +107,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
 
         loadTextInfo(l, element);
 
-        Block m = jmri.InstanceManager.blockManagerInstance().getBlock(name);
+        Block m = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
         if (m != null) {
             l.setBlock(name);
         } else {

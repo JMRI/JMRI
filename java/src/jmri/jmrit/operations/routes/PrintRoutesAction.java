@@ -1,4 +1,3 @@
-// PrintRouteAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.event.ActionEvent;
@@ -14,14 +13,9 @@ import org.slf4j.LoggerFactory;
  * Action to print all of the routes used in operations.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class PrintRoutesAction extends PrintRouteAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6083754676592916495L;
     private static final char FORM_FEED = '\f';
     private final static Logger log = LoggerFactory.getLogger(PrintRoutesAction.class);
 
@@ -42,18 +36,19 @@ public class PrintRoutesAction extends PrintRouteAction {
             log.debug("Print cancelled");
             return;
         }
-        List<Route> routes = RouteManager.instance().getRoutesByNameList();
-        for (int i = 0; i < routes.size(); i++) {
-            Route route = routes.get(i);
-            try {
+        try {
+            writer.write(" "); // prevents exception when using Preview and no routes
+            List<Route> routes = RouteManager.instance().getRoutesByNameList();
+            for (int i = 0; i < routes.size(); i++) {
+                Route route = routes.get(i);
                 writer.write(route.getName() + NEW_LINE);
                 printRoute(writer, route);
                 if (i != routes.size() - 1) {
                     writer.write(FORM_FEED);
                 }
-            } catch (IOException e1) {
-                log.error("Exception in print routes");
             }
+        } catch (IOException e1) {
+            log.error("Exception in print routes");
         }
         // and force completion of the printing
         writer.close();

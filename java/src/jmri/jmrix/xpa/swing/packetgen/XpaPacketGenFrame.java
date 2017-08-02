@@ -8,7 +8,6 @@ package jmri.jmrix.xpa.swing.packetgen;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.xpa.XpaMessage;
-import jmri.jmrix.xpa.XpaTrafficController;
 
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
@@ -24,25 +23,26 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo = m;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
-        jLabel1.setText("Command:");
+        jLabel1.setText(Bundle.getMessage("CommandLabel"));
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+        packetTextField.setToolTipText(Bundle.getMessage("EnterASCIIToolTip"));
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle("Send Xpa+Modem command");
+        setTitle(Bundle.getMessage("SendCommandTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -50,6 +50,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -68,9 +69,11 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
+    @Override
     public void message(XpaMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(XpaMessage r) {
     } // ignore replies
 }

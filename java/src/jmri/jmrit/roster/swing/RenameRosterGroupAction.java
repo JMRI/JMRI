@@ -26,7 +26,7 @@ import jmri.util.swing.WindowInterface;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  * @author Randall Wood Copyright (C) 2011
  * @see Roster
  */
@@ -68,11 +68,11 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
-                    "<html><b>Rename roster group</b><br>Select the roster group to rename.</html>",
-                    "Rename Roster Group",
+                    Bundle.getMessage("RenameRosterGroupDialog"),
+                    Bundle.getMessage("RenameRosterGroupTitle", ""),
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // can't rename the groups that represent the entire roster 
@@ -81,24 +81,27 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         }
 
         String entry = (String) JOptionPane.showInputDialog(_who,
-                "<html><b>Rename roster group</b><br>Enter the new name for roster group \"" + group + "\".</html>",
-                "Rename Roster Group " + group,
+                Bundle.getMessage("RenameRosterGroupNewName", group),
+                Bundle.getMessage("RenameRosterGroupTitle", group),
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 null,
                 null);
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        if (entry != null) {
+            entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        }
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
-        } else if (Roster.instance().getRosterGroupList().contains(entry)) {
+        } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
-                    "<html><b>Unable to rename roster group</b><br>The roster group named \"" + entry + "\" already exists.",
-                    "Rename Roster Group " + group,
+                    Bundle.getMessage("RenameRosterGroupSameName", entry),
+                    Bundle.getMessage("RenameRosterGroupTitle", group),
                     JOptionPane.ERROR_MESSAGE);
         }
 
         // rename the roster grouping
-        Roster.instance().renameRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().renameRosterGroupList(group, entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

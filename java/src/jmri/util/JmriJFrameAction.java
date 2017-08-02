@@ -21,11 +21,15 @@ public class JmriJFrameAction extends AbstractAction {
     /**
      * Method to be overridden to make this work. Provide a completely qualified
      * class name, must be castable to JmriJFrame
+     *
+     * @return the default implementation returns an empty String
      */
+    // why isn't this abstract?
     public String getName() {
         return "";
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String name = getName();
         JmriJFrame j = null;

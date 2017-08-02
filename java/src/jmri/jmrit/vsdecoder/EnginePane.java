@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -57,10 +57,12 @@ public class EnginePane extends JPanel {
     public void initComponents() {
     }
 
+    @Override
     public String getName() {
         return (name);
     }
 
+    @Override
     public void setName(String n) {
         name = n;
     }
@@ -76,10 +78,12 @@ public class EnginePane extends JPanel {
     public void setThrottle(int t) {
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         listenerList.add(PropertyChangeListener.class, listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         listenerList.remove(PropertyChangeListener.class, listener);
     }

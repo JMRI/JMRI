@@ -1,47 +1,52 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- translated by Herv&#233; Blorec le 2012/01/02-->  
+<!-- translated by Herv&#233; Blorec le 2012/01/02-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Block Add/Edit Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Block Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Block Add/Edit Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Block Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-    <p>
- 
-  <H1> Ajouter/Modifier les entr&#233;es de Tableau Canton </H1>
+      <h1>Ajouter/Modifier les entr&eacute;es de Tableau
+      Canton</h1>
 
-<p>
-Entrez le nom syst&#232;me pour le Canton que vous voulez ajouter. Par exemple, un nom
-valide comme nom  syst&#232;me de Canton pour un r&#233;seau LocoNet pourrait &#234;tre LB456. Un autre
- exemple, un nom syst&#232;me interne valide pour un capteur pourrait &#234;tre IB123. Le
-nom utilisateur facultatif peut &#234;tre quelque chose que vous voulez pour d&#233;crire le Canton. Voir la page d'aide
-"<A HREF="../../../../html/doc/Technical/Names.shtml"> Noms </A>"
-pour plus d'informations.
-<p>
+      <p>Entrez le nom syst&egrave;me pour le Canton que vous
+      voulez ajouter. Par exemple, un nom valide comme nom
+      syst&egrave;me de Canton pour un r&eacute;seau LocoNet
+      pourrait &ecirc;tre LB456. Un autre exemple, un nom
+      syst&egrave;me interne valide pour un capteur pourrait
+      &ecirc;tre IB123. Le nom utilisateur facultatif peut
+      &ecirc;tre quelque chose que vous voulez pour d&eacute;crire
+      le Canton. Voir la page d'aide " <a href=
+      "../../../../html/doc/Technical/Names.shtml">Noms</a> " pour
+      plus d'informations.</p>
 
-C'est la page d'aide package/jmri/jmrit/beantable/BlockAddEdit
-<br>
-
-<!--#include virtual="/Footer" -->
+      <p>C'est la page d'aide
+      package/jmri/jmrit/beantable/BlockAddEdit<br>
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-
-
- 	  	 

@@ -29,16 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */
 public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6144223447231259664L;
     private OBlock _block;
     private CircuitBuilder _parent;
 
@@ -74,6 +69,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent();
             }
@@ -142,11 +138,12 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 //        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText(Float.toString(_block.getLengthIn()));
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "length", true, "TooltipBlockLength"));
+                false, _length, "Length", true, "TooltipBlockLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _units = new JToggleButton("foo", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipBlockLength"));
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
             }
@@ -180,6 +177,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         _openPicklistButton = new JButton(Bundle.getMessage("OpenSensorPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_pickFrame == null) {
                     openPickList();
@@ -204,8 +202,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
+        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -215,6 +213,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePickList();
             }
@@ -242,6 +241,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changeBlockName();
             }
@@ -251,6 +251,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteCircuit();
             }
@@ -270,6 +271,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
         convertButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 convertIcons();
             }
@@ -279,6 +281,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent();
             }
@@ -358,7 +361,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _errorSensorName.setText(name);
 
         int state = _block.getState();
-        StringBuffer stateText = new StringBuffer();
+        StringBuilder stateText = new StringBuilder();
         if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
         }
@@ -380,7 +383,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         if ((state & OBlock.OUT_OF_SERVICE) != 0) {
             stateText.append("OutOf Service ");
         }
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.UNDETECTED) != 0) {
             stateText.append("Dark ");
         }
         if ((state & OBlock.TRACK_ERROR) != 0) {
@@ -390,7 +393,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             stateText.append("Not Initialized");
         }
         if (log.isDebugEnabled()) {
-            log.debug("updateContentPanel: state= " + stateText.toString());
+            log.debug("updateContentPanel: state= {}", stateText.toString());
         }
         _blockState.setText(stateText.toString());
     }
@@ -461,7 +464,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         int turnouts = 0;
         if (icons != null) {
             if (log.isDebugEnabled()) {
-                log.debug("updateIconList: icons.size()= " + icons.size());
+                log.debug("updateIconList: icons.size()= {}", icons.size());
             }
             for (int i = 0; i < icons.size(); i++) {
                 Positionable pos = icons.get(i);

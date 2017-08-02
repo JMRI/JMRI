@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Turnout;
@@ -23,14 +24,17 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
 
+    @Override
     public char typeLetter() {
         return 'T';
     }
 
+    @Override
     public Turnout provideTurnout(String name) {
         Turnout t = getTurnout(name);
         if (t != null) {
@@ -43,6 +47,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         }
     }
 
+    @Override
     public Turnout getTurnout(String name) {
         Turnout t = getByUserName(name);
         if (t != null) {
@@ -52,14 +57,17 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Turnout getBySystemName(String name) {
         return (Turnout) _tsys.get(name);
     }
 
+    @Override
     public Turnout getByUserName(String key) {
         return (Turnout) _tuser.get(key);
     }
 
+    @Override
     public Turnout newTurnout(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("newTurnout:"
@@ -67,7 +75,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
@@ -117,6 +126,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return s;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTurnout");
     }
@@ -126,6 +136,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
+    @Override
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
@@ -135,6 +146,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
+    @Override
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -150,10 +162,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * available, this method should return 0 for number of control bits, after
      * informing the user of the problem.
      */
+    @Override
     public int askNumControlBits(String systemName) {
         return 1;
     }
 
+    @Override
     public boolean isNumControlBitsSupported(String systemName) {
         return false;
     }
@@ -168,10 +182,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * for 'pulsed' control, where n specifies the duration of the pulse
      * (normally in seconds).
      */
+    @Override
     public int askControlType(String systemName) {
         return 0;
     }
 
+    @Override
     public boolean isControlTypeSupported(String systemName) {
         return false;
     }
@@ -190,8 +206,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * Order is important because
      * they will be tried in the order specified.
      */
+    @Override
     public String[] getValidOperationTypes() {
-        if (jmri.InstanceManager.commandStationInstance() != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
         } else {
             return new String[]{"Sensor", "NoFeedback"};
@@ -203,10 +220,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * turnouts in numerical order eg 10 to 30
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
             Integer.parseInt(curAddress);
@@ -217,6 +236,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return prefix + typeLetter() + curAddress;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.
@@ -267,7 +287,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @Override
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested turnout default closed speed can not be null");
@@ -296,6 +317,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
 
+    @Override
     public void setDefaultThrownSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested turnout default thrown speed can not be null");
@@ -325,10 +347,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         firePropertyChange("DefaultTurnoutThrownSpeedChange", oldSpeed, speed);
     }
 
+    @Override
     public String getDefaultThrownSpeed() {
         return defaultThrownSpeed;
     }
 
+    @Override
     public String getDefaultClosedSpeed() {
         return defaultClosedSpeed;
     }

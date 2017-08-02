@@ -1,4 +1,3 @@
-// PrintOptionFrame.java
 package jmri.jmrit.operations.setup;
 
 import javax.swing.JMenu;
@@ -9,7 +8,6 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of manifest and switch list print options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class PrintOptionFrame extends OperationsFrame {
 
@@ -23,7 +21,7 @@ public class PrintOptionFrame extends OperationsFrame {
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new PrintMoreOptionAction());
         toolMenu.add(new EditManifestHeaderTextAction());
         toolMenu.add(new EditManifestTextAction());

@@ -2,10 +2,9 @@
  * XNetConsist.java
  *
  * This is the Consist definition for a consist on an XPresNet system. it uses
- * the XPressNet specific commands to build a consist.
+ * the XpressNet specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  */
 package jmri.jmrix.lenz;
 
@@ -29,9 +28,11 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     private boolean _directionNormal = false; // direction of the last request
 
     protected XNetTrafficController tc = null; // hold the traffic controller associated with this consist.
-    // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
 
+    /**
+     * Initialize a consist for the specific address.
+     * Default consist type is an advanced consist.
+     */
     public XNetConsist(int address, XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
         super(address);
         tc = controller;
@@ -42,8 +43,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 this);
     }
 
-    // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
+    /**
+     * Initialize a consist for the specific address.
+     * Default consist type is an advanced consist.
+     */
     public XNetConsist(DccLocoAddress address, XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
         super(address);
         tc = controller;
@@ -56,28 +59,25 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
     XNetSystemConnectionMemo systemMemo;
 
-    // Clean Up local storage, and remove the XNetListener
+    /**
+     * Clean Up local storage, and remove the XNetListener.
+     */
     @Override
     synchronized public void dispose() {
-        for (int i = (ConsistList.size() - 1); i >= 0; i--) {
-            DccLocoAddress loco = ConsistList.get(i);
-            if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + loco.toString());
-            }
-            try {
-                remove(loco);
-            } catch (Exception ex) {
-                log.error("Error removing loco: " + loco.toString() + " from consist: " + ConsistAddress.toString());
-            }
-        }
-
+        super.dispose();
         tc.removeXNetListener(
                 XNetInterface.COMMINFO
                 | XNetInterface.CONSIST,
                 this);
     }
 
-    // Set the Consist Type
+    /**
+     * Set the Consist Type.
+     *
+     * @param consist_type, an integer, should be either 
+     * jmri.Consist.ADVANCED_CONSIST or jmri.Consist.CS_CONSIST.
+     */
+    @Override
     public void setConsistType(int consist_type) {
         if (consist_type == Consist.ADVANCED_CONSIST) {
             ConsistType = consist_type;
@@ -90,10 +90,15 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /* is this address allowed?
+    /**
+     * Is this address allowed?
+     * <p>
      * On Lenz systems, All addresses but 0 can be used in a consist 
      * (Either and Advanced Consist or a Double Header).
+     *
+     * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to check.
      */
+    @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
         if (address.getNumber() != 0) {
             return (true);
@@ -102,11 +107,13 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /* is there a size limit for this consist?
-     * For Lenz double headers, returns 2
-     * For Decoder Assisted Consists, returns -1 (no limit)
-     * return 0 for any other consist type.
+    /**
+     * Is there a size limit for this consist?
+     *
+     * @return 2 For Lenz double headers. -1 (no limit) For 
+     *         Decoder Assisted Consists. 0 for any other consist type.
      */
+    @Override
     public int sizeLimit() {
         if (ConsistType == ADVANCED_CONSIST) {
             return -1;
@@ -117,7 +124,12 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    // does the consist contain the specified address?
+    /**
+     * Does the consist contain the specified address?
+     *
+     * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to check.
+     */
+    @Override
     public boolean contains(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             return (ConsistList.contains(address));
@@ -128,8 +140,14 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         return false;
     }
 
-    // get the relative direction setting for a specific
-    // locomotive in the consist
+    /**
+     * Get the relative direction setting for a specific
+     * locomotive in the consist.
+     *
+     * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to check
+     * @return true means forward, false means backwards.
+     */
+    @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             Boolean Direction = ConsistDir.get(address);
@@ -141,8 +159,11 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         return false;
     }
 
-    /*
-     * Method for adding an Address to the internal consist list object.
+    /**
+     * Add an Address to the internal consist list object.
+     *
+     * @param LocoAddress {@link jmri.DccLocoAddress address} of the locomotive to add.
+     * @param directionNormal true for normal direction, false for reverse.
      */
     private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
         Boolean Direction = Boolean.valueOf(directionNormal);
@@ -160,8 +181,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /*
-     * Method for removing an address from the internal consist list object.
+    /**
+     * Remove an address from the internal consist list object.
+     *
+     * @param LocoAddress {@link jmri.DccLocoAddress address} of the locomotive to remove.
      */
     private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
         if(ConsistList.contains(LocoAddress)) {
@@ -171,12 +194,14 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
-    /*
-     * Add a Locomotive to a Consist
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling 
-     *        the same direction as the consist, or false otherwise.
+    /**
+     * Add a Locomotive to a Consist.
+     *
+     * @param LocoAddress the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
+     *        the same direction as the consist, or false otherwise
      */
+    @Override
     public synchronized void add(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (ConsistType == ADVANCED_CONSIST) {
             addToAdvancedConsist(LocoAddress, directionNormal);
@@ -229,14 +254,18 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /*
+    /**
      * Restore a Locomotive to an Advanced Consist, but don't write to
-     * the command station.  This is used for restoring the consist
-     * from a file or adding a consist read from the command station.
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     * the command station.
+     * <p>
+     * This is used for restoring the consist from a file or adding a
+     * consist read from the command station.
+     *
+     *  @param LocoAddress the Locomotive address to add to the locomotive
+     *  @param directionNormal True if the locomotive is traveling
+     *        the same direction as the Consist, or false otherwise.
      */
+    @Override
     public synchronized void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (ConsistType == ADVANCED_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
@@ -248,10 +277,12 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /*
-     *  Remove a Locomotive from this Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     *  Remove a Locomotive from this Consist.
+     *
+     *  @param LocoAddress the Locomotive address to add to the Consist
      */
+    @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
         log.debug("Consist {}: remove called for address {}",ConsistAddress, LocoAddress );
         if (ConsistType == ADVANCED_CONSIST) {
@@ -282,9 +313,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
-    /*
-     *  Add a Locomotive to an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     *  Add a Locomotive to an Advanced Consist.
+     *
+     *  @param LocoAddress the Locomotive address to add to the locomotive
      *  @param directionNormal is True if the locomotive is traveling 
      *        the same direction as the consist, or false otherwise.
      */
@@ -319,9 +351,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         _state = ADDREQUESTSENTSTATE;
     }
 
-    /*
-     *  Remove a Locomotive from an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     *  Remove a Locomotive from an Advanced Consist.
+     *
+     *  @param LocoAddress the Locomotive address to add to the locomotive
      */
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
@@ -335,9 +368,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         _state = REMOVEREQUESTSENTSTATE;
     }
 
-    /*
+    /**
      *  Add a Locomotive to a Lenz Double Header
-     *  @param address is the Locomotive address to add to the locomotive
+     *
+     *  @param LocoAddress the Locomotive address to add to the locomotive
      *  @param directionNormal is True if the locomotive is traveling 
      *        the same direction as the consist, or false otherwise.
      */
@@ -398,9 +432,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         _state = ADDREQUESTSENTSTATE;
     }
 
-    /*
-     *  Remove a Locomotive from a Lenz Double Header
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     *  Remove a Locomotive from a Lenz Double Header.
+     *
+     *  @param LocoAddress is the Locomotive address to add to the locomotive
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         // All we have to do here is create an apropriate XNetMessage, 
@@ -410,10 +445,17 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         _state = REMOVEREQUESTSENTSTATE;
     }
 
+<<<<<<< HEAD
     // Listeners for messages from the command station
+=======
+    /**
+     * Listeners for messages from the command station.
+     */
+>>>>>>> JMRI/master
+    @Override
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {
-            // we're waiting for a reply, so examine what we recieved
+            // we're waiting for a reply, so examine what we received
             String text;
             if (l.isOkMessage()) {
                 if (_state == ADDREQUESTSENTSTATE) {
@@ -426,7 +468,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 text = "XpressNet MU+DH error: ";
                 switch (l.getElement(1)) {
                     case 0x81:
-                        text = text + "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+                        text = text + "Selected Locomotive has not been operated by this XpressNet device or address 0 selected";
                         log.error(text);
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
@@ -434,7 +476,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                                 | ConsistListener.LOCO_NOT_OPERATED);
                         break;
                     case 0x82:
-                        text = text + "Selected Locomotive is being operated by another XPressNet device";
+                        text = text + "Selected Locomotive is being operated by another XpressNet device";
                         log.error(text);
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
@@ -504,26 +546,28 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
-    /* 
-     * <P>
+    /**
      * Set the speed and direction of a locomotive; bypassing the 
      * commands in the throttle, since they don't work for this 
-     * application
-     * <P> 
+     * application.
+     * <p>
      * For this application, we also set the speed setting to 0, which 
      * also establishes control over the locomotive in the consist.
-     * @param t is an XPressNett throttle
-     * @param isForward is the boolean value representing the desired 
+     *
+     * @param t an XNetThrottle (XpressNet) throttle
+     * @param isForward the boolean value representing the desired
      * direction
      */
     private void sendDirection(XNetThrottle t, boolean isForward) {
@@ -535,16 +579,16 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         tc.sendXNetMessage(msg, this);
     }
 
-    /* 
-     * <P>
+    /**
      * Set the speed and direction of a locomotive; bypassing the 
      * commands in the throttle, since they don't work for this 
-     * application
-     * <P> 
+     * application.
+     * <p>
      * For this application, we also set the speed setting to 0, which 
      * also establishes control over the locomotive in the consist.
-     * @param t is an XPressNett throttle
-     * @param isForward is the boolean value representing the desired 
+     *
+     * @param t an XNetThrottle (XpressNet) throttle
+     * @param isForward the boolean value representing the desired
      * direction
      */
     private void sendDirection(DccLocoAddress address, boolean isForward) {

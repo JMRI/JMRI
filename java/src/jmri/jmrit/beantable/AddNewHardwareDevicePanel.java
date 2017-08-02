@@ -10,17 +10,18 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JTextField endRange, JCheckBox addRange,
+    public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JSpinner endRange, JCheckBox addRange,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
@@ -53,6 +54,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 2;
         c.gridy = 1;
         p.add(sysAddress, c);
+        sysAddress.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
         c.gridx = 3;
         p.add(finishLabel, c);
         c.gridx = 4;
@@ -79,6 +81,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }
@@ -113,7 +116,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     JButton ok;
     JButton cancel;
-    JTextField _endRange;
+    JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName"));
     JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));

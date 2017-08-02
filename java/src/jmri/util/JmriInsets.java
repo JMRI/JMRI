@@ -48,6 +48,8 @@ public class JmriInsets {
 
     /**
      * Creates a new instance of JmriInsets
+     *
+     * @return the new instance
      */
     public static Insets getInsets() {
 
@@ -88,7 +90,7 @@ public class JmriInsets {
                     String line = r.readLine();
                     while (line != null) {
                         for (int i = 0; i < desktopList.size(); i++) {
-                            String s = desktopList.get(i).toString();
+                            String s = desktopList.get(i);
                             if (line.contains(s) && !line.contains("grep")) //NOI18N
                             {
                                 return desktopList.indexOf(s);
@@ -201,13 +203,12 @@ public class JmriInsets {
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if (!OS_NAME.toLowerCase().startsWith("windows") && //NOI18N
-                !OS_NAME.toLowerCase().startsWith("mac")) //NOI18N
-        // MS Windows & Mac OS will always end-up here, so no need to log.
-        {
+        if (!OS_NAME.toLowerCase().startsWith("windows") // NOI18N
+                && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
+            // MS Windows & Mac OS will always end-up here, so no need to log.
             return getDefaultInsets(false);
-        } else // any other OS ends up here
-        {
+        } else {
+            // any other OS ends up here
             return getDefaultInsets(true);
         }
     }
@@ -233,7 +234,7 @@ public class JmriInsets {
     /*
      * Some additional routines required for specific window managers
      */
-    /*
+ /*
      * Parse XML files for some sizes in Gnome
      */
     private static int getGnomeXML(File xmlFile) {

@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for tools/speedometer pages -->
 <hr class="hide">
-	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI is...</div>
 	    <dl>
@@ -42,7 +41,7 @@
 		to running trains in the background.
 		    <ul>
 		    <li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
-        <li><dfn><a href="../signaling/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+        <li><dfn><a href="../EntryExit.shtml">Entry Exit (NX)</a></dfn>
         <li><dfn><a href="../Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
 		    <li><dfn><a href="../scripting/index.shtml">Scripting</a></dfn>

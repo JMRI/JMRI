@@ -4,18 +4,19 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the DccSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
  */
-public class DccSignalHeadTest extends TestCase {
+public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
+    @Test
     public void testCtor1() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -23,6 +24,7 @@ public class DccSignalHeadTest extends TestCase {
         Assert.assertEquals("Send count", 0, sentPacketCount);
     }
 
+    @Test
     public void testRedAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -36,6 +38,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testDarkAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -50,6 +53,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testLunarAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -63,6 +67,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testYellowAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -76,6 +81,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testGreenAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -89,6 +95,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testFlashRedAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -102,6 +109,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testFlashLunarAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -115,6 +123,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testFlashYellowAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -128,6 +137,7 @@ public class DccSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testFlashGreenAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -142,39 +152,32 @@ public class DccSignalHeadTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public DccSignalHeadTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DccSignalHeadTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    public SignalHead getHeadToTest() {
+        return new DccSignalHead("IH$1");
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DccSignalHeadTest.class);
-        return suite;
-    }
-
+    
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
+            @Override
             public void sendPacket(byte[] packet, int repeats) {
                 lastSentPacket = packet;
                 sentPacketCount++;
             }
 
+            @Override
             public String getUserName() {
                 return null;
             }
 
+            @Override
             public String getSystemPrefix() {
                 return "I";
             }
@@ -186,9 +189,9 @@ public class DccSignalHeadTest extends TestCase {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

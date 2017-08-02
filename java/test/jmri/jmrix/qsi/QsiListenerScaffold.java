@@ -5,7 +5,6 @@ package jmri.jmrix.qsi;
  * Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 class QsiListenerScaffold implements QsiListener {
 
@@ -14,10 +13,12 @@ class QsiListenerScaffold implements QsiListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(QsiMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(QsiReply r) {
         rcvdReply = r;
     }

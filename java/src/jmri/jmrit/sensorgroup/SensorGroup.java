@@ -1,4 +1,3 @@
-// SensorGroup.java
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
@@ -15,10 +14,11 @@ import org.slf4j.LoggerFactory;
  * Object for representing, creating and editing sensor groups.
  * <P>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
+ * <p>
+ * They are not (currently) NamedBean objects.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2007
+  */
 public class SensorGroup {
 
     /**
@@ -38,7 +38,7 @@ public class SensorGroup {
     SensorGroup(String name) {
         this.name = name;
         // find suitable 
-        RouteManager rm = InstanceManager.routeManagerInstance();
+        RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name.toUpperCase();
         List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
@@ -56,7 +56,7 @@ public class SensorGroup {
 
     void addPressed() {
         log.debug("start with " + sensorList.size() + " lines");
-        RouteManager rm = InstanceManager.routeManagerInstance();
+        RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name.toUpperCase();
 
         // remove the old routes

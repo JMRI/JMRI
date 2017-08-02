@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -19,10 +18,12 @@ public class XBeeLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -1,4 +1,3 @@
-// SimpleProgAction.java
 package jmri.jmrit.simpleprog;
 
 import java.awt.event.ActionEvent;
@@ -12,8 +11,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a SimpleProgAction object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleProgAction extends JmriAbstractAction {
 
@@ -30,12 +28,10 @@ public class SimpleProgAction extends JmriAbstractAction {
 
         // disable ourself if programming is not possible
         boolean enabled = false;
-        if ((InstanceManager.getList(GlobalProgrammerManager.class) != null)
-                && (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0)) {
+        if (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0) {
             enabled = true;
         }
-        if ((InstanceManager.getList(AddressedProgrammerManager.class) != null)
-                && (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0)) {
+        if (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0) {
             enabled = true;
         }
 
@@ -46,6 +42,7 @@ public class SimpleProgAction extends JmriAbstractAction {
         this(Bundle.getMessage("MenuItemSingleCVProgrammer"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a SimpleProgFrame
@@ -55,9 +52,8 @@ public class SimpleProgAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 }
-
-/* @(#)SimpleProgAction.java */

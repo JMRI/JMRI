@@ -9,17 +9,13 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Sensor interface.
  * <P>
  *
- * Description:	extend jmri.AbstractSensor for JMRIClient layouts
+ * Description: extend jmri.AbstractSensor for JMRIClient layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class JMRIClientSensor extends AbstractSensor implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7705766903549405578L;
     // data members
     private int _number;   // sensor number
     private JMRIClientTrafficController tc = null;
@@ -45,6 +41,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
     // Handle a request to change state by sending a formatted packet
     // to the server.
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         // sort out states
         if ((s & Sensor.ACTIVE) != 0) {
@@ -68,6 +65,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         }
     }
 
+    @Override
     public void requestUpdateFromLayout() {
         // get the message text
         String text = "SENSOR " + transmitName + "\n";
@@ -91,6 +89,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
     }
 
     // to listen for status changes from JMRIClient system
+    @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
         log.debug("Message Received: " + m);
@@ -106,6 +105,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         }
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 
@@ -114,4 +114,4 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 }
 
 
-/* @(#)JMRIClientSensor.java */
+

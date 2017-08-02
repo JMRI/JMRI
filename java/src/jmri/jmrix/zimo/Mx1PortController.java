@@ -1,13 +1,10 @@
-// Mx1PortController.java
 package jmri.jmrix.zimo;
 
 /**
- * Abstract base for classes representing a MX-1 communications port
+ * Abstract base for classes representing a MX-1 communications port. Adapted by
+ * Sip Bosch for use with zimo Mx-1.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
- * Adapted by Sip Bosch for use with zimo Mx-1
  */
 public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -20,6 +17,8 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
     /**
      * Can the port accept additional characters? This might go false for short
      * intervals, but it might also stick off if something goes wrong.
+     *
+     * @return true if more data can be sent; false otherwise
      */
     public abstract boolean okToSend();
 
@@ -28,6 +27,3 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
         return (Mx1SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-
-
-/* @(#)Mx1PortController.java */

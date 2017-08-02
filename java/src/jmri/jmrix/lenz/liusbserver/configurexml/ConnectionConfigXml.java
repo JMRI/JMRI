@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -83,6 +82,5 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
-
 
 }

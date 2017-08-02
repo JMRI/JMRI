@@ -38,6 +38,7 @@ public class TurnoutOperationFrame extends JDialog {
         contentPane.add(outerBox);
         tabPane = new JTabbedPane();
         tabPane.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 self.changeTab();
             }
@@ -45,24 +46,27 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
-        JButton okButton = new JButton(Bundle.getMessage("OK"));
+        JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 self.doOK();
             }
         }
         );
         bottomBox.add(okButton);
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
             }
         }
         );
         bottomBox.add(cancelButton);
-        JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+        JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 self.doDelete();
             }
@@ -72,6 +76,7 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(bottomBox);
         populateTabs();
         TurnoutOperationManager.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Content")) {
                     populateTabs();

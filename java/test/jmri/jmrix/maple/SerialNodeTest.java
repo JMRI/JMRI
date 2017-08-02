@@ -1,7 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @author	Dave Duchamp multi-node extensions 2003
- * @version	$Revision$
  */
 public class SerialNodeTest extends TestCase {
 
@@ -61,10 +60,12 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -1,8 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
+import jmri.jmrit.XmlFile;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,9 +12,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- * VariableTableModelTest.java
- *
- * Description:
+ * Test VariableTableModel table methods.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
@@ -26,30 +25,29 @@ public class VariableTableModelTest extends TestCase {
         new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
     }
 
     // Can we create a table?
     public void testVarTableCreate() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, null, null);  // CvTableModel ref is null for this test
+        VariableTableModel t = new VariableTableModel(null, args, null);  // CvTableModel ref is null for this test
         Assert.assertNotNull("exists", t);
     }
 
     // Check column count member fn, column names
     public void testVarTableColumnCount() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, null, null);
+        VariableTableModel t = new VariableTableModel(null, args, null);
         Assert.assertTrue(t.getColumnCount() == 2);
-        Assert.assertTrue(t.getColumnName(1) == "Name");
+        Assert.assertTrue(t.getColumnName(1) == Bundle.getMessage("Name")); // allow for I18N
     }
 
     // Check loading two columns, three rows
     public void testVarTableLoad_2_3() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -117,7 +115,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating a longaddr type, walk through its programming
     public void testVarTableLoadLongAddr() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -160,7 +158,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating a speed table, then finding it by name
     public void testVarSpeedTable() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -197,7 +195,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating an enumvar with various groupings
     public void testVarEnumVar() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -257,7 +255,12 @@ public class VariableTableModelTest extends TestCase {
     // Check creating bogus XML (unknown variable type)
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
+<<<<<<< HEAD
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
+=======
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)) {
+>>>>>>> JMRI/master
+            @Override
             void reportBogus() {
             }
         };
@@ -297,6 +300,53 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
+
+    // Check can read simple file
+    public void testVarTableLoadFileSimple() throws Exception {
+        String[] args = {"CV", "Name"};
+<<<<<<< HEAD
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+=======
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+>>>>>>> JMRI/master
+
+        // create a JDOM tree from file
+        XmlFile file = new XmlFile(){};
+        Element root = file.rootFromName("xml/decoders/0NMRA.xml");
+
+        // add the contents
+        Element el0 = root.getChild("decoder").getChild("variables");
+        int i = 0;
+        for (Element v : el0.getChildren("variable")) {
+            t.setRow(i++, v);
+        }
+        // fault is failure to reach the end, e.g. throw message or exception
+
+    }
+
+    // Check can read complex file
+    public void testVarTableLoadFileComplex() throws Exception {
+        String[] args = {"CV", "Name"};
+<<<<<<< HEAD
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+=======
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+>>>>>>> JMRI/master
+
+        // create a JDOM tree from file
+        XmlFile file = new XmlFile(){};
+        Element root = file.rootFromName("xml/decoders//QSI_ver9.xml");
+
+        // add the contents
+        Element el0 = root.getChild("decoder").getChild("variables");
+        int i = 0;
+        for (Element v : el0.getChildren("variable")) {
+            t.setRow(i++, v);
+        }
+        // fault is failure to reach the end, e.g. throw message or exception
+
+    }
+
     // from here down is testing infrastructure
     public VariableTableModelTest(String s) {
         super(s);
@@ -315,10 +365,12 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

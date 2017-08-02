@@ -3,7 +3,6 @@ package jmri.jmrit.roster.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
 
@@ -57,27 +56,31 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String) JOptionPane.showInputDialog(_who,
-                "<html><b>" + ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate") + "</b></html>",
-                ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
+                Bundle.getMessage("CreateRosterGroupDialog", Bundle.getMessage("MenuGroupCreate")),
+                Bundle.getMessage("MenuGroupCreate"),
                 JOptionPane.INFORMATION_MESSAGE,
                 null, // icon
                 null, // initial values
                 null);// preselected initial value
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        if (entry != null) {
+            entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        }
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
         }
         if (rosterEntries != null) {
             for (RosterEntry re : rosterEntries) {
                 log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
-                re.putAttribute(Roster.instance().getRosterGroupPrefix() + entry, "yes");
+                re.putAttribute(Roster.getDefault().getRosterGroupPrefix() + entry, "yes");
                 re.updateFile();
             }
         }
-        Roster.instance().addRosterGroup(entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().addRosterGroup(entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

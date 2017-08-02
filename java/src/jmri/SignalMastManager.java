@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for obtaining signal masts.
  * <P>
@@ -25,6 +28,7 @@ import java.util.List;
 public interface SignalMastManager extends Manager {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -34,7 +38,7 @@ public interface SignalMastManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public SignalMast getSignalMast(String name);
+    @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. Create new one from
@@ -45,23 +49,24 @@ public interface SignalMastManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if SignalMast doesn't already exist and
      *                                  the manager cannot create the SignalMast
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
-    public SignalMast provideSignalMast(String name);
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
 
-    public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
-            String signalSystem,
-            String mastName,
-            String[] heads);
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+            @Nonnull String signalSystem,
+            @Nonnull String mastName,
+            @Nonnull String[] heads);
 
-    public SignalMast getByUserName(String s);
+    @CheckForNull public SignalMast getByUserName(@Nonnull String s);
 
-    public SignalMast getBySystemName(String s);
+    @CheckForNull public SignalMast getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all SignalMast system names.
      */
-    public List<String> getSystemNameList();
+    @Nonnull@Override
+ public List<String> getSystemNameList();
 
 }

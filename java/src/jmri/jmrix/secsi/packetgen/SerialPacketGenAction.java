@@ -9,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SerialPacketGenFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5258440487857635217L;
 
     public SerialPacketGenAction(String s) {
         super(s);
@@ -26,6 +20,7 @@ public class SerialPacketGenAction extends AbstractAction {
         this("Send SECSI message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame();
         try {

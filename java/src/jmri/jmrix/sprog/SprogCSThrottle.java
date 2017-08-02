@@ -12,7 +12,6 @@ import jmri.jmrix.AbstractThrottle;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @version $Revision$
  */
 public class SprogCSThrottle extends AbstractThrottle {
 
@@ -44,11 +43,10 @@ public class SprogCSThrottle extends AbstractThrottle {
         //should support other modes, but doesn't in practice.  
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
-        //commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
             commandStation = memo.get(jmri.CommandStation.class);
         } else {
-            commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
+            commandStation = (SprogCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
         }
 
     }
@@ -57,6 +55,7 @@ public class SprogCSThrottle extends AbstractThrottle {
 
     DccLocoAddress address;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
@@ -65,6 +64,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F0, F1, F2, F3, F4 by
      * adding it to the S queue
      */
+    @Override
     protected void sendFunctionGroup1() {
         commandStation.function0Through4Packet(address,
                 getF0(), getF0Momentary(),
@@ -79,6 +79,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F5, F6, F7, F8 by# adding
      * it to the S queue
      */
+    @Override
     protected void sendFunctionGroup2() {
         commandStation.function5Through8Packet(address,
                 getF5(), getF5Momentary(),
@@ -91,6 +92,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F9, F10, F11, F12 by
      * adding it to the S queue
      */
+    @Override
     protected void sendFunctionGroup3() {
         commandStation.function9Through12Packet(address,
                 getF9(), getF9Momentary(),
@@ -107,6 +109,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @Override
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
@@ -151,6 +154,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         record(speed);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -160,6 +164,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         }
     }
 
+    @Override
     protected void throttleDispose() {
         active = false;
         commandStation.release(address);

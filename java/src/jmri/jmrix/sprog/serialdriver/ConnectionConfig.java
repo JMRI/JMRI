@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.serialdriver;
 
 import jmri.util.SystemType;
@@ -8,8 +7,7 @@ import jmri.util.SystemType;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -27,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "SPROG";
     }
@@ -39,7 +38,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SerialDriverAdapter();
+        }
     }
 }

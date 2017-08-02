@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -33,6 +32,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      * @param o Object to store, of type IndicatorTrackIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         IndicatorTrackIcon p = (IndicatorTrackIcon) o;
@@ -47,7 +47,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             element.addContent(storeNamedBean("occupancyblock", b));
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
-        if (b == null && s != null) {		// only write sensor if no OBlock, don't write double sensing
+        if (b == null && s != null) {  // only write sensor if no OBlock, don't write double sensing
             element.addContent(storeNamedBean("occupancysensor", s));
         }
         /*
@@ -112,6 +112,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

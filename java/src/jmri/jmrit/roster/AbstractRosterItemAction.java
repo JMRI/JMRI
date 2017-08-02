@@ -1,4 +1,3 @@
-// AbstractRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -21,16 +20,10 @@ import org.slf4j.LoggerFactory;
  * Note that {@link DeleteRosterItemAction} is sufficiently different that it
  * doesn't use this base class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
  * @see jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8258669241681051088L;
 
     public AbstractRosterItemAction(String pName, Component pWho) {
         super(pName);
@@ -47,6 +40,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     Component mParent;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         // select the "from" entry/file
@@ -105,9 +99,9 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         int retval = JOptionPane.showOptionDialog(mParent,
                 "Select one roster entry", "Select roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", selections}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":\""
-                + selections.getSelectedItem() + "\"");
+                + selections.getSelectedItem() + "\""); // TODO I18N
         if (retval != 1) {
             return false;  // user didn't select
         }
@@ -118,8 +112,9 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     /**
-     * method added for DP3 where the existing roster entry is selected from a
-     * table
+     * Set the roster entry this action acts upon.
+     *
+     * @param mFromEntry the roster entry to act upon
      */
     public void setExistingEntry(RosterEntry mFromEntry) {
         this.mFromEntry = mFromEntry;
@@ -145,7 +140,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
             }
 
             // check for duplicate
-            if (0 == Roster.instance().matchingList(null, null, null, null, null, null, mToID).size()) {
+            if (0 == Roster.getDefault().matchingList(null, null, null, null, null, null, mToID).size()) {
                 break;
             }
 
@@ -200,17 +195,17 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
-        Roster.instance().addEntry(mToEntry);
-        Roster.writeRosterFile();
+        Roster.getDefault().addEntry(mToEntry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
     // initialize logging
-    private final static Logger log
-            = LoggerFactory.getLogger(AbstractRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractRosterItemAction.class);
 
 }

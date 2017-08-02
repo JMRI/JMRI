@@ -92,6 +92,7 @@ public class PointDetails {
     //Sensor getSensor() { return sensor; }
     protected PropertyChangeListener nxButtonListener = new PropertyChangeListener() {
         //First off if we were inactive, and now active
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             nxButtonStateChange(e);
         }
@@ -329,6 +330,7 @@ public class PointDetails {
             ButtonTimeOut() {
             }
 
+            @Override
             public void run() {
                 try {
                     //Stage one default timer for the button if no other button has been pressed
@@ -554,7 +556,7 @@ public class PointDetails {
         if ((getPanel() != null) && (!getPanel().isEditable()) && (getSignalHead() != null)) {
             return getSignalHead();
         }
-        jmri.SignalHeadManager sh = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager sh = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         NamedBean signal = null;
 
         if (getRefObject() == null) {

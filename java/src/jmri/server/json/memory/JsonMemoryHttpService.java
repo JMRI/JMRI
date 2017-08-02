@@ -1,5 +1,12 @@
 package jmri.server.json.memory;
 
+import static jmri.server.json.JSON.COMMENT;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.JSON.VALUE;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -7,21 +14,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Memory;
-import static jmri.server.json.JSON.COMMENT;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
-import static jmri.server.json.JSON.VALUE;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
-import static jmri.server.json.memory.JsonMemoryServiceFactory.MEMORY;
+import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonMemoryHttpService extends JsonHttpService {
+public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -29,20 +29,17 @@ public class JsonMemoryHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
+        ObjectNode data = this.getNamedBean(memory, name, type, locale);
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
-        ObjectNode data = root.putObject(DATA);
-        Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (memory == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
-        }
-        data.put(NAME, memory.getSystemName());
-        data.put(USERNAME, memory.getUserName());
-        data.put(COMMENT, memory.getComment());
-        if (memory.getValue() == null) {
-            data.putNull(VALUE);
-        } else {
-            data.put(VALUE, memory.getValue().toString());
+        root.put(DATA, data);
+        if (memory != null) {
+            if (memory.getValue() == null) {
+                data.putNull(VALUE);
+            } else {
+                data.put(VALUE, memory.getValue().toString());
+            }
         }
         return root;
     }
@@ -80,7 +77,7 @@ public class JsonMemoryHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
             root.add(this.doGet(MEMORY, name, locale));

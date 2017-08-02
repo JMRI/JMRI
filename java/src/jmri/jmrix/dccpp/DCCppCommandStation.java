@@ -1,6 +1,3 @@
-/*
- * DCCppCommandStation.java
- */
 package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
@@ -10,9 +7,8 @@ import org.slf4j.LoggerFactory;
  * Defines the standard/common routines used in multiple classes related to the
  * a DCC++ Command Station, on a DCC++ network.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
@@ -31,26 +27,24 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     /** ctor */
     public DCCppCommandStation() {
-	super();
-	if (rmgr == null) {
-	    rmgr = new DCCppRegisterManager();
-	}
+ super();
+     rmgr = new DCCppRegisterManager();
     }
 
     public void setBaseStationType(String s) {
-	baseStationType = s;
+ baseStationType = s;
     }
     
     public String getBaseStationType() {
-	return baseStationType;
+ return baseStationType;
     }
 
     public void setCodeBuildDate(String s) {
-	codeBuildDate = s;
+ codeBuildDate = s;
     }
 
     public String getCodeBuildDate() {
-	return codeBuildDate;
+ return codeBuildDate;
     }
 
     /**
@@ -59,12 +53,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
      *
      */
     protected void setCommandStationInfo(DCCppReply l) {
-	// V1.0 Syntax
-	//String syntax = "iDCC\\+\\+\\s+BASE\\s+STATION\\s+v([a-zA-Z0-9_.]+):\\s+BUILD\\s+((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
-	// V1.1 Syntax
-	//String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
-	// V1.0/V1.1 Simplified
-	//String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+ // V1.0 Syntax
+ //String syntax = "iDCC\\+\\+\\s+BASE\\s+STATION\\s+v([a-zA-Z0-9_.]+):\\s+BUILD\\s+((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+ // V1.1 Syntax
+ //String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+ // V1.0/V1.1 Simplified
+ //String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+        // V1.2.1 Syntax
+        // String syntax = "iDCC++ BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+        // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
+        // V1.0/V1.1/V1.2 Simplified
+        // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
         
         baseStationType = l.getStatusVersionString();
         codeBuildDate = l.getStatusBuildDateString();
@@ -80,28 +79,6 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return(baseStationType + ": BUILD " + codeBuildDate);
     }
 
-    /* 
-     * The next group of messages has to do with determining if the
-     * command station has, and is currently in service mode 
-     */
-    /**
-     * DCC++ does use a service mode
-     */
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
-    /**
-     * If this command station has a service mode, is the command station
-     * currently in that mode?
-     */
-    public boolean getInServiceMode() {
-        //return mInServiceMode;
-	return(true); // TODO: Verify we are effectively always in service mode.
-	//TODO: Or just eliminate the concept of Service Mode entirely.
-	// Perhaps not possible, since it is an NMRA standard.
-    }
-
     /**
      * Remember whether or not in service mode
      *
@@ -112,7 +89,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * DCC++ command station does provide Ops Mode.
      */
     public boolean isOpsModePossible() {
-	return true;
+ return true;
     }
 
     // A few utility functions
@@ -162,6 +139,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
@@ -169,8 +147,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
             return;
         }
 
-	int reg = 1; // TODO: Fix this when I understand registers...
-	DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
+ int reg = 1; // TODO: Fix this when I understand registers...
+ DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);
@@ -193,6 +171,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     DCCppSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "DCC++";
@@ -200,6 +179,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "DCCPP";
@@ -208,21 +188,21 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     public int requestNewRegister(int addr) {
-	return(rmgr.requestRegister(addr));
+ return(rmgr.requestRegister(addr));
     }
 
     public void releaseRegister(int addr) {
-	rmgr.releaseRegister(addr);
+ rmgr.releaseRegister(addr);
     }
 
     // REturns DCCppConstants.NO_REGISTER_FREE if address is not in list.
     public int getRegisterNum(int addr) {
-	return(rmgr.getRegisterNum(addr));
+ return(rmgr.getRegisterNum(addr));
     }
 
     // Returns DCCppConstants.REGISTER_UNALLOCATED if register is unused.
     public int getRegisterAddress(int num) {
-	return(rmgr.getRegisterAddress(num));
+ return(rmgr.getRegisterAddress(num));
     }
 
     /*
@@ -232,5 +212,3 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
 }
 
-
-/* @(#)DCCppCommandStation.java */

@@ -1,4 +1,3 @@
-// AutomationTableFrame.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
@@ -17,11 +16,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a automation
  *
  * @author Dan Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -187,7 +187,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
         toolMenu.add(new AutomationResetAction(this));
         toolMenu.add(new AutomationCopyAction(automation));
@@ -267,18 +267,18 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
     private void addNewAutomationItem() {
         // add item to this automation
         if (addActionAtTopRadioButton.isSelected()) {
-            _automation.addItem(0);
+            _automation.addNewItem(0);
         } else if (addActionAtBottomRadioButton.isSelected()) {
             _automation.addItem();
         } else {
             // middle radio button selected
             if (_automationTable.getSelectedRow() >= 0) {
                 int row = _automationTable.getSelectedRow();
-                _automation.addItem(row);
+                _automation.addNewItem(row);
                 // we need to reselect the table since the content has changed
                 _automationTable.getSelectionModel().setSelectionInterval(row, row);
             } else {
-                _automation.addItem(_automation.getSize() / 2);
+                _automation.addNewItem(_automation.getSize() / 2);
             }
         }
     }
@@ -303,7 +303,6 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         _automation.setName(automationNameTextField.getText());
         _automation.setComment(commentTextField.getText());
 
-        saveTableDetails(_automationTable);
         // save automation file
         OperationsXml.save();
     }
@@ -368,6 +367,9 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         if (_automation != null) {
             _automation.removePropertyChangeListener(this);
         }
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(_automationTable);
+        });
         _automationTableModel.dispose();
         super.dispose();
     }

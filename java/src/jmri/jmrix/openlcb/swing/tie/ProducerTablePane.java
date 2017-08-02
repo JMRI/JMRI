@@ -1,4 +1,3 @@
-// ProducerTablePane.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.util.ResourceBundle;
@@ -8,26 +7,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Pane for showing the producer table
  *
- * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+ * @author Bob Jacobsen 2008
+  * @since 2.3.7
  */
 public class ProducerTablePane extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -892441860659962671L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     protected JTable table = null;
-    protected TableModel tableModel = null;
+    protected ProducerTableModel tableModel = null;
 
     public void initComponents() throws Exception {
 
@@ -36,7 +29,8 @@ public class ProducerTablePane extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         tableModel = new ProducerTableModel();
-        table = jmri.util.JTableUtil.sortableDataModel(tableModel);
+        table = new JTable(tableModel);
+        table.setRowSorter(new TableRowSorter<>(tableModel));
         table.setRowSelectionAllowed(true);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
 
@@ -59,5 +53,3 @@ public class ProducerTablePane extends JPanel {
     }
 
 }
-
-/* @(#)ProducerTablePane.java */

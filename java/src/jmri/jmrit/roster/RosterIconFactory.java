@@ -17,8 +17,7 @@ import javax.swing.ImageIcon;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author	Lionel Jeanson   Copyright (C) 2009
- * @version	$$
+ * @author Lionel Jeanson   Copyright (C) 2009
  */
 public class RosterIconFactory {
 
@@ -37,7 +36,7 @@ public class RosterIconFactory {
         if (id == null) {
             return null;
         }
-        RosterEntry re = Roster.instance().entryFromTitle(id);
+        RosterEntry re = Roster.getDefault().entryFromTitle(id);
         if (re == null) {
             return null;
         }

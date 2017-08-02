@@ -1,4 +1,3 @@
-// PowerManagerMenu.java
 package jmri.swing;
 
 import java.util.List;
@@ -13,19 +12,16 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
 
     /**
+     * Get the currently selected manager.
      *
+     * @return null unless overridden by subclass
      */
-    private static final long serialVersionUID = 1282259771699660069L;
-
-    /**
-     * Get the currently selected manager
-     */
+    // should this be abstract?
     public PowerManager get() {
         return null;
     }
@@ -45,38 +41,30 @@ abstract public class PowerManagerMenu extends JMenu {
 
         // now add an item for each available manager
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
-        if (managers != null) {
-            for (PowerManager mgr : managers) {
-                if (mgr != null) {
-                    JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
-                    add(item);
-                    group.add(item);
-                    items.add(item);
-                    item.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            choiceChanged();
-                        }
-                    });
-                }
+        for (PowerManager mgr : managers) {
+            if (mgr != null) {
+                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                add(item);
+                group.add(item);
+                items.add(item);
+                item.addActionListener((java.awt.event.ActionEvent e) -> {
+                    choiceChanged();
+                });
             }
         }
 
         setDefault();
     }
 
-    List<JMenuItem> items = new java.util.ArrayList<JMenuItem>();
+    List<JMenuItem> items = new java.util.ArrayList<>();
 
     void setDefault() {
         // name of default
-        PowerManager manager = InstanceManager.powerManagerInstance();
+        PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
         if (manager == null) {
             return;
         }
         String defaultMgr = manager.getUserName();
-        if (defaultMgr == null) {
-            return;
-        }
-
         for (JMenuItem item : items) {
             if (defaultMgr.equals(item.getActionCommand())) {
                 item.setSelected(true);
@@ -86,7 +74,7 @@ abstract public class PowerManagerMenu extends JMenu {
 
     public PowerManager getManager() {
         // start with default
-        PowerManager manager = InstanceManager.powerManagerInstance();
+        PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
         if (manager == null) {
             return null;
         }

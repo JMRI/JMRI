@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.mrc.simulator;
 
 import javax.swing.JPanel;
@@ -9,7 +8,6 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE
  * @author kcameron Copyright (C) 2014
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -18,6 +16,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p serial port adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -30,14 +29,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();

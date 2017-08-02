@@ -90,16 +90,18 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setDnd(false);
     }
 
+    @Override
     public void setBackground(Color bckCol) {
         super.setBackground(bckCol);
         setScaledImage();
     }
 
     /**
-     * Enable or disable drag'n drop, dropped files will be copied in latest
-     * used image path top folder when dnd enabled, also enable contextual menu
-     * with remove entry
+     * Enable or disable drag and drop, dropped files will be copied in latest
+     * used image path top folder when DND enabled, also enable contextual menu
+     * with remove entry.
      *
+     * @param dnd true to enable drag and drop
      */
     public void setDnd(boolean dnd) {
         if (dnd) {
@@ -129,6 +131,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             popUpMenu = new JPopupMenu();
             removeMenuItem = new JMenuItem("Remove");
             removeMenuItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     rip.setImagePath(null);
                     removeMenuItem.setEnabled(false);
@@ -144,21 +147,26 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             removeMenuItem.setEnabled(b);
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mousePressed(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mouseEntered(MouseEvent e) {
         }
 
+        @Override
         public void mouseExited(MouseEvent e) {
         }
 
@@ -172,6 +180,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allows this DnDImagePanel to force resize of its container
      *
+     * @param b true if the container can be resized
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -180,6 +189,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Can this DnDImagePanel resize its container?
      *
+     * @return true if the container can be resized
      */
     public boolean isResizingContainer() {
         return _resizeContainer;
@@ -188,31 +198,35 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Is this DnDImagePanel respecting aspect ratio when resizing content?
      *
+     * @return true if the aspect ratio respected when resizing
      */
     public boolean isRespectingAspectRatio() {
         return _respectAspectRatio;
     }
 
     /**
-     * Allow this DnDImagePanel to respect aspect ratio when resizing content
+     * Allow this DnDImagePanel to respect aspect ratio when resizing content.
      *
+     * @param b true if aspect ratio needs to be respected
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;
     }
 
     /**
-     * Return curent image file path
+     * Return current image file path
      *
+     * @return the path
      */
     public String getImagePath() {
         return _imagePath;
     }
 
     /**
-     * Set image file path, display will be updated If passed value is null,
-     * blank image
+     * Set image file path, display will be updated if passed value is null,
+     * blank image.
      *
+     * @param s the path
      */
     public void setImagePath(String s) {
         if (s == null) {
@@ -249,6 +263,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     //
     // componentListener methods, for auto resizing and scaling
     //
+    @Override
     public void componentResized(ComponentEvent e) {
         if (!(isResizingContainer())) {
             if (e.getComponent().isVisible()) {
@@ -266,22 +281,23 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         }
     }
 
+    @Override
     public void componentMoved(ComponentEvent e) {
     }
 
+    @Override
     public void componentShown(ComponentEvent e) {
         if (isResizingContainer()) {
             resizeContainer();
-        } else {
-            if ((toResize) || (scaledImage == null)) {
-                setSize(e.getComponent().getSize());
-                setPreferredSize(e.getComponent().getSize());
-                setScaledImage();
-                toResize = false;
-            }
+        } else if ((toResize) || (scaledImage == null)) {
+            setSize(e.getComponent().getSize());
+            setPreferredSize(e.getComponent().getSize());
+            setScaledImage();
+            toResize = false;
         }
     }
 
+    @Override
     public void componentHidden(ComponentEvent e) {
         log.debug("Component hidden");
         if (isResizingContainer()) {
@@ -312,6 +328,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     //override paintComponent
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (scaledImage != null) {
@@ -322,7 +339,9 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     /**
-     * Get curent scaled Image
+     * Get current scaled Image.
+     *
+     * @return the scaled image
      */
     public BufferedImage getScaledImage() {
         return scaledImage;
@@ -394,6 +413,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Callback for the dnd listener
      */
+    @Override
     public void filesDropped(File[] files) {
         if (files == null) {
             return;
@@ -416,5 +436,5 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setImagePath(dest.getPath());
     }
 
-    static private Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
 }

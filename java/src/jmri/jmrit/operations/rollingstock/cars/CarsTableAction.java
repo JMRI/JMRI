@@ -1,4 +1,3 @@
-// CarsTableAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +8,8 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class CarsTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1165041540465869264L;
 
     public CarsTableAction(String s) {
         super(s);
@@ -33,4 +26,4 @@ public class CarsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)CarsTableAction.java */
+

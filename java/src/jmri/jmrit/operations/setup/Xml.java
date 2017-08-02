@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -48,7 +48,7 @@ public class Xml {
     static final String USE_JMRI_RAILROAD_NAME = "useJmriRailroadName"; // NOI18N
     static final String SETTINGS = "settings"; // NOI18N
     static final String MAIN_MENU = "mainMenu"; // NOI18N
-    static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N	
+    static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N 
     static final String AUTO_SAVE = "autoSave"; // NOI18N
     static final String AUTO_BACKUP = "autoBackup"; // NOI18N
     static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
@@ -57,7 +57,7 @@ public class Xml {
     static final String HPT = "hpt"; // NOI18N
     static final String SCALE = "scale"; // NOI18N
     static final String CAR_TYPES = "carTypes"; // NOI18N
-    static final String SWITCH_TIME = "switchTime"; // NOI18N	
+    static final String SWITCH_TIME = "switchTime"; // NOI18N 
     static final String TRAVEL_TIME = "travelTime"; // NOI18N
     static final String SHOW_VALUE = "showValue"; // NOI18N
     static final String VALUE_LABEL = "valueLabel"; // NOI18N
@@ -146,7 +146,7 @@ public class Xml {
     static final String TWO_COLUMNS = "twoColumns"; // NOI18N
     static final String MANIFEST_FORMAT = "manifestFormat";  // NOI18N
     static final String VALUE = "value"; // NOI18N
-    static final String STANDARD = "0";	// NOI18N
+    static final String STANDARD = "0"; // NOI18N
     static final String TWO_COLUMN = "1"; // NOI18N
     static final String TWO_COLUMN_TRACK = "2"; // NOI18N
 
@@ -192,6 +192,9 @@ public class Xml {
 
     static final String COMMENTS = "comments"; // NOI18N
     static final String MISPLACED_CARS = "misplacedCars"; // NOI18N
+    
+    static final String DISPLAY = "display"; // NOI18N
+    static final String SHOW_TRACK_MOVES = "showTrackMoves"; // NOI18N
 
     static final String VSD = "vsd"; // NOI18N
     static final String ENABLE_PHYSICAL_LOCATIONS = "enablePhysicalLocations"; // NOI18N

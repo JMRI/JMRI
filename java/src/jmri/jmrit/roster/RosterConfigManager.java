@@ -18,6 +18,7 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Load and store the Roster configuration.
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class RosterConfigManager extends AbstractPreferencesManager {
 
     private String directory = FileUtil.PREFERENCES;
@@ -88,7 +90,7 @@ public class RosterConfigManager extends AbstractPreferencesManager {
     /**
      * @return the defaultOwner
      */
-    public @Nonnull
+    @Nonnull public
     String getDefaultOwner() {
         // defaultOwner should never be null, but check anyway to ensure its not
         if (defaultOwner == null) {

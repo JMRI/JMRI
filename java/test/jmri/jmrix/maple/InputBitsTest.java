@@ -1,7 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.Sensor;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the InputBits class
  *
  * @author	Dave Duchamp 2009
- * @version	$Revision$
- */
+  */
 public class InputBitsTest extends TestCase {
 
     public void testConstructor1() {
@@ -184,6 +183,7 @@ public class InputBitsTest extends TestCase {
 
     private InputBits ibit;
 
+    @Override
     protected void setUp() {
         // The minimal setup for log4J
         apps.tests.Log4JFixture.setUp();
@@ -192,6 +192,7 @@ public class InputBitsTest extends TestCase {
         ibit = InputBits.instance();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

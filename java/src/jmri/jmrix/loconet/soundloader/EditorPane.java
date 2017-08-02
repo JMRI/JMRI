@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -21,7 +20,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * This handles file read/write.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -33,12 +32,14 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     JButton save;
     LocoNetSystemConnectionMemo memo;
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.soundloader.EditorFrame";
+        return "package.jmri.jmrix.loconet.soundloader.EditorFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSoundEditor"));
+        return getTitle(Bundle.getMessage("MenuItemSoundEditor"));
     }
 
     public EditorPane() {
@@ -53,11 +54,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         // add file button
         open = new JButton(res.getString("ButtonOpen"));
         open.addActionListener(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6691600637263742650L;
-
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectInputFile();
             }
@@ -65,11 +62,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         save = new JButton(res.getString("ButtonSave"));
         save.addActionListener(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8592850250263713770L;
-
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectSaveFile();
             }
@@ -108,7 +101,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     void selectSaveFile() {
         if (chooser == null) {
-            chooser = new JFileChooser(System.getProperty("user.dir"));
+            chooser = new JFileChooser(System.getProperty("user.dir")); // NOI18N
         }
         int retVal = chooser.showSaveDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -142,6 +135,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         pane.saveFile(name);
     }
 
+    @Override
     public void dispose() {
         if (pane != null) {
             pane.dispose();

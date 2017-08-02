@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>CSX-2014-Chessie</name>
+  <date>2014</date>
+  <reference>As described in the January 2014 version of the CSX Transportation publication "Signal Rules - C1281-C1292".</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year>
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule C1281</rule>
+      <indication>Proceed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule C1281B</rule>
+      <indication>Proceed approaching next signal not exceeding Limited Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule C1281C</rule>
+      <indication>Limited Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed</indication>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited Approach</name>
+      <rule>Rule C1281D</rule>
+      <indication>Limited Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed, prepared to stop at next signal.</indication>
+      <speed>Limited</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule C1282</rule>
+      <indication>Proceed, approaching next signal not exceeding Medium Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule C1283</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed.</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach Medium</name>
+      <rule>Rule C1283A</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed, approaching next signal not exceeding Medium Speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach Slow</name>
+      <rule>Rule C1283B</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed, approaching next signal not exceeding Slow Speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule C1284</rule>
+      <indication>Proceed, approaching next signal not exceeding slow speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule C1285</rule>
+      <indication>Proceed prepared to stop at the next signal. Train exceeding medium speed must immediately begin reduction to Medium Speed as soon as the engine passes the Approach Signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule C1286</rule>
+      <indication>Medium Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed, prepared to stop at next signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule C1287</rule>
+      <indication>Slow Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed.</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule C1288</rule>
+      <indication>Slow Speed through turnouts, crossovers, sidings and over power-operated switches, then proceed, prepared to stop at next signal.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule C1290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricted Proceed</name>
+      <rule>Rule C1291</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule C1292</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <rule>Rule-</rule>
+      <indication>Dark</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="aspects" />
+    <imagetype type="flash" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-CO-3-3-3-hi.xml" />
+    <appearancefile href="appearance-CO-3-3-2-hi.xml" />
+    <appearancefile href="appearance-CO-3-2-2-hi.xml" />
+    <appearancefile href="appearance-CO-3-3-1-hi.xml" />
+    <appearancefile href="appearance-CO-1-3-3-hi.xml" />
+    <appearancefile href="appearance-CO-1-3-2-hi.xml" />
+    <appearancefile href="appearance-CO-1-2-2-hi.xml" />
+    <appearancefile href="appearance-CO-1-3-1-hi.xml" />
+    <appearancefile href="appearance-CO-3-3-hi.xml" />
+    <appearancefile href="appearance-CO-1-3-hi.xml" />
+    <appearancefile href="appearance-CO-1-2-hi.xml" />
+    <appearancefile href="appearance-CO-3-2-hi.xml" />
+    <appearancefile href="appearance-CO-3-1g-hi.xml" />
+    <appearancefile href="appearance-CO-3-1y-hi.xml" />
+    <appearancefile href="appearance-CO-3-1r-hi.xml" />
+    <appearancefile href="appearance-CO-3-hi.xml" />
+    <appearancefile href="appearance-CO-3-3-lo.xml" />
+    <appearancefile href="appearance-CO-3-lo.xml" />
+    <appearancefile href="appearance-CO-3p-lo.xml" />
+    <appearancefile href="appearance-CO-1-lo.xml" />
+  </appearancefiles>
+</aspecttable>

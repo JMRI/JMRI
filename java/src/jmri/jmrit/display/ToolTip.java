@@ -22,8 +22,8 @@ public class ToolTip {
 
     /**
      * @param text tooltip text
-     * @param x    - x coord of Positionable's screen location
-     * @param y    - y coord of Positionable's screen location
+     * @param x    x coord of Positionable's screen location
+     * @param y    y coord of Positionable's screen location
      */
     public ToolTip(String text, int x, int y) {
         _tip = text;
@@ -36,8 +36,8 @@ public class ToolTip {
     }
 
     /**
-     * @param tooltip - toolTip to clone
-     * @param pos     - Positionable of this Tooltip
+     * @param tooltip toolTip to clone
+     * @param pos     Positionable of this Tooltip
      */
     public ToolTip(ToolTip tooltip, Positionable pos) {
         setLocation(pos);
@@ -48,11 +48,13 @@ public class ToolTip {
     }
 
     /**
-     * @param text            - tooltip text
-     * @param font            - tooltip font
-     * @param fontColor       - tooltip font color
-     * @param backgroundColor = tooltip background color
-     * @param borderColor     - tooltip border color
+     * @param text            tooltip text
+     * @param x               x coord of Positionable's screen location
+     * @param y               y coord of Positionable's screen location
+     * @param font            tooltip font
+     * @param fontColor       tooltip font color
+     * @param backgroundColor tooltip background color
+     * @param borderColor     tooltip border color
      */
     public ToolTip(String text, int x, int y, Font font,
             Color fontColor, Color backgroundColor, Color borderColor) {
@@ -84,7 +86,7 @@ public class ToolTip {
     }
 
     public final void setfontSize(int size) {
-        _tFont = jmri.util.FontUtil.deriveFont(_tFont, size);
+        _tFont = _tFont.deriveFont(size);
     }
 
     public final int getFontSize() {

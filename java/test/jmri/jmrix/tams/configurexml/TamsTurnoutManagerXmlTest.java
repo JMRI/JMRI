@@ -1,0 +1,34 @@
+package jmri.jmrix.tams.configurexml;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * TamsTurnoutManagerXmlTest.java
+ *
+ * Description: tests for the TamsTurnoutManagerXml class
+ *
+ * @author   Paul Bender  Copyright (C) 2016
+ */
+public class TamsTurnoutManagerXmlTest {
+
+    @Test
+    public void testCtor(){
+      Assert.assertNotNull("TamsTurnoutManagerXml constructor",new TamsTurnoutManagerXml());
+    }
+
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+}
+

@@ -5,12 +5,13 @@ import java.awt.geom.PathIterator;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionablePolygon;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionablePolygonXml extends PositionableShapeXml {
 
@@ -23,6 +24,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionablePolygon p = (PositionablePolygon) o;
 
@@ -64,6 +66,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;
@@ -94,6 +97,9 @@ public class PositionablePolygonXml extends PositionableShapeXml {
                 case PathIterator.SEG_CLOSE:
                     path.closePath();
                     break;
+                default:
+                    log.warn("Unhandled type: {}", type);
+                    break;
             }
         }
         PositionablePolygon ps = new PositionablePolygon(ed, path);
@@ -102,4 +108,5 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
+    private final static Logger log = LoggerFactory.getLogger(PositionablePolygonXml.class.getName());
 }

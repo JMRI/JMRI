@@ -1,4 +1,3 @@
-// CarTypes.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Represents the types of cars a railroad can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarTypes extends RollingStockAttribute {
 
@@ -34,9 +32,7 @@ public class CarTypes extends RollingStockAttribute {
 
     public static synchronized CarTypes instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarTypes creating instance");
-            }
+            log.debug("CarTypes creating instance");
             // create and load
             _instance = new CarTypes();
         }
@@ -57,6 +53,7 @@ public class CarTypes extends RollingStockAttribute {
     /**
      * Changes the car types from descriptive to AAR, or the other way. Only
      * removes the default car type names from the list
+     * @param type Setup.DESCRIPTIVE or Setup.AAR
      */
     public void changeDefaultNames(String type) {
         String[] convert = CONVERT_TYPES.split(","); // NOI18N
@@ -163,6 +160,7 @@ public class CarTypes extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {

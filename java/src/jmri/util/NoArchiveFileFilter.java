@@ -1,4 +1,3 @@
-// NoArchiveFileFilter.java
 package jmri.util;
 
 /**
@@ -8,7 +7,6 @@ package jmri.util;
  * filter skips them, while still allowing you to specify others, etc.
  *
  * @author Bob Jacobsen Copyright 2007 Made from a suggestion by John Plocher
- * @version $Revision$
  */
 public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
 
@@ -20,6 +18,7 @@ public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
         super(description);
     }
 
+    @Override
     public boolean accept(java.io.File f) {
         if (f.getName().endsWith(".zip")) {
             return false;

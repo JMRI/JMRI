@@ -1,0 +1,1309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>2</major>
+    <minor>11</minor>
+    <test>3</test>
+    <modifier>.3+dev</modifier>
+  </jmriversion>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="LT1" userName="Xover" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1</systemName>
+      <userName>Xover</userName>
+    </turnout>
+    <turnout systemName="LT2" userName="EastRight" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT2</systemName>
+      <userName>EastRight</userName>
+    </turnout>
+    <turnout systemName="LT3" userName="EastLeft" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT3</systemName>
+      <userName>EastLeft</userName>
+    </turnout>
+    <turnout systemName="LT4" userName="WestRight" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT4</systemName>
+      <userName>WestRight</userName>
+    </turnout>
+    <turnout systemName="LT5" userName="WestLeft" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT5</systemName>
+      <userName>WestLeft</userName>
+    </turnout>
+  </turnouts>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS1" inverted="false" userName="Blk1W">
+      <systemName>LS1</systemName>
+      <userName>Blk1W</userName>
+    </sensor>
+    <sensor systemName="LS10" inverted="false" userName="Blk5E">
+      <systemName>LS10</systemName>
+      <userName>Blk5E</userName>
+    </sensor>
+    <sensor systemName="LS11" inverted="false" userName="Blk6W">
+      <systemName>LS11</systemName>
+      <userName>Blk6W</userName>
+    </sensor>
+    <sensor systemName="LS12" inverted="false" userName="Blk6E">
+      <systemName>LS12</systemName>
+      <userName>Blk6E</userName>
+    </sensor>
+    <sensor systemName="LS2" inverted="false" userName="Blk1E">
+      <systemName>LS2</systemName>
+      <userName>Blk1E</userName>
+    </sensor>
+    <sensor systemName="LS3" inverted="false" userName="Blk2W">
+      <systemName>LS3</systemName>
+      <userName>Blk2W</userName>
+    </sensor>
+    <sensor systemName="LS4" inverted="false" userName="Blk2E">
+      <systemName>LS4</systemName>
+      <userName>Blk2E</userName>
+    </sensor>
+    <sensor systemName="LS5" inverted="false" userName="Blk3W">
+      <systemName>LS5</systemName>
+      <userName>Blk3W</userName>
+    </sensor>
+    <sensor systemName="LS6" inverted="false" userName="Blk3E">
+      <systemName>LS6</systemName>
+      <userName>Blk3E</userName>
+    </sensor>
+    <sensor systemName="LS7" inverted="false" userName="Blk4W">
+      <systemName>LS7</systemName>
+      <userName>Blk4W</userName>
+    </sensor>
+    <sensor systemName="LS8" inverted="false" userName="Blk4E">
+      <systemName>LS8</systemName>
+      <userName>Blk4E</userName>
+    </sensor>
+    <sensor systemName="LS9" inverted="false" userName="Blk5W">
+      <systemName>LS9</systemName>
+      <userName>Blk5W</userName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM:AUTO:0001" userName="Blk1E">
+      <systemName>IM:AUTO:0001</systemName>
+      <userName>Blk1E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0002" userName="Blk2E">
+      <systemName>IM:AUTO:0002</systemName>
+      <userName>Blk2E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0003" userName="Blk3E">
+      <systemName>IM:AUTO:0003</systemName>
+      <userName>Blk3E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0004" userName="Blk4E">
+      <systemName>IM:AUTO:0004</systemName>
+      <userName>Blk4E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0005" userName="Blk5E">
+      <systemName>IM:AUTO:0005</systemName>
+      <userName>Blk5E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0006" userName="Blk6E">
+      <systemName>IM:AUTO:0006</systemName>
+      <userName>Blk6E</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0007" userName="Blk6W">
+      <systemName>IM:AUTO:0007</systemName>
+      <userName>Blk6W</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0008" userName="Blk5W">
+      <systemName>IM:AUTO:0008</systemName>
+      <userName>Blk5W</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0009" userName="Blk4W">
+      <systemName>IM:AUTO:0009</systemName>
+      <userName>Blk4W</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0010" userName="Blk3W">
+      <systemName>IM:AUTO:0010</systemName>
+      <userName>Blk3W</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0011" userName="Blk2W">
+      <systemName>IM:AUTO:0011</systemName>
+      <userName>Blk2W</userName>
+    </memory>
+    <memory systemName="IM:AUTO:0012" userName="Blk1W">
+      <systemName>IM:AUTO:0012</systemName>
+      <userName>Blk1W</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="8:34 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+  </memories>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 21 15:30:53 EST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" userName="Blk1E" occupancysensor="Blk1E" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk1E" />
+    <layoutblock systemName="ILB10" userName="Blk5E" occupancysensor="Blk5E" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk5E" />
+    <layoutblock systemName="ILB11" userName="Blk6E" occupancysensor="Blk6E" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk6E" />
+    <layoutblock systemName="ILB12" userName="Blk6W" occupancysensor="Blk6W" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk6W" />
+    <layoutblock systemName="ILB2" userName="Blk1W" occupancysensor="Blk1W" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk1W" />
+    <layoutblock systemName="ILB3" userName="Blk3E" occupancysensor="Blk3E" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk3E" />
+    <layoutblock systemName="ILB5" userName="Blk2W" occupancysensor="Blk2W" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk2W" />
+    <layoutblock systemName="ILB6" userName="Blk2E" occupancysensor="Blk2E" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk2E" />
+    <layoutblock systemName="ILB7" userName="Blk4W" occupancysensor="Blk4W" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk4W" />
+    <layoutblock systemName="ILB9" userName="Blk5W" occupancysensor="Blk5W" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black" memory="Blk5W" />
+  </layoutblocks>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+    </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+    </block>
+    <block systemName="IB9">
+      <systemName>IB9</systemName>
+    </block>
+    <block systemName="IB1" length="1016.0" curve="0" userName="Blk1E">
+      <systemName>IB1</systemName>
+      <userName>Blk1E</userName>
+      <sensor systemName="LS2" />
+      <path todir="64" fromdir="128" block="IB6" />
+    </block>
+    <block systemName="IB10" length="1016.0" curve="0" userName="Blk5E">
+      <systemName>IB10</systemName>
+      <userName>Blk5E</userName>
+      <sensor systemName="LS10" />
+      <path todir="64" fromdir="128" block="IB11" />
+      <path todir="128" fromdir="64" block="IB3" />
+    </block>
+    <block systemName="IB11" length="1016.0" curve="0" userName="Blk6E">
+      <systemName>IB11</systemName>
+      <userName>Blk6E</userName>
+      <sensor systemName="LS12" />
+      <path todir="128" fromdir="64" block="IB10" />
+    </block>
+    <block systemName="IB12" length="1016.0" curve="0" userName="Blk6W">
+      <systemName>IB12</systemName>
+      <userName>Blk6W</userName>
+      <sensor systemName="LS11" />
+      <path todir="128" fromdir="64" block="IB9" />
+    </block>
+    <block systemName="IB2" length="1016.0" curve="0" userName="Blk1W">
+      <systemName>IB2</systemName>
+      <userName>Blk1W</userName>
+      <sensor systemName="LS1" />
+      <path todir="64" fromdir="128" block="IB5" />
+    </block>
+    <block systemName="IB3" length="508.0" curve="0" userName="Blk3E">
+      <systemName>IB3</systemName>
+      <userName>Blk3E</userName>
+      <sensor systemName="LS6" />
+      <path todir="80" fromdir="160" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="LT3" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="LT3" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB6" />
+    </block>
+    <block systemName="IB4" length="508.0" curve="0" userName="Blk3W">
+      <systemName>IB4</systemName>
+      <userName>Blk3W</userName>
+      <sensor systemName="LS5" />
+      <path todir="64" fromdir="128" block="IB7">
+        <beansetting setting="2">
+          <turnout systemName="LT1" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB8">
+        <beansetting setting="4">
+          <turnout systemName="LT1" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB5" length="1016.0" curve="0" userName="Blk2W">
+      <systemName>IB5</systemName>
+      <userName>Blk2W</userName>
+      <sensor systemName="LS3" />
+      <path todir="128" fromdir="64" block="IB2" />
+      <path todir="64" fromdir="128" block="IB7" />
+    </block>
+    <block systemName="IB6" length="1016.0" curve="0" userName="Blk2E">
+      <systemName>IB6</systemName>
+      <userName>Blk2E</userName>
+      <sensor systemName="LS4" />
+      <path todir="128" fromdir="64" block="IB1" />
+      <path todir="64" fromdir="128" block="IB3" />
+    </block>
+    <block systemName="IB7" length="508.0" curve="0" userName="Blk4W">
+      <systemName>IB7</systemName>
+      <userName>Blk4W</userName>
+      <sensor systemName="LS7" />
+      <path todir="160" fromdir="80" block="IB3">
+        <beansetting setting="4">
+          <turnout systemName="LT5" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB9" />
+      <path todir="128" fromdir="64" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="LT5" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB8" length="508.0" curve="0" userName="Blk4E">
+      <systemName>IB8</systemName>
+      <userName>Blk4E</userName>
+      <sensor systemName="LS8" />
+      <path todir="128" fromdir="64" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="LT1" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB3">
+        <beansetting setting="2">
+          <turnout systemName="LT1" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB9" length="1016.0" curve="0" userName="Blk5W">
+      <systemName>IB9</systemName>
+      <userName>Blk5W</userName>
+      <sensor systemName="LS9" />
+      <path todir="64" fromdir="128" block="IB12" />
+      <path todir="128" fromdir="64" block="IB7" />
+    </block>
+  </blocks>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1EE" userName="1EE">
+      <systemName>IH1EE</systemName>
+      <userName>1EE</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1EW" userName="1EW">
+      <systemName>IH1EW</systemName>
+      <userName>1EW</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1WE" userName="1WE">
+      <systemName>IH1WE</systemName>
+      <userName>1WE</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1WW" userName="1WW">
+      <systemName>IH1WW</systemName>
+      <userName>1WW</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH3EE" userName="3EE">
+      <systemName>IH3EE</systemName>
+      <userName>3EE</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH3EW" userName="3EW">
+      <systemName>IH3EW</systemName>
+      <userName>3EW</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH3WE" userName="3WE">
+      <systemName>IH3WE</systemName>
+      <userName>3WE</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH3WW" userName="3WW">
+      <systemName>IH3WW</systemName>
+      <userName>3WW</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXAC" userName="XAC">
+      <systemName>IHXAC</systemName>
+      <userName>XAC</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXAD" userName="XAD">
+      <systemName>IHXAD</systemName>
+      <userName>XAD</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXBC" userName="XBC">
+      <systemName>IHXBC</systemName>
+      <userName>XBC</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXBD" userName="XBD">
+      <systemName>IHXBD</systemName>
+      <userName>XBD</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXCC" userName="XCC">
+      <systemName>IHXCC</systemName>
+      <userName>XCC</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXCD" userName="XCD">
+      <systemName>IHXCD</systemName>
+      <userName>XCD</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXDC" userName="XDC">
+      <systemName>IHXDC</systemName>
+      <userName>XDC</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHXDD" userName="XDD">
+      <systemName>IHXDD</systemName>
+      <userName>XDD</userName>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <signalmast systemName="IF$shsm:NYCS-1937:SL-1-low(1EE)" userName="1EE">
+      <systemName>IF$shsm:NYCS-1937:SL-1-low(1EE)</systemName>
+      <userName>1EE</userName>
+    </signalmast>
+    <signalmast systemName="IF$shsm:NYCS-1937:SL-1-low(1EW)" userName="1EW">
+      <systemName>IF$shsm:NYCS-1937:SL-1-low(1EW)</systemName>
+      <userName>1EW</userName>
+    </signalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="IHXBD" mode="3" watchedturnout="WestLeft" watchedsignal1="XCD" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="true">
+      <sensorname>Blk4W</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXBC" mode="2" watchedturnout="WestLeft" watchedsignal1="1WW" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk4W</sensorname>
+      <sensorname>Blk3W</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="3EW" mode="1" watchedsignal1="XCC" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk5E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="1WE" mode="1" watchedsignal1="XAC" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk2E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXDD" mode="3" watchedturnout="EastLeft" watchedsignal1="IHXAD" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="true">
+      <sensorname>Blk3E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXAD" mode="3" watchedturnout="WestLeft" watchedsignal1="3WE" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk4W</sensorname>
+      <sensorname>Blk5W</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXDC" mode="2" watchedturnout="EastLeft" watchedsignal1="3EE" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk3E</sensorname>
+      <sensorname>Blk5E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXAC" mode="2" watchedturnout="LT5" watchedsignal1="IH3WE" watchedsignal2="IH3EE" watchedsensor1="LS5" watchedsensor2="LS6" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensorname>LS9</sensorname>
+      <sensorname>Blk3W</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="1WW" mode="1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS1</sensorname>
+    </signalelement>
+    <signalelement signal="1EE" mode="1" watchedsignal1="IHXDC" watchedsignal1alt="IHXDD" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS4</sensorname>
+    </signalelement>
+    <signalelement signal="3WE" mode="1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS11</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXCD" mode="3" watchedturnout="EastLeft" watchedsignal1="1EW" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk3E</sensorname>
+      <sensorname>Blk2E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="1EW" mode="1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk1E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="IHXCC" mode="2" watchedturnout="EastLeft" watchedsignal1="1EW" watchedsensor1="LS2" watchedsensor2="LS1" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensorname>Blk3E</sensorname>
+      <sensorname>Blk2E</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="3WW" mode="1" watchedsignal1="IHXBC" watchedsignal1alt="IHXBD" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS9</sensorname>
+    </signalelement>
+    <signalelement signal="3EE" mode="1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS12</sensorname>
+      <comment />
+    </signalelement>
+  </signalelements>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Built From Turnouts" x="0" y="0" height="930" width="3340" windowheight="568" windowwidth="1083" panelheight="930" panelwidth="3340" sliders="yes" scrollable="both" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaulttextcolor="black" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0">
+    <sensoricon sensor="Blk1E" x="150" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk1E</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk1W" x="150" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk1W</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk2W" x="280" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk2W</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk3E" x="400" y="190" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk3E</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk2E" x="280" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk2E</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="160" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk1E" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="290" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk2E" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="410" y="190" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk3E" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="290" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk2W" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="160" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk1W" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <sensoricon sensor="Blk4W" x="470" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk4W</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="480" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk4W" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="630" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk5E" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="640" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk5W" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="830" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk6W" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="830" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Blk6E" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <signalheadicon signalhead="1EE" x="234" y="184" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>1EE</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1EW" x="250" y="164" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>1EW</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1WE" x="230" y="120" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>1WE</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1WW" x="250" y="100" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>1WW</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="3WE" x="724" y="124" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>3WE</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="3WW" x="740" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>3WW</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="3EE" x="724" y="184" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>3EE</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="3EW" x="740" y="164" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>3EW</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <sensoricon sensor="Blk5E" x="620" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk5E</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk6E" x="820" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk6E</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk6W" x="820" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk6W</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Blk5W" x="630" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>Blk5W</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <memoryicon memory="Blk1E" x="170" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Blk2E" x="310" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk2E (IM:AUTO:0002)</toolTip>
+    </memoryicon>
+    <memoryicon memory="Blk3E" x="420" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk3E (IM:AUTO:0003)</toolTip>
+    </memoryicon>
+    <memoryicon memory="Blk5E" x="640" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Blk6E" x="840" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Blk6W" x="840" y="100" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Blk5W" x="640" y="100" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk5W (IM:AUTO:0008)</toolTip>
+    </memoryicon>
+    <memoryicon memory="Blk4W" x="480" y="100" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk4W (IM:AUTO:0009)</toolTip>
+    </memoryicon>
+    <memoryicon memory="Blk2W" x="310" y="100" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk2W (IM:AUTO:0011)</toolTip>
+    </memoryicon>
+    <memoryicon memory="Blk1W" x="170" y="100" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <toolTip>Blk1W (IM:AUTO:0012)</toolTip>
+    </memoryicon>
+    <signalheadicon signalhead="XDC" x="364" y="184" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XDC</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XDD" x="344" y="184" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XDD</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XCC" x="460" y="160" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XCC</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XCD" x="440" y="144" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XCD</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XBC" x="540" y="100" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XBC</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XBD" x="560" y="100" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XBD</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XAC" x="420" y="120" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XAC</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="XAD" x="454" y="144" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>XAD</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalmasticon signalmast="1EE" x="234" y="159" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" rotation="180" scale="1.0" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>1EE (IF$shsm:NYCS-1937:SL-1-low(1EE))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="1EW" x="254" y="185" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" rotation="0" scale="1.0" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>1EW (IF$shsm:NYCS-1937:SL-1-low(1EW))</toolTip>
+    </signalmasticon>
+    <layoutturnout ident="TO1" turnoutname="EastLeft" blockname="Blk3E" type="2" connectaname="T7" connectbname="T4" connectcname="T2" signala1name="XDC" signala2name="XDD" signalb1name="XCC" signalc1name="XCD" continuing="2" disabled="no" disableWhenOccupied="no" xcen="420.0" ycen="180.0" xb="460.0" yb="180.0" xc="440.0" yc="160.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO2" turnoutname="WestLeft" blockname="Blk4W" type="2" connectaname="T3" connectbname="T9" connectcname="T2" signala1name="XBC" signala2name="XBD" signalb1name="XAC" signalc1name="XAD" continuing="2" disabled="no" disableWhenOccupied="no" xcen="490.0" ycen="120.0" xb="440.0" yb="120.0" xc="470.0" yc="140.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T5" blockname="Blk6W" connect1name="A2" type1="1" connect2name="EB3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="Blk6E" connect1name="A1" type1="1" connect2name="EB4" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T1" blockname="Blk1E" connect1name="EB2" type1="1" connect2name="A4" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="Blk1W" connect1name="EB1" type1="1" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="Blk4W" connect1name="TO1" type1="4" connect2name="TO2" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="Blk5W" connect1name="TO2" type1="2" connect2name="A2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="Blk5E" connect1name="TO1" type1="3" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="Blk2E" connect1name="A4" type1="1" connect2name="TO1" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="Blk2W" connect1name="A3" type1="1" connect2name="TO2" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="2" x="100.0" y="120.0" connect1name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="100.0" y="180.0" connect1name="T1" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="950.0" y="120.0" connect1name="T5" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="950.0" y="180.0" connect1name="T6" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="740.0" y="180.0" connect1name="T4" connect2name="T6" eastboundsignal="3EE" westboundsignal="3EW" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="740.0" y="120.0" connect1name="T3" connect2name="T5" eastboundsignal="3WE" westboundsignal="3WW" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="250.0" y="120.0" connect1name="T9" connect2name="T8" eastboundsignal="1WE" westboundsignal="1WW" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="250.0" y="180.0" connect1name="T1" connect2name="T7" eastboundsignal="1EE" westboundsignal="1EW" eastboundsignalmast="1EE" westboundsignalmast="1EW" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Jan 16 20:33:55 EST 2011</date>
+      <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Sun Jan 16 20:33:55 EST 2011</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Jan 16 20:33:57 EST 2011</date>
+      <filename>PanelProConfig-RB_Test.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Jan 16 20:33:59 EST 2011</date>
+      <filename>XoverBuildTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Jan 16 16:51:36 EST 2011</date>
+          <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Sun Jan 16 16:51:36 EST 2011</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Jan 16 16:51:47 EST 2011</date>
+          <filename>PanelProConfig-RB_Test.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Jan 16 16:51:57 EST 2011</date>
+          <filename>XoverBuildTest.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Tue Dec 28 11:48:48 EST 2010</date>
+              <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Tue Dec 28 11:48:48 EST 2010</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Tue Dec 28 11:48:49 EST 2010</date>
+              <filename>PanelProConfig-RB_Test.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Tue Dec 28 11:48:56 EST 2010</date>
+              <filename>XoverBuildTest.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Mon Dec 27 21:12:28 EST 2010</date>
+                  <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Mon Dec 27 21:12:28 EST 2010</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Mon Dec 27 21:12:31 EST 2010</date>
+                  <filename>PanelProConfig-RB_Test.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Mon Dec 27 21:12:34 EST 2010</date>
+                  <filename>XoverDoubleTest.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Mon Dec 27 08:02:56 EST 2010</date>
+                      <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Mon Dec 27 08:02:55 EST 2010</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Dec 27 08:03:01 EST 2010</date>
+                      <filename>PanelProConfig-RB_Test.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Dec 27 08:03:03 EST 2010</date>
+                      <filename>XoverRtTest.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Sun Dec 26 19:34:06 EST 2010</date>
+                          <filename>PanelPro version 2.11.3+dev starts under Java 1.6.0_22 at Sun Dec 26 19:34:06 EST 2010</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sun Dec 26 19:34:10 EST 2010</date>
+                          <filename>PanelProConfig-RB_Test.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sun Dec 26 19:34:12 EST 2010</date>
+                          <filename>XoverTest.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Sun Dec 26 21:05:26 EST 2010</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Mon Dec 27 08:20:40 EST 2010</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Mon Dec 27 22:42:52 EST 2010</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Tue Dec 28 12:02:44 EST 2010</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Jan 16 17:16:41 EST 2011</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Jan 16 20:40:38 EST 2011</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 2.11.3+dev on Sun Jan 16 20:40:38 EST 2011 $Id: XmlFile.java,v 1.57 2010/10/15 04:13:38 jacobsen Exp $-->
+</layout-config>
+

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
 import javax.swing.JFrame;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -32,6 +32,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PanelEditor
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PanelEditor p = (PanelEditor) o;
         Element panel = new Element("paneleditor");
@@ -83,6 +84,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return panel;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -225,7 +227,10 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setVisible(true);    // always show the panel
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(panel);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(panel);
+        }
 
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);
@@ -233,6 +238,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }

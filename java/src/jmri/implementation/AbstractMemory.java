@@ -1,4 +1,3 @@
-// AbstractMemory.java
 package jmri.implementation;
 
 import jmri.Memory;
@@ -10,10 +9,9 @@ import jmri.Memory;
  * <p>
  * Memory system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
+public abstract class AbstractMemory extends AbstractNamedBean implements Memory {
 
     public AbstractMemory(String systemName) {
         super(systemName.toUpperCase());
@@ -23,10 +21,12 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameMemory");
     }
 
+    @Override
     public Object getValue() {
         return _current;
     }
@@ -34,6 +34,7 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
     /**
      * Provide a general method for updating the report.
      */
+    @Override
     public void setValue(Object v) {
         Object old = _current;
         _current = v;
@@ -45,5 +46,3 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
     private Object _current = null;
 
 }
-
-/* @(#)AbstractMemory.java */

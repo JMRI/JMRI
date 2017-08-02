@@ -1,4 +1,3 @@
-// ConnectionLabel.java
 package jmri.swing;
 
 import java.awt.Color;
@@ -16,10 +15,6 @@ import jmri.jmrix.JmrixConfigPane;
  */
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4404932240707919099L;
     ConnectionConfig connection;
 
     public ConnectionLabel(ConnectionConfig connection) {
@@ -28,7 +23,7 @@ public final class ConnectionLabel extends JLabel implements PropertyChangeListe
         if (connection.name().equals(JmrixConfigPane.NONE)) {
             this.setText("");
         } else {
-            ConnectionStatus.instance().addConnection(connection.name(), connection.getInfo());
+            ConnectionStatus.instance().addConnection(connection.getConnectionName(), connection.getInfo());
             this.update();
         }
         ConnectionStatus.instance().addPropertyChangeListener(this);
@@ -42,7 +37,7 @@ public final class ConnectionLabel extends JLabel implements PropertyChangeListe
         if (name == null) {
             name = this.connection.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(this.connection.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(this.connection.getConnectionName(),this.connection.getInfo())) {
             this.setForeground(Color.BLACK);
             this.setText(Bundle.getMessage("ConnectionSucceeded",
                     name, this.connection.name(), this.connection.getInfo()));

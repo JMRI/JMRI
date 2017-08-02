@@ -70,9 +70,9 @@ pour savoir o&#249; placer l'ic&#244;ne, si elle peut &#234;tre choisie, etc
 Dans cet &#233;l&#233;ment, vous pouvez d&#233;finir des &#233;l&#233;ments "memorystate" qui
 d&#233;finissent ce que l'ic&#244;ne a &#224; afficher lorsque la m&#233;moire a une valeur sp&#233;cifique:
 <code> <pre>
-    <memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif">
-      <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" />
-      <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" />
+    <memoryicon memory="IM20" defaulticon="program:resources/icons/misc/Question-black.gif">
+      <memorystate value="9" icon="program:resources/icons/misc/Nixie/M9B.gif" />
+      <memorystate value="8" icon="program:resources/icons/misc/Nixie/M8B.gif" />
     </Memoryicon>
 </Pre> </code>
 (Cet exemple a &#233;t&#233; simplifi&#233; en omettant quelques trucs de l'&#233;l&#233;ment memoryicon)

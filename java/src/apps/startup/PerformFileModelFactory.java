@@ -1,14 +1,15 @@
 package apps.startup;
 
 import apps.PerformFileModel;
-import apps.StartupModel;
 import javax.swing.JFileChooser;
 import jmri.jmrit.XmlFile;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class PerformFileModelFactory extends AbstractFileModelFactory {
 
     @Override
@@ -25,5 +26,5 @@ public class PerformFileModelFactory extends AbstractFileModelFactory {
     protected JFileChooser setFileChooser() {
         return XmlFile.userFileChooser("XML files", "xml");
     }
-    
+
 }

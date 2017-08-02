@@ -6,13 +6,14 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a SymbolicProg object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SymbolicProgAction extends AbstractAction {
     public SymbolicProgAction(String s) {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a SimpleProgFrame

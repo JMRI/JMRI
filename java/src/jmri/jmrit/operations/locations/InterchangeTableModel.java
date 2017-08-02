@@ -1,4 +1,3 @@
-// InterchangeTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of interchanges used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class InterchangeTableModel extends TrackTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3985319043804319680L;
 
     public InterchangeTableModel() {
         super();
@@ -34,6 +27,9 @@ public class InterchangeTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("InterchangeName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

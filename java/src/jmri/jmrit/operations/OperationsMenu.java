@@ -10,14 +10,8 @@ import javax.swing.JMenu;
  *
  * @author Bob Jacobsen Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version $Revision$
  */
 public class OperationsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 701227477994394798L;
 
     public OperationsMenu(String name) {
         this();

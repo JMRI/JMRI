@@ -1,4 +1,3 @@
-// HexFileServer.java
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnCommandStationType;
@@ -11,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * ConnectionConfigXml.load() calls HexFileServer instead of HexFileFrame if
  * jmri is running in headless mode.
  *
- * @author	Steve Todd Copyright 2012
- * @version $Revision: 18841 $
+ * @author Steve Todd Copyright 2012
  */
 public class HexFileServer {
 
@@ -63,9 +61,6 @@ public class HexFileServer {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     private Thread sourceThread;

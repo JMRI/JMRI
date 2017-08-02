@@ -1,4 +1,3 @@
-// ExportEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;
@@ -9,14 +8,8 @@ import javax.swing.AbstractAction;
  * Starts the ImportEngines thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ExportEngineRosterAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3996636827704137431L;
 
     public ExportEngineRosterAction(String actionName, Component frame) {
         super(actionName);

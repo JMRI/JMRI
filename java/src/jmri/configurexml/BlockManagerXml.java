@@ -38,6 +38,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      *
      * @param memories The top-level element being created
      */
+    @Override
     public void setStoreElementClass(Element memories) {
         memories.setAttribute("class", "jmri.configurexml.BlockManagerXml");
     }
@@ -48,6 +49,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param o Object to store, of type BlockManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element blocks = new Element("blocks");
         setStoreElementClass(blocks);
@@ -73,11 +75,16 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         if (b == null) {
                             log.error("Null block during store - sname = " + sname);
                         } else {
-                            Element elem = new Element("block")
-                                    .setAttribute("systemName", sname);
+                            Element elem = new Element("block");
                             elem.addContent(new Element("systemName").addContent(sname));
+                            
+                            // As a work-around for backward compatibility, store systemName as attribute.
+                            // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                            elem.setAttribute("systemName", sname);
+                            
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
-                            if ((b.getUserName() != null) && (!b.getUserName().equals(""))) {
+                            String uname = b.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
                                 elem.addContent(new Element("userName").addContent(b.getUserName()));
                             }
                             if (log.isDebugEnabled()) {
@@ -108,9 +115,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         if (uname == null) {
                             uname = "";
                         }
-                        Element elem = new Element("block")
-                                .setAttribute("systemName", sname);
+                        Element elem = new Element("block");
                         elem.addContent(new Element("systemName").addContent(sname));
+                            
+                        // As a work-around for backward compatibility, store systemName as attribute.
+                        // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                        elem.setAttribute("systemName", sname);
+                            
                         if (log.isDebugEnabled()) {
                             log.debug("second store Block " + sname + ":" + uname);
                         }
@@ -135,9 +146,9 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
                         if (b.getDeniedBlocks().size() > 0) {
                             Element denied = new Element("deniedBlocks");
-                            for (String deniedBlock : b.getDeniedBlocks()) {
+                            b.getDeniedBlocks().forEach((deniedBlock) -> {
                                 denied.addContent(new Element("block").addContent(deniedBlock));
-                            }
+                            });
                             elem.addContent(denied);
                         }
 
@@ -150,7 +161,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                             elem.addContent(re);
                         }
 
-                        if (tm.savePathInfo()) {
+                        if (tm.isSavedPathInfo()) {
                             // then the paths
                             List<Path> paths = b.getPaths();
                             for (int i = 0; i < paths.size(); i++) {
@@ -203,8 +214,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * <p>
      * The BlockManager in the InstanceManager is created automatically.
      *
-     * @param sharedBlocks Element containing the block elements to load.
-     * @param perNodeBlocks Per-node block elements to load.
+     * @param sharedBlocks  Element containing the block elements to load
+     * @param perNodeBlocks Per-node block elements to load
      * @return true if successful
      * @throws jmri.configurexml.JmriConfigureXmlException if error during load
      */
@@ -215,10 +226,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             if (sharedBlocks.getChild("defaultspeed") != null) {
                 String speed = sharedBlocks.getChild("defaultspeed").getText();
                 if (speed != null && !speed.equals("")) {
-                    InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
+                    InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speed);
                 }
             }
-        } catch (jmri.JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error(ex.toString());
         }
 
@@ -226,7 +237,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }
-        //BlockManager tm = InstanceManager.blockManagerInstance();
+        //BlockManager tm = InstanceManager.getDefault(jmri.BlockManager.class);
 
         for (int i = 0; i < list.size(); i++) {
             Element block = list.get(i);
@@ -238,23 +249,30 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     /**
      * Utility method to load the individual Block objects.
      *
-     * @param element Element holding one block
+     * @param element Element containing one block
+     * @throws jmri.configurexml.JmriConfigureXmlException if element contains
+     *                                                     malformed or
+     *                                                     schematically invalid
+     *                                                     XMl
      */
-    public void loadBlock(Element element) throws jmri.configurexml.JmriConfigureXmlException {
+    public void loadBlock(Element element) throws JmriConfigureXmlException {
+<<<<<<< HEAD
         if (element.getAttribute("systemName") == null) {
             log.warn("unexpected null in systemName " + element + " " + element.getAttributes());
             return;
         }
+=======
+>>>>>>> JMRI/master
         String sysName = getSystemName(element);
         String userName = getUserName(element);
         if (log.isDebugEnabled()) {
             log.debug("defined Block: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
         }
 
-        Block block = InstanceManager.blockManagerInstance().getBlock(sysName);
+        Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(sysName);
         if (block == null) { // create it if doesn't exist
-            InstanceManager.blockManagerInstance().createNewBlock(sysName, userName);
-            block = InstanceManager.blockManagerInstance().getBlock(sysName);
+            InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sysName, userName);
+            block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(sysName);
         }
         if (block == null) {
             log.error("Unable to load block with system name " + sysName + " and username of " + (userName == null ? "<null>" : userName));
@@ -265,7 +283,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
         if (element.getAttribute("length") != null) {
             // load length in millimeters
-            block.setLength(Float.valueOf(element.getAttribute("length").getValue()).floatValue());
+            block.setLength(Float.parseFloat(element.getAttribute("length").getValue()));
         }
         if (element.getAttribute("curve") != null) {
             // load curve attribute
@@ -328,9 +346,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (reporters.size() == 1) {
             // Reporter
             String name = reporters.get(0).getAttribute("systemName").getValue();
-            Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(name);
-            block.setReporter(reporter);
-            block.setReportingCurrent(reporters.get(0).getAttribute("useCurrent").getValue().equals("yes"));
+            try {
+                Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
+                block.setReporter(reporter);
+                block.setReportingCurrent(reporters.get(0).getAttribute("useCurrent").getValue().equals("yes"));
+            } catch (IllegalArgumentException ex) {
+                log.warn("failed to create Reporter \"{}\" during Block load", name);
+            }
         }
 
         // load paths if present
@@ -338,10 +360,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
         int startSize = block.getPaths().size();
         int loadCount = 0;
-        
+
         for (int i = 0; i < paths.size(); i++) {
             Element path = paths.get(i);
-            if (loadPath(block, path)) loadCount++;
+            if (loadPath(block, path)) {
+                loadCount++;
+            }
         }
 
         if (startSize > 0 && loadCount > 0) {
@@ -349,18 +373,23 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
 
         if (startSize + loadCount != block.getPaths().size()) {
-            log.error("Started with " + startSize + " paths in block " + sysName + ", added "+loadCount+" but final count is "+block.getPaths().size()+"; something not right.");
+            log.error("Started with " + startSize + " paths in block " + sysName + ", added " + loadCount + " but final count is " + block.getPaths().size() + "; something not right.");
         }
-                
+
     }
 
     /**
-     * Load path into an existing Block.
+     * Load path into an existing Block from XML.
      *
      * @param block   Block to receive path
      * @param element Element containing path information
+     * @return true if path added to block; false otherwise
+     * @throws jmri.configurexml.JmriConfigureXmlException if element contains
+     *                                                     malformed or
+     *                                                     schematically invalid
+     *                                                     XMl
      */
-    public boolean loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
+    public boolean loadPath(Block block, Element element) throws JmriConfigureXmlException {
         // load individual path
         int toDir = 0;
         int fromDir = 0;
@@ -370,14 +399,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse path attribute");
         } catch (NullPointerException e) {
-            creationErrorEncountered("Block Path entry in file missing required attribute",
-                    block.getSystemName(), block.getUserName(), null);
+            handleException("Block Path entry in file missing required attribute",
+                    null, block.getSystemName(), block.getUserName(), null);
         }
 
         Block toBlock = null;
         if (element.getAttribute("block") != null) {
             String name = element.getAttribute("block").getValue();
-            toBlock = InstanceManager.blockManagerInstance().getBlock(name);
+            toBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
         }
         Path path = new Path(toBlock, toDir, fromDir);
 
@@ -388,7 +417,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
 
         // check if path already in block
-        if (!block.hasPath(path)) {    
+        if (!block.hasPath(path)) {
             block.addPath(path);
             return true;
         } else {
@@ -415,14 +444,19 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             log.error("invalid number of turnout element children");
         }
         String name = turnouts.get(0).getAttribute("systemName").getValue();
-        Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+        try {
+            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            BeanSetting bs = new BeanSetting(t, name, setting);
+            path.addSetting(bs);
+        } catch (IllegalArgumentException ex) {
+            log.warn("failed to create Turnout \"{}\" during Block load", name);
+        }
 
-        BeanSetting bs = new BeanSetting(t, name, setting);
-        path.addSetting(bs);
     }
 
+    @Override
     public int loadOrder() {
-        return InstanceManager.blockManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.BlockManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());

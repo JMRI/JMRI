@@ -1,4 +1,3 @@
-// LoaderFrame.java
 package jmri.jmrix.pricom.downloader;
 
 import java.util.ResourceBundle;
@@ -10,14 +9,9 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version $Revision$
  */
 public class LoaderFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2659741505895230693L;
     // GUI member declarations
     LoaderPane pane = new LoaderPane();
 
@@ -31,6 +25,7 @@ public class LoaderFrame extends JmriJFrame {
     }
 
     // Clean up this window
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

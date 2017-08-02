@@ -1,4 +1,3 @@
-// TurnoutSignalMast.javaa
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -24,8 +23,7 @@ import org.slf4j.LoggerFactory;
  * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
- * @version $Revision: 19027 $
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 
@@ -188,13 +186,15 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         turnouts.put(appearance, new TurnoutAspect(turn, state));
     }
 
-    HashMap<String, TurnoutAspect> turnouts = new HashMap<String, TurnoutAspect>();
+    HashMap<String, TurnoutAspect> turnouts = new HashMap<>();
 
     boolean resetPreviousStates = false;
 
     /**
      * If the signal mast driver requires the previous state to be cleared down
      * before the next state is set.
+     *
+     * @param boo true if prior states should be cleared; false otherwise
      */
     public void resetPreviousStates(boolean boo) {
         resetPreviousStates = boo;
@@ -204,7 +204,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect implements java.io.Serializable {
+    static class TurnoutAspect {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
@@ -258,6 +258,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -271,11 +272,10 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
 }
-
-/* @(#)TurnoutSignalMast.java */

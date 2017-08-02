@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterMediaPane extends JPanel {
 
-    private static final long serialVersionUID = 2420617780437463773L;
     JLabel _imageFPlabel = new JLabel();
     EditableResizableImagePanel _imageFilePath;
     JLabel _iconFPlabel = new JLabel();
@@ -86,7 +85,7 @@ public class RosterMediaPane extends JPanel {
         JTable jtAttributes = new JTable();
         jtAttributes.setModel(rosterAttributesModel);
         JScrollPane jsp = new JScrollPane(jtAttributes);
-//		jtAttributes.setFillsViewportHeight(true); // Java 1.6 only
+        jtAttributes.setFillsViewportHeight(true);
 
         JPanel mediap = new JPanel();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -175,10 +174,6 @@ public class RosterMediaPane extends JPanel {
 
     private class RosterAttributesTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3682548535759237390L;
         Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;

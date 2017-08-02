@@ -8,7 +8,6 @@ import org.jdom2.Element;
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableEllipseXml extends PositionableShapeXml {
 
@@ -21,6 +20,7 @@ public class PositionableEllipseXml extends PositionableShapeXml {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableEllipse p = (PositionableEllipse) o;
 
@@ -45,6 +45,7 @@ public class PositionableEllipseXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

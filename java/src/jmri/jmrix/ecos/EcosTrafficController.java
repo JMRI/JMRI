@@ -1,6 +1,6 @@
-// EcosTrafficController.java
 package jmri.jmrix.ecos;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -44,10 +43,12 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     EcosSystemConnectionMemo adaptermemo;
 
     // The methods to implement the EcosInterface
+    @Override
     public synchronized void addEcosListener(EcosListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeEcosListener(EcosListener l) {
         this.removeListener(l);
     }
@@ -59,14 +60,17 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
-     * CommandStation implementation This is NOT Supported in the ECOS
+     * CommandStation implementation.
+     * This is NOT Supported in the ECoS
      */
+    @Override
     public void sendPacket(byte[] packet, int count) {
     }
 
     /**
-     * Forward a EcosMessage to all registered EcosInterface listeners.
+     * Forward an EcosMessage to all registered EcosInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((EcosListener) client).message((EcosMessage) m);
     }
@@ -74,14 +78,17 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a EcosReply to all registered EcosInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((EcosListener) client).reply((EcosReply) r);
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -89,6 +96,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a pre-formatted message to the actual interface.
      */
+    @Override
     public void sendEcosMessage(EcosMessage m, EcosListener reply) {
         sendMessage(m, reply);
     }
@@ -100,46 +108,62 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     protected boolean unsolicitedSensorMessageSeen = false;
 
+<<<<<<< HEAD
     //Ecos doesn't support this function.
+=======
+    /**
+     *  ECoS doesn't support this function.
+     */
+>>>>>>> JMRI/master
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return EcosMessage.getProgMode();
     }
 
     //Ecos doesn't support this function!
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return EcosMessage.getExitProgMode();
     }
 
     /**
-     * static function returning the EcosTrafficController instance to use.
+     * Static function returning the EcosTrafficController instance to use.
      *
      * @return The registered EcosTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public EcosTrafficController instance() {
         return self;
     }
 
     //This can be removed once multi-connection is complete
+    @Override
+    @Deprecated
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
 
+    @Override
     protected AbstractMRReply newReply() {
         EcosReply reply = new EcosReply();
         return reply;
     }
 
-    // for now, receive always OK
+    /**
+     * @return for now, receive always OK
+     */
     @Override
     protected boolean canReceive() {
         return true;
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // detect that the reply buffer ends with "COMMAND: " (note ending
         // space)
@@ -289,13 +313,15 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
     }
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "ECoS";
+            return "ECoS"; // NOI18N
         }
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "U";
@@ -303,6 +329,5 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return adaptermemo.getSystemPrefix();
     }
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
-}
 
-/* @(#)EcosTrafficController.java */
+}

@@ -4,6 +4,7 @@
 
 var jmri = null;
 var view = "";
+var CODE_TERMINATED = 0x80;
 
 /*
  * request and show a list of available trains from JMRI server
@@ -13,6 +14,7 @@ function getTrains(showAll) {
         url: "/operations/trains?format=html" + ((showAll) ? "&show=all" : ""),
         data: {},
         success: function (data) {
+//        	jmri.log("redrawing Trains table");
             if (data.length === 0) {
                 $("#warning-no-trains").removeClass("hidden").addClass("show");
                 $("#trains").removeClass("show").addClass("hidden");
@@ -24,15 +26,7 @@ function getTrains(showAll) {
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
             $("#trains-options").removeClass("hidden").addClass("show");
-            $("#trains > tbody").children("tr").each(function () {
-                if (window.console) {
-                    console.log("Requesting train id " + $(this).data("train"));
-                }
-                if (jmri !== null) {
-                    jmri.getTrain($(this).data("train"));
-                }
-            });
-        },
+       },
         dataType: "html"
     });
 }
@@ -117,16 +111,17 @@ function getConductor(id, location) {
                     $(".rs-check").prop("checked", false);
                     $("#move-train").prop("disabled", true);
                 });
+                //disable move button if no location
+                if (!$("#move-train").data("location")) {
+                    $("#move-train").prop("disabled", true);
+                }
                 // disable/enable controls if no work
                 if ($(".rs-check").length === 0) {
                     $("#move-train").prop("disabled", false);
                     $("#check-all").prop("disabled", true);
                     $("#clear-all").prop("disabled", true);
                 }
-                if (!$("#move-train").data("location")) {
-                    $("#move-train").prop("disabled", true);
-                }
-                // enable move button only if all checkboxs are checked
+                // enable move button if all checkboxs are checked
                 $(".rs-check").click(function () {
                     var disabled = true;
                     if (this.checked) {
@@ -140,6 +135,11 @@ function getConductor(id, location) {
                     }
                     $("#move-train").prop("disabled", disabled);
                 });
+                //disable move button if train is terminated
+                if ($("#move-train").data("statuscode") == CODE_TERMINATED) {
+                    $("#move-train").prop("disabled", true);
+                }
+                
                 // add function to move button
                 $("#move-train").click(function () {
                     getConductor(id, $("#move-train").data("location"));
@@ -186,9 +186,14 @@ $(document).ready(function () {
                 jmri.getTrain($("html").data("train"));
             } else if (view === "trains") {
                 getTrains($("#show-all-trains > input").is(":checked"));
+                jmri.getList("trains"); //request updates when trains are added or deleted
             }
         },
+        trains: function (data) { //trains list received, refresh the trains table
+            getTrains($("#show-all-trains > input").is(":checked")); //refresh the trains table
+        },
         train: function (id, data) {
+//        	jmri.log("in train: for " + data.iconName);
             if (view === "manifest") {
                 if (id == $("html").data("train")) {
                     $("title").text(data.iconName + " (" + data.description + ") Manifest | " + $("html").data("railroad"));
@@ -198,7 +203,7 @@ $(document).ready(function () {
                     $("title").text(data.iconName + " (" + data.description + ") Conductor | " + $("html").data("railroad"));
                     getConductor(id, false);
                 }
-            } else if (view === "trains") {
+            } else if (view === "trains") { //if this train already shown, replace columns in that row
                 var row = $("tr[data-train=" + id + "]");
                 if ($(row).length) {
                     $(row).find(".train-name").text(data.iconName); // train icon name
@@ -210,10 +215,12 @@ $(document).ready(function () {
                     $(row).children(".train-location").text(data.location); // location
                     $(row).children(".train-trainTerminatesName").text(data.trainTerminatesName); // destination
                     $(row).children(".train-route").text(data.route); // route
-                } else {
-                    // how should I add a new train?
-                    // reload the page for now
-                    location.reload(false);
+                } else { //add unknown trains only if showAll is checked, or train has cars (active)
+                	if ($("#show-all-trains > input").is(":checked") 
+                		|| data.cars.length > 0 ) {
+//                		jmri.log("new train found, reloading trains table");
+                		getTrains($("#show-all-trains > input").is(":checked"));
+                	}
                 }
             }
         }

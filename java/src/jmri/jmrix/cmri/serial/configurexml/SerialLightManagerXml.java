@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.cmri.serial.configurexml;
 
 import jmri.jmrix.cmri.serial.SerialLightManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -23,18 +21,18 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SerialLightManager.instance();
         // load individual lights
         return loadLights(shared);
     }

@@ -1,4 +1,3 @@
-// LocoNetListener.java
 package jmri.jmrix.loconet;
 
 /**
@@ -11,9 +10,8 @@ package jmri.jmrix.loconet;
  * simplification of client code. We've not done that yet because we're not sure
  * that deadlocks can be avoided in that case.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001
+  */
 public interface LocoNetListener extends java.util.EventListener {
 
     /**
@@ -26,6 +24,3 @@ public interface LocoNetListener extends java.util.EventListener {
      */
     public void message(LocoNetMessage msg);
 }
-
-
-/* @(#)LocoNetListener.java */

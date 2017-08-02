@@ -1,8 +1,6 @@
-// PiSprogOneCSSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +13,17 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogOneCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public PiSprogOneCSSerialDriverAdapter() {
         super(SprogMode.OPS, 115200);
-        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
+        options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
+                new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
+                true)); // first element (TrackPowerState) NOI18N
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG One Command Station");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprog1CSTitle"));
     }
 
     /**
@@ -35,19 +34,14 @@ public class PiSprogOneCSSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
-    //private Thread slotThread;
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public PiSprogOneCSSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            PiSprogOneCSSerialDriverAdapter m = new PiSprogOneCSSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    static volatile PiSprogOneCSSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogOneCSSerialDriverAdapter.java */

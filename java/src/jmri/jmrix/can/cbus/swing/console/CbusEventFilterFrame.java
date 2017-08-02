@@ -1,7 +1,3 @@
-/*
- * CbusEventFilterFrame.java
- *
- */
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.awt.Color;
@@ -16,17 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame to control an instance of CBUS filter to filter events
+ * Frame to control an instance of CBUS filter to filter events.
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusEventFilterFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -618391050120364272L;
     protected static final int FILTERS = 4;
     static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
@@ -37,7 +28,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     private CbusConsolePane _console = null;
 
     /**
-     * Creates a new instance of CbusFilterFrame
+     * Create a new instance of CbusFilterFrame.
      */
     public CbusEventFilterFrame(CbusConsolePane console) {
         super();
@@ -56,17 +47,19 @@ public class CbusEventFilterFrame extends JmriJFrame {
     }
 
     protected String title() {
-        return "CBUS EventFilter";
+        return Bundle.getMessage("EventFilterTitle");
     }
 
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         super.dispose();
 //        _console.filterFrameClosed();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setTitle(title());
         // Panels will be added downwards
@@ -77,7 +70,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
             // Pane to hold a filter
             filterPanes[i] = new CbusEventFilterPanel(this, i);
             filterPanes[i].setBorder(BorderFactory.createTitledBorder(
-                    BorderFactory.createEtchedBorder(), "Filter " + (i + 1)));
+                    BorderFactory.createEtchedBorder(), Bundle.getMessage("EventFilterTitleX", (i + 1))));
             filterPanes[i].initComponents(i);
             getContentPane().add(filterPanes[i]);
         }
@@ -138,7 +131,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected void addHelpMenu() {
 
         // *** TO DO
-//    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
+//     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class.getName());

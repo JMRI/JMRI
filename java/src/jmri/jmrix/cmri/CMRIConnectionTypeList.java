@@ -1,14 +1,16 @@
-// CMRIConnectionTypeList.java
 package jmri.jmrix.cmri;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid CMRI Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class CMRIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String CMRI = "C/MRI";

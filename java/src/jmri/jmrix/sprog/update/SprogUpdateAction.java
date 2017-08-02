@@ -1,30 +1,20 @@
-//SprogUpdateAction.java
 package jmri.jmrix.sprog.update;
 
-import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
  *
  * @author	Andrew crosland Copyright (C) 2004
- * @version	$Revision$
  */
-public class SprogUpdateAction extends AbstractAction {
+abstract public class SprogUpdateAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6041262829964811405L;
+    protected SprogSystemConnectionMemo _memo = null;
 
-    public SprogUpdateAction(String s) {
+    public SprogUpdateAction(String s,SprogSystemConnectionMemo memo) {
         super(s);
-    }
-
-    public void actionPerformed(ActionEvent e) {
+        _memo = memo;
     }
 
 }
-
-
-/* @(#)SprogUpdateAction.java */

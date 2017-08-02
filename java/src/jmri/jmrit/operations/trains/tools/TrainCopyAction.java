@@ -1,4 +1,3 @@
-// TrainCopyAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -11,7 +10,6 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class TrainCopyAction extends AbstractAction {
 
@@ -39,4 +37,4 @@ public class TrainCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainCopyAction.java */
+

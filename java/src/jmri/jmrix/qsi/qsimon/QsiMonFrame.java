@@ -1,42 +1,41 @@
-// QsiMonFrame.java
 package jmri.jmrix.qsi.qsimon;
 
 import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) QSI command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2700439550177448217L;
-
-    public QsiMonFrame() {
+    private QsiSystemConnectionMemo _memo = null;
+    public QsiMonFrame(QsiSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     protected String title() {
         return "QSI Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
-        QsiTrafficController.instance().addQsiListener(this);
+        _memo.getQsiTrafficController().addQsiListener(this);
     }
 
+    @Override
     public void dispose() {
-        QsiTrafficController.instance().removeQsiListener(this);
+        _memo.getQsiTrafficController().removeQsiListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(QsiMessage l) {  // receive a message and log it
         int opcode = l.getElement(0);
         String text = null;
@@ -55,13 +54,14 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
                     text = "OP_REQ_CLEAR_ERROR_STATUS";
                     break;
                 default:
-                    text = "Unrecognized message with code " + opcode + ": " + l.toString();
+                    text = "Unrecognized message with code " + opcode + ": " + l.toString(_memo.getQsiTrafficController());
                     break;
             }
         }
-        nextLine("M: " + text + "\n", l.toString());
+        nextLine("M: " + text + "\n", l.toString(_memo.getQsiTrafficController()));
     }
 
+    @Override
     public synchronized void reply(QsiReply l) {  // receive a reply message and log it
         String text;
 
@@ -81,9 +81,9 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
             }
 
         } else {
-            text = "U: Unrecognized reply: " + l.toString();
+            text = "U: Unrecognized reply: " + l.toString(_memo.getQsiTrafficController());
         }
-        nextLine(text + "\n", l.toString());
+        nextLine(text + "\n", l.toString(_memo.getQsiTrafficController()));
     }
 
 }

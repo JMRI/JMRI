@@ -1,4 +1,3 @@
-// Server.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.io.FileInputStream;
@@ -14,7 +13,6 @@ import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
-import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
  */
 public class Server {
 
@@ -168,8 +165,8 @@ public class Server {
                     }
                 };
             }
-            if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -198,8 +195,8 @@ public class Server {
             }
         }
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 
@@ -217,15 +214,16 @@ public class Server {
 
     class ClientListener implements Runnable {
 
+        @Override
         public void run() {
             Socket newClientConnection;
             String remoteAddress;
             try {
                 serverSocket = new ServerSocket(getPortNumber());
-                SocketUtil.setReuseAddress(serverSocket, true);
+                serverSocket.setReuseAddress(true);
                 while (!socketListener.isInterrupted()) {
                     newClientConnection = serverSocket.accept();
-                    remoteAddress = SocketUtil.getRemoteSocketAddress(newClientConnection);
+                    remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
                     log.info("Server: Connection from: " + remoteAddress);
                     addClient(new ClientRxHandler(remoteAddress, newClientConnection));
                 }

@@ -1,4 +1,3 @@
-// StagingTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class StagingTableModel extends TrackTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 406205617566439045L;
 
     public StagingTableModel() {
         super();
@@ -34,6 +27,9 @@ public class StagingTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("StagingName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

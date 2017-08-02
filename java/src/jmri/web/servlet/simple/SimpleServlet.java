@@ -1,7 +1,7 @@
-// SimpleWebSocketServlet.java
 package jmri.web.servlet.simple;
 
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -28,14 +28,19 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
+ * WebSocket servlet for JMRI Simple service protocol.
  *
- * @author rhwood
+ * @author Randall Wood (c) 2016
  */
+@WebServlet(name = "SimpleServlet",
+        urlPatterns = {"/simple"})
+@ServiceProvider(service = HttpServlet.class)
 public class SimpleServlet extends WebSocketServlet {
 
-    private static final long serialVersionUID = 3435613482175230757L;
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
     @Override
@@ -102,7 +107,7 @@ public class SimpleServlet extends WebSocketServlet {
                 log.warn(e.getMessage(), e);
                 this.connection.getSession().close();
             }
-            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
 
         @OnWebSocketError
@@ -112,13 +117,11 @@ public class SimpleServlet extends WebSocketServlet {
 
         @OnWebSocketMessage
         public void onMessage(String string) {
-            if (log.isDebugEnabled()) {
-                log.debug("Received from client: {}", string);
-            }
+            log.debug("Received from client: {}", string);
             try {
                 if (string.startsWith("POWER")) {
                     this.powerServer.parseStatus(string);
-                    this.powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+                    this.powerServer.sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                 } else if (string.startsWith("TURNOUT")) {
                     this.turnoutServer.parseStatus(string);
                 } else if (string.startsWith("LIGHT")) {
@@ -140,12 +143,12 @@ public class SimpleServlet extends WebSocketServlet {
                 } catch (IOException ie) {
                     log.warn(ie.getMessage(), ie);
                     this.connection.getSession().close();
-                    InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                    InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
                 }
             } catch (IOException ie) {
                 log.warn(ie.getMessage(), ie);
                 this.connection.getSession().close();
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }
         }
     }

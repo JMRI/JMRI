@@ -1,4 +1,3 @@
-// XNetListener.java
 package jmri.jmrix.lenz;
 
 /**
@@ -11,10 +10,9 @@ package jmri.jmrix.lenz;
  * simplification of client code. We've not done that yet because we're not sure
  * that deadlocks can be avoided in that case.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2010
+  */
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
     /**
@@ -37,11 +35,11 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
     public void message(XNetMessage msg);
 
     /**
-     * Member function invoked by an XNetInterface implementation to notify * a
-     * sender that an outgoing message timed out and was dropped from the *
+     * Member function invoked by an XNetInterface implementation to notify a
+     * sender that an outgoing message timed out and was dropped from the
      * queue.
      */
     public void notifyTimeout(XNetMessage msg);
 
 }
-/* @(#)XNetListener.java */
+

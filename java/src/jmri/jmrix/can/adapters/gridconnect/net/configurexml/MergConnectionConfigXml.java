@@ -15,7 +15,7 @@ import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 19698 $
+ * 
  */
 public class MergConnectionConfigXml extends ConnectionConfigXml {
 
@@ -23,10 +23,12 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new MergNetworkDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((MergConnectionConfig) object).getAdapter();
     }

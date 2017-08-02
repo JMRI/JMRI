@@ -10,44 +10,68 @@
     <name>Help</name>
     <name xml:lang="it">Aiuto</name>
     <name xml:lang="de">Hilfe</name>
+	<name xml:lang="ca">Ajuda</name>
+    <name xml:lang="cs">Nápověda</name>
+    <name xml:lang="nl">Help</name>
     <mnemonic>h</mnemonic>
     <node>
         <name>General</name>
         <name xml:lang="it">Generale</name>
         <name xml:lang="de">Allgemeinhilfe</name>
+		<name xml:lang="ca">General</name>
+        <name xml:lang="cs">Obsah</name>
+        <name xml:lang="nl">Algemene Help</name>
         <help>index</help>
     </node>
     <node>
         <name>Window-Specific</name>
         <name xml:lang="it">Specifico</name>
         <name xml:lang="de">Fensterhilfe</name>
+		<name xml:lang="ca">Finestra-Específica</name>
+        <name xml:lang="cs">Kontextová nápověda</name>
+        <name xml:lang="nl">Vensterhelp</name>
     </node>
     <node>
         <name>License</name>
         <name xml:lang="it">Licenza</name>
         <name xml:lang="de">Lizenz</name>
+		<name xml:lang="ca">Llicència</name>
+        <name xml:lang="cs">Licence</name>
+        <name xml:lang="nl">Licentie</name>
         <adapter>apps.LicenseAction</adapter>
     </node>
     <node>
         <name>Locations</name>
         <name xml:lang="it">Località</name>
         <name xml:lang="de">Ablageorte</name>
+		<name xml:lang="ca">Ubicacions</name>
+        <name xml:lang="cs">Umístění</name>
+        <name xml:lang="nl">Opslaglocaties</name>
     </node>
     <node>
         <name>Context</name>
         <name xml:lang="it">Contesto</name>
         <name xml:lang="de">Zusammenhang</name>
+		<name xml:lang="ca">Context</name>
+        <name xml:lang="cs">Prostředí</name>
+        <name xml:lang="nl">Systeemcontext</name>
         <adapter>apps.ReportContextAction</adapter>
     </node>
     <node>
         <name>Upload Debugging Info</name>
         <name xml:lang="it">Carica Info Debug</name>
         <name xml:lang="de">Lade Debugging Info auf</name>
+		<name xml:lang="ca">Envia Informació de Debugging</name>
+        <name xml:lang="nl">Verstuur Debug-informatie</name>
+        <name xml:lang="cs">Nahrát ladící informace</name>
     </node>
     <node>
         <name>System Console</name>
         <name xml:lang="it">Consolle di Sistema</name>
         <name xml:lang="de">Systemkonsole</name>
+		<name xml:lang="ca">Consola de Sistema</name>
+        <name xml:lang="cs">Systémová konzole</name>
+        <name xml:lang="nl">Systeemconsole</name>
         <adapter>apps.SystemConsoleAction</adapter>
     </node>
     

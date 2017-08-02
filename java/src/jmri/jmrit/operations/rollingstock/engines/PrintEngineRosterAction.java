@@ -1,6 +1,6 @@
-// PrintEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2014
- * @version $Revision$
  */
 public class PrintEngineRosterAction extends AbstractAction {
 
@@ -53,7 +52,7 @@ public class PrintEngineRosterAction extends AbstractAction {
     static final String TAB = "\t"; // NOI18N
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this

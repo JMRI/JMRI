@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  * translated from  section 2.16 of the manual from the German 
  * with the aid of google translate).
  * <UL>
- * <LI>0x00000001 send XPressNet related information (track
+ * <LI>0x00000001 send XpressNet related information (track
  * power on/off, programming mode, short circuit, broadcast stop,
  * locomotive information, turnout information).</LI>
  * <LI>0x00000002 send data changes that occur on the RMBUS.</LI>
  * <LI>0x00000004 (deprecated by Roco) send Railcom Data</LI>
  * <LI>0x00000100 send changes in system state (such as track voltage)
- * <LI>0x00010000 send changes to locomotives on XPressNet (must also have
+ * <LI>0x00010000 send changes to locomotives on XpressNet (must also have
  * 0x00000001 set.</LI>
  * <LI>0x01000000 forward LocoNet data to the client.  Does not send
  * Locomotive or turnout data.</LI>
@@ -32,21 +32,12 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.CommandStation {
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
     private int serial_number = 0; // holds the serial number of the Z21.
     private float software_version = 0; // holds the software version of the Z21.
     private int hardware_version = 0; // holds the hardware version of the Z21.
-
-    /**
-     * Roco does use a service mode
-     */
-    @Override
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
 
    /**
     * get the serial number.
@@ -114,7 +105,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * Is flag bit 0x00000001 which tells the command station to send 
-    * XPressNet related information (track power on/off, programming 
+    * XpressNet related information (track power on/off, programming
     * mode, short circuit, broadcast stop, locomotive information, 
     * turnout information) set?
     * @return true if flag is set.
@@ -125,7 +116,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * Set flag bit 0x00000001 which tells the command station to send 
-    * XPressNet related information (track power on/off, programming 
+    * XpressNet related information (track power on/off, programming
     * mode, short circuit, broadcast stop, locomotive information, 
     * turnout information).
     * @param flag true if flag is to be set.
@@ -138,8 +129,6 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
            broadcast_flags = broadcast_flags & (~(0x00000001));
         }
     }
-
-
 
    /**
     * Is flag bit 0x00000002 which tells the command station to send 
@@ -214,8 +203,9 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * Is flag bit 0x00010000 which tells the command station to send 
-    * XPressNet related locomoitve information to the client set?
-    * @return true if flag is set.
+    * XpressNet related locomoitve information to the client set?
+    *
+    * @return true if flag is set
     */
     public boolean getXPressNetLocomotiveMessagesFlag(){
         return((broadcast_flags & 0x00010000) == 0x00010000);
@@ -223,7 +213,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * Set flag bit 0x00010000 which tells the command station to send 
-    * XPressNet related locomoitve information to the client.
+    * XpressNet related locomoitve information to the client.
     * @param flag true if flag is to be set.
     */
     public void setXPressNetLocomotiveMessagesFlag(boolean flag){
@@ -245,7 +235,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * set flag bit 0x01000000 which tells the command station to send 
+    * Set flag bit 0x01000000 which tells the command station to send
     * LocoNet data,except Locomotive and Turnout data, to the client.
     * @param flag true if flag is to be set.
     */

@@ -1,4 +1,3 @@
-// CarColors.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the colors that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarColors extends RollingStockAttribute {
 
@@ -29,9 +27,7 @@ public class CarColors extends RollingStockAttribute {
 
     public static synchronized CarColors instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarColors creating instance");
-            }
+            log.debug("CarColors creating instance");
             // create and load
             _instance = new CarColors();
         }
@@ -68,6 +64,7 @@ public class CarColors extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {

@@ -11,7 +11,6 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-  <!-- $Id$ -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the most important few CVs -->
   <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
@@ -21,12 +20,14 @@
         <label>
           <text>Using a dccAddress element</text>
           <text xml:lang="it">Usa un Indirizzo DCC</text>
+		  <text xml:lang="ca">Usant una Adreça DCC</text>
         </label>
         <dccaddress/>
         <separator/>
         <label>
           <text>As two numbers and mode selection</text>
           <text xml:lang="it">Con due numeri e seleziona il Modo</text>
+		  <text xml:lang="ca">Com dos nombres i selecció de mode</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
@@ -35,6 +36,7 @@
         <label>
           <text>As two numbers and checkbox</text>
           <text xml:lang="it">Con due numeri e seleziona il checkbox</text>
+		  <text xml:lang="ca">Amb dos nombres i selecció del checkbox</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
@@ -43,6 +45,7 @@
         <label>
           <text>As two numbers and radiobuttons</text>
           <text xml:lang="it">Con due numeri e seleziona il Pulsante</text>
+		  <text xml:lang="ca">Com dos numbres i selecció del polsador</text>
         </label>
         <row>
           <column>
@@ -63,6 +66,7 @@
         <separator/>
       </column>
       <name xml:lang="it">Indirizzo Decoder</name>
+	  <name xml:lang="ca">Adreça del Descodificador</name>
     </pane>
     <pane nameFmt="item">
       <name>Enums</name>
@@ -70,41 +74,48 @@
         <label>
           <text>Default form</text>
           <text xml:lang="it">Pannello di Defaul</text>
+		  <text xml:lang="ca">Pannell per defecte</text>
         </label>
         <display item="Speed Table Definition" layout="left"/>
         <separator/>
         <label>
           <text>As a checkbox, 1 if checked</text>
           <text xml:lang="it">Come checkbox, 1 se spuntato</text>
+		  <text xml:lang="ca">Com al checkbox, 1 si està activat</text>
         </label>
         <display item="Speed Table Definition" format="checkbox" layout="left"/>
         <separator/>
         <label>
           <text>As a set of radiobuttons</text>
           <text xml:lang="it">Come gruppo di Pulsanti</text>
+		  <text xml:lang="ca">Com un grup de polsadors</text>
         </label>
         <display item="Speed Table Definition" format="radiobuttons" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, 1 (on) if selected</text>
           <text xml:lang="it">Come Pulsante radio, 1 (on) se premuto</text>
+		  <text xml:lang="ca">Com Polsadors, 1 (on) si és premut</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, 0 (off) if selected</text>
           <text xml:lang="it">Come Pulsante radio, 0 (off)se premuto</text>
+		  <text xml:lang="ca">Com Polsador, 0 (off) si és premut</text>
         </label>
         <display item="Speed Table Definition" format="offradiobutton" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, using just the state label</text>
           <text xml:lang="it">Come Pulsante radio, usa scritta di stato</text>
+		  <text xml:lang="ca">Com Polsador, usa l'estat escrit</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" label="" layout="left"/>
         <separator/>
       </column>
       <name xml:lang="it">Lista Valori</name>
+	  <name xml:lang="ca">Llista de valors</name>
     </pane>
     <pane nameFmt="item">
       <name>Values</name>
@@ -112,12 +123,14 @@
         <label>
           <text>Default form</text>
           <text xml:lang="it">Pannello di Defaul</text>
+		  <text xml:lang="ca">Pannell per defecte</text>
         </label>
         <display item="Short Address" layout="left"/>
         <separator/>
         <label>
           <text>As a horizontal slider</text>
           <text xml:lang="it">Come scorrimento orizzontale</text>
+		  <text xml:lang="ca">Com desplaçament horitzontal</text>
         </label>
         <display item="Short Address" layout="left" format="hslider"/>
       </column>
@@ -125,10 +138,12 @@
         <label>
           <text>As a vertical slider</text>
           <text xml:lang="it">Come scorrimento verticale</text>
+		  <text xml:lang="ca">Com desplaçament vertical</text>
         </label>
         <display item="Short Address" layout="left" format="vslider"/>
       </column>
       <name xml:lang="it">Valori</name>
+	  <name xml:lang="ca">Valor</name>
     </pane>
   </programmer>
 </programmer-config>

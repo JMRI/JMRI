@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
+import jmri.server.json.light.JsonLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonClientLight extends AbstractLight implements JsonClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8476285407567592168L;
     private static final Logger log = LoggerFactory.getLogger(JsonClientLight.class);
     private final JsonClientSystemConnectionMemo memo;
 
@@ -31,7 +28,7 @@ public class JsonClientLight extends AbstractLight implements JsonClientListener
     protected void doNewState(int oldState, int newState) {
         if (oldState != newState) {
             ObjectNode root = this.memo.getTrafficController().mapper.createObjectNode();
-            root.put(JSON.TYPE, JSON.LIGHT);
+            root.put(JSON.TYPE, JsonLight.LIGHT);
             // TODO: if server indicates that PUT is not valid, use SET
             // TODO: if server indicates that SET is not valid, do nothing
             // TODO: Note that JSON protocol needs to be extended to support this
@@ -71,7 +68,7 @@ public class JsonClientLight extends AbstractLight implements JsonClientListener
 
     @Override
     public void reply(JsonClientReply reply) {
-        if (reply.getMessage().path(JSON.TYPE).asText().equals(JSON.LIGHT)) {
+        if (reply.getMessage().path(JSON.TYPE).asText().equals(JsonLight.LIGHT)) {
             this.reply(reply.getData());
         }
     }
@@ -89,6 +86,9 @@ public class JsonClientLight extends AbstractLight implements JsonClientListener
                 break;
             case JSON.UNKNOWN:
                 this.notifyStateChange(this.mState, Light.UNKNOWN);
+                break;
+            default:
+                log.warn("Unhandled state: {}", state);
                 break;
         }
     }

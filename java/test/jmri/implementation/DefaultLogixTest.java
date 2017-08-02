@@ -2,7 +2,7 @@ package jmri.implementation;
 
 import jmri.*;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -16,6 +16,7 @@ public class DefaultLogixTest extends NamedBeanTest {
     /**
      * Operate parent NamedBeanTest tests.
      */
+    @Override
     protected NamedBean createInstance() {
         return new DefaultLogix("IX 0");
     }

@@ -4,7 +4,6 @@
  * Description:	Stands in for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc;
 
@@ -16,10 +15,12 @@ class EasyDccInterfaceScaffold implements EasyDccListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(EasyDccMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(EasyDccReply r) {
         rcvdReply = r;
     }

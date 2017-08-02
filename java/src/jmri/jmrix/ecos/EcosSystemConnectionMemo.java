@@ -1,4 +1,3 @@
-// EcosSystemConnectionMemo.java
 package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
@@ -11,8 +10,7 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -69,16 +67,17 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.ecos.EcosDccThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
-        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
-        jmri.InstanceManager.setSensorManager(sensorManager);
-
         reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
         jmri.InstanceManager.setReporterManager(reporterManager);
+        
+        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
+        jmri.InstanceManager.setSensorManager(sensorManager);
         
         jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
 
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.ecos.EcosActionListBundle");
     }
@@ -128,8 +127,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tell which managers this provides by class.
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -159,6 +159,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -221,7 +222,5 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
 }
-
-
-/* @(#)InternalSystemConnectionMemo.java */

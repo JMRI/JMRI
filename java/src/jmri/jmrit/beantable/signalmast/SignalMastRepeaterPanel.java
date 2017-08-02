@@ -15,13 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.implementation.SignalMastRepeater;
 import jmri.managers.DefaultSignalMastManager;
+import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
@@ -32,15 +35,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Signal Mast Add / Edit Panel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 20084 $
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9220621583127217095L;
 
     DefaultSignalMastManager dsmm;
 
@@ -52,7 +49,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
     public SignalMastRepeaterPanel() {
         super();
-        dsmm = (DefaultSignalMastManager) jmri.InstanceManager.signalMastManagerInstance();
+        dsmm = (DefaultSignalMastManager) jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         dsmm.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
@@ -66,14 +63,12 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         add(header, BorderLayout.NORTH);
 
         _RepeaterModel = new SignalMastRepeaterModel();
-        JTable _RepeaterTable = jmri.util.JTableUtil.sortableDataModel(_RepeaterModel);
+        JTable _RepeaterTable = new JTable(_RepeaterModel);
 
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) _RepeaterTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(SignalMastRepeaterModel.DIR_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel);
+        sorter.setComparator(SignalMastRepeaterModel.DIR_COLUMN, new jmri.util.SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, SignalMastRepeaterModel.DIR_COLUMN, SortOrder.ASCENDING);
+        _RepeaterTable.setRowSorter(sorter);
 
         _RepeaterTable.setRowSelectionAllowed(false);
         _RepeaterTable.setPreferredScrollableViewportSize(new java.awt.Dimension(526, 120));
@@ -87,6 +82,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         _MasterBox = new JmriBeanComboBox(dsmm);
         _MasterBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSlaveBoxLists();
             }
@@ -101,6 +97,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         _addRepeater = new JButton(Bundle.getMessage("ButtonAdd"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 SignalMastRepeater rp = new SignalMastRepeater((SignalMast) _MasterBox.getSelectedBean(), (SignalMast) _SlaveBox.getSelectedBean());
                 try {
@@ -162,6 +159,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 
     }
@@ -174,11 +172,6 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
     }
 
     public class SignalMastRepeaterModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -452987462897570268L;
 
         SignalMastRepeaterModel() {
             super();
@@ -246,10 +239,10 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
                 return Bundle.getMessage("ColumnSlave");
             }
             if (col == ENABLE_COLUMN) {
-                return Bundle.getMessage("ColumnEnabled");
+                return Bundle.getMessage("ColumnHeadEnabled");
             }
             if (col == DEL_COLUMN) {
-                return Bundle.getMessage("ColumnDelete");
+                return "";
             }
             return "";
         }
@@ -258,6 +251,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("repeaterlength")) {
                 updateDetails();
@@ -291,6 +285,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
                     .setPreferredWidth((sample.getPreferredSize().width) + 4);
         }
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
@@ -322,6 +317,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         public void setSetToState(String x) {
         }
 
+        @Override
         public int getRowCount() {
             if (_signalMastRepeaterList == null) {
                 return 0;
@@ -329,6 +325,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             return _signalMastRepeaterList.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (r >= _signalMastRepeaterList.size()) {
                 log.debug("row is greater than turnout list size");

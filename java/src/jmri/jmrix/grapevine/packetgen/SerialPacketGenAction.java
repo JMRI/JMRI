@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
 public class SerialPacketGenAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class SerialPacketGenAction extends AbstractAction {
         this("Send Grapevine message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame();
         try {

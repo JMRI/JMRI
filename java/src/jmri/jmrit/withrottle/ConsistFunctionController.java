@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class ConsistFunctionController implements ThrottleListener {
 
@@ -27,6 +26,7 @@ public class ConsistFunctionController implements ThrottleListener {
         rosterLoco = re;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         if (log.isDebugEnabled()) {
             log.debug("Lead Loco throttle found: " + t
@@ -44,6 +44,7 @@ public class ConsistFunctionController implements ThrottleListener {
         throttleController.sendAllFunctionStates(throttle);
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
     }

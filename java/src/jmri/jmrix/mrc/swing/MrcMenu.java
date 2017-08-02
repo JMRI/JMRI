@@ -1,4 +1,3 @@
-// MrcMenu.java
 package jmri.jmrix.mrc.swing;
 
 import javax.swing.JMenu;
@@ -7,21 +6,16 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 /**
  * Create a "Systems" menu containing the JMRI MRC-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
+ * @author Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version $Revision: 23001 $
  */
 public class MrcMenu extends JMenu {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 7065069034402845776L;
-
-    /**
      * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
      * actions. Actions will open new windows.
+     * @param memo sytem connection memo
      */
     // Need to Sort out the MRC server menu items;
     public MrcMenu(MrcSystemConnectionMemo memo) {
@@ -47,7 +41,7 @@ public class MrcMenu extends JMenu {
         }
 
         // do we have a MrcTrafficController?
-        setEnabled(memo.getMrcTrafficController() != null);	// disable menu, no connection, no tools!
+        setEnabled(memo.getMrcTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }
@@ -67,5 +61,3 @@ public class MrcMenu extends JMenu {
         String load;
     }
 }
-
-/* @(#)MrcMenu.java */

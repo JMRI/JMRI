@@ -1,4 +1,3 @@
-// XNetTrafficRouter.java
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
@@ -13,10 +12,12 @@ import org.slf4j.LoggerFactory;
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
+<<<<<<< HEAD
  *
+=======
+>>>>>>> JMRI/master
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
 
@@ -29,12 +30,15 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     // removeXNetListener, notify
     boolean connected = false;
 
+    @Override
     public boolean status() {
         return connected;
     }
 
 
-    /* store the last sender */
+    /**
+     * Store the last sender
+     */
     XNetListener lastSender = null;
 
     /**
@@ -42,6 +46,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
         lastSender = replyTo;
         destination.sendXNetMessage(m, replyTo);
@@ -51,15 +56,24 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      * Receive a XNet message from upstream and forward it to all the local
      * clients.
      */
+    @Override
     public void message(XNetReply m) {
         notify(m);
     }
 
+<<<<<<< HEAD
     // listen for the messages to the LI100/LI101
+=======
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
+>>>>>>> JMRI/master
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -107,7 +121,5 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class.getName());
+
 }
-
-
-/* @(#)XNetTrafficRouter.java */

@@ -1,4 +1,3 @@
-// CarRoads.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the road names that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarRoads extends RollingStockAttribute {
 
@@ -29,9 +27,7 @@ public class CarRoads extends RollingStockAttribute {
 
     public static synchronized CarRoads instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarRoads creating instance");
-            }
+            log.debug("CarRoads creating instance");
             // create and load
             _instance = new CarRoads();
         }
@@ -66,7 +62,7 @@ public class CarRoads extends RollingStockAttribute {
             setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, list.size() + 1, list.size());
         }
     }
-    
+
     /**
      * Get the maximum character length of a road name when printing on a
      * manifest or switch list. Characters after the "-" are ignored.
@@ -95,6 +91,7 @@ public class CarRoads extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {

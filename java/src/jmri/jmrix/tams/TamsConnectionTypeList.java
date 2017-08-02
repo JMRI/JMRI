@@ -1,13 +1,15 @@
-// TamsConnectionTypeList.java
 package jmri.jmrix.tams;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid ESU Tams Connection Types
  * <P>
  * @author Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class TamsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String TAMS = "Tams";

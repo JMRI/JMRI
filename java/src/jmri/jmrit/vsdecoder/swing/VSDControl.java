@@ -21,8 +21,8 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -38,7 +38,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -58,13 +57,11 @@ import org.slf4j.LoggerFactory;
  * Virtual Sound Decoder for playing sounds off of LocoNet messages. Based on
  * the LocoMon tool by Bob Jacobsen
  *
- * @author	Mark Underwood Copyright (C) 2011
- * @version $Revision: 21510 $
+ * @author Mark Underwood Copyright (C) 2011
+ * 
  */
 @SuppressWarnings("serial")
 public class VSDControl extends JPanel {
-
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static enum PropertyChangeID {
 
@@ -131,7 +128,7 @@ public class VSDControl extends JPanel {
 
     static public JPanel generateBlank() {
         VSDControl temp = new VSDControl("");
-        JLabel jl = new JLabel(rb.getString("BlankVSDControlLabel"));
+        JLabel jl = new JLabel(Bundle.getMessage("BlankVSDControlLabel"));
         jl.setMinimumSize(temp.getPreferredSize());
         jl.setPreferredSize(temp.getPreferredSize());
         jl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,9 +186,9 @@ public class VSDControl extends JPanel {
 
         configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS));
-        configButton = new JButton(rb.getString("ConfigButtonLabel"));
-        optionButton = new JButton(rb.getString("OptionsButtonLabel"));
-        deleteButton = new JButton(rb.getString("DeleteButtonLabel"));
+        configButton = new JButton(Bundle.getMessage("ConfigButtonLabel"));
+        optionButton = new JButton(Bundle.getMessage("OptionsButtonLabel"));
+        deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         configPanel.add(configButton); // maybe don't allow this anymore.
         configPanel.add(Box.createHorizontalGlue());
         configPanel.add(optionButton);
@@ -213,18 +210,21 @@ public class VSDControl extends JPanel {
         this.add(configPanel, setConstraints(3, 0));
 
         optionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 optionButtonPressed(e);
             }
 
         });
         configButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 configButtonPressed(e);
             }
 
         });
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteButtonPressed(e);
             }
@@ -264,8 +264,9 @@ public class VSDControl extends JPanel {
      */
     protected void optionButtonPressed(ActionEvent e) {
         log.debug("(" + address + ") Option Button Pressed");
-        VSDOptionsDialog d = new VSDOptionsDialog(this, rb.getString("OptionsDialogTitlePrefix") + " " + this.address);
+        VSDOptionsDialog d = new VSDOptionsDialog(this, Bundle.getMessage("OptionsDialogTitlePrefix") + " " + this.address);
         d.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 optionsDialogPropertyChange(event);
@@ -279,8 +280,9 @@ public class VSDControl extends JPanel {
      */
     protected void configButtonPressed(ActionEvent e) {
         log.debug("(" + address + ") Config Button Pressed");
-        VSDConfigDialog d = new VSDConfigDialog(this, rb.getString("ConfigDialogTitlePrefix") + " " + this.address, config);
+        VSDConfigDialog d = new VSDConfigDialog(this, Bundle.getMessage("ConfigDialogTitlePrefix") + " " + this.address, config);
         d.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 configDialogPropertyChange(event);
@@ -317,6 +319,7 @@ public class VSDControl extends JPanel {
     /**
      * Add a listener for this Pane's property change events
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
         if (!l.contains(listener)) {
@@ -327,6 +330,7 @@ public class VSDControl extends JPanel {
     /**
      * Remove a listener
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         listenerList.remove(PropertyChangeListener.class, listener);
     }

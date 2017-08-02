@@ -1,6 +1,3 @@
-/**
- * XnTcpXNetPacketizer.java
- */
 package jmri.jmrix.lenz.xntcp;
 
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -13,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  *
- * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by
+ * @author Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by
  * Paul Bender, Copyright (C) 2005
- * @version $Revision$ GT - May 2011 - Removed calls to deprecated
+ *  GT - May 2011 - Removed calls to deprecated
  * method "XnTcpAdapter.instance()"
  *
  */
@@ -66,6 +63,8 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 
             ((XnTcpAdapter) controller).xnTcpSetPendingPackets(-1);
             log.debug("XnTcpNetPacketizer: received end of packet");
+        } catch (java.io.InterruptedIOException ex) {
+            return;
         } catch (java.io.IOException ex) {
             ((XnTcpAdapter) controller).xnTcpError();
             throw ex;
@@ -76,4 +75,4 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     private final static Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class.getName());
 }
 
-/* @(#)XnTcpXNetPacketizer.java */
+

@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
-import jmri.util.JTableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame provinging access to the loco database on the Tams MC
+ * Frame providing access to the loco database on the Tams MC
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
@@ -45,11 +45,13 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         super();
     }
 
+    @Override
     public void initComponents(jmri.jmrix.tams.TamsSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         locoModel = new LocoDataModel(128, 16, memo);
-        locoTable = JTableUtil.sortableDataModel(locoModel);
+        locoTable = new JTable(locoModel);
+        locoTable.setRowSorter(new TableRowSorter<>(locoModel));
         locoScroll = new JScrollPane(locoTable);
 
         locoModel.configureTable(locoTable);
@@ -73,6 +75,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
         // add listener object so checkboxes function
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addLoco();
             }
@@ -117,14 +120,17 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         locoModel.addLoco(m);
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame";
     }
 
+    @Override
     public String getTitle() {
         return rb.getString("Title");
     }
 
+    @Override
     public void dispose() {
         locoModel.dispose();
         locoModel = null;

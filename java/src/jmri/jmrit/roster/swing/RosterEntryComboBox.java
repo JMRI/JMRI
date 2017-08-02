@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -38,7 +37,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
     protected String _decoderMfgID;
     protected String _decoderVersionID;
     protected String _id;
-    protected String _nonSelectedItem = "Select Loco";
+    protected String _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
     protected RosterEntry[] _currentSelection = null;
 
     private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class.getName());
@@ -48,7 +47,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      * roster group.
      */
     public RosterEntryComboBox() {
-        this(Roster.instance(), Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
+        this(Roster.getDefault(), Roster.getDefault().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -57,7 +56,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      *
      */
     public RosterEntryComboBox(Roster roster) {
-        this(roster, Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
+        this(roster, Roster.getDefault().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -66,7 +65,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      *
      */
     public RosterEntryComboBox(String rosterGroup) {
-        this(Roster.instance(), rosterGroup, null, null, null, null, null, null, null);
+        this(Roster.getDefault(), rosterGroup, null, null, null, null, null, null, null);
     }
 
     /**
@@ -91,8 +90,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        this(Roster.instance(),
-                Roster.instance().getDefaultRosterGroup(),
+        this(Roster.getDefault(),
+                Roster.getDefault().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -117,7 +116,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderVersionID,
             String id) {
         this(roster,
-                Roster.instance().getDefaultRosterGroup(),
+                Roster.getDefault().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -142,7 +141,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        this(Roster.instance(),
+        this(Roster.getDefault(),
                 rosterGroup,
                 roadName,
                 roadNumber,
@@ -189,6 +188,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
                 id);
 
         _roster.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 if (pce.getPropertyName().equals("add")
                         || pce.getPropertyName().equals("remove")
@@ -206,8 +206,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             }
         });
 
-        ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-        _nonSelectedItem = resources.getString("RosterEntryComboBoxNoSelection");
+        //ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
     }
 
     /**

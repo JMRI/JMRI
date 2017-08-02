@@ -1,4 +1,3 @@
-// Mx1TrafficController.java
 package jmri.jmrix.zimo;
 
 import java.util.Vector;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * locating the local implementation.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -28,6 +26,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      *
      * @param pCommandStation reference to associated command station object,
      *                        preserved for later.
+     * @param prot            false if {@link #ASCII}, true if {@link #BINARY}
      */
     Mx1TrafficController(Mx1CommandStation pCommandStation, boolean prot) {
         mCommandStation = pCommandStation;
@@ -44,18 +43,22 @@ public abstract class Mx1TrafficController implements Mx1Interface {
     }
 
     // Abstract methods for the Mx1Interface
+    @Override
     abstract public boolean status();
 
     /**
-     * Forward a preformatted Mx1Message to the actual interface.
+     * Forward a pre-formatted Mx1Message to the actual interface.
      *
-     * @param m Message to send; will be updated with CRC
+     * @param m     Message to send; will be updated with CRC
+     * @param reply the listener to notify of a response
      */
+    @Override
     abstract public void sendMx1Message(Mx1Message m, Mx1Listener reply);
 
     // The methods to implement adding and removing listeners
-    protected Vector<Mx1Listener> listeners = new Vector<Mx1Listener>();
+    protected Vector<Mx1Listener> listeners = new Vector<>();
 
+    @Override
     public synchronized void addMx1Listener(int mask, Mx1Listener l) {
         // add only if not already registered
         if (l == null) {
@@ -66,6 +69,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         }
     }
 
+    @Override
     public synchronized void removeMx1Listener(int mask, Mx1Listener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
@@ -135,6 +139,3 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 
     private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
 }
-
-
-/* @(#)Mx1TrafficController.java */

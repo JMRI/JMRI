@@ -3,28 +3,28 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.util.Optional;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,10 +36,6 @@ import org.slf4j.LoggerFactory;
 public class PositionableShape extends PositionableJComponent
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6747180861605933680L;
     private Shape _shape;
     protected Color _lineColor = Color.black;
     protected Color _fillColor = new Color(255, 255, 255, 0);
@@ -47,12 +43,12 @@ public class PositionableShape extends PositionableJComponent
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;			// default level set in popup
+    private int _saveLevel = 5;   // default level set in popup
     private int _changeLevel = 5;
-    private boolean _doHide;		// whether sensor controls show/hide or change level
+    private boolean _doHide;  // whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
-    protected int _hitIndex = -1;	// dual use! also is index of polygon's vertices
+    protected int _hitIndex = -1; // dual use! also is index of polygon's vertices
     protected int _lastX;
     protected int _lastY;
     // params for shape's bounding box
@@ -68,12 +64,12 @@ public class PositionableShape extends PositionableJComponent
         super(editor);
         setName("Graphic");
         setShowTooltip(false);
+        setDisplayLevel(ControlPanelEditor.LABELS);
     }
 
     public PositionableShape(Editor editor, Shape shape) {
         this(editor);
         _shape = shape;
-        setShowTooltip(false);
     }
 
     public PathIterator getPathIterator(AffineTransform at) {
@@ -160,7 +156,7 @@ public class PositionableShape extends PositionableJComponent
         if (_degrees == 0) {
             _transform = null;
         } else {
-            double rad = _degrees * Math.PI / 180.0;
+            double rad = Math.toRadians(_degrees);
             _transform = new AffineTransform();
             // use bit shift to avoid FindBugs paranoia
             _transform.setToRotation(rad, (_width >>> 1), (_height >>> 1));
@@ -174,16 +170,20 @@ public class PositionableShape extends PositionableJComponent
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
-        /*
-         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
-         RenderingHints.VALUE_RENDER_QUALITY); 
-         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-         RenderingHints.VALUE_ANTIALIAS_ON);
-         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
-         RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
-         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-         */
+
+        // set antialiasing hint for macOS and Windows
+        // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+        if (SystemType.isMacOSX() || SystemType.isWindows()) {
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                    RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        }
+
         g2d.setClip(null);
         if (_transform != null) {
             g2d.transform(_transform);
@@ -211,7 +211,7 @@ public class PositionableShape extends PositionableJComponent
             r.width += _lineWidth;
             r.height += _lineWidth;
             g2d.draw(r);
-//       		g2d.fill(r);
+//         g2d.fill(r);
             for (int i = 0; i < _handles.length; i++) {
                 if (_handles[i] != null) {
                     g2d.setColor(Color.RED);
@@ -233,7 +233,11 @@ public class PositionableShape extends PositionableJComponent
         pos._lineWidth = _lineWidth;
         pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
         pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
-        pos.updateSize();
+        pos.setControlSensor(getSensorName(), _doHide, _changeLevel);
+        pos.setWidth(_width);
+        pos.setHeight(_height);
+        pos.makeShape();
+        pos.rotate(getDegrees());       // must be after makeShape due to updateSize call
         return super.finishClone(pos);
     }
 
@@ -275,7 +279,7 @@ public class PositionableShape extends PositionableJComponent
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
-        if (getDisplayLevel() > Editor.BKG) {
+        if (super.getDisplayLevel() > Editor.BKG) {
             popup.add(CoordinateEdit.getRotateEditAction(this));
             return true;
         }
@@ -292,117 +296,95 @@ public class PositionableShape extends PositionableJComponent
         return _degrees;
     }
 
-    DrawFrame _editFrame;
-
-    protected void setEditParams() {
-        _editFrame.setDisplayParams(this);
-        java.awt.Container contentPane = _editFrame.getContentPane();
-        contentPane.add(_editFrame.makeParamsPanel());
-        contentPane.add(makeDoneButtonPanel());
-        _editFrame.pack();
-        drawHandles();
-    }
-
-    protected JPanel makeDoneButtonPanel() {
-        JPanel panel0 = new JPanel();
-        panel0.setLayout(new FlowLayout());
-        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                editItem();
-            }
-        });
-        panel0.add(doneButton);
-
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                removeHandles();
-                _editFrame.closingEvent();
-                _editFrame = null;
-            }
-        });
-        panel0.add(cancelButton);
-        return panel0;
-    }
-
-    protected void editItem() {
-        _editFrame.updateFigure(this);
-//        makeShape();
-        removeHandles();
-        updateSize();
-        _editFrame.closingEvent();
-        _editFrame = null;
-        repaint();
-    }
-
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " property " + evt.getPropertyName() + " is now "
-                    + evt.getNewValue() + " from " + evt.getSource().getClass().getName());
+            log.debug("property change: \"{}\"= {} for {}",
+                   evt.getPropertyName(), evt.getNewValue(), getClass().getName());
         }
-
         if (!_editor.isEditable()) {
             if (evt.getPropertyName().equals("KnownState")) {
                 if (((Integer) evt.getNewValue()).intValue() == Sensor.ACTIVE) {
                     if (_doHide) {
                         setVisible(true);
                     } else {
-                        setDisplayLevel(_changeLevel);
+                        super.setDisplayLevel(_changeLevel);
                         setVisible(true);
                     }
                 } else if (((Integer) evt.getNewValue()).intValue() == Sensor.INACTIVE) {
                     if (_doHide) {
                         setVisible(false);
                     } else {
-                        setDisplayLevel(_saveLevel);
+                        super.setDisplayLevel(_saveLevel);
                         setVisible(true);
                     }
                 } else {
-                    setDisplayLevel(_saveLevel);
+                    super.setDisplayLevel(_saveLevel);
                     setVisible(true);
                 }
+                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this,
+                        MouseEvent.MOUSE_MOVED, System.currentTimeMillis(),
+                        0, getX(), getY(), 0, false));
+                repaint();
+                _editor.getTargetPanel().revalidate();
             }
         } else {
-            setDisplayLevel(_saveLevel);
+            super.setDisplayLevel(_saveLevel);
             setVisible(true);
         }
+        if (log.isDebugEnabled()) {
+            log.debug("_changeLevel= {} _saveLevel= {} displayLevel= {} _doHide= {} visible= {}",
+                    _changeLevel, _saveLevel, getDisplayLevel(), _doHide, isVisible());
+        }
+    }
+
+    @Override
+    // changing the level from regular popup
+    public void setDisplayLevel(int l) {
+        super.setDisplayLevel(l);
+        _saveLevel = l;
     }
 
     /**
      * Attach a named sensor to shape
      *
      * @param pName Used as a system/user name to lookup the sensor object
+     * @param hide true if sensor should be hidden
+     * @param level level at which sensor is placed
+     * @return error message, if any
      */
-    public void setControlSensor(String pName, boolean hide, int level) {
-        NamedBeanHandle<Sensor> senHandle = null;
+    public String setControlSensor(String pName, boolean hide, int level) {
         String msg = null;
-        if (pName == null || pName.trim().length() == 0) {
-            msg = Bundle.getMessage("badSensorName", pName);
+        if (pName == null || pName.trim().isEmpty()) {
+            setControlSensorHandle(null);
+            return null;
         }
-        _saveLevel = getDisplayLevel();
-        if (msg == null) {
-            if (InstanceManager.sensorManagerInstance() != null) {
-                Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
-                senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-                if (sensor != null) {
-                    _doHide = hide;
-                    _changeLevel = level;
-                    if (_changeLevel <= 0) {
-                        _changeLevel = getDisplayLevel();
-                    }
-                } else {
-                    msg = Bundle.getMessage("badSensorName", pName);
+        NamedBeanHandle<Sensor> senHandle = null;
+        _saveLevel = super.getDisplayLevel();
+        Optional<SensorManager> sensorManager = InstanceManager.getOptionalDefault(SensorManager.class);
+        if (sensorManager.isPresent()) {
+            Sensor sensor = sensorManager.get().getSensor(pName);
+            Optional<NamedBeanHandleManager> nbhm = InstanceManager.getOptionalDefault(NamedBeanHandleManager.class);
+            if (sensor != null) {
+                if (nbhm.isPresent()) {
+                    senHandle = nbhm.get().getNamedBeanHandle(pName, sensor);
+                }
+                _doHide = hide;
+                _changeLevel = level;
+                if (_changeLevel <= 0) {
+                    _changeLevel = super.getDisplayLevel();
                 }
             } else {
-                msg = "No SensorManager for this protocol, shape cannot acquire a sensor.";
+                msg = Bundle.getMessage("badSensorName", pName); // NOI18N
             }
+        } else {
+            msg = Bundle.getMessage("NoSensorManager"); // NOI18N
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            log.warn("{} for {} sensor", msg, Bundle.getMessage("VisibleSensor"));
         }
         setControlSensorHandle(senHandle);
+        return msg;
     }
 
     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
@@ -423,6 +405,13 @@ public class PositionableShape extends PositionableJComponent
         }
         return _controlSensor.getBean();
     }
+    protected String getSensorName() {
+        Sensor s = getControlSensor();
+        if (s != null) {
+            return s.getDisplayName();
+        }
+        return null;
+    }
 
     public NamedBeanHandle<Sensor> getControlSensorHandle() {
         return _controlSensor;
@@ -436,6 +425,10 @@ public class PositionableShape extends PositionableJComponent
         return _changeLevel;
     }
 
+    public void setChangeLevel(int l) {
+        _changeLevel = l;
+    }
+
     public void dispose() {
         if (_controlSensor != null) {
             getControlSensor().removePropertyChangeListener(this);
@@ -443,9 +436,25 @@ public class PositionableShape extends PositionableJComponent
         _controlSensor = null;
     }
 
+    DrawFrame _editFrame;
+
+    protected void setEditFrame(DrawFrame f) {
+        _editFrame = f;
+    }
+
+    protected void setEditParams() {
+        _editFrame.setDisplayParams(this);
+        _editFrame.makeCopy(this);
+        drawHandles();
+    }
+
+    protected void closeEditFrame() {
+        _editFrame = null;
+        removeHandles();
+    }
+
     public void removeHandles() {
         _handles = null;
-//    	invalidate();
         repaint();
     }
 
@@ -473,6 +482,7 @@ public class PositionableShape extends PositionableJComponent
         return new Point(x, y);
     }
 
+    @Override
     public void doMousePressed(MouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {
@@ -502,31 +512,42 @@ public class PositionableShape extends PositionableJComponent
         if (_hitIndex >= 0 && _editor.isEditable()) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
+            int height = _height;
+            int width = _width;
             switch (_hitIndex) {
                 case TOP:
                     if (_height - deltaY > SIZE) {
-                        setHeight(_height - deltaY);
+                        height = _height - deltaY;
                         _editor.moveItem(this, 0, deltaY);
                     } else {
-                        setHeight(SIZE);
-                        _editor.moveItem(this, 0, _height - SIZE);
+                        height = SIZE;
                     }
+                    setHeight(height);
                     break;
                 case RIGHT:
-                    setWidth(Math.max(SIZE, _width + deltaX));
+                    width = Math.max(SIZE, _width + deltaX);
+                    setWidth(width);
                     break;
                 case BOTTOM:
-                    setHeight(Math.max(SIZE, _height + deltaY));
+                    height = Math.max(SIZE, _height + deltaY);
+                    setHeight(height);
                     break;
                 case LEFT:
                     if (_width - deltaX > SIZE) {
-                        setWidth(Math.max(SIZE, _width - deltaX));
+                        width = Math.max(SIZE, _width - deltaX);
                         _editor.moveItem(this, deltaX, 0);
                     } else {
-                        setWidth(SIZE);
-                        _editor.moveItem(this, _width - SIZE, 0);
+                        width = SIZE;
                     }
+                    setWidth(width);
                     break;
+                default:
+                    log.warn("Unhandled dir: {}", _hitIndex);
+                    break;
+            }
+            if (_editFrame!=null) {
+                _editFrame.setDisplayWidth(_width);
+                _editFrame.setDisplayHeight(_height);
             }
             makeShape();
             updateSize();

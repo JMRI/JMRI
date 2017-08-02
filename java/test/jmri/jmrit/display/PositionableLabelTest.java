@@ -4,6 +4,7 @@ package jmri.jmrit.display;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.io.IOException;
 import javax.swing.JButton;
@@ -11,12 +12,14 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test of PositionableLabel
@@ -36,7 +39,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testSmallPanel() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         panel = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
 
@@ -48,13 +54,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         // test button in upper left
         JButton doButton = new JButton("change label");
-        doButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (to.getText().equals("one"))
-                    to.setText("two");
-                else
-                    to.setText("one");
-            }
+        doButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (to.getText().equals("one"))
+                to.setText("two");
+            else
+                to.setText("one");
         });
         doButton.setBounds(0, 0, 120, 40);
         p.add(doButton);
@@ -74,10 +78,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
     public void testBackgroundColorFile() throws Exception {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         // make four windows
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
         flushAWT();
 
@@ -127,7 +134,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Explicit tests of PositionableLabel features
 
     public void testDisplayTransparent() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -168,7 +178,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     public void testDisplayTransparent45degrees() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -218,7 +231,20 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
     public void testDisplayAnimatedRGB() throws IOException {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+
+        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
+            log.info("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            return;
+        }
+
+        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
+            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -238,6 +264,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // check for initial red
+        sleep(5);
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
 
         Assert.assertEquals("icon arraylength", 13*13, val.length);
@@ -289,10 +316,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
     public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
+            log.info("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
             return;
         }
 
@@ -381,7 +411,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // HEAVY MULTIPLICATION X \u2716
 
     public void testDisplayText() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -422,7 +455,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
 
     public void testDisplayTextRotated90() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -467,7 +503,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     public void testDisplayTextRotated45() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -529,13 +568,16 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
         if (panel != null) {
@@ -545,6 +587,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel = null;
+            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         }
 
         apps.tests.Log4JFixture.tearDown();

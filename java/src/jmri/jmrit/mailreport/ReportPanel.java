@@ -1,4 +1,3 @@
-// ReportPanel.java
 package jmri.jmrit.mailreport;
 
 import apps.PerformFileModel;
@@ -39,14 +38,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Matthew Harris Copyright (c) 2014
- * @version $Revision$
  */
 public class ReportPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8455989563494151294L;
 
     static java.util.ResourceBundle rb = null;
 
@@ -64,7 +57,7 @@ public class ReportPanel extends JPanel {
 
     // Define which profile sub-directories to include
     // In lowercase as I was too lazy to do a proper case-insensitive check...
-    String[] profDirs = {"networkservices", "programmers", "throttle"};
+    String[] profDirs = {"networkservices", "profile", "programmers", "throttle"};
 
     public ReportPanel() {
         if (rb == null) {
@@ -215,7 +208,7 @@ public class ReportPanel extends JPanel {
             if (checkProfile.isSelected()) {
                 log.debug("prepare profile attachment");
                 // Check that a profile has been loaded
-                Profile profile = ProfileManager.defaultManager().getActiveProfile();
+                Profile profile = ProfileManager.getDefault().getActiveProfile();
                 File file = profile.getPath();
                 if (file != null) {
                     log.debug("add profile: {}", file.getPath());
@@ -278,7 +271,7 @@ public class ReportPanel extends JPanel {
                 // close containing Frame
                 getTopLevelAncestor().setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
                 sendButton.setEnabled(true);
             }
 
@@ -287,7 +280,7 @@ public class ReportPanel extends JPanel {
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
             log.error("Invalid email address: " + ex);
-            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
     }

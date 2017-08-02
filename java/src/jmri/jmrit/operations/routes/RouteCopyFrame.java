@@ -1,4 +1,3 @@
-// RouteCopyFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
@@ -18,14 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class RouteCopyFrame extends OperationsFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4478401682355496019L;
 
     RouteManager routeManager = RouteManager.instance();
 
@@ -40,7 +33,7 @@ public class RouteCopyFrame extends OperationsFrame {
     javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
     JComboBox<Route> routeBox = RouteManager.instance().getComboBox();

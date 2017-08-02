@@ -1,4 +1,3 @@
-// AcelaSystemConnectionMemo.java
 package jmri.jmrix.acela;
 
 import java.util.ResourceBundle;
@@ -11,8 +10,7 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -20,17 +18,18 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super("A", "Acela");
         this.tc = tc;
         register();
-        /*InstanceManager.store(cf = new jmri.jmrix.acela.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        // create and register the AcelaComponetFactory
+        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public AcelaSystemConnectionMemo() {
         super("A", "Acela");
         register(); // registers general type
         InstanceManager.store(this, AcelaSystemConnectionMemo.class); // also register as specific type
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.acela.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        // create and register the AcelaComponetFactory
+        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -54,21 +53,23 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
 
-        jmri.InstanceManager.setLightManager(jmri.jmrix.acela.AcelaLightManager.instance());
+        jmri.InstanceManager.setLightManager(new AcelaLightManager(this));
 
         AcelaSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.acela.AcelaSensorManager.instance());
-        AcelaTrafficController.instance().setSensorManager(s);
+        jmri.InstanceManager.setSensorManager(s = new AcelaSensorManager(this));
+        tc.setSensorManager(s);
 
         AcelaTurnoutManager t;
-        jmri.InstanceManager.setTurnoutManager(t = jmri.jmrix.acela.AcelaTurnoutManager.instance());
+        jmri.InstanceManager.setTurnoutManager(t = new AcelaTurnoutManager(this));
         AcelaTrafficController.instance().setTurnoutManager(t);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.acela.AcelaActionListBundle");
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, AcelaSystemConnectionMemo.class);
@@ -78,6 +79,3 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 }
-
-
-/* @(#)AcelaSystemConnectionMemo.java */

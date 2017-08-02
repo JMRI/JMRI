@@ -27,6 +27,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -44,23 +56,31 @@
     <label>Ch. 1 for Address</label>
     <label xml:lang="it">Canale.1 per Indirizzo</label>
     <label xml:lang="de">Kanal 1 für Adressen</label>
+    <label xml:lang="cs">Kanál 1 pro adresu</label>
+    <label xml:lang="ca">Canal 1 per adreça</label>
   </variable>
   <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Ch. 2 for Data</label>
     <label xml:lang="it">Canale.2 per Dati</label>
     <label xml:lang="de">Kanal 2 für Daten</label>
+    <label xml:lang="cs">Kanál 2 pro data</label>
+    <label xml:lang="ca">Canal 2 per dades</label>
   </variable>
   <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Ch. 1 for Command Ack.</label>
     <label xml:lang="it">Canale.1 per Comando Ack.</label>
     <label xml:lang="de">Kanal 1 für Befehls-Ack.</label>
+    <label xml:lang="cs">Kanál 1 pro potvrzení příkazu</label>
+    <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
   </variable>
   <variable CV="29" mask="XXXXVXXX" item="Enable RailCom" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable RailCom</label>
     <label xml:lang="it">Abilita RailCom</label>
     <label xml:lang="de">RailCom Ein/Aus</label>
+    <label xml:lang="cs">Zpřístupnit RailCom</label>
+    <label xml:lang="ca">Activa RailCom</label>
   </variable>
 </variables>

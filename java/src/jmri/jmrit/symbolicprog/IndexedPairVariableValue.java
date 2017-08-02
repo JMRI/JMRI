@@ -97,6 +97,7 @@ public class IndexedPairVariableValue extends VariableValue
         cv1.setState(CvValue.FROMFILE);
     }
 
+    @Override
     public CvValue[] usesCVs() {
         return new CvValue[]{
             _cvMap.get(getCvName()),
@@ -120,6 +121,7 @@ public class IndexedPairVariableValue extends VariableValue
     // e.g. multiply by 256, then shift by this
     int upperbitoffset;
 
+    @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
@@ -131,10 +133,12 @@ public class IndexedPairVariableValue extends VariableValue
 
     boolean _upperFirst;
 
+    @Override
     public Object rangeVal() {
         return "Split value";
     }
 
+    @Override
     public String getMask() {
         return _uppermask + _mask;
     }
@@ -142,6 +146,7 @@ public class IndexedPairVariableValue extends VariableValue
     /**
      * Provide a user-readable description of the CVs accessed by this variable.
      */
+    @Override
     public String getCvDescription() {
         return "CV" + getCvName() + " & CV" + mSecondCVname;
     }
@@ -163,6 +168,7 @@ public class IndexedPairVariableValue extends VariableValue
         }
     }
 
+    @Override
     void updatedTextField() {
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvName() + "," + getSecondCvNum() + " enter updatedTextField in SplitVal");
@@ -210,6 +216,7 @@ public class IndexedPairVariableValue extends VariableValue
     /**
      * ActionListener implementations
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvName() + "," + getSecondCvNum() + " actionPerformed");
@@ -222,6 +229,7 @@ public class IndexedPairVariableValue extends VariableValue
     /**
      * FocusListener implementations
      */
+    @Override
     public void focusGained(FocusEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvName() + "," + getSecondCvNum() + " focusGained");
@@ -229,6 +237,7 @@ public class IndexedPairVariableValue extends VariableValue
         enterField();
     }
 
+    @Override
     public void focusLost(FocusEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvName() + "," + getSecondCvNum() + " focusLost");
@@ -238,26 +247,31 @@ public class IndexedPairVariableValue extends VariableValue
 
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
+    @Override
     public String getValueString() {
         // until 2.13.1-dev, this was just the 1st CV value
         //int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
         return _value.getText();
     }
 
+    @Override
     public void setIntValue(int i) {
         // until 2.13.1-dev, this was just the 1st CV value
         //setValue((i-mOffset)/mFactor);
         setValue(i);
     }
 
+    @Override
     public int getIntValue() {
         return ((Integer.valueOf(_value.getText()).intValue()) - mOffset) / mFactor;
     }
 
+    @Override
     public Object getValueObject() {
         return Integer.valueOf(_value.getText());
     }
 
+    @Override
     public Component getCommonRep() {
         if (getReadOnly()) {
             JLabel r = new JLabel(_value.getText());
@@ -304,6 +318,7 @@ public class IndexedPairVariableValue extends VariableValue
         return _value.getBackground();
     }
 
+    @Override
     void setColor(Color c) {
         if (c != null) {
             _value.setBackground(c);
@@ -312,6 +327,7 @@ public class IndexedPairVariableValue extends VariableValue
         }
     }
 
+    @Override
     public Component getNewRep(String format) {
         if (format.equals("vslider")) {
             IndexedPairVarSlider b = new IndexedPairVarSlider(this, _minVal, _maxVal);
@@ -368,6 +384,7 @@ public class IndexedPairVariableValue extends VariableValue
         }
     }
 
+    @Override
     public void setAvailable(boolean a) {
         _value.setVisible(a);
         for (Component c : sliders) {
@@ -416,10 +433,12 @@ public class IndexedPairVariableValue extends VariableValue
      * Notify the connected CVs of a state change from above
      *
      */
+    @Override
     public void setCvState(int state) {
         (_cvMap.get(getCvName())).setState(state);
     }
 
+    @Override
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly() || !getAvailable()) {
             state = false;
@@ -428,11 +447,13 @@ public class IndexedPairVariableValue extends VariableValue
         (_cvMap.get(mSecondCVname)).setToRead(state);
     }
 
+    @Override
     public boolean isToRead() {
         return getAvailable()
                 && ((_cvMap.get(getCvName())).isToRead() || (_cvMap.get(mSecondCVname)).isToRead());
     }
 
+    @Override
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly() || !getAvailable()) {
             state = false;
@@ -441,29 +462,34 @@ public class IndexedPairVariableValue extends VariableValue
         (_cvMap.get(mSecondCVname)).setToWrite(state);
     }
 
+    @Override
     public boolean isToWrite() {
         return getAvailable()
                 && ((_cvMap.get(getCvName())).isToWrite() || (_cvMap.get(mSecondCVname)).isToWrite());
     }
 
+    @Override
     public boolean isChanged() {
         CvValue cv1 = (_cvMap.get(getCvName()));
         CvValue cv2 = (_cvMap.get(mSecondCVname));
         return (considerChanged(cv1) || considerChanged(cv2));
     }
 
+    @Override
     public void readChanges() {
         if (isChanged()) {
             readAll();
         }
     }
 
+    @Override
     public void writeChanges() {
         if (isChanged()) {
             writeAll();
         }
     }
 
+    @Override
     public void readAll() {
         if (_upperFirst) {
             programmingLow = false;
@@ -500,6 +526,7 @@ public class IndexedPairVariableValue extends VariableValue
         (_cvMap.get(programmingLow ? getCvName() : mSecondCVname)).writePI(_status);
     }
 
+    @Override
     public void writeAll() {
         if (getReadOnly()) {
             log.error("unexpected write operation when readOnly is set");
@@ -537,6 +564,7 @@ public class IndexedPairVariableValue extends VariableValue
         (_cvMap.get(programmingLow ? getCvName() : mSecondCVname)).writePI(_status);
     }
 
+    @Override
     public void confirmAll() {
         if (_upperFirst) {
             programmingLow = false;
@@ -568,6 +596,7 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     // handle incoming parameter notification
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property changed event - name: "
@@ -777,7 +806,7 @@ public class IndexedPairVariableValue extends VariableValue
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
      *
-     * @author	Bob Jacobsen   Copyright (C) 2001
+     * @author Bob Jacobsen   Copyright (C) 2001
      */
     public class VarTextField extends JTextField {
 
@@ -788,11 +817,13 @@ public class IndexedPairVariableValue extends VariableValue
             setBackground(_var._value.getBackground());
             // listen for changes to ourself
             addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     thisActionPerformed(e);
                 }
             });
             addFocusListener(new java.awt.event.FocusListener() {
+                @Override
                 public void focusGained(FocusEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("focusGained");
@@ -800,6 +831,7 @@ public class IndexedPairVariableValue extends VariableValue
                     enterField();
                 }
 
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("focusLost");
@@ -809,6 +841,7 @@ public class IndexedPairVariableValue extends VariableValue
             });
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     originalPropertyChanged(e);
                 }
@@ -832,6 +865,7 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     // clean up connections when done
+    @Override
     public void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");

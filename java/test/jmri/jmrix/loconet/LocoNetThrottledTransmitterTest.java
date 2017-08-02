@@ -2,7 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,18 +15,23 @@ import junit.framework.TestSuite;
 public class LocoNetThrottledTransmitterTest extends TestCase {
 
     public void testCtorAndDispose() {
-        new LocoNetThrottledTransmitter(null, false).dispose();
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
-        q.new Memo(null, 100, TimeUnit.MILLISECONDS);
+        new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
 
         q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     public void testMemoComparable() {
+<<<<<<< HEAD
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
+            @Override
             long nowMSec() {
                 return 0;
             }
@@ -36,6 +41,13 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         LocoNetThrottledTransmitter.Memo m100b = q.new Memo(null, 100, TimeUnit.MILLISECONDS);
         LocoNetThrottledTransmitter.Memo m200a = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
         LocoNetThrottledTransmitter.Memo m200b = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
+=======
+        LocoNetThrottledTransmitter.Memo m50   = new LocoNetThrottledTransmitter.Memo(null, 50, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m100a = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m100b = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m200a = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m200b = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
+>>>>>>> JMRI/master
 
         Assert.assertNotNull("exists", m100b);
         Assert.assertNotNull("exists", m200b);
@@ -49,12 +61,14 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         Assert.assertEquals("greater than 1", 1, m200a.compareTo(m100a));
         Assert.assertEquals("greater than 2", 1, m100a.compareTo(m50));
         Assert.assertEquals("greater than 3", 1, m200a.compareTo(m50));
+<<<<<<< HEAD
 
         q.dispose();
     }
 
     public void testMemoGetDelay() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
+            @Override
             long nowMSec() {
                 return 0;
             }
@@ -67,6 +81,8 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         Assert.assertEquals("seconds", 5l, m5000.getDelay(TimeUnit.SECONDS));
 
         q.dispose();
+=======
+>>>>>>> JMRI/master
     }
 
     public void testThreadStartStop() {
@@ -95,6 +111,9 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("one sent", 1, s.outbound.size());
         Assert.assertEquals("right one", m1, s.outbound.elementAt(s.outbound.size() - 1));
+
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     public void testSendOneNowOneLater() {
@@ -120,6 +139,9 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("two sent", 2, s.outbound.size());
         Assert.assertEquals("right 2nd", m2, s.outbound.elementAt(1));
+
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     public void testAfterTimeNewMessageSentImmediately() {
@@ -144,6 +166,9 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("two sent", 2, s.outbound.size());
         Assert.assertEquals("right 2nd", m2, s.outbound.elementAt(1));
+
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     // from here down is testing infrastructure
@@ -164,10 +189,12 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -29,8 +29,9 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision$
+ * @deprecated as of JMRI 2.13.5 - keep for a bit until DCS240 situation is resolved (note added June 2016)
  */
+@Deprecated
 public abstract class AbstractAlmImplementation implements LocoNetListener {
 
     // constants for the ATASK value
@@ -62,6 +63,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      *
      * @param msg Input message
      */
+    @Override
     public void message(LocoNetMessage msg) {
         // sort on opcode and ALM number
         if (msg.getOpCode() == 0xEE && msg.getElement(2) == mNumber) {

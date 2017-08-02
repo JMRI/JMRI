@@ -1,4 +1,3 @@
-// RoutesTableFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
@@ -13,9 +12,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class RoutesTableFrame extends OperationsFrame {
 
@@ -40,7 +39,7 @@ public class RoutesTableFrame extends OperationsFrame {
     JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public RoutesTableFrame() {
         super(Bundle.getMessage("TitleRoutesTable"));
@@ -49,9 +48,7 @@ public class RoutesTableFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // Set up the jtable in a Scroll Pane..
-        TableSorter sorter = new TableSorter(routesModel);
-        routesTable = new JTable(sorter);
-        sorter.setTableHeader(routesTable.getTableHeader());
+        routesTable = new JTable(routesModel);
         JScrollPane routesPane = new JScrollPane(routesTable);
         routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         routesModel.initTable(this, routesTable);
@@ -80,9 +77,10 @@ public class RoutesTableFrame extends OperationsFrame {
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
         toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));
 
@@ -106,6 +104,8 @@ public class RoutesTableFrame extends OperationsFrame {
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(routesTable);
         if (ae.getSource() == sortByName) {
             sortByName.setSelected(true);
             sortById.setSelected(false);
@@ -131,7 +131,9 @@ public class RoutesTableFrame extends OperationsFrame {
 
     @Override
     public void dispose() {
-        saveTableDetails(routesTable);
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(routesTable);
+        });
         routesModel.dispose();
         super.dispose();
     }

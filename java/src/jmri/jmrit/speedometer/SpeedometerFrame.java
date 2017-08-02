@@ -1,4 +1,3 @@
-// SpeedometerFrame.java
 package jmri.jmrit.speedometer;
 
 import java.awt.FlowLayout;
@@ -16,6 +15,7 @@ import jmri.Application;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
@@ -38,29 +38,24 @@ import org.slf4j.LoggerFactory;
  * and displayed.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch
  * @author Matthew Harris Copyright (c) 2011
- * @version	$Revision$
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8321031366797967218L;
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5);
+    JTextField startSensor = new JTextField(5); // N11N
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);
+    JTextField stopSensor1 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);
+    public JTextField stopSensor2 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
@@ -122,7 +117,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     public SpeedometerFrame() {
         super(false, false);
         //Install the named bean handle if not installed, which can happen if opened from DP3
-        if (jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.NamedBeanHandleManager.class) == null) {
             jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         }
 
@@ -151,7 +146,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane1.add(new JLabel(Bundle.getMessage("LabelSensor")));
         startSensor.setToolTipText(Bundle.getMessage("TooltipStartSensor"));
         pane1.add(startSensor);
-        pane1.add(new JLabel(Bundle.getMessage("LabelStartSensor")));
+        JLabel startSensorLabel = new JLabel(Bundle.getMessage("LabelStartSensor"));
+        startSensorLabel.setLabelFor(startSensor);
+        pane1.add(startSensorLabel);
         pane1.add(startOnEntry);
         pane1.add(startOnExit);
         startSensorIcon = new SensorIcon(editor);
@@ -165,7 +162,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane2.add(new JLabel(Bundle.getMessage("LabelSensor")));
         stopSensor1.setToolTipText(Bundle.getMessage("TooltipStopSensor1"));
         pane2.add(stopSensor1);
-        pane2.add(new JLabel(Bundle.getMessage("LabelStopSensor1")));
+        JLabel stopSensor1Label = new JLabel(Bundle.getMessage("LabelStopSensor1"));
+        stopSensor1Label.setLabelFor(stopSensor1);
+        pane2.add(stopSensor1Label);
         pane2.add(stopOnEntry1);
         pane2.add(stopOnExit1);
         stopSensorIcon1 = new SensorIcon(editor);
@@ -179,7 +178,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane3.add(new JLabel(Bundle.getMessage("LabelSensor")));
         stopSensor2.setToolTipText(Bundle.getMessage("TooltipStopSensor2"));
         pane3.add(stopSensor2);
-        pane3.add(new JLabel(Bundle.getMessage("LabelStopSensor2")));
+        JLabel stopSensor2Label = new JLabel(Bundle.getMessage("LabelStopSensor2"));
+        stopSensor2Label.setLabelFor(stopSensor2);
+        pane3.add(stopSensor2Label);
         pane3.add(stopOnEntry2);
         pane3.add(stopOnExit2);
         stopSensorIcon2 = new SensorIcon(editor);
@@ -191,12 +192,14 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
         pane4.add(text1);
+        text1.setLabelFor(distance1);
         pane4.add(distance1);
         getContentPane().add(pane4);
 
         JPanel pane5 = new JPanel();
         pane5.setLayout(new FlowLayout());
         pane5.add(text2);
+        text2.setLabelFor(distance2);
         pane5.add(distance2);
         getContentPane().add(pane5);
 
@@ -211,7 +214,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         clearButton.setVisible(false);
 
         // see if there's a sensor manager, if not disable
-        if (null == InstanceManager.sensorManagerInstance()) {
+        if (null == InstanceManager.getNullableDefault(SensorManager.class)) {
             startButton.setEnabled(false);
             startButton.setToolTipText(Bundle.getMessage("TooltipSensorsNotSupported"));
         }
@@ -220,16 +223,22 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane6.setLayout(new FlowLayout());
         pane6.add(text3);
         pane6.add(result1);
-        pane6.add(new JLabel(Bundle.getMessage("LabelTime")));
+        text3.setLabelFor(result1);
+        JLabel time1Label = new JLabel(Bundle.getMessage("LabelTime"));
+        pane6.add(time1Label);
         pane6.add(time1);
+        time1Label.setLabelFor(time1);
         getContentPane().add(pane6);
 
         JPanel pane7 = new JPanel();
         pane7.setLayout(new FlowLayout());
         pane7.add(text4);
         pane7.add(result2);
-        pane7.add(new JLabel(Bundle.getMessage("LabelTime")));
+        text4.setLabelFor(result2);
+        JLabel time2Label = new JLabel(Bundle.getMessage("LabelTime"));
+        pane7.add(time2Label);
         pane7.add(time2);
+        time2Label.setLabelFor(time2);
         getContentPane().add(pane7);
 
         // set the units consistently
@@ -237,18 +246,21 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
         // add the actions to the config button
         dimButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 dim();
             }
         });
 
         startButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setup();
             }
         });
 
         clearButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 time1.setText(blank);
                 time2.setText(blank);
@@ -258,6 +270,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         });
 
         saveButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doStore();
             }
@@ -265,17 +278,20 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startSensorIcon.setSensor(startSensor.getText());
             }
         });
         stopSensor1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopSensorIcon1.setSensor(stopSensor1.getText());
             }
         });
 
         stopSensor2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopSensorIcon2.setSensor(stopSensor2.getText());
             }
@@ -338,6 +354,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         s = InstanceManager.sensorManagerInstance().
                 provideSensor(startSensor.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("start sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {
@@ -358,6 +375,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         s = InstanceManager.sensorManagerInstance().
                 provideSensor(stopSensor1.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("stop sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {
@@ -411,6 +429,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 provideSensor(stopSensor2.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             // handle change in stop sensor
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("stop sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {

@@ -1,21 +1,19 @@
-// InterchangeEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 
 /**
  * Frame for user edit of a classification/interchange track. Adds two panels to
  * TrackEditFrame for train/route car drops and pulls.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
- * @version $Revision$
  */
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5077272536994978975L;
 
     public InterchangeEditFrame() {
         super();

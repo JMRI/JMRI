@@ -1,10 +1,8 @@
 package jmri.jmrix.sprog.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -14,6 +12,11 @@ import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.update.SprogType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -35,33 +38,41 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.baudRate = 9600;
-        this.getSystemConnectionMemo().setUserName("SPROG Programmer");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogProgrammerTitle"));
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm) {
         super(new SprogSystemConnectionMemo(sm));
         this.baudRate = 9600;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm, int baud, SprogType type) {
         super(new SprogSystemConnectionMemo(sm, type));
         this.baudRate = baud;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm, int baud) {
         super(new SprogSystemConnectionMemo(sm));
         this.baudRate = baud;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     SerialPort activeSerialPort = null;
     
     private int baudRate = -1;
 
+    @Override
     public String openPort(String portName, String appName) {
-
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -75,7 +86,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             // try to set it for comunication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -114,7 +125,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
             //AJB - add Sprog Traffic Controller as event listener
             try {
-                activeSerialPort.addEventListener(SprogTrafficController.instance());
+                activeSerialPort.addEventListener(this.getSystemConnectionMemo().getSprogTrafficController());
             } catch (TooManyListenersException e) {
             }
 
@@ -123,9 +134,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -146,6 +157,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     // base class methods for the SprogPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -154,6 +166,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -169,34 +182,30 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     /**
      * Get an array of valid baud rates. This is currently only 9,600 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }
 
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
 
-    static volatile SerialDriverAdapter mInstance = null;
-
     /**
-     * set up all of the other objects to operate with an Sprog command station
-     * connected to this port
+     * Set up all of the other objects to operate with an Sprog command station
+     * connected to this port.
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
-        SprogTrafficController control = SprogTrafficController.instance();
-        control.connectPort(this);
-        control.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().setSprogTrafficController(control);
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
 
@@ -206,7 +215,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             jmri.jmrix.sprog.ActiveFlag.setActive();            
         }
         
-        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals("Powered On")) {
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
             } catch (jmri.JmriException e) {
@@ -215,12 +224,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set when disposed")
     @Override
     public void dispose() {
         super.dispose();
-        mInstance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());

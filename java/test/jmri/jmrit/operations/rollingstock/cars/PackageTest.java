@@ -35,17 +35,38 @@ public class PackageTest extends TestCase {
         suite.addTest(KernelTest.suite());
         suite.addTest(CarManagerTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarSetFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportCarsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCheckboxesCarsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCheckboxesCarsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameActionTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarDeleteAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarRosterMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnableDestinationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintCarLoadsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCarMovesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportCarsTest.class));
 
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(CarsTableFrameTest.suite());
-            suite.addTest(CarEditFrameTest.suite());
-            suite.addTest(CarAttributeEditFrameTest.suite());
-            suite.addTest(CarLoadEditFrameTest.suite());
-            suite.addTest(CarSetFrameTest.suite());
-        }
-
+>>>>>>> JMRI/master
         return suite;
     }
 

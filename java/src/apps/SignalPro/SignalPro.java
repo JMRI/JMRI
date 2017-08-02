@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003-2010
+ * @author Bob Jacobsen Copyright 2003-2010
  */
 public class SignalPro extends Apps {
 
@@ -41,23 +41,28 @@ public class SignalPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String logo() {
         return "resources/logo.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.SignalPro.SignalPro";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("SignalProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/SignalPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -65,6 +70,7 @@ public class SignalPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

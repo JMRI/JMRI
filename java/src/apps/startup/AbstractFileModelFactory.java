@@ -1,9 +1,10 @@
 package apps.startup;
 
-import apps.StartupModel;
+import apps.StartupActionsManager;
 import java.awt.Component;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,8 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
 
     /**
      * This factory simply displays a {@link javax.swing.JFileChooser} to allow
-     * users to configure the action. Subclasses to initialize the correct file
-     * chooser by implementing this method.
+     * users to configure the action. Subclasses to performAction the correct file
+ chooser by implementing this method.
      *
      * @return a configured file chooser.
      */
@@ -47,8 +48,10 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
             }
             if (this.chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
                 try {
-                    if (model.getName() == null || !model.getName().equals(this.chooser.getSelectedFile().getCanonicalPath())) {
+                    String name = model.getName();
+                    if (name == null || !name.equals(this.chooser.getSelectedFile().getCanonicalPath())) {
                         model.setName(this.chooser.getSelectedFile().getCanonicalPath());
+                        InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
                     }
                 } catch (IOException ex) {
                     log.error("File {} does not exist.", this.chooser.getSelectedFile());
@@ -56,7 +59,7 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
             }
         }
     }
-    
+
     @Override
     public void initialize() {
         // nothing to do

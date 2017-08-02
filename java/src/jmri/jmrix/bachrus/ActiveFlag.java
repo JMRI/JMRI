@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.bachrus;
 
 
@@ -9,9 +8,10 @@ package jmri.jmrix.bachrus;
  * This is a very light-weight class, carrying only the flag, so as to limit the
  * number of unneeded class loadings.
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @version $Revision$
+ * @author Andrew Crosland Copyright (C) 2010
+ * @deprecated since 4.5.1
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;
@@ -26,4 +26,4 @@ abstract public class ActiveFlag {
 
 }
 
-/* @(#)ActiveFlag.java */
+

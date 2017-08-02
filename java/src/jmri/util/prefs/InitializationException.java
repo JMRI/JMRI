@@ -8,7 +8,6 @@ package jmri.util.prefs;
  */
 public class InitializationException extends Exception {
 
-    private static final long serialVersionUID = 1L;
     private String localizedMessage = null;
 
     public InitializationException(String message, String localized) {
@@ -18,6 +17,11 @@ public class InitializationException extends Exception {
     public InitializationException(String message, String localized, Throwable cause) {
         super(message, cause);
         this.localizedMessage = localized;
+    }
+
+    public InitializationException(Throwable cause) {
+        super(cause);
+        this.localizedMessage = cause.getLocalizedMessage();
     }
 
     @Override

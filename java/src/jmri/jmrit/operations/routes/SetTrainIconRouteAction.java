@@ -1,4 +1,3 @@
-// SetTrainIconRouteAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
@@ -10,14 +9,8 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconRouteAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9152117316952301773L;
 
     public SetTrainIconRouteAction(String s) {
         super(s);
@@ -39,8 +32,8 @@ public class SetTrainIconRouteAction extends AbstractAction {
             f = new SetTrainIconRouteFrame(routeName);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)SetTrainIconRouteAction.java */
+

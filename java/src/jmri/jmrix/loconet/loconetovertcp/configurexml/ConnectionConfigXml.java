@@ -16,7 +16,6 @@ import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -24,10 +23,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new LnTcpDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

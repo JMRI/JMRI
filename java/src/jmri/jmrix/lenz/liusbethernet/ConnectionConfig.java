@@ -1,16 +1,14 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import javax.swing.JPanel;
 
 /**
- * Handle configuring an XPressNet layout connection via a LIUSBEthernet.
+ * Handle configuring an XpressNet layout connection via a LIUSBEthernet.
  * <P>
  * This uses the {@link LIUSBEthernetAdapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2011
- * @version	$Revision$
- *
+ * @author Paul Bender Copyright (C) 2011
+  *
  * @see LIUSBEthernetAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
@@ -31,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB Ethernet";
     }
@@ -39,12 +38,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBEthernetAdapter();
         }
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText(adapter.getHostName());

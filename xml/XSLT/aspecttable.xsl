@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -188,6 +187,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="route" >
  Route:  <xsl:apply-templates/><br/>
+</xsl:template>
+
+<xsl:template match="dccAspect" >
+ Default DCC Aspect:  <xsl:apply-templates/><br/>
 </xsl:template>
 
 <xsl:template match="description" >

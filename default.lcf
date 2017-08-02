@@ -15,7 +15,7 @@
 # For the general syntax of property based configuration files see the
 # documentation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE.
 
 # The root category is set to log priority INFO and above
 # to the console (A1), to rolling log files (T), and to a single file (R).
@@ -23,12 +23,12 @@
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
 # priority, in which case the priority is inherited from the
-# hierarchy.  See the end of the file for examples of how to 
+# hierarchy.  See the end of the file for examples of how to
 # control this at a finer level.
 
 log4j.rootCategory= INFO, A1, T, R
 
-# A1 is set to be a ConsoleAppender which outputs to System.err. 
+# A1 is set to be a ConsoleAppender which outputs to System.err.
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 # A1 writes to system.err to synchronize with e.g. exception traces
@@ -38,11 +38,11 @@ log4j.appender.A1.target=System.err
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 # The conversion pattern uses format specifiers. For details, see
-# the org.apache.log4j.PatternLayout JavaDocs. To summarize:
+# the org.apache.log4j.PatternLayout Javadocs. To summarize:
 #
 # c category, e.g. %c{2} for right-most two tokens
 # C classname of call (slow)
-# d date, e.g. %d{ISO8601}, %d{ABSOLUTE}, %d{DATE}, %d{HH:mm:ss,SSS} 
+# d date, e.g. %d{ISO8601}, %d{ABSOLUTE}, %d{DATE}, %d{HH:mm:ss,SSS}
 #              or %d{dd MMM yyyy HH:mm:ss,SSS}
 # F filename of call (slow)
 # l location, JVM-dependent (extremely slow)
@@ -55,7 +55,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # x nested diagnostic context
 # % the sequence %% emits a single %
 #
-# Justification, padding and truncation can be controlled e.g. %-5.10p 
+# Justification, padding and truncation can be controlled e.g. %-5.10p
 # is left justified, at least 5 and no more than 10 characters wide
 
 log4j.appender.A1.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
@@ -105,3 +105,6 @@ log4j.category.javax.jmdns=OFF
 # log4j.category.jmri.jmrix.can=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO
+
+#log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
+#log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG

@@ -1,4 +1,3 @@
-// DccSignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a Copyright: Copyright (c) 2007
- * @version $Revision$
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -36,14 +34,13 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DccSignalHead p = (DccSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -110,10 +107,11 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             }
         }
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

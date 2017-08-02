@@ -1,4 +1,3 @@
-// LocoIdPanel.java
 package jmri.jmrix.loconet.locoid;
 
 import java.util.ResourceBundle;
@@ -6,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -15,15 +13,10 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * User interface for setting the LocoNet ID
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
- * @version $Revision$
  */
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4377983464521092360L;
     // member declarations
     javax.swing.JButton readButton;
     javax.swing.JButton setButton;
@@ -36,6 +29,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.jmrix.loconet.locoid.LocoId");
@@ -64,25 +58,30 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 
         // Set our callbacks
         setButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setButtonActionPerformed();
             }
         });
         readButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readButtonActionPerformed();
             }
         });
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame";
+        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSetID"));
+        return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -99,7 +98,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     public void setButtonActionPerformed() {
         String value = (String) idBox.getSelectedItem();
 
-        if (value != "-") {
+        if (!value.equals("-")) {
             memo.getLnTrafficController().sendLocoNetMessage(
                     createSetPacket(value));
         }
@@ -123,6 +122,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
      *
      * @param m Inbound LocoNet message to check.
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         // The message is 6 bytes long.
@@ -189,6 +189,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
+    @Override
     public void dispose() {
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
         super.dispose();

@@ -23,6 +23,7 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 
     HashMap<JmriPanel, JmriJFrame> frames = new HashMap<JmriPanel, JmriJFrame>();
 
+    @Override
     public void show(final JmriPanel child,
             JmriAbstractAction act,
             Hint hint) {
@@ -47,16 +48,14 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 
         // add menus if requested
         List<JMenu> list = child.getMenus();
-        if (list != null) {
-            JMenuBar bar = frame.getJMenuBar();
-            if (bar == null) {
-                bar = new JMenuBar();
-            }
-            for (JMenu menu : list) {
-                bar.add(menu);
-            }
-            frame.setJMenuBar(bar);
+        JMenuBar bar = frame.getJMenuBar();
+        if (bar == null) {
+            bar = new JMenuBar();
         }
+        for (JMenu menu : list) {
+            bar.add(menu);
+        }
+        frame.setJMenuBar(bar);
 
         // add help menu if requested
         if (child.getHelpTarget() != null) {
@@ -77,6 +76,7 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
                     c = child;
                 }
 
+                @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
                     c.dispose();
                 }
@@ -88,6 +88,7 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
         frame.setVisible(true);
     }
 
+    @Override
     public void show(final jmri.util.swing.JmriPanel child,
             jmri.util.swing.JmriAbstractAction act) {
 
@@ -97,10 +98,12 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
     /**
      * Create new windows on each request
      */
+    @Override
     public boolean multipleInstances() {
         return true;
     }
 
+    @Override
     public void dispose() {
     }
 

@@ -1,4 +1,3 @@
-// RosterConfigPane.java
 package jmri.jmrit.roster;
 
 import java.awt.FlowLayout;
@@ -20,17 +19,17 @@ import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure Roster defaults.
  *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2007
- * @version	$Revision$
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -8185051724790761792L;
     JLabel filename;
     JTextField owner = new JTextField(20);
     JFileChooser fc;
@@ -72,11 +71,6 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         JButton b = new JButton(Bundle.getMessage("ButtonSetDots"));
 
         b.addActionListener(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1593137799319787064L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 // prompt with instructions
@@ -107,11 +101,6 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         p.add(b);
         b = new JButton(Bundle.getMessage("ButtonReset"));
         b.addActionListener(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 898239723894109746L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 filename.setText("");

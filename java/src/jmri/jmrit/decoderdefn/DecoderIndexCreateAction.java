@@ -1,4 +1,3 @@
-// DecoderIndexCreateAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
@@ -9,16 +8,10 @@ import jmri.util.swing.WindowInterface;
 /**
  * Update the decoder index and store
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2011
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2011
  * @see jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4750974443596415652L;
 
     public DecoderIndexCreateAction(String s, WindowInterface wi) {
         super(s, wi);

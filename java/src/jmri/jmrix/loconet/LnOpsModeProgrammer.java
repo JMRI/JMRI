@@ -1,12 +1,14 @@
-/* LnOpsModeProgrammer.java */
 package jmri.jmrix.loconet;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -18,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * SlotManager object.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
@@ -45,18 +46,17 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
+    @Override
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
 
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
-    }
-
+    @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
@@ -91,6 +91,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
@@ -125,6 +126,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    @Override
+    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(""+CV, val, p);
+    }
+
+    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
@@ -138,6 +146,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    @Override
     public void message(LocoNetMessage m) {
         // see if reply to LNSV 1 or LNSV2 request
         if ((m.getElement( 0) & 0xFF) != 0xE5) return;
@@ -257,12 +266,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
             mode = m;
-            notifyPropertyChange("Mode", mode, m);
+            notifyPropertyChange("Mode", mode, m); // NOI18N
         } else {
-            throw new IllegalArgumentException("Invalid requested mode: " + m);
+            throw new IllegalArgumentException("Invalid requested mode: " + m); // NOI18N
         }
     }
 
+    @Override
     public final ProgrammingMode getMode() {
         return mode;
     }
@@ -280,6 +290,21 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     /**
+     * Confirmation mode by programming mode; not that this doesn't
+     * yet know whether BDL168 hardware is present to allow DecoderReply
+     * to function; that should be a preference eventually.  See also DCS240...
+     *
+     * @param addr CV address ignored, as there's no variance with this in LocoNet
+     * @return Depends on programming mode
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
+        if (getMode().equals(DefaultProgrammerManager.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        return WriteConfirmMode.DecoderReply;
+    }
+
+    /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
@@ -289,10 +314,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      *
      * @param listener The PropertyChangeListener to be added
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
@@ -327,18 +354,22 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         return getCanWrite() && Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public String decodeErrorCode(int i) {
         return mSlotMgr.decodeErrorCode(i);
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -347,5 +378,3 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
 
 }
-
-/* @(#)LnOpsModeProgrammer.java */

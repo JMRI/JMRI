@@ -1,54 +1,32 @@
 package jmri.jmrix.xpa;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * XpaThrottleManagerTest.java
  *
  * Description:	tests for the jmri.jmrix.xpa.XpaThrottleManager class
  *
- * @author	Paul Bender
- * @version $Revision: 17977 $
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XpaThrottleManagerTest extends TestCase {
-
-    XpaSystemConnectionMemo memo = null;
-
-    public void testCtor() {
-        XpaThrottleManager t = new XpaThrottleManager(memo);
-        Assert.assertNotNull(t);
-    }
-
-    // from here down is testing infrastructure
-    public XpaThrottleManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XpaThrottleManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XpaThrottleManagerTest.class);
-        return suite;
-    }
+public class XpaThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        memo = new XpaSystemConnectionMemo();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
         memo.setXpaTrafficController(new XpaTrafficController());
+        tm = new XpaThrottleManager(memo);
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        memo = null;
     }
 
 }

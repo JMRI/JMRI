@@ -1,31 +1,40 @@
-/**
- * EasyDccTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
- *
- * @author	Bob Jacobsen
- * @version
- */
 package jmri.jmrix.easydcc;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+/**
+ * Tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
+ *
+ * @author	Bob Jacobsen
+ */
+public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    public void setUp() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    @Override
+    public void setUp(){
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // create and register the manager object
         l = new EasyDccTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
         return "ET" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("ET21", "my name");
@@ -33,7 +42,7 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (EasyDccTurnout) o);
+        Assert.assertTrue(null != (EasyDccTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -43,27 +52,9 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("ET21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("ET21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
-    }
-
-    // from here down is testing infrastructure
-    public EasyDccTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(EasyDccTurnoutManagerTest.class);
-        return suite;
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class.getName());

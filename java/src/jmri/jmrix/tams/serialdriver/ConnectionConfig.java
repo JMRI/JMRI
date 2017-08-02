@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.tams.serialdriver;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.tams.serialdriver;
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -27,10 +25,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

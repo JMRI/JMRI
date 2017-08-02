@@ -2,28 +2,33 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2016
  */
-public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    @Override
     public String getSystemName(int i) {
         return "IS" + i;
     }
 
+    @Test
     public void testAsAbstractFactory() {
 
         // ask for a Sensor, and check type
         SensorManager lm = jmri.InstanceManager.sensorManagerInstance();
-
+        
         Sensor tl = lm.newSensor("IS21", "my name");
 
         if (log.isDebugEnabled()) {
@@ -44,6 +49,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
     }
 
+    @Test
     public void testSetGetDefaultState() {
 
         // confirm default
@@ -56,25 +62,10 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     // from here down is testing infrastructure
-    public InternalSensorManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", InternalSensorManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(InternalSensorManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -82,8 +73,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         l = jmri.InstanceManager.sensorManagerInstance();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

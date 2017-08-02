@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class RouteController extends AbstractController implements PropertyChangeListener {
 
@@ -25,7 +24,7 @@ public class RouteController extends AbstractController implements PropertyChang
     private Hashtable<NamedBeanHandle<Sensor>, Route> indication;    //  Monitor turnouts for aligned status
 
     public RouteController() {
-        manager = InstanceManager.routeManagerInstance();
+        manager = InstanceManager.getNullableDefault(jmri.RouteManager.class);
         if (manager == null) {
             log.info("No route manager instance.");
             isValid = false;
@@ -35,11 +34,13 @@ public class RouteController extends AbstractController implements PropertyChang
         }
     }
 
+    @Override
     boolean verifyCreation() {
 
         return isValid;
     }
 
+    @Override
     public void filterList() {
         ArrayList<String> tempList = new ArrayList<String>(0);
         for (String sysName : sysNameList) {
@@ -53,11 +54,17 @@ public class RouteController extends AbstractController implements PropertyChang
         sysNameList = tempList;
     }
 
+    @Override
     void handleMessage(String message) {
         try {
             if (message.charAt(0) == 'A') {
                 if (message.charAt(1) == '2') {
-                    manager.getBySystemName(message.substring(2)).setRoute();
+                    Route r = manager.getBySystemName(message.substring(2));
+                    if (r != null) {
+                        r.setRoute();
+                    } else {
+                        log.warn("Message \"{}\" contained invalid system name.", message);
+                    }
                 } else {
                     log.warn("Message \"" + message + "\" does not match a route.");
                 }
@@ -123,9 +130,11 @@ public class RouteController extends AbstractController implements PropertyChang
             list.append("}|{");
             String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
             if (!turnoutsAlignedSensor.equals("")) {  //only set if found
-                Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-                if (routeAligned != null) {
+                try {
+                    Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
                     list.append(routeAligned.getKnownState());
+                } catch (IllegalArgumentException ex) {
+                    log.warn("Failed to provide turnoutsAlignedSensor \"{}\" in sendList", turnoutsAlignedSensor);
                 }
             }
 
@@ -141,6 +150,7 @@ public class RouteController extends AbstractController implements PropertyChang
      * This is on the aligned sensor, not the route itself.
      *
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Sensor s = (Sensor) evt.getSource();
@@ -163,6 +173,7 @@ public class RouteController extends AbstractController implements PropertyChang
     /**
      * Register this as a listener of each managed route's aligned sensor
      */
+    @Override
     public void register() {
         for (String sysName : sysNameList) {
             Route r = manager.getBySystemName(sysName);
@@ -185,6 +196,7 @@ public class RouteController extends AbstractController implements PropertyChang
     /**
      * Remove this from each managed route's aligned sensor.
      */
+    @Override
     public void deregister() {
         if (sysNameList.isEmpty()) {
             return;

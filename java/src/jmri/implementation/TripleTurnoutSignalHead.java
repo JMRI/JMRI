@@ -1,6 +1,6 @@
-// TripleTurnoutSignalHead.java
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 
@@ -35,7 +34,8 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -89,6 +89,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mYellow = null;
         super.dispose();
@@ -104,6 +105,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
         mYellow = t;
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (super.isTurnoutUsed(t)) {
             return true;
@@ -114,7 +116,11 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
+    /**
+     * Disables the feedback mechanism of the DoubleTurnoutSignalHead.
+     */
+    @Override
+    void readOutput() { }
+
     private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
 }
-
-/* @(#)TripleTurnoutSignalHead.java */

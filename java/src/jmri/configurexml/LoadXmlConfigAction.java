@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.ConfigureManager} for information on the various types of
  * information stored in configuration files.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
@@ -29,6 +30,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         loadFile(getConfigFileChooser());
     }
@@ -43,12 +45,17 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         java.io.File file = getFile(fileChooser);
         if (file != null) {
             try {
-                results = InstanceManager.configureManagerInstance().load(file);
-                if (results) {
-                    // insure logix etc fire up
-                    InstanceManager.logixManagerInstance().activateAllLogixs();
-                    InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                    new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+                if (cm == null) {
+                    log.error("Failed to get default configure manager");
+                } else {
+                    results = cm.load(file);
+                    if (results) {
+                        // insure logix etc fire up
+                        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                    }
                 }
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: " + e);

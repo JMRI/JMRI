@@ -1,4 +1,3 @@
-// MrcComponentFactory.java
 package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version $Revision: 17977 $
  */
 public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
@@ -22,6 +20,7 @@ public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
@@ -31,4 +30,4 @@ public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)MrcComponentFactory.java */
+

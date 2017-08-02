@@ -1,5 +1,10 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
@@ -30,6 +35,9 @@ public class XBeeLight extends AbstractLight {
     /**
      * Create a Light object, with system and user names and a reference to the
      * traffic controller.
+     * @param systemName Xbee system id : pin id
+     * @param userName User friendly name
+     * @param controller tc for connection for this node
      */
     public XBeeLight(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
@@ -97,11 +105,21 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
+    @Override
     protected void doNewState(int oldState, int newState) {
-        // get message 
-        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, newState == Light.ON);
-        // send the message
-        tc.sendXBeeMessage(message, null);
+        try  {
+            if((newState == Light.ON) ) {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.HIGH);
+            } else {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.LOW);
+            }
+        } catch (TimeoutException toe) {
+           log.error("Timeout setting IO line value for light {} on {}",getUserName(),node.getXBee());
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open setting IO line value for light {} on {}",getUserName(),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error setting IO line value for light {} on {}",getUserName(),node.getXBee());
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeLight.class.getName());

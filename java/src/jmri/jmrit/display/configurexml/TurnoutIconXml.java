@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -34,6 +33,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
      * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         TurnoutIcon p = (TurnoutIcon) o;
@@ -73,6 +73,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
      * @param o       Editor as an Object
      */
     @SuppressWarnings("null")
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;
@@ -90,7 +91,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
         l.setTurnout(name);
 
         Attribute a = element.getAttribute("tristate");
-        if ((a == null) || ((a != null) && a.getValue().equals("true"))) {
+        if ((a == null) || a.getValue().equals("true")) {
             l.setTristate(true);
         } else {
             l.setTristate(false);

@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * <LI>Send Resume Operations request
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
- * <img src="doc-files/XPressNetProgrammer-StateDiagram.png">
- * <img src="doc-files/XPressNetProgrammer-SequenceDiagram.png">
+ * <img src="doc-files/XPressNetProgrammer-StateDiagram.png" alt="UML State diagram">
+ * <img src="doc-files/XPressNetProgrammer-SequenceDiagram.png" alt="UML Sequence diagram">
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003-2010
@@ -184,10 +184,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     static protected final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
     static protected final int INQUIRESENT = 2; // read/write command sent, waiting reply
     protected boolean _progRead = false;
-    protected int _val;	// remember the value being read/written for confirmative reply
-    protected int _cv;	// remember the cv being read/written
+    protected int _val; // remember the value being read/written for confirmative reply
+    protected int _cv; // remember the cv being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -220,10 +221,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -277,6 +280,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
@@ -492,29 +496,30 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
-
-    /*
+    /**
      * Since the Lenz programming sequence requires several 
-     * operations, We want to be able to check and see if we are 
+     * operations, we want to be able to check and see if we are
      * currently programming before allowing the Traffic Controller 
-     * to send a request to exit service mode
+     * to send a request to exit service mode.
      */
     synchronized public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     @Override
     synchronized protected void timeout() {
@@ -533,7 +538,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    // internal method to notify of the final result
+    /**
+     * Internal method to notify of the final result
+     */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -554,6 +561,3 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class.getName());
 
 }
-
-
-/* @(#)XNetProgrammer.java */

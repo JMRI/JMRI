@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -42,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * code just flips from one to the other as the user selects a mode. The
  * individual items all share data models to simplify the logic.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, limited speed,
  * changed layout, and tool tips. Dick Bronson (RJB) 2006
@@ -200,6 +199,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         g.add(buttonTrailDiv);
         g.add(buttonFacing);
         ActionListener a = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 buttonClicked();
             }
@@ -247,6 +247,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line.add(outSignalField = new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
         outSignalField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // user hit enter, use this name to fill in the rest of the fields
                 activate();
@@ -285,17 +286,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.setLayout(new FlowLayout());
-        line.add(new JLabel(rbt.getString("Comment:_")));
+        line.add(new JLabel(rbt.getString("Comment")));
         line.add(commentField = new JTextField(30));
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         // add OK button at bottom
-        JButton b = new JButton(rbt.getString("Apply"));
+        JButton b = new JButton(rbt.getString("Apply")); // TODO add Bundle to folder and use ButtonApply from NBB
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }
@@ -681,14 +683,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void okPressed() {
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             JOptionPane.showMessageDialog(this, rbt.getString("Signal_head_") + outSignalField.getText() + rbt.getString("_is_not_defined_yet"));
             return;
         }
         SignalHead head = sh;
         if (sh == null) {
-            head = InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText());
+            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText());
         }
 
         // it does
@@ -708,8 +710,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 return;
             }
         } catch (Exception e) {
-            log.error("An error occured creating the boss logic " + e.toString());
-            JOptionPane.showMessageDialog(this, "An error occured creating the Simple Signal Logic\nPlease check the console log for more information");
+            log.error("An error occurred creating the boss logic " + e.toString());
+            JOptionPane.showMessageDialog(this, "An error occurred creating the Simple Signal Logic\nPlease check the console log for more information");
         }
     }
 
@@ -806,7 +808,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     void activate() {
 
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
+            // head not exist, just title the window and leave
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
@@ -817,10 +820,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             b = BlockBossLogic.getExisting(sh);
         } else {
             b = BlockBossLogic.getExisting(outSignalField.getText());
-        }
-        if (b == null) {
-            setTitle(rbt.getString("Simple_Signal_Logic"));
-            return;
         }
 
         setTitle(rbt.getString("Signal_logic_for_") + " " + outSignalField.getText());
@@ -897,6 +896,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     SignalHead sh = null;
 
+    /**
+     * Programmatically open the frame to edit a specific signal by head.
+     *
+     * @param sh signal head of which the name should be entered in the Edit pane
+     */
     public void setSignal(SignalHead sh) {
         this.sh = sh;
         outSignalField.setText(sh.getDisplayName());
@@ -905,7 +909,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Programmatically open the frame to edit a specific signal
+     * Programmatically open the frame to edit a specific signal by name.
+     *
+     * @param name system or user name of the signal head to be entered in the Edit pane
      */
     public void setSignal(String name) {
         sh = null;

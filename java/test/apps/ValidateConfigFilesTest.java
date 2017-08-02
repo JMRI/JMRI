@@ -1,36 +1,26 @@
-// ValidateConfigFilesTest.java
 package apps;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.io.File;
+import jmri.configurexml.SchemaTestBase;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test upper level loading of config files
  *
  * @author Bob Jacobsen Copyright 2012
  * @since 2.5.5
- * @version $Revision$
  */
-public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
+@RunWith(Parameterized.class)
+public class ValidateConfigFilesTest extends SchemaTestBase {
 
-    // from here down is testing infrastructure
-    // Note setup() and teardown are provided from base class, and 
-    // need to be invoked if you add methods here
-    public ValidateConfigFilesTest(String s) {
-        super(s);
+    @Parameters(name = "{0} (pass={1})")
+    public static Iterable<Object[]> data() {
+        return getFiles(new File("xml/config"), true, true);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ValidateConfigFilesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    public ValidateConfigFilesTest(File file, boolean pass) {
+        super(file, pass);
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("apps.ValidateConfigFilesTest");
-        doDirectory(suite, "xml/config");
-        return suite;
-    }
-
 }

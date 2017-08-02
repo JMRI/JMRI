@@ -9,7 +9,7 @@ import jmri.jmrit.roster.RosterEntry;
  * Create a TreeNode representing the entire Roster.
  *
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class RosterTreeNode extends DefaultMutableTreeNode {
 
@@ -28,7 +28,7 @@ public class RosterTreeNode extends DefaultMutableTreeNode {
         setUserObject("Roster");
 
         // add every roster entry
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry r : list) {
             add(new DefaultMutableTreeNode(r.getId()));

@@ -15,6 +15,8 @@
 
   <tocitem text="Configuration Profiles " target="html.setup.profiles"/>
 
+  <tocitem text="System Console " target="package.apps.SystemConsole"/>
+
   <tocitem text="Error Codes " target="html.setup.Errors"/>
 
   <tocitem text="InstallTest " target="package.apps.InstallTest.InstallTest"/>
@@ -235,6 +237,8 @@
 
   <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
+  <tocitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
+
  </tocitem>
  <tocitem text="Tables ">
   <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
@@ -424,12 +428,6 @@
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
-   <tocitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
-
-   <tocitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-   <tocitem text="Code Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
-
    <tocitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
 
    <tocitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
@@ -460,7 +458,7 @@
 
    <tocitem text="Digitrax Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
-   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
 
    <tocitem text="Duplex Network Configuration Tool " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
@@ -556,9 +554,25 @@
   <tocitem text="How We Do Stuff ">
    <tocitem text="Recommended Practices for Programmers " target="html.doc.Technical.RP"/>
 
-   <tocitem text="JMRI Program Structure " target="html.doc.Technical.IntroStructure"/>
+   <tocitem text="JMRI Library Structure " target="html.doc.Technical.IntroStructure"/>
+
+   <tocitem text="JMRI Program Structure " target="html.doc.Technical.AppStructure"/>
+
+   <tocitem text="Names and Naming " target="html.doc.Technical.Names"/>
+
+   <tocitem text="Code Structure Patterns " target="html.doc.Technical.Patterns"/>
+
+   <tocitem text="Swing Structure " target="html.doc.Technical.Swing"/>
+
+   <tocitem text="External Connection Structure " target="html.doc.Technical.SystemStructure"/>
+
+   <tocitem text="Threads and Threading " target="html.doc.Technical.Threads"/>
 
    <tocitem text="JavaHelp HowTo " target="html.doc.Technical.Help"/>
+
+   <tocitem text="Documentation with Javadoc and UML " target="html.doc.Technical.Javadoc"/>
+
+   <tocitem text="Unit testing with JUnit " target="html.doc.Technical.JUnit"/>
 
    <tocitem text="The Website " target="html.doc.Technical.WebSite"/>
 

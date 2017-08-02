@@ -16,6 +16,7 @@
   <name>Lenz Lighting</name>
   <name xml:lang="it">Effetti Luce Lenz</name>
   <name xml:lang="de">Lenz Licht</name>
+  <name xml:lang="cs">Osvětlení Lenz</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -29,6 +30,18 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
@@ -52,11 +65,15 @@
           <text>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
           <text xml:lang="it">I valori in questa pagina sono unici e ogni CV rappresenta l'effetto luci per due uscite</text>          
           <text xml:lang="de">Die Werte in den CV stellen die Lichteffekte für jeweils zwei Ausgänge ein.</text>
+          <text xml:lang="cs">CV hodnoty na této stránce jsou jedinečné v tom, že každé CV představuje výběr osvětlení pro dva různé výstupy.</text>
+          <text xml:lang="ca">El valor de CV d'aquesta pàgina només representen CV de dos efectes de llum.</text>
         </label>
         <label>
           <text>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
           <text xml:lang="it">Le decine corrispondono ad una uscita e le unità all'altra uscita</text>  
           <text xml:lang="de">Der Zehnerwert bestimmt den Wert für den einen Ausgang der Einerwert für den anderen.</text>
+          <text xml:lang="cs">Hodnota desítek odpovídá jednomu výstupu a jednotky odpovídají druhému výstupu.</text>
+          <text xml:lang="ca">El deu dígits d'un valor representen una sortida i la unitat una altra sortida.</text>
         </label>
         <label>
           <text> </text>
@@ -69,6 +86,8 @@
           <text>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</text>
           <text xml:lang="it">Un valore di 23 ad esempio risulta come (Gyra light all'uscita B) e ( Lampeggiante all'uscita A)</text>
           <text xml:lang="de">Beipiel:  Der Wert 23 unten ergibt Gyralight am Ausgang B und Strobe (Blitz) am Ausgang A.</text>
+          <text xml:lang="cs">Příklad: Hodnota 23 zapne gyroskopické světlo na výstupu B a stroboskopické na výstupu A.</text>
+		  <text xml:lang="ca">Un valor de 23 o menor representa un llum giratori a la sortida B i estreboscic a la soritda A</text>
         </label>
         <label>
           <text> </text>
@@ -85,11 +104,15 @@
           <text>The following lighting effects are</text>
           <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
+          <text xml:lang="cs">Následující světelné efekty jsou</text>
+          <text xml:lang="ca">Els següents efectes de llum són</text>
         </label>
         <label>
           <text>available for outputs A and B</text>
           <text xml:lang="it">sono disponibili per le uscite A e B</text>
           <text xml:lang="de">an den Ausgängen A und B verfügbar</text>
+          <text xml:lang="cs">dostupné na výstupech A a B</text>
+          <text xml:lang="ca">disponibles per a la sortida A i B</text>
         </label>
         <label>
           <text> </text>
@@ -98,26 +121,35 @@
           <text>No effect    </text>
           <text xml:lang="it">Nessun effetto</text>
           <text xml:lang="de">Kein Effekt    </text>
+          <text xml:lang="cs">Žádné efekty    </text>
+          <text xml:lang="ca">Cap efecte</text>
         </label>
         <label>
-          <text>Mars light   </text>
+        <text>Mars light   </text>
           <text xml:lang="it">Luci Mars</text>
           <text xml:lang="de">Marslight   </text>
+          <text xml:lang="cs">Mars světlo   </text>
+          <text xml:lang="ca">Llum Mars</text>
         </label>
         <label>
           <text>Gyra light   </text>
           <text xml:lang="de">Gyralight   </text>
           <text xml:lang="it">Gyra light   </text>
+          <text xml:lang="cs">Gyroskopické světlo   </text>
         </label>
         <label>
           <text>Strobe       </text>
           <text xml:lang="it">Lampeggiante   </text>
           <text xml:lang="de">Strobe  (Blitz)     </text>
+          <text xml:lang="cs">Stroboskopické světlo     </text>
+          <text xml:lang="ca">Llum Estreboscòpica</text>
         </label>
         <label>
           <text>Double Strobe</text>
            <text xml:lang="it">Doppio Lampeggiante   </text>
           <text xml:lang="de">Doublestrobe (Doppelblitz)</text>
+          <text xml:lang="cs">Dvojitý stroboskop</text>
+          <text xml:lang="ca">Doble Estreboscòpica</text>
         </label>
         <label>
           <text> </text>
@@ -136,11 +168,15 @@
           <text>Output B</text>
            <text xml:lang="it">Uscita B </text>
           <text xml:lang="de">Ausgang B</text>
+          <text xml:lang="cs">Výstup B</text>
+          <text xml:lang="ca">Sortida B</text>
         </label>
         <label>
           <text> (Tens)</text>
           <text xml:lang="it">(Decine) </text>
           <text xml:lang="de"> (Zehner)</text>
+          <text xml:lang="cs"> (Desítky)</text>
+          <text xml:lang="ca">(Desena)</text>
         </label>
         <label>
           <text> </text>
@@ -148,22 +184,31 @@
         <label>
           <text>   0</text>
           <text xml:lang="de">   0</text>
+          <text xml:lang="cs">   0</text>
         </label>
         <label>
           <text>   1</text>
           <text xml:lang="de">   1</text>
+          <text xml:lang="cs">   1</text>
+		  <text xml:lang="ca">   1</text>
         </label>
         <label>
           <text>   2</text>
           <text xml:lang="de">   2</text>
+          <text xml:lang="cs">   2</text>
+          <text xml:lang="ca">   2</text>
         </label>
         <label>
           <text>   3</text>
           <text xml:lang="de">   3</text>
+          <text xml:lang="cs">   3</text>
+          <text xml:lang="ca">   3</text>
         </label>
         <label>
           <text>   4</text>
           <text xml:lang="de">   4</text>
+          <text xml:lang="cs">   4</text>
+          <text xml:lang="ca">   4</text>
         </label>
         <label>
           <text> </text>
@@ -182,11 +227,15 @@
           <text>Output A</text>
           <text xml:lang="it">Uscita A </text>
           <text xml:lang="de">Ausgang A</text>
+          <text xml:lang="cs">Výstup A</text>
+          <text xml:lang="ca">Sortida A</text>
         </label>
         <label>
           <text> (Ones)</text>
           <text xml:lang="it">(Unità) </text>
           <text xml:lang="de"> (Einer)</text>
+          <text xml:lang="cs"> (Jednotky)</text>
+          <text xml:lang="ca">(Unitat)</text>
         </label>
         <label>
           <text> </text>
@@ -194,22 +243,32 @@
         <label>
           <text>   0</text>
           <text xml:lang="de">   0</text>
+          <text xml:lang="cs">   0</text>
+          <text xml:lang="ca">   0</text>
         </label>
         <label>
           <text>   1</text>
           <text xml:lang="de">   1</text>
+          <text xml:lang="cs">   1</text>
+          <text xml:lang="ca">   1</text>
         </label>
         <label>
           <text>   2</text>
           <text xml:lang="de">   2</text>
+          <text xml:lang="cs">   2</text>
+          <text xml:lang="ca">   2</text>
         </label>
         <label>
           <text>   3</text>
           <text xml:lang="de">   3</text>
+          <text xml:lang="cs">   3</text>
+          <text xml:lang="ca">   3</text>
         </label>
         <label>
           <text>   4</text>
           <text xml:lang="de">   4</text>
+          <text xml:lang="cs">   4</text>
+          <text xml:lang="ca">   4</text>
         </label>
         <label>
           <text> </text>
@@ -239,11 +298,15 @@
           <text>The following lighting effects are</text>
           <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
+          <text xml:lang="cs">Následující světelné efekty jsou</text>
+          <text xml:lang="ca">Els següents efectes són</text>
         </label>
         <label>
           <text>available for output D</text>
           <text xml:lang="it">sono disponibili per l'uscita D</text>
           <text xml:lang="de">am Ausgang D verfügbar</text>
+          <text xml:lang="cs">dostupné na výstupu D</text>
+          <text xml:lang="ca">disponibles per a la sortida D</text>
         </label>
         <label>
           <text> </text>
@@ -252,31 +315,43 @@
           <text>No effect                      </text>
           <text xml:lang="it">Nessun effetto              </text>
           <text xml:lang="de">No effect                      </text>
+          <text xml:lang="cs">Žádné efekty                      </text>
+          <text xml:lang="ca">Cap efecte                        </text>
         </label>
         <label>
           <text>Flashing with output C         </text>
           <text xml:lang="it">Lampeggia con uscita C                            </text>
           <text xml:lang="de">Blinken im Gleichtakt zu Ausgang C         </text>
+          <text xml:lang="cs">Blikání na výstupu C         </text>
+          <text xml:lang="ca">Intermitent a la sortida C</text>
         </label>
         <label>
           <text>Flashing alternate to output C </text>
           <text xml:lang="it">Lampeggia alternandosi con uscita C </text>
           <text xml:lang="de">Blinken im Gegentakt zu Ausgang C </text>
+          <text xml:lang="cs">Blikání střídave na výstupu C </text>
+          <text xml:lang="ca">Intermitent alternatiu a la sortida C</text>
         </label>
         <label>
           <text>Flickering type 2 (less smooth)</text>
           <text xml:lang="it">Luce tremolante tipo 2(agitata) </text>
           <text xml:lang="de">Flackern Typ 2 (unruhiger)</text>
+          <text xml:lang="cs">Blikání typ 2 (neklidné)</text>
+          <text xml:lang="ca">Intermitent tipus 2 (més mogut)</text>
         </label>
         <label>
           <text>Flickering type 3 (excitedly)  </text>
           <text xml:lang="it">Luce tremolante tipo 3(eccitata) </text>
           <text xml:lang="de">Flackern Typ 3 (hektisch)  </text>
+          <text xml:lang="cs">Blikání typ 3 (hektické)</text>
+          <text xml:lang="ca">Intermitent tipus 3 (encara més mogut)</text>
         </label>
         <label>
           <text>Dimming enabled                </text>
           <text xml:lang="it">Abilita Luci smorzate    </text>
           <text xml:lang="de">Dimmen ein                </text>
+          <text xml:lang="cs">Tlumení jasu zpřístupněno                </text>
+          <text xml:lang="ca">Habilita llum atenuada</text>
         </label>
         <label>
           <text> </text>
@@ -295,11 +370,15 @@
           <text>Output D</text>
           <text xml:lang="it">Uscita D</text>
           <text xml:lang="de">Ausgang D</text>
+          <text xml:lang="cs">Výstup D</text>
+          <text xml:lang="ca">Sortida D</text>
         </label>
         <label>
           <text> (Tens)</text>
           <text xml:lang="it">(Decine)</text>
           <text xml:lang="de"> (Zehner)</text>
+          <text xml:lang="cs"> (Desítky)</text>
+          <text xml:lang="ca">(Desena)</text>
         </label>
         <label>
           <text> </text>
@@ -307,26 +386,38 @@
         <label>
           <text>   0</text>
           <text xml:lang="de">   0</text>
+          <text xml:lang="cs">   0</text>
+          <text xml:lang="ca">   0</text>
         </label>
         <label>
           <text>   1</text>
           <text xml:lang="de">   1</text>
+          <text xml:lang="cs">   1</text>
+          <text xml:lang="ca">   1</text>
         </label>
         <label>
           <text>   2</text>
           <text xml:lang="de">   2</text>
+          <text xml:lang="cs">   2</text>
+          <text xml:lang="ca">   2</text>
         </label>
         <label>
           <text>   3</text>
           <text xml:lang="de">   3</text>
+          <text xml:lang="cs">   3</text>
+          <text xml:lang="ca">   3</text>
         </label>
         <label>
           <text>   4</text>
           <text xml:lang="de">   4</text>
+          <text xml:lang="cs">   4</text>
+          <text xml:lang="ca">   4</text>
         </label>
         <label>
           <text>   5</text>
           <text xml:lang="de">   5</text>
+          <text xml:lang="cs">   5</text>
+          <text xml:lang="ca">   5</text>
         </label>
         <label>
           <text> </text>
@@ -345,11 +436,15 @@
           <text>Output C</text>
           <text xml:lang="it">Uscita C</text>
           <text xml:lang="de">Ausgang C</text>
+          <text xml:lang="cs">Výstup C</text>
+          <text xml:lang="ca">Sortida C</text>
         </label>
         <label>
           <text> (Ones)</text>
           <text xml:lang="it">(Unità)</text>
           <text xml:lang="de"> (Einer)</text>
+          <text xml:lang="cs"> (Jednotky)</text>
+          <text xml:lang="ca">(Unitat)</text>
         </label>
         <label>
           <text> </text>
@@ -357,18 +452,26 @@
         <label>
           <text>   0</text>
           <text xml:lang="de">   0</text>
+          <text xml:lang="cs">   0</text>
+          <text xml:lang="ca">   0</text>
         </label>
         <label>
           <text>   1</text>
           <text xml:lang="de">   1</text>
+          <text xml:lang="cs">   1</text>
+          <text xml:lang="ca">   1</text>
         </label>
         <label>
           <text>   2</text>
           <text xml:lang="de">   2</text>
+          <text xml:lang="cs">   2</text>
+          <text xml:lang="ca">   2</text>
         </label>
         <label>
           <text>   3</text>
           <text xml:lang="de">   3</text>
+          <text xml:lang="cs">   3</text>
+          <text xml:lang="ca">   3</text>
         </label>
         <label>
           <text> </text>
@@ -393,11 +496,15 @@
           <text>The following lighting effects are</text>
           <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
+          <text xml:lang="cs">Následující světelné efekty jsou</text>
+          <text xml:lang="ca">Els següents efectes són</text>
         </label>
         <label>
           <text>available for output C</text>
           <text xml:lang="it">sono disponibili per l'uscita C</text>
           <text xml:lang="de">am Ausgang C verfügbar</text>
+          <text xml:lang="cs">dostupné na výstupu C</text>
+          <text xml:lang="ca">disponibles per a la sortida C</text>
         </label>
         <label>
           <text> </text>
@@ -406,21 +513,29 @@
           <text>No effect                 </text>
           <text xml:lang="it">Nessun effetto             </text>
           <text xml:lang="de">Kein Effekt                 </text>
+          <text xml:lang="cs">Žádné efekty                 </text>
+          <text xml:lang="ca">Cap efecte</text>
         </label>
         <label>
           <text>Flashing                  </text>
           <text xml:lang="it">Lampeggiante        </text>
           <text xml:lang="de">Blinken                  </text>
+          <text xml:lang="cs">Blikání                  </text>
+          <text xml:lang="ca">Intermitent              </text>
         </label>
         <label>
           <text>Flickering type 1 (smooth)</text>
           <text xml:lang="it">Luce tremolante tipo 1(calma) </text>
           <text xml:lang="de">Flackern Typ 1 (ruhig)</text>
+          <text xml:lang="cs">Blikání typ 3 (klidné)</text>
+          <text xml:lang="ca">Intermitent de tipus 1 (calmat)</text>
         </label>
         <label>
           <text>Dimming enabled           </text>
            <text xml:lang="it">Abilita Luci smorzate    </text>
           <text xml:lang="de">Dimmen ein           </text>
+          <text xml:lang="cs">Tlumení jasu zpřístupněno           </text>
+          <text xml:lang="ca">Intermiten desactivat</text>
         </label>
         <label>
           <text> </text>

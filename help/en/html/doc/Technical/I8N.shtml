@@ -24,6 +24,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -59,7 +60,7 @@ a default Locale (as part of the
 <a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>), 
 we can customize the JMRI&reg; program to different countries and languages.
 
-<a name="resourcebundles"><h2>Use of Resource Bundles</h2></a>
+<a name="resourcebundles"></a><h2>Use of Resource Bundles</h2>
 The text for menus, buttons and similiar controls is for the most part contained in
 <strong>property files</strong>, which are accessed via the Resource Bundle mechanism
 of java.util.
@@ -83,6 +84,12 @@ By convention, resource names for GUI elements start with one of
     <li>Error - for an error message displayed as part of the GUI
     </ol>
 Other resources are named so as not to conflict with these.
+
+<p>Many standard names for buttons, objects, colors etc. are grouped in one place, from which
+they are available in all tools, tables and JMRI apps. The highest level Bundle is called
+    <em>NamedBeanBundle</em>, located in the jmri package. A next level is inside the jmri.jmrit (Tools) directory,
+where the Bundle.properties bundle contains keys common for all tools, such as the names of colors and
+other Tools interface strings.</p>
 
 <h2>Adapting to a new language</h2>
 The primary steps to adapt JMRI to a new language are:
@@ -117,15 +124,22 @@ You can also check the official
 <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">list of countries/regions</a>
 (optional second part of the suffix).
 <p>
-You then edit the language-specific files to enter text in  your own language. 
+You then edit the language-specific files to enter text in your own language.
 <p>
 The lines in the file that contain things like <code>$Release: $;</code>
 are a vestige of older version control systems; they can be ignored or deleted.
 <p>
 There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
-of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
-<code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
+of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
+
+<a name="commonkeys"><p>
+You are advised to start a new language translation by completing the highest level bundles, starting with the
+<em>NamedBeanBundle</em> in the src/jmri directory end working your way down the folder hierarchy, of course following your personal
+interest in certain modules. By following this order, you will see your initial work all the way down inside the user interface for tools such as
+Panels, Operations and Signals.<br>
+Thanks to the hierarchy of bundle properties files, we maintain consistency across the user interface of the different parts. If you come across a spot
+where your language just doesn't work, please leave a note with the developers so we can help you by adding a specific key, or even splitting the tree.</p>
 
 <h3>Translating XML Files</h3>
 <p>The <code>xml/config/parts/jmri/</code> folder contains additional text strings to translate for programmers etc. Just as in <a href="#xml">decoder
@@ -169,25 +183,25 @@ Please see the
 for more info on how to include those characters in your .properties files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
 <p>An example is the 
-<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a> 
 file, which contains diacritical letters for the Czech translation. 
 <p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
 by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
-<a name="xml" id="xml"><h3>Translating XML files</h3>
+<a name="xml"><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
-<code><pre>
+<pre style="font-family: monospace;">
       &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
       &lt;/variable&gt;
-</pre></code>
+</pre>
 <p>
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
@@ -262,15 +276,15 @@ which name to display when the program is running.  Different languages
 may put that part of the message in different places, and supporting that
 is important.  
 That's handled by putting a placeholder in the message definition:
-<pre><code>
+<pre style="font-family: monospace;">
 Error123 = System name {0} is already in use
-</code></pre>
+</pre>
 (You can have more than one insertion, called {1}, {2}, etc)
 <p>
 Next, format the final message by inserting the content into it:
-<pre><code>
+<pre style="font-family: monospace;">
   String msg = Bundle.getMessage("Error123", badName);
-</code></pre>
+</pre>
 <p>
 The first argument is the message key
 followed by one or more strings to be inserted into the message.
@@ -287,12 +301,22 @@ than providing multiple lines in the code itself.
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
 English, as should messages sent to the logging system. Keys for 
-the translation bundles are another example. 
+the translation bundles should also stay in English. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
-<pre><code>
-  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
-</code></pre>
+<pre style="font-family: monospace;">
+           Sensor thisSensorVariableNameIsInEnglish;
+
+           String message = "THAT_ONE_MESSAGE";  // NOI18N
+           JLabel jl1 = new JLabel(Bundle.getMessage(message));
+
+           JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
+
+           log.debug("The process failed account of user error"); // NOI18N
+
+           // This comment is in English and need not be annotated w.r.t. internationalization
+
+</pre>
 
 <h3>Adding a new Bundle</h3>
 <p>
@@ -320,9 +344,9 @@ If your package does not already have a Bundle class, you can add it by:
 <h4>Older code</h4>
 <p>
 Older code typically references the bundles directly:
-<pre><code>
+<pre style="font-family: monospace;">
   java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-</code></pre>
+</pre>
 
 <p>
 The getBundle argument is the complete package name (not file name)
@@ -332,9 +356,9 @@ strings in more than one properties file.
 
 <p>
 You can then retrieve particular strings like this:
-<pre><code>
+<pre style="font-family: monospace;">
 java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle").getString("ButtonNew");
-</code></pre>
+</pre>
 <p>
 We no longer recommend defining a class-static variable to hold the 
 reference to the Bundle object, as this ends up consuming a lot 
@@ -343,20 +367,20 @@ Go ahead and
 call the <code>getBundle()</code> each time, it's fast because it works through
 a weakly-referenced and garbage-collected cache.
 
-<a name="xml-dev" id="xml-dev"></a>
+<a name="xml-dev"></a>
 <h3>XML Access</h3>
 <p>Second, you have to retrieve XML elements and attributes properly.
 The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
 that replaces the JDOM getAttribute element when the content of the 
 attribute might have been internationalized. You use it like this:
 
-<code><pre>
+<pre style="font-family: monospace;">
 String choice = LocaleSelector.getAttribute(choiceElement, "choice")
-</pre></code>
+</pre>
 where "choiceElement" is a JDOM Element object containing a (possibly translated)
 "choice" attribute.  &quot;Null&quot; will be returned if nothing is found.
 
-<a name="numbers" id="numbers"></a>
+<a name="numbers"></a>
 <h3>Numbers</h3>
 <p>The number "10*10*10+2+3/10" is written in different ways in different places:
 "1002.3",
@@ -365,17 +389,17 @@ where "choiceElement" is a JDOM Element object containing a (possibly translated
 <p>
 JMRI provides a helpful utility for handling this on input:
 
-<code><pre>
+<pre style="font-family: monospace;">
    double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
    float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</pre></code>
+</pre>
 
 Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
 handling that is part of your user-error handling.
 
 <p>
 For output:
-<pre>
+<pre style="font-family: monospace;">
    String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre>
 <p>
@@ -383,7 +407,7 @@ For output:
 without using these formatting tools. That way, the files can be moved
 from one user to another without worrying about whether they are using the same Locale.</strong>
 
-<a name="testing" id="testing">
+<a name="testing">
 <h3>Testing</h3>
 <p>
 You should check that you've properly internationalized 

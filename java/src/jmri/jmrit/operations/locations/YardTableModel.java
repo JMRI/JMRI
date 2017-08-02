@@ -1,4 +1,3 @@
-// YardTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of yards used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class YardTableModel extends TrackTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7919234279596604386L;
 
     public YardTableModel() {
         super();
@@ -34,6 +27,9 @@ public class YardTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("YardName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

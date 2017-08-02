@@ -1,4 +1,3 @@
-// JmriSRCPServer.java
 package jmri.jmris.srcp;
 
 import java.io.BufferedReader;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * This is an implementation of SRCP for JMRI.
  *
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision$
  *
  */
 public class JmriSRCPServer extends JmriServer {
@@ -30,6 +28,10 @@ public class JmriSRCPServer extends JmriServer {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
 
+    /*
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
+     */
+    @Deprecated
     synchronized public static JmriServer instance() {
         if (_instance == null) {
             int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));

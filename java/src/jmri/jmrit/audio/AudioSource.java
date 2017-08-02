@@ -18,7 +18,7 @@ import jmri.Audio;
  * Each AudioSource object has a two names. The "user" name is entirely free
  * form, and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
- * control system (e.g. LocoNet, NCE, etc) and address within that system.
+ * control system (for example LocoNet or NCE) and address within that system.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -233,18 +233,6 @@ public interface AudioSource extends Audio {
      */
     public void setAssignedBuffer(String sysName);
 
-//    /**
-//     * Binds this AudioSource with the specified AudioBuffer
-//     * <p>
-//     * Applies only to sub-types:
-//     * <ul>
-//     * <li>Source
-//     * </ul>
-//     * @param audioBuffer the AudioBuffer to bind to this AudioSource
-//     * @return true if successful
-//     */
-//    @Deprecated
-//    public boolean bindAudioBuffer(AudioBuffer audioBuffer);
     /**
      * Queues the linked AudioBuffer object to this Source's buffer queue
      * <p>
@@ -254,6 +242,7 @@ public interface AudioSource extends Audio {
      * </ul>
      *
      * @param audioBuffers the AudioBuffer object to enqueue to this AudioSource
+     * @return true if successfully queued audioBuffers; false otherwise
      */
     public boolean queueBuffers(Queue<AudioBuffer> audioBuffers);
 
@@ -387,7 +376,38 @@ public interface AudioSource extends Audio {
     public void setReferenceDistance(float referenceDistance);
 
     /**
-     * Return the current maximum distance setting
+     * Set the offset in which to start playback of this AudioSource.
+     * <p>
+     * Default value = 0
+     * <p>
+     * Value is clamped between 0 and length of attached AudioBuffer
+     * <p>
+     * Applies only to sub-types:
+     * </p><ul>
+     * <li>Source
+     * </ul>
+     *
+     * @param offset the offset in samples marking the point to commence
+     *               playback
+     */
+    public void setOffset(long offset);
+
+    /**
+     * Return the offset in which to start playback of this AudioSource.
+     * <p>
+     * Default value = 0
+     * <p>
+     * Applies only to sub-types:
+     * </p><ul>
+     * <li>Source
+     * </ul>
+     *
+     * @return the offset in samples marking the point to commence playback
+     */
+    public long getOffset();
+
+    /**
+     * Return the current maximum distance setting.
      * <p>
      * Default value = Audio.MAX_DISTANCE
      * <p>
@@ -398,11 +418,12 @@ public interface AudioSource extends Audio {
      * </p><ul>
      * <li>Source
      * </ul>
+     * @return the maximum distance
      */
     public float getMaximumDistance();
 
     /**
-     * Set the current maximum distance setting
+     * Set the current maximum distance setting.
      * <p>
      * Default value = Audio.MAX_DISTANCE
      * <p>
@@ -419,7 +440,7 @@ public interface AudioSource extends Audio {
     public void setMaximumDistance(float maximumDistance);
 
     /**
-     * Set the roll-off factor of this AudioSource object
+     * Set the roll-off factor of this AudioSource object.
      * <p>
      * Default value = 1.0f
      * <p>
@@ -433,7 +454,7 @@ public interface AudioSource extends Audio {
     public void setRollOffFactor(float rollOffFactor);
 
     /**
-     * Return the roll-off factor of this AudioSource object
+     * Get the roll-off factor of this AudioSource object.
      * <p>
      * Default value = 1.0f
      * <p>
@@ -441,11 +462,12 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     * @return the roll-off factor
      */
     public float getRollOffFactor();
 
     /**
-     * Returns a boolean if this AudioSource object will loop or not
+     * Check if this AudioSource object will loop or not.
      * <p>
      * Applies only to sub-types:
      * <ul>

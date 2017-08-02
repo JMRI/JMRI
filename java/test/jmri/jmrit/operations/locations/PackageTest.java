@@ -27,26 +27,45 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.locations.PackageTest"); // no tests in class itself
         suite.addTest(LocationTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(ScheduleItemTest.suite());
-        suite.addTest(ScheduleTest.suite());
-        suite.addTest(ScheduleManagerTest.suite());
         suite.addTest(TrackTest.suite());
         suite.addTest(OperationsPoolTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(InterchangeEditFrameTest.suite());
-            suite.addTest(LocationEditFrameTest.suite());
-            suite.addTest(LocationTableFrameTest.suite());
-            suite.addTest(ScheduleEditFrameTest.suite());
-            suite.addTest(ScheduleTableFrameTest.suite());
-            suite.addTest(SidingEditFrameTest.suite());
-            suite.addTest(StagingEditFrameTest.suite());
-            suite.addTest(YardEditFrameTest.suite());
-            suite.addTest(PoolTrackGuiTest.suite());
-        }
-
+        suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
+        suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());
+<<<<<<< HEAD
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeEditFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationTableFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SidingEditFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingEditFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardEditFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class)); 
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SidingEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class));
+>>>>>>> JMRI/master
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpurEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpurTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTest.class));
         return suite;
     }
 

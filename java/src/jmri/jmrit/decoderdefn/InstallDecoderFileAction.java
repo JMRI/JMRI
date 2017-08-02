@@ -1,4 +1,3 @@
-// InstallDecoderFileAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -13,16 +12,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from local file.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8029283743478939558L;
 
     public InstallDecoderFileAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -42,6 +35,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
 
     JFileChooser fci;
 
+    @Override
     URL pickURL(JPanel who) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
@@ -68,6 +62,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

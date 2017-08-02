@@ -9,15 +9,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Tracks train into memory object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class MemoryTracker {
 
     /**
      * Create a Tracker object, providing a list of blocks to watch
      */
-    public MemoryTracker(Block b, String namePrefix) {
+    public MemoryTracker(Block b, String namePrefix) throws IllegalArgumentException {
         block = b;
 
         // make sure Memory objects exist & remember it
@@ -26,6 +25,7 @@ public class MemoryTracker {
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(namePrefix + block.getSystemName(), m);
         // set listener in the block
         block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleChange();
             }

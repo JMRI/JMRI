@@ -15,7 +15,6 @@ import jmri.jmrix.sprog.sprogCS.SprogCSSerialDriverAdapter;
  * attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -23,9 +22,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SprogCSSerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SprogCSSerialDriverAdapter();
+        }
     }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
 
     @Override
     protected void register() {

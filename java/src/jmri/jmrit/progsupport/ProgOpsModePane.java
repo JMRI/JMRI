@@ -1,4 +1,3 @@
-// ProgOpsModePane.java
 package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionListener;
@@ -8,17 +7,23 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+<<<<<<< HEAD
 import javax.swing.JTextField;
+=======
+>>>>>>> JMRI/master
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.implementation.AccessoryOpsModeProgrammerFacade;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,50 +33,88 @@ import org.slf4j.LoggerFactory;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
     // GUI member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = 165989491869394147L;
     ButtonGroup modeGroup = new ButtonGroup();
-    HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
+    HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<>();
     JComboBox<AddressedProgrammerManager> progBox;
+<<<<<<< HEAD
     ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
-
-    JTextField mAddrField = new JTextField(4);
-    String oldAddrText = "";
-
+=======
+    ArrayList<JRadioButton> buttonPool = new ArrayList<>();
+>>>>>>> JMRI/master
+    // JTextField mAddrField = new JTextField(4);
+    // use JSpinner for CV number input
+    SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10239, 1); // 10239 is highest DCC Long Address documented by NMRA as per 2017
+    JSpinner mAddrField = new JSpinner(model);
+<<<<<<< HEAD
+    int oldAddrValue = 3; // Default start value
     JCheckBox mLongAddrCheck = new JCheckBox(Bundle.getMessage("LongAddress"));
+=======
+    int lowAddrLimit = 0;
+    int highAddrLimit = 10239;
+    int oldAddrValue = 3; // Default start value
+    ButtonGroup addrGroup = new ButtonGroup();
+    JRadioButton shortAddrButton = new JRadioButton(Bundle.getMessage("ShortAddress"));
+    JRadioButton longAddrButton = new JRadioButton(Bundle.getMessage("LongAddress"));
+>>>>>>> JMRI/master
     boolean oldLongAddr = false;
+    boolean opsAccyMode = false;
+    boolean oldOpsAccyMode = false;
+    boolean opsSigMode = false;
+    boolean oldOpsSigMode = false;
     AddressedProgrammer programmer = null;
+    AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
 
     /**
      * Get the selected programmer
      */
+    @Override
     public Programmer getProgrammer() {
-        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getText().equals(oldAddrText)) {
+<<<<<<< HEAD
+        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getValue().equals(oldAddrValue)) {
+=======
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode);
+        if ((longAddrButton.isSelected() == oldLongAddr)
+                && mAddrField.getValue().equals(oldAddrValue)
+                && opsAccyMode == oldOpsAccyMode
+                && opsSigMode == oldOpsSigMode) {
+            log.debug("getProgrammer hasn't changed");
+>>>>>>> JMRI/master
             // hasn't changed
-            return programmer;
+            if (opsAccyMode || opsSigMode) {
+                return facadeProgrammer;
+            } else {
+                return programmer;
+            }
         }
 
         // here values have changed, try to create a new one
         AddressedProgrammerManager pm = ((AddressedProgrammerManager) progBox.getSelectedItem());
+<<<<<<< HEAD
         oldLongAddr = mLongAddrCheck.isSelected();
-        oldAddrText = mAddrField.getText();
+        oldAddrValue = (Integer) mAddrField.getValue();
+=======
+        oldLongAddr = longAddrButton.isSelected();
+        oldAddrValue = (Integer) mAddrField.getValue();
+        oldOpsAccyMode = opsAccyMode;
+        oldOpsSigMode = opsSigMode;
+        setAddrParams();
+>>>>>>> JMRI/master
 
         if (pm != null) {
             int address = 3;
             try {
-                address = Integer.parseInt(mAddrField.getText());
+                address = (Integer) mAddrField.getValue();
             } catch (java.lang.NumberFormatException e) {
-                log.error("loco address \"{}\" not correct", mAddrField.getText());
+                log.error("loco address \"{}\" not correct", mAddrField.getValue());
                 programmer = null;
             }
-            boolean longAddr = mLongAddrCheck.isSelected();
+            boolean longAddr = longAddrButton.isSelected();
             log.debug("ops programmer for address " + address
                     + ", long address " + longAddr);
             programmer = pm.getAddressedProgrammer(longAddr, address);
@@ -83,6 +126,16 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             log.warn("request for ops mode programmer with no ProgrammerManager configured");
             programmer = null;
         }
+        if (opsAccyMode) {
+            log.debug("   getting AccessoryOpsModeProgrammerFacade");
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer,
+                    longAddrButton.isSelected() ? "accessory" : "decoder");
+            return facadeProgrammer;
+        } else if (opsSigMode) {
+            log.debug("   getting AccessoryOpsModeProgrammerFacade signal mode");
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, "signal");
+            return facadeProgrammer;
+        }
         return programmer;
     }
 
@@ -91,6 +144,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      *
      * @return true is any button is selected
      */
+    @Override
     public boolean isSelected() {
         for (JRadioButton button : buttonMap.values()) {
             if (button.isSelected()) {
@@ -101,6 +155,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> JMRI/master
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
      */
@@ -109,11 +168,22 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
+<<<<<<< HEAD
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
+     * @param group A set of JButtons to display programming modes
+=======
+     *
+     * @param direction controls layout, either BoxLayout.X_AXIS or
+     *                  BoxLayout.Y_AXIS
+     * @param group     A set of JButtons to display programming modes
+>>>>>>> JMRI/master
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
+        addrGroup.add(shortAddrButton);
+        addrGroup.add(longAddrButton);
 
         // general GUI config
         setLayout(new BoxLayout(this, direction));
@@ -130,38 +200,64 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)); // set default
         progBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
                 programmerSelected();
             }
         });
 
+        add(new JLabel(Bundle.getMessage("TitleProgramOnMain")));
+        add(new JLabel(" "));
+        add(shortAddrButton);
+        add(longAddrButton);
         JPanel panel = new JPanel();
         panel.setLayout(new java.awt.FlowLayout());
         panel.add(new JLabel(Bundle.getMessage("AddressLabel")));
         panel.add(mAddrField);
+        mAddrField.setToolTipText(Bundle.getMessage("ToolTipEnterDecoderAddress"));
         add(panel);
-        add(mLongAddrCheck);
+        add(new JLabel(Bundle.getMessage("OpsModeLabel")));
 
-        mAddrField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+//        mAddrField.addActionListener(new java.awt.event.ActionListener() {
+//            @Override
+//            public void actionPerformed(java.awt.event.ActionEvent e) {
+<<<<<<< HEAD
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
-            }
-        });
+//                programmerSelected(); // in case it has valid address now
+//            }
+//        });
         mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
+=======
+        // new programmer selection
+//                programmerSelected(); // in case it has valid address now
+//            }
+//        });
+        shortAddrButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
+                programmerSelected(); // in case it has valid address now
             }
         });
+
+        longAddrButton.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> JMRI/master
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // new programmer selection
+                programmerSelected(); // in case it has valid address now
+            }
+        });
+
+        shortAddrButton.setSelected(true);
 
         // and execute the setup for 1st time
         programmerSelected();
     }
 
     /**
-     * reload the interface with the new programmers
+     * Reload the interface with the new programmers.
      */
     void programmerSelected() {
         log.debug("programmerSelected starts with {} buttons", buttonPool.size());
@@ -174,15 +270,30 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         buttonMap.clear();
 
         // require new programmer if possible
-        oldAddrText = "";
+<<<<<<< HEAD
+        oldAddrValue = 0;
+=======
+        oldAddrValue = -1;
+>>>>>>> JMRI/master
 
         // configure buttons
         int index = 0;
-        List<ProgrammingMode> modes;
+        List<ProgrammingMode> modes = new ArrayList<ProgrammingMode>();
         if (getProgrammer() != null) {
-            modes = getProgrammer().getSupportedModes();
+            modes.addAll(programmer.getSupportedModes());
         } else {
-            modes = ((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes();
+            modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
+        }
+        // add OPSACCBYTEMODE & OPSACCEXTBYTEMODE if possible
+        if (modes.contains(DefaultProgrammerManager.OPSBYTEMODE)) {
+            if (!modes.contains(DefaultProgrammerManager.OPSACCBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCBYTEMODE);
+                modes.add(DefaultProgrammerManager.OPSACCBYTEMODE);
+            }
+            if (!modes.contains(DefaultProgrammerManager.OPSACCEXTBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+                modes.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+            }
         }
         log.debug("   has {} modes", modes.size());
         for (ProgrammingMode mode : modes) {
@@ -209,34 +320,89 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * Listen to buttons for mode changes
+     * Listen to buttons for mode changes.
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> JMRI/master
+     * @param e ActionEvent heard
      */
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (mode.toString().equals(e.getActionCommand())) {
-                log.debug("      set mode {} on {}", mode.toString(), getProgrammer());
+                log.debug("      setting mode {} on {}", mode.toString(), getProgrammer());
                 if (getProgrammer() != null) {
-                    getProgrammer().setMode(mode);
+                    log.debug("getProgrammer() != null");
+                    if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
+                        log.debug("OPS ACCY was selected in actionPerformed");
+                        opsAccyMode = true;
+                        opsSigMode = false;
+                    } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                        log.debug("OPS SIG was selected in actionPerformed");
+                        opsAccyMode = false;
+                        opsSigMode = true;
+                    } else {
+                        opsAccyMode = false;
+                        opsSigMode = false;
+                        getProgrammer().setMode(mode);
+                    }
                 }
+                setAddrParams();
                 return; // 1st match
             }
         }
     }
 
+    /**
+     * Change the programmer (mode).
+<<<<<<< HEAD
+     * @param programmer The type of programmer (i.e. Byte Mode)
+     */
     void setProgrammerFromGui(Programmer programmer) {
+=======
+     *
+     * @param programmer The type of programmer (i.e. Byte Mode)
+     */
+    void setProgrammerFromGui(Programmer programmer
+    ) {
+>>>>>>> JMRI/master
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (buttonMap.get(mode).isSelected()) {
-                programmer.setMode(mode);
+                if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
+                    log.debug("OPS ACCY was selected in setProgrammerFromGui");
+                    opsAccyMode = true;
+                    opsSigMode = false;
+                } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                    log.debug("OPS SIG was selected in setProgrammerFromGui");
+                    opsAccyMode = false;
+                    opsSigMode = true;
+                } else {
+                    opsAccyMode = false;
+                    opsSigMode = false;
+                    getProgrammer().setMode(mode);
+                }
             }
         }
     }
 
     /**
-     * Listen to programmer for mode changes
+     * Listen to programmer for mode changes.
+<<<<<<< HEAD
+     * @param e ActionEvent heard
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+=======
+     *
+     * @param e ActionEvent heard
+     */
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e
+    ) {
+>>>>>>> JMRI/master
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             if (isSelected()) {  // only change mode if we have a selected mode, in case some other selector with shared group has the selection
@@ -245,6 +411,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+    /**
+     * Change the selected mode in GUI when programmer is changed elsewhere.
+     */
     void setGuiFromProgrammer() {
         if (getProgrammer() == null) {
             // no mode selected
@@ -255,6 +424,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
 
         ProgrammingMode mode = getProgrammer().getMode();
+        if (opsAccyMode) {
+            mode = DefaultProgrammerManager.OPSACCBYTEMODE;
+        } else if (opsSigMode) {
+            mode = DefaultProgrammerManager.OPSACCEXTBYTEMODE;
+        }
         JRadioButton button = buttonMap.get(mode);
         if (button == null) {
             log.error("setGuiFromProgrammer found mode \"{}\" that's not supported by the programmer", mode);
@@ -262,12 +436,78 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
         log.debug("  setting button for mode {}", mode);
         button.setSelected(true);
+        setAddrParams();
     }
 
-    // no longer needed, disconnect if still connected
+    /**
+     * Set address limits and field names depending on address type.
+     */
+    void setAddrParams() {
+        if (opsAccyMode) {
+            shortAddrButton.setText(Bundle.getMessage("DecoderAddress"));
+            shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipDecoderAddress"));
+            shortAddrButton.setVisible(true);
+            longAddrButton.setText(Bundle.getMessage("AccessoryAddress"));
+            longAddrButton.setToolTipText(Bundle.getMessage("ToolTipAccessoryAddress"));
+            if (longAddrButton.isSelected()) {
+                lowAddrLimit = 1;
+                highAddrLimit = 2044;
+            } else {
+                lowAddrLimit = 1;
+                highAddrLimit = 511;
+            }
+        } else if (opsSigMode) {
+            shortAddrButton.setVisible(false);
+            longAddrButton.setSelected(true);
+            longAddrButton.setText(Bundle.getMessage("SignalAddress"));
+            longAddrButton.setToolTipText(Bundle.getMessage("ToolTipSignalAddress"));
+            lowAddrLimit = 1;
+            highAddrLimit = 2044;
+        } else {
+            shortAddrButton.setText(Bundle.getMessage("ShortAddress"));
+            shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipShortAddress"));
+            shortAddrButton.setVisible(true);
+            longAddrButton.setText(Bundle.getMessage("LongAddress"));
+            longAddrButton.setToolTipText(Bundle.getMessage("ToolTipLongAddress"));
+            if (longAddrButton.isSelected()) {
+                lowAddrLimit = 0;
+                highAddrLimit = 10239;
+            } else {
+                lowAddrLimit = 1;
+                highAddrLimit = 127;
+            }
+        }
+
+        log.debug(
+                "Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
+        model.setMinimum(lowAddrLimit);
+
+        model.setMaximum(highAddrLimit);
+        int address;
+
+        try {
+            address = (Integer) mAddrField.getValue();
+        } catch (java.lang.NumberFormatException e) {
+            log.debug("loco address \"{}\" not correct", mAddrField.getValue());
+            return;
+        }
+        if (address < lowAddrLimit) {
+            mAddrField.setValue(lowAddrLimit);
+        } else if (address > highAddrLimit) {
+            mAddrField.setValue(highAddrLimit);
+        }
+    }
+
+<<<<<<< HEAD
+    // Free up memory from no longer needed stuff, disconnect if still connected.
+=======
+// Free up memory from no longer needed stuff, disconnect if still connected.
+>>>>>>> JMRI/master
+    @Override
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class
+            .getName());
 
 }

@@ -1,4 +1,3 @@
-// EasyDccSystemConnectionMemo.java
 package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
@@ -13,8 +12,7 @@ import jmri.ThrottleManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 Kevin Dickerson
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2010 Kevin Dickerson
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -219,10 +217,12 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     private EasyDccCommandStation commandStation;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.easydcc.EasyDccActionListBundle");
     }
 
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, EasyDccSystemConnectionMemo.class);
@@ -244,6 +244,3 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 }
-
-
-/* @(#)InternalSystemConnectionMemo.java */

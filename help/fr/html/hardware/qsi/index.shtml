@@ -2,16 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-09-18--> 
-<title>JMRI: QSI Programmer</title>
+<title>JMRI: Programmateur Quantum</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
@@ -115,7 +112,7 @@ Vous configurez JMRI pour utiliser un programmateur Quantum similaire &#224; la 
 <li>
 D&#233;marrez le programme
 <li>
-S&#233;lectionnez Â«Pr&#233;f&#233;rences ...Â» &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
+S&#233;lectionnez «Pr&#233;f&#233;rences ...» &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
 <li>
 S&#233;lectionnez "Programmateur Quantum" comme type de connexion.
 <li>
@@ -124,7 +121,7 @@ S&#233;lectionnez "QSIProgrammateur" comme le port &#224; utiliser.
 Le reste des options sont fixes et ne peuvent pas &#234;tre modifi&#233;es.
 <li>
 Cliquez sur le bouton "Sauvegarder". Lorsque vous &#234;tes invit&#233;, quitter le programme.
-</ ol>
+</ol>
 
 Le programme est maintenant configur&#233;. Le red&#233;marrer, et il devrait &#234;tre pr&#234;t &#224; &#234;tre utiliser..
 
@@ -138,7 +135,10 @@ ajoutez.
 <p>
 Nous n'avons actuellement pas assez d'informations pour t&#233;l&#233;charger des sons dans le d&#233;codeur &#224; travers le
 Programmateur Quantum. Si nous obtenons l'information, nous allons certainement &#233;crire ce code.
+    </p>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

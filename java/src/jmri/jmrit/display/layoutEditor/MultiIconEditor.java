@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -20,17 +19,12 @@ import jmri.jmrit.catalog.NamedIcon;
  * use this.
  *
  * @author Bob Jacobsen Copyright (c) 2003
- * @version $Revision$
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.layoutEditor.LayoutEditor
  * @see jmri.jmrit.catalog
  */
 public class MultiIconEditor extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5521166208807582080L;
     JButton[] buttonList;
     NamedIcon[] iconList;
 
@@ -75,20 +69,12 @@ public class MultiIconEditor extends JPanel {
 
     private class IconButton extends JButton {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 801709580821200118L;
-
         IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
             super(init);
             savedIndex = index;
-            addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    pickIcon();
-                }
-            }
-            );
+            addActionListener((ActionEvent a) -> {
+                pickIcon();
+            });
         }
 
         int savedIndex;

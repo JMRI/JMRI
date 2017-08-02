@@ -1,4 +1,3 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.nce;
 
 import java.util.ResourceBundle;
@@ -12,9 +11,8 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -54,6 +52,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return tc for this connection
      */
     public NceTrafficController getNceTrafficController() {
         return nceTrafficController;
@@ -89,6 +88,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Sets the NCE message option.
+     * @param val command option value
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);
@@ -99,6 +99,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Tells which managers this provides by class
      */
     @SuppressWarnings("deprecation")
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -144,6 +145,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide manager by class
      */
     @SuppressWarnings({"unchecked", "deprecation"})
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -259,10 +261,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return consistManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    @Override
     public void dispose() {
         nceTrafficController = null;
         InstanceManager.deregister(this, NceSystemConnectionMemo.class);
@@ -295,6 +299,3 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 }
-
-
-/* @(#)NceSystemConnectionMemo.java */

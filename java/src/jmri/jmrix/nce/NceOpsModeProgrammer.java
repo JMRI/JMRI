@@ -1,4 +1,3 @@
-/* NceOpsModeProgrammer.java */
 package jmri.jmrix.nce;
 
 import java.util.ArrayList;
@@ -19,9 +18,8 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
- * @version	$Revision$
  */
 public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
 
@@ -39,6 +37,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
@@ -63,7 +62,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
             if (contents == null) {
                 throw new ProgrammerException();
             }
-            msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
+            msg = NceMessage.sendPacketMessage(tc, contents, 5); // retry 5 times
         }
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -80,6 +79,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         tc.sendNceMessage(msg, this);
     }
 
+    @Override
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
@@ -88,15 +88,17 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         throw new ProgrammerException();
     }
 
-    public synchronized void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    @Override
+    public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
-            log.debug("confirm CV=" + CV);
+            log.debug("confirm CV={}", CV);
         }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
 
     // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    @Override
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("NceOpsModeProgrammer adds 200mSec delay to response");
@@ -136,17 +138,21 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
      * this routine does nothing except to replace the parent routine that does
      * something.
      */
+    @Override
     void cleanup() {
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -155,5 +161,3 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
 
 }
-
-/* @(#)NceOpsModeProgrammer.java */

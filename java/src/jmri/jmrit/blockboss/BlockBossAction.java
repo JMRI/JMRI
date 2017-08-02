@@ -7,19 +7,14 @@ import javax.swing.JFrame;
 /**
  * Swing action to create and show a "Simple Signal Logic" GUI panel.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BlockBossAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1838689834093701766L;
 
     public BlockBossAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.signalHeadManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -28,6 +23,7 @@ public class BlockBossAction extends AbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Simple_Signal_Logic"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create the frame

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @version $Revision$
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
 
@@ -24,6 +23,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
         super(memo);
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback
@@ -36,6 +36,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
      * What speed modes are supported by this system? value should be or of
      * possible modes specified by the DccThrottle interface
      */
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
@@ -44,6 +45,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
      * Addresses 0-10239 can be long
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return ((address >= 0) && (address <= 10239));
     }
@@ -52,6 +54,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
      * The short addresses 1-127 are available
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return ((address >= 1) && (address <= 127));
     }
@@ -59,10 +62,12 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             SprogCSThrottle lnt = (SprogCSThrottle) t;

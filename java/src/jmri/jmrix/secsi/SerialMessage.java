@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.secsi;
 
 /**
@@ -8,7 +7,6 @@ package jmri.jmrix.secsi;
  * DLE characters are included. These are added during transmission.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
@@ -86,4 +84,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SerialMessage.java */
+

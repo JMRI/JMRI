@@ -1,4 +1,3 @@
-// CarManagerXml.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * models, engine types, engine lengths, and engine consist names.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class EngineManagerXml extends OperationsXml {
 
@@ -26,30 +24,27 @@ public class EngineManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static EngineManagerXml _instance = null;
-
     public static synchronized EngineManagerXml instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineManagerXml creating instance");
-            }
+        EngineManagerXml instance = jmri.InstanceManager.getNullableDefault(EngineManagerXml.class);
+        if (instance == null) {
+            log.debug("EngineManagerXml creating instance");
             // create and load
-            _instance = new EngineManagerXml();
-            _instance.load();
+            instance = new EngineManagerXml();
+            jmri.InstanceManager.setDefault(EngineManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("EngineManagerXml returns instance {}", _instance);
+            log.debug("EngineManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -120,11 +115,8 @@ public class EngineManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
-    public void dispose(){
-        _instance = null;
+    public void dispose() {
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 

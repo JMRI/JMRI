@@ -1,11 +1,11 @@
-// GetEcosObjectNumber.java
 package jmri.jmrix.ecos.utilities;
 
 
 /**
- * This method, simply returns a integer value from a string, that is between
- * two given characters.
+ * This method simply returns a integer value from a string, that is between
+ * two given character positions.
  *
+<<<<<<< HEAD
  *
  * <hr>
  * This file is part of JMRI.
@@ -18,9 +18,10 @@ package jmri.jmrix.ecos.utilities;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
- */
+=======
+>>>>>>> JMRI/master
+ * @author Kevin Dickerson Copyright (C) 2009
+  */
 public class GetEcosObjectNumber {
 
     /**
@@ -42,4 +43,5 @@ public class GetEcosObjectNumber {
         int object = Integer.parseInt(s.substring(intStart, intEnd));
         return object;
     }
+
 }

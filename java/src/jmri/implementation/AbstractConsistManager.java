@@ -1,4 +1,3 @@
-// AbstractConsistManager.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import jmri.DccLocoAddress;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractConsistManager implements ConsistManager {
 
@@ -40,7 +38,11 @@ abstract public class AbstractConsistManager implements ConsistManager {
     }
 
     /**
-     * Add a new Consist with the given address to the consistTable/consistList
+     * Add a new Consist with the given address.
+     *
+     * @param address consist address
+     * @return a consist at address; this will be the existing consist if a
+     *         consist is already known to exist at address
      */
     abstract protected Consist addConsist(DccLocoAddress address);
 

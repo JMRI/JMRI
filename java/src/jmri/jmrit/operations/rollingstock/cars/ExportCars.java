@@ -1,6 +1,6 @@
-// ExportCars.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,14 +21,13 @@ import org.slf4j.LoggerFactory;
  * Exports the car roster into a comma delimitated file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
- * @version $Revision$
  *
  */
 public class ExportCars extends XmlFile {
 
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
-    
+
     List<RollingStock> _carList;
 
     public ExportCars(List<RollingStock> carList) {
@@ -65,11 +64,10 @@ public class ExportCars extends XmlFile {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "CarManager only provides Car Objects")
     public void writeFile(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -85,17 +83,45 @@ public class ExportCars extends XmlFile {
             log.error("Can not open export cars CSV file: {}", file.getName());
             return;
         }
-        
+
         // create header
-        String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del + Bundle.getMessage("Type")
-                + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del
-                + Bundle.getMessage("Color") + del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built")
-                + del + Bundle.getMessage("Location") + del + "-" + del + Bundle.getMessage("Track") + del
-                + Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") 
-                + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel() + del + Bundle.getMessage("Comment")
-                + del + Bundle.getMessage("Miscellaneous") + del + Bundle.getMessage("Extensions");
+        String header = Bundle.getMessage("Number") +
+                del +
+                Bundle.getMessage("Road") +
+                del +
+                Bundle.getMessage("Type") +
+                del +
+                Bundle.getMessage("Length") +
+                del +
+                Bundle.getMessage("Weight") +
+                del +
+                Bundle.getMessage("Color") +
+                del +
+                Bundle.getMessage("Owner") +
+                del +
+                Bundle.getMessage("Built") +
+                del +
+                Bundle.getMessage("Location") +
+                del +
+                "-" +
+                del +
+                Bundle.getMessage("Track") +
+                del +
+                Bundle.getMessage("Load") +
+                del +
+                Bundle.getMessage("Kernel") +
+                del +
+                Bundle.getMessage("Moves") +
+                del +
+                Setup.getValueLabel() +
+                del +
+                Bundle.getMessage("Comment") +
+                del +
+                Bundle.getMessage("Miscellaneous") +
+                del +
+                Bundle.getMessage("Extensions");
         fileOut.println(header);
-        
+
         String line = "";
         String carType;
         String carLoad;
@@ -143,24 +169,55 @@ public class ExportCars extends XmlFile {
                 miscellaneous = Bundle.getMessage("OutOfService");
             }
             extensions = car.getTypeExtensions();
-            line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
-                    + car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-                    + carLocationName + ",-," + carTrackName + del + carLoad + del + carKernel
-                    + del + car.getMoves() + del + value + del + comment + del + miscellaneous + del + extensions;
+            line = car.getNumber() +
+                    del +
+                    car.getRoadName() +
+                    del +
+                    carType +
+                    del +
+                    car.getLength() +
+                    del +
+                    car.getWeight() +
+                    del +
+                    car.getColor() +
+                    del +
+                    car.getOwner() +
+                    del +
+                    car.getBuilt() +
+                    del +
+                    carLocationName +
+                    ",-," +
+                    carTrackName +
+                    del +
+                    carLoad +
+                    del +
+                    carKernel +
+                    del +
+                    car.getMoves() +
+                    del +
+                    value +
+                    del +
+                    comment +
+                    del +
+                    miscellaneous +
+                    del +
+                    extensions;
             fileOut.println(line);
         }
         fileOut.flush();
         fileOut.close();
         log.info("Exported " + _carList.size() + " cars to file " + defaultOperationsFilename());
         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-            _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+                _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator
-                + getOperationsFileName();
+        return OperationsSetupXml.getFileLocation() +
+                OperationsSetupXml.getOperationsDirectoryName() +
+                File.separator +
+                getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

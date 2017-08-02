@@ -7,13 +7,13 @@ import java.util.Comparator;
  * that otherwise as Strings.
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version	$Revision: 24569 $
  */
-public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
+public class PreferNumericComparator implements Comparator<Object> {
 
     public PreferNumericComparator() {
     }
 
+    @Override
     public int compare(Object oo1, Object oo2) {
 
         boolean isFirstNumeric, isSecondNumeric;

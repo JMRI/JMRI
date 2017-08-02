@@ -1,4 +1,3 @@
-// EcosProgrammer.java
 package jmri.jmrix.ecos;
 
 import java.util.ArrayList;
@@ -11,11 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements the jmri.Programmer interface via commands for the Ecos
+ * Implements the jmri.Programmer interface via commands for the ECoS
  * programmer. This provides a service mode programmer.
  *
  * @author Karl Johan Lisby Copyright (C) 2015
- * @version	$Revision$
  */
 public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
@@ -26,7 +24,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     EcosTrafficController tc; 
     
     /**
-     * Types implemented here.
+     * @return list of programming modes implemented for ECoS
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
@@ -38,13 +36,18 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 	// waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int MODESENT = 1;  // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
+<<<<<<< HEAD
+=======
+
+>>>>>>> JMRI/master
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -66,10 +69,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -107,10 +112,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         log.info("message: "+m);
     }
 
+    @Override
     synchronized public void reply(EcosReply reply) {
         log.info("reply: "+reply);
         if (progState == NOTPROGRAMMING) {
@@ -191,8 +198,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -208,7 +216,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    // internal method to notify of the final result
+    /**
+     * Internal method to notify of the final result.
+     */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -227,5 +237,3 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
 
 }
-
-/* @(#)EcosProgrammer.java */

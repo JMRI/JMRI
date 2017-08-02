@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ConsistController extends AbstractController implements ProgListener {
 
@@ -28,9 +27,10 @@ public class ConsistController extends AbstractController implements ProgListene
         //  writeFile needs to be separate method
         if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
+            jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getDefault(jmri.ConsistManager.class);
+            manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 
@@ -86,8 +86,8 @@ public class ConsistController extends AbstractController implements ProgListene
         }
 
         // Loop through the NCE consists and send consist detail for each
-    	/* dboudreau 2/26/2012 added consist manager for NCE
-         NceConsistRoster r = NceConsistRoster.instance();
+     /* dboudreau 2/26/2012 added consist manager for NCE
+         NceConsistRoster r = NceConsistRoster.getDefault();
          List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
          int i=-1;
          for (i = 0; i<l.size(); i++) {
@@ -187,6 +187,7 @@ public class ConsistController extends AbstractController implements ProgListene
         isConsistAllowed = b;
     }
 
+    @Override
     boolean verifyCreation() {
         return isValid;
     }
@@ -195,6 +196,7 @@ public class ConsistController extends AbstractController implements ProgListene
      *
      * @param message string containing new consist information
      */
+    @Override
     void handleMessage(String message) {
         try {
             if (message.charAt(0) == 'P') {  //  Change consist 'P'ositions
@@ -416,7 +418,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
             return;
         }
-        AddressedProgrammer pom = jmri.InstanceManager.programmerManagerInstance()
+        AddressedProgrammer pom = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(loco.isLongAddress(), loco.getNumber());
 
         // loco done, now get CVs
@@ -434,10 +436,11 @@ public class ConsistController extends AbstractController implements ProgListene
                 log.warn("Error in setting CVs: " + nfe);
             }
         }
-        jmri.InstanceManager.programmerManagerInstance().releaseAddressedProgrammer(pom);
+        jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).releaseAddressedProgrammer(pom);
 
     }
 
+    @Override
     public void programmingOpReply(int value, int status) {
 
     }
@@ -463,10 +466,12 @@ public class ConsistController extends AbstractController implements ProgListene
         return false;
     }
 
+    @Override
     void register() {
         throw new UnsupportedOperationException("Not used.");
     }
 
+    @Override
     void deregister() {
         throw new UnsupportedOperationException("Not used.");
     }

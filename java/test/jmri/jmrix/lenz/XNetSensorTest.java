@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -99,7 +99,7 @@ public class XNetSensorTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetSensor.class.getName()};
+        String[] testCaseName = {"-noloading", XNetSensorTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
@@ -110,10 +110,12 @@ public class XNetSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

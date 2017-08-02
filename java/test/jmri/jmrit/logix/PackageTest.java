@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,16 +29,41 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
 
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
-        suite.addTest(SchemaTest.suite());
-        suite.addTest(OBlockTest.suite());
-        suite.addTest(OPathTest.suite());
-        suite.addTest(WarrantTest.suite());
-        suite.addTest(LogixActionTest.suite());
-        suite.addTest(BundleTest.suite());
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
-            suite.addTest(LearnWarrantTest.suite());            
-        }
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
+        suite.addTest(new JUnit4TestAdapter(OBlockTest.class));
+        suite.addTest(new JUnit4TestAdapter(OBlockManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(OPathTest.class));
+        suite.addTest(new JUnit4TestAdapter(PortalTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTest.class));
+        suite.addTest(new JUnit4TestAdapter(LogixActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
+        suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
+        suite.addTest(LearnWarrantTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PortalManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(ThrottleSettingTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantPreferencesPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantPreferencesTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableModelTest.class));
+        suite.addTest(new JUnit4TestAdapter(LearnThrottleFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTest.class));
+        suite.addTest(new JUnit4TestAdapter(BlockOrderTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        suite.addTest(new JUnit4TestAdapter(OpSessionLogTest.class));
+>>>>>>> JMRI/master
+=======
+        suite.addTest(new JUnit4TestAdapter(OpSessionLogTest.class));
+        suite.addTest(new JUnit4TestAdapter(SCWarrantTest.class));
+        suite.addTest(new JUnit4TestAdapter(EngineerTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

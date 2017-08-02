@@ -2,7 +2,7 @@ package jmri.util;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.NamedBeanUtil class.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class NamedBeanHandleTest extends TestCase {
 
@@ -22,9 +21,11 @@ public class NamedBeanHandleTest extends TestCase {
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name") {
 
+            @Override
             protected void forwardCommandChangeToLayout(int s) {
             }
 
+            @Override
             protected void turnoutPushbuttonLockout(boolean b) {
             }
         };

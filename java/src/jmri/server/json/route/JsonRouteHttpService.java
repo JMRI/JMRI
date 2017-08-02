@@ -11,15 +11,17 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
+
 import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
+
+import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
  * Provide JSON HTTP services for managing {@link jmri.Route}s.
  *
  * @author Randall Wood
  */
-public class JsonRouteHttpService extends JsonHttpService {
+public class JsonRouteHttpService extends JsonNamedBeanHttpService {
 
     public JsonRouteHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -28,29 +30,26 @@ public class JsonRouteHttpService extends JsonHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, ROUTE);
-        ObjectNode data = root.putObject(JSON.DATA);
         Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
-        if (route == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name)); // NOI18N
-        }
-        data.put(JSON.NAME, route.getSystemName());
-        data.put(JSON.USERNAME, route.getUserName());
-        data.put(JSON.COMMENT, route.getComment());
-        switch (route.getState()) {
-            case Sensor.ACTIVE:
-                data.put(JSON.STATE, JSON.ACTIVE);
-                break;
-            case Sensor.INACTIVE:
-                data.put(JSON.STATE, JSON.INACTIVE);
-                break;
-            case Sensor.INCONSISTENT:
-                data.put(JSON.STATE, JSON.INCONSISTENT);
-                break;
-            case Sensor.UNKNOWN:
-            default:
-                data.put(JSON.STATE, JSON.UNKNOWN);
-                break;
+        root.put(JSON.TYPE, ROUTE);
+        ObjectNode data = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
+        root.put(JSON.DATA, data);
+        if (route != null) {
+            switch (route.getState()) {
+                case Sensor.ACTIVE:
+                    data.put(JSON.STATE, JSON.ACTIVE);
+                    break;
+                case Sensor.INACTIVE:
+                    data.put(JSON.STATE, JSON.INACTIVE);
+                    break;
+                case Sensor.INCONSISTENT:
+                    data.put(JSON.STATE, JSON.INCONSISTENT);
+                    break;
+                case Sensor.UNKNOWN:
+                default:
+                    data.put(JSON.STATE, JSON.UNKNOWN);
+                    break;
+            }
         }
         return root;
     }
@@ -124,7 +123,7 @@ public class JsonRouteHttpService extends JsonHttpService {
     }
      */
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(RouteManager.class).getSystemNameList()) {
             root.add(this.doGet(ROUTE, name, locale));

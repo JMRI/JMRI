@@ -1,14 +1,15 @@
 package apps.startup;
 
 import apps.PerformScriptModel;
-import apps.StartupModel;
 import javax.swing.JFileChooser;
 import jmri.script.ScriptFileChooser;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class PerformScriptModelFactory extends AbstractFileModelFactory {
 
     public PerformScriptModelFactory() {
@@ -28,5 +29,5 @@ public class PerformScriptModelFactory extends AbstractFileModelFactory {
     protected JFileChooser setFileChooser() {
         return new ScriptFileChooser();
     }
-    
+
 }

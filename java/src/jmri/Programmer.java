@@ -2,14 +2,15 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>
@@ -39,7 +40,7 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
 public interface Programmer {
 
@@ -54,7 +55,13 @@ public interface Programmer {
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
-     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int, jmri.ProgListener)
+     *
+     * @param CV  the CV to write
+     * @param val the value to write
+     * @param p   the listener that will be notified of the write
+     * @throws jmri.ProgrammerException if unable to communicate
+     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
+     * jmri.ProgListener)
      */
     @Deprecated
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
@@ -71,6 +78,11 @@ public interface Programmer {
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     *
+     * @param CV  the CV to write
+     * @param val the value to write
+     * @param p   the listener that will be notified of the write
+     * @throws jmri.ProgrammerException if unable to communicate
      */
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
@@ -85,7 +97,12 @@ public interface Programmer {
      * at the start, not during the actual programming sequence. A typical
      * exception would be due to an invalid mode (though that should be
      * prevented earlier)
-     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int, jmri.ProgListener)
+     *
+     * @param CV the CV to read
+     * @param p  the listener that will be notified of the read
+     * @throws jmri.ProgrammerException if unable to communicate
+     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int,
+     * jmri.ProgListener)
      */
     @Deprecated
     public void readCV(int CV, ProgListener p) throws ProgrammerException;
@@ -102,6 +119,10 @@ public interface Programmer {
      * at the start, not during the actual programming sequence. A typical
      * exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     *
+     * @param CV the CV to read
+     * @param p  the listener that will be notified of the read
+     * @throws jmri.ProgrammerException if unable to communicate
      */
     public void readCV(String CV, ProgListener p) throws ProgrammerException;
 
@@ -116,7 +137,13 @@ public interface Programmer {
      * be thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
-     * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int, jmri.ProgListener)
+     *
+     * @param CV  the CV to confirm
+     * @param val the value to confirm
+     * @param p   the listener that will be notified of the confirmation
+     * @throws jmri.ProgrammerException if unable to communicate
+     * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int,
+     * jmri.ProgListener)
      */
     @Deprecated
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
@@ -133,58 +160,102 @@ public interface Programmer {
      * be thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     *
+     * @param CV  the CV to confirm
+     * @param val the value to confirm
+     * @param p   the listener that will be notified of the confirmation
+     * @throws jmri.ProgrammerException if unable to communicate
      */
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
      * Get the list of {@link ProgrammingMode} supported by this Programmer. If
      * the order is significant, earlier modes are better.
+     *
+     * @return the list of supported modes or an empty list
      */
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes();
 
     /**
      * Set the programmer to a particular mode.
      * <p>
-     * Mode is a bound parameter; mode changes fire listeneres.
+     * Mode is a bound parameter; mode changes fire listeners.
      * <p>
      * Only modes returned by {@link #getSupportedModes} are supported. If an
      * invalid mode is requested, the active mode is unchanged.
+     *
+     * @param p a valid node returned by {@link #getSupportedModes()} or null;
+     *          null is ignored if {@link #getSupportedModes()} is not empty
      */
     public void setMode(ProgrammingMode p);
 
     /**
      * Get the current programming mode
+     *
+     * @return the current mode or null if none is defined and no default mode
+     *         is defined
      */
     public ProgrammingMode getMode();
 
     /**
      * Checks the general read capability, regardless of mode
+     *
+     * @return true if the programmer is capable of reading; false otherwise
      */
     public boolean getCanRead();
 
     /**
      * Checks the general read capability, regardless of mode, for a specific
      * address
+     *
+     * @param addr the address to read
+     * @return true if the address can be read; false otherwise
      */
     public boolean getCanRead(String addr);
 
     /**
      * Checks the general write capability, regardless of mode
+     *
+     * @return true if the programmer is capable of writing; false otherwise
      */
     public boolean getCanWrite();
 
     /**
      * Checks the general write capability, regardless of mode, for a specific
      * address
+     * @param addr the address to write to
+     * @return true if the address can be written to; false otherwise
      */
     public boolean getCanWrite(String addr);
 
+    /**
+     * Learn about whether the programmer does any kind of verification of write operations
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return The confirmation behavior that can be counted on (might be better in some cases)
+     */
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr);
+    
+    enum WriteConfirmMode {
+        /** No verification available, writes are blind */
+        NotVerified,
+        
+        /** Programmer signals error if there's no reply from the device */
+        DecoderReply,
+        
+        /** Programmer does a read after write to verify */
+        ReadAfterWrite
+    }
+    
     public void addPropertyChangeListener(PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
+    @Nonnull
     public String decodeErrorCode(int i);
 
 }

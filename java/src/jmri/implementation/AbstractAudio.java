@@ -1,4 +1,3 @@
-// AbstractAudio.java
 package jmri.implementation;
 
 import jmri.Audio;
@@ -23,7 +22,6 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
@@ -99,10 +97,9 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         return roundDecimal(value, Math.log10(INT_PRECISION));
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameAudio");
     }
 
 }
-
-/* $(#)AbstractAudio.java */

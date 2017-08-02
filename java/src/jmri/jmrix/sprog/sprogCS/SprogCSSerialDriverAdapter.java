@@ -1,8 +1,6 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,30 +14,27 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2006
- * @version	$Revision$
  */
 public class SprogCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
-        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
+        options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
+                new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
+                true)); // first element (TrackPowerState) NOI18N
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("SPROG Command Station");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogCSSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    static volatile SprogCSSerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)SerialdriverAdapter.java */

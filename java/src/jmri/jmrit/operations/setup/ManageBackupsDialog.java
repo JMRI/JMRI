@@ -24,10 +24,6 @@ import javax.swing.event.ListSelectionListener;
 
 public class ManageBackupsDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -149145687905176236L;
     private final JPanel contentPanel = new JPanel();
     private JLabel selectBackupSetsLabel;
     private JButton selectAllButton;
@@ -148,7 +144,7 @@ public class ManageBackupsDialog extends JDialog {
                 buttonPane.add(horizontalGlue);
             }
             {
-                deleteButton = new JButton(Bundle.getMessage("ManageBackupsDialog.deleteButton.text"));
+                deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
                 deleteButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -163,7 +159,7 @@ public class ManageBackupsDialog extends JDialog {
                 buttonPane.add(horizontalStrut_1);
             }
             {
-                JButton closeButton = new JButton(Bundle.getMessage("ManageBackupsDialog.cancelButton.text"));
+                JButton closeButton = new JButton(Bundle.getMessage("ButtonCancel"));
                 closeButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

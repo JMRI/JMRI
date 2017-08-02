@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.oaktree.configurexml;
 
 import jmri.jmrix.oaktree.SerialLightManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -23,10 +21,12 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.oaktree.configurexml.SerialLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -20,7 +19,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
@@ -41,12 +39,10 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
-
-    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
     // Local References
     VSDecoderManager decoder_mgr; // local reference to the VSDecoderManager instance
@@ -219,6 +215,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         // Connect to the VSDecoderManager, so we know when the Profile list changes.
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent e) {
                 if (e.getType() == VSDManagerEvent.EventType.PROFILE_LIST_CHANGE) {
                     log.debug("Received Decoder List Change Event");
@@ -262,12 +259,13 @@ public class VSDConfigPanel extends JmriPanel {
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText("Save");
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
         });
         rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-        rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
+        rosterSaveButton.setToolTipText(Bundle.getMessage("RosterSaveButtonToolTip"));
         rosterPanel.add(rosterSaveButton);
 
         addressLabel = new javax.swing.JLabel();
@@ -290,6 +288,7 @@ public class VSDConfigPanel extends JmriPanel {
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profile_selected = false;
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -304,6 +303,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         addressSetButton.setText("Set");
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -401,9 +401,9 @@ public class VSDConfigPanel extends JmriPanel {
                 r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
                 r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
                 int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(vsdecoderBundle.getString("UpdateRoster"),
+                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
-                        vsdecoderBundle.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
                     storeFile(r);
                 }
@@ -416,18 +416,17 @@ public class VSDConfigPanel extends JmriPanel {
 
     protected boolean storeFile(RosterEntry _rosterEntry) {
         log.debug("storeFile starts");
-        // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
+        // We need to create a programmer, a cvTableModel, and a variableTableModel.
         // Doesn't matter which, so we'll use the Global programmer.
-        Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
-        IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
-        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel, iCvModel);
+        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel);
 
         // Now, in theory we can call _rosterEntry.writeFile...
         if (_rosterEntry.getFileName() != null) {
             // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel);
         }
 
         // id has to be set!
@@ -440,13 +439,13 @@ public class VSDConfigPanel extends JmriPanel {
         _rosterEntry.ensureFilenameExists();
 
         // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, iCvModel, variableModel); // where to get the models???
+        _rosterEntry.writeFile(cvModel, variableModel); // where to get the models???
 
         // mark this as a success
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         return true;
     }
@@ -505,6 +504,7 @@ public class VSDConfigPanel extends JmriPanel {
                 return (main_pane.getDecoder(profileComboBox.getSelectedItem().toString()));
             }
 
+            @Override
             protected void done() {
                 busy_dialog.finish();
             }

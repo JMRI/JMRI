@@ -1,6 +1,6 @@
 package jmri.jmris;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -48,11 +48,13 @@ public class JmriServerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

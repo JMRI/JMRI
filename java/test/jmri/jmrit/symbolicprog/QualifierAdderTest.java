@@ -3,7 +3,7 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,9 +40,11 @@ public class QualifierAdderTest extends TestCase {
             super(watchedVal, value, relation);
         }
 
+        @Override
         public void setWatchedAvailable(boolean t) {
         }
 
+        @Override
         public boolean currentAvailableState() {
             return true;
         }
@@ -59,10 +61,12 @@ public class QualifierAdderTest extends TestCase {
      */
     protected QualifierAdder processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 v.addPropertyChangeListener(qc);
             }
@@ -265,6 +269,7 @@ public class QualifierAdderTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -273,8 +278,7 @@ public class QualifierAdderTest extends TestCase {
         model = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                cvtable,
-                new IndexedCvTableModel(new JLabel(""), p)
+                cvtable
         );
 
         // create a JDOM tree with just some elements
@@ -324,6 +328,7 @@ public class QualifierAdderTest extends TestCase {
         v3 = model.findVar("three");
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

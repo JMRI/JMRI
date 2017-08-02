@@ -12,11 +12,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 public class EcosLocoTableTabAction extends AbstractTableTabAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6641977899170854725L;
-
     public EcosLocoTableTabAction(String s) {
         super(s);
     }
@@ -51,6 +46,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
                 dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
             }
             dataTabs.addChangeListener(new ChangeListener() {
+                @Override
                 public void stateChanged(ChangeEvent evt) {
                     setMenuBar(f);
                 }
@@ -60,6 +56,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         init = true;
     }
 
+    @Override
     protected AbstractTableAction getNewTableAction(String choice) {
         return null;
     }
@@ -68,16 +65,19 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         return new EcosLocoTableAction(choice, eMemo);
     }
 
+    @Override
     protected Manager getManager() {
         return null;
     }
 
+    @Override
     public void addToFrame(jmri.jmrit.beantable.BeanTableFrame f) {
         if (tabbedTableArray.size() > 1) {
             super.addToFrame(f);
         }
     }
 
+    @Override
     public void setMenuBar(jmri.jmrit.beantable.BeanTableFrame f) {
         if (tabbedTableArray.size() > 1) {
             super.setMenuBar(f);
@@ -89,15 +89,19 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         //atf.setTitle("multiple turnouts");
     }
 
+    @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.beantable.EcosLocoTable";
+        return "package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable"; // very simple help page
     }
 
+    @Override
     protected String getClassName() {
         return EcosLocoTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
-        return "Ecos Loco Table";
+        return Bundle.getMessage("EcosLocoTableTitle");
     }
+
 }

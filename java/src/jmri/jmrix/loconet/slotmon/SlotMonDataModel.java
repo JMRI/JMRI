@@ -20,18 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of slot manager contents
+ * Table data model for display of slot manager contents.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Jeffrey Machacek 2013
- * @version $Revision$
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7189862416509314863L;
     static public final int SLOTCOLUMN = 0;
     static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 2;
@@ -67,13 +62,14 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     /**
-     * Returns the number of rows to be displayed. This can vary depending on
+     * Return the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed, and whether the system slots
      * should be displayed.
-     * <P>
+     * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
      */
+    @Override
     public int getRowCount() {
         if (_allSlots) {
             // will show the entire set, so don't bother counting
@@ -100,28 +96,30 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         return n;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SLOTCOLUMN:
-                return "Slot";
+                return Bundle.getMessage("SlotCol");
             case ESTOPCOLUMN:
                 return "";     // no heading, as button is clear
             case ADDRCOLUMN:
-                return "Address";
+                return Bundle.getMessage("AddressCol");
             case SPDCOLUMN:
-                return "Speed";
+                return Bundle.getMessage("SpeedCol");
             case TYPECOLUMN:
-                return "Status";
+                return Bundle.getMessage("StatusCol");
             case STATCOLUMN:
-                return "Use";
+                return Bundle.getMessage("UseCol");
             case CONSCOLUMN:
-                return "Consisted";
+                return Bundle.getMessage("ConsistedCol");
             case DIRCOLUMN:
-                return "Dir";
+                return Bundle.getMessage("DirectionCol");
             case DISPCOLUMN:
                 return "";     // no heading, as button is clear
             case F0COLUMN:
@@ -143,12 +141,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F8COLUMN:
                 return Throttle.F8;
             case THROTCOLUMN:
-                return "Throttle ID";
+                return Bundle.getMessage("ThrottleIDCol");
             default:
-                return "unknown";
+                return "unknown"; // NOI18N
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -179,6 +178,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ESTOPCOLUMN:
@@ -192,7 +192,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
-                // system slots to be marked Readonly
+                // system slots to be marked Read only
                 return (Integer.valueOf(slotNum(row)) >= 120) ? false : true;
             default:
                 return false;
@@ -202,6 +202,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static final Boolean True = Boolean.valueOf(true);
     static final Boolean False = Boolean.valueOf(false);
 
+    @Override
     public Object getValueAt(int row, int col) {
         LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String t;
@@ -214,7 +215,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case SLOTCOLUMN:  // slot number
                 return Integer.valueOf(slotNum(row));
             case ESTOPCOLUMN:  //
-                return "E Stop";          // will be name of button in default GUI
+                return Bundle.getMessage("ButtonEstop"); // will be name of button in default GUI
             case ADDRCOLUMN:  //
                 return Integer.valueOf(s.locoAddr());
             case SPDCOLUMN:  //
@@ -226,12 +227,12 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                         } else {
                             t = "          " + s.speed();
                         }
-                        return t.substring(t.length() - 9, t.length()); // 9 comes from (estop)
+                        return t.substring(t.length() - 9, t.length()); // 9 comes from length of the "(estop)" prefix
                     case LnConstants.CONSIST_MID:
                     case LnConstants.CONSIST_SUB:
-                        return "(consist)";
+                        return Bundle.getMessage("SlotSpeedConsist");
                     default:
-                        return "<error>";
+                        return Bundle.getMessage("StateError");
                 }
             case TYPECOLUMN:  //
                 switch (s.decoderType()) {
@@ -248,40 +249,40 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     case LnConstants.DEC_MODE_28:
                         return " 28 step";
                     default:
-                        return "<unknown>";
+                        return Bundle.getMessage("StateUnknown");
                 }
             case STATCOLUMN:  //
                 switch (s.slotStatus()) {
                     case LnConstants.LOCO_IN_USE:
-                        return "In Use";
+                        return Bundle.getMessage("StateInUse");
                     case LnConstants.LOCO_IDLE:
-                        return "Idle";
+                        return Bundle.getMessage("StateIdle");
                     case LnConstants.LOCO_COMMON:
-                        return "Common";
+                        return Bundle.getMessage("StateCommon");
                     case LnConstants.LOCO_FREE:
-                        return "Free";
+                        return Bundle.getMessage("StateFree");
                     default:
-                        return "<error>";
+                        return Bundle.getMessage("StateError");
                 }
             case CONSCOLUMN:  //
                 switch (s.consistStatus()) {
                     case LnConstants.CONSIST_MID:
-                        t = "mid(" + s.speed() + ")";
+                        t = Bundle.getMessage("SlotConsistMidX", s.speed());
                         return t;
                     case LnConstants.CONSIST_TOP:
-                        return "top";
+                        return Bundle.getMessage("SlotConsistTop");
                     case LnConstants.CONSIST_SUB:
-                        t = "sub(" + s.speed() + ")";
+                        t = Bundle.getMessage("SlotConsistSubX", s.speed());
                         return t;
                     case LnConstants.CONSIST_NO:
-                        return "none";
+                        return Bundle.getMessage("SlotConsistNone");
                     default:
-                        return "<error>";
+                        return Bundle.getMessage("StateError");
                 }
             case DISPCOLUMN:  //
-                return "Free";          // will be name of button in default GUI
+                return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
             case DIRCOLUMN:  //
-                return (s.isForward() ? "F" : "R");
+                return (s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse"));
             case F0COLUMN:  //
                 return (s.isF0() ? True : False);
             case F1COLUMN:  //
@@ -316,7 +317,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case SLOTCOLUMN:
                 return new JTextField(3).getPreferredSize().width;
             case ESTOPCOLUMN:
-                return new JButton("E Stop").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonEstop")).getPreferredSize().width;
             case ADDRCOLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case SPDCOLUMN:
@@ -328,9 +329,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
-                return new JTextField(3).getPreferredSize().width;
+                return new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width;
             case DISPCOLUMN:
-                return new JButton("Free").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case F0COLUMN:
@@ -342,12 +343,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
-                return new JLabel(" off    ").getPreferredSize().width;
+                return new JLabel("       ").getPreferredSize().width; // to show checkboxes
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width;
+                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         int status = 0;
 
@@ -361,11 +363,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
             if ((s.consistStatus() == LnConstants.CONSIST_SUB)
                     || (s.consistStatus() == LnConstants.CONSIST_MID)) {
-                Object[] options = {"OK", "Cancel"};
+                Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
                 int result
                         = JOptionPane.showOptionDialog(null,
-                                "E-Stopping a consist MID or SUB will mess up the consist.\n\nAre you sure you want to do that?",
-                                "Warning",
+                                Bundle.getMessage("SlotEstopWarning"),
+                                Bundle.getMessage("WarningTitle"),
                                 JOptionPane.DEFAULT_OPTION,
                                 JOptionPane.WARNING_MESSAGE,
                                 null, options, options[1]);
@@ -579,6 +581,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton()) {
+            @Override
             public void mousePressed(MouseEvent e) {
                 stopCellEditing();
             }
@@ -591,6 +594,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     // methods to communicate with SlotManager
+    @Override
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
         // update model from this slot
         int slotNum = s.getSlot();
@@ -627,6 +631,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             _model = model;
         }
 
+        @Override
         public void run() {
             if (-1 == _row) {  // notify about entire table
                 _model.fireTableDataChanged();  // just that row

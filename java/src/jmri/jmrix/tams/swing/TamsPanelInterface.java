@@ -1,4 +1,3 @@
-// TamsPanelInterface.java
 package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -10,7 +9,6 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public interface TamsPanelInterface {
 

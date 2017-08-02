@@ -1,4 +1,3 @@
-// PlayEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.event.ActionListener;
@@ -18,15 +17,9 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 /**
  * Editor panel for the PLAY macro from the Digitrax sound definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class PlayEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6609198608813676953L;
 
     public PlayEditor(SdfMacro inst) {
         super(inst);
@@ -61,6 +54,7 @@ class PlayEditor extends SdfMacroEditor {
 
         // change the instruction when the value is changed
         ActionListener l = new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 guiChanged();
             }
@@ -69,6 +63,7 @@ class PlayEditor extends SdfMacroEditor {
         wavbrk1.addActionListener(l);
         wavbrk2.addActionListener(l);
         ChangeListener c = new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 guiChanged();
             }
@@ -105,6 +100,7 @@ class PlayEditor extends SdfMacroEditor {
         updated();
     }
 
+    @Override
     public void update() {
         // find & set index of selected trigger
         Play instruction = (Play) inst;
@@ -120,5 +116,3 @@ class PlayEditor extends SdfMacroEditor {
         wavbrk2.setSelected((flags & 0x02) != 0);
     }
 }
-
-/* @(#)PlayEditor.java */

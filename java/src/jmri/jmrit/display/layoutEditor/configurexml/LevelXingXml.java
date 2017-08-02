@@ -1,4 +1,3 @@
-// jmri.jmrit.display.configurexml.LevelXingXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LevelXingXml extends AbstractXmlAdapter {
 
@@ -29,6 +27,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LevelXing
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LevelXing p = (LevelXing) o;
@@ -105,7 +104,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
 
-        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 
@@ -121,6 +120,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;

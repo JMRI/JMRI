@@ -1,4 +1,3 @@
-// ImportCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Component;
@@ -9,14 +8,8 @@ import javax.swing.AbstractAction;
  * Starts the ImportCars thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ImportCarRosterAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8894977271081874448L;
 
     public ImportCarRosterAction(String actionName, Component frame) {
         super(actionName);

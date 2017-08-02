@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.secsi;
 
 import jmri.Turnout;
@@ -12,18 +11,19 @@ import org.slf4j.LoggerFactory;
  * System names are "VTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "V";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
@@ -65,4 +65,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

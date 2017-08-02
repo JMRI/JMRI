@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.secsi;
 
 import jmri.Turnout;
@@ -17,14 +16,8 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for SECSI serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3108640348293672974L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -42,6 +35,7 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * Handle a request to change state by sending a turnout command
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -67,12 +61,14 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
         }
     }
 
+    @Override
     public void dispose() {
         // no connections need to be broken
         super.dispose();
@@ -93,5 +89,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

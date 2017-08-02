@@ -1,6 +1,6 @@
-// CarAttributeEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Frame for editing a car attribute.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -40,7 +39,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     // combo box
@@ -104,8 +103,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-        toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuanity"), this));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuantity"), this));
         toolMenu.add(new CarDeleteAttributeAction(Bundle.getMessage("DeleteUnusedAttributes"), this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
@@ -117,7 +116,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     // add, delete, or replace button
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
@@ -214,7 +213,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     static boolean showDialogBox = true;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     private void addItemToCombobox(String addItem) {
         if (_comboboxName.equals(CarEditFrame.ROAD)) {
             CarRoads.instance().addName(addItem);

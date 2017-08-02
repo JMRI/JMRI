@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -28,14 +27,9 @@ import org.slf4j.LoggerFactory;
  * Yardmaster Frame. Shows work at one location.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -88218348551032298L;
 
     protected static final boolean IS_MANIFEST = false;
 
@@ -142,7 +136,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             nextButtonAction();
         }
         super.buttonActionPerformed(ae);
-        update();
     }
 
     private void nextButtonAction() {
@@ -190,14 +183,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private void clearAndUpdate() {
-        trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-        carCheckBoxes.clear();
-        isSetMode = false;
-        update();
-    }
-
-    private void update() {
+    @Override
+    protected void update() {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
@@ -331,13 +318,14 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
                 || (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e.getNewValue() == null)
-                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
-                carCheckBoxes.remove("p" + car.getId());
-                carCheckBoxes.remove("s" + car.getId());
-                carCheckBoxes.remove("m" + car.getId());
+                checkBoxes.remove("p" + car.getId());
+                checkBoxes.remove("s" + car.getId());
+                checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
             }
             update();

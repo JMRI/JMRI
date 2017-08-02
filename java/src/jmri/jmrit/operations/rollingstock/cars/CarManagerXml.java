@@ -1,4 +1,3 @@
-// CarManagerXml.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * car types, car colors, car lengths, car owners, and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision$
  */
 public class CarManagerXml extends OperationsXml {
 
@@ -26,30 +24,27 @@ public class CarManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static CarManagerXml _instance = null;
-
     public static synchronized CarManagerXml instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarManagerXml creating instance");
-            }
+        CarManagerXml instance = jmri.InstanceManager.getNullableDefault(CarManagerXml.class);
+        if (instance == null) {
+            log.debug("CarManagerXml creating instance");
             // create and load
-            _instance = new CarManagerXml();
-            _instance.load();
+            instance = new CarManagerXml();
+            jmri.InstanceManager.setDefault(CarManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("CarManagerXml returns instance {}", _instance);
+            log.debug("CarManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -62,7 +57,7 @@ public class CarManagerXml extends OperationsXml {
         // add XSLT processing instruction
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl"); // NOI18N
-        m.put("href", xsltLocation + "operations-cars.xsl");	// NOI18N
+        m.put("href", xsltLocation + "operations-cars.xsl"); // NOI18N
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
@@ -124,13 +119,11 @@ public class CarManagerXml extends OperationsXml {
     public String getOperationsFileName() {
         return operationsFileName;
     }
+
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
-    public void dispose(){
-        _instance = null;
+    public void dispose() {
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());
 

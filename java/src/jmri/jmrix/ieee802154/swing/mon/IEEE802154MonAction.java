@@ -1,12 +1,3 @@
-/**
- * IEEE802154MonAction.java
- *
- * Description:	Swing action to create and register a IEEE802154MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
- */
 package jmri.jmrix.ieee802154.swing.mon;
 
 import java.awt.event.ActionEvent;
@@ -14,12 +5,14 @@ import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a IEEE802154MonFrame object
+ *
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2013
+ */
 public class IEEE802154MonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 542282941886486019L;
     private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo _memo;
 
     public IEEE802154MonAction(String s, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
@@ -28,7 +21,7 @@ public class IEEE802154MonAction extends AbstractAction {
     }
 
     public IEEE802154MonAction(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
-        this("IEEE 802.15.4 Monitor", memo);
+        this(Bundle.getMessage("MonActionTitle"), memo);
     }
 
     public IEEE802154MonAction(String s) {
@@ -40,9 +33,10 @@ public class IEEE802154MonAction extends AbstractAction {
     }
 
     public IEEE802154MonAction() {
-        this("IEEE 802.15.4 Monitor");
+        this(Bundle.getMessage("MonActionTitle"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a IEEE802154MonFrame
         IEEE802154MonFrame f = new IEEE802154MonFrame(_memo);
@@ -60,4 +54,4 @@ public class IEEE802154MonAction extends AbstractAction {
 }
 
 
-/* @(#)IEEE802154MonAction.java */
+

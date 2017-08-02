@@ -1,4 +1,3 @@
-// ResetEngineMovesAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;
@@ -13,14 +12,9 @@ import org.slf4j.LoggerFactory;
  * database.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ResetEngineMovesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5851492095725608963L;
     EngineManager manager = EngineManager.instance();
 
     public ResetEngineMovesAction(String actionName, Component frame) {

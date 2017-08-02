@@ -1,9 +1,9 @@
-// Bundle.java
 package jmri.jmrit.jython;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -19,12 +19,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmrit.jython.JythonBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.jython.JythonBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -94,6 +94,7 @@ public class Bundle extends jmri.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
+    @Nullable
     protected String bundleName() {
         return name;
     }
@@ -104,10 +105,8 @@ public class Bundle extends jmri.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }
-
-/* @(#)Bundle.java */

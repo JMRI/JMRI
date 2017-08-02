@@ -1,4 +1,3 @@
-// LnSensorAddress.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -27,8 +26,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class LnSensorAddress {
 
@@ -40,33 +38,11 @@ public class LnSensorAddress {
     boolean _valid;
 
     public LnSensorAddress(int sw1, int sw2, String prefix) {
-        _as = sw2 & 0x20;		// should be a LocoNet constant?
+        _as = sw2 & 0x20;  // should be a LocoNet constant?
         _high = sw2 & 0x0F;
         _low = sw1 & 0x7F;
         _valid = true;
         this.prefix = prefix;
-    }
-
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(int sw1, int sw2) {
-        this(sw1, sw2, "L");
-    }
-
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(String s) {
-        this(s, "L");  // assume one connection
     }
 
     public LnSensorAddress(String s, String prefix) {
@@ -108,6 +84,9 @@ public class LnSensorAddress {
                             break;
                         case 'D':
                             d = 3;
+                            break;
+                        default:
+                            log.warn("Unhandled addr code: {}", c);
                             break;
                     }
                     int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 2)) * 16 + d * 4
@@ -187,6 +166,7 @@ public class LnSensorAddress {
         return _valid;
     }
 
+    @Override
     public String toString() {
         return getNumericAddress() + ":"
                 + getDS54Address() + ":"
@@ -265,6 +245,3 @@ public class LnSensorAddress {
     private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
-
-
-/* @(#)LnSensorAddress.java */

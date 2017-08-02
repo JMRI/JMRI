@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated z21 system.
- *
+ * <p>
  * Currently, the z21Simulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
- *
+ * <p>
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
@@ -41,14 +41,13 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     }
 
     /**
-     * set up all of the other objects to operate with a z21Simulator connected
-     * to this port
+     * Set up all of the other objects to operate with a z21Simulator connected
+     * to this port.
      */
     @Override
     public void configure() {
-        if (log.isDebugEnabled()) {
-            log.debug("configure called");
-        }
+        log.debug("configure called");
+
         // connect to a packetizing traffic controller
         Z21TrafficController packets = new Z21TrafficController();
         packets.connectPort(this);
@@ -58,23 +57,45 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         this.getSystemConnectionMemo().setTrafficController(packets);
 
         sourceThread = new Thread(this);
+        sourceThread.setName("Z21SimulatorAdapter sourceThread");
         sourceThread.start();
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.roco.z21.ActiveFlag.setActive();
     }
 
     @Override
     public void connect() throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("connect called");
-        }
+        log.debug("connect called");
 
        setHostAddress("localhost"); // always localhost for the simulation.
        super.connect();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Terminate service thread
+     *<p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThread() {
+        threadStopRequest = true;
+        if (socket != null) socket.close();
+        if (sourceThread != null) {
+            sourceThread.interrupt();
+            try {
+                sourceThread.join();
+            } catch (InterruptedException ie){
+                // interrupted durring cleanup.
+            }
+        }
+    }
+    
+    volatile boolean threadStopRequest;
+    volatile DatagramSocket socket;
+    
+>>>>>>> JMRI/master
+    @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,
         // and then goes into an infinite loop.
@@ -82,8 +103,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         // try connecting to the server
         try (DatagramSocket s = new DatagramSocket(COMMUNICATION_UDP_PORT)) {
 
+            socket = s; // save for later close()
             log.debug("socket created, starting loop");
-            while(true){
+            while(!threadStopRequest){
                 log.debug("simulation loop");
                 // the server waits for a client to connect, then echos the data sent back.
                 byte[] input=new byte[100]; // input from network
@@ -93,7 +115,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     DatagramPacket receivePacket = new DatagramPacket(input,100);
                     // and wait for the data to arrive.
                     s.receive(receivePacket);
-
+                    if (threadStopRequest) return;
+                    
                     Z21Message msg = new Z21Message(receivePacket.getLength());
                     for(int i=0;i< receivePacket.getLength();i++)
                         msg.setElement(i,receivePacket.getData()[i]);
@@ -124,8 +147,12 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     }
 
                 } catch (Exception ex3) {
-                    log.debug("IO Exception" );
-                    ex3.printStackTrace();
+                    if (!threadStopRequest) {
+                        log.debug("IO Exception" );
+                        ex3.printStackTrace();
+                    } else {
+                        return;
+                    }
                 }
                 log.debug("Client Disconnect");
             }
@@ -151,9 +178,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 reply=getHardwareVersionReply();
                 break;
              case 0x0040:
-                // XPressNet tunnel message.
+                // XpressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
-                log.debug("Received XNet Message: " + m);
+                log.debug("Received XNet Message: {}",  m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);
                 reply = getZ21ReplyFromXNet(xnr);
                 break;
@@ -175,6 +202,10 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // get broadcast flags
                 reply = getZ21BroadCastFlagsReply();
                 break;
+             case 0x0089:
+                // Get Railcom Data
+                reply = getZ21RailComDataChangedReply();
+                break;
              case 0x0060:
                 // get loco mode
              case 0x0061:
@@ -189,8 +220,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // program RMBus module
              case 0x0085:
                 // get system state
-             case 0x0089:
-                  // Get Railcom Data
              case 0x00A2:
                   // loconet data from lan
              case 0x00A3:
@@ -251,7 +280,33 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         return reply;
     }
 
+    private Z21Reply getZ21RailComDataChangedReply(){
+        Z21Reply reply = new Z21Reply();
+        reply.setOpCode(0x0088);
+        reply.setLength(0x0004);
+        int offset=4;
+        for(int i = 0;i<xnetadapter.locoCount;i++) {
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 5, LocoAddress msb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
+            reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x01);
+            reply.setElement(offset++,0x00);// bytes 11-14,32 bit error counter.
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,xnetadapter.locoData[i].getSpeed());//currently reserved.Speed in firmware<=1.12
+            reply.setElement(offset++,0x00);//currently reserved.Options in firmware<=1.12
+            reply.setElement(offset++,0x00);//currently reserved.Temp in firmware<=1.12
+            reply.setLength(0xffff & offset);
+        }
+        log.debug("output {} offset: {}", reply.toString(),offset);
+        return reply;
+    }
+
     // utility functions
+
     private XNetMessage getXNetMessage(Z21Message m) {
         if(m==null) throw new java.lang.IllegalArgumentException();
         XNetMessage xnm = new XNetMessage(m.getLength()-4);
@@ -271,7 +326,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         }
         return(r);
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(Z21SimulatorAdapter.class.getName());
 

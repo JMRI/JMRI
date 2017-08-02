@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -19,10 +18,12 @@ public class XBeeTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

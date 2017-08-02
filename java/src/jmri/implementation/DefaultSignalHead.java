@@ -1,15 +1,15 @@
-// DefaultSignalHead.java
 package jmri.implementation;
+
+import java.util.Arrays;
 
 /**
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * This class only claims support for the Red, Yellow and Green appearances, and
- * their corressponding flashing forms. Support for Lunar is deferred to
- * DefaultLunarSignalHead.
+ * their corresponding flashing forms. Support for Lunar is deferred to
+ * DefaultLunarSignalHead or an extended class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -21,9 +21,27 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         super(systemName);
     }
 
+    @Override
     public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
+        int oldAppearance = mAppearance; // store the current appearance
         mAppearance = newAppearance;
+        appearanceSetsFlashTimer(newAppearance);
+
+        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
+         * allow 'newAppearance' to be set to resync these cases - P Cressman
+         * if (oldAppearance != newAppearance) */
+        updateOutput();
+
+        // notify listeners, if any
+        firePropertyChange("Appearance", oldAppearance, newAppearance);
+    }
+
+    /**
+     * Call to set timer when updating the appearance.
+     *
+     * @param newAppearance the new appearance
+     */
+    protected void appearanceSetsFlashTimer(int newAppearance) {
         if (mLit && ((newAppearance == FLASHGREEN)
                 || (newAppearance == FLASHYELLOW)
                 || (newAppearance == FLASHRED)
@@ -36,17 +54,9 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
                 && (newAppearance != FLASHLUNAR))) {
             stopFlash();
         }
-
-        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
-         * allow 'newAppearance' to be set to resync these cases - P Cressman
-         if (oldAppearance != newAppearance) */ {
-            updateOutput();
-
-            // notify listeners, if any
-            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
-        }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -62,37 +72,45 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             }
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
 
     }
 
     /**
      * Set the held parameter.
-     * <P>
+     * <p>
      * Note that this does not directly effect the output on the layout; the
      * held parameter is a local variable which effects the aspect only via
-     * higher-level logic
+     * higher-level logic.
+     *
+<<<<<<< HEAD
+     * @param newHeld new Held state, true if Held, to be compared with current Held state
+=======
+     * @param newHeld new Held state, true if Held, to be compared with current
+     *                Held state
+>>>>>>> JMRI/master
      */
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
+            firePropertyChange("Held", oldHeld, newHeld);
         }
 
     }
 
     /**
      * Type-specific routine to handle output to the layout hardware.
-     *
+     * <p>
      * Does not notify listeners of changes; that's done elsewhere. Should use
      * the following variables to determine what to send:
-     * <UL>
-     * <LI>mAppearance
-     * <LI>mLit
-     * <LI>mFlashOn
+     * <ul>
+     * <li>mAppearance
+     * <li>mLit
+     * <li>mFlashOn
      * </ul>
      */
     abstract protected void updateOutput();
@@ -108,17 +126,23 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      */
     int delay = 750;
 
-    /*
-     * Start the timer that controls flashing
+    /**
+     * Start the timer that controls flashing.
      */
     protected void startFlash() {
         // note that we don't force mFlashOn to be true at the start
         // of this; that way a flash in process isn't disturbed.
         if (timer == null) {
+<<<<<<< HEAD
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
+=======
+            timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
+                timeout();
+>>>>>>> JMRI/master
             });
             timer.setInitialDelay(delay);
             timer.setRepeats(true);
@@ -127,20 +151,20 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     private void timeout() {
-        if (mFlashOn) {
-            mFlashOn = false;
-        } else {
-            mFlashOn = true;
-        }
+        mFlashOn = !mFlashOn;
 
         updateOutput();
     }
 
     /*
      * Stop the timer that controls flashing.
-     *
+     * <p>
+<<<<<<< HEAD
      * This is only a resource-saver; the actual use of 
-     * flashing happens elsewere
+=======
+     * This is only a resource-saver; the actual use of
+>>>>>>> JMRI/master
+     * flashing happens elsewhere.
      */
     protected void stopFlash() {
         if (timer != null) {
@@ -149,37 +173,36 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mFlashOn = true;
     }
 
-    final static private int[] validStates = new int[]{
+    final static private int[] VALID_STATES = new int[]{
         DARK,
         RED,
         YELLOW,
         GREEN,
         FLASHRED,
         FLASHYELLOW,
-        FLASHGREEN,};
-    final static private String[] validStateNames = new String[]{
+        FLASHGREEN,}; // No int for Lunar
+    final static private String[] VALID_STATE_NAMES = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
         Bundle.getMessage("SignalHeadStateYellow"),
         Bundle.getMessage("SignalHeadStateGreen"),
         Bundle.getMessage("SignalHeadStateFlashingRed"),
         Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen"),};
+        Bundle.getMessage("SignalHeadStateFlashingGreen"),}; // Lunar not included
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(VALID_STATES, VALID_STATES.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(VALID_STATE_NAMES, VALID_STATE_NAMES.length);
     }
 
+    @Override
     boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
 
 }
-
-/* @(#)DefaultSignalHead.java */

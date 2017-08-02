@@ -1,9 +1,7 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * XNetThrottleManagerTest.java
@@ -12,40 +10,21 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XNetThrottleManagerTest extends TestCase {
-
-    public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        XNetThrottleManager c = new XNetThrottleManager(new XNetSystemConnectionMemo(tc));
-
-        Assert.assertNotNull(c);
-    }
-
-    // from here down is testing infrastructure
-    public XNetThrottleManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetThrottleManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetThrottleManagerTest.class);
-        return suite;
-    }
+public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tm = new XNetThrottleManager(new XNetSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
+    @After
+    public  void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

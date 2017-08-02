@@ -2,6 +2,9 @@
 <?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
 <!DOCTYPE layout-config SYSTEM "layout-config-2-7-7.dtd">
 
+<!-- This is the original version of the LoadFileTest277.xml file, with the original -->
+<!-- format and class names. Please do not update/migrate to newer, as it tests old load -->
+
 <layout-config>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -47,7 +50,7 @@
     <memory systemName="IMDUMMY" />
   </memories>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
     <logix systemName="IX1" userName="Test logix" enabled="yes">
       <logixConditional systemName="IX1C1" order="0" />
     </logix>
@@ -69,7 +72,7 @@
       <turnoutname defines="red">For Signal IH2 R</turnoutname>
     </signalhead>
   </signalheads>
-  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+  <routes class="jmri.configurexml.DefaultRouteManagerXml">
     <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />
@@ -80,13 +83,13 @@
       <routeSensor systemName="IS101" mode="onInactive" />
     </route>
   </routes>
-  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
     <conditional systemName="IX1C1" userName="" antecedent="R1 and R2" logicType="1">
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="1" negated="no" type="1" systemName="User 1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml 17977 2011-07-18 17:23:46Z zoo $-->
+  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.2 2009-10-16 07:16:24 jacobsen Exp $-->
 </layout-config>
 

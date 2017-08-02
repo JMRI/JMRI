@@ -1,4 +1,3 @@
-// SpeedometerAction.java
 package jmri.jmrit.speedometer;
 
 import java.awt.event.ActionEvent;
@@ -9,15 +8,9 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a SpeedometerFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SpeedometerAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5303424007379961528L;
 
     public SpeedometerAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -31,7 +24,7 @@ public class SpeedometerAction extends JmriAbstractAction {
         super(s);
 
         // disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.sensorManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.SensorManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -40,6 +33,7 @@ public class SpeedometerAction extends JmriAbstractAction {
         this("Speedometer");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a SimpleProgFrame
@@ -49,9 +43,8 @@ public class SpeedometerAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 }
-
-/* @(#)SpeedometerAction.java */

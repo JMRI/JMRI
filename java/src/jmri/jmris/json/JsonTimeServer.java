@@ -1,8 +1,8 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.POST;
-import static jmri.jmris.json.JSON.TIME;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.POST;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +11,17 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTimeServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 
+/**
+ * @deprecated since 4.5.6
+ */
 @Deprecated
 public class JsonTimeServer extends AbstractTimeServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
+
     JsonTimeServer(JmriConnection connection) {
         super();
         this.connection = connection;

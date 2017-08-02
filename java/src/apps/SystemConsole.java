@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -122,7 +123,7 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private SystemConsole() {
         // Record current System.out and System.err
@@ -201,6 +202,9 @@ public final class SystemConsole extends JTextArea {
         frame = new JmriJFrame(Bundle.getMessage("TitleConsole"));
 
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
+        // Add Help menu (Windows menu automaitically added)
+        frame.addHelpMenu("package.apps.SystemConsole", true); // NOI18N
 
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
@@ -356,7 +360,6 @@ public final class SystemConsole extends JTextArea {
      * @param which the stream that this text is for
      */
     private void updateTextArea(final String text, final int which) {
-
         // Append message to the original System.out / System.err streams
         if (which == STD_OUT) {
             originalOut.append(text);
@@ -368,6 +371,9 @@ public final class SystemConsole extends JTextArea {
         // As append method is thread safe, we don't need to run this on
         // the Swing dispatch thread
         console.append(text);
+        
+        // but we do have to run this on the Swing thread
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ truncateTextArea(); } );
     }
 
     /**
@@ -401,7 +407,7 @@ public final class SystemConsole extends JTextArea {
             }
 
             @Override
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+            @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
                     justification = "Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
@@ -417,13 +423,27 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(this.getOutputStream());
         System.setErr(this.getErrorStream());
     }
 
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
+    public void truncateTextArea() {
+        int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
+        if(numLinesToRemove > 0) {
+            try {
+                int posOfLastLineToRemove = console.getLineEndOffset(numLinesToRemove - 1);
+                console.replaceRange("",0,posOfLastLineToRemove);
+            }
+            catch (javax.swing.text.BadLocationException ex) {
+                log.error("trouble truncating SystemConsole window", ex);
+            }
+        }
+    }
+    
     /**
      * Set the console wrapping style to one of the following:
      *

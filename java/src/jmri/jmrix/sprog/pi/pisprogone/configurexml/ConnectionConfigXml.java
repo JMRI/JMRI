@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2016
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -25,8 +24,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = PiSprogOneSerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new PiSprogOneSerialDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

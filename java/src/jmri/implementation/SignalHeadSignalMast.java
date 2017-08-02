@@ -1,4 +1,3 @@
-// SignalHeadSignalMast.javaa
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -7,6 +6,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import org.slf4j.Logger;
@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory;
  * <li>IH1:IH2 - colon-separated list of names for SignalHeads
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
@@ -92,9 +91,14 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
+            // check head exists
+            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(parts[i])==null) {
+                log.warn("Attempting to create Mast from non-existant signal head {}", parts[i]);
+            }
             NamedBeanHandle<SignalHead> s
-                    = new NamedBeanHandle<SignalHead>(parts[i],
-                            InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(parts[i],
+                            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
             heads.add(s);
         }
     }
@@ -211,12 +215,14 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
             final int thrDelay = delay;
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     setDelayedAppearances(thrDelayedSet, thrDelay);
                 }
             };
             Thread thr = new Thread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
+            thr.setDaemon(true);
             try {
                 thr.start();
             } catch (java.lang.IllegalThreadStateException ex) {
@@ -230,6 +236,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         for (SignalHead head : delaySet.keySet()) {
             final SignalHead thrHead = head;
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         thrHead.setAppearance(delaySet.get(thrHead));
@@ -246,6 +253,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
             Thread thr = new Thread(r);
             thr.setName(getDisplayName());
+            thr.setDaemon(true);
             try {
                 thr.start();
                 thr.join();
@@ -259,8 +267,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
     public static List<SignalHead> getSignalHeadsUsed() {
         List<SignalHead> headsUsed = new ArrayList<SignalHead>();
-        for (String val : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
             if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();
                 for (NamedBeanHandle<SignalHead> bean : masthead) {
@@ -272,8 +280,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     }
 
     public static String isHeadUsed(SignalHead head) {
-        for (String val : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
             if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();
                 for (NamedBeanHandle<SignalHead> bean : masthead) {
@@ -286,6 +294,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         return null;
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
@@ -304,5 +313,3 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
 }
-
-/* @(#)SignalHeadSignalMast.java */

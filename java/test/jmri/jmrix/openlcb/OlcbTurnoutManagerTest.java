@@ -1,42 +1,66 @@
 package jmri.jmrix.openlcb;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.Turnout;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
-public class OlcbTurnoutManagerTest extends TestCase {
+public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    public void testDummy() {
+    @Override
+    public String getSystemName(int i) {
+        return "MTX010203040506070" + i + ";X010203040506070" + (i - 1);
     }
 
-    // from here down is testing infrastructure
-    public OlcbTurnoutManagerTest(String s) {
-        super(s);
+    @Test
+    public void testCtor() {
+        Assert.assertNotNull("exists",l);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {OlcbTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest2()+ ";X010203040506070" +
+                (getNumToTest2()-1) );
+
+        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbTurnoutManagerTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest1() + ";X010203040506070" +
+                (getNumToTest1()-1) );
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
+
+
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+
+        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
+        l = new OlcbTurnoutManager(m);
+
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

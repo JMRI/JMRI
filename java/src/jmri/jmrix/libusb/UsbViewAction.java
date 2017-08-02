@@ -1,30 +1,25 @@
-// UsbViewAction.java
 package jmri.jmrix.libusb;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.usb.UsbBrowserAction;
 
 /**
- * Invoke the UsbView tool from libusb-java.
+ * Open a USB browser.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version	$Revision$
+ * @author Randall Wood (C) 2017
  */
-public class UsbViewAction extends javax.swing.AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7957478904918565568L;
+public class UsbViewAction extends UsbBrowserAction {
 
     public UsbViewAction(String s) {
         super(s);
     }
 
     public UsbViewAction() {
-        this(java.util.ResourceBundle.getBundle("jmri.jmrix.libusb.UsbViewActionBundle").getString("USB_Device_Viewer"));
+        super();
     }
+<<<<<<< HEAD
 
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // create and display
         try {
@@ -36,6 +31,6 @@ public class UsbViewAction extends javax.swing.AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
+=======
+>>>>>>> JMRI/master
 }
-
-/* @(#)UsbViewAction.java */

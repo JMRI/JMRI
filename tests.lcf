@@ -39,7 +39,7 @@ log4j.appender.A1.target=System.err
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 # The conversion pattern uses format specifiers. For details, see
-# the org.apache.log4j.PatternLayout JavaDocs. To summarize:
+# the org.apache.log4j.PatternLayout Javadocs. To summarize:
 #
 # c category, e.g. %c{2} for right-most two tokens
 # C classname of call (slow)
@@ -61,7 +61,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
 
-# R is set to output to a log file
+# R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=example.log
 log4j.appender.R.layout=org.apache.log4j.PatternLayout

@@ -1,4 +1,3 @@
-// pricom.pockettester.DataSourceAction.java
 package jmri.jmrix.pricom.pockettester;
 
 
@@ -9,14 +8,8 @@ package jmri.jmrix.pricom.pockettester;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2005
- * @version	$Revision$
- */
+  */
 public class DataSourceAction extends jmri.util.JmriJFrameAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3504361321427171189L;
 
     public DataSourceAction(String s) {
         super(s);
@@ -33,10 +26,9 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction {
      * Method to be overridden to make this work. Provide a completely qualified
      * class name, must be castable to JmriJFrame
      */
+    @Override
     public String getName() {
         return "jmri.jmrix.pricom.pockettester.DataSource";
     }
 
 }
-
-/* @(#)DataSourceAction.java */

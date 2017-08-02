@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.withrottle.PackageTest");   // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(ConsistControllerTest.suite());
         suite.addTest(ConsistFunctionControllerTest.suite());
         suite.addTest(DeviceServerTest.suite());
@@ -38,28 +39,27 @@ public class PackageTest extends TestCase {
         suite.addTest(TrackPowerControllerTest.suite());
         suite.addTest(TurnoutControllerTest.suite());
         suite.addTest(WiFiConsistFileTest.suite());
-        suite.addTest(WiFiConsistTest.suite());
-        suite.addTest(WiFiConsistManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistManagerTest.class));
         suite.addTest(WiThrottleManagerTest.suite());
         suite.addTest(WiThrottlePreferencesTest.suite());
         suite.addTest(WiThrottlesListModelTest.suite());
-
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(ControllerFilterActionTest.suite());
-            suite.addTest(ControllerFilterFrameTest.suite());
-            suite.addTest(UserInterfaceTest.suite());
-            suite.addTest(WiThrottlePrefsPanelTest.suite());
-        }
+        suite.addTest(new JUnit4TestAdapter(WiThrottlePrefsPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiThrottleCreationActionTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

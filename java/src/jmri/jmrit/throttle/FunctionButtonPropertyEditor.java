@@ -137,8 +137,9 @@ public class FunctionButtonPropertyEditor extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonOK"));
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveProperties();
             }
@@ -146,6 +147,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 finishEdit();
             }

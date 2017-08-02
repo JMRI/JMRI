@@ -1,4 +1,3 @@
-// StatusFrame.java
 package jmri.jmrit.signalling;
 
 import java.util.ResourceBundle;
@@ -6,17 +5,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 /**
- * Frame for the Signalling Logic
+ * Provide a JFrame to display a table of Signal Mast Logic.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3885712015636161664L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {
@@ -26,6 +20,13 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
     JButton sendButton;
     SignallingPanel sigPanel;
 
+    /**
+     * Set the Signal Mast Logic frame's initial state.
+     *
+     * @param source The Signal Mast this SML is directly linked to
+     * @param dest The Signal Mast this SML is looking at
+     * @throws Exception when an error occurs during initialization
+     */
     public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) throws Exception {
         // the following code sets the frame's initial state
         sigPanel = new SignallingPanel(source, dest, this);

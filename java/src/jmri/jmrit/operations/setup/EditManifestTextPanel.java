@@ -1,4 +1,3 @@
-// EditManifestTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
@@ -16,7 +15,7 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
@@ -26,7 +25,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // text field

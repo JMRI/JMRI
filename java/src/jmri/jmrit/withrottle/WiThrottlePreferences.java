@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
@@ -259,6 +258,6 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         useWiFiConsist = value;
     }
 
-    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
 }

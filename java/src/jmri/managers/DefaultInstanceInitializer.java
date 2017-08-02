@@ -11,6 +11,7 @@ import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
 import jmri.ProgrammerManager;
+import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
 import jmri.SectionManager;
@@ -52,6 +53,7 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
+    @Override
     public <T> Object getDefault(Class<T> type) {
 
         if (type == AudioManager.class) {
@@ -93,6 +95,10 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == ProgrammerManager.class) {
             return new DeferringProgrammerManager();
+        }
+
+        if (type == RailComManager.class) {
+            return new DefaultRailComManager();
         }
 
         if (type == ReporterManager.class) {
@@ -142,7 +148,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-            if (InstanceManager.getDefault(jmri.ConfigureManager.class) != null) {
+            if (InstanceManager.getNullableDefault(jmri.ConfigureManager.class) != null) {
                 InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);
             }
             return timebase;

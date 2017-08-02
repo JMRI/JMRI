@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
  */
@@ -38,6 +38,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this

@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 public class DnDStringImportHandler extends TransferHandler {
 
     /////////////////////import
+    @Override
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.canImport ");
 
@@ -31,23 +32,22 @@ public class DnDStringImportHandler extends TransferHandler {
         return false;
     }
 
+    @Override
     public boolean importData(JComponent comp, Transferable tr) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.importData ");
-        DataFlavor[] flavors = new DataFlavor[]{DataFlavor.stringFlavor};
+        DataFlavor[] flavors =  tr.getTransferDataFlavors();
 
         if (!canImport(comp, flavors)) {
             return false;
         }
 
         try {
-            if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                String data = (String) tr.getTransferData(DataFlavor.stringFlavor);
-                JTextField field = (JTextField) comp;
-                field.setText(data);
-                //Notify listeners drop happened
-                field.firePropertyChange("DnDrop", 0, 1);
-                return true;
-            }
+            String data = (String) tr.getTransferData(DataFlavor.stringFlavor);
+            JTextField field = (JTextField) comp;
+            field.setText(data);
+            //Notify listeners drop happened
+            field.firePropertyChange("DnDrop", 0, 1);
+            return true;
         } catch (UnsupportedFlavorException ufe) {
             log.warn("DnDStringImportHandler.importData: " + ufe.getMessage());
         } catch (IOException ioe) {

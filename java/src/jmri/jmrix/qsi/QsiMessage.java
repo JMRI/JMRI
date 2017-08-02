@@ -1,6 +1,6 @@
-// QsiMessage.java
 package jmri.jmrix.qsi;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.ProgrammingMode;
 
 /**
@@ -9,7 +9,6 @@ import jmri.ProgrammingMode;
  * The {@link QsiReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -167,12 +166,19 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return f;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @Override
+    public String toString() {
+       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+       return toString(memo.getQsiTrafficController());
+    }
+
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
-    public String toString() {
+    public String toString(QsiTrafficController controller) {
         String s = "";
-        if (!QsiTrafficController.instance().isSIIBootMode()) {
+        if (_dataChars == null) return "<none>";
+        if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s += jmri.util.StringUtil.twoHexFromInt(_dataChars[i]) + " ";
             }
@@ -378,5 +384,3 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
 }
-
-/* @(#)QsiMessage.java */

@@ -6,16 +6,10 @@ import javax.swing.AbstractAction;
 /**
  * Start a ControlPanelEditor.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7670881366702521286L;
 
     public ControlPanelEditorAction(String s) {
         super(s);
@@ -25,6 +19,7 @@ public class ControlPanelEditorAction extends AbstractAction {
         this("New Panel");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String name = "Control Panel";
         for (int i = 2; i < 100; i++) {

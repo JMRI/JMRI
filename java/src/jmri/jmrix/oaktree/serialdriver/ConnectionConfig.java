@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.oaktree.serialdriver;
 
 import javax.swing.BoxLayout;
@@ -10,8 +9,7 @@ import jmri.jmrix.oaktree.nodeconfig.NodeConfigAction;
  * Definition of objects to handle configuring a Oak Tree layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -29,6 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -47,10 +46,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     }
 
+    @Override
     public String name() {
         return "RCI bus";
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

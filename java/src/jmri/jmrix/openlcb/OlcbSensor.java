@@ -1,35 +1,44 @@
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
+
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
+import org.openlcb.EventID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.implementations.EventTable;
+import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
-public class OlcbSensor extends AbstractSensor implements CanListener {
+public class OlcbSensor extends AbstractSensor {
 
     static int ON_TIME = 500; // time that sensor is active after being tripped
     Timer timer = null;
 
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
+    OlcbInterface iface;
 
-    public OlcbSensor(String prefix, String address, TrafficController tc) {
+    VersionedValueListener<Boolean> sensorListener;
+    BitProducerConsumer pc;
+    EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
+    EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
+
+    public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
-        this.tc = tc;
+        this.iface = iface;
         init(address);
     }
-
-    TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -49,18 +58,67 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, false);
                 timer = new Timer(true);
+                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                    @Override
+                    public void update(Boolean value) {
+                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                        if (value) {
+                            setTimeout();
+                        }
+                    }
+                };
                 break;
             case 2:
                 addrActive = v[0];
                 addrInactive = v[1];
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(),
+                        addrInactive.toEventID(), false);
+                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                    @Override
+                    public void update(Boolean value) {
+                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                    }
+                };
                 break;
             default:
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
         }
-        // connect
-        tc.addCanListener(this);
+        activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
+        if (addrInactive != null) {
+            inactiveEventTableEntryHolder = iface.getEventTable().addEvent(addrInactive.toEventID(), getEventName(false));
+        }
+    }
+
+    /**
+     * Computes the display name of a given event to be entered into the Event Table.
+     * @param isActive true for sensor active, false for inactive.
+     * @return user-visible string to represent this event.
+     */
+    private String getEventName(boolean isActive) {
+        String name = mUserName;
+        if (name == null) name = mSystemName;
+        String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
+        return Bundle.getMessage(msgName, name);
+    }
+
+    /**
+     * Updates event table entries when the user name changes.
+     * @param s new user name
+     * @throws NamedBean.BadUserNameException see {@link NamedBean}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
+        super.setUserName(s);
+        if (activeEventTableEntryHolder != null) {
+            activeEventTableEntryHolder.getEntry().updateDescription(getEventName(true));
+        }
+        if (inactiveEventTableEntryHolder != null) {
+            inactiveEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
+        }
     }
 
     /**
@@ -68,6 +126,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      * <p>
      * There is no known way to do this, so the request is just ignored.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
@@ -77,51 +136,16 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      * should use setOwnState to handle internal sets and bean notifies.
      *
      */
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        CanMessage m;
+        setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            m = addrActive.makeMessage();
-            tc.sendCanMessage(m, this);
-            setOwnState(Sensor.ACTIVE);
+            sensorListener.setFromOwner(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            if (addrInactive != null) {
-                m = addrInactive.makeMessage();
-                tc.sendCanMessage(m, this);
-            }
-            setOwnState(Sensor.INACTIVE);
-        }
-    }
-
-    /**
-     * Track layout status from messages being sent to CAN
-     *
-     */
-    public void message(CanMessage f) {
-        if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
-            if (addrInactive == null) {
-                setTimeout();
-            }
-        } else if (addrInactive != null && addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
-        }
-    }
-
-    /**
-     * Track layout status from messages being received from CAN
-     *
-     */
-    public void reply(CanReply f) {
-        if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
-            if (addrInactive == null) {
-                setTimeout();
-            }
-        } else if (addrInactive != null && addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            sensorListener.setFromOwner(false);
         }
     }
 
@@ -131,6 +155,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      */
     void setTimeout() {
         timer.schedule(new java.util.TimerTask() {
+            @Override
             public void run() {
                 try {
                     setKnownState(Sensor.INACTIVE);
@@ -140,9 +165,20 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
             }
         }, ON_TIME);
     }
+    
+    /*
+     * since the events that drive a sensor can be whichever state a user
+     * wants, the order of the event pair determines what is the 'active' state
+     */
+    @Override
+    public boolean canInvert() {
+        return false;
+    }
 
+    @Override
     public void dispose() {
-        tc.removeCanListener(this);
+        if (sensorListener != null) sensorListener.release();
+        if (pc != null) pc.release();
         super.dispose();
     }
 

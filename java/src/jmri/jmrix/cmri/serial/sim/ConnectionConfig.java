@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
@@ -28,7 +29,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
+
+        setInstance();
+
         // have to embed the usual one in a new JPanel
 
         JPanel p = new JPanel();
@@ -38,25 +43,26 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure C/MRI nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 
-    /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<>();
-     portNameVector.addElement("(None)");
-     return portNameVector;
-     }*/
-    //public boolean isPortAdvanced() { return true; }
+    @Override
     public String name() {
         return "Simulator";
     }
 
+    @Override
     protected void setInstance() {
-        adapter = SimDriverAdapter.instance();
+        if(adapter == null ) {
+           adapter = new SimDriverAdapter();
+           adapter.configure(); // make sure the traffic controller 
+                                // loads so that node details can be 
+                                // saved.
+        }
     }
 }

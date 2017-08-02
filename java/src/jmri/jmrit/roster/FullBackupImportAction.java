@@ -28,12 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FullBackupImportAction extends ImportRosterItemAction {
 
-    /**
-     * Load from a file exported by {@link FullBackupImportAction}
-     *
-     * @author Bob Jacobsen Copyright 2014
-     */
-    private static final long serialVersionUID = 1L;
     private final static Logger log = LoggerFactory.getLogger(FullBackupImportAction.class);
 
     //private Component _who;
@@ -54,13 +48,14 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         super(title, parent);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
         FileUtil.createDirectory(LocoFile.getFileLocation());
 
         // make sure instance loaded
-        Roster.instance();
+        Roster.getDefault();
 
         // set up to read import file
         ZipInputStream zipper = null;
@@ -84,6 +79,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
             inputfile = new FileInputStream(filename);
             zipper = new ZipInputStream(inputfile) {
+                @Override
                 public void close() {
                 } // SaxReader calls close when reading XML stream, ignore
                 // and close directly later
@@ -118,7 +114,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                             null,
                             new Object[]{Bundle.getMessage("CancelImports"),
                                 Bundle.getMessage("Skip"),
-                                Bundle.getMessage("OK")},
+                                Bundle.getMessage("ButtonOK")},
                             null);
                     if (retval == 0) {
                         break;
@@ -128,7 +124,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                     }
 
                     // see if duplicate
-                    RosterEntry currentEntry = Roster.instance().getEntryForId(mToID);
+                    RosterEntry currentEntry = Roster.getDefault().getEntryForId(mToID);
 
                     if (currentEntry != null) {
                         retval = JOptionPane.showOptionDialog(mParent,
@@ -139,7 +135,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                                 null,
                                 new Object[]{Bundle.getMessage("CancelImports"),
                                     Bundle.getMessage("Skip"),
-                                    Bundle.getMessage("OK")},
+                                    Bundle.getMessage("ButtonOK")},
                                 null);
                         if (retval == 0) {
                             break;
@@ -153,7 +149,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                         df.makeBackupFile(LocoFile.getFileLocation() + currentEntry.getFileName());
 
                         // delete entry
-                        Roster.instance().removeEntry(currentEntry);
+                        Roster.getDefault().removeEntry(currentEntry);
 
                     }
 
@@ -161,7 +157,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                     addToEntryToRoster();
 
                     // use the new roster
-                    Roster.instance().reloadRosterFile();
+                    Roster.getDefault().reloadRosterFile();
                 } catch (org.jdom2.JDOMException ex) {
                     ex.printStackTrace();
                 }

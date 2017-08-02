@@ -2,15 +2,16 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
+import javax.servlet.annotation.WebServlet;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmris.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.server.json.JSON;
 import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -18,15 +19,19 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServlet;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
  *
  * @author mstevetodd -- based on PanelServlet.java by rhwood
  */
+@WebServlet(name = "LayoutPanelServlet",
+        urlPatterns = {"/panel/Layout"})
+@ServiceProvider(service = HttpServlet.class)
 public class LayoutPanelServlet extends AbstractPanelServlet {
 
-    private static final long serialVersionUID = 3008424425552738898L;
     private final static Logger log = LoggerFactory.getLogger(LayoutPanelServlet.class);
 
     @Override
@@ -127,8 +132,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 if (b.getUseCount() > 0) {
                     // save only those LayoutBlocks that are in use--skip abandoned ones
                     Element elem = new Element("layoutblock").setAttribute("systemname", sname);
-                    if (!b.getUserName().isEmpty()) {
-                        elem.setAttribute("username", b.getUserName());
+                    String uname = b.getUserName();
+                    if (uname != null && !uname.isEmpty()) {
+                        elem.setAttribute("username", uname);
                     }
                     // get occupancy sensor from layoutblock if it is valid
                     if (!b.getOccupancySensorName().isEmpty()) {

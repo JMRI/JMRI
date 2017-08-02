@@ -1,4 +1,3 @@
-// AutomatTableFrame.java
 package jmri.jmrit.automat.monitor;
 
 import java.util.ResourceBundle;
@@ -6,20 +5,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.util.JTableUtil;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Frame providing a table of Automat instances
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6052436715378143786L;
     AutomatTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -31,7 +25,8 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         super();
         dataModel = model;
 
-        dataTable = JTableUtil.sortableDataModel(dataModel);
+        dataTable = new JTable(dataModel);
+        dataTable.setRowSorter(new TableRowSorter<>(dataModel));
         dataScroll = new JScrollPane(dataTable);
 
         // configure items for GUI
@@ -53,6 +48,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         dataModel.dispose();
         dataModel = null;

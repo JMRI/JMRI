@@ -25,16 +25,27 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locoio.LocoIOTest");  // no tests in this class itself
+
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(LocoIOPanelTest.suite());
         suite.addTest(LocoIOTableModelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIODataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

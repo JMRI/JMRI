@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Martin Wade Copyright (C) 2014
- * @version $Revision: 22821 $
  */
 public class MrcTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class MrcTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.mrc.configurexml.MrcTurnoutManagerXml");//IN18N
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");//IN18N
     }

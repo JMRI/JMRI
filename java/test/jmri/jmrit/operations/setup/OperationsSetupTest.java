@@ -8,16 +8,16 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
  *
  * Still to do: Backup, Control, Demo
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsSetupTest extends OperationsTestCase {
 
@@ -410,7 +410,7 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("After Read Train Icon Color Terminate", "White", s.getTrainIconColorTerminate());
     }
 
-	// TODO: Add test to create xml file
+    // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @SuppressWarnings("static-access")
     public static Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
@@ -475,11 +475,12 @@ public class OperationsSetupTest extends OperationsTestCase {
         ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
     }
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     /**
      * Test-by test initialization.
-     * @throws Exception 
+     *
+     * @throws Exception
      */
     @Override
     protected void setUp() throws Exception {
@@ -499,8 +500,6 @@ public class OperationsSetupTest extends OperationsTestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(OperationsSetupTest.class);
-        suite.addTestSuite(OperationsBackupTest.class);
-
         return suite;
     }
 

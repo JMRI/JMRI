@@ -41,7 +41,6 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  */
-
 package jmri.util.xml;
 
 import java.io.ByteArrayInputStream;
@@ -96,60 +95,75 @@ import org.xml.sax.XMLReader;
 
 /**
  * Utility class collecting library methods related to XML processing.
- * 
+ *
  * org.openide.xml.XMLUtil adapted to work in JMRI. This should maintain strict
  * API conformance to the OpenIDE implementation.
  */
 public final class XMLUtil extends Object {
 
     private final static Logger log = LoggerFactory.getLogger(XMLUtil.class);
-    
+
     /*
         public static String toCDATA(String val) throws IOException {
 
         }
-    */
+     */
     private static final char[] DEC2HEX = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
     };
 
-    /** Forbids creating new XMLUtil */
+    /**
+     * Forbids creating new XMLUtil
+     */
     private XMLUtil() {
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~ SAX related ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    /** Create a simple parser.
-      * @return <code>createXMLReader(false, false)</code>
-      */
+    /**
+     * Create a simple parser.
+     *
+     * @return <code>createXMLReader(false, false)</code>
+     * @throws SAXException if a parser fulfilling given parameters can not be
+     *                      created
+     */
     public static XMLReader createXMLReader() throws SAXException {
         return createXMLReader(false, false);
     }
 
-    /** Create a simple parser, possibly validating.
+    /**
+     * Create a simple parser, possibly validating.
+     *
      * @param validate if true, a validating parser is returned
      * @return <code>createXMLReader(validate, false)</code>
+     * @throws SAXException if a parser fulfilling given parameters can not be
+     *                      created
      */
     public static XMLReader createXMLReader(boolean validate)
-    throws SAXException {
+            throws SAXException {
         return createXMLReader(validate, false);
     }
 
-    private static SAXParserFactory[][] saxes  = new SAXParserFactory[2][2];
-    /** Creates a SAX parser.
+    private static SAXParserFactory[][] saxes = new SAXParserFactory[2][2];
+
+    /**
+     * Creates a SAX parser.
      *
-     * <p>See {@link #parse} for hints on setting an entity resolver.
+     * <p>
+     * See {@link #parse} for hints on setting an entity resolver.
      *
-     * @param validate if true, a validating parser is returned
+     * @param validate       if true, a validating parser is returned
      * @param namespaceAware if true, a namespace aware parser is returned
      *
-     * @throws FactoryConfigurationError Application developers should never need to directly catch errors of this type.
-     * @throws SAXException if a parser fulfilling given parameters can not be created
+     * @throws FactoryConfigurationError Application developers should never
+     *                                   need to directly catch errors of this
+     *                                   type.
+     * @throws SAXException              if a parser fulfilling given parameters
+     *                                   can not be created
      *
      * @return XMLReader configured according to passed parameters
      */
     public static synchronized XMLReader createXMLReader(boolean validate, boolean namespaceAware)
-    throws SAXException {
+            throws SAXException {
         SAXParserFactory factory = saxes[validate ? 0 : 1][namespaceAware ? 0 : 1];
         if (factory == null) {
             try {
@@ -170,27 +184,31 @@ public final class XMLUtil extends Object {
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~ DOM related ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     /**
      * Creates an empty DOM document. E.g.:
      * <pre>
      * Document doc = createDocument("book", null, null, null);
-     * </pre>
-     * creates new DOM of a well-formed document with root element named book.
+     * </pre> creates new DOM of a well-formed document with root element named
+     * book.
      *
-     * @param rootQName qualified name of root element. e.g. <code>myroot</code> or <code>ns:myroot</code>
-     * @param namespaceURI URI of root element namespace or <code>null</code>
+     * @param rootQName       qualified name of root element, for example
+     *                        <code>myroot</code> or <code>ns:myroot</code>
+     * @param namespaceURI    URI of root element namespace or <code>null</code>
      * @param doctypePublicID public ID of DOCTYPE or <code>null</code>
-     * @param doctypeSystemID system ID of DOCTYPE or <code>null</code> if no DOCTYPE
-     *        required and doctypePublicID is also <code>null</code>
+     * @param doctypeSystemID system ID of DOCTYPE or <code>null</code> if no
+     *                        DOCTYPE required and doctypePublicID is also
+     *                        <code>null</code>
      *
-     * @throws DOMException if new DOM with passed parameters can not be created
-     * @throws FactoryConfigurationError Application developers should never need to directly catch errors of this type.
+     * @throws DOMException              if new DOM with passed parameters can
+     *                                   not be created
+     * @throws FactoryConfigurationError Application developers should never
+     *                                   need to directly catch errors of this
+     *                                   type.
      *
      * @return new DOM Document
      */
     public static Document createDocument(
-        String rootQName, String namespaceURI, String doctypePublicID, String doctypeSystemID
+            String rootQName, String namespaceURI, String doctypePublicID, String doctypeSystemID
     ) throws DOMException {
         DOMImplementation impl = getDOMImplementation();
 
@@ -208,16 +226,19 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Obtains DOMImpementaton interface providing a number of methods for performing
-     * operations that are independent of any particular DOM instance.
+     * Obtains DOMImpementaton interface providing a number of methods for
+     * performing operations that are independent of any particular DOM
+     * instance.
      *
-     * @throw DOMException <code>NOT_SUPPORTED_ERR</code> if cannot get DOMImplementation
-     * @throw FactoryConfigurationError Application developers should never need to directly catch errors of this type.
+     * @throw DOMException <code>NOT_SUPPORTED_ERR</code> if cannot get
+     * DOMImplementation
+     * @throw FactoryConfigurationError Application developers should never need
+     * to directly catch errors of this type.
      *
      * @return DOMImplementation implementation
      */
     private static DOMImplementation getDOMImplementation()
-    throws DOMException { //can be made public
+            throws DOMException { //can be made public
 
         DocumentBuilderFactory factory = getFactory(false, false);
 
@@ -225,7 +246,7 @@ public final class XMLUtil extends Object {
             return factory.newDocumentBuilder().getDOMImplementation();
         } catch (ParserConfigurationException ex) {
             throw new DOMException(
-                DOMException.NOT_SUPPORTED_ERR, "Cannot create parser satisfying configuration parameters"
+                    DOMException.NOT_SUPPORTED_ERR, "Cannot create parser satisfying configuration parameters"
             ); //NOI18N
         } catch (RuntimeException e) {
             // E.g. #36578, IllegalArgumentException. Try to recover gracefully.
@@ -234,6 +255,7 @@ public final class XMLUtil extends Object {
     }
 
     private static DocumentBuilderFactory[][] doms = new DocumentBuilderFactory[2][2];
+
     private static synchronized DocumentBuilderFactory getFactory(boolean validate, boolean namespaceAware) {
         DocumentBuilderFactory factory = doms[validate ? 0 : 1][namespaceAware ? 0 : 1];
         if (factory == null) {
@@ -250,7 +272,8 @@ public final class XMLUtil extends Object {
      *
      * <div class="nonnormative">
      *
-     * <p>Remember that when parsing XML files you often want to set an explicit
+     * <p>
+     * Remember that when parsing XML files you often want to set an explicit
      * entity resolver. For example, consider a file such as this:</p>
      *
      * <pre>
@@ -259,21 +282,23 @@ public final class XMLUtil extends Object {
      * &lt;<font class="function-name">root</font>/&gt;
      * </pre>
      *
-     * <p>If you parse this with a null entity resolver, or you use the
-     * default resolver (EntityCatalog.getDefault) but do not do
-     * anything special with this DTD, you will probably find the parse
-     * blocking to make a network connection <em>even when you are not
-     * validating</em>. That is because DTDs can be used to define
-     * entities and other XML oddities, and are not a pure constraint
-     * language like Schema or RELAX-NG.</p>
+     * <p>
+     * If you parse this with a null entity resolver, or you use the default
+     * resolver (EntityCatalog.getDefault) but do not do anything special with
+     * this DTD, you will probably find the parse blocking to make a network
+     * connection <em>even when you are not validating</em>. That is because
+     * DTDs can be used to define entities and other XML oddities, and are not a
+     * pure constraint language like Schema or RELAX-NG.</p>
      *
-     * <p>There are three basic ways to avoid the network connection.</p>
+     * <p>
+     * There are three basic ways to avoid the network connection.</p>
      *
      * <ol>
      *
-     * <li><p>Register the DTD. This is generally the best thing to do. See
-     * EntityCatalog's documentation for details, but for example
-     * in your layer use:</p>
+     * <li><p>
+     * Register the DTD. This is generally the best thing to do. See
+     * EntityCatalog's documentation for details, but for example in your layer
+     * use:</p>
      *
      * <pre>
      * &lt;<font class="function-name">filesystem</font>&gt;
@@ -291,26 +316,27 @@ public final class XMLUtil extends Object {
      * &lt;/<font class="function-name">filesystem</font>&gt;
      * </pre>
      *
-     * <p>Now the default system entity catalog will resolve the public ID
-     * to the local copy in your module, not the network copy.
-     * Additionally, anyone who mounts the "NetBeans Catalog" in the XML
-     * Entity Catalogs node in the Runtime tab will be able to use your
-     * local copy of the DTD automatically, for validation, code
-     * completion, etc. (The network URL should really exist, though, for
-     * the benefit of other tools!)</p></li>
+     * <p>
+     * Now the default system entity catalog will resolve the public ID to the
+     * local copy in your module, not the network copy. Additionally, anyone who
+     * mounts the "NetBeans Catalog" in the XML Entity Catalogs node in the
+     * Runtime tab will be able to use your local copy of the DTD automatically,
+     * for validation, code completion, etc. (The network URL should really
+     * exist, though, for the benefit of other tools!)</p></li>
      *
-     * <li><p>You can also set an explicit entity resolver which maps that
-     * particular public ID to some local copy of the DTD, if you do not
-     * want to register it globally in the system for some reason. If
-     * handed other public IDs, just return null to indicate that the
-     * system ID should be loaded.</p></li>
+     * <li><p>
+     * You can also set an explicit entity resolver which maps that particular
+     * public ID to some local copy of the DTD, if you do not want to register
+     * it globally in the system for some reason. If handed other public IDs,
+     * just return null to indicate that the system ID should be
+     * loaded.</p></li>
      *
-     * <li><p>In some cases where XML parsing is very
-     * performance-sensitive, and you know that you do not need validation
-     * and furthermore that the DTD defines no infoset (there are no
-     * entity or character definitions, etc.), you can speed up the parse.
-     * Turn off validation, but also supply a custom entity resolver that
-     * does not even bother to load the DTD at all:</p>
+     * <li><p>
+     * In some cases where XML parsing is very performance-sensitive, and you
+     * know that you do not need validation and furthermore that the DTD defines
+     * no infoset (there are no entity or character definitions, etc.), you can
+     * speed up the parse. Turn off validation, but also supply a custom entity
+     * resolver that does not even bother to load the DTD at all:</p>
      *
      * <pre>
      * <font class="keyword">public</font> <font class="type">InputSource</font> <font class="function-name">resolveEntity</font>(<font class="type">String</font> <font class="variable-name">pubid</font>, <font class="type">String</font> <font class="variable-name">sysid</font>)
@@ -327,23 +353,28 @@ public final class XMLUtil extends Object {
      *
      * </div>
      *
-     * @param input a parser input (for URL users use: <code>new InputSource(url.toString())</code>
-     * @param validate if true validating parser is used
+     * @param input          a parser input (for URL users use:
+     *                       <code>new InputSource(url.toString())</code>
+     * @param validate       if true validating parser is used
      * @param namespaceAware if true DOM is created by namespace aware parser
-     * @param errorHandler a error handler to notify about exception (such as {@link #defaultErrorHandler}) or <code>null</code>
-     * @param entityResolver SAX entity resolver (such as EntityCatalog#getDefault) or <code>null</code>
+     * @param errorHandler   a error handler to notify about exception (such as
+     *                       {@link #defaultErrorHandler}) or <code>null</code>
+     * @param entityResolver SAX entity resolver (such as
+     *                       EntityCatalog#getDefault) or <code>null</code>
      *
-     * @throws IOException if an I/O problem during parsing occurs
-     * @throws SAXException is thrown if a parser error occurs
-     * @throws FactoryConfigurationError Application developers should never need to directly catch errors of this type.
+     * @throws IOException               if an I/O problem during parsing occurs
+     * @throws SAXException              is thrown if a parser error occurs
+     * @throws FactoryConfigurationError Application developers should never
+     *                                   need to directly catch errors of this
+     *                                   type.
      *
      * @return document representing given input
      */
     public static Document parse(
-        InputSource input, boolean validate, boolean namespaceAware, ErrorHandler errorHandler,
-        EntityResolver entityResolver
+            InputSource input, boolean validate, boolean namespaceAware, ErrorHandler errorHandler,
+            EntityResolver entityResolver
     ) throws IOException, SAXException {
-        
+
         DocumentBuilder builder = null;
         DocumentBuilderFactory factory = getFactory(validate, namespaceAware);
 
@@ -352,57 +383,71 @@ public final class XMLUtil extends Object {
         } catch (ParserConfigurationException ex) {
             throw new SAXException("Cannot create parser satisfying configuration parameters", ex); //NOI18N
         }
-        
+
         if (errorHandler != null) {
             builder.setErrorHandler(errorHandler);
         }
-        
+
         if (entityResolver != null) {
             builder.setEntityResolver(entityResolver);
         }
-        
+
         return builder.parse(input);
     }
 
     /**
-     * Identity transformation in XSLT with indentation added.
-     * Just using the identity transform and calling
-     * t.setOutputProperty(OutputKeys.INDENT, "yes");
-     * t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-     * does not work currently.
-     * You really have to use this bogus stylesheet.
+     * Identity transformation in XSLT with indentation added. Just using the
+     * identity transform and calling t.setOutputProperty(OutputKeys.INDENT,
+     * "yes"); t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount",
+     * "4"); does not work currently. You really have to use this bogus
+     * stylesheet.
+     *
      * @see "JDK bug #5064280"
      */
-    private static final String IDENTITY_XSLT_WITH_INDENT =
-            "<xsl:stylesheet version='1.0' " + // NOI18N
-            "xmlns:xsl='http://www.w3.org/1999/XSL/Transform' " + // NOI18N
-            "xmlns:xalan='http://xml.apache.org/xslt' " + // NOI18N
-            "exclude-result-prefixes='xalan'>" + // NOI18N
-            "<xsl:output method='xml' indent='yes' xalan:indent-amount='4'/>" + // NOI18N
-            "<xsl:template match='@*|node()'>" + // NOI18N
-            "<xsl:copy>" + // NOI18N
-            "<xsl:apply-templates select='@*|node()'/>" + // NOI18N
-            "</xsl:copy>" + // NOI18N
-            "</xsl:template>" + // NOI18N
+    private static final String IDENTITY_XSLT_WITH_INDENT
+            = "<xsl:stylesheet version='1.0' "
+            + // NOI18N
+            "xmlns:xsl='http://www.w3.org/1999/XSL/Transform' "
+            + // NOI18N
+            "xmlns:xalan='http://xml.apache.org/xslt' "
+            + // NOI18N
+            "exclude-result-prefixes='xalan'>"
+            + // NOI18N
+            "<xsl:output method='xml' indent='yes' xalan:indent-amount='4'/>"
+            + // NOI18N
+            "<xsl:template match='@*|node()'>"
+            + // NOI18N
+            "<xsl:copy>"
+            + // NOI18N
+            "<xsl:apply-templates select='@*|node()'/>"
+            + // NOI18N
+            "</xsl:copy>"
+            + // NOI18N
+            "</xsl:template>"
+            + // NOI18N
             "</xsl:stylesheet>"; // NOI18N
-    /** Workaround for JAXP bug 7150637 / XALANJ-1497. */
-    private static final String ORACLE_IS_STANDALONE = "http://www.oracle.com/xml/is-standalone";
     /**
-     * Writes a DOM document to a stream.
-     * The precise output format is not guaranteed but this method will attempt to indent it sensibly.
-     * 
-     * <p class="nonnormative"><b>Important</b>: There might be some problems with
-     * <code>&lt;![CDATA[ ]]&gt;</code> sections in the DOM tree you pass into this method. Specifically,
-     * some CDATA sections my not be written as CDATA section or may be merged with
-     * other CDATA section at the same level. Also if plain text nodes are mixed with
-     * CDATA sections at the same level all text is likely to end up in one big CDATA section.
+     * Workaround for JAXP bug 7150637 / XALANJ-1497.
+     */
+    private static final String ORACLE_IS_STANDALONE = "http://www.oracle.com/xml/is-standalone";
+
+    /**
+     * Writes a DOM document to a stream. The precise output format is not
+     * guaranteed but this method will attempt to indent it sensibly.
+     *
+     * <p class="nonnormative"><b>Important</b>: There might be some problems
+     * with <code>&lt;![CDATA[ ]]&gt;</code> sections in the DOM tree you pass
+     * into this method. Specifically, some CDATA sections my not be written as
+     * CDATA section or may be merged with other CDATA section at the same
+     * level. Also if plain text nodes are mixed with CDATA sections at the same
+     * level all text is likely to end up in one big CDATA section.
      * <br>
      * For nodes that only have one CDATA section this method should work fine.
      * </p>
-     * 
+     *
      * @param doc DOM document to be written
      * @param out data sink
-     * @param enc XML-defined encoding name (e.g. "UTF-8")
+     * @param enc XML-defined encoding name (for example, "UTF-8")
      * @throws IOException if JAXP fails or the stream cannot be written to
      */
     public static void write(Document doc, OutputStream out, String enc) throws IOException {
@@ -412,9 +457,11 @@ public final class XMLUtil extends Object {
         Document doc2 = normalize(doc);
         ClassLoader orig = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() { // #195921
-            @Override public ClassLoader run() {
+            @Override
+            public ClassLoader run() {
                 return new ClassLoader(ClassLoader.getSystemClassLoader().getParent()) {
-                    @Override public InputStream getResourceAsStream(String name) {
+                    @Override
+                    public InputStream getResourceAsStream(String name) {
                         if (name.startsWith("META-INF/services/")) {
                             return new ByteArrayInputStream(new byte[0]); // JAXP #6723276
                         }
@@ -450,7 +497,7 @@ public final class XMLUtil extends Object {
             collectCDATASections(doc2, cdataQNames);
             if (cdataQNames.size() > 0) {
                 StringBuilder cdataSections = new StringBuilder();
-                for(String s : cdataQNames) {
+                for (String s : cdataQNames) {
                     cdataSections.append(s).append(' '); //NOI18N
                 }
                 t.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, cdataSections.toString());
@@ -459,8 +506,7 @@ public final class XMLUtil extends Object {
             Source source = new DOMSource(doc2);
             Result result = new StreamResult(out);
             t.transform(source, result);
-        } catch (javax.xml.transform.TransformerException 
-                | RuntimeException e) { // catch anything that happens
+        } catch (javax.xml.transform.TransformerException | RuntimeException e) { // catch anything that happens
             throw new IOException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(orig);
@@ -479,16 +525,16 @@ public final class XMLUtil extends Object {
                 }
             }
         }
-        
+
         NodeList children = node.getChildNodes();
-        for(int i = 0; i < children.getLength(); i++) {
+        for (int i = 0; i < children.getLength(); i++) {
             collectCDATASections(children.item(i), cdataQNames);
         }
     }
 
     /**
-     * Check whether a DOM tree is valid according to a schema.
-     * Example of usage:
+     * Check whether a DOM tree is valid according to a schema. Example of
+     * usage:
      * <pre>
      * Element fragment = ...;
      * SchemaFactory f = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -500,7 +546,8 @@ public final class XMLUtil extends Object {
      *     // invalid
      * }
      * </pre>
-     * @param data a DOM tree
+     *
+     * @param data   a DOM tree
      * @param schema a parsed schema
      * @throws SAXException if validation failed
      * @since org.openide.util 7.17
@@ -509,12 +556,18 @@ public final class XMLUtil extends Object {
         Validator v = schema.newValidator();
         final SAXException[] error = {null};
         v.setErrorHandler(new ErrorHandler() {
-            public @Override void warning(SAXParseException x) throws SAXException {}
-            public @Override void error(SAXParseException x) throws SAXException {
+            @Override
+            public void warning(SAXParseException x) throws SAXException {
+            }
+
+            @Override
+            public void error(SAXParseException x) throws SAXException {
                 // Just rethrowing it is bad because it will also print it to stderr.
                 error[0] = x;
             }
-            public @Override void fatalError(SAXParseException x) throws SAXException {
+
+            @Override
+            public void fatalError(SAXParseException x) throws SAXException {
                 error[0] = x;
             }
         });
@@ -527,6 +580,7 @@ public final class XMLUtil extends Object {
             throw error[0];
         }
     }
+
     private static Element fixupAttrs(Element root) { // #140905
         // #6529766/#6531160: some versions of JAXP reject attributes set using setAttribute
         // (rather than setAttributeNS) even though the schema calls for no-NS attrs!
@@ -540,6 +594,7 @@ public final class XMLUtil extends Object {
         }
         return copy;
     }
+
     private static void fixupAttrsSingle(Element e) throws DOMException {
         removeXmlBase(e);
         Map<String, String> replace = new HashMap<String, String>();
@@ -555,15 +610,15 @@ public final class XMLUtil extends Object {
             e.setAttributeNS(null, entry.getKey(), entry.getValue());
         }
     }
+
     private static void removeXmlBase(Element e) {
         e.removeAttributeNS("http://www.w3.org/XML/1998/namespace", "base"); // NOI18N
         e.removeAttribute("xml:base"); // NOI18N
     }
 
     /**
-     * Escape passed string as XML attibute value
-     * (<code>&lt;</code>, <code>&amp;</code>, <code>'</code> and <code>"</code>
-     * will be escaped.
+     * Escape passed string as XML attibute value (<code>&lt;</code>,
+     * <code>&amp;</code>, <code>'</code> and <code>"</code> will be escaped.
      * Note: An XML processor returns normalized value that can be different.
      *
      * @param val a string to be escaped
@@ -658,12 +713,13 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Can be used to encode values that contain invalid XML characters.
-     * At SAX parser end must be used pair method to get original value.
+     * Can be used to encode values that contain invalid XML characters. At SAX
+     * parser end must be used pair method to get original value.
      *
-     * @param val data to be converted
+     * @param val   data to be converted
      * @param start offset
-     * @param len count
+     * @param len   count
+     * @return the converted data
      *
      * @since 1.29
      */
@@ -682,16 +738,17 @@ public final class XMLUtil extends Object {
     /**
      * Decodes data encoded using {@link #toHex(byte[],int,int) toHex}.
      *
-     * @param hex data to be converted
+     * @param hex   data to be converted
      * @param start offset
-     * @param len count
+     * @param len   count
+     * @return the converted data
      *
      * @throws IOException if input does not represent hex encoded value
      *
      * @since 1.29
      */
     public static byte[] fromHex(char[] hex, int start, int len)
-    throws IOException {
+            throws IOException {
         if (hex == null) {
             throw new IOException("null");
         }
@@ -719,11 +776,12 @@ public final class XMLUtil extends Object {
 
     /**
      * Check if all passed characters match XML expression [2].
+     *
      * @return true if no escaping necessary
      * @throws CharConversionException if contains invalid chars
      */
     private static boolean checkAttributeCharacters(String chars)
-    throws CharConversionException {
+            throws CharConversionException {
         boolean escape = false;
 
         for (int i = 0; i < chars.length(); i++) {
@@ -732,25 +790,25 @@ public final class XMLUtil extends Object {
             if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
-                case 0x9:
-                case 0xA:
-                case 0xD:
+                    case 0x9:
+                    case 0xA:
+                    case 0xD:
 
-                    continue;
+                        continue;
 
-                case '\'':
-                case '"':
-                case '<':
-                case '&':
-                    escape = true;
+                    case '\'':
+                    case '"':
+                    case '<':
+                    case '&':
+                        escape = true;
 
-                    continue;
+                        continue;
 
-                default:
+                    default:
 
-                    if (ch < 0x20) {
-                        throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
-                    }
+                        if (ch < 0x20) {
+                            throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
+                        }
                 }
             }
         }
@@ -760,11 +818,12 @@ public final class XMLUtil extends Object {
 
     /**
      * Check if all passed characters match XML expression [2].
+     *
      * @return true if no escaping necessary
      * @throws CharConversionException if contains invalid chars
      */
     private static boolean checkContentCharacters(String chars)
-    throws CharConversionException {
+            throws CharConversionException {
         boolean escape = false;
 
         for (int i = 0; i < chars.length(); i++) {
@@ -773,33 +832,33 @@ public final class XMLUtil extends Object {
             if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
-                case 0x9:
-                case 0xA:
-                case 0xD:
+                    case 0x9:
+                    case 0xA:
+                    case 0xD:
 
-                    continue;
-
-                case '>': // only ]]> is dangerous
-
-                    if (escape) {
                         continue;
-                    }
 
-                    escape = (i > 0) && (chars.charAt(i - 1) == ']');
+                    case '>': // only ]]> is dangerous
 
-                    continue;
+                        if (escape) {
+                            continue;
+                        }
 
-                case '<':
-                case '&':
-                    escape = true;
+                        escape = (i > 0) && (chars.charAt(i - 1) == ']');
 
-                    continue;
+                        continue;
 
-                default:
+                    case '<':
+                    case '&':
+                        escape = true;
 
-                    if (ch < 0x20) {
-                        throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
-                    }
+                        continue;
+
+                    default:
+
+                        if (ch < 0x20) {
+                            throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
+                        }
                 }
             }
         }
@@ -809,6 +868,7 @@ public final class XMLUtil extends Object {
 
     /**
      * Try to normalize a document by removing nonsignificant whitespace.
+     *
      * @see "#62006"
      */
     private static Document normalize(Document orig) throws IOException {
@@ -831,12 +891,12 @@ public final class XMLUtil extends Object {
         Document doc;
         if (doctype != null) {
             doc = builder.getDOMImplementation().createDocument(
-                orig.getDocumentElement().getNamespaceURI(),
-                orig.getDocumentElement().getTagName(),
-                builder.getDOMImplementation().createDocumentType(
-                    orig.getDoctype().getName(),
-                    orig.getDoctype().getPublicId(),
-                    orig.getDoctype().getSystemId()));
+                    orig.getDocumentElement().getNamespaceURI(),
+                    orig.getDocumentElement().getTagName(),
+                    builder.getDOMImplementation().createDocumentType(
+                            orig.getDoctype().getName(),
+                            orig.getDoctype().getPublicId(),
+                            orig.getDoctype().getSystemId()));
             // XXX what about entity decls inside the DOCTYPE?
             doc.removeChild(doc.getDocumentElement());
         } else {
@@ -874,16 +934,17 @@ public final class XMLUtil extends Object {
      * Append a child element to the parent at the specified location.
      *
      * Starting with a valid document, append an element according to the schema
-     * sequence represented by the <code>order</code>.  All existing child elements must be
-     * include as well as the new element.  The existing child element following
-     * the new child is important, as the element will be 'inserted before', not
-     * 'inserted after'.
+     * sequence represented by the <code>order</code>. All existing child
+     * elements must be include as well as the new element. The existing child
+     * element following the new child is important, as the element will be
+     * 'inserted before', not 'inserted after'.
      *
      * @param parent parent to which the child will be appended
-     * @param el element to be added
-     * @param order order of the elements which must be followed
+     * @param el     element to be added
+     * @param order  order of the elements which must be followed
      * @throws IllegalArgumentException if the order cannot be followed, either
-     * a missing existing or new child element is not specified in order
+     *                                  a missing existing or new child element
+     *                                  is not specified in order
      *
      * @since 8.4
      */
@@ -893,7 +954,7 @@ public final class XMLUtil extends Object {
 
         // ensure the new new element is contained in the 'order'
         if (index == -1) {
-            throw new IllegalArgumentException("new child element '"+ el.getLocalName() + "' not specified in order " + l); // NOI18N
+            throw new IllegalArgumentException("new child element '" + el.getLocalName() + "' not specified in order " + l); // NOI18N
         }
 
         List<Element> elements = findSubElements(parent);
@@ -915,13 +976,15 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Find all direct child elements of an element.
-     * Children which are all-whitespace text nodes or comments are ignored; others cause
-     * an exception to be thrown.
+     * Find all direct child elements of an element. Children which are
+     * all-whitespace text nodes or comments are ignored; others cause an
+     * exception to be thrown.
+     *
      * @param parent a parent element in a DOM tree
      * @return a list of direct child elements (may be empty)
-     * @throws IllegalArgumentException if there are non-element children besides whitespace
-     * 
+     * @throws IllegalArgumentException if there are non-element children
+     *                                  besides whitespace
+     *
      * @since 8.4
      */
     public static List<Element> findSubElements(Element parent) throws IllegalArgumentException {
@@ -948,9 +1011,9 @@ public final class XMLUtil extends Object {
     /**
      * Search for an XML element in the direct children of parent only.
      *
-     * This compares localName (nodeName if localName is null) to name,
-     * and checks the tags namespace with the provided namespace.
-     * A <code>null</code> namespace will match any namespace.
+     * This compares localName (nodeName if localName is null) to name, and
+     * checks the tags namespace with the provided namespace. A
+     * <code>null</code> namespace will match any namespace.
      * <p>
      * This is differs from the DOM version by:
      * <ul>
@@ -958,12 +1021,13 @@ public final class XMLUtil extends Object {
      * <li>returns a single result</li>
      * </ul>
      *
-     * @param parent a parent element
-     * @param name the intended local name
+     * @param parent    a parent element
+     * @param name      the intended local name
      * @param namespace the intended namespace (or null)
      * @return the one child element with that name, or null if none
-     * @throws IllegalArgumentException if there is multiple elements of the same name
-     * 
+     * @throws IllegalArgumentException if there is multiple elements of the
+     *                                  same name
+     *
      * @since 8.4
      */
     public static Element findElement(Element parent, String name, String namespace) throws IllegalArgumentException {
@@ -975,11 +1039,11 @@ public final class XMLUtil extends Object {
                 Node node = l.item(i);
                 String localName = node.getLocalName();
                 localName = localName == null ? node.getNodeName() : localName;
-                
+
                 if (name.equals(localName)
-			&& (namespace == null || namespace.equals(node.getNamespaceURI()))) {
+                        && (namespace == null || namespace.equals(node.getNamespaceURI()))) {
                     if (result == null) {
-                        result = (Element)node;
+                        result = (Element) node;
                     } else {
                         throw new IllegalArgumentException("more than one element with same name found");
                     }
@@ -990,11 +1054,12 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Extract nested text from a node.
-     * Currently does not handle coalescing text nodes, CDATA sections, etc.
+     * Extract nested text from a node. Currently does not handle coalescing
+     * text nodes, CDATA sections, etc.
+     *
      * @param parent a parent element
      * @return the nested text, or null if none was found
-     * 
+     *
      * @since 8.4
      */
     public static String findText(Node parent) {
@@ -1010,10 +1075,11 @@ public final class XMLUtil extends Object {
 
     /**
      * Convert an XML fragment from one namespace to another.
-     * 
-     * @param from element to translate
+     *
+     * @param from      element to translate
      * @param namespace namespace to be translated to
-     * 
+     * @return the element in the new namespace
+     *
      * @since 8.4
      */
     public static Element translateXML(Element from, String namespace) {
@@ -1039,13 +1105,13 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Copy elements from one document to another attaching at the specified element
-     * and translating the namespace.
+     * Copy elements from one document to another attaching at the specified
+     * element and translating the namespace.
      *
-     * @param from copy the children of this element (exclusive)
-     * @param to where to attach the copied elements
+     * @param from         copy the children of this element (exclusive)
+     * @param to           where to attach the copied elements
      * @param newNamespace destination namespace
-     * 
+     *
      * @since 8.4
      */
     public static void copyDocument(Element from, Element to, String newNamespace) {
@@ -1076,7 +1142,9 @@ public final class XMLUtil extends Object {
     }
 
     /**
-     * Create an XML error handler that rethrows errors and fatal errors and logs warnings.
+     * Create an XML error handler that rethrows errors and fatal errors and
+     * logs warnings.
+     *
      * @return a standard error handler
      *
      * @since 8.4
@@ -1087,23 +1155,27 @@ public final class XMLUtil extends Object {
 
     private static final class ErrHandler implements ErrorHandler {
 
-        ErrHandler() {}
+        ErrHandler() {
+        }
 
         private void annotate(SAXParseException exception) throws SAXException {
             log.error(null, exception);
         }
 
-        public @Override void fatalError(SAXParseException exception) throws SAXException {
+        @Override
+        public void fatalError(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        public @Override void error(SAXParseException exception) throws SAXException {
+        @Override
+        public void error(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        public @Override void warning(SAXParseException exception) throws SAXException {
+        @Override
+        public void warning(SAXParseException exception) throws SAXException {
             log.warn(null, exception);
         }
 

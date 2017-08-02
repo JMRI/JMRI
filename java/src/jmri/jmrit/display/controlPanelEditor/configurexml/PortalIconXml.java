@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.PortalIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class PortalIconXml extends PositionableLabelXml {
 
@@ -27,6 +26,7 @@ public class PortalIconXml extends PositionableLabelXml {
      * @param o Object to store, of type PortalIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         PortalIcon p = (PortalIcon) o;
@@ -64,6 +64,7 @@ public class PortalIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         if (!(o instanceof ControlPanelEditor)) {
             log.error("Can't load portalIcon.  Panel editor must use ControlPanelEditor.");

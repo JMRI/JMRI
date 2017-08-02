@@ -46,10 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AddProfileDialog extends javax.swing.JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2838864019793309792L;
     private String profileId;
     private boolean setNextProfile = false;
     private Profile source = null;
@@ -146,7 +142,9 @@ public class AddProfileDialog extends javax.swing.JDialog {
             }
         });
 
+        profileFolder.setEditable(false);
         profileFolder.setText(ProfileManager.getDefault().getDefaultSearchPath().getPath());
+        profileFolder.setEnabled(false);
         profileFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 profileFolderActionPerformed(evt);

@@ -1,6 +1,6 @@
 package jmri.jmrit.roster;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmrit.roster.IdentifyLoco class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class IdentifyLocoTest extends TestCase {
 
     static int cvRead = -1;
@@ -20,6 +19,7 @@ public class IdentifyLocoTest extends TestCase {
     public void testShort() {
         // initialize the system
         jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 cvRead = CV;
             }
@@ -28,12 +28,15 @@ public class IdentifyLocoTest extends TestCase {
 
         // create our test object
         IdentifyLoco i = new IdentifyLoco(p) {
+            @Override
             public void message(String m) {
             }
 
+            @Override
             public void done(int i) {
             }
 
+            @Override
             public void error() {
             }
         };
@@ -65,6 +68,7 @@ public class IdentifyLocoTest extends TestCase {
     public void testLong() {
         // initialize the system
         jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 cvRead = CV;
             }
@@ -73,12 +77,15 @@ public class IdentifyLocoTest extends TestCase {
 
         // create our test object
         IdentifyLoco i = new IdentifyLoco(p) {
+            @Override
             public void message(String m) {
             }
 
+            @Override
             public void done(int i) {
             }
 
+            @Override
             public void error() {
             }
         };

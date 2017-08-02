@@ -5,18 +5,20 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for the SE8cSignalHead implmentation
+ * Tests for the SE8cSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
+ * updated to JUnit4 2016
  */
-public class SE8cSignalHeadTest extends TestCase {
+public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
+    @Test
     public void testCtor1() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -34,6 +36,7 @@ public class SE8cSignalHeadTest extends TestCase {
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
 
+    @Test
     public void testCtor2() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -50,6 +53,7 @@ public class SE8cSignalHeadTest extends TestCase {
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
 
+    @Test
     public void testCtor3() {
         // original ctor from number and user name
         SE8cSignalHead s = new SE8cSignalHead(11, "user name");
@@ -58,13 +62,15 @@ public class SE8cSignalHeadTest extends TestCase {
         Assert.assertEquals("user name", "user name", s.getUserName());
     }
 
+    @Test
     public void testCtor4() {
-        // original ctor from number and user name
+        // original ctor from number only 
         SE8cSignalHead s = new SE8cSignalHead(11);
 
         Assert.assertEquals("system name", "LH11", s.getSystemName());
     }
 
+    @Test
     public void testRedState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -81,6 +87,7 @@ public class SE8cSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testYellowState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -97,6 +104,7 @@ public class SE8cSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testGreenState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -113,6 +121,7 @@ public class SE8cSignalHeadTest extends TestCase {
 
     }
 
+    @Test
     public void testDarkState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -129,7 +138,9 @@ public class SE8cSignalHeadTest extends TestCase {
 
     }
 
-    public void testStateFollowing() {
+<<<<<<< HEAD
+    @Test
+    public void testStateFollowingCtor1() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s1 = new SE8cSignalHead(
@@ -138,6 +149,50 @@ public class SE8cSignalHeadTest extends TestCase {
                 "user name"
         );
 
+        // s2 should follow s1
+        SE8cSignalHead s2 = new SE8cSignalHead(
+=======
+    // from here down is testing infrastructure
+
+    @Override
+    public SignalHead getHeadToTest() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        return new SE8cSignalHead(
+>>>>>>> JMRI/master
+                new NamedBeanHandle<Turnout>("11", it11),
+                new NamedBeanHandle<Turnout>("12", it12)
+        );
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.RED);
+        Assert.assertEquals("s2 after RED", SignalHead.RED, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.GREEN);
+        Assert.assertEquals("s2 after GREEN", SignalHead.GREEN, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.YELLOW);
+        Assert.assertEquals("s2 after YELLOW", SignalHead.YELLOW, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
+    }
+
+    @Test
+    public void testStateFollowingCtor2() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        SE8cSignalHead s1 = new SE8cSignalHead(
+                new NamedBeanHandle<Turnout>("11", it11),
+                new NamedBeanHandle<Turnout>("12", it12),
+                "user name"
+        );
+<<<<<<< HEAD
+
+        // s2 should follow s1
         SE8cSignalHead s2 = new SE8cSignalHead(
                 new NamedBeanHandle<Turnout>("11", it11),
                 new NamedBeanHandle<Turnout>("12", it12),
@@ -161,34 +216,79 @@ public class SE8cSignalHeadTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SE8cSignalHeadTest(String s) {
-        super(s);
+    @Test
+    public void testStateFollowingCtor3() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        SE8cSignalHead s1 = new SE8cSignalHead(
+                new NamedBeanHandle<Turnout>("11", it11),
+                new NamedBeanHandle<Turnout>("12", it12),
+                "user name"
+        );
+
+        // s2 should follow s1
+        SE8cSignalHead s2 = new SE8cSignalHead(11, "user name");
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.RED);
+        Assert.assertEquals("s2 after RED", SignalHead.RED, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.GREEN);
+        Assert.assertEquals("s2 after GREEN", SignalHead.GREEN, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.YELLOW);
+        Assert.assertEquals("s2 after YELLOW", SignalHead.YELLOW, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SE8cSignalHeadTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testStateFollowingCtor4() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        SE8cSignalHead s1 = new SE8cSignalHead(
+                new NamedBeanHandle<Turnout>("11", it11),
+                new NamedBeanHandle<Turnout>("12", it12),
+                "user name"
+        );
+
+        // s2 should follow s1
+        SE8cSignalHead s2 = new SE8cSignalHead(11);
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.RED);
+        Assert.assertEquals("s2 after RED", SignalHead.RED, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.GREEN);
+        Assert.assertEquals("s2 after GREEN", SignalHead.GREEN, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.YELLOW);
+        Assert.assertEquals("s2 after YELLOW", SignalHead.YELLOW, s2.getAppearance());
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+
+=======
+>>>>>>> JMRI/master
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SE8cSignalHeadTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    // The minimal setup for log4J/JUnit4
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

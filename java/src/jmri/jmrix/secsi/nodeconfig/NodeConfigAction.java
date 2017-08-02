@@ -20,6 +20,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure SECSI Nodes");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame();
         try {

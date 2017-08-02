@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -26,7 +15,13 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-	<revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2014-05-17</date>
       <authorinitials>Ba</authorinitials>
@@ -53,10 +48,12 @@
   </revhistory>
   <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
     <decVal max="127"/>
+    <label>Consist Acceleration Adjustment</label>
     <label xml:lang="it">Regola Accellerazione Consist</label>
     <label xml:lang="fr">Ajustement d'accélération en Unité Mutiple</label>
-    <label>Consist Acceleration Adjustment</label>
-    <label xml:lang="de">Anpassung der Beschleunigung beim Consist</label>
+    <label xml:lang="de">Anpassung der Beschleunigung beim Verbundfahrt</label>
+    <label xml:lang="cs">Nastavení zrychlení soupravy</label>
+    <label xml:lang="nl">Versnellingscorrectie voor Multi-tractie</label>
   </variable>
   <variable item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
     <enumVal>
@@ -64,24 +61,32 @@
         <choice xml:lang="it">Fattore Aggiustamento sommato</choice>
         <choice xml:lang="fr">Ajustement positif</choice>
         <choice xml:lang="de">Anpassung erhöht</choice>
+        <choice xml:lang="cs">Korekce kladná</choice>
+        <choice xml:lang="nl">Correctie omhoog</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
         <choice xml:lang="it">Fattore Sottratto</choice>
         <choice xml:lang="fr">Ajustement négatif</choice>
         <choice xml:lang="de">Anpassung verringert</choice>
+        <choice xml:lang="cs">Korekce záporná</choice>
+        <choice xml:lang="nl">Correctie omlaag</choice>
       </enumChoice>
     </enumVal>
+    <label>Consist Acceleration Adjustment Sign</label>
     <label xml:lang="it">Segno Aggiustamento Accellerazione Consist</label>
     <label xml:lang="fr">Signe de l'ajustement d'accélération</label>
-    <label>Consist Acceleration Adjustment Sign</label>
-    <label xml:lang="de">Signal für die Anpassung der Beschleunigung beim Consist</label>
+    <label xml:lang="de">Zeichen für Anpassung der Beschleunigung beim Verbundfahrt</label>
+    <label xml:lang="cs">Znaménko úpravy zrychlení soupravy</label>
+    <label xml:lang="nl">Teken voor Versnellingscorrectie Multi-tractie</label>
   </variable>
   <variable item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
     <decVal max="127"/>
+    <label>Consist Deceleration Adjustment</label>
     <label xml:lang="it">Aggiustamento Decellerazione Consist</label>
     <label xml:lang="fr">Ajustement de décélération en Unité Mutiple</label>
-    <label>Consist Deceleration Adjustment</label>
-    <label xml:lang="de">Anpassung der Verzögerung beim Consist</label>
+    <label xml:lang="de">Anpassung der Verzögerung beim Verbundfahrt</label>
+    <label xml:lang="cs">Nastavení zpomalení soupravy</label>
+    <label xml:lang="nl">Remvertragingscorrectie voor Multi-tractie</label>
   </variable>
   <variable item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
     <enumVal>
@@ -89,16 +94,22 @@
         <choice xml:lang="it">Fattore Aggiustamento sommato</choice>
         <choice xml:lang="fr">Ajustement positif</choice>
         <choice xml:lang="de">Anpassung erhöht</choice>
+        <choice xml:lang="cs">Korekce kladná</choice>
+        <choice xml:lang="nl">Correctie omhoog</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
         <choice xml:lang="it">Fattore Sottratto</choice>
         <choice xml:lang="fr">Ajustement négatif</choice>
         <choice xml:lang="de">Anpassung verringert</choice>
+        <choice xml:lang="cs">Korekce záporná</choice>
+        <choice xml:lang="nl">Correctie omlaag</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="fr">Signe de l'ajustement de décélération</label>
-    <label xml:lang="it">Segno Aggiustamento Decellerazione Consist</label>
     <label>Consist Deceleration Adjustment Sign</label>
-    <label xml:lang="de">Signal für die Anpassung der Verzögerung beim Consist</label>
+    <label xml:lang="it">Segno Aggiustamento Decellerazione Consist</label>
+    <label xml:lang="fr">Signe de l'ajustement de décélération</label>
+    <label xml:lang="de">Zeichen für Anpassung der Verzögerung beim Verbundfahrt</label>
+    <label xml:lang="cs">Znaménko úpravy zpomalení soupravy</label>
+    <label xml:lang="nl">Teken voor Remvertragingscorrectie Multi-tractie</label>
   </variable>
 </variables>

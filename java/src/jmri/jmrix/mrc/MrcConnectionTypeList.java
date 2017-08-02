@@ -1,14 +1,16 @@
-// MRCConnectionTypeList.java
 package jmri.jmrix.mrc;
+
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid MRC Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2014
- * @version	$Revision: 17977 $
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class MrcConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MRC = "MRC";

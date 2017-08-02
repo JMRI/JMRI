@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision$
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -28,14 +27,13 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DoubleTurnoutSignalHead p = (DoubleTurnoutSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -86,13 +84,18 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Process stored signal head output (turnout).
+     * <p>
+     * Needs to handle two types of element: turnoutname is new form; turnout is
+     * old form.
+     *
+     * @param o xml object defining a turnout on an SE8C signal head
+     * @return named bean for the turnout
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
@@ -110,11 +113,17 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            try {
+                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in sendStatus", name);
+                return null;
+            }            
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

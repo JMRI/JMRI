@@ -1,4 +1,3 @@
-// SignallingFrameAction.java
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
@@ -8,27 +7,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignallingFrame object
+ * Swing action to create and register a SignallingFrame object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrameAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8722069814853245097L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
+    /**
+     * Create an action with the supplied name.
+     *
+     * @param s The name of the resulting action
+     */
     public SignallingFrameAction(String s) {
         super(s);
     }
 
+    /**
+     * Create an action with a preset name, localizable via the Bundle mechanism.
+     */
     public SignallingFrameAction() {
         super(rb.getString("SignallingPairs"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingFrame f = new SignallingFrame();
         try {
@@ -41,6 +44,3 @@ public class SignallingFrameAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SignallingFrameAction.class.getName());
 }
-
-
-/* @(#)SignallingFrameAction.java */

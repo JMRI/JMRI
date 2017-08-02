@@ -1,4 +1,3 @@
-// AllocationPlan.java
 package jmri.jmrit.dispatcher;
 
 import jmri.Section;
@@ -33,8 +32,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2011
- * @version	$Revision$
+ * @author Dave Duchamp Copyright (C) 2011
  */
 public class AllocationPlan {
 
@@ -65,9 +63,9 @@ public class AllocationPlan {
     private int _tSectionOneSeq = 0;
     private int _tSectionTwoSeq = 0;
 
-    /**
-     * Access methods
-     */
+    //
+    // Access methods
+    //
     protected int getPlanNum() {
         return _planNum;
     }
@@ -129,9 +127,9 @@ public class AllocationPlan {
         return 0;
     }
 
-    /**
-     * Other Methods
-     */
+    //
+    // Other Methods
+    //
     protected boolean isComplete() {
         if ((_atOne == null) || (_atTwo == null)) {
             return false;
@@ -164,5 +162,3 @@ public class AllocationPlan {
 
     private final static Logger log = LoggerFactory.getLogger(AllocationPlan.class.getName());
 }
-
-/* @(#)AllocationPlan.java */

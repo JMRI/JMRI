@@ -1,5 +1,8 @@
 package jmri;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Locate a RailCom Object representing a specific RailCom Enabled device.<br>
  * RailCom is a registered trademark of Lenz GmbH.
@@ -20,10 +23,19 @@ package jmri;
  */
 public interface RailComManager extends IdTagManager {
 
+    /**
+     *
+     * @throws IllegalArgumentException if requested object does not already
+     *                                  exist and the manager cannot create it
+     *                                  due to an illegal name or name that can
+     *                                  not be parsed.
+     */
     @Override
-    public RailCom provideIdTag(String name);
+    @Nonnull
+    public RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
     @Override
-    public RailCom getIdTag(String name);
+    @CheckForNull
+    public RailCom getIdTag(@Nonnull String name);
 
 }

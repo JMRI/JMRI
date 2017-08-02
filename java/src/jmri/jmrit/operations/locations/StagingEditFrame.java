@@ -1,4 +1,3 @@
-// StagingEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
@@ -6,6 +5,9 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
 
@@ -13,7 +15,6 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user edit of a staging track
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
@@ -34,6 +35,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 
     @Override
     public void initComponents(Location location, Track track) {
+        _type = Track.STAGING;
 
         // setup the optional panel with staging stuff
         panelLoad.setLayout(new BoxLayout(panelLoad, BoxLayout.X_AXIS));
@@ -66,7 +68,6 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         panelLoad.add(p3);
 
         super.initComponents(location, track);
-        _type = Track.STAGING;
 
         _toolMenu.add(new TrackDestinationEditAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
@@ -94,7 +95,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
             loadAnyCheckBox.setSelected(_track.isAddCustomLoadsAnySpurEnabled());
             loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
             pShipLoadOption.setVisible(loadCheckBox.isSelected()
-                    || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected());	// show which loads this track can ship
+                    || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected()); // show which loads this track can ship
             blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
             if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()
                     || loadAnyStagingCheckBox.isSelected()) {

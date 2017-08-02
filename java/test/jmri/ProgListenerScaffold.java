@@ -17,7 +17,6 @@ package jmri;
  * <P>
  * @see jmri.Programmer
  * @author	Paul Bender Copyright (C) 2013
- * @version	$Revision: 17977 $
  */
 public class ProgListenerScaffold implements ProgListener {
 
@@ -27,6 +26,7 @@ public class ProgListenerScaffold implements ProgListener {
         rcvdStatus = -1;
     }
 
+    @Override
     public void programmingOpReply(int value, int status) {
         rcvdValue = value;
         rcvdStatus = status;
@@ -52,4 +52,4 @@ public class ProgListenerScaffold implements ProgListener {
 }
 
 
-/* @(#)ProgListenerScaffold.java */
+

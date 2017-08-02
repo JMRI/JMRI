@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

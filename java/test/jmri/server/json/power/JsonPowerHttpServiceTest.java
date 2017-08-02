@@ -11,11 +11,10 @@ import jmri.PowerManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,15 +23,17 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonPowerHttpServiceTest extends TestCase {
+public class JsonPowerHttpServiceTest {
 
     private final static Logger log = LoggerFactory.getLogger(JsonPowerHttpServiceTest.class);
 
+    @Test
     public void testCtorSuccess() {
         JsonPowerHttpService service = new JsonPowerHttpService(new ObjectMapper());
         Assert.assertNotNull(service);
     }
 
+    @Test
     public void testDoGet() throws JmriException {
         JsonPowerHttpService service = new JsonPowerHttpService(new ObjectMapper());
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
@@ -41,6 +42,7 @@ public class JsonPowerHttpServiceTest extends TestCase {
             power.setPower(PowerManager.UNKNOWN);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonPowerServiceFactory.POWER, result.path(JSON.TYPE).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
@@ -56,6 +58,7 @@ public class JsonPowerHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPost() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonPowerHttpService service = new JsonPowerHttpService(mapper);
@@ -94,6 +97,7 @@ public class JsonPowerHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPut() {
         try {
             (new JsonPowerHttpService(new ObjectMapper())).doPut(JsonPowerServiceFactory.POWER, null, null, Locale.ENGLISH);
@@ -104,16 +108,19 @@ public class JsonPowerHttpServiceTest extends TestCase {
         Assert.fail("Did not throw expected error.");
     }
     
+    @Test
     public void testDoGetList() {
         try {
-            (new JsonPowerHttpService(new ObjectMapper())).doGetList(JsonPowerServiceFactory.POWER, Locale.ENGLISH);
+            JsonNode result = (new JsonPowerHttpService(new ObjectMapper())).doGetList(JsonPowerServiceFactory.POWER, Locale.ENGLISH);
+            Assert.assertTrue(result.isArray());
+            Assert.assertEquals(1, result.size());
         } catch (JsonException ex) {
-            Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-            return;
+            log.error("Threw", ex);
+            Assert.fail("Unexpected Exception");
         }
-        Assert.fail("Did not throw expected error.");
     }
     
+    @Test
     public void testDelete() {
         try {
             (new JsonPowerHttpService(new ObjectMapper())).doDelete(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
@@ -124,29 +131,10 @@ public class JsonPowerHttpServiceTest extends TestCase {
         Assert.fail("Did not throw expected error.");
     }
     
-    // from here down is testing infrastructure
-    public JsonPowerHttpServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonPowerHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonPowerHttpServiceTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         Log4JFixture.setUp();
-        super.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -155,10 +143,9 @@ public class JsonPowerHttpServiceTest extends TestCase {
         JUnitUtil.initDebugPowerManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         Log4JFixture.tearDown();
     }
 

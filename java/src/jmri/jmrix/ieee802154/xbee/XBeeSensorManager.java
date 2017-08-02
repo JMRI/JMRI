@@ -1,9 +1,13 @@
-// XBeeSensorManager.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.RemoteAtResponse;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOMode;
+import com.digi.xbee.api.io.IOSample;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -15,11 +19,11 @@ import org.slf4j.LoggerFactory;
  * System names are "ZSnnn", where nnn is the sensor number without padding. or
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
+ * @author Paul Bender Copyright (C) 2003-2016
  */
-public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements XBeeListener {
+public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -31,15 +35,18 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     static public XBeeSensorManager instance() {
         return mInstance;
     }
+    @Deprecated
     static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
-        tc.removeXBeeListener(this);
+        tc.getXBee().removeIOSampleListener(this);
         super.dispose();
     }
 
     // XBee specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -68,62 +75,41 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // ctor has to register for XBee events
     public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
         tc = controller;
-        tc.addXBeeListener(this);
         this.prefix = prefix;
+        tc.getXBee().addIOSampleListener(this);
     }
 
-    // listen for sensors, creating them as needed
-    public void reply(XBeeReply l) {
+    // IIOSampleReceiveListener methods
+    @Override
+    public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        com.rapplogic.xbee.api.XBeeResponse response = l.getXBeeResponse();
-
-        if (response.getApiId() == ApiId.RX_64_IO_RESPONSE
-                || response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-            com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample) response;
-
-            int address[] = ioSample.getSourceAddress().getAddress();
-            XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
-
-            for (int i = 0; i <= 8; i++) {
-                if (!node.getPinAssigned(i)
-                        && ioSample.isDigitalEnabled(i)) {
-                    // request pin direction.
-                    tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
-                }
-            }
-        } else if (response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
-            com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample
-                    = (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
-
-            XBeeAddress64 xBeeAddr = ioSample.getRemoteAddress64();
-            XBeeNode node = (XBeeNode) tc.getNodeFromAddress(xBeeAddr.getAddress());
-
-            // series 2 xbees can go up to 12.  We'll leave it at 8 like
-            // the series 1 xbees to start with.
-            for (int i = 0; i <= 7; i++) {
-                if (!node.getPinAssigned(i)
-                        && ioSample.isDigitalEnabled(i)) {
-                    // request pin direction.
-                    tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
-                }
-            }
-        } else if (response instanceof RemoteAtResponse) {
-            RemoteAtResponse atResp = (RemoteAtResponse) response;
-            // check to see if this is a Dx responsponse.
-            for (int i = 0; i < 7; i++) {
-                String cmd = "D" + i;
-                if (atResp.getCommand().equals(cmd)) {
-                    // check the data to see if it is 3 (digital input).
-                    if (atResp.getValue().length > 0
-                            && atResp.getValue()[0] == 0x03) {
-                        // create the sensor.
-                        XBeeNode node = null;
-                        if ((node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress())) == null) {
-                            node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress16().getAddress());
-                        }
+        XBeeNode node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
+        for (int i = 0; i <= 8; i++) {
+            if (!node.getPinAssigned(i)
+                && ioSample.hasDigitalValue(IOLine.getDIO(i))) {
+                   // get pin direction
+                   IOMode mode = IOMode.DISABLED;  // assume disabled as default.
+                   try  {
+                       mode = remoteDevice.getIOConfiguration(IOLine.getDIO(i));
+                   } catch (TimeoutException toe) {
+                      log.debug("Timeout retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                      // is this a hidden terminal?  This was triggered by an 
+                      // IO Sample, so we know we can hear the other node, but
+                      // it may not hear us.  In this case, assume we are 
+                      // working with an input pin.
+                      mode = IOMode.DIGITAL_IN;
+                   } catch (InterfaceNotOpenException ino) {
+                      log.error("Interface Not Open retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                   } catch (XBeeException xbe) {
+                      log.error("Error retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                   }
+               
+                   if(mode == IOMode.DIGITAL_IN ) {
+                        // thisis an input, check to see if it exists as a sensor.
+                        node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
                         // Sensor name is prefix followed by NI/address
                         // followed by the bit number.
@@ -135,39 +121,24 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                             try {
                                provideSensor(sName);
                                if (log.isDebugEnabled()) {
-                                   log.debug("DIO " + sName + " enabled as sensor");
+                                   log.debug("DIO {} enabled as sensor",sName);
                                }
                             } catch(java.lang.IllegalArgumentException iae){
                                // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
                                if (log.isDebugEnabled()) {
-                                   log.debug("Attempt to enable DIO " + sName + " as sensor failed");
+                                   log.debug("Attempt to enable DIO {} as sensor failed",sName);
                                }
                                throw iae;
                             }
                         }
                     }
-                }
+               }
             }
-        } else {
-            // not what we expected
-            log.debug("Ignoring mystery packet " + response.toString());
         }
-
-    }
-
-    // listen for the messages to the XBee  
-    public void message(XBeeMessage l) {
-    }
-
-    // Handle a timeout notification
-    public void notifyTimeout(XBeeMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
-    }
 
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
@@ -256,8 +227,20 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     }
 
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * For Raspberry Pi systems, it is possible to set the pullup or
+     * pulldown resistor, so return true.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return true;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }
-
-/* @(#)XBeeSensorManager.java */

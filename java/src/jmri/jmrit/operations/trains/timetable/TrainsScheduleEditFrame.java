@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Used to edit train timetable (Schedule).
  *
  * @author Daniel Boudreau Copyright (C)
- * @version $Revision: 23749 $
+ * 
  *
  */
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -24,25 +24,38 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
     // combo box
-    JComboBox<TrainSchedule> comboBox;
+    private JComboBox<TrainSchedule> comboBox = null;
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
 
-    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
+    TrainScheduleManager trainScheduleManager = null;
 
     public TrainsScheduleEditFrame() {
         super();
+
+        trainScheduleManager = TrainScheduleManager.instance();
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new GridBagLayout());
 
         trainScheduleManager.addPropertyChangeListener(this);
-        comboBox = trainScheduleManager.getComboBox();
+
+        initComponents();
+    }
+
+    @Override
+    public void initComponents() {
+        try {
+           comboBox = trainScheduleManager.getComboBox();
+        } catch(IllegalArgumentException iae) {
+           comboBox = new JComboBox<TrainSchedule>();
+           trainScheduleManager.updateComboBox(comboBox);
+        }
 
         // row 1
         addItem(addTextBox, 2, 2);
@@ -80,7 +93,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         String s = addTextBox.getText();
         s = s.trim();
         if (s.equals("")) {
-            return;	// done
+            return; // done
         }
         if (ae.getSource() == addButton) {
             trainScheduleManager.newSchedule(s);

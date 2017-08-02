@@ -1,6 +1,9 @@
 package jmri;
 
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Locate an IdTag object representing a specific IdTag.
@@ -14,7 +17,7 @@ import java.util.List;
  * Each IdTag has a two names. The "user" name is entirely free form, and can be
  * used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (for example LocoNet or NCE) and address within that system.
  * <P>
  * Much of the book-keeping is implemented in the AbstractIdTagManager class,
  * which can form the basis for a system-specific implementation.
@@ -47,13 +50,14 @@ public interface IdTagManager extends Manager {
      *
      * @param name Tag ID, user name, system name, or address which can be
      *             promoted to system name
-     * @return Never null
+     * @return A tag ID
      * @throws IllegalArgumentException if IdTag doesn't already exist and the
      *                                  manager cannot create the IdTag due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    public IdTag provideIdTag(String name);
+    @Nonnull
+    public IdTag provideIdTag(@Nonnull String name);
 
     /**
      * Locate via tag ID, then by user name, and finally system name if needed.
@@ -62,7 +66,9 @@ public interface IdTagManager extends Manager {
      * @param name tag name being requested
      * @return null if no match found
      */
-    public IdTag getIdTag(String name);
+    @CheckReturnValue
+    @CheckForNull
+    public IdTag getIdTag(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -71,7 +77,9 @@ public interface IdTagManager extends Manager {
      * @param systemName system name being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getBySystemName(String systemName);
+    @CheckReturnValue
+    @CheckForNull
+    public IdTag getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -80,7 +88,9 @@ public interface IdTagManager extends Manager {
      * @param userName user name being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getByUserName(String userName);
+    @CheckReturnValue
+    @CheckForNull
+    public IdTag getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a tag ID. Returns null if no instance already
@@ -89,7 +99,9 @@ public interface IdTagManager extends Manager {
      * @param tagID tag ID being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getByTagID(String tagID);
+    @CheckReturnValue
+    @CheckForNull
+    public IdTag getByTagID(@Nonnull String tagID);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -113,17 +125,24 @@ public interface IdTagManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * RfidTags when you should be looking them up.
      *
+     * @param systemName the system name
+     * @param userName   the user name
      * @return requested IdTag object (never null)
      * @throws IllegalArgumentException if cannot create the IdTag due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public IdTag newIdTag(String systemName, String userName);
+    @Nonnull
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName);
 
     /**
      * Get a list of all IdTag's system names.
+     *
+     * @return a list of system names or an empty list
      */
     @Override
+    @CheckReturnValue
+    @Nonnull
     public List<String> getSystemNameList();
 
     /**
@@ -134,26 +153,29 @@ public interface IdTagManager extends Manager {
      * @param threshold Time threshold (in ms)
      * @return List of matching IdTags
      */
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold);
+    @CheckReturnValue
+    @Nonnull
+    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold);
 
     /**
      * Define if the manager should persist details of when and where all known
-     * IdTags were seen
+     * IdTags were seen.
      *
      * @param state True to store; False to omit
      */
     public void setStateStored(boolean state);
 
     /**
-     * Determines if the state of known IdTags should be stored
+     * Determines if the state of known IdTags should be stored.
      *
      * @return True to store state; False to discard state
      */
+    @CheckReturnValue
     public boolean isStateStored();
 
     /**
      * Define if the manager should use the fast clock when setting the times
-     * when a given IdTag was last seen
+     * when a given IdTag was last seen.
      *
      * @param fastClock True to use the fast clock; False to use the system
      *                  clock
@@ -162,22 +184,24 @@ public interface IdTagManager extends Manager {
 
     /**
      * Determines if fast clock times should be recorded for when a given IdTag
-     * was last seen
+     * was last seen.
      *
      * @return True to use the fast clock; False to use the system clock
      */
+    @CheckReturnValue
     public boolean isFastClockUsed();
 
     /**
-     * Perform initialisation
+     * Perform initialization.
      */
     public void init();
 
     /**
-     * Determines if the manager has been initialised
+     * Determines if the manager has been initialized.
      *
-     * @return state of initialisation
+     * @return state of initialization
      */
+    @CheckReturnValue
     public boolean isInitialised();
 
 }

@@ -8,8 +8,8 @@ import jmri.jmrix.grapevine.SerialTrafficController;
 /**
  * Frame for user configuration of serial nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
@@ -27,6 +27,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -47,6 +48,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(p);
         super.dispose();

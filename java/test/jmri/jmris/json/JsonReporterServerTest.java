@@ -2,7 +2,7 @@
 package jmri.jmris.json;
 
 import jmri.jmris.JmriConnection;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -46,6 +46,7 @@ public class JsonReporterServerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -56,6 +57,7 @@ public class JsonReporterServerTest extends TestCase {
         jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();

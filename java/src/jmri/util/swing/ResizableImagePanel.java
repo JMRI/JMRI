@@ -90,6 +90,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     /**
      * Allows this ResizableImagePanel to force resize of its container
      *
+     * @param b true if this instance can resize its container; false otherwise
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -115,8 +116,9 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     /**
      * Allow this ResizableImagePanel to respect aspect ratio when resizing
-     * content
+     * content.
      *
+     * @param b true if aspect ratio should be respected; false otherwise
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;
@@ -135,6 +137,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      * Set image file path, display will be updated if passed value is null,
      * blank image
      *
+     * @param s path to image file
      */
     public void setImagePath(String s) {
         String old = _imagePath;
@@ -287,5 +290,5 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    static private Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
 }

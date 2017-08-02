@@ -1,4 +1,3 @@
-// CanConnectionTypeList.java
 package jmri.jmrix.can;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.can;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class CanConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

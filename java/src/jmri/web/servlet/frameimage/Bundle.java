@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.web.Bundle {
 
-    private final static String name = "jmri.web.servlet.frameimage.JmriJFrameServlet"; // no local resources
+    @Nullable
+    private static final String name = "jmri.web.servlet.frameimage.JmriJFrameServlet"; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -104,8 +105,8 @@ public class Bundle extends jmri.web.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }

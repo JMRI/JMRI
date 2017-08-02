@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.secsi;
 
 import org.slf4j.Logger;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * payload.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -38,6 +36,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
@@ -47,4 +46,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

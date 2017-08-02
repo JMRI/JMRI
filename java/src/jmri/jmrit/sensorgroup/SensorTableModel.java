@@ -1,4 +1,3 @@
-// SensorTableModel.java
 package jmri.jmrit.sensorgroup;
 
 import java.beans.PropertyChangeListener;
@@ -13,14 +12,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version $Revision$
  */
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3536564177611715912L;
     String[] _sysNameList;
     Boolean[] _includedSensors;
 
@@ -42,14 +36,17 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         getManager().removePropertyChangeListener(this);
     }
 
+    @Override
     public Manager getManager() {
         return InstanceManager.sensorManagerInstance();
     }
 
+    @Override
     public int getRowCount() {
         return _sysNameList.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         if (r >= _sysNameList.length) {
             return null;
@@ -66,6 +63,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         if (r > _sysNameList.length) {
             return;
@@ -79,6 +77,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -90,4 +89,3 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     private final static Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
 
 }
-/* @(#)SensorTableModel.java */

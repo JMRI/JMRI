@@ -1,4 +1,3 @@
-// PipeListener.java
 package jmri.util;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import javax.swing.JTextArea;
  * JTextArea for display
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class PipeListener extends Thread {
 
@@ -34,7 +32,7 @@ public class PipeListener extends Thread {
                     // new object created
                 } catch (IOException ex) {
                     if (ex.getMessage().equals("Write end dead") || ex.getMessage().equals("Pipe broken")) {
-                        // happens when the writer thread, e.g. a script, terminates
+                        // happens when the writer thread, possibly a script, terminates
                         synchronized (this) {
                             try {
                                 wait(500);

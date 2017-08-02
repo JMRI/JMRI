@@ -37,8 +37,9 @@ public class Profile implements Comparable<Profile> {
      * in storage on the computer.
      *
      * @param path The Profile's directory
+     * @throws java.io.IOException If unable to read the Profile from path
      */
-    public Profile(File path) throws IOException {
+    public Profile(@Nonnull File path) throws IOException {
         this(path, true);
     }
 
@@ -51,8 +52,14 @@ public class Profile implements Comparable<Profile> {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
+     * @param name Name of the profile. Will not be used to enforce uniqueness
+     *             constraints.
+     * @param id   Id of the profile. Will be prepended to a random String to
+     *             enforce uniqueness constraints.
+     * @param path Location to store the profile
+     * @throws java.io.IOException If unable to create the profile at path
      */
-    public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
+    public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
             throw new IllegalArgumentException(id + " " + path.getName() + " do not match"); // NOI18N
         }
@@ -82,14 +89,37 @@ public class Profile implements Comparable<Profile> {
 
     /**
      * Create a Profile object given just a path to it. If isReadable is true,
+     * the Profile must exist in storage on the computer. Generates a random id
+     * for the profile.
+     *
+     * This method exists purely to support subclasses.
+     *
+     * @param path       The Profile's directory
+     * @param isReadable True if the profile has storage. See
+     *                   {@link jmri.profile.NullProfile} for a Profile subclass
+     *                   where this is not true.
+     * @throws java.io.IOException If the profile's preferences cannot be read.
+     */
+    protected Profile(@Nonnull File path, boolean isReadable) throws IOException {
+        this(path, ProfileManager.createUniqueId(), isReadable);
+    }
+
+    /**
+     * Create a Profile object given just a path to it. If isReadable is true,
      * the Profile must exist in storage on the computer.
      *
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
+     * @param id         The Profile's id
+     * @param isReadable True if the profile has storage. See
+     *                   {@link jmri.profile.NullProfile} for a Profile subclass
+     *                   where this is not true.
+     * @throws java.io.IOException If the profile's preferences cannot be read.
      */
-    protected Profile(File path, boolean isReadable) throws IOException {
+    protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
         this.path = path;
+        this.id = id;
         if (isReadable) {
             this.readProfile();
         }
@@ -108,6 +138,16 @@ public class Profile implements Comparable<Profile> {
         return name;
     }
 
+    /**
+     * Set the name for this profile.
+     * <p>
+     * Overriding classing must use
+     * {@link #setNameInConstructor(java.lang.String)} to set the name in a
+     * constructor since this method passes this Profile object to an object
+     * excepting a completely constructed Profile.
+     *
+     * @param name the new name
+     */
     public void setName(String name) {
         String oldName = this.name;
         this.name = name;
@@ -115,10 +155,28 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
+     * Set the name for this profile while constructing the profile.
+     * <p>
+     * Overriding classing must use this method to set the name in a constructor
+<<<<<<< HEAD
+     * since this method passes this Profile object to an object excepting a
+     * completely constructed Profile.
+=======
+     * since {@link #setName(java.lang.String)} passes this Profile object to an
+     * object expecting a completely constructed Profile.
+>>>>>>> JMRI/master
+     *
+     * @param name the new name
+     */
+    protected final void setNameInConstructor(String name) {
+        this.name = name;
+    }
+
+    /**
      * @return the id
      */
-    public @Nonnull
-    String getId() {
+    @Nonnull
+    public String getId() {
         return id;
     }
 
@@ -130,7 +188,7 @@ public class Profile implements Comparable<Profile> {
     }
 
     private void readProfile() throws IOException {
-        ProfileProperties p = new ProfileProperties(this);
+        ProfileProperties p = new ProfileProperties(this.path);
         this.id = p.get(ID, true);
         this.name = p.get(NAME, true);
         if (this.id == null) {
@@ -139,8 +197,9 @@ public class Profile implements Comparable<Profile> {
         }
     }
 
-    /*
-     * Remove sometime after the new profiles get entrenched (JMRI 5.0, 6.0?)
+    /**
+     * @deprecated since 4.1.1; Remove sometime after the new profiles get
+     * entrenched (JMRI 5.0, 6.0?)
      */
     @Deprecated
     private void readProfileXml() throws IOException {
@@ -211,6 +270,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path or subdirectories contains a Profile.
      *
+     * @param path Path to test.
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
@@ -233,6 +293,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is within a directory that is a Profile.
      *
+     * @param path Path to test.
      * @return true if path or parent directories is a Profile.
      * @since 3.9.4
      */
@@ -249,6 +310,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is a Profile.
      *
+     * @param path Path to test.
      * @return true if path is a Profile.
      * @since 3.9.4
      */
@@ -259,7 +321,7 @@ public class Profile implements Comparable<Profile> {
                 return true;
             }
             // version 1
-            if ((new File(path, PROPERTIES)).canRead()) {
+            if ((new File(path, PROPERTIES)).canRead() && !path.getName().equals(PROFILE)) {
                 return true;
             }
         }

@@ -1,4 +1,3 @@
-// EngineSetFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.List;
@@ -12,15 +11,9 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  * Frame for user to place engine on the layout
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class EngineSetFrame extends RollingStockSetFrame implements
         java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7608591085014836578L;
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");

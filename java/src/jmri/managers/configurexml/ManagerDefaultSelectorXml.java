@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
@@ -14,7 +15,6 @@ import org.jdom2.Element;
  * used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
  * @since 2.9.7
  */
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
@@ -29,6 +29,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type ManagerDefaultSelector
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("managerdefaults");
         e.setAttribute("class", getClass().getName());
@@ -66,7 +67,10 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         }
         // put into effect
         InstanceManager.getDefault(ManagerDefaultSelector.class).configure();
-        InstanceManager.configureManagerInstance().registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        }
         return true;
     }
 
@@ -76,6 +80,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       PanelEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
     }
 

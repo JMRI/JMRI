@@ -1,28 +1,28 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Test PaneProgFrame
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file
     public void testPane() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
         setupDoc();
@@ -34,6 +34,7 @@ public class PaneProgFrameTest extends TestCase {
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
                     // dummy implementations
+                    @Override
                     protected JPanel getModePane() {
                         return new JPanel();
                     }
@@ -52,7 +53,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // show me the specially-created frame
     public void testFrame() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
         setupDoc();
@@ -60,6 +61,7 @@ public class PaneProgFrameTest extends TestCase {
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
                     // dummy implementations
+                    @Override
                     protected JPanel getModePane() {
                         return null;
                     }
@@ -170,10 +172,12 @@ public class PaneProgFrameTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

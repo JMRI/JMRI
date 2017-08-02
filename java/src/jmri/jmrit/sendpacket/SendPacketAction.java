@@ -1,4 +1,3 @@
-// SendPacketAction.java
 package jmri.jmrit.sendpacket;
 
 import java.awt.event.ActionEvent;
@@ -9,21 +8,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SendPacketFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SendPacketAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3000436999151726193L;
 
     public SendPacketAction(String s) {
         super(s);
 
         // disable ourself if there is no command Station object available
-        if (jmri.InstanceManager.commandStationInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) == null) {
             setEnabled(false);
         }
     }
@@ -32,6 +25,7 @@ public class SendPacketAction extends AbstractAction {
         this("Send DCC packet");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SendPacketFrame
         SendPacketFrame f = new SendPacketFrame();
@@ -44,5 +38,3 @@ public class SendPacketAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
 }
-
-/* @(#)SendPacketAction.java */

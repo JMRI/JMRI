@@ -5,7 +5,7 @@ import jmri.managers.DefaultProgrammerManager;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public class LnOpsModeProgrammerTest extends TestCase {
@@ -252,6 +252,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         
@@ -262,6 +263,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

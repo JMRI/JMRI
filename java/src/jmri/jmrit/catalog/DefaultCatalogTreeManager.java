@@ -1,4 +1,3 @@
-// DefaultCatalogTreeManager.java
 package jmri.jmrit.catalog;
 
 import jmri.CatalogTree;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Control of the systemName is internal so the more casual approach of
  * SignalHeadManager is used rather than the ProxyManager style.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
 public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
@@ -25,10 +24,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      * automatically as part of the general storage mechanism.
      *
      */
+    @Override
     protected void registerSelf() {
         log.debug("not registering");
     }
 
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
@@ -37,6 +38,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      * This is a bogus systemPrefix. Naming is enforced in method
      * createNewCatalogTree below.
      */
+    @Override
     public String getSystemPrefix() {
         return "0";
     }
@@ -44,10 +46,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     /**
      * Bogus typeLetter
      */
+    @Override
     public char typeLetter() {
         return '0';
     }
 
+    @Override
     public CatalogTree getCatalogTree(String name) {
         CatalogTree t = getByUserName(name);
         if (t != null) {
@@ -57,6 +61,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public CatalogTree getBySystemName(String key) {
         String name = key.toUpperCase();
         if (log.isDebugEnabled()) {
@@ -71,10 +76,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return (CatalogTree) _tsys.get(name);
     }
 
+    @Override
     public CatalogTree getByUserName(String key) {
         return (CatalogTree) _tuser.get(key);
     }
 
+    @Override
     public CatalogTree newCatalogTree(String sysName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new CatalogTree: systemName= " + sysName
@@ -126,6 +133,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      *   TX... - index for script files stored in XML config file
      *   NX... - index for files stored in XML config file
      * </PRE>
+     *
+     * @param systemName system name for catalog tree
+     * @param userName   user name for catalog tree
+     * @return the new catalog tree or null if unable to create
      */
     protected CatalogTree createNewCatalogTree(String systemName, String userName) {
         if (systemName == null || systemName.length() == 0) {
@@ -147,7 +158,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
                     log.error("Bad systemName: " + systemName + " (userName= " + userName + ")");
             }
         } else if (systemName.charAt(1) == CatalogTree.FILESYS) {
-            CatalogTreeFS catTree = null;
+            CatalogTreeFS catTree;
             switch (systemName.charAt(0)) {
                 case CatalogTree.IMAGE:
                     catTree = new CatalogTreeFS(systemName, userName);
@@ -178,11 +189,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     }
     private static DefaultCatalogTreeManager _instance;
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameCatalog");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
-
-/* @(#)CatalogTreeFSManager.java */

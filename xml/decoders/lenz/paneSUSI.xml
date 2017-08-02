@@ -29,6 +29,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -47,7 +59,9 @@
         <label>
           <text>              S.U.S.I. Variables</text>
           <text xml:lang="de">              S.U.S.I. Variablen</text>
-		      <text xml:lang="it">              Variabili S.U.S.I.</text>
+		  <text xml:lang="it">              Variabili S.U.S.I.</text>
+          <text xml:lang="cs">              Proměnné S.U.S.I.</text>
+          <text xml:lang="ca">              Variables S.U.S.I.</text>
         </label>
         <label>
           <text> </text>

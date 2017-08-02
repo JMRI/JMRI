@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores the operation setup using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class OperationsSetupXml extends OperationsXml {
 
@@ -29,9 +29,7 @@ public class OperationsSetupXml extends OperationsXml {
 
     public static synchronized OperationsSetupXml instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("OperationsSetupXml creating instance");
-            }
+            log.debug("OperationsSetupXml creating instance");
             // create and load
             _instance = new OperationsSetupXml();
             _instance.load();
@@ -44,9 +42,7 @@ public class OperationsSetupXml extends OperationsXml {
 
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -63,7 +59,7 @@ public class OperationsSetupXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        // add top-level elements	        
+        // add top-level elements         
         root.addContent(Setup.store());
         // add manifest header text strings
         root.addContent(TrainManifestHeaderText.store());
@@ -118,8 +114,9 @@ public class OperationsSetupXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
-    public void dispose(){
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "for testing")
+    public void dispose() {
         _instance = null;
     }
 

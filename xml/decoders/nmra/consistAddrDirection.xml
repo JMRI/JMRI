@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -26,6 +15,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>8</revnumber>
       <date>2014-08-10</date>
@@ -57,9 +52,13 @@
     <label xml:lang="it">Indirizzo Consist Avanzato</label>
     <label xml:lang="fr">Addresse UM</label>
     <label xml:lang="de">Verbundadresse</label>
+    <label xml:lang="cs">Adresa soupravy</label>
+    <label xml:lang="nl">Multitractie-adres</label>
     <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
     <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
-    <tooltip xml:lang="de">nur lesend: Speichert die Verbundadresse. Werte 0-127 (Richtung gesetzt in bit 7)</tooltip>
+    <tooltip xml:lang="de">Nur lesend: Speichert die Verbundadresse. Werte 0-127 (Richtung gesetzt in bit 7)</tooltip>
+    <tooltip xml:lang="cs">Obsahuje adresu soupravy. Meze 0-127 (směr je uložen v bitu 7)</tooltip>
+    <tooltip xml:lang="nl">Alleen lezen: Slaat het Multitractie-adres op. Waarde van 0-127 (Rijrichting in bit 7)</tooltip>
   </variable>
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
@@ -67,8 +66,12 @@
     <label xml:lang="it">Direzione Loco nel Consist</label>
     <label xml:lang="fr">Direction UM</label>
     <label xml:lang="de">Verbund-Richtung</label>
+    <label xml:lang="cs">Směr lokomotivy v soupravě</label>
+    <label xml:lang="nl">Rijrichting Multitractie</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro (indirizzo+128)</tooltip>
-    <tooltip xml:lang="de">nur lesend: Die Lok fährt im Verbundbetrieb vorwärts oder rückwärts.</tooltip>
+    <tooltip xml:lang="de">Nur lesend: Die Lok fährt im Verbundbetrieb vorwärts oder rückwärts.</tooltip>
+    <tooltip xml:lang="cs">Pokud je tato lokomotiva v soupravě tak jede normálně (výchozí hodnota) nebo opačně (adresa + 128).</tooltip>
+    <tooltip xml:lang="nl">Alleen lezen: Loc rijdt in Multitractie Normaal (Adres, standaard) of Achteruit (Adres + 128)</tooltip>
   </variable>
 </variables>

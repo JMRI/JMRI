@@ -1,6 +1,5 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision$ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -23,7 +22,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2016"/>
+  <property name="jmri.copyright.year" value="1997-2017"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003, 2005, 2007, 2010
+ * @author Bob Jacobsen Copyright 2003, 2005, 2007, 2010
  */
 public class SampleMinimalProgram {
 
@@ -45,8 +45,11 @@ public class SampleMinimalProgram {
     }
 
     /**
-     * Static method to return a standard program id. Used for logging startup,
-     * etc.
+     * Static method to return a first logging statement. Used for logging
+     * startup, etc.
+     *
+     * @param program the name of the program
+     * @return the logging statement including JMRI and Java versions
      */
     static public String startupInfo(String program) {
         return (program + " version " + jmri.Version.name()
@@ -54,8 +57,8 @@ public class SampleMinimalProgram {
     }
 
     /**
-     * Static method to get Log4J working before the rest of JMRI starts up.
-     * In a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
+     * Static method to get Log4J working before the rest of JMRI starts up. In
+     * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
@@ -77,6 +80,8 @@ public class SampleMinimalProgram {
 
     /**
      * Constructor starts the JMRI application running, and then returns.
+     *
+     * @param args command line arguments set at application launch
      */
     public SampleMinimalProgram(String[] args) {
 
@@ -116,7 +121,11 @@ public class SampleMinimalProgram {
         // start web server
         final int port = 12080;
         WebServerPreferences.getDefault().setPort(port);
-        WebServer.getDefault().start();
+        try {
+            WebServer.getDefault().start();
+        } catch (Exception ex) {
+            log.error("Unable to start web server.", ex);
+        }
 
         log.info("Up!");
     }

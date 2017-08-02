@@ -14,7 +14,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
-import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.swing.AboutDialog;
 import org.slf4j.Logger;
@@ -32,8 +31,12 @@ import org.slf4j.LoggerFactory;
 public class HelpUtil {
 
     /**
-     * @param direct true if this call should complete the help menu by adding
-     *               the general help
+     * Append a help menu to the menu bar.
+     *
+     * @param menuBar the menu bar to add the help menu to
+     * @param ref     context-sensitive help reference
+     * @param direct  true if this call should complete the help menu by adding
+     *                the general help
      * @return new Help menu, in case user wants to add more items
      */
     static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
@@ -86,12 +89,8 @@ public class HelpUtil {
             // Put about dialog in Apple's prefered area on Mac OS X
             if (SystemType.isMacOSX()) {
                 try {
-                    Application.getApplication().setAboutHandler(new AboutHandler() {
-
-                        @Override
-                        public void handleAbout(EventObject eo) {
-                            new AboutDialog(null, true).setVisible(true);
-                        }
+                    Application.getApplication().setAboutHandler((EventObject eo) -> {
+                        new AboutDialog(null, true).setVisible(true);
                     });
                 } catch (java.lang.RuntimeException re) {
                     log.error("Unable to put About handler in default location", re);
@@ -192,6 +191,7 @@ public class HelpUtil {
 
             String helpID = id;
 
+            @Override
             public void actionPerformed(ActionEvent event) {
                 globalHelpBroker.setCurrentID(helpID);
                 globalHelpBroker.setDisplayed(true);
@@ -203,5 +203,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
 }

@@ -1,6 +1,6 @@
-// PrintOptionFrame.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of manifest and switch list print options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
@@ -40,7 +39,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     JLabel logoURL = new JLabel("");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton addLogoButton = new JButton(Bundle.getMessage("AddLogo"));
     JButton removeLogoButton = new JButton(Bundle.getMessage("RemoveLogo"));
 
@@ -353,7 +352,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
         use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
         printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
-        sortByTrackCheckBox.setSelected(Setup.isSortByTrackEnabled());
+        sortByTrackCheckBox.setSelected(Setup.isSortByTrackNameEnabled());
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
         truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
@@ -494,7 +493,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "checks for instance of PrintOptionFrame")  // NOI18N
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
@@ -561,7 +560,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "checks for instance of PrintOptionFrame")  // NOI18N
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
@@ -843,7 +842,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
         Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
         Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
-        Setup.setSortByTrackEnabled(sortByTrackCheckBox.isSelected());
+        Setup.setSortByTrackNameEnabled(sortByTrackCheckBox.isSelected());
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
         Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
         Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
@@ -894,7 +893,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 Setup.isPrintLoadsAndEmptiesEnabled() != printLoadsEmptiesCheckBox.isSelected() ||
                 Setup.is12hrFormatEnabled() != use12hrFormatCheckBox.isSelected() ||
                 Setup.isPrintValidEnabled() != printValidCheckBox.isSelected() ||
-                Setup.isSortByTrackEnabled() != sortByTrackCheckBox.isSelected() ||
+                Setup.isSortByTrackNameEnabled() != sortByTrackCheckBox.isSelected() ||
                 Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
                 Setup.isPrintTimetableNameEnabled() != printTimetableNameCheckBox.isSelected() ||
                 Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected() ||

@@ -1,4 +1,3 @@
-// UpdateDecoderDefinitionAction.java
 package jmri.jmrit.roster;
 
 import java.awt.event.ActionEvent;
@@ -15,16 +14,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Update the decoder definitions in the roster
  *
- * @author	Bob Jacobsen Copyright (C) 2013
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2013
  * @see jmri.jmrit.XmlFile
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2751913119792322837L;
 
     public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -58,16 +51,21 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
                 if (decoder.getReplacementFamily() != null || decoder.getReplacementModel() != null) {
                     log.info("   Recommended replacement is family \"" + decoder.getReplacementFamily() + "\" model \"" + decoder.getReplacementModel() + "\"");
                 }
-                replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : replacementFamily;
-                replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
+                replacementFamily = decoder.getReplacementFamily();
+                replacementModel = decoder.getReplacementModel();
             }
 
-            if (replacementModel != null && replacementFamily != null) {
-                log.info("   *** Will update");
+            if (replacementModel != null || replacementFamily != null) {
 
                 // change the roster entry
-                entry.setDecoderFamily(replacementFamily);
-                entry.setDecoderModel(replacementModel);
+                if (replacementFamily != null) {
+                    log.info("   *** Will update. replacementFamily='{}'", replacementFamily);
+                    entry.setDecoderFamily(replacementFamily);
+                }
+                if (replacementModel != null) {
+                    log.info("   *** Will update. replacementModel='{}'", replacementModel);
+                    entry.setDecoderModel(replacementModel);
+                }
 
                 // write it out (not bothering to do backup?)
                 entry.updateFile();
@@ -75,9 +73,9 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         }
 
         // write updated roster
-        Roster.getDefault().makeBackupFile(Roster.defaultRosterFilename());
+        Roster.getDefault().makeBackupFile(Roster.getDefault().getRosterIndexPath());
         try {
-            Roster.getDefault().writeFile(Roster.defaultRosterFilename());
+            Roster.getDefault().writeFile(Roster.getDefault().getRosterIndexPath());
         } catch (IOException ex) {
             log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }

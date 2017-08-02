@@ -50,6 +50,31 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+; - Version 0.1.22.11
+; - Remove outmoded lib\ch.ntb.usb.jar
+; -------------------------------------------------------------------------
+; - Version 0.1.22.10
+; - Support Java 9
+; -------------------------------------------------------------------------
+; - Version 0.1.22.9
+; - Remove outmoded lib\jna-4.2.2.jar and install jmri.conf
+; - Remove RXTX and SerialIO files as now replaced by purejavacomm
+; -------------------------------------------------------------------------
+>>>>>>> JMRI/master
+; - Version 0.1.22.8
+; - Remove outmoded jackson files
+; -------------------------------------------------------------------------
+; - Version 0.1.22.7
+; - Remove outmoded jython files
+; -------------------------------------------------------------------------
+; - Version 0.1.22.6
+; - Remove outmoded vecmath files
+; -------------------------------------------------------------------------
+; - Version 0.1.22.5
+; - Remove more outmoded jetty files
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.4
 ; - Remove more outmoded jetty files
 ; -------------------------------------------------------------------------
@@ -251,7 +276,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JMRI_COPY  "by"                       ; Copyright dates
 !endif
-!define COPYRIGHT "© ${JMRI_COPY} JMRI Community"  ; Copyright string
+!define COPYRIGHT "(c) ${JMRI_COPY} JMRI Community"  ; Copyright string
 !ifndef JMRI_VER
   ; -- usually, this will be determined by the build.xml ant script
   !define JMRI_VER  "unknown"                   ; Application version
@@ -264,7 +289,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.4"                    ; Installer version
+!define INST_VER  "0.1.22.11"                   ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -434,10 +459,27 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
+<<<<<<< HEAD
+=======
+    ; -- Delete old USB library files
+    Delete "$OUTDIR\ch.ntb.usb.jar"
+
+    ; -- Delete old PJC file for JMRI 4.7.5
+    Delete "$OUTDIR\jna-4.2.2.jar"
+
+>>>>>>> JMRI/master
+    ; -- Delete old jackson jar files as of JMRI 4.7.1
+    Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
+    Delete "$OUTDIR\jackson-core-2.0.6.jar"
+    Delete "$OUTDIR\jackson-databind-2.0.6.jar"
+
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
+
+    ; -- Delete old vecmath.jar files as of JMRI 4.5.1
+    Delete "$OUTDIR\lib\vecmath.jar"
 
     ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
     ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
@@ -475,6 +517,19 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\websocket-common-9.2.7.v20150116.jar"
     Delete "$OUTDIR\lib\websocket-server-9.2.7.v20150116.jar"
     Delete "$OUTDIR\lib\websocket-servlet-9.2.7.v20150116.jar"
+
+    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.7
+    Delete "$OUTDIR\lib\jetty-http-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-io-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-security-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-server-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-util-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-api-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-client-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-common-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-server-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-servlet-9.3.6.v20151106.jar"
 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
@@ -535,6 +590,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
     Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
+    Delete "$OUTDIR\lib\jython.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
@@ -585,6 +641,12 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old JOAL .dll files
     Delete "$OUTDIR\lib\x86\joal_native.dll"
+
+    ; -- Delete RXTX/SerialIO files
+    Delete "$OUTDIR\lib\Serialio.jar"
+    Delete "$OUTDIR\lib\RXTXcomm.jar"
+    Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
+    Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
 
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
@@ -648,6 +710,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Library & Support Files now moved from here
     File /a "${SRCDIR}\*.jar"
     File /a "${SRCDIR}\COPYING"
+    File /a "${SRCDIR}\jmri.conf"
     File /a "${SRCDIR}\LaunchJMRI.exe"
     File /a "${SRCDIR}\*.bat"
     File /a "${SRCDIR}\default.lcf"
@@ -1090,6 +1153,9 @@ Function CheckJRE
   JRESearch:
     IntOp $JREINSTALLCOUNT $JREINSTALLCOUNT + 1
     ClearErrors
+    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
+    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JRE\$1" "JavaHome"
+    IfErrors 0 +3
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$1" "JavaHome"
 

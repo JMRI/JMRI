@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class SprogThrottle extends AbstractThrottle {
 
@@ -25,6 +24,7 @@ public class SprogThrottle extends AbstractThrottle {
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
+        station = memo.getCommandStation();
 
         // cache settings.
         this.speedSetting = 0;
@@ -46,10 +46,11 @@ public class SprogThrottle extends AbstractThrottle {
 
     }
 
-    SprogCommandStation station = new SprogCommandStation();
+    SprogCommandStation station = null;
 
     DccLocoAddress address;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
@@ -57,6 +58,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(
                 address.getNumber(), address.isLongAddress(),
@@ -68,6 +70,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(
@@ -80,6 +83,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(
@@ -92,6 +96,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F13 F14, F15, F16.
      */
+    @Override
     protected void sendFunctionGroup4() {
 
         byte[] result = jmri.NmraPacket.function13Through20Packet(
@@ -105,6 +110,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F17 F18, F19, F20.
      */
+    @Override
     protected void sendFunctionGroup5() {
 
         byte[] result = jmri.NmraPacket.function21Through28Packet(
@@ -116,21 +122,22 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     /**
-     * setSpeedStepMode - set the speed step value and the related
+     * Set the speed step value and the related
      * speedIncrement value.
      *
      * @param Mode - the current speed step mode - default should be 128 speed
      *             step mode in most cases
      */
+    @Override
     public void setSpeedStepMode(int Mode) {
         SprogMessage m;
         int mode = address.isLongAddress()
                 ? SprogConstants.LONG_ADD : 0;
         try {
-            mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
+            mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.powerManagerInstance(): " + e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): " + e);
         }
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode
@@ -151,7 +158,7 @@ public class SprogThrottle extends AbstractThrottle {
             speedIncrement = SPEED_STEP_128_INCREMENT;
         }
         m = new SprogMessage("M h" + Integer.toHexString(mode));
-        SprogTrafficController.instance().sendSprogMessage(m, null);
+        ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
         if ((speedStepMode != Mode) && (Mode != DccThrottle.SpeedStepMode27)) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
@@ -160,12 +167,13 @@ public class SprogThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @Override
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
@@ -200,7 +208,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -233,7 +241,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -241,6 +249,7 @@ public class SprogThrottle extends AbstractThrottle {
         record(speed);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -250,6 +259,7 @@ public class SprogThrottle extends AbstractThrottle {
         }
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

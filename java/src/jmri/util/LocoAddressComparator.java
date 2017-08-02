@@ -10,11 +10,12 @@ import jmri.LocoAddress;
  *
  * @author	Paul Bender Copyright (C) 2015
  */
-public class LocoAddressComparator implements Comparator<LocoAddress>, java.io.Serializable {
+public class LocoAddressComparator implements Comparator<LocoAddress> {
 
     public LocoAddressComparator() {
     }
 
+    @Override
     public int compare(LocoAddress l1, LocoAddress l2) {
          if( l1.getProtocol() == l2.getProtocol() ){
              // protocol is the same, compare the number fields

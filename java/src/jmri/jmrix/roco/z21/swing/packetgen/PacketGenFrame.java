@@ -4,28 +4,29 @@ import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21TrafficController;
 
 /**
- * Frame for user input of XpressNet messages
+ * Frame for user input of XpressNet messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2002
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7715995607748223001L;
+<<<<<<< HEAD
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
 
+=======
+>>>>>>> JMRI/master
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenActio"));
+        setTitle(Bundle.getMessage("SendZ21MessageTitle"));
 
         // pack to cause display
         pack();
     }
 
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendz21Message(createPacket(packetTextField.getSelectedItem().toString()), null);
     }

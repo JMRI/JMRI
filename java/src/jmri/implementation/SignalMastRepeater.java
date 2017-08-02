@@ -1,12 +1,9 @@
-// SignalMastRepeater.java
 package jmri.implementation;
 
 /**
  * A simple class that repeaters the state of one SignalMast to another
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- *
- * @version $Revision$
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -34,9 +31,9 @@ public class SignalMastRepeater {
     }
 
     public SignalMastRepeater(String master, String slave) {
-        SignalMast masterMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(master);
+        SignalMast masterMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(master);
         _master = nbhm.getNamedBeanHandle(master, masterMast);
-        SignalMast slaveMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(slave);
+        SignalMast slaveMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(slave);
         _slave = nbhm.getNamedBeanHandle(slave, slaveMast);
     }
 
@@ -110,6 +107,7 @@ public class SignalMastRepeater {
     }
 
     PropertyChangeListener mastListener = new PropertyChangeListener() {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (disposed) {
                 return;

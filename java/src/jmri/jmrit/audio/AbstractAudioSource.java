@@ -56,11 +56,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private boolean bound = false;
     private boolean positionRelative = false;
     private boolean queued = false;
+    private long offset = 0;
     private AudioBuffer buffer;
 //    private AudioSourceDelayThread asdt = null;
     private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<>();
 
-    private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    private static final AudioFactory activeAudioFactory = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
 
     private static float metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
 
@@ -163,7 +164,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void setAssignedBuffer(String bufferSystemName) {
         if (!queued) {
-            AudioManager am = InstanceManager.audioManagerInstance();
+            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
             if (a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);
@@ -337,6 +338,25 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public float getReferenceDistance() {
         return this.referenceDistance;
+    }
+
+    @Override
+    public void setOffset(long offset) {
+        if (offset < 0) {
+            offset = 0;
+        }
+        if (offset > this.buffer.getLength()) {
+            offset = this.buffer.getLength();
+        }
+        this.offset = offset;
+        if (log.isDebugEnabled()) {
+            log.debug("Set byte offset of Source " + this.getSystemName() + "to " + offset);
+        }
+    }
+
+    @Override
+    public long getOffset() {
+        return this.offset;
     }
 
     @Override

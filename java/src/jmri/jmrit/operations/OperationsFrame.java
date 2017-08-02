@@ -1,6 +1,7 @@
 //OperationsFrame.java
 package jmri.jmrit.operations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -25,9 +26,8 @@ import jmri.util.JmriJFrame;
  * Frame for operations
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
- * @version $Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
+@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     public static final String NEW_LINE = "\n"; // NOI18N
@@ -155,27 +155,19 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * Will modify the character column width of a TextArea box to 90% of a
      * panels width. ScrollPane is set to 95% of panel width.
      *
+     * @param scrollPane the pane containing the textArea
+     * @param textArea   the textArea to adjust
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
     }
 
     /**
-     * Saves the table's width, position, and sorting status in the user
-     * preferences file
-     *
-     * @param table Table to be saved.
-     */
-    protected void saveTableDetails(JTable table) {
-        ((OperationsPanel) this.getContentPane()).saveTableDetails(table);
-    }
-
-    /**
-     * Loads the table's width, position, and sorting status from the user
+     * Load the table width, position, and sorting status from the user
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if table has been adjusted by saved xml file.
+     * @return true
      */
     public boolean loadTableDetails(JTable table) {
         return ((OperationsPanel) this.getContentPane()).loadTableDetails(table);
@@ -208,7 +200,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel();	// kludge fix for horizontal scrollbar
+        pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 

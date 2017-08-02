@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -27,15 +26,16 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * @param o Object to store, of type SE8cSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SE8cSignalHead p = (SE8cSignalHead) o;
 
-        Element element = new Element("signalhead");
-        element.setAttribute("class", this.getClass().getName());
+        Element element = new Element("signalhead"); // NOI18N
+        element.setAttribute("class", this.getClass().getName()); // NOI18N
 
         // include contents
-        element.setAttribute("systemName", p.getSystemName());
-        element.addContent(new Element("systemName").addContent(p.getSystemName()));
+        element.setAttribute("systemName", p.getSystemName()); // NOI18N
+        element.addContent(new Element("systemName").addContent(p.getSystemName())); // NOI18N
 
         storeCommon(p, element);
 
@@ -46,15 +46,15 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
     }
 
     Element addTurnoutElement(int number) {
-        Element el = new Element("turnout");
-        el.setAttribute("systemName", "" + number);
+        Element el = new Element("turnout"); // NOI18N
+        el.setAttribute("systemName", "" + number); // NOI18N
 
         return el;
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        List<Element> l = shared.getChildren("turnout");
+        List<Element> l = shared.getChildren("turnout"); // NOI18N
         int turnout = loadTurnout(l.get(0));
         // put it together
         String uname = getUserName(shared);
@@ -67,7 +67,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -76,15 +76,16 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         // in this case, the systemName attribute is a number
         try {
-            return e.getAttribute("systemName").getIntValue();
+            return e.getAttribute("systemName").getIntValue(); // NOI18N
         } catch (DataConversionException ex) {
-            log.warn("Can't read turnout number for SE8cSignalHead because of " + ex);
+            log.warn("Can't read turnout number for SE8cSignalHead because of " + ex); // NOI18N
             return 0;
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
-        log.error("Invalid method called");
+        log.error("Invalid method called"); // NOI18N
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());

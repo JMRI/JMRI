@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmris.simpleserver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -20,11 +19,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision$
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmris.Bundle {
 
+    @Nullable
     private static final String name = "jmri.jmris.simpleserver.SimpleServerBundle"; // NOI18N
 
     //
@@ -106,10 +105,8 @@ public class Bundle extends jmri.jmris.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale, key);
     }
 
 }
-
-/* @(#)Bundle.java */

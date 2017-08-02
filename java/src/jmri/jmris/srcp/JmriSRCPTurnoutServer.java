@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010-2013
- * @version $Revision$
  */
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
@@ -39,6 +38,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(String turnoutName, int Status) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
@@ -55,24 +55,30 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         }
         String turnoutName = memo.getSystemPrefix()
                 + "T" + address;
-        // busy loop, wait for turnout to settle before continuing.
-        while (InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
-        }
-        int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
-        if (Status == Turnout.THROWN) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 1 0\n\r");
-        } else if (Status == Turnout.CLOSED) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 0 0\n\r");
-        } else {
-            //  unknown state
-            TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+        try {
+            // busy loop, wait for turnout to settle before continuing.
+            while (InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
+            }
+            int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
+            if (Status == Turnout.THROWN) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 1 0\n\r");
+            } else if (Status == Turnout.CLOSED) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 0 0\n\r");
+            } else {
+                //  unknown state
+                TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+            }
+        } catch (IllegalArgumentException ex) {
+            log.warn("Failed to provide Turnout \"{}\" in sendStatus", turnoutName);
         }
     }
 
+    @Override
     public void sendErrorStatus(String turnoutName) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
 
+    @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }

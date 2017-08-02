@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure the Default File Locations
@@ -27,6 +29,7 @@ import jmri.util.FileUtil;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
@@ -161,7 +164,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
             this.field = field;
         }
         @Override
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
+        @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
         public void actionPerformed(ActionEvent e) {
             // get the file
             chooser.showOpenDialog(null);

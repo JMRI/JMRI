@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.secsi;
 
 import jmri.Sensor;
@@ -14,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
- * @version	$Revision$
- */
+  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
@@ -38,11 +36,13 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the Oak Tree system letter
      */
+    @Override
     public String getSystemPrefix() {
         return "V";
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
     }
 
@@ -50,6 +50,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
@@ -100,6 +101,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         log.warn("unexpected message");
     }
@@ -107,6 +109,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     public void reply(SerialReply r) {
         // determine which node
         SerialNode node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(r.getAddr());
@@ -161,4 +164,4 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
-/* @(#)SerialSensorManager.java */
+

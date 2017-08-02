@@ -1,4 +1,3 @@
-//XNetSystemConnectionMemo.java
 package jmri.jmrix.lenz;
 
 import java.util.ResourceBundle;
@@ -22,12 +21,11 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public XNetSystemConnectionMemo(XNetTrafficController xt) {
-        super("X", "XPressnet");
+        super("X", "XpressNet");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         register(); // registers general type
@@ -43,7 +41,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public XNetSystemConnectionMemo() {
-        super("X", "XPressnet");
+        super("X", "XpressNet");
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 
@@ -58,7 +56,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public XNetTrafficController getXNetTrafficController() {
         return xt;
@@ -73,8 +71,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provide access to the Programmer for this particular connection.
+     * <p>
+     * NOTE: Programmer defaults to null
      */
     public ProgrammerManager getProgrammerManager() {
         return programmerManager;
@@ -87,7 +86,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private ProgrammerManager programmerManager = null;
 
     /*
-     * Provides access to the Throttle Manager for this particular connection.
+     * Provide access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
         if (throttleManager == null) {
@@ -104,7 +103,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provide access to the Power Manager for this particular connection.
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
@@ -120,8 +119,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private PowerManager powerManager;
 
-    /*
-     * Provides access to the Sensor Manager for this particular connection.
+    /**
+     * Provide access to the Sensor Manager for this particular connection.
+     * <p>
      * NOTE: Sensor manager defaults to NULL
      */
     public SensorManager getSensorManager() {
@@ -135,8 +135,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private SensorManager sensorManager = null;
 
-    /*
-     * Provides access to the Turnout Manager for this particular connection.
+    /**
+     * Provide access to the Turnout Manager for this particular connection.
+     * <p>
      * NOTE: Turnout manager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
@@ -150,8 +151,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private TurnoutManager turnoutManager = null;
 
-    /*
-     * Provides access to the Light Manager for this particular connection.
+    /**
+     * Provide access to the Light Manager for this particular connection.
+     * <p>
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {
@@ -165,8 +167,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private LightManager lightManager = null;
 
-    /*
-     * Provides access to the Consist Manager for this particular connection.
+    /**
+     * Provide access to the Consist Manager for this particular connection.
+     * <p>
      * NOTE: Consist manager defaults to NULL
      */
     public ConsistManager getConsistManager() {
@@ -179,8 +182,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private ConsistManager consistManager = null;
 
-    /*
-     * Provides access to the Command Station for this particular connection.
+    /**
+     * Provide access to the Command Station for this particular connection.
+     * <p>
      * NOTE: Command Station defaults to NULL
      */
     public CommandStation getCommandStation() {
@@ -197,6 +201,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private CommandStation commandStation = null;
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -225,7 +230,16 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
-            return true;
+            try {
+                return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
+            } catch (java.lang.NullPointerException npe){
+                // if the command station has not been configured yet,
+                // assume true
+                if(log.isTraceEnabled()){
+                   npe.printStackTrace();
+                }
+                return true;
+            }
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else {
@@ -234,6 +248,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -272,10 +287,12 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return null; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.lenz.XNetActionListBundle");
     }
 
+    @Override
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, XNetSystemConnectionMemo.class);
@@ -288,4 +305,3 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private final static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class.getName());
 
 }
-/* @(#)XNetSystemConnectionMemo.java */

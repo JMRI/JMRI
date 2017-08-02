@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
- * @version $Revision$
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -24,6 +23,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         VirtualSignalHead p = (VirtualSignalHead) o;
 
@@ -31,7 +31,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -53,10 +52,11 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

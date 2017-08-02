@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * This module delays initialization of Blocks until first reference after an
  * Entry Point is loaded from a configuration file.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class EntryPoint {
 
@@ -55,11 +55,11 @@ public class EntryPoint {
     private String fromBlockName = "";
 
     private void initialize() {
-        mBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(blockName);
+        mBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(blockName);
         if (mBlock == null) {
             log.error("Missing block - " + blockName + " - when initializing entry point");
         }
-        mFromBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(fromBlockName);
+        mFromBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(fromBlockName);
         if (mFromBlock == null) {
             log.error("Missing block - " + fromBlockName + " - when initializing entry point");
         }
@@ -67,7 +67,9 @@ public class EntryPoint {
     }
 
     /**
-     * Access methods
+     * Get the block.
+     *
+     * @return the block, initialized if needed
      */
     public Block getBlock() {
         if (needsInitialize) {
@@ -111,24 +113,15 @@ public class EntryPoint {
     }
 
     public boolean isForwardType() {
-        if (mDirection == FORWARD) {
-            return true;
-        }
-        return false;
+        return mDirection == FORWARD;
     }
 
     public boolean isReverseType() {
-        if (mDirection == REVERSE) {
-            return true;
-        }
-        return false;
+        return mDirection == REVERSE;
     }
 
     public boolean isUnknownType() {
-        if (mDirection == UNKNOWN) {
-            return true;
-        }
-        return false;
+        return mDirection == UNKNOWN;
     }
 
     public int getDirection() {

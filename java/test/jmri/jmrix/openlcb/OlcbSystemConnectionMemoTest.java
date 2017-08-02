@@ -1,8 +1,9 @@
 package jmri.jmrix.openlcb;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * OlcbSystemConnectionMemoTest.java
@@ -10,38 +11,23 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 28820 $
+ * @author      Paul Bender Copyright (C) 2016	
  */
-public class OlcbSystemConnectionMemoTest extends TestCase {
+public class OlcbSystemConnectionMemoTest {
 
+    @Test
     public void testCtor() {
-    }
-
-    // from here down is testing infrastructure
-    public OlcbSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OlcbSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbSystemConnectionMemoTest.class);
-        return suite;
+        Assert.assertNotNull(new OlcbSystemConnectionMemo());
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -1,7 +1,8 @@
 package jmri.jmrix.powerline;
 
+import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,8 +12,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     SerialTrafficControlScaffold tc = null;
@@ -140,11 +140,21 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();        
+        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
+        // prepare an interface, register
+        tc = new SerialTrafficControlScaffold();
+        tc.setAdapterMemo(memo);
+        memo.setTrafficController(tc);
+        memo.setSerialAddress(new SerialAddress(memo));
     }
 
+    @Override
     protected void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();        
         apps.tests.Log4JFixture.tearDown();
     }
 

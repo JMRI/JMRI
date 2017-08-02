@@ -1,7 +1,7 @@
-// DefaultLogixManagerXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -28,6 +27,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);
@@ -50,9 +50,12 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("logix system name is " + sname);
                 Logix x = tm.getBySystemName(sname);
                 boolean enabled = x.getEnabled();
-                Element elem = new Element("logix")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("logix");
                 elem.addContent(new Element("systemName").addContent(sname));
+
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                if (x.getUserName()!=null && !x.getUserName().equals("")) elem.setAttribute("userName", x.getUserName());
 
                 // store common part
                 storeCommon(x, elem);
@@ -92,6 +95,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         logixs.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -125,7 +129,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         if (log.isDebugEnabled()) {
             log.debug("Found " + logixList.size() + " logixs");
         }
-        LogixManager tm = InstanceManager.logixManagerInstance();
+        LogixManager tm = InstanceManager.getDefault(jmri.LogixManager.class);
 
         for (int i = 0; i < logixList.size(); i++) {
 
@@ -135,12 +139,9 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 break;
             }
 
-            String userName = null;
-            //boolean enabled = true;
+            String userName = getUserName(logixList.get(i));
+
             String yesno = "";
-            if (logixList.get(i).getAttribute("userName") != null) {
-                userName = logixList.get(i).getAttribute("userName").getValue();
-            }
             if (logixList.get(i).getAttribute("enabled") != null) {
                 yesno = logixList.get(i).getAttribute("enabled").getValue();
             }
@@ -148,6 +149,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("create logix: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
+            
             Logix x = tm.createNewLogix(sysName, userName);
             if (x != null) {
                 // load common part
@@ -189,25 +191,32 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * type.
      */
     protected void replaceLogixManager() {
-        if (InstanceManager.logixManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.LogixManager.class).getClass().getName()
                 .equals(DefaultLogixManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.logixManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(
-                    InstanceManager.logixManagerInstance());
+        if (InstanceManager.getNullableDefault(jmri.LogixManager.class) != null) {
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.deregister(InstanceManager.getDefault(jmri.LogixManager.class));
+            }
+                    
         }
 
         // register new one with InstanceManager
         DefaultLogixManager pManager = DefaultLogixManager.instance();
         InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LOGIXS);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cmOD != null) {
+            cmOD.registerConfig(pManager, jmri.Manager.LOGIXS);
+        }
     }
 
+    @Override
     public int loadOrder() {
-        return InstanceManager.logixManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.LogixManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class.getName());

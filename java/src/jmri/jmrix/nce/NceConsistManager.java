@@ -6,7 +6,6 @@
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 package jmri.jmrix.nce;
 
@@ -73,7 +72,7 @@ public class NceConsistManager extends AbstractConsistManager {
 
     private void addConsist(NceConsist consist) {
         log.debug("Add consist " + consist.getConsistAddress());
-        //delConsist(consist.getConsistAddress());	// remove consist if one exists
+        //delConsist(consist.getConsistAddress()); // remove consist if one exists
         consistTable.put(consist.getConsistAddress(), consist);
     }
 
@@ -123,7 +122,7 @@ public class NceConsistManager extends AbstractConsistManager {
                 while (!ConnectionStatus.instance().getConnectionState(memo.getNceTrafficController().getPortName()).equals(ConnectionStatus.CONNECTION_UP)) {
                     log.debug("Waiting for NCE connected");
                     try {
-                        wait(2000);	// wait 2 seconds and try again
+                        wait(2000); // wait 2 seconds and try again
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
                     }
@@ -139,7 +138,7 @@ public class NceConsistManager extends AbstractConsistManager {
                     synchronized (this) {
                         try {
                             //log.debug("Waiting for consist "+_consistNum+" to be valid");
-                            wait(100);	// wait 100 milliseconds and check again
+                            wait(100); // wait 100 milliseconds and check again
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                         }

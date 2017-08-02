@@ -1,4 +1,3 @@
-// InputWindow.java
 package jmri.jmrit.jython;
 
 import java.awt.BorderLayout;
@@ -12,7 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.swing.JButton;
@@ -26,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
+import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptFileChooser;
 import jmri.script.ScriptOutput;
@@ -40,25 +40,25 @@ import org.slf4j.LoggerFactory;
  * interpreter
  *
  * @author Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class InputWindow extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8043631915757357490L;
     JTextArea area;
     JButton button;
     JButton loadButton;
     JButton storeButton;
+    private UserPreferencesManager pref;
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     JComboBox<String> languages = new JComboBox<>();
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
 
+    public static final String languageSelection = InputWindow.class.getName() + ".language";
+    public static final String alwaysOnTopChecked = InputWindow.class.getName() + ".alwaysOnTopChecked";
+
     public InputWindow() {
+        pref = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
 
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
@@ -102,11 +102,14 @@ public class InputWindow extends JPanel {
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(js, BorderLayout.CENTER);
 
-        Vector<String> names = new Vector<>();
+        ArrayList<String> names = new ArrayList<>();
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
             names.add(factory.getLanguageName());
         });
-        languages = new JComboBox<>(names);
+        languages = new JComboBox<>(names.toArray(new String[names.size()]));
+        if (pref.getComboBoxLastSelection(languageSelection) != null) {
+            languages.setSelectedItem((String) pref.getComboBoxLastSelection(languageSelection));
+        }
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -138,11 +141,17 @@ public class InputWindow extends JPanel {
             storeButtonPressed();
         });
 
+        languages.addItemListener((java.awt.event.ItemEvent e) -> {
+            pref.setComboBoxLastSelection(languageSelection, (String) languages.getSelectedItem());
+        });
+
         alwaysOnTopCheckBox.addActionListener((ActionEvent e) -> {
             if (getTopLevelAncestor() != null) {
                 ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
+            pref.setSimplePreferenceState(alwaysOnTopChecked, alwaysOnTopCheckBox.isSelected());
         });
+        alwaysOnTopCheckBox.setSelected(pref.getSimplePreferenceState(alwaysOnTopChecked));
 
         // set a monospaced font
         int size = area.getFont().getSize();
@@ -156,8 +165,10 @@ public class InputWindow extends JPanel {
     }
 
     /**
+     * Load a file into this input window.
      *
-     * @return true if successful
+     * @param fileChooser the chooser to select the file with
+     * @return true if successful; false otherwise
      */
     protected boolean loadFile(JFileChooser fileChooser) {
         boolean results = false;
@@ -183,18 +194,21 @@ public class InputWindow extends JPanel {
 
                 area.setText(fileData.toString());
 
-                } catch (IOException e) {
-                    log.error("Unhandled problem in loadFile: " + e);
-                }
-            }else {
+            } catch (IOException e) {
+                log.error("Unhandled problem in loadFile: " + e);
+            }
+        } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.
         }
-            return results;
-        }
-        /**
-         *
-         * @return true if successful
-         */
+        return results;
+    }
+
+    /**
+     * Save the contents of this input window to a file.
+     *
+     * @param fileChooser the chooser to select the file with
+     * @return true if successful; false otherwise
+     */
     protected boolean storeFile(JFileChooser fileChooser) {
         boolean results = false;
         File file = getFile(fileChooser);
@@ -273,5 +287,3 @@ public class InputWindow extends JPanel {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
 }
-
-/* @(#)InputWindow.java */

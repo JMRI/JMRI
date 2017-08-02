@@ -1,4 +1,3 @@
-// SerialPacketGenAction.java
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -10,17 +9,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright (C) 2001, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6499014957221691885L;
 
     public SerialPacketGenAction(String s, SerialTrafficController tc) {
         super(s);
@@ -34,6 +27,7 @@ public class SerialPacketGenAction extends AbstractAction {
 
     SerialTrafficController tc = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame(tc);
         try {
@@ -45,6 +39,3 @@ public class SerialPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

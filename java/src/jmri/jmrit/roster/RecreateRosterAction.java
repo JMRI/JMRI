@@ -1,4 +1,3 @@
-// RecreateRosterAction.java
 package jmri.jmrit.roster;
 
 import java.awt.event.ActionEvent;
@@ -11,15 +10,9 @@ import jmri.util.swing.WindowInterface;
  * <P>
  * Scans the roster directory for xml files, including any that are found.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class RecreateRosterAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2421095427974812157L;
 
     public RecreateRosterAction(String s, WindowInterface wi) {
         super(s, wi);

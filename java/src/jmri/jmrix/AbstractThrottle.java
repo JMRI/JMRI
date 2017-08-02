@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -887,7 +888,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getNullableDefault(CommandStation.class);
         }
 
         // send it 3 times
@@ -919,7 +920,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getNullableDefault(CommandStation.class);
         }
 
         // send it 3 times
@@ -1360,8 +1361,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);
-        Date date = new Date();
-        re.putAttribute("LastOperated", "" + date);
+        re.putAttribute("LastOperated", new ISO8601DateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();

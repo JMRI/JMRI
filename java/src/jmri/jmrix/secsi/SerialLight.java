@@ -11,14 +11,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5341714389847300360L;
 
     /**
      * Create a Light object, with only system name.
@@ -64,6 +58,7 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode != null) {

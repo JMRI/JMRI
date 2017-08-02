@@ -1,10 +1,13 @@
 package jmri;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
@@ -109,10 +112,10 @@ import org.slf4j.LoggerFactory;
  * in millimeter units. A length of 0.0 indicates no entry of length by the
  * user.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
-public class Block extends jmri.implementation.AbstractNamedBean implements PhysicalLocationReporter {
+public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
         super(systemName.toUpperCase());
@@ -132,6 +135,34 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     static final public int TIGHT = 0x02;
     static final public int SEVERE = 0x04;
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
+    // this should only be used for debugging...
+>>>>>>> JMRI/master
+    public String toString() {
+        String result = getFullyFormattedDisplayName() + " ";
+        switch (getState()) {
+            case UNDETECTED: {
+                    result += "UNDETECTED";
+                break;
+            }
+            case UNOCCUPIED: {
+                    result += "UNOCCUPIED";
+                break;
+            }
+            case OCCUPIED: {
+                    result += "OCCUPIED";
+                break;
+            }
+            default: {
+                    result += "unknown " + getState();
+                break;
+            }
+        }
+        return result;
+    }
+
     /*
      * return true if a Sensor is set
      */
@@ -140,12 +171,12 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             setNamedSensor(null);
             return false;
         }
-        if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
-                setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+        if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+                setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 return true;
-            } else {
+            } catch (IllegalArgumentException ex) {
                 setNamedSensor(null);
                 log.error("Sensor '" + pName + "' not available");
             }
@@ -165,10 +196,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         _namedSensor = s;
 
         if (_namedSensor != null) {
-            getSensor().addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    handleSensorChange(e);
-                }
+            getSensor().addPropertyChangeListener(_sensorListener = (PropertyChangeEvent e) -> {
+                handleSensorChange(e);
             }, s.getName(), "Block Sensor " + getDisplayName());
             _current = getSensor().getState();
         } else {
@@ -204,10 +233,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         _reporter = reporter;
         if (_reporter != null) {
             // attach listener
-            _reporter.addPropertyChangeListener(_reporterListener = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    handleReporterChange(e);
-                }
+            _reporter.addPropertyChangeListener(_reporterListener = (PropertyChangeEvent e) -> {
+                handleReporterChange(e);
             });
 
         }
@@ -250,11 +277,12 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return _reportingCurrent;
     }
 
+    @Override
     public int getState() {
         return _current;
     }
 
-    ArrayList<Path> paths = new ArrayList<Path>();
+    ArrayList<Path> paths = new ArrayList<>();
 
     public void addPath(Path p) {
         if (p == null) {
@@ -275,28 +303,30 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
     }
 
-    public boolean hasPath(Path p) { 
-        for (Path t : paths) {
-            if (t.equals(p)) return true;
-        }
-        return false;
+    public boolean hasPath(Path p) {
+        return paths.stream().anyMatch((t) -> (t.equals(p)));
     }
-    
+
     /**
      * Get a copy of the list of Paths
+     *
+     * @return the paths or an empty list
      */
     public List<Path> getPaths() {
-        return new ArrayList<Path>(paths);
+        return new ArrayList<>(paths);
     }
 
     /**
      * Provide a general method for updating the report.
+     *
+     * @param v the new state
      */
+    @Override
     public void setState(int v) {
         int old = _current;
         _current = v;
         // notify
-        firePropertyChange("state", Integer.valueOf(old), Integer.valueOf(_current));
+        firePropertyChange("state", old, _current);
     }
 
     /**
@@ -308,9 +338,13 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * @param value The new Object resident in this block, or null if none.
      */
     public void setValue(Object value) {
-        Object old = _value;
-        _value = value;
-        firePropertyChange("value", old, _value);
+        //ignore if unchanged
+        if (value != _value) {
+            log.debug("Block {} value changed from '{}' to '{}'", getDisplayName(), _value, value);
+            _previousValue = _value;
+            _value = value;
+            firePropertyChange("value", _previousValue, _value);
+        }
     }
 
     public Object getValue() {
@@ -318,10 +352,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public void setDirection(int direction) {
-        int oldDirection = _direction;
-        _direction = direction;
-        // this is a bound parameter
-        firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
+        //ignore if unchanged
+        if (direction != _direction) {
+            log.debug("Block {} direction changed from {} to {}", getDisplayName(), Path.decodeDirection(_direction), Path.decodeDirection(direction));
+            int oldDirection = _direction;
+            _direction = direction;
+            // this is a bound parameter
+            firePropertyChange("direction", oldDirection, direction);
+        }
     }
 
     public int getDirection() {
@@ -329,7 +367,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     //Deny traffic entering from this block
-    ArrayList<NamedBeanHandle<Block>> blockDenyList = new ArrayList<NamedBeanHandle<Block>>(1);
+    ArrayList<NamedBeanHandle<Block>> blockDenyList = new ArrayList<>(1);
 
     /**
      * The block deny list, is used by higher level code, to determine if
@@ -338,17 +376,19 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * to prevent traffic from following from this block to another then this
      * block must be added to the deny list of the other block. By default no
      * block is barred, so traffic flow is bi-directional.
+     *
+     * @param pName name of the block to add
      */
     public void addBlockDenyList(String pName) {
-        Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(pName);
-        NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
+        Block blk = InstanceManager.getDefault(BlockManager.class).getBlock(pName);
+        NamedBeanHandle<Block> namedBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
         }
     }
 
     public void addBlockDenyList(Block blk) {
-        NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
+        NamedBeanHandle<Block> namedBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
         }
@@ -379,29 +419,19 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public List<String> getDeniedBlocks() {
-        List<String> list = new ArrayList<String>(blockDenyList.size());
-        for (NamedBeanHandle<Block> bean : blockDenyList) {
+        List<String> list = new ArrayList<>(blockDenyList.size());
+        blockDenyList.forEach((bean) -> {
             list.add(bean.getName());
-        }
+        });
         return list;
     }
 
     public boolean isBlockDenied(String deny) {
-        for (NamedBeanHandle<Block> bean : blockDenyList) {
-            if (bean.getName().equals(deny)) {
-                return true;
-            }
-        }
-        return false;
+        return blockDenyList.stream().anyMatch((bean) -> (bean.getName().equals(deny)));
     }
 
     public boolean isBlockDenied(Block deny) {
-        for (NamedBeanHandle<Block> bean : blockDenyList) {
-            if (bean.getBean() == deny) {
-                return true;
-            }
-        }
-        return false;
+        return blockDenyList.stream().anyMatch((bean) -> (bean.getBean() == deny));
     }
 
     public boolean getPermissiveWorking() {
@@ -419,7 +449,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         String speed = _blockSpeed;
         if (_blockSpeed.equals("Global")) {
-            speed = InstanceManager.blockManagerInstance().getDefaultSpeed();
+            speed = InstanceManager.getDefault(BlockManager.class).getDefaultSpeed();
         }
 
         try {
@@ -428,7 +458,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
+            return InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -438,16 +468,17 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     public String getBlockSpeed() {
         if (_blockSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.blockManagerInstance().getDefaultSpeed());
+            return (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(BlockManager.class).getDefaultSpeed());
+            // Ensure the word "Global" is always in the speed name for later comparison
         }
         return _blockSpeed;
     }
-    
+
     public void setBlockSpeedName(String s) {
-        if(s==null) {
+        if (s == null) {
             _blockSpeed = "";
         } else {
-            _blockSpeed = s;            
+            _blockSpeed = s;
         }
     }
 
@@ -462,7 +493,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
+                    InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
@@ -490,14 +521,11 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      */
     public void setLength(float l) {
         _length = l;
-        List<Path> paths = getPaths();
-        Iterator<Path> it = paths.iterator();
-        while (it.hasNext()) {
-            Path p = it.next();
+        getPaths().stream().forEach((p) -> {
             if (p.getLength() > l) {
-                p.setLength(0);   // set to default
+                p.setLength(0); // set to default
             }
-        }
+        });
     }
 
     public float getLengthMm() {
@@ -512,11 +540,10 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return (_length / 25.4f);
     }  // return length in inches
 
-
-    /** 
+    /**
      * Note: this has to make choices about identity values (always the same)
-     * and operation values (can change as the block works).  Might be missing
-     * some identity values. 
+     * and operation values (can change as the block works). Might be missing
+     * some identity values.
      */
     @Override
     public boolean equals(Object obj) {
@@ -531,9 +558,11 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             return false;
         } else {
             Block b = (Block) obj;
-                        
-            if (!b.getSystemName().equals(this.getSystemName())) return false;
-            
+
+            if (!b.getSystemName().equals(this.getSystemName())) {
+                return false;
+            }
+
         }
         return true;
     }
@@ -548,56 +577,73 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     private int _current = UNDETECTED; // state until sensor is set
     //private Sensor _sensor = null;
     private NamedBeanHandle<Sensor> _namedSensor = null;
-    private java.beans.PropertyChangeListener _sensorListener = null;
+    private PropertyChangeListener _sensorListener = null;
     private Object _value;
+    private Object _previousValue;
     private int _direction;
     private int _curvature = NONE;
     private float _length = 0.0f;  // always stored in millimeters
     private Reporter _reporter = null;
-    private java.beans.PropertyChangeListener _reporterListener = null;
+    private PropertyChangeListener _reporterListener = null;
     private boolean _reportingCurrent = false;
 
     private Path pListOfPossibleEntrancePaths[] = null;
     private int CntOfPossibleEntrancePaths = 0;
+
     void ResetCandidateEntrancePaths() {
         pListOfPossibleEntrancePaths = null;
         CntOfPossibleEntrancePaths = 0;
     }
+
     boolean SetAsEntryBlockIfPossible(Block b) {
-        for (int i=0; i< CntOfPossibleEntrancePaths; i++) {
-		 Block CandidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
+        for (int i = 0; i < CntOfPossibleEntrancePaths; i++) {
+            Block CandidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
             if (CandidateBlock == b) {
                 setValue(CandidateBlock.getValue());
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                //if (log.isDebugEnabled()) 
-                    log.info("Block "+getSystemName()+" gets LATE new value from "+ CandidateBlock.getSystemName()+", direction="+Path.decodeDirection(getDirection()));
+                log.info("Block {} gets LATE new value from {}, direction= {}", getDisplayName(), CandidateBlock.getDisplayName(), Path.decodeDirection(getDirection()));
                 ResetCandidateEntrancePaths();
                 return true;
             }
         }
         return false;
     }
-    
-    
-    /** Handle change in sensor state.
+
+    /**
+     * Handle change in sensor state.
      * <P>
-     * Defers real work to goingActive, goingInactive methods
+     * Defers real work to goingActive, goingInactive methods.
+     *
+     * @param e the event
      */
-    void handleSensorChange(java.beans.PropertyChangeEvent e) {
+    void handleSensorChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {
             int state = getSensor().getState();
-            if (state == Sensor.ACTIVE) {
-                goingActive();
-            } else if (state == Sensor.INACTIVE) {
-                goingInactive();
-            } else if (state == Sensor.UNKNOWN) {
-                setValue(null);
-                setState(UNKNOWN);
-            } else {
-                setValue(null);
-                setState(INCONSISTENT);
+            switch (state) {
+                case Sensor.ACTIVE:
+                    goingActive();
+                    break;
+                case Sensor.INACTIVE:
+                    goingInactive();
+                    break;
+                case Sensor.UNKNOWN:
+                    goingUnknown();
+                    break;
+                default:
+                    goingInconsistent();
+                    break;
             }
         }
+    }
+
+    public void goingUnknown() {
+        setValue(null);
+        setState(UNKNOWN);
+    }
+
+    public void goingInconsistent() {
+        setValue(null);
+        setState(INCONSISTENT);
     }
 
     /**
@@ -605,7 +651,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * @param e PropertyChangeEvent
      */
-    void handleReporterChange(java.beans.PropertyChangeEvent e) {
+    void handleReporterChange(PropertyChangeEvent e) {
         if ((_reportingCurrent && e.getPropertyName().equals("currentReport"))
                 || (!_reportingCurrent && e.getPropertyName().equals("lastReport"))) {
             setValue(e.getNewValue());
@@ -616,20 +662,20 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * Handles Block sensor going INACTIVE: this block is empty
      */
     public void goingInactive() {
-        if (log.isDebugEnabled()) {
-            log.debug("Block " + getSystemName() + " goes UNOCCUPIED");
-        }
+        log.debug("Block {} goes UNOCCUPIED", getDisplayName());
         int currPathCnt = paths.size();
         for (int i = 0; i < currPathCnt; i++) {
-           Block b = paths.get(i).getBlock();
-           if (b != null) b.SetAsEntryBlockIfPossible(this);
+            Block b = paths.get(i).getBlock();
+            if (b != null) {
+                b.SetAsEntryBlockIfPossible(this);
+            }
         }
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);
     }
 
-    private int maxInfoMessages = 5;
+    private final int maxInfoMessages = 5;
     private int infoMessageCount = 0;
 
     /**
@@ -640,6 +686,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         if (getState() == OCCUPIED) {
             return;
         }
+        log.debug("Block {} goes OCCUPIED", getDisplayName());
         ResetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
@@ -656,11 +703,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             isSet[i] = pList[i].checkPathSet();
             Block b = pList[i].getBlock();
             if (b != null) {
-                if (b.getState() == OCCUPIED) {
-                    isActive[i] = true;
-                } else {
-                    isActive[i] = false;
-                }
+                isActive[i] = b.getState() == OCCUPIED;
                 pDir[i] = b.getDirection();
             } else {
                 isActive[i] = false;
@@ -673,71 +716,84 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }
         }
         // sort on number of neighbors
-        if (count == 0) {
-            if (infoMessageCount < maxInfoMessages) {
-                log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getSystemName() + ". Value not set.");
-                infoMessageCount++;
-            }
-        } else if (count == 1) { // simple case
-
-            if ((next != null) && (next.getBlock() != null)) {
-                // normal case, transfer value object 
-                setValue(next.getBlock().getValue());
-                setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
+        switch (count) {
+            case 0:
+                if (null != _previousValue) {
+                    setValue(_previousValue);
+                    if (infoMessageCount < maxInfoMessages) {
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Restoring previous value.");
+                        infoMessageCount++;
+                    }
+                } else {
+                    if (infoMessageCount < maxInfoMessages) {
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Value not set.");
+                        infoMessageCount++;
+                    }
                 }
-            } else if (next == null) {
-                log.error("unexpected next==null processing signal in block " + getSystemName());
-            } else if (next.getBlock() == null) {
-                log.error("unexpected next.getBlock()=null processing signal in block " + getSystemName());
-            }
-        } else {  // count > 1, check for one with proper direction
-            // this time, count ones with proper direction
-            if (log.isDebugEnabled()) {
-                log.debug("Block " + getSystemName() + "- count of active linked blocks = " + count);
-            }
-            next = null;
-            count = 0;
-            for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
+                break;
+            case 1:
+                // simple case
+                if ((next != null) && (next.getBlock() != null)) {
+                    // normal case, transfer value object
+                    setValue(next.getBlock().getValue());
+                    setDirection(next.getFromBlockDirection());
+                    log.debug("Block {} gets new value '{}' from {}, direction={}",
+                            getDisplayName(),
+                            next.getBlock().getValue(),
+                            next.getBlock().getDisplayName(),
+                            Path.decodeDirection(getDirection()));
+                } else if (next == null) {
+                    log.error("unexpected next==null processing block " + getDisplayName());
+                } else if (next.getBlock() == null) {
+                    log.error("unexpected next.getBlock()=null processing block " + getDisplayName());
                 }
-            }
-            if (next == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("next is null!");
-                }
-            }
-            if (next == null) {
+                break;
+            default:
+                // count > 1, check for one with proper direction
+                // this time, count ones with proper direction
+                log.debug("Block {} has {} active linked blocks, comparing directions", getDisplayName(), count);
+                next = null;
+                count = 0;
                 for (int i = 0; i < currPathCnt; i++) {
-                   if (isSet[i] && isActive[i]) {
-                       count++;
-                       next = pList[i];
-                   }  
+                    if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                        log.debug("comparing {} ({}) to {} ({})",
+                                pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
+                                getDisplayName(), Path.decodeDirection(pFromDir[i]));
+                        if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
+                            count++;
+                            next = pList[i];
+                        }
+                    }
                 }
-            }
-            if (next != null && count == 1) {
-                // found one block with proper direction, assume that
-                setValue(next.getBlock().getValue());
-                setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " with direction " + Path.decodeDirection(getDirection()) + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
+                if (next == null) {
+                    for (int i = 0; i < currPathCnt; i++) {
+                        if (isSet[i] && isActive[i]) {
+                            count++;
+                            next = pList[i];
+                        }
+                    }
                 }
-            } else {
-                // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName() 
-                                + " but maybe it can be determined when an other block becomes free");
-                pListOfPossibleEntrancePaths = new Path[currPathCnt];
-                CntOfPossibleEntrancePaths = 0;
-                for (int i = 0; i < currPathCnt; i++) {
-                    if (isSet[i] && isActive[i]) {
-                        pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
-                        CntOfPossibleEntrancePaths++;
-            }
-        }
-            }
+                if (next != null && count == 1) {
+                    // found one block with proper direction, use it
+                    setValue(next.getBlock().getValue());
+                    setDirection(next.getFromBlockDirection());
+                    log.debug("Block {} gets new value '{}' from {}, direction {}",
+                            getDisplayName(), next.getBlock().getValue(),
+                            next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
+                } else {
+                    // no unique path with correct direction - this happens frequently from noise in block detectors!!
+                    log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getDisplayName()
+                            + " but maybe it can be determined when another block becomes free");
+                    pListOfPossibleEntrancePaths = new Path[currPathCnt];
+                    CntOfPossibleEntrancePaths = 0;
+                    for (int i = 0; i < currPathCnt; i++) {
+                        if (isSet[i] && isActive[i]) {
+                            pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
+                            CntOfPossibleEntrancePaths++;
+                        }
+                    }
+                }
+                break;
         }
         setState(OCCUPIED);
     }
@@ -748,6 +804,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * (this is largely a copy of the 'Search' part of the logic from
      * goingActive())
+     *
+     * @return the next path
      */
     public Path findFromPath() {
         // index through the paths, counting
@@ -765,11 +823,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             isSet[i] = pList[i].checkPathSet();
             Block b = pList[i].getBlock();
             if (b != null) {
-                if (b.getState() == OCCUPIED) {
-                    isActive[i] = true;
-                } else {
-                    isActive[i] = false;
-                }
+                isActive[i] = b.getState() == OCCUPIED;
                 pDir[i] = b.getDirection();
             } else {
                 isActive[i] = false;
@@ -787,38 +841,39 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         } else {
             // count > 1, check for one with proper direction
             // this time, count ones with proper direction
-            if (log.isDebugEnabled()) {
-                log.debug("Block " + getSystemName() + "- count of active linked blocks = " + count);
-            }
+            log.debug("Block {} - count of active linked blocks = {}", getDisplayName(), count);
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
+                if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                    log.debug("comparing {} ({}) to {} ({})",
+                            pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
+                            getDisplayName(), Path.decodeDirection(pFromDir[i]));
+                    if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
+                        count++;
+                        next = pList[i];
+                    }
                 }
             }
             if (next == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("next is null!");
-                }
+                log.debug("next is null!");
             }
             if (next != null && count == 1) {
                 // found one block with proper direction, assume that
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
+                log.warn("count of " + count + " ACTIVE neighbors with proper direction can't be handled for block " + getDisplayName());
             }
         }
         // in any case, go OCCUPIED
-        if (log.isDebugEnabled()) {
-            log.debug("Block " + getSystemName() + " with direction " + Path.decodeDirection(getDirection()) + " gets new value from " + (next != null ? next.getBlock().getSystemName() : "(no next block)") + "(informational. No state change)");
+        if (log.isDebugEnabled()) { // avoid potentially expensive non-logging
+            log.debug("Block {} with direction {} gets new value from {} + (informational. No state change)", getDisplayName(), Path.decodeDirection(getDirection()), (next != null ? next.getBlock().getDisplayName() : "(no next block)"));
         }
         return (next);
     }
 
     /*
-     * This allows the layout block to inform any listerners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an
      * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
      * trigger a propertyChangeEvent.
      */
@@ -834,13 +889,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     /**
      * Parse a given string and return the LocoAddress value that is presumed
      * stored within it based on this object's protocol. The Class Block
-     * implementationd defers to its associated Reporter, if it exists.
+     * implementation defers to its associated Reporter, if it exists.
      *
      * @param rep String to be parsed
      * @return LocoAddress address parsed from string, or null if this Block
      *         isn't associated with a Reporter, or is associated with a
      *         Reporter that is not also a PhysicalLocationReporter
      */
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // Defer parsing to our associated Reporter if we can.
         if (rep == null) {
@@ -876,6 +932,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *         associated with a Reporter that is not also a
      *         PhysicalLocationReporter
      */
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         if (rep == null) {
             log.warn("String input is null!");
@@ -891,14 +948,15 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
                 log.debug("Parsed direction: " + m.group(2));
-                if (m.group(2).equals("enter")) {
-                    // LocoNet Enter message
-                    return (PhysicalLocationReporter.Direction.ENTER);
-                } else if (m.group(2).equals("seen")) {
-                    // Lissy message.  Treat them all as "entry" messages.
-                    return (PhysicalLocationReporter.Direction.ENTER);
-                } else {
-                    return (PhysicalLocationReporter.Direction.EXIT);
+                switch (m.group(2)) {
+                    case "enter":
+                        // LocoNet Enter message
+                        return (PhysicalLocationReporter.Direction.ENTER);
+                    case "seen":
+                        // Lissy message.  Treat them all as "entry" messages.
+                        return (PhysicalLocationReporter.Direction.ENTER);
+                    default:
+                        return (PhysicalLocationReporter.Direction.EXIT);
                 }
             } else {
                 return (PhysicalLocationReporter.Direction.UNKNOWN);
@@ -912,6 +970,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * @return PhysicalLocation : this Block's location.
      */
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
         return (PhysicalLocation.getBeanPhysicalLocation(this));
@@ -925,22 +984,24 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * @param s (this parameter is ignored)
      * @return PhysicalLocation : this Block's location.
      */
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
         // Intentionally ignore the String s
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    @Override
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor())) {
-                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                    throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
             if (evt.getOldValue() instanceof Reporter) {
                 if (evt.getOldValue().equals(getReporter())) {
-                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                    throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -957,6 +1018,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameBlock");
     }

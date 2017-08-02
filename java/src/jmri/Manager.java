@@ -1,8 +1,11 @@
 package jmri;
 
+import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -41,27 +44,28 @@ import javax.annotation.Nullable;
 public interface Manager {
 
     /**
-     * @return The system-specific prefix letter for a specific implementation
-     * @deprecated 2.9.5 Use getSystemPrefix
-     */
-    @Deprecated
-    public char systemLetter();
-
-    /**
      * Provides access to the system prefix string. This was previously called
      * the "System letter"
+     *
+     * @return the system prefix
      */
-    public @Nonnull String getSystemPrefix();
+    @CheckReturnValue
+    @Nonnull
+    public String getSystemPrefix();
 
     /**
      * @return The type letter for a specific implementation
      */
+    @CheckReturnValue
     public char typeLetter();
 
     /**
+     * @param s the item to make the system name for
      * @return A system name from a user input, typically a number.
+     * @throws IllegalArgumentException if a valid name can't be created
      */
-    public @Nonnull String makeSystemName(@Nonnull String s);
+    @Nonnull
+    public String makeSystemName(@Nonnull String s);
 
     /**
      * Free resources when no longer used. Specifically, remove all references
@@ -69,11 +73,17 @@ public interface Manager {
      */
     public void dispose();
 
-    public @Nonnull String[] getSystemNameArray();
+    @CheckReturnValue
+    @Nonnull
+    public String[] getSystemNameArray();
 
-    public @Nonnull List<String> getSystemNameList();
+    @CheckReturnValue
+    @Nonnull
+    public List<String> getSystemNameList();
 
-    public @Nonnull List<NamedBean> getNamedBeanList();
+    @CheckReturnValue
+    @Nonnull
+    public List<NamedBean> getNamedBeanList();
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -81,8 +91,11 @@ public interface Manager {
      *
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
+     * @throws IllegalArgumentException if provided name is invalid
      */
-    public @Nullable NamedBean getBeanBySystemName(@Nonnull String systemName);
+    @CheckReturnValue
+    @CheckForNull
+    public NamedBean getBeanBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -91,7 +104,9 @@ public interface Manager {
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public @Nullable NamedBean getBeanByUserName(@Nonnull String userName);
+    @CheckReturnValue
+    @CheckForNull
+    public NamedBean getBeanByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a name. Returns null if no instance already
@@ -100,29 +115,39 @@ public interface Manager {
      * @param name System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public @Nullable NamedBean getNamedBean(@Nonnull String name);
+    @CheckReturnValue
+    @CheckForNull
+    public NamedBean getNamedBean(@Nonnull String name);
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
      * NamedBeans; they may have other properties that will also notify.
+     *
+     * @param l the listener
      */
-    public void addPropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener l);
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
      * NamedBeans; they may have other properties that will also notify.
+     *
+     * @param l the listener
      */
-    public void removePropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@CheckForNull PropertyChangeListener l);
 
     /**
      * Add a VetoableChangeListener to the listener list.
+     *
+     * @param l the listener
      */
-    public void addVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+    public void addVetoableChangeListener(@CheckForNull VetoableChangeListener l);
 
     /**
      * Remove a VetoableChangeListener to the listener list.
+     *
+     * @param l the listener
      */
-    public void removeVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+    public void removeVetoableChangeListener(@CheckForNull VetoableChangeListener l);
 
     /**
      * Method for a UI to delete a bean, the UI should first request a
@@ -149,6 +174,8 @@ public interface Manager {
      * Remember a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific SignalHeadManagers use this method extensively.
+     *
+     * @param n the bean
      */
     public void register(@Nonnull NamedBean n);
 
@@ -156,6 +183,8 @@ public interface Manager {
      * Forget a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific RouteManager uses this method.
+     *
+     * @param n the bean
      */
     public void deregister(@Nonnull NamedBean n);
 
@@ -188,6 +217,15 @@ public interface Manager {
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
 
+    /**
+     * Determine the order that types should be written when storing panel
+     * files. Uses one of the constants defined in this class.
+     * <p>
+     * Yes, that's an overly-centralized methodology, but it works for now.
+     *
+     * @return write order for this Manager; larger is later.
+     */
+    @CheckReturnValue
     public int getXMLOrder();
 
     /**
@@ -197,5 +235,18 @@ public interface Manager {
      * @return a string of the bean type that the manager handles, eg Turnout,
      *         Sensor etc
      */
-    public @Nonnull String getBeanTypeHandled();
+    @CheckReturnValue
+    @Nonnull
+    public String getBeanTypeHandled();
+
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager.
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
 }

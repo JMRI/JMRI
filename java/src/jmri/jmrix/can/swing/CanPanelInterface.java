@@ -1,4 +1,3 @@
-// CbusPanelInterface.java
 package jmri.jmrix.can.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright 2012
  * @since 2.99.2
- * @version $Revision: 17977 $
  */
 public interface CanPanelInterface {
 

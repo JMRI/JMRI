@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane {
 
@@ -45,8 +45,6 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Create the panel used to select the decoder
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     @Override
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel();
@@ -58,6 +56,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         mMfgList.clearSelection();
         mMfgList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mMfgListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!mMfgList.isSelectionEmpty()) {
                     // manufacturer selected, update decoder list
@@ -82,17 +81,18 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         mDecoderList.clearSelection();
         mDecoderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mDecoderListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!mDecoderList.isSelectionEmpty()) {
                     // decoder selected - reset and disable loco selection
                     locoBox.setSelectedIndex(0);
                     go2.setEnabled(true);
-                    go2.setToolTipText("Click to open the programmer");
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                     updateMfgListToSelectedDecoder();
                 } else {
                     // decoder not selected - require one
                     go2.setEnabled(false);
-                    go2.setToolTipText("Select a locomotive or decoder to enable");
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         };
@@ -102,14 +102,15 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         pane1a.add(new JScrollPane(mDecoderList));
         iddecoder = new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
         }
         iddecoder.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("identify decoder pressed");
@@ -251,9 +252,10 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Set the decoder selection to a specific decoder from a selected Loco
      */
+    @Override
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
-        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);
         if (locoEntry == null) {
             return;
         }

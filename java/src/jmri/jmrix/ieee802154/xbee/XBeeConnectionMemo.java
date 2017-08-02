@@ -1,4 +1,3 @@
-// XBeeConnectionMemo.java
 package jmri.jmrix.ieee802154.xbee;
 
 import java.util.ResourceBundle;
@@ -16,12 +15,11 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into powerline for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into powerline for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from powerline into IEEE802154
+ * @author Ken Cameron Copyright (C) 2011 copied from powerline into IEEE802154
  * for multiple connections by
- * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2013
  */
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
 
@@ -88,15 +86,9 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
      */
     @Override
     public void configureManagers() {
-        log.error("Configuring Managers for XBee Connection");
+        log.debug("Configuring Managers for XBee Connection");
 
         XBeeTrafficController cont = (XBeeTrafficController) getTrafficController();
-        // before we start the managers, request the hardware
-        // version.
-        cont.sendXBeeMessage(XBeeMessage.getHardwareVersionRequest(), null);
-        // and the firmware revision.
-        cont.sendXBeeMessage(XBeeMessage.getFirmwareVersionRequest(), null);
-
         // the start the managers.
         _NodeManager = new XBeeNodeManager(cont);
 
@@ -106,7 +98,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         jmri.InstanceManager.setLightManager(getLightManager());
         setTurnoutManager(new XBeeTurnoutManager(cont, getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-
+        
     }
 
     /*
@@ -170,10 +162,12 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
     private TurnoutManager turnoutManager = null;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, XBeeConnectionMemo.class);
         super.dispose();
@@ -184,4 +178,4 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 }
 
 
-/* @(#)XBeeConnectionMemo.java */
+

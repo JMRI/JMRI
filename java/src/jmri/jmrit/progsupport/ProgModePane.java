@@ -1,4 +1,3 @@
-// ProgModePane.java
 package jmri.jmrit.progsupport;
 
 import javax.swing.BoxLayout;
@@ -26,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgModePane extends ProgModeSelector {
 
@@ -64,14 +63,14 @@ public class ProgModePane extends ProgModeSelector {
         // create the ops mode 1st, so the service is 2nd,
         // so it's the one that's selected
         mOpsPane = null;
-        if (InstanceManager.getDefault(AddressedProgrammerManager.class) != null
+        if (InstanceManager.getNullableDefault(AddressedProgrammerManager.class) != null
                 && InstanceManager.getDefault(AddressedProgrammerManager.class).isAddressedModePossible()) {
 
             mOpsPane = new ProgOpsModePane(direction, group);
         }
 
         // service mode support, if present
-        if (InstanceManager.getDefault(GlobalProgrammerManager.class) != null) {
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
 
             mServicePane = new ProgServiceModePane(direction, group);
             add(mServicePane);
@@ -93,6 +92,7 @@ public class ProgModePane extends ProgModeSelector {
      *
      * @return Always true in this implementation
      */
+    @Override
     public boolean isSelected() {
         return true;
     }
@@ -100,6 +100,7 @@ public class ProgModePane extends ProgModeSelector {
     /**
      * Get the configured programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if (mServicePane!=null && mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
@@ -110,6 +111,7 @@ public class ProgModePane extends ProgModeSelector {
         }
     }
 
+    @Override
     public void dispose() {
         if (mServicePane != null) {
             mServicePane.dispose();

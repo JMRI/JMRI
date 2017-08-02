@@ -1,11 +1,9 @@
-// SerialListener.java
 package jmri.jmrix.cmri.serial;
 
 /**
  * Listener interface to be notified about serial C/MRI traffic
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SerialListener extends jmri.jmrix.AbstractMRListener {
 
@@ -13,5 +11,3 @@ public interface SerialListener extends jmri.jmrix.AbstractMRListener {
 
     public void reply(SerialReply m);
 }
-
-/* @(#)SerialListener.java */

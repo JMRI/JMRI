@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision$
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -32,6 +31,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param o Object to store, of type ReporterManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
@@ -50,11 +50,11 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
-                Element elem = new Element("reporter")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
@@ -91,7 +91,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         if (log.isDebugEnabled()) {
             log.debug("Found " + reporterList.size() + " reporters");
         }
-        ReporterManager tm = InstanceManager.reporterManagerInstance();
+        ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -113,8 +113,9 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return result;
     }
 
+    @Override
     public int loadOrder() {
-        return InstanceManager.reporterManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());

@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
@@ -28,6 +29,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -38,7 +42,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             _lRouteTable._outputList.get(3 * i + 1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
-        java.util.List<String> l = InstanceManager.logixManagerInstance().getSystemNameList();
+        java.util.List<String> l = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList();
         assertEquals("Logix Count", 1, l.size());
 
         _lRouteTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0,
@@ -104,6 +108,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -119,6 +124,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
             // skip dialog box if in edit mode, just assume OK pressed
+            @Override
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {
                     return true;
@@ -128,6 +134,10 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         };
         assertNotNull("LogixTableAction is null!", _logixTable);
 
+//        Logix x1 = new jmri.implementation.DefaultLogix("RTXABC");
+//        assertNotNull("Logix x1 is null!", x1);
+//        InstanceManager.getDefault(jmri.LogixManager.class).register(x1);
+
         for (int i = 1; i < 20; i++) {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS" + i, "Sensor" + i);
             assertNotNull("Sensor is null!", s);
@@ -135,18 +145,19 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             assertNotNull("Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(
-                    "Conditional" + i, "Conditional" + i);
-            assertNotNull(i + "th Conditional is null!", c);
-            SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal" + i);
+//            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(
+//                    "Conditional" + i, "Conditional" + i);
+//            assertNotNull(i + "th Conditional is null!", c);
+            SignalHead sh = new jmri.implementation.VirtualSignalHead("SignalHead" + i);
             assertNotNull(i + "th SignalHead is null!", sh);
-            InstanceManager.signalHeadManagerInstance().register(sh);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
             Route r = new jmri.implementation.DefaultRoute("Route" + i);
             assertNotNull(i + "th Route is null!", r);
-            InstanceManager.routeManagerInstance().register(r);
+            InstanceManager.getDefault(jmri.RouteManager.class).register(r);
         }
     }
 
+    @Override
     protected void tearDown() throws Exception {
         // now close action window
         TestHelper.disposeWindow(_lRouteTable.f, this);

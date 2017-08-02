@@ -2,7 +2,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -12,7 +11,6 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class ShapeDrawer {
@@ -28,42 +26,72 @@ public class ShapeDrawer {
     public JMenu makeMenu() {
         JMenu drawMenu = new JMenu(Bundle.getMessage("drawShapes"));
 
-        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawRectangle"));
+        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newRectangle();
             }
         });
-        shapeItem = new JMenuItem(Bundle.getMessage("drawRoundRectangle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newRoundRectangle();
             }
+=======
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRectangle();
+        });
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
+        drawMenu.add(shapeItem);
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRoundRectangle();
+>>>>>>> JMRI/master
         });
 
-        shapeItem = new JMenuItem(Bundle.getMessage("drawPolygon"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newPolygon();
             }
+=======
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newPolygon();
+>>>>>>> JMRI/master
         });
 
-        shapeItem = new JMenuItem(Bundle.getMessage("drawCircle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newCircle();
             }
         });
-        shapeItem = new JMenuItem(Bundle.getMessage("drawEllipse"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newEllipse();
             }
+=======
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newCircle();
+        });
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
+        drawMenu.add(shapeItem);
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newEllipse();
+>>>>>>> JMRI/master
         });
 
         return drawMenu;
@@ -71,7 +99,7 @@ public class ShapeDrawer {
 
     private void newRectangle() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawRectangle("newShape", "rectangle", this);
+            _drawFrame = new DrawRectangle("newShape", "Rectangle", this);
         } else {
             _drawFrame.toFront();
         }
@@ -87,7 +115,7 @@ public class ShapeDrawer {
 
     private void newPolygon() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawPolygon("newShape", "polygon", this);
+            _drawFrame = new DrawPolygon("newShape", "Polygon", this);
         } else {
             _drawFrame.toFront();
         }
@@ -95,7 +123,7 @@ public class ShapeDrawer {
 
     private void newCircle() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawCircle("newShape", "circle", this);
+            _drawFrame = new DrawCircle("newShape", "Circle", this);
         } else {
             _drawFrame.toFront();
         }
@@ -103,7 +131,7 @@ public class ShapeDrawer {
 
     private void newEllipse() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawEllipse("newShape", "ellipse", this);
+            _drawFrame = new DrawEllipse("newShape", "Ellipse", this);
         } else {
             _drawFrame.toFront();
         }
@@ -115,6 +143,7 @@ public class ShapeDrawer {
 
     protected void closeDrawFrame(DrawFrame f) {
         _drawFrame = null;
+        _editor.resetEditor();
     }
 
     protected ControlPanelEditor getEditor() {
@@ -127,16 +156,15 @@ public class ShapeDrawer {
         }
     }
 
+    ///////////////////////////// Mouse /////////////////////////////
     /**
-     * ************************** Mouse ************************
-     */
-    /**
-     * *** return true if creating or editing **
+     * @param event the event to process
+     * @param pos   the item to check
+     * @return true if creating or editing; false otherwise
      */
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
         if (_drawFrame instanceof DrawPolygon) {
-            DrawPolygon f = (DrawPolygon) _drawFrame;
-            f.anchorPoint(event.getX(), event.getY());
+            ((DrawPolygon) _drawFrame).anchorPoint(event.getX(), event.getY());
         }
         if (pos instanceof PositionableShape && _editor.isEditable()) {
             if (!pos.equals(_currentSelection)) {
@@ -156,9 +184,8 @@ public class ShapeDrawer {
     }
 
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
-        if (_drawFrame != null && !_drawFrame._editing) {
+        if (_drawFrame != null && _drawFrame._shape == null) {
             if (_drawFrame.makeFigure(event)) {
-                _drawFrame.closingEvent();
                 _editor.resetEditor();
             }
             return true;
@@ -168,6 +195,9 @@ public class ShapeDrawer {
 
     public boolean doMouseClicked(MouseEvent event) {
         if (_drawFrame != null) {
+            if (_drawFrame instanceof DrawPolygon && event.getClickCount() > 1) {
+                ((DrawPolygon) _drawFrame).setEditing(true);
+            }
             return true;
         }
         return false;
@@ -176,7 +206,7 @@ public class ShapeDrawer {
     public boolean doMouseDragged(MouseEvent event) {
         if (_drawFrame instanceof DrawPolygon && _currentSelection == null) {
             ((DrawPolygon) _drawFrame).moveTo(event.getX(), event.getY());
-            return true;		// no select rect
+            return true;  // no select rect
         } else if (_currentSelection != null) {
             return _currentSelection.doHandleMove(event);
         }

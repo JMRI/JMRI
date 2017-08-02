@@ -1,20 +1,23 @@
 package apps.startup;
 
-import apps.StartupModel;
+import apps.StartupActionsManager;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.script.ScriptFileChooser;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class ScriptButtonModelFactory implements StartupModelFactory {
 
     private ScriptFileChooser chooser = null;
-    
+
     public ScriptButtonModelFactory() {
     }
 
@@ -60,6 +63,7 @@ public class ScriptButtonModelFactory implements StartupModelFactory {
             if (!buttonPanel.getButtonName().isEmpty()) {
                 model.setName(buttonPanel.getButtonName());
                 ((ScriptButtonModel) model).setScript(new File(buttonPanel.getScript()));
+                InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
             }
         }
     }

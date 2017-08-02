@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.util.com.sun.TableSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,15 +32,15 @@ import org.slf4j.LoggerFactory;
  * provide, and by providing a {@link #extras} implementation that can in turn
  * invoke {@link #addToBottomBox} as needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-    Box bottomBox;		// panel at bottom for extra buttons etc
-    int bottomBoxIndex;	// index to insert extra stuff
+    Box bottomBox;  // panel at bottom for extra buttons etc
+    int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
     ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
@@ -58,12 +62,10 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         dataScroll = new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        this.dataTable.setRowSorter(sorter);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);
@@ -80,6 +82,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -98,7 +101,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         // install items in GUI
         getContentPane().add(dataScroll);
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         getContentPane().add(bottomBox);
@@ -116,7 +119,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        dataModel.loadTableColumnDetails(dataTable);
+        dataModel.persistTable(dataTable);
     }
 
     /**
@@ -136,7 +139,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      * @param comp {@link Component} to add
      * @param c    Class name
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
+    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
             justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -145,9 +148,10 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         ++bottomBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
-            dataModel.saveTableColumnDetails(dataTable);
+            dataModel.stopPersistingTable(dataTable);
             dataModel.dispose();
         }
         dataModel = null;

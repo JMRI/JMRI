@@ -1,6 +1,6 @@
-// SerialNode.java
 package jmri.jmrix.cmri.serial;
 
+import java.util.Arrays;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
@@ -25,9 +25,8 @@ import org.slf4j.LoggerFactory;
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no more than
  * 64 total cards.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialNode extends AbstractNode {
 
@@ -55,7 +54,7 @@ public class SerialNode extends AbstractNode {
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
-    protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+    protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
     //   1 = searchlight LED, 2*NS bits must be set to 1
@@ -77,8 +76,8 @@ public class SerialNode extends AbstractNode {
      * is used, actual node address must be set using setNodeAddress, and actual
      * node type using 'setNodeType'
      */
-    public SerialNode() {
-        this(0, SMINI);
+    public SerialNode(SerialTrafficController tc) {
+        this(0, SMINI,tc);
     }
 
     /**
@@ -86,7 +85,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on CMRI serial bus (0-127) type - SMINI,
      * USIC_SUSIC,
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type,SerialTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -112,7 +111,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        tc.registerNode(this);
     }
 
     public int getNum2LSearchLights() {
@@ -123,18 +122,16 @@ public class SerialNode extends AbstractNode {
         num2LSearchLights = n;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getLocSearchLightBits() {
-        return locSearchLightBits;
+        return Arrays.copyOf(locSearchLightBits, locSearchLightBits.length);
     }
 
     public void setLocSearchLightBits(int num, int value) {
         locSearchLightBits[num] = (byte) (value & 0xFF);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getCardTypeLocation() {
-        return cardTypeLocation;
+        return Arrays.copyOf(cardTypeLocation, cardTypeLocation.length);
     }
 
     public void setCardTypeLocation(int num, int value) {
@@ -209,6 +206,7 @@ public class SerialNode extends AbstractNode {
      * Get state of Sensor polling. Note: returns 'true' if at least one sensor
      * is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -322,6 +320,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check valid node address, must match value in dip switches (0 - 127)
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address >= 0) && (address < 128);
     }
@@ -590,6 +589,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Create an Initialization packet (SerialMessage) for this node
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         // Assemble initialization byte array from node information
         int nInitBytes = 4;
@@ -682,6 +682,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         // Count the number of DLE's to be inserted
         int nOutBytes = numOutputCards() * (bitsPerCard / 8);
@@ -809,6 +810,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
@@ -846,6 +848,7 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");
@@ -855,5 +858,3 @@ public class SerialNode extends AbstractNode {
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
-
-/* @(#)SerialNode.java */

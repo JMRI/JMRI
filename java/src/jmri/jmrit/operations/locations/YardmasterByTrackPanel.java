@@ -1,6 +1,6 @@
-// YardmasterByTrackPanel.java
 package jmri.jmrit.operations.locations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
@@ -169,7 +169,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -179,12 +180,12 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();
         trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-        carCheckBoxes.clear();
+        checkBoxes.clear();
         pTrack.removeAll();
         boolean pickup = false;
         boolean setout = false;
@@ -217,10 +218,11 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
                         setCheckBoxFont(checkBox);
                         pTrain.add(checkBox);
-                        carCheckBoxes.put(engine.getId(), checkBox);
+                        checkBoxes.put(engine.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
                 }
+                // now do locomotive set outs
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
                         if (engine.getDestinationTrack() == _track) {
@@ -238,10 +240,11 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
                         setCheckBoxFont(checkBox);
                         pTrain.add(checkBox);
-                        carCheckBoxes.put(engine.getId(), checkBox);
+                        checkBoxes.put(engine.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
                 }
+                // now cars
                 List<Car> carList = carManager.getByTrainDestinationList(train);
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Car car : carList) {
@@ -276,7 +279,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             JCheckBox checkBox = new JCheckBox(text);
                             setCheckBoxFont(checkBox);
                             pTrain.add(checkBox);
-                            carCheckBoxes.put(car.getId(), checkBox);
+                            checkBoxes.put(car.getId(), checkBox);
                             pTrack.add(pTrain);
                         }
                     }
@@ -312,7 +315,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         JCheckBox checkBox = new JCheckBox(text);
                         setCheckBoxFont(checkBox);
                         pTrain.add(checkBox);
-                        carCheckBoxes.put(car.getId(), checkBox);
+                        checkBoxes.put(car.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
                 }
@@ -346,10 +349,13 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         JCheckBox checkBox = new JCheckBox(text);
                         setCheckBoxFont(checkBox);
                         pTrain.add(checkBox);
-                        carCheckBoxes.put(car.getId(), checkBox);
+                        checkBoxes.put(car.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
                 }
+                pTrackPane.validate();
+                pTrain.setMaximumSize(new Dimension(2000, pTrain.getHeight()));
+                pTrain.revalidate();
             }
             // now do car holds
             // we only need the cars on this track
@@ -373,7 +379,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
                             new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
                                     TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
                                     TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
@@ -384,10 +390,12 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 JCheckBox checkBox = new JCheckBox(text);
                 setCheckBoxFont(checkBox);
                 pHoldCars.add(checkBox);
-                carCheckBoxes.put(car.getId(), checkBox);
+                checkBoxes.put(car.getId(), checkBox);
                 pTrack.add(pHoldCars);
             }
             pTrackPane.validate();
+            pHoldCars.setMaximumSize(new Dimension(2000, pHoldCars.getHeight()));
+            pHoldCars.revalidate();
             if (pickup && !setout) {
                 textTrackCommentWorkPane.setText(_track.getCommentPickup());
             } else if (!pickup && setout) {

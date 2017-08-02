@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LightIcon objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2011
- * @version $Revision: 17977 $
  */
 public class LightIconXml extends PositionableLabelXml {
 
@@ -24,6 +23,7 @@ public class LightIconXml extends PositionableLabelXml {
      * @param o Object to store, of type LightIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LightIcon p = (LightIcon) o;
@@ -52,6 +52,7 @@ public class LightIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

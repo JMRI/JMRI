@@ -1,4 +1,3 @@
-// ExportRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -27,17 +26,11 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU Gene ral Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.roster.ImportRosterItemAction
  * @see jmri.jmrit.XmlFile
  */
 public class ExportRosterItemAction extends AbstractRosterItemAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6157199339046481963L;
 
     public ExportRosterItemAction(String pName, Component pWho) {
         super(pName, pWho);

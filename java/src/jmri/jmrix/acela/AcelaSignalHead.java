@@ -1,4 +1,3 @@
-// AcelaSignalHead.java
 package jmri.jmrix.acela;
 
 import jmri.implementation.DefaultSignalHead;
@@ -16,18 +15,16 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaSignalHead extends DefaultSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4814823979680236593L;
+    AcelaSystemConnectionMemo _memo = null;
 
     /**
      * Create a SignalHead object, with only a system name.
      * <P>
      * 'systemName' should have been previously validated
      */
-    public AcelaSignalHead(String systemName) {
+    public AcelaSignalHead(String systemName,AcelaSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         // Save system Name
         tSystemName = systemName;
 
@@ -35,7 +32,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
         int num = AcelaAddress.getBitFromSystemName(systemName);
         addr = num;
 
-        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName);
+        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName,_memo);
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't find new Acela Signal with name '" + tSystemName);
@@ -50,8 +47,9 @@ public class AcelaSignalHead extends DefaultSignalHead {
      * <P>
      * 'systemName' should have been previously validated
      */
-    public AcelaSignalHead(String systemName, String userName) {
+    public AcelaSignalHead(String systemName, String userName,AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
         // Save system Name
         tSystemName = systemName;
 
@@ -59,7 +57,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
         int num = AcelaAddress.getBitFromSystemName(systemName);
         addr = num;
 
-        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName);
+        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName,_memo);
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't find new Acela Signal with name '" + tSystemName);
@@ -72,8 +70,9 @@ public class AcelaSignalHead extends DefaultSignalHead {
     /**
      * Handle a request to change state on layout
      */
+    @Override
     protected void updateOutput() {
-        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName);
+        AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName,_memo);
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't resolve Acela Signal with name '" + tSystemName + "', command ignored");
@@ -134,5 +133,3 @@ public class AcelaSignalHead extends DefaultSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSignalHead.class.getName());
 }
-
-/* @(#)AcelaSignalHead.java */

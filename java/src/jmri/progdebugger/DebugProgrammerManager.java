@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
     public DebugProgrammerManager() {
@@ -32,6 +31,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      */
     Hashtable<Integer, ProgDebugger> opsProgrammers = new Hashtable<Integer, ProgDebugger>();
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         int address = pAddress;
         if (!pLongAddress) {
@@ -55,6 +55,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return saw;
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
@@ -64,6 +65,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }

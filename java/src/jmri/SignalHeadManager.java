@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for obtaining signal heads.
  * <P>
@@ -25,6 +29,7 @@ import java.util.List;
 public interface SignalHeadManager extends Manager {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -34,15 +39,19 @@ public interface SignalHeadManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public SignalHead getSignalHead(String name);
+    @CheckReturnValue
+    @CheckForNull public SignalHead getSignalHead(@Nonnull String name);
 
-    public SignalHead getByUserName(String s);
+    @CheckReturnValue
+    @CheckForNull public SignalHead getByUserName(@Nonnull String s);
 
-    public SignalHead getBySystemName(String s);
+    @CheckReturnValue
+    @CheckForNull public SignalHead getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all SignalHead system names.
      */
-    public List<String> getSystemNameList();
+    @Nonnull@Override
+ public List<String> getSystemNameList();
 
 }

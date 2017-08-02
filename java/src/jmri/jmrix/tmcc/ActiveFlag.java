@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.tmcc;
 
 /**
@@ -9,8 +8,9 @@ package jmri.jmrix.tmcc;
  * number of unneeded class loadings.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version $Revision$
+ * @deprecated since 4.5.1
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;
@@ -23,6 +23,3 @@ abstract public class ActiveFlag {
         return flag;
     }
 }
-
-
-/* @(#)AbstractMRReply.java */

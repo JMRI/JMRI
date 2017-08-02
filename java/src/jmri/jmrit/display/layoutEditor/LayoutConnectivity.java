@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutConnectivity.java
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Path;
@@ -43,7 +42,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
- * @version $Revision$
  */
 public class LayoutConnectivity {
 
@@ -63,21 +61,51 @@ public class LayoutConnectivity {
 
     // defined constants for crossover block boundary types.
     final public static int NONE = 0;
-    final public static int XOVER_BOUNDARY_AB = 1;		// continuing
-    final public static int XOVER_BOUNDARY_CD = 2;		// continuing
-    final public static int XOVER_BOUNDARY_AC = 3;		// xed over
-    final public static int XOVER_BOUNDARY_BD = 4;		// xed over
+    final public static int XOVER_BOUNDARY_AB = 1;  // continuing
+    final public static int XOVER_BOUNDARY_CD = 2;  // continuing
+    final public static int XOVER_BOUNDARY_AC = 3;  // xed over
+    final public static int XOVER_BOUNDARY_BD = 4;  // xed over
+<<<<<<< HEAD
+=======
+    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
+    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
+>>>>>>> JMRI/master
 
     // instance variables
-    LayoutBlock block1 = null;
-    LayoutBlock block2 = null;
-    int direction = Path.NONE;
-    TrackSegment track1 = null;
-    Object connect2 = null;
-    int typeConnect2 = 0;
-    LayoutTurnout xover = null;
-    int xoverBoundaryType = NONE;
-    PositionablePoint anchor = null;
+    private LayoutBlock block1 = null;
+    private LayoutBlock block2 = null;
+
+    private int direction = Path.NONE;
+    private TrackSegment track1 = null;
+
+    private Object connect2 = null;
+    private int typeConnect2 = 0;
+
+    private LayoutTurnout xover = null;
+    private int xoverBoundaryType = NONE;
+
+    private PositionablePoint anchor = null;
+
+    // this should only be used for debugging...
+    public String toString() {
+        String result = "between " + block1 + " and " + block2 + " in direction " + Path.decodeDirection(direction);
+        if (track1 != null) {
+            result = result + ", track: " + track1.getID();
+        }
+        if (connect2 != null) {
+            result = result + ", connect2: " + ((LayoutTrack) connect2).getID() + ", type2: " + typeConnect2;
+        }
+        if (xover != null) {
+            result = result + ", xover: " + xover.getID() + ", xoverBoundaryType: " + xoverBoundaryType;
+        }
+        return result;
+    }
+
+    // this should only be used for debugging…
+    public String toString() {
+        return "between " + block1 + " and "
+                + block2 + " in direction " + Path.decodeDirection(direction);
+    }
 
     /**
      * Accessor routines

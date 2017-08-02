@@ -1,7 +1,3 @@
-/**
- * LI100XNetProgrammer.java
- */
- // Convert the jmri.Programmer interface into commands for the Lenz XpressNet
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.XNetConstants;
@@ -30,13 +26,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
- * @version $Revision$
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
     static private final int RETURNSENT = 3;
 
-    // save the last XPressNet message for retransmission after a 
+    // save the last XpressNet message for retransmission after a
     // communication error..
     private XNetMessage lastRequestMessage = null;
 
@@ -47,6 +42,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -85,10 +81,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -132,6 +130,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
@@ -387,6 +386,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 
@@ -420,6 +420,3 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     private final static Logger log = LoggerFactory.getLogger(LI100XNetProgrammer.class.getName());
 
 }
-
-
-/* @(#)XNetProgrammer.java */

@@ -1,6 +1,6 @@
-// DCCppSensorManager.java
 package jmri.jmrix.dccpp;
 
+import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "DCCppSnnn", where nnn is the sensor number without padding.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -31,17 +31,27 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     static private DCCppSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeDCCppListener(DCCppInterface.FEEDBACK, this);
         super.dispose();
     }
 
+<<<<<<< HEAD
     // XPressNet specific methods
+=======
+    // DCCpp specific methods
+
+>>>>>>> JMRI/master
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new DCCppSensor(systemName, userName, tc);
     }
 
-    // ctor has to register for DCC++ events
+    /**
+     * Ctor
+     * Has to register for DCC++ events.
+     */
     public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
         tc = controller;
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
@@ -52,7 +62,14 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     }
 
+<<<<<<< HEAD
     // listen for sensors, creating them as needed
+=======
+    /**
+     * Listen for sensors, creating them as needed.
+     */
+>>>>>>> JMRI/master
+    @Override
     public void message(DCCppReply l) {
         int addr = 0;
         if (log.isDebugEnabled()) {
@@ -76,22 +93,42 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } else {
             // The sensor exists.  We need to forward this 
             // message to it.
-            ((DCCppSensor) getBySystemName(s)).message(l);
+            Sensor sen = getBySystemName(s);
+            if (sen == null) {
+                log.error("Failed to get sensor for {}", s);
+            } else {
+                ((DCCppSensor) sen).message(l);
+            }
         }
 
     }
 
+<<<<<<< HEAD
     // listen for the messages to the LI100/LI101
+=======
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
+>>>>>>> JMRI/master
+    @Override
     public void message(DCCppMessage l) {
     }
 
+<<<<<<< HEAD
     // Handle a timeout notification
+=======
+    /**
+     * Handle a timeout notification.
+     */
+>>>>>>> JMRI/master
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -102,18 +139,20 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         int input = 0;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form of encoderAddress:input or T:turnout address
+            // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
                 encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningAddressAsNumber"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             iName = ((encoderAddress - 1) * 8) + input;
         } else {
-            //Entered in using the old format
+            // Entered in using the old format
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
@@ -128,6 +167,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     int iName; // must synchronize to avoid race conditions.
 
     /**
+     * Provide next valid DCC++ address.
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
@@ -139,7 +179,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -163,5 +203,3 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());
 
 }
-
-/* @(#)DCCppSensorManager.java */

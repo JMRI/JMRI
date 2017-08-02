@@ -1,34 +1,32 @@
-// PacketGenFrame.java
 package jmri.jmrix.qsi.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Frame for user input of QSI messages. Input is a sequence of hex pairs,
  * including the length, but not the lead 'A', checksum or final 'E'.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4372308600267781524L;
+    private QsiSystemConnectionMemo _memo = null;
+
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public PacketGenFrame() {
+    public PacketGenFrame(QsiSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -55,6 +53,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -65,7 +64,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        QsiTrafficController.instance().sendQsiMessage(createPacket(packetTextField.getText()), this);
+        _memo.getQsiTrafficController().sendQsiMessage(createPacket(packetTextField.getText()), this);
     }
 
     /**
@@ -86,9 +85,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         return m;
     }
 
+    @Override
     public void message(QsiMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(QsiReply r) {
     } // ignore replies
 

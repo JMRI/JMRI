@@ -31,7 +31,7 @@ import jmri.util.swing.WindowInterface;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class CopyRosterGroupAction extends JmriAbstractAction {
 
@@ -73,11 +73,11 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
-                    "<html><b>Duplicate roster group</b><br>Select the roster group to duplicate.</html>",
-                    "Duplicate Roster Group",
+                    Bundle.getMessage("DuplicateRosterGroupDialog"),
+                    Bundle.getMessage("DuplicateRosterGroupTitle", ""),
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
@@ -86,24 +86,27 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         }
 
         String entry = (String) JOptionPane.showInputDialog(_who,
-                "<html><b>Duplicate roster group</b><br>Enter the name for the new roster group.</html>",
-                "Duplicate Roster Group " + group,
+                Bundle.getMessage("DuplicateRosterGroupNewName"),
+                Bundle.getMessage("DuplicateRosterGroupTitle",group),
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 null,
                 null);
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        if (entry != null) {
+            entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        }
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
-        } else if (Roster.instance().getRosterGroupList().contains(entry)) {
+        } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
-                    "<html><b>Unable to duplicate roster group</b><br>The roster group named \"" + entry + "\" already exists.",
-                    "Duplicate Roster Group " + group,
+                    Bundle.getMessage("DuplicateRosterGroupSameName", entry),
+                    Bundle.getMessage("DuplicateRosterGroupTitle", group),
                     JOptionPane.ERROR_MESSAGE);
         }
 
         // rename the roster grouping
-        Roster.instance().copyRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().copyRosterGroupList(group, entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

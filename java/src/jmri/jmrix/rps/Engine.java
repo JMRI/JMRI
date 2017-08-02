@@ -1,9 +1,10 @@
-// Engine.java
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
+import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -28,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * must be present in the Roster.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class Engine implements ReadingListener {
 
@@ -141,6 +141,7 @@ public class Engine implements ReadingListener {
 
     String algorithm = "Ash 2.1";  // default value, configured separately
 
+    @Override
     public void notify(Reading r) {
         // This implementation creates a new Calculator
         // each time to ensure that the most recent
@@ -306,7 +307,7 @@ public class Engine implements ReadingListener {
     void loadInitialTransmitters() {
         transmitters = new java.util.ArrayList<Transmitter>();
         // load transmitters from the JMRI roster
-        java.util.List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        java.util.List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
         log.debug("Got " + l.size() + " roster entries");
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = null;
@@ -462,6 +463,7 @@ public class Engine implements ReadingListener {
     void startpoll() {
         // time to start operation
         pollThread = new Thread() {
+            @Override
             public void run() {
                 log.debug("Polling starts");
                 while (true) {
@@ -533,8 +535,8 @@ public class Engine implements ReadingListener {
             packet = jmri.NmraPacket.threeBytePacket(
                     t.getAddress(), t.isLongAddress(),
                     (byte) 0xC0, (byte) 0xA5, (byte) 0xFE);
-            if (jmri.InstanceManager.commandStationInstance() != null) {
-                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+            if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
+                jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
             }
         } else {
             // poll using F2
@@ -551,8 +553,8 @@ public class Engine implements ReadingListener {
                 packet = jmri.NmraPacket.function0Through4Packet(
                         t.getAddress(), t.isLongAddress(),
                         false, false, true, false, false);
-                if (jmri.InstanceManager.commandStationInstance() != null) {
-                    jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+                if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
+                    jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
                 }
             }
         }
@@ -575,18 +577,18 @@ public class Engine implements ReadingListener {
                 byte[] packet = jmri.NmraPacket.function0Through4Packet(
                         t.getAddress(), t.isLongAddress(),
                         false, false, false, false, false);
-                if (jmri.InstanceManager.commandStationInstance() != null) {
-                    jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+                if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
+                    jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
                 }
             }
         }
     }
 
     // for now, we only allow one Engine
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
     static public Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()

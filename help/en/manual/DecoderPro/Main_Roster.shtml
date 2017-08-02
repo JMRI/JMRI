@@ -1,170 +1,278 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI DP Manual - Roster Menu</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI DP Manual - Roster Menu</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>Roster Menu</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Main_Tool.shtml"> Previous | </a><a href="Main_Panels.shtml">Next </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<h3>Roster</h3>
-<p>Opens a window showing the complete roster. (See <a style="font-weight: bold;" href="../3-6_DecoderPro3/index.shtml" target="_blank">DecoderPro Manual.</a>)</p>
-<p><img src="images/Main_DP3Roster.png" alt="DP3 Roster" height="527" width="899"></p>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<h3>Create Entry...</h3>
-<h4>New Roster Setup Pane</h4>
-<p align="center"><img src="images/Main_RosterMenu01.png" alt="Create Roster" border="0" height="483" width="391"></p>
-<p>Select a decoder that matches the one installed in your Locomotive.
-The Open Programmer button will now become activated and you&#8217;ll be able
-to move on with the Programmer selected from the drop-down list, then
-&nbsp;click on the <strong>Open Programmer</strong> button, the selected Programmer window will open. All programmers,  Basic and Comprehensive, open to the <a href="Comp_Setup_Roster.shtml">Roster Entry pane</a>.</p>
+      <h2>Roster Menu</h2>
 
-<h3>Edit Entry...</h3>
-<h4>Edit Roster Entry Setup Pane</h4>
-<p align="center"><img src="images/Main_RosterMenu02.png" alt="Edit Roster setup" border="0" height="162" width="275"></p>
-<p>Select the roster entry from the drop-down list that
-you wish to edit. Select the Programmer format that you wish to use
-from the drop-down list. Click on the Open Programmer button and <a href="Comp_Setup_Roster.shtml">Roster Entry Pane</a> of selected programmer will open.</p>
+      <div align="right">
+        <p><a href="Main_Tool.shtml">Previous |</a> <a href=
+        "Main_Panels.shtml">Next</a></p>
 
-<h3>Copy Entry...</h3>
-<h4 align="left">Select	roster entry dialog box</h4>
-<p align="center"><img src="images/Main_RosterMenu03.png" alt="select roster entry" border="0" height="123" width="309"></p>
-<p>From the drop-down list select the roster that you wish to process, then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
 
-<h3>Import Entry...</h3>
-<h4 align="left">Input prompt</h4>
-<p align="center"><img src="images/Main_RosterMenu04.png" alt="input dialog" border="0" height="127" width="299"></p>
-<p>Type the name of the new roster you wish to process then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
+      <h3>Roster</h3>
 
-<h3>Export Entry...</h3>
-<p>Opens the <a href="#SelectDialog">Select roster entry</a> dialog box. Next the <strong>Save</strong> dialog will be displayed, select the location where you would like to save the roster file.</p>
+      <p>Opens a window showing the complete roster. (See <a style=
+      "font-weight: bold;" href="../3-6_DecoderPro3/index.shtml"
+      target="_blank">DecoderPro Manual.</a>)</p>
 
-<h3>Delete Entry...</h3>
-<p>Select the Locomotive that you wish to delete from DecoderPro in the Roster drop-down list. Click <strong>OK</strong> and the Confirmation box <strong>Delete entry <em>[file Name]</em>?</strong> is displayed. Clicking <strong>Yes</strong> deletes the file, <strong>No</strong> aborts the operation.</p>
-<p align="center"><img src="images/Main_RosterMenu05.png" alt="Delete Roster" border="0" height="119" width="305">&nbsp;<img src="images/Main_RosterMenu06.png" alt="confirm delete" border="0" height="122" width="432"></p>
+      <p><img src="images/Main_DP3Roster.png" alt="DP3 Roster"
+      height="527" width="899"></p>
 
-<h3>Print Summary...</h3>
-<p>Opens your operating systems Print... dialog and when
-<strong>Print</strong> is selected, prints a complete summary of your roster entries.
-(typically 5 entries per page, so be prepared to print several pages). 
-Printing to PDF file can save a lot of paper.</p>
-<p style="text-align: center;"><img style="width: 722px; height: 649px;" alt="summary" src="images/Main_RosterMenu07.png"></p>
+      <h3>Create Entry...</h3>
 
-<h3>Print Preview Summary...</h3>
-<p style="text-align: center;">Preview Roster Summary<img style="width: 669px; height: 605px;" alt="Summary Preview" src="images/Main_RosterMenu07a.png"></p>
+      <h4>New Roster Setup Pane</h4>
 
-<h3><a href="Main_RosterGroup.shtml">Roster Groups</a></h3>
-<p>Roster Grouping allows you to allocate Roster Entries into different groups.  
-  If for example you run multiple layouts with different locomotives, 
-  you can allocate those Locomotives to the relative group, 
-  thus when you select a roster group to work with, 
-  the drop down lists in the Throttle or Edit Roster entries 
-will only contain Locomotives that are in that specific list.</p>
-  <p style="margin-left: 40px;">When working with a Roster Group, some of the functions above change slightly:
-	<ul>
-    <li><strong>Create Roster Group</strong></li>
-    <li><strong>Delete Roster Group</strong></li>
-    <li><strong>Table Association</strong></li>
-    <li><strong>Add Roster Entry to Group</strong></li>
-    <li><strong>Remove Roster Entry from Group</strong></li>
-	</ul>
-</p>
+      <p align="center"><img src="images/Main_RosterMenu01.png"
+      alt="Create Roster" border="0" height="483" width="391"></p>
 
-<div style="margin-left: 40px;"><img src="images/separator.png" alt="sep" height="4" width="340"></div>
+      <p>Select a decoder that matches the one installed in your
+      Locomotive. The Open Programmer button will now become
+      activated and you'll be able to move on with the Programmer
+      selected from the drop-down list, then click on the
+      <strong>Open Programmer</strong> button, the selected
+      Programmer window will open. All programmers, Basic and
+      Comprehensive, open to the <a href=
+      "Comp_Setup_Roster.shtml">Roster Entry pane</a>.</p>
 
-<h3>Export Complete Roster...</h3>
-<p>Opens the Save dialog box to allow you to select directory and name the file.</p>
+      <h3>Edit Entry...</h3>
 
-<a name="speedProfiling"></a><h3>Speed Profiling</span></h3>
-          <p>The tool is designed to create a profile of a loco at various speed 
-          steps to help with the automatic running of a loco within JMRI. 
-          Primarily to help with the principle of getting a loco to stop 
-          within a specific distance from a known throttle setting.
-        </p>
-        <p>
-          The tool works on the principle of timing a loco over a known 
-          distance at a given speed step, in both the forward and reverse 
-          direction. Currently it requires three sensors which monitor the 
-          occupancy of a section of track. Ideally the section of track that 
-          the timed runs are performed over should be straight, and a minimum 
-          of 1 m&nbsp; long, the longer the length the better the result. For this 
-          profiling to work correctly acceleration / deceleration should be 
-          disabled on the loco decoder.</p>
-          
-        <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+      <h4>Edit Roster Entry Setup Pane</h4>
+
+      <p align="center"><img src="images/Main_RosterMenu02.png"
+      alt="Edit Roster setup" border="0" height="162" width=
+      "275"></p>
+
+      <p>Select the roster entry from the drop-down list that you
+      wish to edit. Select the Programmer format that you wish to
+      use from the drop-down list. Click on the Open Programmer
+      button and <a href="Comp_Setup_Roster.shtml">Roster Entry
+      Pane</a> of selected programmer will open.</p>
+
+      <h3>Copy Entry...</h3>
+
+      <h4 align="left">Select roster entry dialog box</h4>
+
+      <p align="center"><img src="images/Main_RosterMenu03.png"
+      alt="select roster entry" border="0" height="123" width=
+      "309"></p>
+
+      <p>From the drop-down list select the roster that you wish to
+      process, then click on the <strong>OK</strong> button. Click
+      <strong>Cancel</strong> button if you wish to abort this
+      function.</p>
+
+      <h3>Import Entry...</h3>
+
+      <h4 align="left">Input prompt</h4>
+
+      <p align="center"><img src="images/Main_RosterMenu04.png"
+      alt="input dialog" border="0" height="127" width="299"></p>
+
+      <p>Type the name of the new roster you wish to process then
+      click on the <strong>OK</strong> button. Click
+      <strong>Cancel</strong> button if you wish to abort this
+      function.</p>
+
+      <h3>Export Entry...</h3>
+
+      <p>Opens the <a href="#SelectDialog">Select roster entry</a>
+      dialog box. Next the <strong>Save</strong> dialog will be
+      displayed, select the location where you would like to save
+      the roster file.</p>
+
+      <h3>Delete Entry...</h3>
+
+      <p>Select the Locomotive that you wish to delete from
+      DecoderPro in the Roster drop-down list. Click
+      <strong>OK</strong> and the Confirmation box <strong>Delete
+      entry <em>[file Name]</em>?</strong> is displayed. Clicking
+      <strong>Yes</strong> deletes the file, <strong>No</strong>
+      aborts the operation.</p>
+
+      <p align="center"><img src="images/Main_RosterMenu05.png"
+      alt="Delete Roster" border="0" height="119" width="305">
+      <img src="images/Main_RosterMenu06.png" alt="confirm delete"
+      border="0" height="122" width="432"></p>
+
+      <h3>Print Summary...</h3>
+
+      <p>Opens your operating systems Print... dialog and when
+      <strong>Print</strong> is selected, prints a complete summary
+      of your roster entries. (typically 5 entries per page, so be
+      prepared to print several pages). Printing to PDF file can
+      save a lot of paper.</p>
+
+      <p style="text-align: center;"><img style=
+      "width: 722px; height: 649px;" alt="summary" src=
+      "images/Main_RosterMenu07.png"></p>
+
+      <h3>Print Preview Summary...</h3>
+
+      <p style="text-align: center;">Preview Roster
+      Summary<img style="width: 669px; height: 605px;" alt=
+      "Summary Preview" src="images/Main_RosterMenu07a.png"></p>
+
+      <h3><a href="Main_RosterGroup.shtml">Roster Groups</a></h3>
+
+      <p>Roster Grouping allows you to allocate Roster Entries into
+      different groups. If for example you run multiple layouts
+      with different locomotives, you can allocate those
+      Locomotives to the relative group, thus when you select a
+      roster group to work with, the drop down lists in the
+      Throttle or Edit Roster entries will only contain Locomotives
+      that are in that specific list.</p>
+
+      <p style="margin-left: 40px;">When working with a Roster
+      Group, some of the functions above change slightly:</p>
+
+      <ul>
+        <li><strong>Create Roster Group</strong></li>
+
+        <li><strong>Delete Roster Group</strong></li>
+
+        <li><strong>Table Association</strong></li>
+
+        <li><strong>Add Roster Entry to Group</strong></li>
+
+        <li><strong>Remove Roster Entry from Group</strong></li>
+      </ul>
+
+      <div style="margin-left: 40px;">
+        <img src="images/separator.png" alt="sep" height="4" width=
+        "340">
+      </div>
+
+      <h3>Export Complete Roster...</h3>
+
+      <p>Opens the Save dialog box to allow you to select directory
+      and name the file.</p><a name="speedProfiling" id=
+      "speedProfiling"></a>
+
+      <h3>Speed Profiling</h3>
+
+      <p>The tool is designed to create a profile of a loco at
+      various speed steps to help with the automatic running of a
+      loco within JMRI. Primarily to help with the principle of
+      getting a loco to stop within a specific distance from a
+      known throttle setting.</p>
+
+      <p>The tool works on the principle of timing a loco over a
+      known distance at a given speed step, in both the forward and
+      reverse direction. Currently it requires three sensors which
+      monitor the occupancy of a section of track. Ideally the
+      section of track that the timed runs are performed over
+      should be straight, and a minimum of 1 m long, the longer the
+      length the better the result. For this profiling to work
+      correctly acceleration / deceleration should be disabled on
+      the loco decoder.</p>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
         <tbody>
-        <tr><td><img style="width: 408px; height: 465px;" alt="speed profile" src="images/Main_Roster_SpeedProfile.png"></td>
-        <td style="vertical-align: top;">
-        <ul>
-					 <li><b>Block Length</b> - This is the length in Millimeters of the 
-					  middle section which the timed run will be measured.</li>
-					<li><b>Start Sensor</b> - This is the Sensor on the initial section of track that 
-					  the Locomotive will start its initial run from.</li>
-					<li><b>Block Sensor</b> - This is the Sensor related to the section of 
-					  track that the timed run will be taken over.</li>
-					<li><b>Finish Sensor</b> - This Sensor is related to the section track 
-					  immediately after the timed section.</li>
-					<li><b>Roster Entry</b> - Select the Locomotive that the profiling is to be 
-					  performed on.</li>
-					<li><b>Cancel</b> - Cancels the profiling or test run.</li>
-					<li><b>Profile</b> - Starts the profiling.</li>
-        </ul></td>
-        </tr>
-        </tbody></table>
-            
-        <p>To profile the loco, fill the above details into the window, place 
-          the loco in the starting section facing forwards towards (but not 
-          on) the section of track that the timed run will be taken over, then 
-          press profile.</p>
-        <p>What happens is that the tool will set the loco off running in the 
-          forward direction at speed step 1, when it activates the timed 
-          section sensor it starts a timer. Once the finish section sensor is 
-          activated the timer is stopped, and the speed is calculated in 
-          Millimeters per Second, this is then recorded against the roster. 
-          The tool will then ensure that the loco is clear of the timed 
-          section sensor, then repeat the procedure again but in the reverse 
-          direction. Once the loco is back at the initial start section, the 
-          whole procedure is repeated again for the next speed step, this 
-          occurs until a profile of all speed steps has been completed.</p>
-          
-    <h4>Testing</h4>
-        <p>Having completed the profiling, it is possible to test the profile 
-          out. Place the loco in the starting section again facing forward 
-          toward the timed section, ideally some distance away from it. Enter 
-          in a starting speed step number in the box next to the Test Button, 
-          then press test. What will occur is that the tool will set the loco 
-          off running at the given speed step, then it will attempt to 
-          gradually stop the loco before it reaches the far end. Results will 
-          vary especially at the higher speed steps, where you will more 
-          likely experience an over run.</p>
-<hr>
+          <tr>
+            <td><img style="width: 408px; height: 465px;" alt=
+            "speed profile" src=
+            "images/Main_Roster_SpeedProfile.png"></td>
 
-<div align="right">
-<p><a href="Main_Panels.shtml"></a><a href="Main_Tool.shtml">Previous | </a><a href="Main_Panels.shtml">Next </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+            <td style="vertical-align: top;">
+              <ul>
+                <li><b>Block Length</b> - This is the length in
+                Millimeters of the middle section which the timed
+                run will be measured.</li>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+                <li><b>Start Sensor</b> - This is the Sensor on the
+                initial section of track that the Locomotive will
+                start its initial run from.</li>
+
+                <li><b>Block Sensor</b> - This is the Sensor
+                related to the section of track that the timed run
+                will be taken over.</li>
+
+                <li><b>Finish Sensor</b> - This Sensor is related
+                to the section track immediately after the timed
+                section.</li>
+
+                <li><b>Roster Entry</b> - Select the Locomotive
+                that the profiling is to be performed on.</li>
+
+                <li><b>Cancel</b> - Cancels the profiling or test
+                run.</li>
+
+                <li><b>Profile</b> - Starts the profiling.</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>To profile the loco, fill the above details into the
+      window, place the loco in the starting section facing
+      forwards towards (but not on) the section of track that the
+      timed run will be taken over, then press profile.</p>
+
+      <p>What happens is that the tool will set the loco off
+      running in the forward direction at speed step 1, when it
+      activates the timed section sensor it starts a timer. Once
+      the finish section sensor is activated the timer is stopped,
+      and the speed is calculated in Millimeters per Second, this
+      is then recorded against the roster. The tool will then
+      ensure that the loco is clear of the timed section sensor,
+      then repeat the procedure again but in the reverse direction.
+      Once the loco is back at the initial start section, the whole
+      procedure is repeated again for the next speed step, this
+      occurs until a profile of all speed steps has been
+      completed.</p>
+
+      <h4>Testing</h4>
+
+      <p>Having completed the profiling, it is possible to test the
+      profile out. Place the loco in the starting section again
+      facing forward toward the timed section, ideally some
+      distance away from it. Enter in a starting speed step number
+      in the box next to the Test Button, then press test. What
+      will occur is that the tool will set the loco off running at
+      the given speed step, then it will attempt to gradually stop
+      the loco before it reaches the far end. Results will vary
+      especially at the higher speed steps, where you will more
+      likely experience an over run.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Panels.shtml"></a><a href=
+        "Main_Tool.shtml">Previous |</a> <a href=
+        "Main_Panels.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

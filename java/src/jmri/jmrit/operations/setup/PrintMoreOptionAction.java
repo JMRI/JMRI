@@ -1,4 +1,3 @@
-// PrintMoreOptionAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
@@ -10,14 +9,9 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 21656 $
+ * 
  */
 public class PrintMoreOptionAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6885400704456385145L;
 
     public PrintMoreOptionAction() {
         this(Bundle.getMessage("TitlePrintMoreOptions"));
@@ -40,4 +34,4 @@ public class PrintMoreOptionAction extends AbstractAction {
     }
 }
 
-/* @(#)PrintMoreOptionAction.java */
+

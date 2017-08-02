@@ -1,4 +1,3 @@
-// TamsPowerManager.java
 package jmri.jmrix.tams;
 
 import jmri.JmriException;
@@ -7,61 +6,83 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PowerManager implementation for controlling layout power.
+ * PowerManager implementation for controlling layout power using binary P50x
+ * commands
  *
- * Based on work by Bob Jacobsen
+ * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
+ * @author Jan Boen
+ * 
  */
 public class TamsPowerManager implements PowerManager, TamsListener {
 
-    public TamsPowerManager(TamsTrafficController etc) {
+    //This dummy message is used in case we expect a reply from polling
+    static private TamsMessage myDummy() {
+        log.debug("*** myDummy ***");
+        TamsMessage m = new TamsMessage(2);
+        m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
+        m.setElement(1, TamsConstants.XSTATUS & TamsConstants.MASKFF);
+        m.setBinary(true);
+        m.setReplyOneByte(true);
+        m.setReplyType('P');
+        return m;
+    }
+    //A local TamsMessage is held at all time
+    //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
+    TamsMessage tm = myDummy();
+    
+    public TamsPowerManager(TamsTrafficController ttc) {
+        log.debug("*** TamsPowerManager ***");
         // connect to the TrafficManager
-        tc = etc;
-
-        TamsMessage m = new TamsMessage("xY");
-        tc.sendTamsMessage(m, this);
-        tc.addPollMessage(m, this);
+        tc = ttc;
+        tc.addTamsListener(this);
+        tm = TamsMessage.getXStatus();
+        tc.sendTamsMessage(tm, this);
+        tc.addPollMessage(tm, this);
+        log.debug("TamsMessage added to pollqueue = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
     }
 
     TamsTrafficController tc;
     Thread TamsPowerMonitorThread;
 
+    @Override
     public String getUserName() {
         return "Tams";
     }
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
+        log.debug("*** setPower ***");
         power = UNKNOWN; // while waiting for reply
         checkTC();
         if (v == ON) {
             // send message to turn on
-            TamsMessage l = new TamsMessage("xGO");
-            lastRequest = v;
-            tc.sendTamsMessage(l, this);
+            tm = TamsMessage.setXPwrOn();
+            tc.sendTamsMessage(tm, null);//changed this to null in this method
         } else if (v == OFF) {
-            lastRequest = v;
             // send message to turn off - twice
-            TamsMessage l = new TamsMessage("xSTOP");
-            tc.sendTamsMessage(l, this);
-            tc.sendTamsMessage(l, this);
+            TamsMessage tm = TamsMessage.setXPwrOff();
+            tc.sendTamsMessage(tm, null);
+            tc.sendTamsMessage(tm, null); //Does this work properly???
         }
         firePropertyChange("Power", null, null);
     }
 
     int lastRequest = 0;
 
+    @Override
     public int getPower() {
+        log.debug("*** getPower ***");
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
-        TamsMessage m = new TamsMessage("xY");
-        tc.removePollMessage(m, this);
+        TamsMessage tm = TamsMessage.getXStatus();
+        tc.removePollMessage(tm, this);
         tc = null;
     }
 
@@ -74,6 +95,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -82,31 +104,62 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
     // to listen for status changes from Tams system
-    public void reply(TamsReply m) {
-        // power message?
-        if (m.match("Pwr off") != -1) {
-            power = OFF;
-            firePropertyChange("Power", null, null);
-        } else if (m.match("Pwr on") != -1) {
-            power = ON;
-            firePropertyChange("Power", null, null);
-        } else if (m.getElement(0) == 0x00) {
-            if (lastRequest == ON) {
-                power = ON;
-            } else if (lastRequest == OFF) {
-                power = OFF;
+    @Override
+    public void reply(TamsReply tr) {
+        if (tm.getReplyType() == 'P'){
+            log.debug("*** TamsReply ***");
+            log.debug("TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
+            log.debug("TamsReply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
+            boolean valid = false;
+            if (tm.getElement(0) == TamsConstants.POLLMSG) {//Replying related to Poll Message
+                log.debug("Reply to Poll Message");
+                //reply to power status check is either 0 for off or 8 for on
+                if (tm.getElement(1) == TamsConstants.XSTATUS) {//power status check
+                    if ((tr.getElement(0) & TamsConstants.XPWRMASK) == 0x00) {
+                        log.debug("Power status = OFF");
+                        power = OFF;
+                        firePropertyChange("Power", null, null);
+                        valid = true;
+                    }
+                    if ((tr.getElement(0) & TamsConstants.XPWRMASK) == 0x08) {
+                        log.debug("Power status = ON");
+                        power = ON;
+                        firePropertyChange("Power", null, null);
+                        valid = true;
+                    }
+                }
+            } else {//Reply related to UI message
+                log.debug("Reply to UI Message");
+                //reply to power on / power off is always 0x00 any other answer is not correct
+                if (tm.getElement(1) == TamsConstants.XPWROFF) {
+                    log.debug("Power set = OFF");
+                    power = OFF;
+                    firePropertyChange("Power", null, null);
+                    valid = true;
+                }
+                if (tm.getElement(1) == TamsConstants.XPWRON) {
+                    log.debug("Power set = ON");
+                    power = ON;
+                    firePropertyChange("Power", null, null);
+                    valid = true;
+                }
             }
-        } else {
-            log.info("Unknown reply in power manager " + m.toString());
+            if (valid == false) {
+                power = UNKNOWN;
+                log.debug("Unknown reply in power manager " + tr.toString());
+            }
+        tm = myDummy();
         }
     }
 
-    public void message(TamsMessage m) {
+    @Override
+    public void message(TamsMessage tm) {
         // messages are ignored
     }
 
@@ -114,4 +167,3 @@ public class TamsPowerManager implements PowerManager, TamsListener {
 }
 
 
-/* @(#)TamsPowerManager.java */

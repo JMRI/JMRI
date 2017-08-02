@@ -3,9 +3,12 @@ package jmri.jmrix.jmriclient;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.Light;
 import jmri.LightManager;
 import jmri.PowerManager;
+import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 
@@ -17,7 +20,6 @@ import jmri.TurnoutManager;
  * activate their particular system.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -58,6 +60,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         this.jt = jt;
     }
 
+    @Override
     public void dispose() {
         jt = null;
         InstanceManager.deregister(this, JMRIClientSystemConnectionMemo.class);
@@ -94,13 +97,22 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
            ((JMRIClientTurnout)(getTurnoutManager().getTurnout(t))).requestUpdateFromLayout();
         }); 
         getSensorManager().getSystemNameList().forEach((s) -> {
-           ((JMRIClientSensor)(getSensorManager().getSensor(s))).requestUpdateFromLayout();
+            Sensor sen = getSensorManager().getSensor(s);
+            if (sen != null) {
+                ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
+            }
         }); 
         getLightManager().getSystemNameList().forEach((l) -> {
-           ((JMRIClientLight)(getLightManager().getLight(l))).requestUpdateFromLayout();
+            Light o = getLightManager().getLight(l);
+            if (o != null) {
+                ((JMRIClientLight)o).requestUpdateFromLayout();
+            }
         }); 
         getReporterManager().getSystemNameList().forEach((r) -> {
-           ((JMRIClientReporter)(getReporterManager().getReporter(r))).requestUpdateFromLayout();
+            Reporter rep = getReporterManager().getReporter(r);
+            if (rep != null) {
+                ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
+            }
         }); 
     }
 
@@ -186,6 +198,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     private String transmitPrefix = null;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
@@ -242,4 +255,4 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-/* @(#)JMRIClientSystemConnectionMemo.java */
+

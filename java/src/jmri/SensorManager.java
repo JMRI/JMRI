@@ -1,8 +1,9 @@
 package jmri;
 
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Interface for controlling sensors.
@@ -18,7 +19,7 @@ import javax.annotation.Nullable;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SensorManager extends Manager {
 
@@ -33,10 +34,11 @@ public interface SensorManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Sensor doesn't already exist and the
      *                                  manager cannot create the Sensor due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull
+    public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -45,9 +47,12 @@ public interface SensorManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @Nullable Sensor getSensor(@Nonnull String name);
+    @CheckReturnValue
+    @CheckForNull
+    public Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -72,18 +77,28 @@ public interface SensorManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Turnouts when you should be looking them up.
      *
-     * @return requested Sensor object (never null)
+     * @param systemName the desired system name
+     * @param userName   the desired user name
+     * @return requested Sensor object
      * @throws IllegalArgumentException if cannot create the Sensor due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Sensor newSensor(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
+    @Nonnull
+    public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
-    public @Nullable Sensor getByUserName(@Nonnull String s);
+    @CheckReturnValue
+    @CheckForNull
+    public Sensor getByUserName(@Nonnull String s);
 
-    public @Nullable Sensor getBySystemName(@Nonnull String s);
+    @CheckReturnValue
+    @CheckForNull
+    public Sensor getBySystemName(@Nonnull String s);
 
-    public @Nonnull List<String> getSystemNameList();
+    @CheckReturnValue
+    @Nonnull
+    @Override
+    public List<String> getSystemNameList();
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -97,11 +112,14 @@ public interface SensorManager extends Manager {
     public void updateAll();
 
     /**
-     * A method that determines if it is possible to add a range of sensors in
-     * numerical order eg 10 to 30 will return true. where as if the address
-     * format is 1b23 this will return false.
+     * Determines if it is possible to add a range of sensors in numerical
+     * order.
      *
+     * @param systemName the system name to check against; appears to be ignored
+     *                   in all implementations
+     * @return true if possible; false otherwise
      */
+    @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
@@ -109,21 +127,36 @@ public interface SensorManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param curAddress - The hardware address of the turnout we which to
+     * @param curAddress - The hardware address of the sensor we wish to add
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
-     * @return           - null if the system name made from prefix and curAddress is in use
+     * @return - null if the system name made from prefix and curAddress is in
+     *         use
      * @throws jmri.JmriException if problem calculating next address
      */
-    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @CheckReturnValue
+    @CheckForNull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
+    @CheckReturnValue
     public long getDefaultSensorDebounceGoingActive();
 
+    @CheckReturnValue
     public long getDefaultSensorDebounceGoingInActive();
 
     public void setDefaultSensorDebounceGoingActive(long timer);
 
     public void setDefaultSensorDebounceGoingInActive(long timer);
+
+    /**
+     * Do the sensor objects provided by this manager support configuring 
+     * an internal pullup or pull down resistor?
+     * 
+     * @return true if pull up/pull down configuration is supported.
+     */
+    public boolean isPullResistanceConfigurable();
+
 }

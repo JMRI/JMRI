@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.dcc.configurexml.DccTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

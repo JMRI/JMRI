@@ -33,9 +33,6 @@
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
-    <turnout systemName="IT" feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT</systemName>
-    </turnout>
     <turnout systemName="IT0" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT0</systemName>
     </turnout>
@@ -68,6 +65,9 @@
     </turnout>
     <turnout systemName="IT9" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT9</systemName>
+    </turnout>
+    <turnout systemName="IT99" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT99</systemName>
     </turnout>
   </turnouts>
   <lights class="jmri.managers.configurexml.InternalLightManagerXml">

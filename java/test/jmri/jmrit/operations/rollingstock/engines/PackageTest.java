@@ -32,16 +32,28 @@ public class PackageTest extends TestCase {
         suite.addTest(NceConsistEnginesTest.suite());
         suite.addTest(EngineManagerTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(EnginesTableFrameTest.suite());
-            suite.addTest(EngineEditFrameTest.suite());
-            suite.addTest(EngineAttributeEditFrameTest.suite());
-            suite.addTest(EngineSetFrameTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineAttributeEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineSetFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEngineRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteEngineRosterActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEngineActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEngineActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistEngineActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetEngineMovesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintEngineRosterActionTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

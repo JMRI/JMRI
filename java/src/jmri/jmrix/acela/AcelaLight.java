@@ -1,4 +1,3 @@
-// AcelaLight.java
 package jmri.jmrix.acela;
 
 import jmri.implementation.AbstractLight;
@@ -13,25 +12,22 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaLight extends AbstractLight {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2275150502965932412L;
+    AcelaSystemConnectionMemo _memo = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaLight(String systemName) {
+    public AcelaLight(String systemName,AcelaSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         initializeLight(systemName);
     }
 
@@ -40,8 +36,9 @@ public class AcelaLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaLight(String systemName, String userName) {
+    public AcelaLight(String systemName, String userName,AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
         initializeLight(systemName);
     }
 
@@ -56,7 +53,7 @@ public class AcelaLight extends AbstractLight {
         // Extract the Bit from the name
         mBit = AcelaAddress.getBitFromSystemName(systemName);
         // Set initial state
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
             int initstate;
@@ -80,6 +77,7 @@ public class AcelaLight extends AbstractLight {
     /**
      * Return the current state of this Light
      */
+    @Override
     public int getState() {
         return mState;
     }
@@ -90,8 +88,9 @@ public class AcelaLight extends AbstractLight {
      * AcelaNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     public void setState(int newState) {
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
             if (newState == ON) {
@@ -114,5 +113,3 @@ public class AcelaLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLight.class.getName());
 }
-
-/* @(#)AcelaLight.java */

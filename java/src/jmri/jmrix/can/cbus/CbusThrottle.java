@@ -390,6 +390,9 @@ public class CbusThrottle extends AbstractThrottle {
             case 28:
                 this.f28 = state;
                 break;
+            default:
+                log.warn("Unhandled function number: {}", fn);
+                break;
         }
     }
 
@@ -402,6 +405,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
+        if (log.isDebugEnabled()) log.debug("setSpeedSetting({}) ", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -412,7 +416,7 @@ public class CbusThrottle extends AbstractThrottle {
         if (this.isForward) {
             new_spd = new_spd | 0x80;
         }
-        log.debug("Sending speed/dir for speed: " + new_spd);
+        if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
         cs.setSpeedDir(_handle, new_spd);
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
@@ -496,7 +500,6 @@ public class CbusThrottle extends AbstractThrottle {
      */
     public void throttleTimedOut() {
         _handle = -1;
-        cs = null;
 
         // stop timeout
         mRefreshTimer.stop();
@@ -514,15 +517,14 @@ public class CbusThrottle extends AbstractThrottle {
     public void throttleDispose() {
         log.debug("dispose");
 
+        // stop timeout
+        mRefreshTimer.stop();
+
         cs.releaseSession(_handle);
         _handle = -1;
         cs = null;
 
-        // stop timeout
-        mRefreshTimer.stop();
-
         mRefreshTimer = null;
-        cs = null;
         finishRecord();
     }
 
@@ -531,6 +533,7 @@ public class CbusThrottle extends AbstractThrottle {
     // CBUS command station expect DSPD every 4s
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 keepAlive();
             }
@@ -543,13 +546,14 @@ public class CbusThrottle extends AbstractThrottle {
      * Internal routine to resend the speed on a timeout
      */
     synchronized protected void keepAlive() {
-        cs.sendKeepAlive(_handle);
+        if (cs != null) { // cs can be null if in process of terminating?
+            cs.sendKeepAlive(_handle);
 
-        // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
-        mRefreshTimer.start();
-
+            // reset timeout
+            mRefreshTimer.stop();
+            mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
+            mRefreshTimer.start();
+        } 
     }
 
     @Override

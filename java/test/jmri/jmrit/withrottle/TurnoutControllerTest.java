@@ -1,10 +1,10 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of TurnoutController
@@ -44,6 +44,7 @@ public class TurnoutControllerTest extends TestCase {
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

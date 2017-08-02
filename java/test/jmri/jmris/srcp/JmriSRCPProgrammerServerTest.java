@@ -1,18 +1,17 @@
-//JmriSRCPProgrammerServerTest.java
 package jmri.jmris.srcp;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPProgrammerServer class
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class JmriSRCPProgrammerServerTest extends TestCase {
+public class JmriSRCPProgrammerServerTest{
 
+    @Test
     public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -26,22 +25,5 @@ public class JmriSRCPProgrammerServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public JmriSRCPProgrammerServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.srcp.JmriSRCPProgrammerServerTest.class);
-
-        return suite;
-    }
 
 }

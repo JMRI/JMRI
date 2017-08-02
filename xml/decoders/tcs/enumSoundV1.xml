@@ -133,12 +133,168 @@
 		<enumChoice choice="Shovelling 2 Butterfly - Air Powered" value="132"/>
 	</enumChoiceGroup>
 	<enumChoice choice="Waterfill 1" value="398"/>
-	<enumChoice choice="Whistle Forward" value="133"/>
-	<enumChoice choice="Whistle Long" value="19"/>
-	<enumChoice choice="Whistle Quill" value="20"/>
-	<enumChoice choice="Whistle Reverse" value="157"/>
-	<enumChoice choice="Whistle Short" value="18"/>
-	<enumChoice choice="Whistle Stop" value="181"/>
+	<enumChoiceGroup>
+		<name>whistle long</name>
+		<enumChoice choice="Alamo Michigan Plant Long" value="19"/>
+		<enumChoice choice="PA 3 Chime Long" value="22"/>
+		<enumChoice choice="Kingsly 4 Chime Long" value="25"/>
+		<enumChoice choice="Reading 6 Chime 2 Long" value="28"/>
+		<enumChoice choice="NPR 765 Long" value="31"/>
+		<enumChoice choice="Reading 6 Chime Long" value="34"/>
+		<enumChoice choice="Reading Pacific G2 Long" value="37"/>
+		<enumChoice choice="Reading Single Chime Long" value="40"/>
+		<enumChoice choice="Wabash 3 Chime Long" value="43"/>
+		<enumChoice choice="B&amp;O Long" value="46"/>
+		<enumChoice choice="Pennsy K4 Long" value="49"/>
+		<enumChoice choice="NW Single Chime Long" value="52"/>
+		<enumChoice choice="Lunkenheimer 3 chime Long" value="55"/>
+		<enumChoice choice="Whistle 14 - Long" value="58"/>
+		<enumChoice choice="Lunkenheimer Single Note Long" value="61"/>
+		<enumChoice choice="Whistle 16 - Long" value="64"/>
+		<enumChoice choice="Whistle 17 - Long" value="67"/>
+		<enumChoice choice="Hancock 3 Chime Long" value="70"/>
+		<enumChoice choice="Southern 6 Chime Long" value="72"/>
+		<enumChoice choice="Wabash 6 Chime Long" value="76"/>
+		<enumChoice choice="Santa Fe 6 Chime Long" value="79"/>
+		<enumChoice choice="NW single chime short bell Long" value="82"/>
+		<enumChoice choice="Great Northern 5 Chime Long" value="85"/>
+		<enumChoice choice="Nathan K5LA Long" value="88"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>whistle short</name>
+		<enumChoice choice="Alamo Michigan Plant Short" value="18"/>
+		<enumChoice choice="PA 3 Chime Short" value="21"/>
+		<enumChoice choice="Kingsly 4 Chime Short" value="24"/>
+		<enumChoice choice="Reading 6 Chime 2 Short" value="27"/>
+		<enumChoice choice="NPR 765 Short" value="30"/>
+		<enumChoice choice="Reading 6 Chime Short" value="33"/>
+		<enumChoice choice="Reading Pacific G2 Short" value="36"/>
+		<enumChoice choice="Reading Single Chime Short" value="39"/>
+		<enumChoice choice="Wabash 3 Chime Short" value="42"/>
+		<enumChoice choice="B&amp;O Short" value="45"/>
+		<enumChoice choice="Pennsy K4 Short" value="48"/>
+		<enumChoice choice="NW Single Chime Short" value="51"/>
+		<enumChoice choice="Lunkenheimer 3 chime Short" value="54"/>
+		<enumChoice choice="Whistle 14 - Short" value="57"/>
+		<enumChoice choice="Lunkenheimer Single Note Short" value="60"/>
+		<enumChoice choice="Whistle 16 - Short" value="63"/>
+		<enumChoice choice="Whistle 17 - Short" value="66"/>
+		<enumChoice choice="Hancock 3 Chime Short" value="69"/>
+		<enumChoice choice="Southern 6 Chime Short" value="72"/>
+		<enumChoice choice="Wabash 6 Chime Short" value="75"/>
+		<enumChoice choice="Santa Fe 6 Chime Short" value="78"/>
+		<enumChoice choice="NW single chime short bell Short" value="81"/>
+		<enumChoice choice="Great Northern 5 Chime Short" value="84"/>
+		<enumChoice choice="Nathan K5LA Short" value="87"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>whistle quill</name>
+		<enumChoice choice="Alamo Michigan Plant Quill" value="20"/>
+		<enumChoice choice="PA 3 Chime Quill" value="23"/>
+		<enumChoice choice="Kingsly 4 Chime Quill" value="26"/>
+		<enumChoice choice="Reading 6 Chime 2 Quill" value="29"/>
+		<enumChoice choice="NPR 765 Quill" value="32"/>
+		<enumChoice choice="Reading 6 Chime Quill" value="35"/>
+		<enumChoice choice="Reading Pacific G2 Quill" value="38"/>
+		<enumChoice choice="Reading Single Chime Quill" value="41"/>
+		<enumChoice choice="Wabash 3 Chime Quill" value="44"/>
+		<enumChoice choice="B&amp;O Quill" value="47"/>
+		<enumChoice choice="Pennsy K4 Quill" value="50"/>
+		<enumChoice choice="NW Single Chime Quill" value="53"/>
+		<enumChoice choice="Lunkenheimer 3 chime Quill" value="56"/>
+		<enumChoice choice="Whistle 14 - Quill" value="59"/>
+		<enumChoice choice="Lunkenheimer Single Note Quill" value="62"/>
+		<enumChoice choice="Whistle 16 - Quill" value="65"/>
+		<enumChoice choice="Whistle 17 - Quill" value="68"/>
+		<enumChoice choice="Hancock 3 Chime Quill" value="71"/>
+		<enumChoice choice="Southern 6 Chime Quill" value="74"/>
+		<enumChoice choice="Wabash 6 Chime Quill" value="77"/>
+		<enumChoice choice="Santa Fe 6 Chime Quill" value="80"/>
+		<enumChoice choice="NW single chime short bell Quill" value="83"/>
+		<enumChoice choice="Great Northern 5 Chime Quill" value="86"/>
+		<enumChoice choice="Nathan K5LA Quill" value="89"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>whistle forward</name>
+		<enumChoice choice="Alamo Michigan Plant Forward" value="133"/>
+		<enumChoice choice="PA 3 Chime Forward" value="134"/>
+		<enumChoice choice="Kingsly 4 Chime Forward" value="135"/>
+		<enumChoice choice="Reading 6 Chime 2 Forward" value="136"/>
+		<enumChoice choice="NPR 765 Foward" value="137"/>
+		<enumChoice choice="Reading 6 Chime Forward" value="138"/>
+		<enumChoice choice="Reading Pacific G2 Forward" value="139"/>
+		<enumChoice choice="Reading Single Chime Forward" value="140"/>
+		<enumChoice choice="Wabash 3 Chime Forward" value="141"/>
+		<enumChoice choice="B&amp;O Forward" value="142"/>
+		<enumChoice choice="Pennsy K4 Forward" value="143"/>
+		<enumChoice choice="NW Single Chime Forward" value="144"/>
+		<enumChoice choice="Lunkenheimer 3 chime Forward" value="145"/>
+		<enumChoice choice="Whistle 14 - Forward" value="146"/>
+		<enumChoice choice="Lunkenheimer Single Note Forward" value="147"/>
+		<enumChoice choice="Whistle 16 - Forward" value="148"/>
+		<enumChoice choice="Whistle 17 - Forward" value="149"/>
+		<enumChoice choice="Hancock 3 Chime Forward" value="150"/>
+		<enumChoice choice="Southern 6 Chime Forward" value="151"/>
+		<enumChoice choice="Wabash 6 Chime Forward" value="152"/>
+		<enumChoice choice="Santa Fe 6 Chime Forward" value="153"/>
+		<enumChoice choice="NW single chime short bell forward" value="154"/>
+		<enumChoice choice="Great Northern 5 Chime Forward" value="155"/>
+		<enumChoice choice="Nathan K5LA Forward" value="156"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>whistle reverse</name>
+		<enumChoice choice="Alamo Michigan Plant Reverse" value="157"/>
+		<enumChoice choice="PA 3 Chime Reverse" value="158"/>
+		<enumChoice choice="Kingsly 4 Chime Reverse" value="159"/>
+		<enumChoice choice="Reading 6 Chime 2 Reverse" value="160"/>
+		<enumChoice choice="NPR 765 Reverse" value="161"/>
+		<enumChoice choice="Reading 6 Chime Reverse" value="162"/>
+		<enumChoice choice="Reading Pacific G2 Reverse" value="163"/>
+		<enumChoice choice="Reading Single Chime Reverse" value="164"/>
+		<enumChoice choice="Wabash 3 Chime Reverse" value="165"/>
+		<enumChoice choice="B&amp;O Reverse" value="166"/>
+		<enumChoice choice="Pennsy K4 Reverse" value="167"/>
+		<enumChoice choice="NW Single Chime Reverse" value="168"/>
+		<enumChoice choice="Lunkenheimer 3 chime Reverse" value="169"/>
+		<enumChoice choice="Whistle 14 - Reverse" value="170"/>
+		<enumChoice choice="Lunkenheimer Single Note Reverse" value="171"/>
+		<enumChoice choice="Whistle 16 - Reverse" value="172"/>
+		<enumChoice choice="Whistle 17 - Reverse" value="173"/>
+		<enumChoice choice="Hancock 3 Chime Reverse" value="174"/>
+		<enumChoice choice="Southern 6 Chime Reverse" value="175"/>
+		<enumChoice choice="Wabash 6 Chime Reverse" value="176"/>
+		<enumChoice choice="Santa Fe 6 Chime Reverse" value="177"/>
+		<enumChoice choice="NW single chime short bell Reverse" value="178"/>
+		<enumChoice choice="Great Northern 5 Chime Reverse" value="179"/>
+		<enumChoice choice="Nathan K5LA Reverse" value="180"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>whistle stop</name>
+		<enumChoice choice="Alamo Michigan Plant Stop" value="181"/>
+		<enumChoice choice="PA 3 Chime Stop" value="182"/>
+		<enumChoice choice="Kingsly 4 Chime Stop" value="183"/>
+		<enumChoice choice="Reading 6 Chime 2 Stop" value="184"/>
+		<enumChoice choice="NPR 765 Stop" value="185"/>
+		<enumChoice choice="Reading 6 Chime Stop" value="186"/>
+		<enumChoice choice="Reading Pacific G2 Stop" value="187"/>
+		<enumChoice choice="Reading Single Chime Stop" value="188"/>
+		<enumChoice choice="Wabash 3 Chime Stop" value="189"/>
+		<enumChoice choice="B&amp;O Stop" value="190"/>
+		<enumChoice choice="Pennsy K4 Stop" value="191"/>
+		<enumChoice choice="NW Single Chime Stop" value="192"/>
+		<enumChoice choice="Lunkenheimer 3 chime Stop" value="193"/>
+		<enumChoice choice="Whistle 14 - Stop" value="194"/>
+		<enumChoice choice="Lunkenheimer Single Note Stop" value="195"/>
+		<enumChoice choice="Whistle 16 - Stop" value="196"/>
+		<enumChoice choice="Whistle 17 - Stop" value="197"/>
+		<enumChoice choice="Hancock 3 Chime Stop" value="198"/>
+		<enumChoice choice="Southern 6 Chime Stop" value="199"/>
+		<enumChoice choice="Wabash 6 Chime Stop" value="200"/>
+		<enumChoice choice="Santa Fe 6 Chime Stop" value="201"/>
+		<enumChoice choice="NW single chime short bell Stop" value="202"/>
+		<enumChoice choice="Great Northern 5 Chime Stop" value="203"/>
+		<enumChoice choice="Nathan K5LA Stop" value="204"/>
+	</enumChoiceGroup>
 	<enumChoice choice="Rotate Whistle" value="372"/>
 	<enumChoice choice="None" value="65535" />
 </enumVal>

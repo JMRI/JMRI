@@ -1,15 +1,34 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractCellEditor; // for iconLabel
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -17,9 +36,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -34,22 +57,27 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a BlockTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
+<<<<<<< HEAD
+=======
+ * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class BlockTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
+     * @param actionName the Action title
      */
     public BlockTableAction(String actionName) {
         super(actionName);
 
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.blockManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) {
             setEnabled(false);
         }
         inchBox.setSelected(true);
@@ -60,7 +88,7 @@ public class BlockTableAction extends AbstractTableAction {
             centimeterBox.setSelected(true);
         }
 
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
@@ -84,12 +112,18 @@ public class BlockTableAction extends AbstractTableAction {
     private String[] sensorList;
     private DecimalFormat twoDigit = new DecimalFormat("0.00");
     String defaultBlockSpeedText;
+    // for icon state col
+    protected boolean _graphicState = false; // updated from prefs
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Block objects
+     * of Block objects.
      */
+    @Override
     protected void createModel() {
+        // load graphic state column display preference
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
+
         m = new BeanTableDataModel() {
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DIRECTIONCOL = EDITCOL + 1;
@@ -102,12 +136,13 @@ public class BlockTableAction extends AbstractTableAction {
             static public final int PERMISCOL = CURRENTREPCOL + 1;
             static public final int SPEEDCOL = PERMISCOL + 1;
 
+            @Override
             public String getValue(String name) {
                 if (name == null) {
                     log.warn("requested getValue(null)");
                     return "(no name)";
                 }
-                Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
+                Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
                 if (b == null) {
                     log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
                     return "(no Block)";
@@ -120,32 +155,39 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
-                return InstanceManager.blockManagerInstance();
+                return InstanceManager.getDefault(jmri.BlockManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.blockManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
-                return InstanceManager.blockManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
             //Permissive and speed columns are temp disabled
+            @Override
             public int getColumnCount() {
                 return SPEEDCOL + 1;
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
@@ -223,7 +265,9 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
+                // no setting of block state from table
                 Block b = (Block) getBySystemName(sysNameList.get(row));
                 if (col == VALUECOL) {
                     b.setValue(value);
@@ -268,14 +312,14 @@ public class BlockTableAction extends AbstractTableAction {
                         JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                         return;
                     }
-                    if (!speedList.contains(speed) && !speed.contains("Global")) {
+                    if (!speedList.contains(speed) && !speed.contains("Global")) { // NOI18N
                         speedList.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
                     if (value != null && !value.equals("") ) {
-                        r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String) value);
+                        r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter((String) value);
                     }
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
@@ -297,6 +341,7 @@ public class BlockTableAction extends AbstractTableAction {
                             this.b = b;
                         }
 
+                        @Override
                         public void run() {
                             editButton(b); // don't really want to stop Route w/o user action
                         }
@@ -309,6 +354,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
                     return Bundle.getMessage("BlockDirection");
@@ -346,6 +392,7 @@ public class BlockTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == DIRECTIONCOL) {
                     return String.class;
@@ -366,7 +413,11 @@ public class BlockTableAction extends AbstractTableAction {
                     return JComboBox.class;
                 }
                 if (col == STATECOL) {
-                    return String.class;
+                    if (_graphicState) {
+                        return JLabel.class; // use an image to show block state
+                    } else {
+                        return String.class;
+                    }
                 }
                 if (col == REPORTERCOL) {
                     return String.class;
@@ -384,6 +435,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 if (col == DIRECTIONCOL) {
                     return new JTextField(7).getPreferredSize().width;
@@ -419,10 +471,12 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == CURVECOL) {
                     return true;
@@ -447,24 +501,29 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+                configStateColumn(table);
                 super.configureTable(table);
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getSource() instanceof jmri.SensorManager) {
                     if (e.getPropertyName().equals("length") || e.getPropertyName().equals("DisplayListName")) {
@@ -478,15 +537,150 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameBlock");
             }
 
+            @Override
             synchronized public void dispose() {
                 super.dispose();
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
             }
-        };
+
+            /**
+             * Customize the block table State column to show an appropriate graphic for the block occupancy state
+             * if _graphicState = true, or (default) just show the localized state text
+             * when the TableDataModel is being called from ListedTableAction.
+             *
+             * @param table a JTable of Blocks
+             */
+            protected void configStateColumn(JTable table) {
+                // have the state column hold a JPanel (icon)
+                //setColumnToHoldButton(table, VALUECOL, new JLabel("1234")); // for small round icon, but cannot be converted to JButton
+                // add extras, override BeanTableDataModel
+                log.debug("Block configStateColumn (I am {})", super.toString());
+                if (_graphicState) { // load icons, only once
+                    //table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // there's no editor for state column in BlockTable
+                    table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
+                    // else, classic text style state indication, do nothing extra
+                }
+            }
+
+            /**
+             * Visualize state in table as a graphic, customized for Blocks (2 states).
+             * Renderer and Editor are identical, as the cell contents are not actually edited.
+             * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
+             * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
+             * @see jmri.jmrit.beantable.LightTableAction#createModel()
+             */
+            class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+                protected JLabel label;
+                protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+                protected char beanTypeChar = 'S'; // reuse Sensor icon for block state
+                protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
+                protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
+                protected BufferedImage onImage;
+                protected BufferedImage offImage;
+                protected ImageIcon onIcon;
+                protected ImageIcon offIcon;
+                protected int iconHeight = -1;
+
+                @Override
+                public Component getTableCellRendererComponent(
+                        JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                @Override
+                public Component getTableCellEditorComponent(
+                        JTable table, Object value, boolean isSelected,
+                        int row, int column) {
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                public JLabel updateLabel(String value, int row) {
+                    if (iconHeight > 0) { // if necessary, increase row height;
+                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Block icons
+                    }
+                    if (value.equals(Bundle.getMessage("BlockUnOccupied")) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
+                    } else if (value.equals(Bundle.getMessage("BlockOccupied")) && onIcon != null) {
+                        label = new JLabel(onIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("onIcon set");
+                    } else if (value.equals(Bundle.getMessage("BlockInconsistent"))) {
+                        label = new JLabel("X", JLabel.CENTER); // centered text alignment
+                        label.setForeground(Color.red);
+                        log.debug("Block state inconsistent");
+                        iconHeight = 0;
+                    } else if (value.equals(Bundle.getMessage("BlockUnknown"))) {
+                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                        log.debug("Block state in transition");
+                        iconHeight = 0;
+                    } else { // failed to load icon
+                        label = new JLabel(value, JLabel.CENTER); // centered text alignment
+                        log.warn("Error reading icons for BlockTable");
+                        iconHeight = 0;
+                    }
+                    label.setToolTipText(value);
+                    label.addMouseListener (new MouseAdapter ()
+                    {
+                        @Override
+                        public final void mousePressed (MouseEvent evt)
+                        {
+                            log.debug("Clicked on icon in row {}", row);
+                            stopCellEditing();
+                        }
+                    });
+                    return label;
+                }
+
+                @Override
+                public Object getCellEditorValue() {
+                    log.debug("getCellEditorValue, me = {})", this.toString());
+                    return this.toString();
+                }
+
+                /**
+                 * Read and buffer graphics. Only called once for this table.
+                 * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+                 */
+                protected void loadIcons() {
+                    try {
+                        onImage = ImageIO.read(new File(onIconPath));
+                        offImage = ImageIO.read(new File(offIconPath));
+                    } catch (IOException ex) {
+                        log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
+                    }
+                    log.debug("Success reading images");
+                    int imageWidth = onImage.getWidth();
+                    int imageHeight = onImage.getHeight();
+                    // scale icons 50% to fit in table rows
+                    Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    onIcon = new ImageIcon(smallOnImage);
+                    offIcon = new ImageIcon(smallOffImage);
+                    iconHeight = onIcon.getIconHeight();
+                }
+
+            } // end of ImageIconRenderer class
+
+        }; // end of custom data model
     }
 
     void editButton(Block b) {
@@ -516,11 +710,12 @@ public class BlockTableAction extends AbstractTableAction {
 
     private void updateSpeedList() {
         speedList.remove(defaultBlockSpeedText);
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(0, defaultBlockSpeedText);
         m.fireTableDataChanged();
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
@@ -534,11 +729,13 @@ public class BlockTableAction extends AbstractTableAction {
      * add radio buttons to a ButtongGroup
      * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
+    @Override
     public void addToFrame(BeanTableFrame f) {
-        //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
+        //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
         inchBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 inchBoxChanged();
             }
@@ -546,35 +743,57 @@ public class BlockTableAction extends AbstractTableAction {
         f.addToBottomBox(centimeterBox, this.getClass().getName());
         centimeterBox.setToolTipText(Bundle.getMessage("CentimeterBoxToolTip"));
         centimeterBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 centimeterBoxChanged();
             }
         });
     }
 
+    /**
+     * Insert 2 table specific menus.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     *
+     * @param f the JFrame of this table
+     */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
-        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
+        final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu("Paths");
-        menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem("Delete Paths...");
+        int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
+
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuPaths"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemDeletePaths"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deletePaths(finalF);
             }
         });
+        menuBar.add(pathMenu, pos + offset);
 
         JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
         item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
         speedMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setDefaultSpeeds(finalF);
             }
         });
-        menuBar.add(speedMenu);
-
+        menuBar.add(speedMenu, pos + offset + 1); // put it to the right of the Paths menu
     }
 
     protected void setDefaultSpeeds(JFrame _who) {
@@ -582,26 +801,50 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
-        block.add(new JLabel(Bundle.getMessage("BlockSpeedLabel")));
+        block.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSpeedLabel"))));
         block.add(blockSpeedCombo);
 
         blockSpeedCombo.removeItem(defaultBlockSpeedText);
 
-        blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
+        blockSpeedCombo.setSelectedItem(InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
 
-        int retval = JOptionPane.showOptionDialog(_who,
-                "Select the default values for the speeds through the blocks\n", Bundle.getMessage("BlockSpeedLabel"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", block}, null);
-        if (retval != 1) {
+        // block of options above row of buttons; gleaned from Maintenance.makeDialog()
+        // can be accessed by Jemmy in GUI test
+        String title = Bundle.getMessage("BlockSpeedLabel");
+        // build JPanel for comboboxes
+        JPanel speedspanel = new JPanel();
+        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.PAGE_AXIS));
+        speedspanel.add(new JLabel(Bundle.getMessage("BlockSpeedSelectDialog")));
+        //default LEFT_ALIGNMENT
+        block.setAlignmentX(Component.LEFT_ALIGNMENT);
+        speedspanel.add(block);
+
+        JOptionPane pane = new JOptionPane(
+                speedspanel,
+                JOptionPane.INFORMATION_MESSAGE,
+                0,
+                null,
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
+        //pane.setxxx(value); // Configure more?
+        JDialog dialog = pane.createDialog(_who, title);
+        dialog.pack();
+        dialog.show();
+
+        if(pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
+            return;
+        }
+        Object retval = pane.getValue();
+        log.debug("Retval = {}", retval.toString());
+        // only 2 buttons to choose from, OK = button 2
+        if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
         }
 
         String speedValue = (String) blockSpeedCombo.getSelectedItem();
         //We will allow the turnout manager to handle checking if the values have changed
         try {
-            InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
-        } catch (jmri.JmriException ex) {
+            InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speedValue);
+        } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
             return;
         }
@@ -617,13 +860,14 @@ public class BlockTableAction extends AbstractTableAction {
         m.fireTableDataChanged();  // update view
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockTable";
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(5);
-    JTextField userName = new JTextField(5);
+    JTextField sysName = new JTextField(20);
+    JTextField userName = new JTextField(20);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
@@ -632,26 +876,31 @@ public class BlockTableAction extends AbstractTableAction {
     JTextField blockSpeed = new JTextField(7);
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
-    JTextField numberToAdd = new JTextField(10);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancellistener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
+            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "B")); // override tooltip with bean specific letter, doesn't work
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
@@ -687,9 +936,11 @@ public class BlockTableAction extends AbstractTableAction {
 
         //return displayList;
         lengthField.addKeyListener(new KeyListener() {
+            @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
 
+            @Override
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
                 if (!validateNumericalInput(text)) {
@@ -698,6 +949,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
@@ -725,22 +977,20 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
-        int intNumberToAdd = 1;
+
+        int NumberOfBlocks = 1;
+
         if (range.isSelected()) {
-            try {
-                intNumberToAdd = Integer.parseInt(numberToAdd.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-                String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{Bundle.getMessage("LabelNumberToAdd")});
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), msg, "" + ex, "", true, false);
-                return;
-            }
+            NumberOfBlocks = (Integer) numberToAdd.getValue();
         }
-        if (intNumberToAdd >= 65) {
-            String msg = Bundle.getMessage("WarnExcessBeans", new Object[]{intNumberToAdd, Bundle.getMessage("BeanNameBlock")});
+        if (NumberOfBlocks >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    msg, Bundle.getMessage("WarningTitle"),
+<<<<<<< HEAD
+                    Bundle.getMessage("WarnExcessBeans", NumberOfBlocks),
+=======
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Blocks"), NumberOfBlocks),
+>>>>>>> JMRI/master
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
@@ -752,7 +1002,7 @@ public class BlockTableAction extends AbstractTableAction {
         String sName = sysName.getText().toUpperCase();
         StringBuilder b;
 
-        for (int x = 0; x < intNumberToAdd; x++) {
+        for (int x = 0; x < NumberOfBlocks; x++) {
             if (x != 0) {
                 if (user != null) {
                     b = new StringBuilder(userName.getText());
@@ -770,9 +1020,9 @@ public class BlockTableAction extends AbstractTableAction {
             Block blk;
             try {
                 if (_autoSystemName.isSelected()) {
-                    blk = InstanceManager.blockManagerInstance().createNewBlock(user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(user);
                 } else {
-                    blk = InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
                 }
             } catch (IllegalArgumentException ex) {
                 // user input no good
@@ -806,7 +1056,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
         }
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
-        // InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+        // InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
     }
 
     void handleCreateException(String sysName) {
@@ -822,17 +1072,17 @@ public class BlockTableAction extends AbstractTableAction {
     void deletePaths(jmri.util.JmriJFrame f) {
         // Set option to prevent the path information from being saved.
 
-        Object[] options = {"Remove",
-            "Keep"};
+        Object[] options = {Bundle.getMessage("ButtonRemove"),
+                Bundle.getMessage("ButtonKeep")};
 
         int retval = JOptionPane.showOptionDialog(f, Bundle.getMessage("BlockPathMessage"), Bundle.getMessage("BlockPathSaveTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
-            InstanceManager.blockManagerInstance().savePathInfo(true);
+            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(true);
             log.info("Requested to save path information via Block Menu.");
         } else {
-            InstanceManager.blockManagerInstance().savePathInfo(false);
+            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
     }
@@ -843,10 +1093,12 @@ public class BlockTableAction extends AbstractTableAction {
         super.dispose();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleBlockTable");
     }
 
+    @Override
     protected String getClassName() {
         return BlockTableAction.class.getName();
     }

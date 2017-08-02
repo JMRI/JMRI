@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,12 +13,24 @@ import jmri.jmrit.logix.OPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * GUI to define OBlocks
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
+ *
+ * @author Pete Cressman (C) 2010
+ */
 public class PathTurnoutTableModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -734742811189091810L;
     public static final int TURNOUT_NAME_COL = 0;
     public static final int SETTINGCOLUMN = 1;
     public static final int DELETE_COL = 2;
@@ -70,24 +64,31 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _path.getSettings().size() + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case TURNOUT_NAME_COL:
                 return Bundle.getMessage("LabelItemName");
             case SETTINGCOLUMN:
                 return Bundle.getMessage("ColumnSetting");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (_path.getSettings().size() == rowIndex) {
             return tempRow[columnIndex];
@@ -118,10 +119,14 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 }
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (_path.getSettings().size() == row) {
             switch (col) {
@@ -141,6 +146,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     initTempRow();
                     fireTableRowsUpdated(row, row);
                     return;
+                default:
+                    // fall through
+                    break;
             }
             Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(tempRow[TURNOUT_NAME_COL]);
             if (t != null) {
@@ -206,13 +214,19 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     _path.removeSetting(bs);
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled col: {}", col);
+                break;
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;
@@ -230,6 +244,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 return new JTextField(10).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }

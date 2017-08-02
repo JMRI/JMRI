@@ -6,7 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,8 +15,7 @@ import junit.framework.TestSuite;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class DccLocoAddressSelectorTest extends TestCase {
 
     public void testCtor() {
@@ -40,6 +39,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         reportedError = null;
         DccLocoAddressSelector sel = new DccLocoAddressSelector() {
+            @Override
             void reportError(String msg) {
                 reportedError = msg;
             }

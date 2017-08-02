@@ -1,19 +1,19 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.CLIENTS;
-import static jmri.jmris.json.JSON.ESTOP;
-import static jmri.jmris.json.JSON.F;
-import static jmri.jmris.json.JSON.FORWARD;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IDLE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.RELEASE;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.SPEED;
-import static jmri.jmris.json.JSON.SPEED_STEPS;
-import static jmri.jmris.json.JSON.STATUS;
-import static jmri.jmris.json.JSON.THROTTLE;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.CLIENTS;
+import static jmri.server.json.JSON.ESTOP;
+import static jmri.server.json.JSON.F;
+import static jmri.server.json.JSON.FORWARD;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.IDLE;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.JSON.RELEASE;
+import static jmri.server.json.JSON.SPEED;
+import static jmri.server.json.JSON.SPEED_STEPS;
+import static jmri.server.json.JSON.STATUS;
+import static jmri.server.json.JSON.THROTTLE;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -75,6 +75,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
+     * @throws jmri.JmriException if unable to get the requested throttle
+     * @throws java.io.IOException if unable to communicate with client
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException, IOException {
         DccLocoAddress address = null;
@@ -89,7 +91,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
         } else if (!data.path(ID).isMissingNode()) {
             try {
-                address = Roster.instance().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
+                address = Roster.getDefault().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
             } catch (NullPointerException ex) {
                 server.sendErrorMessage(-100, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRosterEntry", data.path(ID).asText()));
                 throw new JmriException("Roster entry " + data.path(ID).asText() + " does not exist."); // NOI18N

@@ -1,4 +1,3 @@
-// DefaultSignalAppearanceMap.java
 package jmri.implementation;
 
 import java.net.URL;
@@ -18,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * The default contents are taken from the NamedBeanBundle properties file. This
  * makes creation a little more heavy-weight, but speeds operation.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -31,6 +29,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         super(systemName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalAppMap");
     }
@@ -138,7 +137,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
             log.debug("loading complete");
         } catch (java.io.IOException | org.jdom2.JDOMException e) {
-            log.error("error reading file "+file.getPath(), e);
+            log.error("error reading file " + file.getPath(), e);
             return null;
         }
 
@@ -262,10 +261,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     /**
      * Get a property associated with a specific aspect
      */
+    @Override
     public String getProperty(String aspect, String key) {
         return aspectAttributeMap.get(aspect).get(key);
     }
 
+    @Override
     public String getImageLink(String aspect, String type) {
         if (type == null || type.equals("")) {
             type = "default";
@@ -285,6 +286,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return value;
     }
 
+    @Override
     public Vector<String> getImageTypes(String aspect) {
         if (!checkAspect(aspect)) {
             return new Vector<String>();
@@ -339,6 +341,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
     }
 
+    @Override
     public boolean checkAspect(String aspect) {
         if (aspect == null) {
             return false;
@@ -354,10 +357,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         table.put(aspect, appearances);
     }
 
+    @Override
     public java.util.Enumeration<String> getAspects() {
         return table.keys();
     }
 
+    @Override
     public String getSpecificAppearance(int appearance) {
         if (specificMaps.containsKey(appearance)) {
             return specificMaps.get(appearance);
@@ -369,6 +374,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
      * Returns a list of potential aspects that we could set the signalmast to
      * given the state of the advanced signal mast.
      */
+    @Override
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect) {
         if (aspectRelationshipMap == null) {
             log.error("aspect relationships have not been defined or loaded");
@@ -386,6 +392,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return null;
     }
 
+    @Override
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
@@ -395,12 +402,26 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
     protected SignalSystem systemDefn;
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method returns a constant result on the DefaultSignalAppearanceMap.
+     *
+     * @return {@link jmri.NamedBean#INCONSISTENT}
+     */
+    @Override
     public int getState() {
-        throw new NoSuchMethodError();
+        return INCONSISTENT;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method has no effect on the DefaultSignalAppearanceMap.
+     */
+    @Override
     public void setState(int s) {
-        throw new NoSuchMethodError();
+        // do nothing
     }
 
     public int[] getAspectSettings(String aspect) {
@@ -410,5 +431,3 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
-
-/* @(#)DefaultSignalAppearanceMap.java */

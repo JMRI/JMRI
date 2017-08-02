@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.ieee802154.xbee;
 
 import javax.swing.JButton;
@@ -9,13 +8,13 @@ import jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction;
  * Definition of objects to handle configuring a layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p port adapter for connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -39,6 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super.loadDetails(details);
     }
 
+    @Override
     public String name() {
         return "XBee Network";
     }
@@ -47,6 +47,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new XBeeAdapter();

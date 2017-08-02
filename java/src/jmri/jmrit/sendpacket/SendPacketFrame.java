@@ -1,4 +1,3 @@
-// SendPacketFrame.java
 package jmri.jmrit.sendpacket;
 
 import java.awt.GridLayout;
@@ -23,15 +22,10 @@ import org.slf4j.LoggerFactory;
  * is somewhat different here. The LocoNet version waited for the sent (LocoNet)
  * packet to be echo'd, while this starts the timeout immediately.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1094279262803359342L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -48,6 +42,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
+    @Override
     public void initComponents() throws Exception {
 
         setTitle("Send DCC Packet");
@@ -74,6 +69,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -105,13 +101,14 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         getContentPane().add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
         });
 
         // get the CommandStation reference
-        cs = InstanceManager.commandStationInstance();
+        cs = InstanceManager.getNullableDefault(CommandStation.class);
         if (cs == null) {
             log.error("No CommandStation object available");
         }
@@ -138,6 +135,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -244,6 +242,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();

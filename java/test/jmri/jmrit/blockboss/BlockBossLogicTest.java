@@ -5,7 +5,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -247,6 +247,7 @@ public class BlockBossLogicTest extends TestCase {
      * creates a set of turnouts, sensors and signals as common background for
      * testing
      */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -255,6 +256,7 @@ public class BlockBossLogicTest extends TestCase {
         
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
@@ -272,19 +274,19 @@ public class BlockBossLogicTest extends TestCase {
         s10 = InstanceManager.sensorManagerInstance().newSensor("IS10", "10");
 
         h1 = new jmri.implementation.VirtualSignalHead("IH1", "1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
         setAndWait(h1, SignalHead.RED); // ensure starting point
         
         h2 = new jmri.implementation.VirtualSignalHead("IH2", "2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
         setAndWait(h2, SignalHead.RED); // ensure starting point
 
         h3 = new jmri.implementation.VirtualSignalHead("IH3", "3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h3);
         setAndWait(h3, SignalHead.RED); // ensure starting point
 
         h4 = new jmri.implementation.VirtualSignalHead("IH4", "4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h4);
         setAndWait(h4, SignalHead.RED); // ensure starting point
     }
 
@@ -306,8 +308,11 @@ public class BlockBossLogicTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         stopLogic();
+        // reset InstanceManager
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

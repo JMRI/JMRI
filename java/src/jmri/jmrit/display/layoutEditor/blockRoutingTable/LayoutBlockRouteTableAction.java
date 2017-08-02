@@ -1,22 +1,15 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 
 /**
  * Swing action to create and register a Block Routing Table.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2989828125582997520L;
 
     /**
      * Create an action with a specific title.
@@ -30,7 +23,7 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         this.lBlock = lBlock;
     }
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     LayoutBlock lBlock;
 
@@ -49,28 +42,23 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         createModel();
 
         // create the frame
-        f = new jmri.util.JmriJFrame() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8814222912512779305L;
-        };
+        f = new jmri.util.JmriJFrame();
         f.add(m);
         setTitle();
         f.pack();
         f.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }
 
     void setTitle() {
         if (lBlock != null) {
-            f.setTitle(rb.getString("BlockRoutingTableTitle") + " " + lBlock.getDisplayName());
+            f.setTitle(Bundle.getMessage("BlockRoutingTableTitle") + " " + lBlock.getDisplayName());
         } else {
-            f.setTitle(rb.getString("BlockRoutingTableTitleShort"));
+            f.setTitle(Bundle.getMessage("BlockRoutingTableTitleShort"));
         }
     }
 

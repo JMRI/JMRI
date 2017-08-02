@@ -1,4 +1,3 @@
-// pricom.pockettester.StatusFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.util.Hashtable;
@@ -14,19 +13,14 @@ import org.slf4j.LoggerFactory;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8215226616579760539L;
 
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     javax.swing.Timer timer = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             sendRequest();
         }
@@ -44,6 +38,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     /**
      * Add GUI elements
      */
+    @Override
     public void initComponents() {
         getContentPane().add(tabPane);
 
@@ -71,6 +66,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
         // add a listener to hear about selections
         tabPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent e) {
                 sendRequest();  // to get a fast update
             }
@@ -89,6 +85,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     // note that the message coming from the unit has
     // an invisible null character after the "=" in version 1.5.1
     // but not in later versions
+    @Override
     public void asciiFormattedMessage(String input) {
         String m = input + " ";  // extra space to make stripping easier
         // check if interesting
@@ -169,6 +166,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         timer.start();
     }
 
+    @Override
     public void dispose() {
         // stop timer
         timer.stop();

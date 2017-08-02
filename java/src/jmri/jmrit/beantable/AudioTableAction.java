@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
 public class AudioTableAction extends AbstractTableAction {
@@ -65,7 +65,7 @@ public class AudioTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Audio manager available
-        if (jmri.InstanceManager.audioManagerInstance() == null) {
+        if (!InstanceManager.getOptionalDefault(AudioManager.class).isPresent()) {
             setEnabled(false);
         }
 
@@ -117,13 +117,15 @@ public class AudioTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
-        if (InstanceManager.audioManagerInstance().getActiveAudioFactory() == null) {
-            InstanceManager.audioManagerInstance().init();
-            if(InstanceManager.audioManagerInstance().getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+        InstanceManager.getOptionalDefault(jmri.AudioManager.class).ifPresent(cm -> {
+            if (cm.getActiveAudioFactory() == null) {
+                cm.init();
+                if (cm.getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
+                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+                }
             }
-        }
+        });
         listeners = new AudioListenerTableDataModel();
         buffers = new AudioBufferTableDataModel();
         sources = new AudioSourceTableDataModel();
@@ -274,10 +276,8 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public AudioManager getManager() {
-            return InstanceManager.audioManagerInstance();
+            return InstanceManager.getDefault(jmri.AudioManager.class);
         }
-        /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-         public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
         @Override
         protected String getMasterClassName() {
@@ -286,12 +286,12 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public Audio getBySystemName(String name) {
-            return InstanceManager.audioManagerInstance().getBySystemName(name);
+            return InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
 
         @Override
         public Audio getByUserName(String name) {
-            return InstanceManager.audioManagerInstance().getByUserName(name);
+            return InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
         }
 
         /**
@@ -350,7 +350,7 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public String getValue(String systemName) {
-            Object m = InstanceManager.audioManagerInstance().getBySystemName(systemName);
+            Object m = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(systemName);
             return (m != null) ? m.toString() : "";
         }
 

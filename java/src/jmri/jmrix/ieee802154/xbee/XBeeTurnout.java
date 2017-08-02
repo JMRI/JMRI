@@ -1,5 +1,10 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -32,6 +37,9 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * Create a Turnout object, with system and user names and a reference to
      * the traffic controller.
+     * @param systemName Xbee id : pin
+     * @param userName friendly text name
+     * @param controller tc for node connection
      */
     public XBeeTurnout(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
@@ -73,6 +81,7 @@ public class XBeeTurnout extends AbstractTurnout {
                                // if there was a number format exception, we couldn't
                                // find the node.
                                node = null;
+                               throw new IllegalArgumentException("Node not defined");
                            }
                        }
                    }
@@ -82,6 +91,7 @@ public class XBeeTurnout extends AbstractTurnout {
                    }
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                   throw new IllegalArgumentException("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                }
            } else {
                try {
@@ -92,6 +102,7 @@ public class XBeeTurnout extends AbstractTurnout {
                    pin = ((address) % 10);
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                   throw new IllegalArgumentException("Unable to convert " + systemName + " Hardware Address to a number");
                }
            }
            if (log.isDebugEnabled()) {
@@ -111,18 +122,44 @@ public class XBeeTurnout extends AbstractTurnout {
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
-        // get message 
-        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, s == Turnout.THROWN);
-        // send the message
-        tc.sendXBeeMessage(message, null);
-        if (pin2 >= 0) {
-            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, s == Turnout.CLOSED);
-            // send the message
-            tc.sendXBeeMessage(message2, null);
+        try  {
+            if((s == Turnout.THROWN) ^ getInverted() ) {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.HIGH);
+            } else {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.LOW);
+            }
+            
+            if (pin2 >= 0) {
+               if((s == Turnout.CLOSED) ^ getInverted() ) {
+                 node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.HIGH);
+               } else {
+                 node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.LOW);
+               }
+
+            }
+        } catch (TimeoutException toe) {
+           log.error("Timeout setting IO line value for turnout {} on {}",getUserName(),node.getXBee());
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open setting IO line value for turnout {} on {}",getUserName(),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error setting IO line value for turout {} on {}",getUserName(),node.getXBee());
         }
+
+
+
     }
 
+    /**
+     * XBee turnouts do support inversion
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
+    }
+    
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

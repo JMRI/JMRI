@@ -1,4 +1,3 @@
-// MergSD2SignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -39,14 +37,13 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param o Object to store, of type MergSD2SignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         MergSD2SignalHead p = (MergSD2SignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         element.setAttribute("aspects", p.getAspects() + "");
@@ -173,7 +170,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -193,11 +190,17 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            try {
+                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in loadTurnout", name);
+                return null;
+            }
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

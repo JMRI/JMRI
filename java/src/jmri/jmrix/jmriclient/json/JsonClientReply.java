@@ -3,7 +3,7 @@ package jmri.jmrix.jmriclient.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrix.AbstractMRReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

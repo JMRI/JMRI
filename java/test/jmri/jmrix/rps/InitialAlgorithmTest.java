@@ -1,10 +1,10 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the rps.Measurement class.
@@ -12,12 +12,12 @@ import junit.framework.TestSuite;
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
  */
-public class InitialAlgorithmTest extends TestCase {
+public class InitialAlgorithmTest {
 
     double vs = 0.0344; // SI default for testing
 
+    @Test
     public void testCalc4() {
         Reading r = new Reading("21", new double[]{0., 7. / vs, 13. / vs, 13. / vs, 13. / vs});
 
@@ -35,6 +35,7 @@ public class InitialAlgorithmTest extends TestCase {
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
     }
 
+    @Test
     public void testCalc3_not4() {
         Reading r = new Reading("21", new double[]{0., 7. / vs, 13. / vs, 13. / vs});
 
@@ -51,6 +52,7 @@ public class InitialAlgorithmTest extends TestCase {
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
     }
 
+    @Test
     public void testCalc3_not1() {
         Reading r = new Reading("21", new double[]{0., 13. / vs, 13. / vs, 13. / vs});
 
@@ -67,6 +69,7 @@ public class InitialAlgorithmTest extends TestCase {
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
     }
 
+    @Test
     public void testCalc3_not2() {
         Reading r = new Reading("21", new double[]{0., 7. / vs, 13. / vs, 13. / vs});
 
@@ -83,6 +86,7 @@ public class InitialAlgorithmTest extends TestCase {
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
     }
 
+    @Test
     public void testCalc3_not3() {
         Reading r = new Reading("21", new double[]{0., 7. / vs, 13. / vs, 13. / vs});
 
@@ -99,22 +103,14 @@ public class InitialAlgorithmTest extends TestCase {
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
     }
 
-    // from here down is testing infrastructure
-    public InitialAlgorithmTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {InitialAlgorithmTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(InitialAlgorithmTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

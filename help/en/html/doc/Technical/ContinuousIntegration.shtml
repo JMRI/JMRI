@@ -1,164 +1,200 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Continuous Integration
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Continuous Integration</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code Continuous Integration jenkins">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
+    <div id="mainContent">
+      <h1>JMRI: Continuous Integration</h1>"Continuous Integration"
+      is the process of rebuilding a system every time it changes,
+      so that you rapidly learn of new problems and are motivated
+      to remove existing ones.
 
-<H1>JMRI: Continuous Integration</H1>
+      <p>The core of our system is a series of <a href=
+      "#jenkins">Jenkins</a> jobs that routinely build the code,
+      run checks, and creates downloadable installers. That means
+      that we can and do put changes into our users hands very
+      quickly.</p>
 
-"Continuous Integration" is the process of rebuilding a 
-system every time it changes, so that you rapidly learn of
-new problems and are motivated to remove existing ones.
+      <p>We also use two additioanl CI engines to test every change
+      entered into our GitHub code repository.</p>
 
-<p>
-The core of our system is a series of 
-<a href="">Jenkins</a>
-jobs that routinely build the code, run checks,
-and creates downloadable installers.  That means that we
-can and do put changes into our users hands very quickly.
+      <h2>Travis CI</h2>We use <a href=
+      "https://travis-ci.org/">Travis CI</a> to do integration/test
+      builds on Linux for every pull into our main <a href=
+      "http://github.com/JMRI">GitHub</a> repositories.
 
-<p>
-We also use two additioanl CI engines to test every change
-entered into our GitHub code repository.
+      <p>Travis will build any branch that contains a .travis.yml
+      file. The build history for the main JMRI repository is at
+      <a href=
+      "https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.</p>
 
-<h2>Travis CI</h2>
+      <p>Travis normally runs the checks for valid line-ends, the
+      check for proper ASCII characters, followed by building the
+      code and running the "AllTest" test routine. A screen buffer
+      (not a real screen) is used for all the GUI tests.</p>
 
-We use
-<a href="https://travis-ci.org/">Travis CI</a>
-to do integration/test builds on Linux for every pull into our main 
-<a href="http://github.com/JMRI">GitHub</a> repositories.
-<p>
-Travis will build any branch that contains a .travis.yml file. 
-The build history for the main JMRI repository is at
-<a href="https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.
-<p>
-Travis normally runs the checks for valid line-ends, the check for proper ASCII characters, 
-followed by building the code and running the "AllTest" test routine.  A screen buffer (not a real screen) 
-is used for all the GUI tests.
-<p>
-You can enable Travis CI for your fork (personal GitHub repository) as well. 
-After merging JMRI/master into your own fork, 
-allow Travis CI to monitor your fork, and it will begin testing after your next push to GitHub. 
-Follow the instructions at <a href="https://travis-ci.org/">Travis CI</a> to set up your forks.
-<p>
-You can prevent a Travis CI from running against a specific commit by 
-including &quot;[ci skip]&quot; (including the brackets, but not the quotes) 
-anywhere in the commit message if so desired.
+      <p>You can enable Travis CI for your fork (personal GitHub
+      repository) as well. After merging JMRI/master into your own
+      fork, allow Travis CI to monitor your fork, and it will begin
+      testing after your next push to GitHub. Follow the
+      instructions at <a href="https://travis-ci.org/">Travis
+      CI</a> to set up your forks.</p>
 
-<h2>AppVeyor CI</h2>
+      <p>You can prevent a Travis CI from running against a
+      specific commit by including "[ci skip]" (including the
+      brackets, but not the quotes) anywhere in the commit message
+      if so desired.</p>
 
-We use
-<a href="http://www.appveyor.com">AppVeyor CI</a>
-to do integration/test builds on Windows for every pull into our main 
-<a href="http://github.com/JMRI">GitHub</a> repositories.
-<p>
-AppVeyor will build any branch that contains a appveyor.yml file. 
-The build history for the main JMRI repository is at
-<a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.
+      <h2>AppVeyor CI</h2>We use <a href=
+      "http://www.appveyor.com">AppVeyor CI</a> to do
+      integration/test builds on Windows for every pull into our
+      main <a href="http://github.com/JMRI">GitHub</a>
+      repositories.
 
-<p>
-AppVeyor normally runs the property-files checks (for duplicate targets and other errors), 
-followed by building the code and running the "AllTest" test routine.  A screen buffer (not a real screen) 
-is used for all the GUI tests.
+      <p>AppVeyor will build any branch that contains a
+      appveyor.yml file. The build history for the main JMRI
+      repository is at <a href=
+      "https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
 
-<p>
-Although it is possible to enable AppVeyor to build commits to your own fork of the JMRI
-repositories, it's a bit complicated to do it within the AppVeyor security model. 
+      <p>AppVeyor normally runs the property-files checks (for
+      duplicate targets and other errors), followed by building the
+      code and running the "AllTest" test routine. A screen buffer
+      (not a real screen) is used for all the GUI tests.</p>
 
-<h2 id="jenkins">Jenkins</h2>
-JMRI uses the 
-<a href="http://jenkins-ci.org/">Jenkins</a>
-continuous integration engine for integration and test builds.
-This includes keeping our 
-<a href="WebSite.shtml">web site</a> up to date as changes are committed,
-building installer packages from development builds, 
-and building final releases.
-<p>
-Our primary Jenkins engine is at 
-<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>, with 
-the original engine at 
-<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>
-and a secondary engine at
-<a href="https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
-<p>
-Specific Jenkins results of interest:
-<ul>
+      <p>Although it is possible to enable AppVeyor to build
+      commits to your own fork of the JMRI repositories, it's a bit
+      complicated to do it within the AppVeyor security model.</p>
 
-<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> page, 
-showing status of the builds done after every series of commits.
-Successful builds are followed by builds installers via the 
-<a href="http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">Packages<a> job.
+      <h2 id="jenkins">Jenkins</h2>JMRI uses the <a href=
+      "http://jenkins-ci.org/">Jenkins</a> continuous integration
+      engine for integration and test builds. This includes keeping
+      our <a href="WebSite.shtml">web site</a> up to date as
+      changes are committed, building installer packages from
+      development builds, and building final releases.
 
-<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">FindBugs</a> page, 
-showing status of the more-extensive 
-<a href="FindBugs.shtml">FindBugs</a> tests done periodically.
-There are also pages of the 
-<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">most recent changes<a> and the
-<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">most recent results<a>.
-<p>
-For more information on JMRI's use of FindBugs, see the
-<a href="FindBugs.shtml">separate FindBugs page</a>.
-</ul>
+      <p>Our primary Jenkins engine is at <a href=
+      "http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>,
+      with the original engine at <a href=
+      "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>
+      and a secondary engine at <a href=
+      "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.</p>
 
-<h3>Jenkins Integration with NetBeans</h3>
-<p>If you are developing in the <a href="NetBeans.shtml">NetBeans 7.0</a> environment,
-it is possible to integrate feedback from the Jenkins Continuous Integration (CI) engine.
-<p>Within the NetBeans environment, reference is made to the Hudson CI engine - Jenkins
-is a <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a>
-of the Hudson code and supports the same <a href="http://en.wikipedia.org/wiki/API">API</a>.
-<h3>Integration</h3>
-<p>Integration into NetBeans is achieved by executing the following steps:
-<ol>
-<li>Open NetBeans
-<li>Switch to the 'Services' window (shortcut key 'Ctrl+5')
-<li>Right-click (Ctrl-click on Mac) the entry 'Hudson Builders' and choose 'Add Hudson Instance...'
-    <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
-<li>In the resulting pop-up, complete the following:
-    <dl>
-    <dt>Name</dt><dd>JMRI</dd>
-    <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
-    <dt>Auto refresh every X minutes</dt><dd>60 (change from the default of 5 to avoid overloading the CI server)</dd>
-    </dl>
-    <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt="Add Hudson Instance dialog">
-</ol>
-<p>From now on, the current status of the Jenkins builds can be reviewed in the 'Services'
-window by expanding the 'JMRI' entry under 'Hudson Builders'.
-<p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
+      <p>Specific Jenkins results of interest:</p>
 
+      <ul>
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">
+        Builds</a> page, showing status of the builds done after
+        every series of commits. Successful builds are followed by
+        builds installers via the <a href=
+        "http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">
+        Packages</a> job.</li>
 
+        <li>
+          <a href=
+          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">
+          FindBugs</a> page, showing status of the more-extensive
+          <a href="FindBugs.shtml">FindBugs</a> tests done
+          periodically. There are also pages of the <a href=
+          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">
+          most recent changes</a> and the <a href=
+          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">
+          most recent results</a>.
 
-<!--#include virtual="/Footer" -->
+          <p>For more information on JMRI's use of FindBugs, see
+          the <a href="FindBugs.shtml">separate FindBugs
+          page</a>.</p>
+        </li>
+      </ul>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <h3>Jenkins Integration with NetBeans</h3>
+
+      <p>If you are developing in the <a href=
+      "NetBeans.shtml">NetBeans 7.0</a> environment, it is possible
+      to integrate feedback from the Jenkins Continuous Integration
+      (CI) engine.</p>
+
+      <p>Within the NetBeans environment, reference is made to the
+      Hudson CI engine - Jenkins is a <a href=
+      "http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a>
+      of the Hudson code and supports the same <a href=
+      "http://en.wikipedia.org/wiki/API">API</a>.</p>
+
+      <h3>Integration</h3>
+
+      <p>Integration into NetBeans is achieved by executing the
+      following steps:</p>
+
+      <ol>
+        <li>Open NetBeans</li>
+
+        <li>Switch to the 'Services' window (shortcut key
+        'Ctrl+5')</li>
+
+        <li>Right-click (Ctrl-click on Mac) the entry 'Hudson
+        Builders' and choose 'Add Hudson Instance...'
+
+          <p><img src="images/NetBeansJenkinsAdd.png" width="342"
+          height="134" alt="Add Hudson Instance..."></p>
+        </li>
+
+        <li>In the resulting pop-up, complete the following:
+
+          <dl>
+            <dt>Name</dt>
+
+            <dd>JMRI</dd>
+
+            <dt>URL</dt>
+
+            <dd>http://builds.jmri.org/jenkins/</dd>
+
+            <dt>Auto refresh every X minutes</dt>
+
+            <dd>60 (change from the default of 5 to avoid
+            overloading the CI server)</dd>
+          </dl><img src="images/NetBeansJenkinsAddDialog.png"
+          width="453" height="240" alt=
+          "Add Hudson Instance dialog">
+        </li>
+      </ol>
+
+      <p>From now on, the current status of the Jenkins builds can
+      be reviewed in the 'Services' window by expanding the 'JMRI'
+      entry under 'Hudson Builders'.</p>
+
+      <p><img src="images/NetBeansJenkinsOverview.png" width="342"
+      height="452" alt="Jenkins Overview"> 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * LocoNet is an int with values from 0 to 127.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class Pr2Throttle extends AbstractThrottle {
 
@@ -34,6 +34,8 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * Convert a LocoNet speed integer to a float speed value
+     * @param lSpeed loconet speed value
+     * @return speed as float 0-&gt;1.0
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -70,6 +72,9 @@ public class Pr2Throttle extends AbstractThrottle {
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
+            default:
+                log.warn("Unhandled speed step mode; {}", this.getSpeedStepMode());
+                break;
         }
         return speed;
     }
@@ -161,6 +166,7 @@ public class Pr2Throttle extends AbstractThrottle {
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4. Invoked by AbstractThrottle when needed.
      */
+    @Override
     protected void sendFunctionGroup1() {
         writeData();
     }
@@ -169,10 +175,12 @@ public class Pr2Throttle extends AbstractThrottle {
      * Send the LocoNet message to set the state of functions F5, F6, F7, F8.
      * Invoked by AbstractThrottle when needed.
      */
+    @Override
     protected void sendFunctionGroup2() {
         writeData();
     }
 
+    @Override
     protected void sendFunctionGroup3() {
         writeData();
     }
@@ -184,7 +192,8 @@ public class Pr2Throttle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -194,7 +203,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
         writeData();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -203,18 +212,20 @@ public class Pr2Throttle extends AbstractThrottle {
      * LocoNet actually puts forward and backward in the same message as the
      * first function group.
      */
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
         sendFunctionGroup1();
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener("IsForward", old, isForward); // NOI18N
         }
     }
 
     /**
      * Release the loco from this throttle, then clean up the object.
      */
+    @Override
     public void release() {
         dispose();
     }
@@ -222,10 +233,12 @@ public class Pr2Throttle extends AbstractThrottle {
     /**
      * Dispatch the loco from this throttle, then clean up the object.
      */
+    @Override
     public void dispatch() {
         dispose();
     }
 
+    @Override
     public String toString() {
         return getLocoAddress().toString();
     }
@@ -234,15 +247,18 @@ public class Pr2Throttle extends AbstractThrottle {
      * Dispose when finished with this object. After this, further usage of this
      * Throttle object will result in a JmriException.
      */
+    @Override
     public void dispose() {
         log.debug("dispose");
         super.dispose();
     }
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

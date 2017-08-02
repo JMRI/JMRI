@@ -31,11 +31,17 @@ public class DccConsist implements Consist, ProgListener {
     // containing the position of
     // each locomotive in the consist,
     // keyed by Loco Address.
+    protected HashMap<DccLocoAddress, String> ConsistRoster = null; // A Hash table
+    // containing the Roster Identifier of
+    // each locomotive in the consist,
+    // keyed by Loco Address.
     protected int ConsistType = ADVANCED_CONSIST;
     protected DccLocoAddress ConsistAddress = null;
     protected String ConsistID = null;
     // data member to hold the throttle listener objects
     final private ArrayList<ConsistListener> listeners;
+
+
 
     // Initialize a consist for the specific address.
     // In this implementation, we can safely assume the address is a
@@ -54,12 +60,17 @@ public class DccConsist implements Consist, ProgListener {
         ConsistDir = new HashMap<DccLocoAddress, Boolean>();
         ConsistList = new ArrayList<DccLocoAddress>();
         ConsistPosition = new HashMap<DccLocoAddress, Integer>();
+        ConsistRoster = new HashMap<DccLocoAddress, String>();
         ConsistID = ConsistAddress.toString();
     }
 
     // Clean Up local Storage.
     @Override
     public void dispose() {
+        if(ConsistList == null) { 
+           // already disposed;
+           return;
+        }
         for (int i = (ConsistList.size() - 1); i >= 0; i--) {
             DccLocoAddress loco = ConsistList.get(i);
             if (log.isDebugEnabled()) {
@@ -74,6 +85,7 @@ public class DccConsist implements Consist, ProgListener {
         ConsistList = null;
         ConsistDir = null;
         ConsistPosition = null;
+        ConsistRoster = null;
     }
 
     // Set the Consist Type
@@ -215,6 +227,7 @@ public class DccConsist implements Consist, ProgListener {
             ConsistDir.remove(LocoAddress);
             ConsistList.remove(LocoAddress);
             ConsistPosition.remove(LocoAddress);
+            ConsistRoster.remove(LocoAddress);
             removeFromAdvancedConsist(LocoAddress);
         } else {
             log.error("Consist Type Not Supported");
@@ -230,7 +243,7 @@ public class DccConsist implements Consist, ProgListener {
      *        the same direction as the consist, or false otherwise.
      */
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
         if (opsProg == null) {
@@ -254,7 +267,7 @@ public class DccConsist implements Consist, ProgListener {
             }
         }
 
-        InstanceManager.programmerManagerInstance()
+        InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .releaseAddressedProgrammer(opsProg);
     }
 
@@ -263,7 +276,7 @@ public class DccConsist implements Consist, ProgListener {
      *  @param address is the Locomotive address to remove from the consist
      */
     protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
-        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
         if (opsProg == null) {
@@ -278,7 +291,7 @@ public class DccConsist implements Consist, ProgListener {
             log.warn("Exception writing CV19 while removing from consist", e);
         }
 
-        InstanceManager.programmerManagerInstance()
+        InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .releaseAddressedProgrammer(opsProg);
     }
 
@@ -313,6 +326,34 @@ public class DccConsist implements Consist, ProgListener {
             return (Consist.POSITION_TRAIL);
         } else {
             return index;
+        }
+    }
+
+    /**
+     * Set the roster entry of a locomotive within the consist
+     *
+     * @param address  is the Locomotive address
+     * @param rosterId is the roster Identifer of the associated roster entry.
+     */
+    @Override
+    public void setRosterId(DccLocoAddress address, String rosterId) {
+        ConsistRoster.put(address, rosterId);
+    }
+
+    /**
+     * Get the rosterId of a locomotive within the consist
+     *
+     * @param address is the Locomotive address of interest
+     * @return string roster Identifier associated with the given address
+     *         in the consist.  Returns null if no roster entry is associated
+     *         with this entry.
+     */
+    @Override
+    public String getRosterId(DccLocoAddress address) {
+        if (ConsistRoster.containsKey(address)) {
+            return (ConsistRoster.get(address));
+        } else {
+            return null;
         }
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling.entryexit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameDestination");
     }
@@ -83,12 +85,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         mUserName = (src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());
 
         propertyBlockListener = new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 blockStateUpdated(e);
             }
         };
     }
 
+    @Override
     public String getDisplayName() {
         return mUserName;
     }
@@ -156,7 +160,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
             justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 
@@ -295,14 +299,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (manager.isRouteStacked(this, false)) {
             manager.cancelStackedRoute(this, false);
         }
-        /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
-         the swing thread for flash the icons to carry on as without interuption */
+        /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
+         The swing thread for flashing the icons will carry on without interuption. */
         final ArrayList<Color> realColorStd = new ArrayList<Color>();
         final ArrayList<Color> realColorXtra = new ArrayList<Color>();
         final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
         if (manager.useDifferentColorWhenSetting()) {
-            for (int i = 1; i < routeDetails.size(); i++) {
-                LayoutBlock lbk = routeDetails.get(i);
+            for (LayoutBlock lbk : routeDetails) {
                 routeBlocks.add(lbk);
                 realColorXtra.add(lbk.getBlockExtraColor());
                 realColorStd.add(lbk.getBlockTrackColor());
@@ -313,7 +316,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             src.getPoint().getPanel().redrawPanel();
         }
         ActiveTrain tmpat = null;
-        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
             jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
             for (ActiveTrain atl : df.getActiveTrainsList()) {
                 if (atl.getEndBlock() == src.getStart().getBlock()) {
@@ -329,6 +332,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
         final ActiveTrain at = tmpat;
         Runnable setRouteRun = new Runnable() {
+            @Override
             public void run() {
                 src.getPoint().getPanel().getGlassPane().setVisible(true);
 
@@ -337,8 +341,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
                     ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
 
-                    //This for loop was after the if statement
-                    //Last block in the route is the one that we are protecting at the last sensor/signalmast
+                    // This for loop was after the if statement
+                    // Last block in the route is the one that we are protecting at the last sensor/signalmast
                     for (int i = 0; i < routeDetails.size(); i++) {
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
@@ -382,7 +386,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
                     if (at == null) {
                         if (!isSignalLogicDynamic()) {
-                            jmri.SignalMastLogic tmSml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic((SignalMast) src.sourceSignal);
+                            jmri.SignalMastLogic tmSml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) src.sourceSignal);
                             for (Turnout t : tmSml.getAutoTurnouts((SignalMast) getSignal())) {
                                 turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
                             }
@@ -390,6 +394,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         for (Map.Entry< Turnout, Integer> entry : turnoutSettings.entrySet()) {
                             entry.getKey().setCommandedState(entry.getValue());
                             Runnable r = new Runnable() {
+                                @Override
                                 public void run() {
                                     try {
                                         Thread.sleep(250 + manager.turnoutSetDelay);
@@ -421,7 +426,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             SignalMast smSource = (SignalMast) src.sourceSignal;
                             SignalMast smDest = (SignalMast) getSignal();
                             synchronized (this) {
-                                sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(smSource);
+                                sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(smSource);
                                 if (!sml.isDestinationValid(smDest)) {
                                     //if no signalmastlogic existed then created it, but set it not to be stored.
                                     sml.setDestinationMast(smDest);
@@ -449,6 +454,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 }
                             }
                             smSource.addPropertyChangeListener(new PropertyChangeListener() {
+                                @Override
                                 public void propertyChange(PropertyChangeEvent e) {
                                     SignalMast source = (SignalMast) e.getSource();
                                     source.removePropertyChangeListener(this);
@@ -473,6 +479,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     if (manager.useDifferentColorWhenSetting()) {
                         //final ArrayList<Color> realColorXtra = realColorXtra;
                         javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
+                            @Override
                             public void actionPerformed(java.awt.event.ActionEvent e) {
                                 for (int i = 0; i < routeBlocks.size(); i++) {
                                     LayoutBlock lbk = routeBlocks.get(i);
@@ -491,10 +498,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             if (sec == null) {
                                 //A Section already exists, lets grab it and check that it is one used with the Interlocking, if so carry on using that.
-                                sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                                sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             } else {
                                 sec.setSectionType(jmri.Section.DYNAMICADHOC);
                             }
@@ -525,7 +532,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                 } catch (RuntimeException ex) {
-                    log.error("An error occured while setting the route");
+                    log.error("An error occurred while setting the route");
                     ex.printStackTrace();
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
@@ -558,8 +565,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
             SignalMast smSource = (SignalMast) src.sourceSignal;
             SignalMast smDest = (SignalMast) getSignal();
-            if (InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource) != null
-                    && InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
+            if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource) != null
+                    && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
                 return false;
             }
         }
@@ -594,6 +601,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             cancelClearFrame.pack();
 
             jButton_Clear.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -601,6 +609,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -608,6 +617,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Stack.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -615,6 +625,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Exit.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -643,6 +654,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             MessageTimeOut() {
             }
 
+            @Override
             public void run() {
                 try {
                     //Set a timmer before this window is automatically closed to 30 seconds
@@ -679,7 +691,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         if (cancelClear == EntryExitPairs.CANCELROUTE) {
-            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
                 jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 ActiveTrain at = null;
                 for (ActiveTrain atl : df.getActiveTrainsList()) {
@@ -696,7 +708,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                         }
                     }
                     if (sec != null) {
@@ -1091,10 +1103,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     void handleNoCurrentRoute(boolean reverse, String message) {
-        Object[] options = {"Yes Stack",
-            "No"};
+        Object[] options = {Bundle.getMessage("ButtonYes"),
+                Bundle.getMessage("ButtonNo")};
         int n = JOptionPane.showOptionDialog(null,
-                message + "\n Would you like to Stack the Route", "Route Not Clear",
+                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"),
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -1108,6 +1120,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    @Override
     public void dispose() {
         enabled = false;
         setActiveEntryExit(false);
@@ -1121,6 +1134,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         disposed = true;
     }
 
+    @Override
     public int getState() {
         if (activeEntryExit) {
             return 0x02;
@@ -1132,6 +1146,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
+    @Override
     public void setState(int state) {
     }
 

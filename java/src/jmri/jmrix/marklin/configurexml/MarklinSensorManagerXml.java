@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 17977 $
  */
 public class MarklinSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class MarklinSensorManagerXml extends jmri.managers.configurexml.Abstract
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.marklin.configurexml.MarklinSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

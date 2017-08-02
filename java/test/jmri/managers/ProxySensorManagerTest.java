@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Test the ProxySensorManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
- * @version	$Revision$
- */
+  */
 public class ProxySensorManagerTest extends TestCase {
 
     public String getSystemName(int i) {
@@ -27,6 +26,7 @@ public class ProxySensorManagerTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -53,6 +53,24 @@ public class ProxySensorManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testNormalizeName() {
+        // create
+        String name = l.provideSensor("" + getNumToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Sensor t = l.provideSensor("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
+    }
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
@@ -133,6 +151,7 @@ public class ProxySensorManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
 
         InternalSensorManager m = new InternalSensorManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
@@ -173,10 +192,12 @@ public class ProxySensorManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalSensorManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }

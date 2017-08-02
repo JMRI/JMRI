@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -28,10 +29,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.Timer;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +43,8 @@ import org.slf4j.LoggerFactory;
  * Provide access to the various tables via a listed pane. Based upon the
  * apps.gui3.TabbedPreferences.java by Bob Jacoben
  * <P>
- * @author	Kevin Dickerson Copyright 2010
- * @author	Bob Jacobsen Copyright 2010
+ * @author Kevin Dickerson Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class ListedTableFrame extends BeanTableFrame {
 
@@ -69,7 +73,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
     public ListedTableFrame(String s) {
         super(s);
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             //We add this to the instanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
@@ -93,10 +97,12 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
             addTable("jmri.jmrit.beantable.IdTagTableAction", Bundle.getMessage("MenuItemIdTagTable"), true);
+            addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
             init = true;
         }
     }
 
+    @Override
     public void initComponents() {
         actionList = new ActionJList(this);
 
@@ -146,12 +152,13 @@ public class ListedTableFrame extends BeanTableFrame {
         cardHolder.setDividerSize(8);
         if (lastdivider != 0) {
             cardHolder.setDividerLocation(lastdivider);
-        } else { //Else if no specific size has been given we set it to the lists preferred width
+        } else { // if no specific size has been given we set it to the lists preferred width
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
         cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "We only intend to use/save the last position of the Split frame")
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("dividerLocation")) {
                     lastdivider = (Integer) e.getNewValue();
@@ -168,7 +175,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
     JPanel errorPanel(String text) {
         JPanel error = new JPanel();
-        error.add(new JLabel(Bundle.getMessage("ErrorAddingTable") + " " + text), BorderLayout.CENTER);
+        error.add(new JLabel(Bundle.getMessage("ErrorAddingTable", text)));
         return error;
     }
 
@@ -201,7 +208,9 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
+    @Override
     public void dispose() {
+        pref.disallowSave();
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             tabbedTableArray.get(x).dispose();
         }
@@ -209,6 +218,7 @@ public class ListedTableFrame extends BeanTableFrame {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();
+        pref.allowSave();
     }
 
     void buildMenus(final TabbedTableItem item) {
@@ -220,6 +230,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
         newItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 actionList.openNewTableWindow(list.getSelectedIndex());
             }
@@ -230,6 +241,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -254,6 +266,7 @@ public class ListedTableFrame extends BeanTableFrame {
             JMenuItem viewItem = new JMenuItem(itemList.getItemString());
             viewMenu.add(viewItem);
             viewItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     gotoListItem(itemList.getClassAsString());
                 }
@@ -273,10 +286,11 @@ public class ListedTableFrame extends BeanTableFrame {
     TabbedTableItem lastSelectedItem = null;
 
     /* This is a bit of a bodge to add the contents to the bottom box and keep
-     * it backwardly compatable with the original views, if the original views
-     * are depreciated then this can be re-written
+     * it backwardly compatible with the original views. When the original views
+     * are deprecated then this can be re-written
      */
     //@TODO Sort out the procedure to add to bottom box
+    @Override
     protected void addToBottomBox(Component comp, String c) {
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             if (tabbedTableArray.get(x).getClassAsString().equals(c)) {
@@ -294,7 +308,7 @@ public class ListedTableFrame extends BeanTableFrame {
         return choices;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "We only intend to use/save the last position of the Split frame")
     public void setDividerLocation(int loc) {
         if (loc == 0) {
@@ -317,7 +331,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        int bottomBoxIndex;	// index to insert extra stuff
+        int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
 
         boolean standardModel = true;
@@ -366,17 +380,13 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void createDataModel() {
             dataModel = tableAction.getTableDataModel();
-            TableSorter sorter = new TableSorter(dataModel);
-            dataTable = dataModel.makeJTable(sorter);
-            sorter.setTableHeader(dataTable.getTableHeader());
+            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+            dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 
-            try {
-                TableSorter tmodel = ((TableSorter) dataTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-            } catch (java.lang.ClassCastException e) {
-            }  // happens if not sortable table
+            sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
             dataModel.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
@@ -396,12 +406,13 @@ public class ListedTableFrame extends BeanTableFrame {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         tableAction.addPressed(e);
                     }
                 });
             }
-            dataModel.loadTableColumnDetails(dataTable);
+            dataModel.persistTable(dataTable);
         }
 
         void addPanelModel() {
@@ -409,7 +420,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
             } catch (NullPointerException e) {
-                log.error("An error occured while trying to create the table for " + itemText + " " + e.toString());
+                log.error("An error occurred while trying to create the table for " + itemText + " " + e.toString());
                 e.printStackTrace();
             }
         }
@@ -447,7 +458,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void dispose() {
             if (dataModel != null) {
-                dataModel.saveTableColumnDetails(dataTable);
+                dataModel.stopPersistingTable(dataTable);
                 dataModel.dispose();
             }
             if (tableAction != null) {
@@ -488,7 +499,7 @@ public class ListedTableFrame extends BeanTableFrame {
     /**
      * ActionJList This deals with handling non-default mouse operations on the
      * List panel and allows for right click popups and double click to open new
-     * windows of over the items we are hovering over.
+     * windows of the items we are hovering over.
      */
     class ActionJList extends MouseAdapter {
 
@@ -500,28 +511,21 @@ public class ListedTableFrame extends BeanTableFrame {
         ActionJList(BeanTableFrame f) {
             frame = f;
             popUp = new JPopupMenu();
-            menuItem = new JMenuItem("Open in New Window");
+            menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     openNewTableWindow(mouseItem);
                 }
             });
-            try {
-                Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time");
-                if (p2 != null) {
-                    clickDelay = ((Integer) p2).intValue();
-                }
-            } catch (Exception e2) {
-                log.error("Error parsing DesktopProperty awt_multiclick_time to set double click interval ", e2.toString());
-            }
             try {
                 Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
                 if (p2 != null) {
                     clickDelay = ((Integer) p2).intValue();
                 }
             } catch (Exception e1) {
-                log.error("Error parsing DesktopProperty awt.multiClickInterval to set double click interval ", e1.toString());
+                log.debug("Cannot parse DesktopProperty awt.multiClickInterval to set double click interval ", e1.toString());
             }
             currentItemSelected = 0;
         }
@@ -529,12 +533,14 @@ public class ListedTableFrame extends BeanTableFrame {
         int clickDelay = 500;
         int currentItemSelected = -1;
 
+        @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopUp(e);
             }
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopUp(e);
@@ -543,7 +549,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         javax.swing.Timer clickTimer = null;
 
-        //Records the item index that the mouse is currenlty over
+        //Records the item index that the mouse is currently over
         int mouseItem;
 
         void showPopUp(MouseEvent e) {
@@ -555,6 +561,7 @@ public class ListedTableFrame extends BeanTableFrame {
             currentItemSelected = current;
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
 
             mouseItem = list.locationToIndex(e.getPoint());
@@ -567,6 +574,7 @@ public class ListedTableFrame extends BeanTableFrame {
             }
             if (clickTimer == null) {
                 clickTimer = new Timer(clickDelay, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         selectListItem(mouseItem);
                     }
@@ -592,6 +600,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     item = tItem;
                 }
 
+                @Override
                 public void run() {
                     ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(), cardHolder.getDividerLocation());
                     tmp.actionPerformed();

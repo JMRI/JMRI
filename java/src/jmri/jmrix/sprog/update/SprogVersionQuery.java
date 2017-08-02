@@ -1,29 +1,28 @@
-// SprogVersionQuery.java
 package jmri.jmrix.sprog.update;
 
 import java.util.Vector;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Get the firmware version of the attached SPROG
- *
- * Updated April 2016 by Andrew Crosland look for the correct replies, which may 
+ * Get the firmware version of the attached SPROG.
+ * <p>
+ * Updated April 2016 by Andrew Crosland: look for the correct replies, which may
  * not be the very next message after a query is sent, due to slot manager
  * traffic. Add Pi-SPROG version decoding.
  *
  * @author	Andrew Crosland Copyright (C) 2012, 2016
- * @version	$Revision: $
  */
 public class SprogVersionQuery implements SprogListener {
 
     String replyString;
-    static SprogTrafficController tc;
-    static SprogVersion ver;
+    SprogTrafficController tc;
+    SprogVersion ver;
 
     // enum for version query states
     enum QueryState {
@@ -33,19 +32,19 @@ public class SprogVersionQuery implements SprogListener {
         QUERYSENT, // awaiting reply to "?"
         DONE
     }       // Version has been found
-    static QueryState state = QueryState.IDLE;
+    QueryState state = QueryState.IDLE;
 
-    static final protected int LONG_TIMEOUT = 2000;
-    static javax.swing.Timer timer = null;
+    final protected int LONG_TIMEOUT = 2000;
+    javax.swing.Timer timer = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogVersionQuery() {
+    private SprogSystemConnectionMemo _memo = null;
+
+    public SprogVersionQuery(SprogSystemConnectionMemo memo) {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
-        tc = SprogTrafficController.instance();
+        _memo = memo;
+        tc = _memo.getSprogTrafficController();
         state = QueryState.IDLE;
     }
 
@@ -68,28 +67,23 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     @SuppressWarnings("unchecked")
-    private static synchronized Vector<SprogVersionListener> getCopyOfListeners() {
+    private synchronized Vector<SprogVersionListener> getCopyOfListeners() {
         return (Vector<SprogVersionListener>) versionListeners.clone();
     }
 
     /**
-     * static function returning the SprogVersionQuery instance to use.
+     * function returning the SprogVersionQuery instance to use.
      *
      * @return The registered SprogVersionQuery instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SprogVersionQuery instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SprogVersionQuery object");
-            }
-            self = new SprogVersionQuery();
-        }
-        return self;
+        return null;
     }
-    static volatile protected SprogVersionQuery self = null;
 
-    static synchronized public void requestVersion(SprogVersionListener l) {
+    synchronized public void requestVersion(SprogVersionListener l) {
         SprogMessage m;
         if (log.isDebugEnabled()) {
             log.debug("SprogVersion requested by " + l.toString());
@@ -100,22 +94,28 @@ public class SprogVersionQuery implements SprogListener {
             return;
         }
         // Remember this listener
-        SprogVersionQuery.instance().addSprogVersionListener(l);
+        this.addSprogVersionListener(l);
         if (state == QueryState.IDLE) {
             // Kick things off with a blank message
             m = new SprogMessage(1);
             m.setOpCode(' ');
-            tc.sendSprogMessage(m, SprogVersionQuery.instance());
+            tc.sendSprogMessage(m, this);
             state = QueryState.CRSENT;
             startLongTimer();
         }
     }
 
     /**
+<<<<<<< HEAD
      * Notify all registered listeners of the SPROG version
+     * @param v version to send notify too
+=======
+     * Notify all registered listeners of the SPROG version.
+>>>>>>> JMRI/master
      *
+     * @param v version to send notify to
      */
-    protected static synchronized void notifyVersion(SprogVersion v) {
+    protected synchronized void notifyVersion(SprogVersion v) {
         ver = v;
         for (SprogVersionListener listener : getCopyOfListeners()) {
             try {
@@ -129,16 +129,14 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * SprogListener notify Message not used
-     *
+     * SprogListener notify Message (not used).
      */
     @Override
     public void notifyMessage(SprogMessage m) {
     }   // Ignore
 
     /**
-     * SprogListener notify Reply listens to replies and looks for version reply
-     *
+     * SprogListener notifyReply listens to replies and looks for version reply.
      */
     @Override
     synchronized public void notifyReply(SprogReply m) {
@@ -262,9 +260,9 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
-    synchronized static protected void timeout() {
+    synchronized protected void timeout() {
         SprogVersion v;
         switch (state) {
             case CRSENT:
@@ -283,18 +281,21 @@ public class SprogVersionQuery implements SprogListener {
             case IDLE:
                 log.error("Timeout in unexpected state: " + state);
                 break;
+            default:
+                log.warn("Unhandled timeout state code: {}", state);
+                break;
         }
     }
 
     /**
-     * Internal routine to restart timer with a long delay
+     * Internal routine to restart timer with a long delay.
      */
-    static protected void startLongTimer() {
+    protected void startLongTimer() {
         restartTimer(LONG_TIMEOUT);
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {
@@ -303,11 +304,11 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      * 
      * @param delay timer delay
      */
-    static protected void restartTimer(int delay) {
+    protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
 

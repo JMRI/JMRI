@@ -1,51 +1,26 @@
 package jmri.jmrix.openlcb.swing;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        jmri.jmrix.openlcb.swing.hub.PackageTest.class,
+        jmri.jmrix.openlcb.swing.tie.PackageTest.class,
+        jmri.jmrix.openlcb.swing.networktree.PackageTest.class,
+        jmri.jmrix.openlcb.swing.monitor.PackageTest.class,
+        jmri.jmrix.openlcb.swing.clockmon.PackageTest.class,
+        jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
+        jmri.jmrix.openlcb.swing.send.PackageTest.class,
+        BundleTest.class,
+        OpenLcbComponentFactoryTest.class
+})
 
 /**
  * Tests for the jmri.jmrix.openlcb package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 
-    public void testDefinitions() {
-    }
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageTest");
-
-        suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.clockmon.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.downloader.PackageTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
 }

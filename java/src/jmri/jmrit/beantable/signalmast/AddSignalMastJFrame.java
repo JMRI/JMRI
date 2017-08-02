@@ -1,4 +1,3 @@
-// AddSignalMastJFrame.java
 package jmri.jmrit.beantable.signalmast;
 
 import javax.swing.BoxLayout;
@@ -7,15 +6,9 @@ import jmri.util.JmriJFrame;
 /**
  * JFrame to create a new SignalMast
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class AddSignalMastJFrame extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6193330521542648003L;
 
     public AddSignalMastJFrame() {
         super(Bundle.getMessage("TitleAddSignalMast"), false, true);
@@ -48,6 +41,3 @@ public class AddSignalMastJFrame extends JmriJFrame {
     }
 
 }
-
-
-/* @(#)AddSignalMastJFrame.java */

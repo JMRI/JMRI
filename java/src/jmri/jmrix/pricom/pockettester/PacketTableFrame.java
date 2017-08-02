@@ -1,4 +1,3 @@
-// PacketTableFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import javax.swing.BoxLayout;
@@ -6,20 +5,15 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.util.JTableUtil;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 219225062863225988L;
     PacketDataModel model = new PacketDataModel();
     JTable table;
     JScrollPane scroll;
@@ -27,9 +21,11 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
+    @Override
     public void initComponents() {
 
-        table = JTableUtil.sortableDataModel(model);
+        table = new JTable(model);
+        table.setRowSorter(new TableRowSorter<>(model));
         scroll = new JScrollPane(table);
 
         model.configureTable(table);
@@ -43,6 +39,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
         JPanel p1 = new JPanel();
         JButton b = new JButton(rb.getString("ButtonClear"));
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 model.reset();
             }
@@ -54,6 +51,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
 
     }
 
+    @Override
     public void dispose() {
         if (source != null) {
             source.removeListener(this);
@@ -72,6 +70,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
         model.setSource(d);
     }
 
+    @Override
     public void asciiFormattedMessage(String m) {
         model.asciiFormattedMessage(m);
     }

@@ -15,6 +15,8 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a ReporterTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class ReporterTableAction extends AbstractTableAction {
 
@@ -44,7 +46,7 @@ public class ReporterTableAction extends AbstractTableAction {
         }
     }
 
-    protected ReporterManager reportManager = InstanceManager.reporterManagerInstance();
+    protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
     public void setManager(ReporterManager man) {
         reportManager = man;
@@ -58,38 +60,48 @@ public class ReporterTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Reporters
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
+            @Override
             public String getValue(String name) {
                 Object value;
-                return (value = reportManager.getBySystemName(name).getCurrentReport()) == null ? "" : value.toString();
+                Reporter r = reportManager.getBySystemName(name);
+                if (r == null) {
+                    return "";
+                }
+                return (value = r.getCurrentReport()) == null ? "" : value.toString();
             }
 
+            @Override
             public Manager getManager() {
                 return reportManager;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return reportManager.getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
                     Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
@@ -103,10 +115,12 @@ public class ReporterTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getColumnCount() {
                 return LASTREPORTCOL + 1;
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
                     return Bundle.getMessage("LabelReport");
@@ -117,6 +131,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
                     return String.class;
@@ -127,6 +142,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnClass(col);
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     return false;
@@ -134,6 +150,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.isCellEditable(row, col);
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
@@ -142,6 +159,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getValueAt(row, col);
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 if (col == LASTREPORTCOL) {
                     return super.getPreferredWidth(VALUECOL);
@@ -149,30 +167,36 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getPreferredWidth(col);
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("Report")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameReporter");
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleReporterTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.ReporterTable";
     }
@@ -181,7 +205,8 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField sysName = new JTextField(10);
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JTextField numberToAdd = new JTextField(10);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -189,20 +214,24 @@ public class ReporterTableAction extends AbstractTableAction {
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager pref;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
             ActionListener okListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             ActionListener rangeListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
                 }
@@ -246,21 +275,16 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
+
         int numberOfReporters = 1;
 
         if (range.isSelected()) {
-            try {
-                numberOfReporters = Integer.parseInt(numberToAdd.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Number to Reporters to Add must be a number!", "" + ex, "", true, false);
-                return;
-            }
+            numberOfReporters = (Integer) numberToAdd.getValue();
         }
-        if (numberOfReporters >= 65) {
+        if (numberOfReporters >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    "You are about to add " + numberOfReporters + " Reporters into the configuration\nAre you sure?", "Warning",
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Reporters"), numberOfReporters),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
@@ -286,17 +310,17 @@ public class ReporterTableAction extends AbstractTableAction {
                 handleCreateException(rName);
                 return; // without creating       
             }
-            if (r != null) {
-                String user = userName.getText();
-                if ((x != 0) && user != null && !user.equals("")) {
-                    user = userName.getText() + ":" + x;
-                }
-                if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
-                    r.setUserName(user);
-                } else if (reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
-                    pref.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
-                }
+
+            String user = userName.getText();
+            if ((x != 0) && user != null && !user.equals("")) {
+                user = userName.getText() + ":" + x;
             }
+            if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
+                r.setUserName(user);
+            } else if (user != null && !user.equals("") && reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
+                pref.showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), userNameError, "", false, true);
+            }
+
         }
         pref.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
@@ -329,10 +353,12 @@ public class ReporterTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    @Override
     protected String getClassName() {
         return ReporterTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleReporterTable");
     }

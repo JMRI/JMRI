@@ -1,6 +1,3 @@
-/*
- * HornbyEliteCommandStation.java
- */
 package jmri.jmrix.lenz.hornbyelite;
 
 
@@ -8,10 +5,9 @@ package jmri.jmrix.lenz.hornbyelite;
  * Defines the routines that differentiate a Hornby Elite Command Station from a
  * Lenz command station.
  *
- * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
+ * @author Paul Bender Copyright (C) 2008
  */
-public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
 
     /**
      * The Hornby Elite does NOT use a service mode
@@ -23,11 +19,9 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /**
      * The Hornby Elite does support Ops Mode programming
      */
+    @Override
     public boolean isOpsModePossible() {
         return true;
     }
 
 }
-
-
-/* @(#)HornbyEliteCommandStation.java */

@@ -10,26 +10,40 @@
     <name>Windows</name>
     <name xml:lang="it">Finestre</name>
     <name xml:lang="de">Fenster</name>
+	<name xml:lang="ca">Finestra</name>
+    <name xml:lang="cs">Okna</name>
+    <name xml:lang="nl">Venster</name>
     <mnemonic>w</mnemonic>
     <node>
         <name>Active</name>
         <name xml:lang="it">Attive</name>
         <name xml:lang="de">Aktiv</name>
+		<name xml:lang="ca">Activa</name>
+        <name xml:lang="cs">Aktivní</name>
+        <name xml:lang="nl">Aktief</name>
         <node>
             <name>Sample Window 1</name>
             <name xml:lang="it">Finestra Esempio 1</name>
             <name xml:lang="de">Vorbildfenster 1</name>
+			<name xml:lang="ca">Finestra d'exemple 1</name>
+            <name xml:lang="cs">Ukázkové okno 1</name>
+            <name xml:lang="nl">Vorbeeldvenster 1</name>
         </node>
         <node>
             <name>Sample Window 2</name>
             <name xml:lang="it">Finestra Esempio 2</name>
             <name xml:lang="de">Vorbildfenster 2</name>
+			<name xml:lang="ca">Finestra d'exemple 2</name>
+            <name xml:lang="nl">Vorbeeldvenster 2</name>
         </node>
     </node>
     <node
         ><name>New PanelPro Window</name>
         <name xml:lang="it">Nuova Finestra PanelPro</name>
         <name xml:lang="de">Neues PanelPro Fenster</name>
+		<name xml:lang="ca">Nova Finestra del PanelPro</name>
+        <name xml:lang="cs">Nové okno PanelPro</name>
+        <name xml:lang="nl">Nieuw PanelPro venster</name>
         <adapter>apps.gui3.paned.PanelProAction</adapter>
     </node>
 </node>

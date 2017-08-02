@@ -1,20 +1,21 @@
-//JmriSRCPTimeServerTest.java
 package jmri.jmris.srcp;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTimeServer class
  *
- * @author Paul Bender
- * @version $Revision: 22710 $
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class JmriSRCPTimeServerTest extends TestCase {
+public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
 
-    public void testCtor() {
+    @Before
+    @Override
+    public void setUp(){
+        jmri.util.JUnitUtil.resetInstanceManager();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -23,26 +24,14 @@ public class JmriSRCPTimeServerTest extends TestCase {
                     public void write(int b) throws java.io.IOException {
                     }
                 });
-        JmriSRCPTimeServer a = new JmriSRCPTimeServer(output);
-        Assert.assertNotNull(a);
+        a = new JmriSRCPTimeServer(output);
     }
 
-    // from here down is testing infrastructure
-    public JmriSRCPTimeServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.srcp.JmriSRCPTimeServerTest.class);
-
-        return suite;
+    @After
+    @Override
+    public void tearDown(){
+       a = null;
+       jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

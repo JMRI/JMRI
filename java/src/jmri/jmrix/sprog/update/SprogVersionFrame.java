@@ -1,43 +1,41 @@
-// SprogVersionFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
- * Get the firmware version of the attached SPROG hardware
+ * Display the firmware version of the attached SPROG hardware.
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8607639215087566190L;
+    private SprogSystemConnectionMemo _memo = null;
 
-    public SprogVersionFrame() {
+    public SprogVersionFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     synchronized public void initComponents() throws Exception {
-        setTitle("SPROG Version");
+        setTitle(Bundle.getMessage("SprogVersionTitle"));
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
 
         // Start the query
-        SprogVersionQuery.requestVersion(this);
+        SprogVersionQuery query = _memo.getSprogVersionQuery();
+        query.requestVersion(this);
     }
 
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
-        if (log.isDebugEnabled()) {
-            log.debug("Version " + v.toString() + " notified");
-        }
-        JOptionPane.showMessageDialog(null, v.toString(),
-                "SPROG Version", JOptionPane.INFORMATION_MESSAGE);
+        log.debug("Version {} notified", v.toString());
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("SprogVersionDialogString", v.toString()),
+                Bundle.getMessage("SprogVersionTitle"), JOptionPane.INFORMATION_MESSAGE);
         setVisible(false);
         dispose();
     }

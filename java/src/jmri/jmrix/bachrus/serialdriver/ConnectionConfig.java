@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.bachrus.serialdriver;
 
 import jmri.util.SystemType;
@@ -9,8 +8,7 @@ import jmri.util.SystemType;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -28,6 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Speedo";
     }
@@ -40,6 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

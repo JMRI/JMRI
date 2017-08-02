@@ -1,4 +1,3 @@
-// EcosPowerManager.java
 package jmri.jmrix.ecos;
 
 import jmri.JmriException;
@@ -7,11 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PowerManager implementation for controlling layout power.
+ * PowerManager implementation for controlling ECoS layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+  */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
     public EcosPowerManager(EcosTrafficController etc) {
@@ -31,12 +29,14 @@ public class EcosPowerManager implements PowerManager, EcosListener {
 
     EcosTrafficController tc;
 
+    @Override
     public String getUserName() {
-        return "Ecos";
+        return "ECoS";
     }
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -52,11 +52,13 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeEcosListener(this);
         tc = null;
@@ -71,6 +73,7 @@ public class EcosPowerManager implements PowerManager, EcosListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -79,11 +82,13 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
     // to listen for status changes from Ecos system
+    @Override
     public void reply(EcosReply m) {
         // power message?
         String msg = m.toString();
@@ -100,12 +105,11 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class.getName());
+
 }
-
-
-/* @(#)EcosPowerManager.java */

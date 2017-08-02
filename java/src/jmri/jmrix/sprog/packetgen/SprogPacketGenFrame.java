@@ -1,51 +1,48 @@
-// SprogPacketGenFrame.java
 package jmri.jmrix.sprog.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame for user input of Sprog messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version	$Revision$
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 641828887730689784L;
+    private SprogSystemConnectionMemo _memo = null;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public SprogPacketGenFrame() {
+    public SprogPacketGenFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
-        jLabel1.setText("Command:");
+        jLabel1.setText(Bundle.getMessage("CommandLabel"));
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendPacketTooltip"));
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+        packetTextField.setToolTipText(Bundle.getMessage("SendCommandFieldTooltip"));
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle("Send Sprog command");
+        setTitle(Bundle.getMessage("SendCommandTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -53,6 +50,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -64,7 +62,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage m = new SprogMessage(packetTextField.getText());
-        SprogTrafficController.instance().sendSprogMessage(m);
+        _memo.getSprogTrafficController().sendSprogMessage(m);
     }
 
 }

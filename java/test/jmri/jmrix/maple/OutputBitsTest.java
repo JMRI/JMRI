@@ -1,7 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the OutputBits class
  *
  * @author	Dave Duchamp 2009
- * @version	$Revision$
- */
+  */
 public class OutputBitsTest extends TestCase {
 
     public void testConstructor1() {
@@ -69,6 +68,7 @@ public class OutputBitsTest extends TestCase {
 
     private OutputBits obit;
 
+    @Override
     protected void setUp() {
         // The minimal setup for log4J
         apps.tests.Log4JFixture.setUp();
@@ -76,6 +76,7 @@ public class OutputBitsTest extends TestCase {
         obit = OutputBits.instance();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

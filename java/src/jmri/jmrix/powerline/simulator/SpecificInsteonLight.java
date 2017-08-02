@@ -1,4 +1,3 @@
-// SpecificInsteonLight.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.InsteonSequence;
@@ -28,16 +27,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author Ken Cameron Copyright (C) 2009, 2010 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8491337785814822488L;
-
     /**
      * Current output step 0 to maxDimStep.
      * <p>
@@ -54,6 +47,8 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName text for systemName of light
+     * @param tc         tc for connection
      */
     public SpecificInsteonLight(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
@@ -65,6 +60,9 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName text for systemName of light
+     * @param tc         tc for connection
+     * @param userName   text for userName of light
      */
     public SpecificInsteonLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);
@@ -79,6 +77,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      *
      * @param intensity The next intensity value that will be set
      */
+    @Override
     protected void initIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("initIntensity(" + intensity + ")");
@@ -91,6 +90,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * <p>
      * This sends "Dim" commands.
      */
+    @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
@@ -134,6 +134,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * Number of steps from dim to bright is maintained in specific
      * SerialTrafficController implementation
      */
+    @Override
     protected int getNumberOfSteps() {
         return maxDimStep;
     }
@@ -141,6 +142,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     /**
      * Send a On/Off Command to the hardware
      */
+    @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("start sendOnOff(" + newState + ") Current: " + mState);
@@ -175,4 +177,4 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     private final static Logger log = LoggerFactory.getLogger(SpecificInsteonLight.class.getName());
 }
 
-/* @(#)SpecificInsteonLight.java */
+

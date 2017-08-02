@@ -1,4 +1,3 @@
-// AbstractXNetSerialConnectionConfig.java
 package jmri.jmrix.dccpp;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.dccpp;
  * <P>
  *
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on AbstractXNetSerialConnectionConfig by Paul Bender
  */
 abstract public class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {

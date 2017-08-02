@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class JMRIdemo extends Apps {
 
@@ -36,6 +36,7 @@ public class JMRIdemo extends Apps {
         super(p);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("JmriDemoVersionCredit"),
                 new Object[]{jmri.Version.name()});
@@ -53,6 +54,9 @@ public class JMRIdemo extends Apps {
 
     /**
      * Show all systems in the menu bar.
+     *
+     * @param menuBar the menu bar to attach the systems menu(s) to
+     * @param frame   ignored; available for overriding methods to use
      */
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrix.SystemsMenu());

@@ -1,9 +1,8 @@
 package jmri.jmrix.srcp;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * SRCPSensorManagerTest.java
@@ -11,45 +10,38 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPSensorManager class
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016	
  */
-public class SRCPSensorManagerTest extends TestCase {
+public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+
+    @Override
+    public String getSystemName(int i) {
+        return "A1S" + i;
+    }
 
     public void testCtor() {
+        Assert.assertNotNull(l);
+    }
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
         }, "A", 1);
 
-        SRCPSensorManager m = new SRCPSensorManager(sm, 1);
-        Assert.assertNotNull(m);
+        l = new SRCPSensorManager(sm, 1);
     }
 
-    // from here down is testing infrastructure
-    public SRCPSensorManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPSensorManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPSensorManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

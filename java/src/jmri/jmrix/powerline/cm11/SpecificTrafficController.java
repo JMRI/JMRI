@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.AbstractMRListener;
@@ -22,11 +21,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SpecificTrafficController extends SerialTrafficController {
 
     public SpecificTrafficController(SerialSystemConnectionMemo memo) {
@@ -48,6 +46,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * <p>
      * Makes them into the local messages and then queues in order
      */
+    @Override
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
         s.reset();
         X10Sequence.Command c;
@@ -74,6 +73,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * This system provides 22 dim steps
      */
+    @Override
     public int getNumberOfIntensitySteps() {
         return 63;
     }
@@ -81,10 +81,12 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Get a message of a specific length for filling in.
      */
+    @Override
     public SerialMessage getSerialMessage(int length) {
         return new SpecificMessage(length);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -96,6 +98,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Specific class override of the Serial class
      */
+    @Override
     protected AbstractMRReply newReply() {
         SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
@@ -109,6 +112,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Specific class override of the Serial class
      */
+    @Override
     public boolean endOfMessage(AbstractMRReply msg) {
         // check if this byte is length
         if (expectLength) {
@@ -153,7 +157,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             if (msg.getNumDataElements() >= 3) {
                 return true;
             } else {
-                return false;	// waiting for high-low addr
+                return false; // waiting for high-low addr
             }
         }
         // if the interlock is present, send it
@@ -177,4 +181,4 @@ public class SpecificTrafficController extends SerialTrafficController {
 }
 
 
-/* @(#)SpecificTrafficController.java */
+

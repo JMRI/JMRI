@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -26,6 +25,7 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param o Object to store, of type LocoIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LocoIcon p = (LocoIcon) o;
@@ -59,6 +59,7 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         Editor ed = (Editor) o;
         LocoIcon l = new LocoIcon(ed);
@@ -103,7 +104,7 @@ public class LocoIconXml extends PositionableLabelXml {
         String rosterId = null;
         try {
             rosterId = element.getAttribute("rosterentry").getValue();
-            RosterEntry entry = Roster.instance().entryFromTitle(rosterId);
+            RosterEntry entry = Roster.getDefault().entryFromTitle(rosterId);
             l.setRosterEntry(entry);
         } catch (Exception e) {
             log.debug("no roster entry for " + rosterId + ", ex= " + e);
@@ -113,7 +114,7 @@ public class LocoIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MARKERS, element);
         loadTextInfo(l, element);
 
-        l.init();		// to detect "background" color for use in Tracker, examine icon file 
+        l.init();  // to detect "background" color for use in Tracker, examine icon file 
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());

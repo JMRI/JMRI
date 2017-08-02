@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.StringUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision$
  */
 public class StringUtilTest extends TestCase {
 
@@ -238,6 +237,12 @@ public class StringUtilTest extends TestCase {
         Assert.assertTrue(compareStringArray(input, output));
     }
 
+    public void testArraySort() {
+        String[] str = new String[]{"8567", "8456"};
+        jmri.util.StringUtil.sort(str);
+        Assert.assertEquals("first ", "8456", str[0]);
+    }
+
     public void testSplit1() {
         String input = "abc.cdf";
         String[] result = jmri.util.StringUtil.split(input, ".");
@@ -291,6 +296,12 @@ public class StringUtilTest extends TestCase {
     public void testparenQuote() {
         String sample;
 
+        sample = null;
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        
         sample = "abc";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
@@ -318,6 +329,12 @@ public class StringUtilTest extends TestCase {
 
     public void testparenUnQuote() {
         String sample;
+
+        sample = null;
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
 
         sample = "abc";
         Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));

@@ -1,4 +1,3 @@
-// AnalogClockFrame.java
 package jmri.jmrit.analogclock;
 
 import java.awt.Color;
@@ -27,15 +26,10 @@ import jmri.util.JmriJFrame;
  * Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author Dennis Miller Copyright (C) 2004
- * @version $Revision$
  */
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1891908489623623638L;
     Timebase clock;
     double minuteAngle;
     double hourAngle;
@@ -44,9 +38,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     public AnalogClockFrame() {
         super(Bundle.getMessage("MenuItemAnalogClock"));
 
-        clock = InstanceManager.timebaseInstance();
+        clock = InstanceManager.getDefault(jmri.Timebase.class);
 
-        // listen for changes to the timebase parameters
+        // listen for changes to the Timebase parameters
         clock.addPropertyChangeListener(this);
 
         // init GUI
@@ -60,21 +54,23 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         // Need to put a Box Layout on the panel to ensure the run/stop button is centered
         // Without it, the button does not center properly
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(b = new JButton("Pause"));
+        buttonPanel.add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
         if (!clock.getRun()) {
-            b.setText("Run");
+            b.setText(Bundle.getMessage("ButtonRunClock"));
         }
         b.addActionListener(new ButtonListener());
         b.setOpaque(true);
         b.setVisible(true);
         getContentPane().add(buttonPanel);
-
+        // since Run/Stop button is not to evryones taste, user may turn it on in clock prefs
+        buttonPanel.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
         // get ready to display
         pack();
         update();  // set proper time
 
         // request callback to update time
         clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
@@ -84,10 +80,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     public class ClockPanel extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8721855316541244373L;
         // Create a Panel that has clockface drawn on it scaled to the size of the panel
         // Define common variables
         Image logo;
@@ -144,6 +136,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
             // Add component listener to handle frame resizing event
             this.addComponentListener(new ComponentAdapter() {
+                @Override
                 public void componentResized(ComponentEvent e) {
                     scaleFace();
                 }
@@ -151,6 +144,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
         }
 
+        @Override
         public void paint(Graphics g) {
 
             // overridden Paint method to draw the clock
@@ -201,14 +195,17 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Draw hour hand rotated to appropriate angle
             // Calculation mimics the AffineTransform class calculations in Graphics2D
             // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+            double minuteAngleRad = Math.toRadians(minuteAngle);
             for (int i = 0; i < scaledMinuteX.length; i++) {
-                rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(toRadians(minuteAngle)) - scaledMinuteY[i] * Math.sin(toRadians(minuteAngle)));
-                rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(toRadians(minuteAngle)) + scaledMinuteY[i] * Math.cos(toRadians(minuteAngle)));
+                rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(minuteAngleRad) - scaledMinuteY[i] * Math.sin(minuteAngleRad));
+                rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(minuteAngleRad) + scaledMinuteY[i] * Math.cos(minuteAngleRad));
             }
             scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
+
+            double hourAngleRad = Math.toRadians(hourAngle);
             for (int i = 0; i < scaledHourX.length; i++) {
-                rotatedHourX[i] = (int) (scaledHourX[i] * Math.cos(toRadians(hourAngle)) - scaledHourY[i] * Math.sin(toRadians(hourAngle)));
-                rotatedHourY[i] = (int) (scaledHourX[i] * Math.sin(toRadians(hourAngle)) + scaledHourY[i] * Math.cos(toRadians(hourAngle)));
+                rotatedHourX[i] = (int) (scaledHourX[i] * Math.cos(hourAngleRad) - scaledHourY[i] * Math.sin(hourAngleRad));
+                rotatedHourY[i] = (int) (scaledHourX[i] * Math.sin(hourAngleRad) + scaledHourY[i] * Math.cos(hourAngleRad));
             }
             scaledHourHand = new Polygon(rotatedHourX, rotatedHourY, rotatedHourX.length);
 
@@ -227,23 +224,17 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             g.drawString(amPm, -amPmFontM.stringWidth(amPm) / 2, faceSize / 5);
         }
 
-        // Method to convert degrees to radians
-        // Math.toRadians was not available until Java 1.2
-        double toRadians(double degrees) {
-            return degrees / 180.0 * Math.PI;
-        }
-
         // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
         int dotX(double radius, double angle) {
             int xDist;
-            xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
+            xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
             return xDist;
         }
 
         // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
         int dotY(double radius, double angle) {
             int yDist;
-            yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
+            yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
             return yDist;
         }
 
@@ -306,6 +297,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         repaint();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -313,12 +305,13 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
-            b.setText("Pause");
+            b.setText(Bundle.getMessage("ButtonPauseClock"));
         } else {
-            b.setText("Run");
+            b.setText(Bundle.getMessage("ButtonRunClock"));
         }
     }
 
@@ -326,13 +319,14 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     private class ButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             boolean next = !clock.getRun();
             clock.setRun(next);
             if (next) {
-                b.setText("Pause");
+                b.setText(Bundle.getMessage("ButtonPauseClock"));
             } else {
-                b.setText("Run ");
+                b.setText(Bundle.getMessage("ButtonRunClock"));
             }
         }
     }

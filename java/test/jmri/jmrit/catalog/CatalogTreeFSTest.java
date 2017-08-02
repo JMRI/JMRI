@@ -1,7 +1,7 @@
 package jmri.jmrit.catalog;
 
 import jmri.NamedBean;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,10 +17,12 @@ public class CatalogTreeFSTest extends TestCase {
     // get/set parameter code, so we test that here
     public void testSetParameter() {
         NamedBean n = new CatalogTreeFS("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
         };
@@ -30,10 +32,12 @@ public class CatalogTreeFSTest extends TestCase {
 
     public void testGetParameter() {
         NamedBean n = new CatalogTreeFS("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
         };
@@ -44,10 +48,12 @@ public class CatalogTreeFSTest extends TestCase {
 
     public void testGetSetNull() {
         NamedBean n = new CatalogTreeFS("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
         };

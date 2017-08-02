@@ -10,6 +10,7 @@ import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ import jmri.server.json.JsonHttpService;
  *
  * @author Randall Wood
  */
-class JsonTimeHttpService extends JsonHttpService {
+public class JsonTimeHttpService extends JsonHttpService {
 
     public JsonTimeHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -33,9 +34,9 @@ class JsonTimeHttpService extends JsonHttpService {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
-        data.put(RATE, InstanceManager.timebaseInstance().getRate());
-        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
+        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
+        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
         return root;
     }
 
@@ -43,13 +44,13 @@ class JsonTimeHttpService extends JsonHttpService {
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
-                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
-                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
             }
         } catch (ParseException ex) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
@@ -58,7 +59,9 @@ class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
-        return this.doGet(type, null, locale);
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+        ArrayNode result = this.mapper.createArrayNode();
+        result.add(this.doGet(type, null, locale));
+        return result;
     }
 }

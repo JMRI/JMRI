@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import javax.annotation.Nonnull;
 import jmri.managers.AbstractManager;
 
 /**
@@ -34,14 +35,17 @@ public class OBlockManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
-    public String getSystemPrefix() {
+    @Nonnull@Override
+ public String getSystemPrefix() {
         return "O";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
@@ -62,7 +66,7 @@ public class OBlockManager extends AbstractManager
         }
         String sName = systemName.toUpperCase();
         if (!sName.startsWith("OB")) {
-            sName = "OB" + sName;
+            return null;
         }
         if (sName.length() < 3) {
             return null;
@@ -106,26 +110,23 @@ public class OBlockManager extends AbstractManager
         return (OBlock) _tuser.get(key);
     }
 
-    public OBlock provideOBlock(String name) {
+    @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
-            return null;
+            throw new IllegalArgumentException("name \""+name+"\" invalid");
         }
         OBlock ob = getByUserName(name);
         if (ob == null) {
             ob = getBySystemName(name);
         }
+        if (ob == null) {
+            ob = createNewOBlock(name, null);
+            if (ob == null) throw new IllegalArgumentException("could not create OBlock \""+name+"\"");
+            register(ob);
+        }
         return ob;
     }
 
-    static OBlockManager _instance = null;
-
-    static public OBlockManager instance() {
-        if (_instance == null) {
-            _instance = new OBlockManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");
     }

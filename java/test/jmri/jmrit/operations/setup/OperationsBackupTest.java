@@ -14,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -44,7 +44,7 @@ import junit.framework.TestSuite;
  *
  *
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision: 00001 $
+ * 
  */
 public class OperationsBackupTest extends TestCase {
 

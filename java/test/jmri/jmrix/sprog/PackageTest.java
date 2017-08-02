@@ -1,41 +1,55 @@
 package jmri.jmrix.sprog;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * tests for the jmri.jmrix.sprog package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // a dummy test to avoid JUnit warning
-    public void testDemo() {
-        assertTrue(true);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.sprog.PackageTest");
-
-        suite.addTest(jmri.jmrix.sprog.SprogMessageTest.suite());
-        suite.addTest(jmri.jmrix.sprog.SprogCSStreamPortControllerTest.suite());
-
-        return suite;
-    }
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   SprogSystemConnectionMemoTest.class,
+   SprogTrafficControllerTest.class,
+   SprogMessageTest.class,
+   SprogCSStreamPortControllerTest.class,
+   SprogPowerManagerTest.class,
+   SprogTurnoutManagerTest.class,
+   SprogTurnoutTest.class,
+   SprogCSTurnoutTest.class,
+   SprogCommandStationTest.class,
+   SprogConnectionTypeListTest.class,
+   jmri.jmrix.sprog.pi.PackageTest.class,
+   jmri.jmrix.sprog.serialdriver.PackageTest.class,
+   jmri.jmrix.sprog.sprog.PackageTest.class,
+   jmri.jmrix.sprog.sprogCS.PackageTest.class,
+   jmri.jmrix.sprog.sprognano.PackageTest.class,
+   jmri.jmrix.sprog.configurexml.PackageTest.class,
+   jmri.jmrix.sprog.swing.PackageTest.class,
+   jmri.jmrix.sprog.packetgen.PackageTest.class,
+   jmri.jmrix.sprog.console.PackageTest.class,
+   jmri.jmrix.sprog.sprogmon.PackageTest.class,
+   jmri.jmrix.sprog.sprogslotmon.PackageTest.class,
+   SPROGMenuTest.class,
+   SPROGCSMenuTest.class,
+   SprogPortControllerTest.class,
+   SprogOpsModeProgrammerTest.class,
+   SprogProgrammerTest.class,
+   SprogProgrammerManagerTest.class,
+   SprogThrottleManagerTest.class,
+   SprogCSThrottleManagerTest.class,
+   SprogThrottleTest.class,
+   SprogCSThrottleTest.class,
+   SprogConstantsTest.class,
+   SprogReplyTest.class,
+   jmri.jmrix.sprog.update.PackageTest.class,
+<<<<<<< HEAD
+   SprogSlotTest.class
+=======
+   SprogSlotTest.class,
+   BundleTest.class
+>>>>>>> JMRI/master
+})
+public class PackageTest {
 }

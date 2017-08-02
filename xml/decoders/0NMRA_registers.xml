@@ -28,10 +28,12 @@
         <decVal/>
         <comment xml:lang="it"> Un valore di 255 corrisponde al 100%</comment>
         <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+        <comment xml:lang="ca">Un valor de 255 correspont al 100%</comment>
         <label>Vstart</label>
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Anfahrspannung</label>
+         <label xml:lang="ca">Voltatge d'arrencada</label>
       </variable>
       <!-- CV 3-4 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>

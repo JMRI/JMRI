@@ -14,7 +14,6 @@ import org.jdom2.Namespace;
  * them. The "load()" method is therefore a null-op here.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -24,6 +23,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file
      */
+    @Override
     public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
@@ -81,6 +81,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
      */
+    @Override
     public void load(Element e, Object o) throws Exception {
         throw new Exception("Method not coded");
     }
@@ -93,6 +94,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      *          in ConfigXmlManager.
      * @return The XML representation Element
      */
+    @Override
     public Element store(Object o) {
         return storeDirectly(o);
     }

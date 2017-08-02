@@ -1,4 +1,3 @@
-// GraphPane.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BasicStroke;
@@ -23,16 +22,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for graph of loco speed curves
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
- */
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
+  */
 public class GraphPane extends JPanel implements Printable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 260997228988676886L;
 
     final int PAD = 40;
 
@@ -44,8 +37,6 @@ public class GraphPane extends JPanel implements Printable {
     protected Color[] colors = {Color.RED, Color.BLUE, Color.BLACK};
 
     protected boolean _grid = false;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     // Use a default 28 step profile
     public GraphPane() {
@@ -92,24 +83,29 @@ public class GraphPane extends JPanel implements Printable {
 
     void setUnitsMph() {
         units = Speed.MPH;
-        setYLabel(rb.getString("SpeedMPH"));
+        setYLabel(Bundle.getMessage("SpeedMPH"));
     }
 
     void setUnitsKph() {
         units = Speed.KPH;
-        setYLabel(rb.getString("SpeedKPH"));
+        setYLabel(Bundle.getMessage("SpeedKPH"));
     }
 
     public int getUnits() {
         return units;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGraph(g);
     }
 
     protected void drawGraph(Graphics g) {
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -262,6 +258,7 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
+    @Override
     public int print(Graphics g, PageFormat pf, int page) throws
             PrinterException {
 
@@ -270,6 +267,10 @@ public class GraphPane extends JPanel implements Printable {
             return Printable.NO_SUCH_PAGE;
         }
 
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+           
         Graphics2D g2 = (Graphics2D) g;
         /* User (0,0) is typically outside the imageable area, so we must
          * translate by the X and Y values in the PageFormat to avoid clipping.

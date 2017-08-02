@@ -1,7 +1,3 @@
-/*
- * EliteXNetProgrammer.java
- */
- // Convert the jmri.Programmer interface into commands for the Lenz XpressNet
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetConstants;
@@ -30,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Paul Bender Copyright (c) 2008
- * @version $Revision$
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -45,6 +40,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -94,10 +90,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         controller().sendXNetMessage(resultMsg, this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -152,6 +150,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         controller().sendXNetMessage(resultMsg, this);
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
@@ -350,12 +349,10 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // listen for the messages to the Elite 
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class.getName());
 
 }
-
-
-/* @(#)XNetProgrammer.java */

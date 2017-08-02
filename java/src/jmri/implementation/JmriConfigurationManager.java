@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
+import jmri.jmrit.XmlFile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
@@ -34,6 +35,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);
     private final ConfigXmlManager legacy = new ConfigXmlManager();
     private final HashMap<PreferencesManager, InitializationException> initializationExceptions = new HashMap<>();
+    private final List<PreferencesManager> initialized = new ArrayList<>();
 
     @SuppressWarnings("unchecked") // For types in InstanceManager.store()
     public JmriConfigurationManager() {
@@ -173,26 +175,33 @@ public class JmriConfigurationManager implements ConfigureManager {
             if (file == null
                     || (new File(file.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
                     || (new File(file.toURI())).getName().equals(Profile.CONFIG)) {
+                Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
                 providers.stream().forEach((provider) -> {
-                    this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
+                    this.initializeProvider(provider, profile);
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
-                        String[] errors = new String[this.initializationExceptions.size()];
-                        int i = 0;
-                        for (InitializationException e : this.initializationExceptions.values()) {
-                            errors[i] = e.getLocalizedMessage();
-                            i++;
-                        }
+                        ArrayList<String> errors = new ArrayList<>();
+                        this.initialized.forEach((provider) -> {
+                            List<Exception> exceptions = provider.getInitializationExceptions(profile);
+                            if (!exceptions.isEmpty()) {
+                                exceptions.forEach((exception) -> {
+                                    errors.add(exception.getLocalizedMessage());
+                                });
+                            } else if (this.initializationExceptions.get(provider) != null) {
+                                errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
+                            }
+                        });
                         Object list;
-                        if (this.initializationExceptions.size() == 1) {
-                            list = errors[0];
+                        if (errors.size() == 1) {
+                            list = errors.get(0);
                         } else {
-                            list = new JList<>(errors);
+                            list = new JList<>(errors.toArray(new String[errors.size()]));
                         }
                         JOptionPane.showMessageDialog(null,
                                 new Object[]{
+                                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
                                     list,
                                     "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
                                     Bundle.getMessage("InitExMessageLogs"), // NOI18N
@@ -237,8 +246,8 @@ public class JmriConfigurationManager implements ConfigureManager {
         return this.legacy.makeBackup(file);
     }
 
-    private boolean initializeProvider(PreferencesManager provider, Profile profile) {
-        if (!provider.isInitialized(profile)) {
+    private void initializeProvider(PreferencesManager provider, Profile profile) {
+        if (!provider.isInitialized(profile) && !provider.isInitializedWithExceptions(profile)) {
             log.debug("Initializing provider {}", provider.getClass());
             for (Class<? extends PreferencesManager> c : provider.getRequires()) {
                 InstanceManager.getList(c).stream().forEach((p) -> {
@@ -256,12 +265,23 @@ public class JmriConfigurationManager implements ConfigureManager {
                     log.error("Additional exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
                 }
             }
+            this.initialized.add(provider);
             log.debug("Initialized provider {}", provider.getClass());
         }
-        return provider.isInitialized(profile);
     }
 
     public HashMap<PreferencesManager, InitializationException> getInitializationExceptions() {
         return new HashMap<>(initializationExceptions);
     }
+
+    @Override
+    public void setValidate(XmlFile.Validate v) {
+        legacy.setValidate(v);
+    }
+
+    @Override
+    public XmlFile.Validate getValidate() {
+        return legacy.getValidate();
+    }
+
 }

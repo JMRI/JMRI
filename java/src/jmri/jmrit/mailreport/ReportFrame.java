@@ -1,4 +1,3 @@
-// ReportFrame.java
 package jmri.jmrit.mailreport;
 
 import javax.swing.BoxLayout;
@@ -6,15 +5,9 @@ import javax.swing.BoxLayout;
 /**
  * Frame for uploading debugging information
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class ReportFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5874305263299040178L;
 
     public ReportFrame() {
         super(false, true);

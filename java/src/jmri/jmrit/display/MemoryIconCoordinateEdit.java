@@ -32,7 +32,7 @@ import javax.swing.event.ChangeListener;
  */
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
-    MemoryIcon pl; 			// positional label tracked by this frame
+    MemoryIcon pl;    // positional label tracked by this frame
     int oldX;
     int oldY;
     double oldD;
@@ -44,11 +44,16 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     }
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
+<<<<<<< HEAD
         return new AbstractAction(Bundle.getMessage("SetXY")) {
+=======
+        return new AbstractAction(Bundle.getMessage("SetXY", "")) {
+>>>>>>> JMRI/master
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetXY"), pos, true);
+                f.init(Bundle.getMessage("SetXY", ""), pos, true);
                 f.initSetXY();
                 f.setVisible(true);
                 f.setLocationRelativeTo(pos);
@@ -56,37 +61,39 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         };
     }
 
+    @Override
     public void initSetXY() {
         oldX = pl.getOriginalX();
         oldY = pl.getOriginalY();
 
         textX = new javax.swing.JLabel();
-        textX.setText("x= " + pl.getOriginalX());
+        textX.setText("X: " + pl.getOriginalX());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("y= " + pl.getOriginalY());
+        textY.setText("Y: " + pl.getOriginalY());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
         ChangeListener listener = new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getOriginalX());
-                textY.setText("y= " + pl.getOriginalY());
+                textX.setText(" X: " + pl.getOriginalX());
+                textY.setText(" Y: " + pl.getOriginalY());
             }
         };
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(Integer.valueOf(pl.getOriginalX()));
-        spinX.setToolTipText("Enter x coordinate");
+        spinX.setToolTipText(Bundle.getMessage("EnterXcoord"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0, 0, 10000, 1);
         spinY = new javax.swing.JSpinner(model);
         spinY.setValue(Integer.valueOf(pl.getOriginalY()));
-        spinY.setToolTipText("Enter y coordinate");
+        spinY.setToolTipText(Bundle.getMessage("EnterYcoord"));
         spinY.setMaximumSize(new Dimension(
                 spinY.getMaximumSize().width, spinY.getPreferredSize().height));
         spinY.addChangeListener(listener);
@@ -96,21 +103,27 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         addSpinItems(true);
 
         okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getOriginalX());
-                textY.setText("y= " + pl.getOriginalY());
+                textX.setText(" X: " + pl.getOriginalX());
+                textY.setText(" Y: " + pl.getOriginalY());
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pl.setLocation(oldX, oldY);
                 dispose();
             }
         });
+        // make large enough to easily move
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 }

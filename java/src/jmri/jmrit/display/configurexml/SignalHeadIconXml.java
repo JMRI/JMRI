@@ -1,4 +1,3 @@
-// SignalHeadIconXml.java
 package jmri.jmrit.display.configurexml;
 
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -43,6 +41,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
      * @param o Object to store, of type SignalHeadIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         SignalHeadIcon p = (SignalHeadIcon) o;
@@ -115,6 +114,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;
@@ -130,7 +130,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             name = attr.getValue();
         }
 
-        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead sh = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
 
         if (sh != null) {
             l.setSignalHead(name);
