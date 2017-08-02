@@ -14,7 +14,7 @@ public class ConsistManagerAcceptanceSteps implements En {
       Given("^the InstanceManager is started$", () -> {
           jmri.util.JUnitUtil.resetInstanceManager();
       });
-
+ 
       When("^I ask for the Consist Manager$", () -> {
           cm = jmri.InstanceManager.getNullableDefault(ConsistManager.class);
       });
@@ -22,6 +22,26 @@ public class ConsistManagerAcceptanceSteps implements En {
       Then("^the consist manager is null$", () -> {
           // Write code here that turns the phrase above into concrete actions
           Assert.assertNull(cm);
+      });
+
+      Given("^A Command Station Instance$", () -> {
+          jmri.util.JUnitUtil.initDebugCommandStation();
+      });
+
+      Then("^the consist manager is not null$", () -> {
+          Assert.assertNotNull(cm);
+      });
+
+      Then("^the consist manager is an Nmra Consist Manager$", () -> {
+          Assert.assertTrue(cm instanceof jmri.implementation.NmraConsistManager);
+      });
+
+      Given("^An Operations Mode Programmer Instance$", () -> {
+          jmri.util.JUnitUtil.initDebugProgrammerManager();
+      });
+
+      Then("^the consist manager is an Dcc Consist Manager$", () -> {
+          Assert.assertTrue(cm instanceof jmri.implementation.DccConsistManager);
       });
    }
 }

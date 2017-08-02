@@ -143,6 +143,7 @@
     <property name="target"       value="${maventarget}/classes"/>
     <property name="testtarget"   value="${maventarget}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
+    <property name="acceptancetest" value="${javadir}/acceptancetest"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="lineendtmp"   value="${tmptarget}/lineend"/>
@@ -432,6 +433,7 @@
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
+            <fileset file="cucumber-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
         </delete>
@@ -628,7 +630,7 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <java-compile javac.source="${test};${acceptancetest}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
