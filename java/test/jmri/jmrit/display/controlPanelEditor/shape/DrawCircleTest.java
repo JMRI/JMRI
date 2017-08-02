@@ -22,7 +22,7 @@ public class DrawCircleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         ShapeDrawer s = new ShapeDrawer(frame);
-        DrawCircle t = new DrawCircle("newShape","drawShapes",s);
+        DrawCircle t = new DrawCircle("newShape","Circle",s);
         Assert.assertNotNull("exists",t);
     }
 

@@ -22,7 +22,7 @@ public class DrawRectangleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         ShapeDrawer s = new ShapeDrawer(frame);
-        DrawRectangle t = new DrawRectangle("newShape","drawShapes",s);
+        DrawRectangle t = new DrawRectangle("newShape","Rectangle",s);
         Assert.assertNotNull("exists",t);
     }
 

@@ -22,7 +22,7 @@ public class DrawEllipseTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         ShapeDrawer s = new ShapeDrawer(frame);
-        DrawEllipse t = new DrawEllipse("newShape","drawShapes",s);
+        DrawEllipse t = new DrawEllipse("newShape","Ellipse",s);
         Assert.assertNotNull("exists",t);
     }
 
