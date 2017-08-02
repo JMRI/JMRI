@@ -26,12 +26,12 @@ import java.util.ArrayList;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @author	 Chuck Catania  Copyright (C) 2014, 2016
+ * @author	 Chuck Catania  Copyright (C) 2014, 2016, 2017
  * @version	 $Revision: 17977 $
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeiolist.NodeIOListBundle");
+//    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeiolist.NodeIOListBundle");
 
     ArrayList<SerialNode> cmriNode = new  ArrayList<SerialNode>();  //c2
     
@@ -43,11 +43,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     public int numOutputBits = 48; // number of output bits for selected node
 
     // node select pane items
-    JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel")+" ");
+    JLabel nodeLabel = new JLabel(Bundle.getMessage("NodeBoxLabel")+" ");
     JLabel nodeAddrBox = new JLabel("??");
     ButtonGroup bitTypeGroup = new ButtonGroup();
-    JRadioButton inputBits = new JRadioButton(rb.getString("ShowInputButton")+"   ",true);
-    JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"),false);
+    JRadioButton inputBits = new JRadioButton(Bundle.getMessage("ShowInputButton")+"   ",true);
+    JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"),false);
     JLabel nodeInfoText = new JLabel("Node Information Text");
 
     JLabel nodeDesc = new JLabel("Description:");  //c2
@@ -56,16 +56,16 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     protected JPanel assignmentPanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
     protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-                                                                    rb.getString("AssignmentPanelInputName") );
+                                                                    Bundle.getMessage("AssignmentPanelInputName") );
     protected Border outputBorder = BorderFactory.createEtchedBorder();
     protected Border outputBorderTitled = BorderFactory.createTitledBorder(outputBorder,
-                                                                    rb.getString("AssignmentPanelOutputName") );
+                                                                    Bundle.getMessage("AssignmentPanelOutputName") );
     protected JTable assignmentTable = null;
     protected TableModel assignmentListModel = null;
 
     // button pane items
-    JButton printButton = new JButton(rb.getString("PrintButtonText") );
-    JButton doneButton = new JButton(rb.getString("DoneButtonText") );
+    JButton printButton = new JButton(Bundle.getMessage("PrintButtonText") );
+    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText") );
     
     NodeIOListFrame curFrame;
     private CMRISystemConnectionMemo _memo = null;
@@ -79,7 +79,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception {
 
         // set the frame's initial state
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
         setSize(500,300);
         Container contentPane = getContentPane();        
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -109,11 +109,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             } );
         }
         else {
-            nodeInfoText.setText(rb.getString("NoNodesError"));
+            nodeInfoText.setText(Bundle.getMessage("NoNodesError"));
         }
-        nodeLabel.setToolTipText(rb.getString("NodeBoxTip"));
-        inputBits.setToolTipText(rb.getString("ShowInputTip"));
-        outputBits.setToolTipText(rb.getString("ShowOutputTip"));
+        nodeLabel.setToolTipText(Bundle.getMessage("NodeBoxTip"));
+        inputBits.setToolTipText(Bundle.getMessage("ShowInputTip"));
+        outputBits.setToolTipText(Bundle.getMessage("ShowOutputTip"));
 		
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -136,7 +136,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel12);
         
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,rb.getString("NodePanelName") );
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,Bundle.getMessage("NodePanelName")+" "+_memo.getUserName() );
         panel1.setBorder(panel1Titled);                
         contentPane.add(panel1);
         
@@ -185,7 +185,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new FlowLayout());
         printButton.setVisible(true);
-        printButton.setToolTipText(rb.getString("PrintButtonTip") );
+        printButton.setToolTipText(Bundle.getMessage("PrintButtonTip") );
 	if (cmriNode.size() > 0) {
             printButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -197,7 +197,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel3);
                
         doneButton.setVisible(true);
-        doneButton.setToolTipText(rb.getString("DoneButtonTip") );
+        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
 	if (cmriNode.size() > 0) 
         {
             doneButton.addActionListener(new java.awt.event.ActionListener() {
@@ -275,12 +275,12 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                 default:
                 break;
             }
-            nodeInfoText.setText(nodeType+bitsPerCard+" "+rb.getString("BitsPerCard")+", "+
-                                            numInputBits+" "+rb.getString("InputBitsAnd")+" "+
-                                            numOutputBits+" "+rb.getString("OutputBits"));
+            nodeInfoText.setText(nodeType+bitsPerCard+" "+Bundle.getMessage("BitsPerCard")+", "+
+                                            numInputBits+" "+Bundle.getMessage("InputBitsAnd")+" "+
+                                            numOutputBits+" "+Bundle.getMessage("OutputBits"));
             String name = selNode.getcmriNodeDesc();
             if (name!=null && (name!="")) {
-                nodeDesc.setText(rb.getString("NodeDesc")+" "+name);
+                nodeDesc.setText(Bundle.getMessage("NodeDesc")+" "+name);
                 nodeDesc.setVisible(true);
             }
 
@@ -317,12 +317,12 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-                head = "CMRInet "+rb.getString("AssignmentPanelInputName")+" - "+
-                                        rb.getString("NodeBoxLabel")+" "+selNodeNum;
+                head = "CMRInet "+Bundle.getMessage("AssignmentPanelInputName")+" - "+
+                                        Bundle.getMessage("NodeBoxLabel")+" "+selNodeNum;
         }
         else {
-                head = "CMRInet "+rb.getString("AssignmentPanelOutputName")+" - "+
-                                        rb.getString("NodeBoxLabel")+" "+selNodeNum;
+                head = "CMRInet "+Bundle.getMessage("AssignmentPanelOutputName")+" - "+
+                                        Bundle.getMessage("NodeBoxLabel")+" "+selNodeNum;
         }
         // initialize a printer writer
         HardcopyWriter writer = null;
@@ -342,7 +342,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
      */
     public class AssignmentTableModel extends AbstractTableModel
     {
-        private String free = rb.getString("AssignmentFree");
+        private String free = Bundle.getMessage("AssignmentFree");
         private int curRow = -1;
         private String curRowSysName = "";
 		
@@ -609,11 +609,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                 }
         }
 }
-    private String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
-						   rb.getString("HeadingAddress"),
-						   rb.getString("HeadingSystemName"),
-						   rb.getString("HeadingUserName"),
-                                                   rb.getString("HeadingComment")};
+    private String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
+						   Bundle.getMessage("HeadingAddress"),
+						   Bundle.getMessage("HeadingSystemName"),
+						   Bundle.getMessage("HeadingUserName"),
+                                                   Bundle.getMessage("HeadingComment")};
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeIOListFrame.class.getName());

@@ -142,7 +142,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel12);
         Border panel1Border = BorderFactory.createEtchedBorder();
         Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,
-                Bundle.getMessage("NodePanelName"));
+                Bundle.getMessage("NodePanelName")+" "+_memo.getUserName());
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 

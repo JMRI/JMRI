@@ -1,11 +1,14 @@
 package jmri.managers;
 
+import java.util.Arrays;
+import java.util.Set;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CatalogTreeManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
 import jmri.IdTagManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
@@ -14,7 +17,6 @@ import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
-import jmri.SectionManager;
 import jmri.SensorManager;
 import jmri.SignalGroupManager;
 import jmri.SignalHeadManager;
@@ -22,13 +24,14 @@ import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
 import jmri.SignalSystemManager;
 import jmri.Timebase;
-import jmri.TransitManager;
 import jmri.TurnoutManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide the usual default implementations for the
@@ -48,21 +51,17 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 2.9.4
  */
-public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
+@ServiceProvider(service = InstanceInitializer.class)
+public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
 
         if (type == AudioManager.class) {
             return new DefaultAudioManager();
-        }
-
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == BlockManager.class) {
-            return new BlockManager();
         }
 
         if (type == CatalogTreeManager.class) {
@@ -117,11 +116,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new jmri.managers.ProxySensorManager();
         }
 
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == SectionManager.class) {
-            return new SectionManager();
-        }
-
         if (type == SignalGroupManager.class) {
             // ensure signal mast manager exists first
             InstanceManager.getDefault(jmri.SignalMastManager.class);
@@ -154,11 +148,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return timebase;
         }
 
-        // @TODO Should do "implements InstanceManagerAutoDefault" instead
-        if (type == TransitManager.class) {
-            return new TransitManager();
-        }
-
         if (type == TurnoutManager.class) {
             return new jmri.managers.ProxyTurnoutManager();
         }
@@ -167,8 +156,38 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return VSDecoderManager.instance();
         }
 
-        // Nothing found
-        return null;
+        return super.getDefault(type);
+    }
+
+    @Override
+    public Set<Class<?>> getInitalizes() {
+        Set<Class<?>> set = super.getInitalizes();
+        set.addAll(Arrays.asList(
+                AudioManager.class,
+                BlockManager.class,
+                CatalogTreeManager.class,
+                ClockControl.class,
+                ConditionalManager.class,
+                IdTagManager.class,
+                LightManager.class,
+                LogixManager.class,
+                MemoryManager.class,
+                ProgrammerManager.class,
+                RailComManager.class,
+                ReporterManager.class,
+                RosterIconFactory.class,
+                RouteManager.class,
+                SensorManager.class,
+                SignalGroupManager.class,
+                SignalHeadManager.class,
+                SignalMastLogicManager.class,
+                SignalMastManager.class,
+                SignalSystemManager.class,
+                Timebase.class,
+                TurnoutManager.class,
+                VSDecoderManager.class
+        ));
+        return set;
     }
 
 }

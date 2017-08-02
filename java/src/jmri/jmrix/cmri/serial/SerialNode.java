@@ -309,7 +309,7 @@ public class SerialNode extends AbstractNode {
           case CPMEGA:    if(result<1)  //c2
                             warn("C/MRI CPMEGA node with "+result+" INPUT cards");
           break;
-          default: ;
+          default:
           break;
         }
 
@@ -355,7 +355,7 @@ public class SerialNode extends AbstractNode {
            if(result<1)
              warn("C/MRI  CPMEGA node with "+result+" OUTPUT cards");
            break;
-           default: ;
+           default: 
          }
          
         return result;
@@ -893,7 +893,7 @@ public class SerialNode extends AbstractNode {
             case CPMEGA:      initBytes[0] = NDP_CPMEGA;  // 'O'   c2
             break;
             
-            default: ;
+            default: 
         }
 
 // Here add code for other type of card
