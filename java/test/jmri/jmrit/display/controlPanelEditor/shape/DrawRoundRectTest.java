@@ -22,7 +22,7 @@ public class DrawRoundRectTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         ShapeDrawer s = new ShapeDrawer(frame);
-        DrawRoundRect t = new DrawRoundRect("newShape","test",s);
+        DrawRoundRect t = new DrawRoundRect("newShape","drawShapes",s);
         Assert.assertNotNull("exists",t);
     }
 

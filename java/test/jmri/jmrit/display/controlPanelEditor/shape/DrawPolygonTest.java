@@ -22,7 +22,7 @@ public class DrawPolygonTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         ShapeDrawer s = new ShapeDrawer(frame);
-        DrawPolygon t = new DrawPolygon("newShape","test",s);
+        DrawPolygon t = new DrawPolygon("newShape","drawShapes",s);
         Assert.assertNotNull("exists",t);
     }
 
