@@ -2,6 +2,7 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import javax.annotation.CheckForNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,23 +16,21 @@ import org.slf4j.LoggerFactory;
 public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
         implements jmri.jmrix.PortAdapter {
 
-    // private control members
-    private boolean opened = false;
     // in theory gpio can be static, because there will only ever
     // be one, but the library handles the details that make it a
     // singleton.
     private GpioController gpio = null;
 
     public RaspberryPiAdapter() {
-        this(GpioFactory.getInstance());
-    }
-
-    public RaspberryPiAdapter(GpioController _gpio) {
         super(new RaspberryPiSystemConnectionMemo());
         log.debug("RaspberryPi GPIO Adapter Constructor called");
-        opened = true;
         this.manufacturerName = RaspberryPiConnectionTypeList.PI;
-        gpio = _gpio;
+        try {
+            gpio = GpioFactory.getInstance();
+            opened = true;
+        } catch (UnsatisfiedLinkError er) {
+            log.error("Expected to run on Raspberry PI, but does not appear to be.");
+        }
     }
 
     @Override
@@ -55,11 +54,6 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
     }
 
     @Override
-    public boolean status() {
-        return opened;
-    }
-
-    @Override
     public java.io.DataInputStream getInputStream() {
         return null;
     }
@@ -79,10 +73,11 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
     }
 
     /*
-    * get the GPIO Controller associated with this object.
+    * Get the GPIO Controller associated with this object.
     *
-    * @return GpioController object.
+    * @return the associaed GPIO Controller or null if none exists
      */
+    @CheckForNull
     public GpioController getGPIOController() {
         return gpio;
     }

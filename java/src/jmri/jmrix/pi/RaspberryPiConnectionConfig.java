@@ -1,5 +1,6 @@
 package jmri.jmrix.pi;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -134,10 +135,18 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         if (adapter == null) {
             adapter = new RaspberryPiAdapter();
         }
+        if (adapter.getGPIOController() == null) {
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("NoGPIOControllerMessage"),
+                        Bundle.getMessage("NoGPIOControllerMessage"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     @Override
-    public jmri.jmrix.PortAdapter getAdapter() {
+    public RaspberryPiAdapter getAdapter() {
         return adapter;
     }
 
