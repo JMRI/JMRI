@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public interface SignalGroupManager extends Manager {
+public interface SignalGroupManager extends Manager<SignalGroup> {
 
     @CheckForNull public SignalGroup getSignalGroup(@Nonnull String name);
 

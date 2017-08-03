@@ -123,6 +123,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
+    String connectionChoice = "";
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
@@ -1006,9 +1007,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            sysNameTextField.setName("sysNameTextField");
-            userNameTextField.setName("userNameTextField");
-            prefixBox.setName("prefixBox");
+            sysNameTextField.setName("sysNameTextField"); // NOI18N
+            userNameTextField.setName("userNameTextField"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             //sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip")); // already assigned by AddNew...
             canAddRange(null);
@@ -1019,7 +1020,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create a {@literal JComboBox<String>} containing all the options for
-     * turnout automation parameters for this turnout
+     * turnout automation parameters for this turnout.
      *
      * @param t the turnout
      * @return the JComboBox
@@ -1166,8 +1167,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
                 dialog.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(f, "There is no operation type suitable for this turnout",
-                        "No operation type", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("TurnoutOperationErrorDialog"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -1206,8 +1207,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                         String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
                         if (newName != null && !newName.equals("")) {
                             if (!myOp.rename(newName)) {
-                                JOptionPane.showMessageDialog(self, "This name is already in use",
-                                        "Name already in use", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(self, Bundle.getMessage("TurnoutErrorDuplicate"),
+                                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                             }
                             setTitle();
                             myTurnout.setTurnoutOperation(null);
@@ -1638,7 +1639,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
                     if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
                         if (JOptionPane.showConfirmDialog(addFrame,
-                                "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
+                                Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
                                 JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all, // I18N TODO see above for existing keys
                         {
                             useLastType = true;
@@ -1656,10 +1657,35 @@ public class TurnoutTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
+        // show tooltip for selected system connection
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
+        log.debug("Connection choice = [{}]", connectionChoice);
+        switch (connectionChoice) {
+            case "MERG": // Bundle key: AddEntryToolTipMERG
+            case "C/MRI":
+            case "XpressNet":
+            case "NCE":
+            case "DCC++":
+            case "X10":
+                log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
+                sysNameTextField.setToolTipText("<html>" +
+                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) + "<br>" +
+                        Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
+                break;
+            default: // LocoNet and others: "enter a number"
+                log.debug("Default tooltip");
+                sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                break;
+        }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
@@ -1667,24 +1693,22 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return;
                 }
             }
-        } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
         }
     }
 
-    void handleCreateException(Exception ex, String sysNameTextField) {
+    void handleCreateException(Exception ex, String sysName) {
         if (ex.getMessage() != null) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         } else {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("ErrorTurnoutAddFailed"),
-                            new Object[]{sysNameTextField}),
+            JOptionPane.showMessageDialog(addFrame,
+                    Bundle.getMessage("ErrorTurnoutAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1740,4 +1764,5 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
+
 }

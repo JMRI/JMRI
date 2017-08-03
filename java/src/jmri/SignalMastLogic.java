@@ -18,7 +18,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public interface SignalMastLogic {
+public interface SignalMastLogic extends NamedBean {
 
     /**
      * Constant representing that all the user entered details relating to a

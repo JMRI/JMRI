@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager implements PropertyChangeListener, VetoableChangeListener {
+public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
 
     public BlockManager() {
         super();
@@ -102,8 +102,8 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         r = new Block(sName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps trace of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IB:AUTO:")) {
             try {

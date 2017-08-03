@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public class LayoutBlockManager extends AbstractManager implements jmri.InstanceManagerAutoDefault {
+public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public LayoutBlockManager() {
@@ -2356,7 +2356,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         firstRoutingChange = System.nanoTime();
 
         //cycle through all LayoutBlocks, completing initialization of the layout block routing
-        java.util.Enumeration<jmri.NamedBean> en = _tsys.elements();
+        java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
         while (en.hasMoreElements()) {
             ((LayoutBlock) en.nextElement()).initializeLayoutBlockRouting();
