@@ -52,6 +52,11 @@
         </ul>
     </ul>
 
+    <p>Individual preferences, such as how a table column is sorted or the 
+    state of a check box, can be stored using the 
+    <code>jmri.UserPreferencesManager</code>.
+    
+    
 <h4>How Preferences Are Stored</h4>
     <ul>
     <li>Multiple search directories are stored in ...
