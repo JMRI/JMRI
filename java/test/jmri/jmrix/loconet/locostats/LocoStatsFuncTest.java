@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.SlotManager;
 
 /**
  *
@@ -17,7 +20,9 @@ public class LocoStatsFuncTest {
 
     @Test
     public void testCTor() {
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LocoStatsFunc t = new LocoStatsFunc(memo);
         Assert.assertNotNull("exists",t);
     }
