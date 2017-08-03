@@ -266,13 +266,8 @@ public interface TurnoutManager extends Manager {
     public String getDefaultClosedSpeed();
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
      */
-    public String getAddToolTip();
-
-    /**
-     * Provide a connection specific entry validation regex for the Add new item beantable pane.
-     */
-    public String getAddMask();
+    public String[] getAddFormat();
 
 }

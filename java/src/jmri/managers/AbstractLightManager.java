@@ -248,5 +248,14 @@ public abstract class AbstractLightManager extends AbstractManager
         return Bundle.getMessage("BeanNameLight");
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        return addFormatArray;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
 }

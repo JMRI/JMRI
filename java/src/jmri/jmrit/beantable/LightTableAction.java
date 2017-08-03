@@ -757,12 +757,7 @@ public class LightTableAction extends AbstractTableAction {
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
-            case "MERG": // Bundle key: AddEntryToolTipMERG
-            case "C/MRI":
-            case "XpressNet":
-            case "NCE":
-            case "DCC++":
-            case "X10":
+            case "123":
                 log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
                 fieldHardwareAddress.setToolTipText("<html>" +
                         Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) + "<br>" +

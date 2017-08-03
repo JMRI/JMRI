@@ -947,7 +947,9 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    ValidatedTextField sysNameTextField = new ValidatedTextField(40, false, "^[0-9]$", "Invalid entry for system name in Add Turnout pane"); // initially allow only digits
+    ValidatedTextField sysNameTextField = new ValidatedTextField(40, false,
+            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Turnout pane");
+    // initially allow any 20 char string, updated by prefixBox selection
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -1010,11 +1012,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
             sysNameTextField.setName("sysNameTextField"); // NOI18N
-            sysNameTextField.setInvalidBackgroundColor(java.awt.Color.white); // don't use colorization on ValidatedTextField as used for CVs
+            sysNameTextField.setInvalidBackgroundColor(java.awt.Color.white);
+            // don't use strong colorization on ValidatedTextField like for CVs
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
-            // tooltip for sysNameTextField is assigned later by canAddRange()
+            // tooltip for sysNameTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
         addFrame.pack();
@@ -1570,7 +1573,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 //                    Bundle.getMessage("ShouldBeNumber", Bundle.getMessage("LabelHardwareAddress")) + "\n" +
 //                            Bundle.getMessage("ShouldBeNumber", Bundle.getMessage("LabelHardwareAddress")) + "\n" +
 //                            InstanceManager.turnoutManagerInstance().getAddToolTip(),
-//                            //Bundle.getMessage("AddOutputEntryToolTipLocoNet"),
+//                            //Bundle.getMessage("AddOutputEntryToolTip"),
 //                    Bundle.getMessage("ErrorTitle"),
 //                    JOptionPane.ERROR_MESSAGE);
 //            _valid = false; // outside valid range
@@ -1679,13 +1682,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 t.setControlType(iType);
             }
-            // end of for loop creating Turnouts
+            // end of for loop creating range of Turnouts
         }
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
 
-    private String tooltip = "";
-    private String regex = "";
+    private String[] addFormat;
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
@@ -1703,26 +1705,24 @@ public class TurnoutTableAction extends AbstractTableAction {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
                     range.setEnabled(true);
-                    // provide tooltip from ProxyTurnoutManager
-                    tooltip = mgr.getAddToolTip();
-                    regex = mgr.getAddMask();
-                    log.debug("ProxyTurnoutManager, Tip = {}; regex = {}", tooltip, regex);
+                    // get tooltip from ProxyTurnoutManager
+                    addFormat = mgr.getAddFormat();
+                    log.debug("ProxyTurnoutManager tip");
                     break;
                 }
             }
         } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
-            // provide tooltip from turnout manager
-            tooltip = turnManager.getAddToolTip();
-            regex = turnManager.getAddMask();
-            log.debug("TurnoutManager, Tip = {}; regex = {}", tooltip, regex);
+            // get tooltip from turnout manager
+            addFormat = turnManager.getAddFormat();
+            log.debug("TurnoutManager tip");
         }
         // show tooltip in the Add Turnout pane to match system connection selected from combobox
         sysNameTextField.setToolTipText("<html>" +
                     Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) +
-                    "<br>" + tooltip + "</html>");
+                    "<br>" + addFormat[0] + "</html>");
         // configure validation regexp for selected connection
-        sysNameTextField.setValidateRegExp(regex); //("^[a-zA-Z0-9]{3,}$"); // manipulate validationRegExp in ValidatedTextField
+        sysNameTextField.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
     }
 
     void handleCreateException(Exception ex, String sysName) {

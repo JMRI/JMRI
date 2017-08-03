@@ -117,6 +117,15 @@ public class XNetLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9:]{1,4}$"};
+        return addFormatArray;
+    }
+
+    /**
      * Allow access to XNetLightManager.
      */
     @Deprecated

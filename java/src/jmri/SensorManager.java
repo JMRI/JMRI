@@ -159,4 +159,9 @@ public interface SensorManager extends Manager {
      */
     public boolean isPullResistanceConfigurable();
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    public String[] getAddFormat();
+
 }

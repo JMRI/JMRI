@@ -43,6 +43,14 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     public void message(NceMessage m) {
 
     }
+
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[a-zA-Z0-9:]{3,4}$"}; // example 2044, 4:3
+        return addFormatArray;
+    }
+
 }
-
-

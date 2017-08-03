@@ -358,20 +358,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
      */
     @Override
-    public String getAddToolTip() {
-        return "Enter a number from 0 to 9999";
-    }
-
-    /**
-     * Provide a connection specific entry validation regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getAddMask() {
-        return "^[0-9]{1,4}$";
+    public String[] getAddFormat() {
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        return addFormatArray;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+
 }

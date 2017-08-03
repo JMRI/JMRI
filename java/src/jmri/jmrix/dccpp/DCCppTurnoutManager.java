@@ -112,7 +112,16 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return _instance;
     }
     static DCCppTurnoutManager _instance = null;
-    
+
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,5}$"};
+        return addFormatArray;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
 
 }
