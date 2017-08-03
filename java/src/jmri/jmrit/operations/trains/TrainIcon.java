@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -124,7 +125,7 @@ public class TrainIcon extends LocoIcon {
         if (route == null) {
             return routeMenu;
         }
-        List<RollingStock> carList = CarManager.instance().getByTrainList(_train);
+        List<RollingStock> carList = InstanceManager.getDefault(CarManager.class).getByTrainList(_train);
         for (RouteLocation rl : route.getLocationsBySequenceList()) {
             int pickupCars = 0;
             int dropCars = 0;
@@ -235,7 +236,7 @@ public class TrainIcon extends LocoIcon {
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());         
+            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);

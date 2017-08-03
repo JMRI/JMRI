@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class RollingStockAttribute {
 

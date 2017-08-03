@@ -3,10 +3,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +34,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
 
@@ -48,7 +49,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
     public void testCarAttributeEditFrameKernel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // remove all kernels
-        CarManager cm = CarManager.instance();
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
         List<String> kList = cm.getKernelNameList();
         for (int i = 0; i < kList.size(); i++) {
             cm.deleteKernel(kList.get(i));
@@ -73,7 +74,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
         // did the replace work?
         Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", f.comboBox.getItemAt(1));
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -321,7 +322,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
             _ship = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DESTINATION_ID)) != null) {
-            _destination = LocationManager.instance().getLocationById(a.getValue());
+            _destination = InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.DEST_TRACK_ID)) != null && _destination != null) {
             _trackDestination = _destination.getTrackById(a.getValue());

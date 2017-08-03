@@ -2,10 +2,11 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,14 +23,14 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
     public void testLocationEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadLocations();
-        
+
         LocationEditFrame f = new LocationEditFrame(null);
         f.setTitle("Test Add Location Frame");
 
         f.locationNameTextField.setText("New Test Location");
         enterClickAndLeave(f.addLocationButton);
 
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         Location newLoc = lManager.getLocationByName("New Test Location");
 
@@ -56,7 +57,7 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
-        pressDialogButton(f,Bundle.getMessage("deletelocation?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("deletelocation?"), "Yes");
         // location now deleted
         Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 
@@ -65,7 +66,7 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
