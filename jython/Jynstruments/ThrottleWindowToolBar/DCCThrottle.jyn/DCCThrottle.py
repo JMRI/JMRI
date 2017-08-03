@@ -7,6 +7,7 @@
 #
 # Listen for a given (3 as a default) DCC throttle commands 
 # and forward them to the curently selected one in throttle window
+# or call advanced function if any defined for curently selected roster entry
 #
 # See JMRI output or log in case of issue.
 #
@@ -147,29 +148,20 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     
 
 class AdvFunctions():
-    # (rosterEntry, fnId , push (boolean)
     def call(self, rosterEntry, advFn, status, throttle):
         assert (rosterEntry!=None), "rosterEntry is null"
         assert (advFn!=None), "advFn is null"
-        assert (status!=None), "status is null"
-        todoStr = self.getAdvFunctionString(rosterEntry, advFn)
+        assert (status!=None), "status is null"        
+        assert (throttle!=None), "throttle is null"
+        todoStr = rosterEntry.getAttribute("advF"+advFn)
         if (todoStr == None):
             return None
-        self.parseAdvFunctionString(rosterEntry, todoStr, status, throttle)                
-        return True
-
-    def getAdvFunctionString(self, rosterEntry, fn):
-        return rosterEntry.getAttribute("advF"+fn)
-
-    def parseAdvFunctionString(self, rosterEntry, todoStr, status, throttle):
+       # poor man parser, should unserialize a json object instead
         todo = todoStr.split(";")
         for task in todo:
             task = task.lstrip()
             # Actual function call 
-            if (task.startswith("F")):
-                if (throttle == None):
-                    print ("Was going to activate "+task+" but no throttle")
-                    continue                    
+            if (task.startswith("F")):                 
                 task = task.rstrip()
                 setter = None
                 getter = None
@@ -191,20 +183,24 @@ class AdvFunctions():
                         setter.invoke(throttle, not state)
                 continue
             # Play sound
-            if (task.startswith("P")):
+            if (task.startswith("P") and status):
                 path = task[1:]
-                self.play(path)
+                self.play(path, throttle)
                 continue
-
-    def play(self, sndPath):
-        assert (sndPath!=None), "sndPath is null"   
-        source = audio.getAudio("IAS"+sndPath)
+        return True
+                
+    def play(self, sndPath, throttle):
+        assert (sndPath!=None), "sndPath is null"
+        sourceName="IAS"+sndPath+"-"+str(throttle.getLocoAddress())
+        bufferName="IAB"+sndPath
+        source = audio.getAudio(sourceName)
         if (source == None):
-            buffer = audio.getAudio("IAS"+sndPath)
+            buffer = audio.getAudio(bufferName)
             if (buffer == None):
-                buffer = audio.provideAudio("IAB"+sndPath)
+                buffer = audio.provideAudio(bufferName)
                 buffer.setURL(sndPath)
-            source = audio.provideAudio("IAS"+sndPath)
-            source.setAssignedBuffer("IAB"+sndPath)
+            source = audio.provideAudio(sourceName)
+            source.setAssignedBuffer(bufferName)
         # would need to update location here
         source.play()
+
