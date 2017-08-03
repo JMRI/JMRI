@@ -717,6 +717,7 @@ public final class InstanceManager {
         ServiceLoader.load(InstanceInitializer.class).forEach((provider) -> {
             provider.getInitalizes().forEach((cls) -> {
                 this.initializers.put(cls, provider);
+                log.debug("Using {} to provide default instance of {}", provider.getClass().getName(), cls.getName());
             });
         });
     }
