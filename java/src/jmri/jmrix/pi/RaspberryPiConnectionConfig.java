@@ -139,7 +139,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("NoGPIOControllerMessage"),
-                        Bundle.getMessage("NoGPIOControllerMessage"),
+                        Bundle.getMessage("NoGPIOControllerTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
         }
