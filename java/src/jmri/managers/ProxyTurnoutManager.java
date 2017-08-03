@@ -282,6 +282,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return ((TurnoutManager) getMgr(0)).getDefaultClosedSpeed();
     }
 
+    /**
+     * Provide a connection agnostic tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        return addFormatArray;
+    }
+
     @Override
     public int getXMLOrder() {
         return jmri.Manager.TURNOUTS;
@@ -294,4 +303,5 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
+
 }

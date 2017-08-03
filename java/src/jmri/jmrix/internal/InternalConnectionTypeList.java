@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionTypeList;
 @ServiceProvider(service = ConnectionTypeList.class)
 public class InternalConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-    public static final String NONE = "None";
+    public static final String NONE = Bundle.getMessage("none");
 
     @Override
     public String[] getAvailableProtocolClasses() {

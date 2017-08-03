@@ -4,7 +4,7 @@ package jmri.jmrix.internal;
  * Definition of objects to handle configuring a virtual layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
@@ -24,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return "No Connection";
+        return Bundle.getMessage("NoConnectionChoice");
     }
 
     @Override

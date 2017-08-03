@@ -49,6 +49,7 @@ import jmri.Turnout;
 import jmri.implementation.LightControl;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ValidatedTextField;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -510,7 +511,10 @@ public class LightTableAction extends AbstractTableAction {
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JTextField fieldHardwareAddress = new JTextField(10);
+    //JTextField fieldHardwareAddress = new JTextField(10);
+    ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
+            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Light pane");
+    // initially allow any 20 char string, updated by prefixBox selection
     JTextField fieldNumToAdd = new JTextField(5);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
@@ -584,7 +588,10 @@ public class LightTableAction extends AbstractTableAction {
             panel1a.setLayout(new FlowLayout());
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(fieldHardwareAddress);
-            fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint")); // customized for chosen connection in prefixChanged()
+            fieldHardwareAddress.setInvalidBackgroundColor(java.awt.Color.white);
+            // don't use strong colorization on ValidatedTextField like for CVs
+            fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(fieldNumToAdd);
             fieldNumToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
@@ -729,6 +736,8 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
+    private String[] addFormat;
+
     protected void prefixChanged() {
         if (supportsVariableLights()) {
             setupVariableDisplay(true, true);
@@ -754,20 +763,17 @@ public class LightTableAction extends AbstractTableAction {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
+        // Update tooltip in the Add Light pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
-        switch (connectionChoice) {
-            case "123":
-                log.debug("Custom tooltip [{}]", "AddOutputEntryToolTip" + connectionChoice);
-                fieldHardwareAddress.setToolTipText("<html>" +
-                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) + "<br>" +
-                        Bundle.getMessage("AddOutputEntryToolTip" + connectionChoice) + "</html>");
-                break;
-            default: // LocoNet and others: "enter a number"
-                log.debug("Default tooltip");
-                fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
-                break;
-        }
+        // get tooltip from ProxyLightManager
+        addFormat = InstanceManager.getDefault(LightManager.class).getAddFormat();
+        log.debug("ProxyTurnoutManager tip");
+        // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
+        fieldHardwareAddress.setToolTipText("<html>" +
+                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
+                "<br>" + addFormat[0] + "</html>");
+        // configure validation regexp for selected connection
+        fieldHardwareAddress.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -820,15 +826,16 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create lights when the create button is pressed
+     * Create lights when the create button is pressed and entry is valis.
      *
      * @param e the button press action
      */
     void createPressed(ActionEvent e) {
-        //ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())
+
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
         String curAddress = fieldHardwareAddress.getText();
+        // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
             status1.setText(Bundle.getMessage("LightError17"));
@@ -845,7 +852,7 @@ public class LightTableAction extends AbstractTableAction {
         // Does System Name have a valid format
         if (!InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName)) {
             // Invalid System Name format
-            log.warn("Invalid Light system name format entered: " + suName);
+            log.warn("Invalid Light system name format entered: {}", suName);
             status1.setText(Bundle.getMessage("LightError3"));
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
@@ -909,7 +916,7 @@ public class LightTableAction extends AbstractTableAction {
                 getBySystemName(testSN);
         if (testT != null) {
             // Address is already used as a Turnout
-            log.warn("Requested Light " + sName + " uses same address as Turnout " + testT);
+            log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
             if (!noWarn) {
                 int selectedValue = JOptionPane.showOptionDialog(addFrame,
                         Bundle.getMessage("LightWarn5") + " " + sName + " " + Bundle.getMessage("LightWarn6") + " "
@@ -942,7 +949,7 @@ public class LightTableAction extends AbstractTableAction {
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert " + fieldNumToAdd.getText() + " to a number - Number to add");
+                log.error("Unable to convert {} to a number - Number to add", fieldNumToAdd.getText());
                 return;
             }
             // convert numerical hardware address
@@ -953,7 +960,7 @@ public class LightTableAction extends AbstractTableAction {
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert " + fieldHardwareAddress.getText() + " to a number.");
+                log.error("Unable to convert {} to a number.", fieldHardwareAddress.getText());
                 return;
             }
             // check that requested address range is available
@@ -966,7 +973,7 @@ public class LightTableAction extends AbstractTableAction {
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
-                    log.error("Range not available - " + testAdd + " already exists.");
+                    log.error("Range not available - {} already exists.", testAdd);
                     return;
                 }
                 testAdd = turnoutPrefix + add;
@@ -975,7 +982,7 @@ public class LightTableAction extends AbstractTableAction {
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
-                    log.error("Range not available - " + testAdd + " already exists.");
+                    log.error("Range not available - {} already exists.", testAdd);
                     return;
                 }
                 add++;

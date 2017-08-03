@@ -249,7 +249,7 @@ public abstract class AbstractLightManager extends AbstractManager
     }
 
     /**
-     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     * Provide at first a connection agnostic tooltip and entry validation regex for the Add new item beantable pane.
      */
     @Override
     public String[] getAddFormat() {

@@ -1717,7 +1717,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             addFormat = turnManager.getAddFormat();
             log.debug("TurnoutManager tip");
         }
-        // show tooltip in the Add Turnout pane to match system connection selected from combobox
+        // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         sysNameTextField.setToolTipText("<html>" +
                     Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) +
                     "<br>" + addFormat[0] + "</html>");

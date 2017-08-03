@@ -111,6 +111,17 @@ public class CbusLightManager extends AbstractLightManager {
         return true;
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     * @see jmri.jmrix.can.cbus.CbusAddress
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"),
+                "^[NX]{0,1}[+-]{0,1}[0-9]{3,5}[;]{0,1}[EX]{0,1}[+-]{0,1}[0-9]{1,5}[M]{0,1}[0-9a-fA-F]{0,2}$"};
+        return addFormatArray;
+    }
+
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());
 
 }

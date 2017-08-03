@@ -106,13 +106,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
-    @Deprecated
-    static public DCCppTurnoutManager instance() {
-        //if (_instance == null) _instance = new DCCppTurnoutManager();
-        return _instance;
-    }
-    static DCCppTurnoutManager _instance = null;
-
     /**
      * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
      */
@@ -121,6 +114,13 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,5}$"};
         return addFormatArray;
     }
+
+    @Deprecated
+    static public DCCppTurnoutManager instance() {
+        //if (_instance == null) _instance = new DCCppTurnoutManager();
+        return _instance;
+    }
+    static DCCppTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
 

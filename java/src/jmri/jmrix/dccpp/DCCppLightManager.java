@@ -115,6 +115,15 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,5}$"};
+        return addFormatArray;
+    }
+
+    /**
      * Allow access to DCCppLightManager
      */
     @Deprecated
