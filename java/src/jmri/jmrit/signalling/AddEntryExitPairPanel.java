@@ -135,10 +135,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     private void autoDiscovery() {
         if (!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(null,
+                    java.util.ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle")  // NOI18N
+                    .getString("EnableLayoutBlockRouting"));  // NOI18N
             if (response == 0) {
                 InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(null,
+                        java.util.ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle")  // NOI18N
+                        .getString("LayoutBlockRoutingEnabled"));  // NOI18N
             }
         }
         entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false);
