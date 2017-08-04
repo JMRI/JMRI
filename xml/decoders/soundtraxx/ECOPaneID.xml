@@ -4,20 +4,8 @@
     <column>
         <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
         <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
-        <label>
-            <text></text>
-        </label>
-        <label>
-            <text>Major firmware version (user changable so may not show correct value)</text>
-        </label>
-        <display item="User Id #1"/>
-        <label>
-            <text>Minor firmware version (user changable so may not show correct value)</text>
-        </label>
-        <display item="User Id #2"/>
-        <label>
-            <text></text>
-        </label>
+        <display item="User Id #1" label="Major firmware version (user changable so may not show correct value)"/>
+        <display item="User Id #2" label="Minor firmware version (user changable so may not show correct value)"/>
         <display item="Customer Code"/>
         <display item="Sound Type"/>
         <display item="Product Revision"/>

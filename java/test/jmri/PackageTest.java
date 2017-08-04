@@ -86,6 +86,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SensorTurnoutOperationTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EntryPointTest.class));
         return suite;
     }
 
