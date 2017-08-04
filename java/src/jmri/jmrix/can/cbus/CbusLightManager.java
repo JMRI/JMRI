@@ -119,7 +119,7 @@ public class CbusLightManager extends AbstractLightManager {
     @Override
     public String[] getAddFormat() {
         String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"),
-                "^[NX]{0,1}[+-]{0,1}[0-9]{3,5}[;]{0,1}[EX]{0,1}[+-]{0,1}[0-9]{1,5}[M]{0,1}[0-9a-fA-F]{0,2}$"};
+                "^[NX]{0,1}[+-]{0,1}[0-9]{1,5}[;]{0,1}[EX]{0,1}[+-]{0,1}[0-9]{1,5}[M]{0,1}[0-9a-fA-F]{0,2}$"};
         return addFormatArray;
     }
 

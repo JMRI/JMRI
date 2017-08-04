@@ -224,34 +224,16 @@ public class SensorTableAction extends AbstractTableAction {
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
 
+    private String[] addFormat = {"No Help",""};
+
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         log.debug("S add box disabled");
         range.setSelected(false);
-        // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
-        }
-        // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
-        log.debug("Connection choice = [{}]", connectionChoice);
-        switch (connectionChoice) {
-            case "MERG": // Bundle key: AddEntryToolTipMERG
-            case "C/MRI":
-            case "XpressNet":
-            case "NCE":
-            case "DCC++":
-            case "X10":
-                log.debug("Custom tooltip [{}]", "AddInputEntryToolTip" + connectionChoice);
-                sysNameTextField.setToolTipText("<html>" +
-                        Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) + "<br>" +
-                        Bundle.getMessage("AddInputEntryToolTip" + connectionChoice) + "</html>");
-                break;
-            default: // LocoNet and others: "enter a number"
-                log.debug("Default tooltip");
-                sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
-                break;
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
@@ -259,16 +241,27 @@ public class SensorTableAction extends AbstractTableAction {
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
-                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
-                    range.setEnabled(true);
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    // get tooltip from ProxyTurnoutManager
+                    addFormat = mgr.getAddFormat();
                     log.debug("S add box enabled1");
-                    return;
+                    break;
                 }
             }
         } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
             log.debug("S add box enabled2");
+            // get tooltip from sensor manager
+            addFormat = senManager.getAddFormat();
+            log.debug("TurnoutManager tip");
         }
+        // show sysName (HW address) field tooltip in the Add Sensor pane that matches system connection selected from combobox
+        sysNameTextField.setToolTipText("<html>" +
+                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
+                "<br>" + addFormat[0] + "</html>");
+        // configure validation regexp for selected connection
+        sysNameTextField.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
     }
 
     void handleCreateException(String sysName) {

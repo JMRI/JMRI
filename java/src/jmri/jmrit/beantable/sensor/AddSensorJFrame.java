@@ -7,7 +7,7 @@ import jmri.util.JmriJFrame;
  * JFrame to create a new Sensor
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @deprecated Replaced by
+ * @deprecated As of JMRI 2.14.1 (2008) Replaced by
  * {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated

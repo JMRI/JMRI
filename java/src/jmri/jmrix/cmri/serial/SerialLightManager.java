@@ -126,7 +126,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[a-zA-Z0-9:]{3,}$"}; // examples 4B3, 4:3
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,6}[:Bb]{0,1}[0-9]{1,3}$"}; // examples 4B3, 4:3
         return addFormatArray;
     }
 

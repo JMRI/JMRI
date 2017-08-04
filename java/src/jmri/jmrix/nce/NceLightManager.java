@@ -121,7 +121,7 @@ public class NceLightManager extends AbstractLightManager {
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[a-zA-Z0-9:]{3,4}$"}; // example 2044, 4:3
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,4}$"}; // NCE example: 2044
         return addFormatArray;
     }
 

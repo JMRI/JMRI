@@ -174,6 +174,15 @@ public class XBeeLightManager extends AbstractLightManager {
 
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"}; // examples 4:3
+        return addFormatArray;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
 
 }

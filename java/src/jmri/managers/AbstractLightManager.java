@@ -260,4 +260,5 @@ public abstract class AbstractLightManager extends AbstractManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+
 }

@@ -241,6 +241,15 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
        return true;
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddInputEntryToolTip"), "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"}; // example 4:3
+        return addFormatArray;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }

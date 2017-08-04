@@ -204,6 +204,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddInputEntryToolTip"), "^[0-9]{1,4}$"}; // LocoNet: "enter a number"
+        return addFormatArray;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 
     /**

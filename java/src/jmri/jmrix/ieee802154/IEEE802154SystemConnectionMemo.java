@@ -113,6 +113,3 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-
-
-

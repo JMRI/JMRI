@@ -218,7 +218,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
             return null;
         }
-
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
@@ -239,6 +238,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }
+    }
+
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddInputEntryToolTip"), "^[0-9]{1,6}[:Bb]{0,1}[0-9]{1,3}$"}; // examples 4B3, 4:3, 43
+        return addFormatArray;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());

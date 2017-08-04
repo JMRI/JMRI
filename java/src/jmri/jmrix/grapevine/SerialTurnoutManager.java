@@ -151,7 +151,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{2,6}[aAmMpPsS]{0,1}[0-9]{1,3}$"};
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{2,6}$"};
         return addFormatArray;
     }
 

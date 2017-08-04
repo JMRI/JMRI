@@ -132,21 +132,21 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
+    /**
+     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     */
+    @Override
+    public String[] getAddFormat() {
+        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,4}$"};
+        return addFormatArray;
+    }
+
     @Deprecated
     static public XNetTurnoutManager instance() {
         //if (_instance == null) _instance = new XNetTurnoutManager();
         return _instance;
     }
     static XNetTurnoutManager _instance = null;
-
-    /**
-     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
-     */
-    @Override
-    public String[] getAddFormat() {
-        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9:]{1,4}$"};
-        return addFormatArray;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManager.class.getName());
 
