@@ -174,8 +174,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossOver")); //key is also used by Control Panel
     //Editor, placed in DisplayBundle
     private JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossOver"));  //idem
-    private JRadioButton layoutSingleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
-    private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
+    private JRadioButton singleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
+    private JRadioButton doubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
     private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
@@ -337,15 +337,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int MARKER = LayoutTrack.MARKER;
     public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
     public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER;  //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-    public static final int SLIP_A = LayoutTrack.SLIP_A;            //offset for slip connection points
-    public static final int SLIP_B = LayoutTrack.SLIP_B;            //offset for slip connection points
-    public static final int SLIP_C = LayoutTrack.SLIP_C;            //offset for slip connection points
-    public static final int SLIP_D = LayoutTrack.SLIP_D;            //offset for slip connection points
+    public static final int SLIP_A = LayoutTrack.SLIP_A;
+    public static final int SLIP_B = LayoutTrack.SLIP_B;
+    public static final int SLIP_C = LayoutTrack.SLIP_C;
+    public static final int SLIP_D = LayoutTrack.SLIP_D;
     public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;  // offsets for Bezier track segment control points (min)
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;  // "        "       "       "       "       "      (max)
-    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;    //offset for turntable connection points
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
+    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
 
     protected Color turnoutCircleColor = Color.black;   //matches earlier versions
     protected int turnoutCircleSize = 4;                //matches earlier versions
@@ -664,8 +664,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         itemGroup.add(rhXoverButton);
         itemGroup.add(lhXoverButton);
         itemGroup.add(levelXingButton);
-        itemGroup.add(layoutSingleSlipButton);
-        itemGroup.add(layoutDoubleSlipButton);
+        itemGroup.add(singleSlipButton);
+        itemGroup.add(doubleSlipButton);
         itemGroup.add(endBumperButton);
         itemGroup.add(anchorButton);
         itemGroup.add(edgeButton);
@@ -688,8 +688,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || doubleXoverButton.isSelected()
                     || rhXoverButton.isSelected()
                     || lhXoverButton.isSelected()
-                    || layoutSingleSlipButton.isSelected()
-                    || layoutDoubleSlipButton.isSelected());
+                    || singleSlipButton.isSelected()
+                    || doubleSlipButton.isSelected());
             log.debug("turnoutPropertiesPanel is " + (e ? "enabled" : "disabled"));
             turnoutNamePanel.setEnabled(e);
 
@@ -703,7 +703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             //second turnout property
-            e = (layoutSingleSlipButton.isSelected() || layoutDoubleSlipButton.isSelected());
+            e = (singleSlipButton.isSelected() || doubleSlipButton.isSelected());
             log.debug("extraTurnoutPanel is " + (e ? "enabled" : "disabled"));
 
             for (Component i : extraTurnoutPanel.getComponents()) {
@@ -725,8 +725,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || doubleXoverButton.isSelected()
                     || rhXoverButton.isSelected()
                     || lhXoverButton.isSelected()
-                    || layoutSingleSlipButton.isSelected()
-                    || layoutDoubleSlipButton.isSelected()
+                    || singleSlipButton.isSelected()
+                    || doubleSlipButton.isSelected()
                     || levelXingButton.isSelected()
                     || trackButton.isSelected());
             log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
@@ -774,8 +774,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rhXoverButton.addActionListener(selectionListAction);
         lhXoverButton.addActionListener(selectionListAction);
         levelXingButton.addActionListener(selectionListAction);
-        layoutSingleSlipButton.addActionListener(selectionListAction);
-        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        singleSlipButton.addActionListener(selectionListAction);
+        doubleSlipButton.addActionListener(selectionListAction);
         endBumperButton.addActionListener(selectionListAction);
         anchorButton.addActionListener(selectionListAction);
         edgeButton.addActionListener(selectionListAction);
@@ -798,8 +798,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         doubleXoverButton.setToolTipText(rb.getString("DoubleCrossOverToolTip"));
         rhXoverButton.setToolTipText(rb.getString("RHCrossOverToolTip"));
         lhXoverButton.setToolTipText(rb.getString("LHCrossOverToolTip"));
-        layoutSingleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
-        layoutDoubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
+        singleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
+        doubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
 
         String turnoutNameString = Bundle.getMessage("Name");
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
@@ -1233,8 +1233,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.add(turnoutGroup2);
 
         JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.add(layoutSingleSlipButton);
-        turnoutGroup3.add(layoutDoubleSlipButton);
+        turnoutGroup3.add(singleSlipButton);
+        turnoutGroup3.add(doubleSlipButton);
         floatEditTurnout.add(turnoutGroup3);
 
         JPanel turnoutGroup4 = new JPanel(floatContentLayout);
@@ -1458,8 +1458,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             innerBorderPanel.add(vTop3Panel);
 
             JPanel vTop4Panel = new JPanel(verticalContentLayout);
-            vTop4Panel.add(layoutSingleSlipButton);
-            vTop4Panel.add(layoutDoubleSlipButton);
+            vTop4Panel.add(singleSlipButton);
+            vTop4Panel.add(doubleSlipButton);
             vTop4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop4Panel.getPreferredSize().height));
             innerBorderPanel.add(vTop4Panel);
 
@@ -1667,8 +1667,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop1Left.add(doubleXoverButton);
             hTop1Left.add(rhXoverButton);
             hTop1Left.add(lhXoverButton);
-            hTop1Left.add(layoutSingleSlipButton);
-            hTop1Left.add(layoutDoubleSlipButton);
+            hTop1Left.add(singleSlipButton);
+            hTop1Left.add(doubleSlipButton);
             hTop1Panel.add(hTop1Left);
 
             if (toolBarIsWide) {
@@ -5231,7 +5231,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         _lastX = _anchorX;
         _lastY = _anchorY;
         calcLocation(event);
-        
+
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
@@ -5740,9 +5740,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     addLayoutTurnout(LayoutTurnout.LH_XOVER);
                 } else if (levelXingButton.isSelected()) {
                     addLevelXing();
-                } else if (layoutSingleSlipButton.isSelected()) {
+                } else if (singleSlipButton.isSelected()) {
                     addLayoutSlip(LayoutSlip.SINGLE_SLIP);
-                } else if (layoutDoubleSlipButton.isSelected()) {
+                } else if (doubleSlipButton.isSelected()) {
                     addLayoutSlip(LayoutSlip.DOUBLE_SLIP);
                 } else if (endBumperButton.isSelected()) {
                     addEndBumper();
@@ -6601,10 +6601,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
-    private ArrayList<PositionablePoint> _pointSelection = null;    //new ArrayList<PositionablePoint>();  //PositionablePoint list
-    private ArrayList<LevelXing> _xingSelection = null;             //new ArrayList<LevelXing>();  //LevelXing list
-    private ArrayList<LayoutSlip> _slipSelection = null;            //new ArrayList<LevelXing>();  //LayoutSlip list
-    private ArrayList<LayoutTurntable> _turntableSelection = null;  //new ArrayList<LayoutTurntable>(); //Turntable list
+    private ArrayList<PositionablePoint> _pointSelection = null;
+    private ArrayList<LevelXing> _xingSelection = null;
+    private ArrayList<LayoutSlip> _slipSelection = null;
+    private ArrayList<LayoutTurntable> _turntableSelection = null;
     private ArrayList<Positionable> _positionableSelection = null;
 
     private void highLightSelection(Graphics2D g) {
@@ -8422,7 +8422,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
                     return false;
                 }
             }
@@ -8442,7 +8441,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 java.text.MessageFormat.format(rb.getString("Error4"),
                                         new Object[]{turnoutName}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
                         return false;
                     }
                 }
@@ -8460,7 +8458,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
                     return false;
                 }
             }
@@ -8474,7 +8471,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
                     return false;
                 }
             }
@@ -8489,7 +8485,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     java.text.MessageFormat.format(rb.getString("Error8"),
                             new Object[]{turnoutName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
             return false;
         }
         return true;
@@ -9269,9 +9264,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //delete from array
         for (int i = 0; i < slipList.size(); i++) {
-            LayoutSlip lx = slipList.get(i);
+            LayoutSlip ls = slipList.get(i);
 
-            if (lx == o) {
+            if (ls == o) {
                 //found object
                 slipList.remove(i);
                 o.remove();
