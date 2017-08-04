@@ -56,6 +56,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * @return current instance of connection
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure

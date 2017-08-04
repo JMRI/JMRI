@@ -132,6 +132,11 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
      */

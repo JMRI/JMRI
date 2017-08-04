@@ -35,6 +35,11 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 
     @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    @Override
     public void reply(NceReply r) {
 
     }

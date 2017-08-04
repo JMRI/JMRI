@@ -307,7 +307,7 @@ public class XBeeNode extends IEEE802154Node {
      * Set the RemoteXBeeDevice associated with this node and
      * configure address information.
      *
-     * @param RemoteXBeeDevice associated with this node.
+     * @param rxd the RemoteXBeeDevice associated with this node.
      */
     public void setXBee(RemoteXBeeDevice rxd) {
            device=rxd;
