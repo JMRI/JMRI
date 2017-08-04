@@ -24,6 +24,7 @@ public class DrawRectangleTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawRectangle t = new DrawRectangle("newShape","Rectangle",s);
         Assert.assertNotNull("exists",t);
+        t.dispose();
         frame.dispose();
     }
 
@@ -32,10 +33,12 @@ public class DrawRectangleTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetWindows(true);  // log existing windows in setup
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
