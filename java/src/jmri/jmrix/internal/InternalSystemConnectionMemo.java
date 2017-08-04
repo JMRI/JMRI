@@ -23,7 +23,7 @@ import jmri.InstanceManager;
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
     public InternalSystemConnectionMemo() {
-        super("I", Bundle.getMessage("Internal"));
+        super("I", "Internal"); // TODO I18N
         InstanceManager.store(this, InternalSystemConnectionMemo.class); // also register as specific type
         register();
     }

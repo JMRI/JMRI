@@ -24,8 +24,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return Bundle.getMessage("NoConnectionChoice");
+        return "No Connection";
     }
+//    public String name() {
+//        return Bundle.getMessage("NoConnectionChoice");
+//    }
 
     @Override
     protected void setInstance() {

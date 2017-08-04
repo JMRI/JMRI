@@ -238,7 +238,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * field foreground and background colors. If instead the current field
      * value does not match the "Last Queried Value", the field background color
      * is changed to reflect that the value is not yet saved. Use the
-     * {@link setLastQueriedValue(String)} method to set the value for this comparison.
+     * {@link #setLastQueriedValue(String)} method to set the value for this comparison.
      *
      * @param len                    the length of the field
      * @param minAcceptableVal       defines the lowest acceptable value
@@ -434,7 +434,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     /**
      * Set the "Last Queried Value". This value is used by the
      * colorization process when focus is exiting the field.
-     * @see getLastQueriedValue()
+     * @see #getLastQueriedValue()
      *
      * @param lastQueriedValue the last value verified
      */
@@ -445,7 +445,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
     /**
      * Retrieve the current value of the "Last Queried Value".
-     * @see setLastQueriedValue(String)
+     * @see #setLastQueriedValue(String)
      *
      * @return the last value verified
      */
@@ -455,7 +455,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
     /**
      * Set the "validationRegExp".
-     * @see getValidateRegExp()
+     * @see #getValidateRegExp()
      *
      * @param validationRegExpr new validation pattern
      */
@@ -466,7 +466,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     /**
      * Retrieve the current "validationRegExp".
      * Used in eg. Add Turnout to attach a connection specific pattern without redrawing the pane
-     * @see setValidateRegExp(String)
+     * @see #setValidateRegExp(String)
      *
      * @return the current validation pattern
      */

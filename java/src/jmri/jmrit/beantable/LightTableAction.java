@@ -32,8 +32,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -515,7 +517,9 @@ public class LightTableAction extends AbstractTableAction {
     ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
             "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Light pane");
     // initially allow any 20 char string, updated by prefixBox selection
-    JTextField fieldNumToAdd = new JTextField(5);
+//    JTextField fieldNumToAdd = new JTextField(5);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
+    JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
@@ -593,8 +597,8 @@ public class LightTableAction extends AbstractTableAction {
             fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
-            panel1a.add(fieldNumToAdd);
-            fieldNumToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
+            panel1a.add(NumberToAdd);
+            NumberToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
             contentPane.add(panel1a);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
@@ -747,15 +751,15 @@ public class LightTableAction extends AbstractTableAction {
         if (canAddRange()) {
             addRangeBox.setVisible(true);
             labelNumToAdd.setVisible(true);
-            fieldNumToAdd.setVisible(true);
+            NumberToAdd.setVisible(true);
         } else {
             addRangeBox.setVisible(false);
             labelNumToAdd.setVisible(false);
-            fieldNumToAdd.setVisible(false);
+            NumberToAdd.setVisible(false);
         }
         addRangeBox.setSelected(false);
-        fieldNumToAdd.setText("");
-        fieldNumToAdd.setEnabled(false);
+        NumberToAdd.setValue(1);
+        NumberToAdd.setEnabled(false);
         labelNumToAdd.setEnabled(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
@@ -781,10 +785,10 @@ public class LightTableAction extends AbstractTableAction {
 
     protected void addRangeChanged() {
         if (addRangeBox.isSelected()) {
-            fieldNumToAdd.setEnabled(true);
+            NumberToAdd.setEnabled(true);
             labelNumToAdd.setEnabled(true);
         } else {
-            fieldNumToAdd.setEnabled(false);
+            NumberToAdd.setEnabled(false);
             labelNumToAdd.setEnabled(false);
         }
     }
@@ -940,16 +944,16 @@ public class LightTableAction extends AbstractTableAction {
         int numberOfLights = 1;
         int startingAddress = 0;
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
-                && addRangeBox.isSelected() && (fieldNumToAdd.getText().length() > 0)) {
+                && addRangeBox.isSelected()) {
             // get number requested   
             try {
-                numberOfLights = Integer.parseInt(fieldNumToAdd.getText());
+                numberOfLights = (Integer) NumberToAdd.getValue();
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError4"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number - Number to add", fieldNumToAdd.getText());
+                log.error("Unable to convert {} to a number - Number to add", (NumberToAdd.getValue() + ""));
                 return;
             }
             // convert numerical hardware address
