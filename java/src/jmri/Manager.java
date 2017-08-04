@@ -41,7 +41,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public interface Manager {
+public interface Manager<E extends NamedBean> {
 
     /**
      * Provides access to the system prefix string. This was previously called
@@ -83,7 +83,7 @@ public interface Manager {
 
     @CheckReturnValue
     @Nonnull
-    public List<NamedBean> getNamedBeanList();
+    public List<E> getNamedBeanList();
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -95,7 +95,7 @@ public interface Manager {
      */
     @CheckReturnValue
     @CheckForNull
-    public NamedBean getBeanBySystemName(@Nonnull String systemName);
+    public E getBeanBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -106,7 +106,7 @@ public interface Manager {
      */
     @CheckReturnValue
     @CheckForNull
-    public NamedBean getBeanByUserName(@Nonnull String userName);
+    public E getBeanByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a name. Returns null if no instance already
@@ -117,7 +117,7 @@ public interface Manager {
      */
     @CheckReturnValue
     @CheckForNull
-    public NamedBean getNamedBean(@Nonnull String name);
+    public E getNamedBean(@Nonnull String name);
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
@@ -168,7 +168,7 @@ public interface Manager {
      *                                          delete to be aborted (see
      *                                          above).
      */
-    public void deleteBean(@Nonnull NamedBean n, @Nonnull String property) throws java.beans.PropertyVetoException;
+    public void deleteBean(@Nonnull E n, @Nonnull String property) throws java.beans.PropertyVetoException;
 
     /**
      * Remember a NamedBean Object created outside the manager.
@@ -177,7 +177,7 @@ public interface Manager {
      *
      * @param n the bean
      */
-    public void register(@Nonnull NamedBean n);
+    public void register(@Nonnull E n);
 
     /**
      * Forget a NamedBean Object created outside the manager.
@@ -186,7 +186,7 @@ public interface Manager {
      *
      * @param n the bean
      */
-    public void deregister(@Nonnull NamedBean n);
+    public void deregister(@Nonnull E n);
 
     /**
      * The order in which things get saved to the xml file.

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
  */
-public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
+public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 
     @Override
     public int getXMLOrder() {
@@ -74,7 +74,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     }
 
     @Override
-    protected Object getInstanceBySystemName(String systemName) {
+    protected Sensor getInstanceBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 

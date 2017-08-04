@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -22,9 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Randall Wood Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012, 2017
  */
-public class WebServerPreferences extends PreferencesBean implements InstanceManagerAutoDefault {
+public class WebServerPreferences extends PreferencesBean {
 
     // preferences elements
     public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
@@ -152,10 +151,12 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
     }
 
     /**
-     * Return the current default WebServerPreferences object.
-     * 
-     * @deprecated 4.9.2 in favor of use of InstanceManager, which will 
-     *              automatically instantiate one of these if needed (see {@link InstanceManagerAutoDefault})
+     * Get the current default WebServerPreferences object.
+     *
+     * @return the default WebServerPrefeences instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
+     * of {@code WebServerPreferences.class} instead
      */
     @Deprecated
     public static WebServerPreferences getDefault() {

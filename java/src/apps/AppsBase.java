@@ -12,7 +12,6 @@ import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.NamedBeanHandleManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
@@ -223,23 +222,18 @@ public abstract class AppsBase {
     }
 
     protected void installManagers() {
-        // Install a history manager
-        InstanceManager.store(new FileHistory(), FileHistory.class);
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
 
-        // install the abstract action model that allows items to be added to the, both 
+        // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
-        // install the named bean handler
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         //Install Entry Exit Pairs Manager
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
@@ -276,7 +270,7 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             file = sharedConfig;
         } else if (!new File(getConfigFileName()).isAbsolute()) {
-            // must be relative, but we want it to 
+            // must be relative, but we want it to
             // be relative to the preferences directory
             file = new File(FileUtil.getUserFilesPath() + getConfigFileName());
         } else {

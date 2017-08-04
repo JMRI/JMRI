@@ -9,6 +9,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JUnitUtil;
@@ -141,7 +142,6 @@ public class XmlLoadTests extends TestCase {
     @Override
     protected void tearDown() throws Exception {
        JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
          
        //dispose of any existing managers
        EngineManager.instance().dispose();
@@ -160,6 +160,10 @@ public class XmlLoadTests extends TestCase {
        OperationsSetupXml.setOperationsDirectoryName("operations");
          OperationsSetupXml.setFileLocation("temp"+ java.io.File.separator);
 
+        //shut down the AutoSave thread if it is running.
+        Setup.getDefault().setAutoSaveEnabled(false);
+
+       apps.tests.Log4JFixture.tearDown();
        super.tearDown();
     }
 

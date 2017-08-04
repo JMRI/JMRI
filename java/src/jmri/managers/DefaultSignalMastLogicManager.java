@@ -238,17 +238,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public SignalMastLogic getBeanBySystemName(String systemName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public SignalMastLogic getBeanByUserName(String userName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public NamedBean getNamedBean(String name) {
+    public SignalMastLogic getNamedBean(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -292,7 +292,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
+    public List<SignalMastLogic> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -325,17 +325,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(SignalMastLogic bean, String property) throws java.beans.PropertyVetoException {
 
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -486,8 +486,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
-        for (NamedBean nb : sm.getNamedBeanList()) {
-            if (((Section) nb).getSectionType() == Section.SIGNALMASTLOGIC) {
+        for (Section nb : sm.getNamedBeanList()) {
+            if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");
             }
             nb.removeProperty("forwardMast");

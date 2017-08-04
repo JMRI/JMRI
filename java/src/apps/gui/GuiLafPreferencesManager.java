@@ -145,7 +145,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         String currentFontName = currentFont.getFontName();
         if (currentFontName != null) {
             String prefFontName = preferences.get(FONT_NAME, currentFontName);
-            if ((prefFontName == null) || (currentFontName != prefFontName)) {
+            if ((prefFontName == null) || ( ! prefFontName.equals(currentFontName))) {
                 preferences.put(FONT_NAME, currentFontName);
             }
         }

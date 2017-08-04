@@ -3,13 +3,16 @@ package jmri.web.server;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
-import jmri.InstanceManager;
+import java.util.Set;
+import jmri.InstanceInitializer;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,51 +20,36 @@ import org.slf4j.LoggerFactory;
  * Provide interface for managing the JMRI web server, including migrating from
  * the older 2.n Mini Web Server.
  *
- * @author rhwood
- * @deprecated since 4.3.5. Use {@link jmri.web.server.WebServer#getDefault()}
- * and {@link jmri.web.server.WebServerPreferences#getDefault()} directly to get
- * the default instances of the WebServer and WebServerPreferences respectively.
+ * @author Randall Wood Copyright 2017
  */
-@Deprecated
-public class WebServerManager {
+@ServiceProvider(service = InstanceInitializer.class)
+public class WebServerPreferencesInstanceInitializer extends AbstractInstanceInitializer {
 
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
-    private WebServerManager() {
-        if (!InstanceManager.getOptionalDefault(WebServerPreferences.class).isPresent()) {
+    @Override
+    public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        if (type == WebServerPreferences.class) {
             File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
             File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
                 // import Mini Server preferences into Web Server preferences
                 preferencesFromMiniServerPreferences(miniServerPrefsFile, webServerPrefsFile);
-            } else if (!webServerPrefsFile.exists()) {
-                InstanceManager.store(new WebServerPreferences(), WebServerPreferences.class);
+            }
+            if (!webServerPrefsFile.exists()) {
+                return new WebServerPreferences();
             } else {
-                InstanceManager.store(new WebServerPreferences(webServerPrefsFile.getAbsolutePath()), WebServerPreferences.class); // NOI18N
+                return new WebServerPreferences(webServerPrefsFile.getAbsolutePath());
             }
         }
+        return super.getDefault(type);
     }
 
-    public static WebServerManager getInstance() {
-        return InstanceManager.getOptionalDefault(WebServerManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
-        });
-    }
-
-    public WebServerPreferences getPreferences() {
-        return WebServerPreferences.getDefault();
-    }
-
-    public static WebServerPreferences getWebServerPreferences() {
-        return getInstance().getPreferences();
-    }
-
-    public WebServer getServer() {
-        return WebServer.getDefault();
-    }
-
-    public static WebServer getWebServer() {
-        return getInstance().getServer();
+    @Override
+    public Set<Class<?>> getInitalizes() {
+        Set set = super.getInitalizes();
+        set.add(WebServerPreferences.class);
+        return set;
     }
 
     @SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
@@ -100,14 +88,14 @@ public class WebServerManager {
             if (!parent.exists()) {
                 boolean created = parent.mkdir(); // directory known to not exist from previous conditional
                 if (!created) {
-                    log.error("Failed to create directory {}", parent.toString());
+                    log.error("Failed to create directory {}", parent);
                     throw new java.io.IOException("Failed to create directory " + parent.toString());
                 }
             }
 
             boolean created = WSFile.createNewFile(); // known to not exist or this method would not have been called
             if (!created) {
-                log.error("Failed to new create file {}", WSFile.toString());
+                log.error("Failed to new create file {}", WSFile);
                 throw new java.io.IOException("Failed to create new file " + WSFile.toString());
             }
 
