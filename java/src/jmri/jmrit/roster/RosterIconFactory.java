@@ -2,27 +2,30 @@ package jmri.jmrit.roster;
 
 import java.util.HashMap;
 import javax.swing.ImageIcon;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 
-/*
+/**
+ * Generate and cache icons at a given height. A managed instance will generate
+ * icons for a default height, while unmanaged instances can be created to
+ * generate icons at different heights.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author Lionel Jeanson   Copyright (C) 2009
+ * @author Lionel Jeanson Copyright (C) 2009
  */
-public class RosterIconFactory {
+public class RosterIconFactory implements InstanceManagerAutoDefault {
 
-    private int iconHeight;
-    HashMap<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
+    private final int iconHeight;
+    HashMap<String, ImageIcon> icons = new HashMap<>();
 
     public RosterIconFactory(int h) {
         iconHeight = h;
@@ -61,12 +64,14 @@ public class RosterIconFactory {
         return icon;
     }
 
+    /**
+     *
+     * @return the default RosterIconFactory instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static RosterIconFactory instance() {
-        if (_instance == null) {
-            _instance = new RosterIconFactory();
-        }
-        return _instance;
+        return InstanceManager.getDefault(RosterIconFactory.class);
     }
-
-    private static RosterIconFactory _instance;
 }

@@ -34,17 +34,21 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
 
         ThrottleFrame tf = (ThrottleFrame) value;
         ImageIcon icon = null;
-        String text = null;
+        String text;
         if (tf.getRosterEntry() != null) {
             icon = iconFactory.getIcon(tf.getAddressPanel().getRosterEntry());
             text = tf.getAddressPanel().getRosterEntry().getId();
         } else if ((tf.getAddressPanel().getCurrentAddress() != null) && (tf.getAddressPanel().getThrottle() != null)) {
-            if (tf.getAddressPanel().getCurrentAddress().getNumber() == 0) {
-                text = Bundle.getMessage("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
-            } else if (tf.getAddressPanel().getCurrentAddress().getNumber() == 3) {
-                text = Bundle.getMessage("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
-            } else {
-                text = Bundle.getMessage("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
+            switch (tf.getAddressPanel().getCurrentAddress().getNumber()) {
+                case 0:
+                    text = Bundle.getMessage("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                    break;
+                case 3:
+                    text = Bundle.getMessage("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                    break;
+                default:
+                    text = Bundle.getMessage("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
+                    break;
             }
         } else {
             text = Bundle.getMessage("ThrottleNotAssigned");
