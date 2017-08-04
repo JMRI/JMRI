@@ -54,9 +54,9 @@ public class PushbuttonPacket {
 
         if (t == null || t.getDecoderName() == null ) {
             return null;
-        } else if (t.getDecoderName().equals(unknown)) {
+        } else if (unknown.equals(t.getDecoderName())) {
             return null;
-        } else if (t.getDecoderName().equals(NCEname)) {
+        } else if (NCEname.equals(t.getDecoderName())) {
             if (locked) {
                 bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 556, 1);
             } else {
@@ -65,8 +65,8 @@ public class PushbuttonPacket {
             return bl;
 
             // Note CVP decoders use the old legacy accessory  format
-        } else if (t.getDecoderName().equals(CVP_1Bname)
-                || t.getDecoderName().equals(CVP_2Bname)) {
+        } else if (CVP_1Bname.equals(t.getDecoderName())
+                || CVP_2Bname.equals(t.getDecoderName())) {
             int CVdata = CVPturnoutLockout(prefix, turnoutNum);
             bl = NmraPacket.accDecoderPktOpsModeLegacy(turnoutNum, 514, CVdata);
             return bl;
@@ -101,9 +101,9 @@ public class PushbuttonPacket {
             Turnout t = InstanceManager.turnoutManagerInstance()
                     .getBySystemName(prefix + modTurnoutNum);
             if (t != null && t.getDecoderName() != null) {
-                if (t.getDecoderName().equals(CVP_1Bname)) {
+                if (CVP_1Bname.equals(t.getDecoderName())) {
                     // do nothing button already = oneButton
-                } else if (t.getDecoderName().equals(CVP_2Bname)) {
+                } else if (CVP_2Bname.equals(t.getDecoderName())) {
                     button = twoButton;
                 } else {
                     log.warn("Turnout " + modTurnoutNum

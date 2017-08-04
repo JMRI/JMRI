@@ -340,7 +340,7 @@
                     <reuseForks>false</reuseForks>
                     -->
                     <!-- uncomment to really ensure tests are independent -->
-                    <runOrder>random</runOrder>
+                    <!-- <runOrder>random</runOrder> -->
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>

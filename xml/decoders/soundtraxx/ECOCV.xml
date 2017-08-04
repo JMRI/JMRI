@@ -250,7 +250,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Grade-Crossing Bell Enable</label>
     </variable>
-    <variable CV="126" mask="XXXXXXVV" item="Sound Option 11" default="0" tooltip="Determine the coupler release sound effect activated by the coupler function">
+    <variable CV="126" mask="XXXXXVVV" item="Sound Option 11" default="0" tooltip="Determine the coupler release sound effect activated by the coupler function">
         <enumVal>
             <enumChoice>
                 <choice>Medium coupler</choice>
@@ -260,6 +260,9 @@
             </enumChoice>
             <enumChoice>
                 <choice>Link-and-pin</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Buffers (UK decoders only)</choice>
             </enumChoice>
         </enumVal>
         <label>Coupler Select</label>
@@ -436,7 +439,7 @@
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
     </variable>
-    <!-- Equalizer Controls follow -->
+<!-- Equalizer Controls follow -->
     <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEQ.xml"/>
         <label>Equalizer Control</label>

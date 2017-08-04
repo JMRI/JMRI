@@ -37,7 +37,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
-public interface ReporterManager extends Manager {
+public interface ReporterManager extends Manager<Reporter> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
