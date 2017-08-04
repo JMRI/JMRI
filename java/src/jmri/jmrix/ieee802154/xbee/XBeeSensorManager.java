@@ -199,7 +199,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Sensor s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();

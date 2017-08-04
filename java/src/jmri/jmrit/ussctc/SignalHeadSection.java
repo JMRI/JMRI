@@ -42,6 +42,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                              String leftInput, String rightInput,
                              Station station) {
         
+        this.station = station;
+
         logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
                         Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"LOG");
         log.debug("log memory name is {}", logMemory.getSystemName());
@@ -85,9 +87,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         hLeftInput = hm.getNamedBeanHandle(leftInput, sm.provideSensor(leftInput));
         hRightInput = hm.getNamedBeanHandle(rightInput, sm.provideSensor(rightInput));
-        
-        this.station = station;
-        
+                
         // initialize lamps to follow layout state to STOP
         tm.provideTurnout(leftIndicator).setCommandedState(Turnout.CLOSED);
         tm.provideTurnout(stopIndicator).setCommandedState(Turnout.THROWN);

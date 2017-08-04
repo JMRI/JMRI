@@ -11,7 +11,7 @@ import jmri.NamedBean;
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
  */
-public class ProxyLightManager extends AbstractProxyManager
+public class ProxyLightManager extends AbstractProxyManager<Light>
         implements LightManager {
 
     public ProxyLightManager() {
@@ -39,7 +39,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     @Override
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    protected Light makeBean(int i, String systemName, String userName) {
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
 

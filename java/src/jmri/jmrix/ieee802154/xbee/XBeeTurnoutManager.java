@@ -182,7 +182,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Turnout s) {
         super.deregister(s);
         // remove the specified turnout from the associated XBee pin.
         String systemName = s.getSystemName();

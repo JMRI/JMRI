@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
+public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -210,7 +210,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return ENTRYEXIT;
     }
 
-    public NamedBean getBySystemName(String systemName) {
+    public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
             if (pd != null) {
@@ -221,12 +221,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public DestinationPoints getBeanBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public DestinationPoints getBeanByUserName(String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -237,8 +237,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public NamedBean getNamedBean(String name) {
-        NamedBean b = getBeanByUserName(name);
+    public DestinationPoints getNamedBean(String name) {
+        DestinationPoints b = getBeanByUserName(name);
         if (b != null) {
             return b;
         }
@@ -285,17 +285,17 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
+    public List<DestinationPoints> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -1037,7 +1037,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(DestinationPoints bean, String property) throws java.beans.PropertyVetoException {
 
     }
 

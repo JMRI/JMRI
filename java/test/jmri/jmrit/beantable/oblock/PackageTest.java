@@ -37,6 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BlockPortalTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PortalTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SignalTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DnDJTableTest.class));
         return suite;
     }
 

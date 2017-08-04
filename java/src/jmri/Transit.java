@@ -571,6 +571,8 @@ public class Transit extends AbstractNamedBean {
         return numErrors;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT" , 
+            justification = "FindBugs doesn't see that toBeRemoved is being read by the forEach clause")
     public void removeTemporarySections() {
         ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -612,9 +614,8 @@ public class Transit extends AbstractNamedBean {
                     throw new PropertyVetoException(Bundle.getMessage("VetoTransitSection", getDisplayName()), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
-            // ignore this property
         }
+        // we ignore the property setConfigureManager
     }
     private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
 
