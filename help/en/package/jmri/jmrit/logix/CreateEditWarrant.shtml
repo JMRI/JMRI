@@ -264,7 +264,8 @@
           <h2>Learn Mode</h2>Throttle commands are created by
           recording the commands you send to a train while
           operating it manually from a throttle in <b>Learn
-          Mode</b>.
+          Mode</b>. The <b>Prototypical</b> button should be
+          chosen.
 
           <h3>Learn Mode Throttle</h3>If a train has been assigned,
           that is, has a valid DCC address in the warrant, then a
@@ -390,6 +391,61 @@
             <li><b>Speed (mm/sec)</b> - The track speed of the
             recording train at the corresponding throttle setting.
           </ul>
+          The recorded throttle commands execute according to
+          the elapsed time between commands. The entry into each 
+          block is recorded with a "NoOp"
+          marker. These markers are used to synchronize the elapsed
+          time of the automatic running of the train when it enters
+          a block. This reset is done so events recorded in the block
+          occur according to the elapsed time in the block.
+
+          <h3>Synchronizing Commands to Block boundaries.</h3>
+          In spite of attempting to maintain the recorded track
+          speed, changing the consist of a train or
+          perhaps even a temperature change between recording and
+          playback, may result in the train not performing a
+          throttle command at exactly the same place on the on the 
+          route where the "Learn Mode" train recorded them.
+
+          <p> The
+          throttle commands of the next block will be delayed until
+          the train enters the block. That is, the elapsed time of
+          the NoOp command must be reached before any more commands
+          are issued to the running train. This will be the case if
+          the train is late in arriving at the block. On the other
+          hand if the train arrives earlier than expected the
+          remaining commands of the preceding block are executed in
+          fractions of a second to catch up.</p>
+
+          <p>If a more precise way is needed to have a script event
+          occur at a particular location, see the section
+          <b>Internal Synchronization From External Events</b>
+          below.</p>
+
+          <h3>Editing Recorded Throttle Commands</h3>
+          Most of the columns in
+          the Throttle Command Table can be edited. Perhaps you
+          want to touch up the timing for the horn blasts or modify
+          the speeds. Just enter the data you want. The values in
+          the Throttle Command Table are changed by typing new
+          entries into cells of the table.
+
+          <p>Rows may be inserted or deleted from the table using
+          the buttons to the right of the table. Note that an
+          inserted row has 0 elapsed time from the previous command
+          so you may want to adjust this by taking time away from
+          either the previous row or the following row and entering
+          it into the inserted row. Also, when a row is deleted,
+          its elapsed time is added to the time of the following
+          row. These default elapsed times for inserting and
+          deleting rows are entered to keep the total elapsed time
+          in the block constant.</p>
+
+          <p>Some caution should be taken to only make modest
+          changes since new commands when executed in playback
+          could cause dramatic events. It may be wiser to re-record
+          the commands in a new Learn Mode session if major changes
+          are made.
 
           <h3>Track Speeds</h3>
           Recording the track speeds in the <b>Speed</b> column
@@ -416,77 +472,6 @@
             will allow it to be loaded by earlier versions.
           </div>
            
-          <h3>Synchronizing Commands to Block boundaries.</h3>
-          In spite of attempting to maintain the recorded track
-          speed, changing the consist of a train or
-          perhaps even a temperature change between recording and
-          playback, may result in the train not performing a
-          throttle command at exactly the same place on the on the 
-          route where the "Learn Mode" train recorded them.
-
-          <p>The entry into each block is recorded with a "NoOp"
-          marker. These markers are used to synchronize the elapsed
-          time of the automatic running of the train when it enters
-          a block to its recorded elapsed time in the block. The
-          throttle commands of the next block will be delayed until
-          the train enters the block. That is, the elapsed time of
-          the NoOp command must be reached before any more commands
-          are issued to the running train. This will be the case if
-          the train is late in arriving at the block. On the other
-          hand if the train arrives earlier than expected the
-          remaining commands of the preceding block are executed in
-          fractions of a second to catch up.</p>
-
-          <p>If a more precise way is needed to have a script event
-          occur at a particular location, see the section
-          <b>Internal Synchronization From External Events</b>
-          below.</p>
-
-          <h3>Editing Recorded Throttle Commands</h3>The throttle
-          commands recorded in <b>Learn Mode</b> can be edited.
-          However, caution should be taken to only make modest
-          changes since new commands when executed in playback
-          could cause dramatic events. It may be wiser to re-record
-          the commands in a new Learn Mode session if major changes
-          are made.
-
-          <p>The recorded throttle commands execute according to
-          the elapsed time between commands. The elapsed time (ET
-          column) may be modified and even the command may be
-          changed. Rows may be deleted and additional rows
-          inserted.</p>
-
-          <p>Rows can be inserted into Throttle command Table so
-          the train can set external sensor states or respond to
-          the state of an external sensor. The run protection
-          discussed in previous sections and synchronizing commands
-          depends on reliable occupancy detection. If the layout is
-          prone to have spurious false detection signals, then
-          automated running will be unsatisfactory - trains may
-          wait indefinitely for phantom trains to release occupancy
-          or run indefinitely by not receiving a synchronizing
-          signal. The train can be run using the elapsed times
-          between commands only and skip the block protection
-          mentioned above i.e. "Run with Blocks Dark".</p>
-
-          <h3>Editing Throttle Commands</h3>All of the columns in
-          the Throttle Command Table can be edited. Perhaps you
-          want to touch up the timing for the horn blasts or modify
-          the speeds. Just enter the data you want. The values in
-          the Throttle Command Table are changed by typing new
-          entries into cells of the table.
-
-          <p>Rows may be inserted or deleted from the table using
-          the buttons to the right of the table. Note that an
-          inserted row has 0 elapsed time from the previous command
-          so you may want to adjust this by taking time away from
-          either the previous row or the following row and entering
-          it into the inserted row. Also, when a row is deleted,
-          its elapsed time is added to the time of the following
-          row. These default elapsed times for inserting and
-          deleting rows are entered to keep the total elapsed time
-          in the block constant.</p>
-
           <h3>Triggering External Events From Scripts</h3>External
           animation or other events may be triggered by entering a
           "<i>Set Sensor</i>" command. To do this, insert a row
@@ -578,7 +563,7 @@
               <td>OB_WEST_YARD</td>
             </tr>
           </table>
-          The train continues the speed of Command #11 until the 
+          <p>The train continues the speed of Command #11 until the 
           sensor at command #12 <b>changes</b> to active. If 
           already active, the train continues to move. Command #13
           stops the train and it remains stopped until the sensor
@@ -722,7 +707,6 @@
             <li><b>Delete</b>: - Deletes the warrant when the panel
             is saved to the Configuration file.</li>
           </ul><!--#include virtual="/Footer" -->
-        </li>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

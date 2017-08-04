@@ -76,7 +76,9 @@
       window. If you mis-clicked on an icon and/or want to change
       the block in one of the fields, just double-click the field
       and click on another icon. Note, the icons <i>must</i> be
-      Indicator Track Icons to have this feature.</p>
+      Indicator Track Icons to have this feature.
+      <a href="CreateEditWarrant.shtml">Creating and
+      Editing Warrants</a> also discusses choosing routes.</p>
 
       <p>The <b>Max Number of Blocks in Route</b> field puts an 
       upper limit on the length
@@ -121,14 +123,6 @@
         displayed automatically if a train is selected from the roster.
         You may enter the DCC address of a non-Roster locomotive.</li>
       </ul>
-      The <b>View Speed Profile</b> button displays a table of the
-      track speeds that will be used in the calculations for the 
-      warrant.  The table is comprised of the Roster Speed Profile
-      merged with any speed measurements that have been made during
-      the current session.  If the table is empty, the values for
-      Throttle Factor and Layout Scale in Warrant Preferences are
-      used in the calculations. (Note, this was the only way it was
-      done prior to Release 4.9.2.)
 
       <div style="margin-left: 2em">
         Note, when editing a Indicator Track Icon (<i>Edit
@@ -137,7 +131,16 @@
         the icon will display the <i>Train Name</i> field entered above.
       </div>
 
-      Next set values for the maximum speed the train should achieve
+      <p>The <b>View Speed Profile</b> button displays a table of the
+      track speeds that will be used in the calculations for the 
+      warrant.  The table is comprised of the Roster Speed Profile
+      merged with any speed measurements that have been made during
+      the current session.  If the table is empty, the values for
+      Throttle Factor and Layout Scale in Warrant Preferences are
+      used in the calculations. (Note, this was the only way it was
+      done prior to Release 4.9.2.)</p>
+
+      <p>Next set values for the maximum speed the train should achieve
       when track conditions are at a <i>Clear</i> aspect.
       <ul>
         <li><b>Max Throttle setting</b> must be a positive decimal

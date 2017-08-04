@@ -52,7 +52,8 @@
       change later, but the defaults are generally sufficient
       without change. See <a href=
       "../../../apps/TabbedPreferences.shtml#Warrants">Warrant
-      Preferences</a> for information about configuration.</p>
+      Preferences</a> for information about configuration of
+      warrant parameters.</p>
 
       <h2>How To Get Started</h2>
 		Definitions of OBlocks, Portals and OPaths are found at
@@ -179,7 +180,8 @@
 	    position for the slowdown to occur.
 	    </p><p> 
 	    See <a href="SpeedChanges.shtml">Modifying Warrant Speeds</a>
-	    for how NXWarrants or signals make gradual changes of speed.
+	    for how warrants detect track conditions that require speed changes
+	    and how they make gradual changes of speed.
 	    
       <h3>Warrant Types</h3>There are three types of warrants:
       <ul>
@@ -187,21 +189,21 @@
         are recorded from a throttle you use to drive a train over
         preselected route. The warrant then replicates all the
         commands when played back. To create a recorded script
-        warrant, select the menu item <b>Create New Warrant</b>
-        from the <b>Warrants</b> menu.</li>
+        warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
+        menu item.</li>
 
         <li>An <b>NXWarrant</b>, (eNtry/eXit) where throttle commands 
         are generated automatically to move a train between blocks
         chosen "on the fly" by you. To create an NXWarrant, 
-        select the menu item <b>Create NXWarrant</b>
-        from the <b>Warrants</b> menu.</li>
+        select the <b>Warrants-&gt;Tables-&gt;Create NXWarrant</b>
+        menu item.</li>
 
         <li>A <b>Fast reacting</b> warrant. This type does not follow
         the rules used by warrants, but reacts to signals
         when entering their approach block with an immediate speed
         change. To create such a
-        warrant, select the menu item <b>Create New Warrant</b>
-        from the <b>Warrants</b> menu.</li>
+        warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
+        menu item.</li>
       </ul>
 
       <h2>Creating a Warrant</h2>
