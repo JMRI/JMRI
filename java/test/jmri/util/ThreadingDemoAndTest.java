@@ -5,6 +5,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.concurrent.*;
+
 /**
  * This class serves as a demonstration of some good
  * threading practices in JMRI, and also as a run-time test of them.
@@ -226,6 +228,123 @@ public class ThreadingDemoAndTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return t1.getState().equals(Thread.State.TERMINATED); }, "continued off the end to terminated state");        
     }
 
+
+    /** 
+     * Confirm interrupt behavior of blocking queue put
+     */
+    public void testInterruptBlockingQueuePut() {
+        flagInterrupted1 = false;  // set true when we leave the first wait
+        flagInterrupted2 = false;  // set true when we leave the second wait
+        flagInterrupted3 = false;  // set true when we leave the third wait
+
+        BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
+        
+        final Thread t = new Thread() {
+            public void run()  {
+                try {
+                    q.put(Integer.valueOf(1));
+                    q.put(Integer.valueOf(2));
+                } catch (InterruptedException e) {
+                    Assert.fail("did not expect interrupt");
+                }
+                flagInterrupted1 = true;
+
+                // third should block until read
+                try {
+                    q.put(Integer.valueOf(3));
+                } catch (InterruptedException e) {
+                    // just eat and continue
+                    flagInterrupted2 = true;
+                }
+
+                try {
+                    q.put(Integer.valueOf(4));
+                } catch (InterruptedException e) {
+                    // just eat and continue
+                    flagInterrupted3 = true;
+                }
+
+                try {
+                    q.put(Integer.valueOf(5));
+                } catch (InterruptedException e) {
+                    // just eat and continue
+                    flagInterrupted3 = true;
+                }
+            }
+        };
+        t.setName("testInterruptBlockingQueuePut");
+        t.setDaemon(true);
+        
+        // confirm our understanding of the life cycle
+        Assert.assertTrue(t.getState().equals(Thread.State.NEW));
+        
+        t.start();
+        JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait state after adding 2");
+        Assert.assertTrue(flagInterrupted1);
+        Assert.assertTrue(q.size() == 2);
+        Assert.assertTrue(! flagInterrupted2);
+
+        Assert.assertEquals("first", Integer.valueOf(1), q.poll());
+
+        // should have allowed another
+        JUnitUtil.waitFor( ()->{ return q.size() == 2; }, "Third added");
+        Assert.assertTrue(! flagInterrupted2);
+        Assert.assertTrue(! flagInterrupted3);
+        JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait state after adding 3");
+        JUnitUtil.waitFor( ()->{ return q.size() == 2; }, "Fourth not yet present");
+        
+        // waiting to add 4, interrupt
+        t.interrupt();
+        JUnitUtil.waitFor( ()->{ return flagInterrupted3; }, "Interrupt handled in add 4");
+
+        // pull contents
+        Assert.assertEquals("second", Integer.valueOf(2), q.poll());
+        Assert.assertEquals("third", Integer.valueOf(3), q.poll());
+        
+        JUnitUtil.waitFor( ()->{ return t.getState().equals(Thread.State.TERMINATED); }, "Got to terminated state");        
+        Assert.assertEquals("fifth; fourth cancelled", Integer.valueOf(5), q.poll());
+    }
+
+    /** 
+     * Confirm interrupt behavior of blocking queue get
+     */
+    public void testInterruptBlockingQueueGet() {
+        flagInterrupted1 = false;  // set true when we leave the first wait
+        flagInterrupted2 = false;  // set true when we leave the second wait
+        flagInterrupted3 = false;  // set true when we leave the third wait
+
+        BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
+        
+        final Thread t = new Thread() {
+            public void run()  {
+                try {
+                    flagInterrupted1 = true;
+                    Assert.fail(" did not expect to complete: "+q.take());
+                } catch (InterruptedException e) {
+                    flagInterrupted2 = true;
+                }
+                flagInterrupted3 = true;
+            }
+        };
+        t.setName("testInterruptBlockingQueueGet");
+        t.setDaemon(true);
+        
+        // confirm our understanding of the life cycle
+        Assert.assertTrue(t.getState().equals(Thread.State.NEW));
+        
+        t.start();
+        JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait input");
+        Assert.assertTrue(flagInterrupted1);
+        Assert.assertTrue(! flagInterrupted2);
+        Assert.assertTrue(! flagInterrupted2);
+
+        t.interrupt();
+        JUnitUtil.waitFor( ()->{ return flagInterrupted2; }, "Interrupt handled");
+
+        JUnitUtil.waitFor( ()->{ return t.getState().equals(Thread.State.TERMINATED); }, "Got to terminated state");        
+        Assert.assertTrue(flagInterrupted3);
+
+    }
 
     // from here down is testing infrastructure
     public ThreadingDemoAndTest(String s) {
