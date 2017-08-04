@@ -5,7 +5,7 @@ import jmri.LightManager;
 import jmri.NamedBean;
 
 /**
- * Implementation of a LightManager that can serves as a proxy for multiple
+ * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
@@ -213,7 +213,7 @@ public class ProxyLightManager extends AbstractProxyManager
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // Initially accepts a 4 digit number
         return addFormatArray;
     }
 

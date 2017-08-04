@@ -1400,7 +1400,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
 
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
-            systemPrefix = "All";
+            systemPrefix = "All"; // NOI18N
         }
         f.addToBottomBox(doAutomationBox, systemPrefix);
         doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());

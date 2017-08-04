@@ -287,7 +287,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // Initially accepts a 4 digit number
         return addFormatArray;
     }
 

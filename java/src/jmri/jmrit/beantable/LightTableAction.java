@@ -509,7 +509,7 @@ public class LightTableAction extends AbstractTableAction {
     boolean inEditMode = false;
     private boolean lightControlChanged = false;
 
-    // items of add frame
+    // items of Add frame
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
@@ -739,7 +739,7 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
-    private String[] addFormat;
+    private String[] addFormat = {"No Help",""};
 
     protected void prefixChanged() {
         if (supportsVariableLights()) {
@@ -769,8 +769,21 @@ public class LightTableAction extends AbstractTableAction {
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         // get tooltip from ProxyLightManager
-        addFormat = InstanceManager.getDefault(LightManager.class).getAddFormat();
-        log.debug("ProxyTurnoutManager tip");
+        if (lightManager.getClass().getName().contains("ProxyLightManager")) {
+            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
+            List<Manager> managerList = proxy.getManagerList();
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
+            for (int x = 0; x < managerList.size(); x++) {
+                jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    // get tooltip from ProxyLightManager
+                    addFormat = mgr.getAddFormat();
+                    log.debug("L add box set");
+                    break;
+                }
+            }
+        }
+        log.debug("DefaultLightManager tip: {}", addFormat[0]);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
         fieldHardwareAddress.setToolTipText("<html>" +
                 Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +

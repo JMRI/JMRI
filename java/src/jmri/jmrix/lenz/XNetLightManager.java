@@ -122,6 +122,7 @@ public class XNetLightManager extends AbstractLightManager {
     @Override
     public String[] getAddFormat() {
         String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9:]{1,4}$"};
+        log.debug("Xnet stuff sent");
         return addFormatArray;
     }
 
