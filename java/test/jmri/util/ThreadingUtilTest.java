@@ -98,6 +98,9 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
     }
 
+    /**
+     * Show how to query state of _current_ thread
+     */
     public void testSelfState() {
     
         // To run the tests, this thread has to be running, not waiting
