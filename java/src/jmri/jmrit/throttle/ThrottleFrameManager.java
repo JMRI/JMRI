@@ -34,8 +34,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     /**
      * Constructor for the ThrottleFrameManager object
      */
-    private ThrottleFrameManager() // can only be created by instance() => private
-    {
+    public ThrottleFrameManager() {
         throttleCycler = new ThrottleCyclingKeyListener();
         throttleWindows = new ArrayList<>(0);
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
