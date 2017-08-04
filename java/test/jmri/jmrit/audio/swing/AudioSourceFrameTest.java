@@ -24,6 +24,7 @@ public class AudioSourceFrameTest {
         // object
         AudioSourceFrame t = new AudioSourceFrame("Source Frame Test",null);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

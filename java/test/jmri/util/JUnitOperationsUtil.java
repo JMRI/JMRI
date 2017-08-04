@@ -28,6 +28,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -49,6 +50,10 @@ public class JUnitOperationsUtil {
      * operations file used during tests.
      */
     public static void resetOperationsManager(){
+
+        //shut down the AutoSave thread if it is running.
+        Setup.getDefault().setAutoSaveEnabled(false);
+
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
 
