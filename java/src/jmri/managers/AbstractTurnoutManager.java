@@ -217,12 +217,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30
+     * turnouts in numerical order eg 10 to 30.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return true;
+        return false;
     }
 
     @Override
@@ -362,7 +364,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // Initially accepts a 4 digit number
         return addFormatArray;
     }
 

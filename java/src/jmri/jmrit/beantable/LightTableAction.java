@@ -517,7 +517,6 @@ public class LightTableAction extends AbstractTableAction {
     ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
             "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Light pane");
     // initially allow any 20 char string, updated by prefixBox selection
-//    JTextField fieldNumToAdd = new JTextField(5);
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));

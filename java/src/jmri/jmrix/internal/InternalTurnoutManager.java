@@ -15,4 +15,9 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
         this.prefix = prefix;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
 }

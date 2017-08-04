@@ -62,9 +62,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    //Turnout address format is more than a simple number.
-    public boolean allowMultipleAdditions() {
-        return false;
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return false; //Turnout address format is more than a simple number.
     }
 
     @Override

@@ -1554,31 +1554,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
-        boolean _valid = false;
-        int entry = 0;
         String curAddress = sysNameTextField.getText().trim();
         // Add some entry pattern checking now, before assembling sName and handing it to the turnoutManager? TODO
-        //String connectionClass = InstanceManager.turnoutManagerInstance().getName();
-        // use underlying connection class name instead of user defined name
-        log.debug(prefix);
-        // Default LocoNet/integer TODO use mask instead
-//        try {
-//            entry = Integer.parseInt(curAddress);
-//            _valid = true;
-//        } catch (NumberFormatException ex) {
-//            _valid = false; // not an integer value
-//        }
-//        if (!_valid || entry < 0 || entry > 2048) {
-//            JOptionPane.showMessageDialog(addFrame,
-//                    Bundle.getMessage("ShouldBeNumber", Bundle.getMessage("LabelHardwareAddress")) + "\n" +
-//                            Bundle.getMessage("ShouldBeNumber", Bundle.getMessage("LabelHardwareAddress")) + "\n" +
-//                            InstanceManager.turnoutManagerInstance().getAddToolTip(),
-//                            //Bundle.getMessage("AddOutputEntryToolTip"),
-//                    Bundle.getMessage("ErrorTitle"),
-//                    JOptionPane.ERROR_MESSAGE);
-//            _valid = false; // outside valid range
-//            return;
-//        }
 
         int iType = 0;
         int iNum = 1;
@@ -1687,14 +1664,16 @@ public class TurnoutTableAction extends AbstractTableAction {
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
 
-    private String[] addFormat;
+    private String[] addFormat = {"No Help",""};
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
+        log.debug("T add box disabled");
         range.setSelected(false);
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {
             // Tab All or first time opening, use default tooltip
+            log.debug("No connection selected");
             connectionChoice = "TBD";
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
@@ -1703,16 +1682,17 @@ public class TurnoutTableAction extends AbstractTableAction {
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
-                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
-                    range.setEnabled(true);
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyTurnoutManager
                     addFormat = mgr.getAddFormat();
-                    log.debug("ProxyTurnoutManager tip");
+                    log.debug("T add box set");
                     break;
                 }
             }
         } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
+            log.debug("T add box enabled2");
             // get tooltip from turnout manager
             addFormat = turnManager.getAddFormat();
             log.debug("TurnoutManager tip");

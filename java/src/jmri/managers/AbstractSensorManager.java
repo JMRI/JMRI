@@ -166,8 +166,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     /**
      * A method that determines if it is possible to add a range of sensors in
      * numerical order eg 10 to 30, primarily used to enable/disable the add
-     * range box in the add sensor panel
+     * range box in the add sensor panel.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -293,7 +295,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     @Override
     public String[] getAddFormat() {
         String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}[:]{0,1}[0-9]{1,4}$"};
-        // accepts a 4 digit number + ":" + another 4 digit number
+        // Initially accepts a 4 digit number + ":" + another 4 digit number
         return addFormatArray;
     }
 

@@ -23,6 +23,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ValidatedTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +87,9 @@ public class SensorTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    JTextField sysNameTextField = new JTextField(40);
+    ValidatedTextField sysNameTextField = new ValidatedTextField(40, false,
+            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Turnout pane");
+    // initially allow any 20 char string, updated by prefixBox selection
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -147,9 +150,12 @@ public class SensorTableAction extends AbstractTableAction {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
             sysNameTextField.setName("sysNameTextField"); // NOI18N
+            sysNameTextField.setInvalidBackgroundColor(java.awt.Color.white);
+            // don't use strong colorization on ValidatedTextField like for CVs
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            // tooltip for sysNameTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
         addFrame.pack();
@@ -220,6 +226,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
+        log.debug("S add box disabled");
         range.setSelected(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
@@ -254,11 +261,13 @@ public class SensorTableAction extends AbstractTableAction {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
                     range.setEnabled(true);
+                    log.debug("S add box enabled1");
                     return;
                 }
             }
         } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
+            log.debug("S add box enabled2");
         }
     }
 

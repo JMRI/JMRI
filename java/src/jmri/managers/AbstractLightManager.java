@@ -235,8 +235,10 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
+     * range box in the add Light window.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -253,7 +255,7 @@ public abstract class AbstractLightManager extends AbstractManager
      */
     @Override
     public String[] getAddFormat() {
-        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // accepts a 4 digit number
+        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}$"}; // Initially accepts a 4 digit number
         return addFormatArray;
     }
 

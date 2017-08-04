@@ -106,6 +106,11 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
      */
