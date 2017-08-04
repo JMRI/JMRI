@@ -24,6 +24,7 @@ public class DrawRectangleTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawRectangle t = new DrawRectangle("newShape","Rectangle",s);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

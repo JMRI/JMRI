@@ -24,6 +24,7 @@ public class DrawRoundRectTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawRoundRect t = new DrawRoundRect("newShape","roundRect",s);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

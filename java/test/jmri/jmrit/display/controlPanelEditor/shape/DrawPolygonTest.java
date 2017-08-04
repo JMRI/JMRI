@@ -24,6 +24,7 @@ public class DrawPolygonTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawPolygon t = new DrawPolygon("newShape","Polygon",s);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

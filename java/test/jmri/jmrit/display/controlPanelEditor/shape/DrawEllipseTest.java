@@ -24,6 +24,7 @@ public class DrawEllipseTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawEllipse t = new DrawEllipse("newShape","Ellipse",s);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

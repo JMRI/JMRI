@@ -24,6 +24,7 @@ public class DrawCircleTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawCircle t = new DrawCircle("newShape","Circle",s);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J
