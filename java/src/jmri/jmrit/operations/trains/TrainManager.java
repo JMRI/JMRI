@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -9,12 +10,13 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
@@ -32,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  *         2014
  */
-public class TrainManager implements java.beans.PropertyChangeListener {
+public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     private static final String NONE = "";
 
@@ -68,24 +70,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
     public TrainManager() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 
     private int _id = 0; // train ids
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized TrainManager instance() {
-        TrainManager instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
-        if (instance == null) {
-            log.debug("TrainManager creating instance");
-            // create and load
-            instance = new TrainManager();
-            jmri.InstanceManager.setDefault(TrainManager.class,instance);
-            OperationsSetupXml.instance(); // load setup
-            TrainManagerXml.instance(); // load trains
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManager returns instance " + instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(TrainManager.class);
     }
 
     /**
@@ -282,7 +282,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @return requested Train object or null if none exists
      */
     public Train getTrainByName(String name) {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getTrainByName called before trains completely loaded!");
         }
         Train train;
@@ -299,7 +299,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     public Train getTrainById(String id) {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getTrainById called before trains completely loaded!");
         }
         return _trainHashTable.get(id);
@@ -591,7 +591,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     private List<Train> getList() {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }
         List<Train> out = new ArrayList<Train>();
@@ -954,8 +954,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void load(Element root) {
         if (root.getChild(Xml.OPTIONS) != null) {
             Element options = root.getChild(Xml.OPTIONS);
-            TrainCustomManifest.instance().load(options);
-            TrainCustomSwitchList.instance().load(options);
+            InstanceManager.getDefault(TrainCustomManifest.class).load(options);
+            InstanceManager.getDefault(TrainCustomSwitchList.class).load(options);
             Element e = options.getChild(Xml.TRAIN_OPTIONS);
             Attribute a;
             if (e != null) {
@@ -1087,8 +1087,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             options.addContent(es);
         }
 
-        TrainCustomManifest.instance().store(options); // save custom manifest elements
-        TrainCustomSwitchList.instance().store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
 
         root.addContent(options);
 
@@ -1130,7 +1130,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
