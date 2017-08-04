@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +106,7 @@ public class TrainIcon extends LocoIcon {
     jmri.jmrit.throttle.ThrottleFrame _tf = null;
 
     private void createThrottle() {
-        _tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
         if (getConsistNumber() > 0) {
             _tf.getAddressPanel().setAddress(getConsistNumber(), false); // use consist address
             if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("SendFunctionCommands"), Bundle

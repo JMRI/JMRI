@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
+import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.util.FileUtil;
@@ -68,8 +69,8 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
             JLabel dir = new JLabel();
-            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
                 if (thr.getIsForward()) {
                     dir.setIcon(fwdIcon);
                 } else {
@@ -84,8 +85,8 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             }
             dir.setVerticalAlignment(JLabel.CENTER);
             ctrlPanel.add(dir, BorderLayout.WEST);
-            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
                 if (thr.getSpeedSetting() == -1) {
                     JLabel estop = new JLabel();
                     estop.setPreferredSize(new Dimension(64, height - 8));

@@ -233,7 +233,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
                     tf.getAddressPanel().setRosterEntry(re);
                 }
