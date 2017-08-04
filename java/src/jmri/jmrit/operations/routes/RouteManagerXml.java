@@ -105,7 +105,7 @@ public class RouteManagerXml extends OperationsXml {
     private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
 
     @ServiceProvider(service = InstanceInitializer.class)
-    public static class RouteManagerXmlInstanceInitializer extends AbstractInstanceInitializer {
+    public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {

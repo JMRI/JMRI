@@ -119,7 +119,7 @@ public class EngineManagerXml extends OperationsXml {
     private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 
     @ServiceProvider(service = InstanceInitializer.class)
-    public static class EngineManagerXmlInstanceInitializer extends AbstractInstanceInitializer {
+    public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {

@@ -198,7 +198,7 @@ public class EngineModels extends RollingStockAttribute {
     private final static Logger log = LoggerFactory.getLogger(EngineModels.class.getName());
 
     @ServiceProvider(service = InstanceInitializer.class)
-    public static class EngineModelsInstanceInitializer extends AbstractInstanceInitializer {
+    public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
