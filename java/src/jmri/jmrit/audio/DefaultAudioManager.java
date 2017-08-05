@@ -2,13 +2,17 @@ package jmri.jmrit.audio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -230,4 +234,23 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 
+@ServiceProvider(service = InstanceInitializer.class)
+public class Initializer extends AbstractInstanceInitializer {
+
+    @Override
+    public <T> Object getDefault(Class<T> type) {
+        if (type == AudioManager.class) {
+            return new DefaultAudioManager();
+        }
+        return super.getDefault(type);
+    }
+
+    @Override
+    public Set<Class<?>> getInitalizes() {
+        Set<Class<?>> set = super.getInitalizes();
+        set.add(AudioManager.class);
+        return set;
+    }
+
+}
 }

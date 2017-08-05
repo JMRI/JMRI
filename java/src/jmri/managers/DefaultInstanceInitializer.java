@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
-import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CatalogTreeManager;
 import jmri.ClockControl;
@@ -27,7 +26,6 @@ import jmri.Timebase;
 import jmri.TurnoutManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
-import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.openide.util.lookup.ServiceProvider;
@@ -58,10 +56,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
-
-        if (type == AudioManager.class) {
-            return new DefaultAudioManager();
-        }
 
         if (type == CatalogTreeManager.class) {
             return new DefaultCatalogTreeManager();
@@ -158,7 +152,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
-                AudioManager.class,
                 BlockManager.class,
                 CatalogTreeManager.class,
                 ClockControl.class,
