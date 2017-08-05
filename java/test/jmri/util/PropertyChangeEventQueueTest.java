@@ -55,6 +55,21 @@ public class PropertyChangeEventQueueTest extends TestCase {
         Assert.assertEquals("PropertyChangeEventQueue for (\"IS1\") (\"IS2\")", pq.toString());
     }
     
+    public void testDispose() throws jmri.JmriException, InterruptedException {
+        PropertyChangeEventQueue pq = new PropertyChangeEventQueue(Arrays.asList(new NamedBean[]{is1, is2}));
+    
+        int start = is1.getNumPropertyChangeListeners(); // there can be internal listeners
+        Assert.assertTrue(start >= 1);
+        
+        pq.dispose();
+        
+        Assert.assertEquals(start-1, is1.getNumPropertyChangeListeners());
+
+        pq.dispose();  // check not an error
+        
+        Assert.assertEquals(start-1, is1.getNumPropertyChangeListeners());        
+    }
+
     // from here down is testing infrastructure
     public PropertyChangeEventQueueTest(String s) {
         super(s);

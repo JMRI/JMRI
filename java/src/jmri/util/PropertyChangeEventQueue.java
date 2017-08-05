@@ -10,14 +10,15 @@ import net.jcip.annotations.*;
 
 /**
  * Gathers PropertyChangeEvents that might occur in overlapping threads
- * and overlapping times, presenting them as requested.
+ * and at overlapping times, presenting them as requested.
  * <p>
  * Listeners are installed when the object is constructed.
  * {@link #dispose()} detaches those listeners, after which the
  * object should not be used.
  * It is not an error to call {@link #dispose()} multiple times.
  * <p>
- * 
+ * Although this could be more generic than NamedBean, there's 
+ * no single interface that specifies "can call addPropertyChangeListener(..)".
  *
  * @author Bob Jacobsen Copyright 2017
  */
@@ -67,6 +68,9 @@ public class PropertyChangeEventQueue {
      */
     public void dispose() {
         if (log.isTraceEnabled()) log.trace("dispose() {}", items.toString());
+        for (NamedBean bean : items) {
+            bean.removePropertyChangeListener(listener);
+        }
     }
     
     public PropertyChangeEvent take() throws InterruptedException {
