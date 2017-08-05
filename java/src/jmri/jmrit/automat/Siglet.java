@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.beans.PropertyChangeEvent;
 
 import jmri.NamedBean;
-import jmri.util.PropertyChangeEventQueue;
+import jmri.util.*;
 
 /**
  * A Siglet is a "an embedded signal automation", like an "applet" an embedded
@@ -84,7 +84,7 @@ abstract public class Siglet {
                             PropertyChangeEvent pe = pq.take();
                             // _any_ event drives output
                             log.trace("driving setOutput from {}", pe);
-                            setOutput();
+                            ThreadingUtil.runOnLayout( ()->{ setOutput(); } );
                         } catch (InterruptedException e) {
                             // done
                             log.trace("Siglet {} cleaning up due to interrupt", name);
