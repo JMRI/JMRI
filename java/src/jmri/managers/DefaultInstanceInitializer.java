@@ -29,7 +29,6 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -104,10 +103,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new jmri.managers.ProxyReporterManager();
         }
 
-        if (type == RosterIconFactory.class) {
-            return RosterIconFactory.instance();
-        }
-
         if (type == RouteManager.class) {
             return new DefaultRouteManager();
         }
@@ -175,7 +170,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 ProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
-                RosterIconFactory.class,
                 RouteManager.class,
                 SensorManager.class,
                 SignalGroupManager.class,

@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     Train _train = null;
-    CarManager carManager = CarManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
     TrainCommon trainCommon = new TrainCommon();
 
     JScrollPane carPane;

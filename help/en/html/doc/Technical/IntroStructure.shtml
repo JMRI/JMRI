@@ -105,6 +105,26 @@
 
       </dl>
 
+      <p>The 
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
+      as a key central point.
+        <ul>
+            <li>Provides access to key objects, particularly the Managers
+                that mediate access to Turnouts, Sensors, etc.
+            <li>Automatically handles initialization of many parts of JMRI via
+                a couple mechanisms
+                <ul>
+                <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a>
+                <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+                </ul>
+            <li>And
+                <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
+                of 
+                <a href="http://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
+                at the end of their lifespan.
+        </ul>
+        
+    
       <p>Extensive use of Factory pattern via objects we call
       "Manager" objects.</p>
 
@@ -128,6 +148,12 @@
       something on the layout, you make a request of a
       TurnoutManager. This is also an interface, with a similar
       implementation pattern. 
+      
+      <p>The role of the generic Manager&lt;T&gt; class
+      
+      <p>NamedBean and addressing as part of the Manager's role.
+      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.
+      
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

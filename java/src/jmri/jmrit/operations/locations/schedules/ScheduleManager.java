@@ -1,10 +1,13 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -22,29 +25,27 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2013
  */
-public class ScheduleManager implements java.beans.PropertyChangeListener {
+public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
 
     public ScheduleManager() {
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarRoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
     }
 
     private int _id = 0;
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized ScheduleManager instance() {
-        ScheduleManager instance = jmri.InstanceManager.getNullableDefault(ScheduleManager.class);
-        if (instance == null) {
-            log.debug("ScheduleManager creating instance");
-            // create and load
-            instance = new ScheduleManager();
-            jmri.InstanceManager.setDefault(ScheduleManager.class,instance);
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("ScheduleManager returns instance {}", instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(ScheduleManager.class);
     }
 
     public void dispose() {
@@ -313,7 +314,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     public JComboBox<LocationTrackPair> getSpursByScheduleComboBox(Schedule schedule) {
         JComboBox<LocationTrackPair> box = new JComboBox<>();
         // search all spurs for that use schedule
-        for (Location location : LocationManager.instance().getLocationsByNameList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             for (Track spur : location.getTrackByNameList(Track.SPUR)) {
                 if (spur.getScheduleId().equals(schedule.getId())) {
                     LocationTrackPair ltp = new LocationTrackPair(location, spur);
@@ -374,7 +375,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
-        LocationManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 

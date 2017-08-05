@@ -1,15 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
  * on 20090131
- *
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
@@ -17,7 +18,7 @@ import junit.framework.TestSuite;
 public class CarLengthsTest extends OperationsTestCase {
 
     public void testCarLengths() {
-        CarLengths cl1 = CarLengths.instance();
+        CarLengths cl1 = InstanceManager.getDefault(CarLengths.class);
         cl1.getNames();	// load predefined lengths
 
         Assert.assertTrue("Car Length Predefined 40", cl1.containsName("40"));
@@ -43,7 +44,7 @@ public class CarLengthsTest extends OperationsTestCase {
     }
 
     public void testCarOwners() {
-        CarOwners co1 = CarOwners.instance();
+        CarOwners co1 = InstanceManager.getDefault(CarOwners.class);
 
         co1.addName("Rich Guy 1");
         Assert.assertTrue("Car Owner Add", co1.containsName("Rich Guy 1"));
@@ -88,6 +89,6 @@ public class CarLengthsTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

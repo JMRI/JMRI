@@ -1,6 +1,5 @@
 package jmri;
 
-import apps.gui3.TabbedPreferences;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +12,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -501,17 +499,6 @@ public final class InstanceManager {
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default roster icon factory. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public RosterIconFactory rosterIconFactoryInstance() {
-        return getDefault(RosterIconFactory.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
      * @return the default route manager. May not be the only instance.
      * @deprecated 4.5.1
      */
@@ -717,6 +704,7 @@ public final class InstanceManager {
         ServiceLoader.load(InstanceInitializer.class).forEach((provider) -> {
             provider.getInitalizes().forEach((cls) -> {
                 this.initializers.put(cls, provider);
+                log.debug("Using {} to provide default instance of {}", provider.getClass().getName(), cls.getName());
             });
         });
     }
