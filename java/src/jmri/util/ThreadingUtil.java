@@ -32,7 +32,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );}
+     * {@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -48,7 +48,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );}
+     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -64,7 +64,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); }, 1000 );}
+     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); }, 1000 );   }
      *
      * @param ta What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -87,7 +87,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );}
+     * {@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -117,7 +117,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );}
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -134,7 +134,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000 );}
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000 );   }
      *
      * @param ta What to run, usually as a lambda expression
      * @param delay interval in milliseconds
