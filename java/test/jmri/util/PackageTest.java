@@ -48,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
+        suite.addTest(jmri.util.PropertyChangeEventQueueTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.prefs.PackageTest.class));
