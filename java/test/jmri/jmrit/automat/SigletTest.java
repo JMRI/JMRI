@@ -37,11 +37,12 @@ public class SigletTest {
         t.start();
         
         JUnitUtil.waitFor( ()->{ return defined; }, "defineIO run"); 
-        Assert.assertFalse(output);
+        Assert.assertTrue(output); // first cycle included
 
+        output = false;
         is1.setState(Sensor.ACTIVE);
         
-        JUnitUtil.waitFor( ()->{ return output; }, "setOutput run"); 
+        JUnitUtil.waitFor( ()->{ return output; }, "setOutput run again"); 
     }
 
     // The minimal setup for log4J
