@@ -739,7 +739,8 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
-    private String[] addFormat = {"No Help",""};
+    private String addEntryToolTip;
+    private String addEntryRegex;
 
     protected void prefixChanged() {
         if (supportsVariableLights()) {
@@ -777,19 +778,20 @@ public class LightTableAction extends AbstractTableAction {
                 jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
-                    addFormat = mgr.getAddFormat();
-                    log.debug("L add box set");
+                    addEntryRegex = mgr.getEntryRegex();
+                    addEntryToolTip = mgr.getEntryToolTip();
+                    log.debug("L Add box set");
                     break;
                 }
             }
         }
-        log.debug("DefaultLightManager tip: {}", addFormat[0]);
+        log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
         fieldHardwareAddress.setToolTipText("<html>" +
                 Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
-                "<br>" + addFormat[0] + "</html>");
+                "<br>" + addEntryToolTip + "</html>");
         // configure validation regexp for selected connection
-        fieldHardwareAddress.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
 
         addFrame.pack();
         addFrame.setVisible(true);

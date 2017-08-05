@@ -1664,7 +1664,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
 
-    private String[] addFormat = {"No Help",""};
+    private String addEntryToolTip;
+    private String addEntryRegex;
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
@@ -1685,7 +1686,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyTurnoutManager
-                    addFormat = mgr.getAddFormat();
+                    addEntryRegex = mgr.getEntryRegex();
+                    addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("T add box set");
                     break;
                 }
@@ -1694,15 +1696,16 @@ public class TurnoutTableAction extends AbstractTableAction {
             range.setEnabled(true);
             log.debug("T add box enabled2");
             // get tooltip from turnout manager
-            addFormat = turnManager.getAddFormat();
+            addEntryRegex = turnManager.getEntryRegex();
+            addEntryToolTip = turnManager.getEntryToolTip();
             log.debug("TurnoutManager tip");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         sysNameTextField.setToolTipText("<html>" +
                     Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts")) +
-                    "<br>" + addFormat[0] + "</html>");
+                    "<br>" + addEntryToolTip + "</html>");
         // configure validation regexp for selected connection
-        sysNameTextField.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        sysNameTextField.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
     }
 
     void handleCreateException(Exception ex, String sysName) {

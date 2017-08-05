@@ -290,13 +290,21 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     * Provide a connection agnostic tooltip for the Add new item beantable pane.
      */
     @Override
-    public String[] getAddFormat() {
-        String[] addFormatArray = {"Enter a number from 1 to 9999", "^[0-9]{1,4}[:]{0,1}[0-9]{1,4}$"};
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}[:]{0,1}[0-9]{1,4}$";
         // Initially accepts a 4 digit number + ":" + another 4 digit number
-        return addFormatArray;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());

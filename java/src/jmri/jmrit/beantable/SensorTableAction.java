@@ -224,7 +224,8 @@ public class SensorTableAction extends AbstractTableAction {
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
 
-    private String[] addFormat = {"No Help",""};
+    private String addEntryToolTip;
+    private String addEntryRegex;
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
@@ -244,7 +245,8 @@ public class SensorTableAction extends AbstractTableAction {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyTurnoutManager
-                    addFormat = mgr.getAddFormat();
+                    addEntryRegex = mgr.getEntryRegex();
+                    addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("S add box enabled1");
                     break;
                 }
@@ -253,15 +255,16 @@ public class SensorTableAction extends AbstractTableAction {
             range.setEnabled(true);
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
-            addFormat = senManager.getAddFormat();
+            addEntryRegex = senManager.getEntryRegex();
+            addEntryToolTip = senManager.getEntryToolTip();
             log.debug("TurnoutManager tip");
         }
         // show sysName (HW address) field tooltip in the Add Sensor pane that matches system connection selected from combobox
         sysNameTextField.setToolTipText("<html>" +
                 Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
-                "<br>" + addFormat[0] + "</html>");
+                "<br>" + addEntryToolTip + "</html>");
         // configure validation regexp for selected connection
-        sysNameTextField.setValidateRegExp(addFormat[1]); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        sysNameTextField.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
     }
 
     void handleCreateException(String sysName) {

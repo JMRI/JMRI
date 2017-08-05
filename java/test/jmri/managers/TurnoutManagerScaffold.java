@@ -209,6 +209,9 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String[] getAddFormat() { return null; }
+    public String getEntryToolTip() { return "No Help"; }
+
+    @Override
+    public String getEntryRegex() { return null; }
 
 }

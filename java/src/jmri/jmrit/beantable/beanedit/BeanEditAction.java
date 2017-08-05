@@ -88,8 +88,8 @@ abstract class BeanEditAction extends AbstractAction {
         basic.setName(Bundle.getMessage("Basic"));
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
-        basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"),
-                Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
+        basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
+                //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
 
         basic.addItem(new BeanEditItem(userNameField, Bundle.getMessage("ColumnUserName"), null));
 

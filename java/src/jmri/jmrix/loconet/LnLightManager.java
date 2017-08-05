@@ -114,12 +114,20 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a connection specific tooltip and entry validation regex for the Add new item beantable pane.
+     * Provide a connection specific tooltip for the Add new item beantable pane.
      */
     @Override
-    public String[] getAddFormat() {
-        String[] addFormatArray = {Bundle.getMessage("AddOutputEntryToolTip"), "^[0-9]{1,4}$"}; // LocoNet: "enter a number"
-        return addFormatArray;
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // LocoNet: "enter a number"
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
