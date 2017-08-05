@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user input of XpressNet messages
+ * Frame for user input of Xbee ieee802154 messages
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
  */
@@ -48,6 +48,6 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     // private data
     private XBeeTrafficController tc = null;
 
-private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class.getName());    
+    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class.getName());
 
 }

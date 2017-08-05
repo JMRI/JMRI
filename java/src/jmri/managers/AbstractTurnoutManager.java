@@ -217,12 +217,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30
+     * turnouts in numerical order eg 10 to 30.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return true;
+        return false;
     }
 
     @Override
@@ -357,5 +359,23 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return defaultClosedSpeed;
     }
 
+    /**
+     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+
 }

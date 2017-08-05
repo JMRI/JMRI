@@ -144,6 +144,24 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
         return null;
     }
 
+    /**
+     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}[:]{0,1}[0-9]{1,4}$";
+        // Initially accepts a 4 digit number + ":" + another 4 digit number
+    }
+
     @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingActive();
@@ -190,7 +208,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     public boolean isPullResistanceConfigurable(){
        return false;
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());

@@ -30,6 +30,11 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // listen for turnouts, creating them as needed
     @Override
     public void message(XNetReply l) {

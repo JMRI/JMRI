@@ -31,7 +31,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
     }
 
     public NodeConfigAction() {
-        this("Configure XBee Nodes", null);
+        this(Bundle.getMessage("ConfigureXbeeTitle"), null);
     }
 
     public NodeConfigAction(String s) {
@@ -39,7 +39,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
     }
 
     public NodeConfigAction(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
-        this("Configure XBee Nodes", cm);
+        this(Bundle.getMessage("ConfigureXbeeTitle"), cm);
     }
 
     @Override
@@ -55,4 +55,5 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
     }
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
 }
