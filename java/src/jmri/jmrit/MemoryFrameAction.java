@@ -97,7 +97,7 @@ public class MemoryFrameAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Roster.getDefault();
-                DecoderIndexFile.instance();
+                InstanceManager.getDefault(DecoderIndexFile.class);
                 updateDisplay();
             }
         });

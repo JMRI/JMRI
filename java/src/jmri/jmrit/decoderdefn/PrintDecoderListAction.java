@@ -59,7 +59,7 @@ public class PrintDecoderListAction extends AbstractAction {
         String lastMfg = "";
         String lastFamily = "";
 
-        DecoderIndexFile f = DecoderIndexFile.instance();
+        DecoderIndexFile f = InstanceManager.getDefault(DecoderIndexFile.class);
         List<DecoderFile> l = f.matchingDecoderList(null, null, null, null, null, null); // take all
         int i = -1;
         log.debug("Roster list size: " + l.size());

@@ -22,7 +22,7 @@ public class RosterToEcos implements EcosListener {
     private boolean createloco;
     EcosSystemConnectionMemo adaptermemo;
 
-    DecoderIndexFile decoderind = DecoderIndexFile.instance();
+    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
 
     public RosterToEcos() {
     }

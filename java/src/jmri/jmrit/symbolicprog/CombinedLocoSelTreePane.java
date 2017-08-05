@@ -204,7 +204,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * Reads the available decoders and loads them into the dModel tree model.
      */
     void createDecoderTypeContents() {
-        List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
+        List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, null);
         int len = decoders.size();
         DecoderTreeNode mfgElement = null;
         DecoderTreeNode familyElement = null;
@@ -223,7 +223,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
                 mfgElement = new DecoderTreeNode(mfg,
-                        "CV8 = " + DecoderIndexFile.instance().mfgIdFromName(mfg), "");
+                        "CV8 = " + InstanceManager.getDefault(DecoderIndexFile.class).mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyNameNode = new HashMap<String, DecoderTreeNode>();
                 familyElement = null;
