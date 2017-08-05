@@ -83,7 +83,7 @@ abstract public class Siglet {
                         try {
                             PropertyChangeEvent pe = pq.take();
                             // _any_ event drives output
-                            log.trace("driving setOutput");
+                            log.trace("driving setOutput from {}", pe);
                             setOutput();
                         } catch (InterruptedException e) {
                             // done
