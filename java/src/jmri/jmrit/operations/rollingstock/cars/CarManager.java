@@ -5,6 +5,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
@@ -22,35 +24,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class CarManager extends RollingStockManager {
+public class CarManager extends RollingStockManager implements InstanceManagerAutoDefault {
 
     // stores Kernels
-    protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>();
+    protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<>();
 
     public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
+            InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+            // create manager to load cars and their attributes
+            InstanceManager.getDefault(CarManagerXml.class);
     }
 
     /**
-     * record the single instance 
-     * @return instance
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static synchronized CarManager instance() {
-        CarManager instance = jmri.InstanceManager.getNullableDefault(CarManager.class);
-        if (instance == null) {
-            log.debug("CarManager creating instance");
-            // create and load
-            instance = new CarManager();
-            jmri.InstanceManager.setDefault(CarManager.class,instance);
-            OperationsSetupXml.instance(); // load setup
-            // create manager to load cars and their attributes
-            CarManagerXml.instance();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("CarManager returns instance {}", instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(CarManager.class);
     }
 
     /**
@@ -390,25 +386,25 @@ public class CarManager extends RollingStockManager {
      * The sort priority is as follows:
      * <ol>
      * <li>Caboose or car with FRED to the end of the list
-     * 
+     *
      * <li>Passenger cars to the end of the list, but before cabooses or car
      * with FRED. Passenger cars have blocking numbers which places them
      * relative to each other.
-     * 
+     *
      * <li>Car's destination (alphabetical by location and track name or by
      * track blocking order)
-     * 
+     *
      * <li>Car's current location (alphabetical by location and track name)
-     * 
+     *
      * <li>Car's final destination (alphabetical by location and track name)
-     * 
+     *
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
      * Cars in a kernel are placed together by their kernel blocking numbers.
      * The kernel's position in the list is based on the lead car in the kernel.
      * <p>
-     * 
+     *
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
      * @param train The selected Train.
@@ -551,7 +547,7 @@ public class CarManager extends RollingStockManager {
                 if (newLoadName != null) {
                     car.setLoadName(newLoadName);
                 } else {
-                    car.setLoadName(CarLoads.instance().getDefaultEmptyName());
+                    car.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
                 }
             }
         }
@@ -640,7 +636,7 @@ public class CarManager extends RollingStockManager {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        CarManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 

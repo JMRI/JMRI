@@ -62,8 +62,8 @@
         configuration.</li>
       </ol><a name="type" id="type"></a>
 
-      <h2>Items with names</h2>There are lots of things that might
-      need names:
+      <h2>Items with names</h2>
+      There are lots of things that might need names:
 
       <ul>
         <li>Aspects for signals</li>
@@ -289,8 +289,9 @@
 
         <li>X logiX - a set of logic equations used to control the
         layout</li>
-      </ul><a name="systeminfo" id="systeminfo"></a>
+      </ul>
 
+      <a name="systeminfo" id="systeminfo"></a>
       <h3>System-specific info</h3>
       <p>"Internal" objects can also be addressed and manipulated,
         but they don't have a strict correspondence with some
@@ -332,6 +333,7 @@
       summary, please <a href="getgitcode.shtml#propose">add
       a reference</a>)</p>
 
+      <a name="entrysummary" id="entrysummary"></a>
       <h4>Adding an item to the table - Entry Format Summary</h4>
       <p>When you add an item to one of the tables, many times you only
       have to enter the numbers and have JMRI construct

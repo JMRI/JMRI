@@ -3,6 +3,7 @@ package jmri.jmrit.operations;
 import java.io.File;
 import java.io.IOException;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -23,23 +24,23 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood 2014
  */
-public final class OperationsManager {
+public final class OperationsManager implements InstanceManagerAutoDefault {
 
     private ShutDownTask shutDownTask = null;
 
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
-    private OperationsManager() {
+    public OperationsManager() {
         // ensure the default instance of all operations managers
         // are initialized by calling their instance() methods
         // Is there a different, more optimal order for this?
-        CarManager.instance();
-        EngineManager.instance();
-        TrainManager.instance();
-        LocationManager.instance();
-        RouteManager.instance();
-        ScheduleManager.instance();
-        TrainScheduleManager.instance();
+        InstanceManager.getDefault(CarManager.class);
+        InstanceManager.getDefault(EngineManager.class);
+        InstanceManager.getDefault(TrainManager.class);
+        InstanceManager.getDefault(LocationManager.class);
+        InstanceManager.getDefault(RouteManager.class);
+        InstanceManager.getDefault(ScheduleManager.class);
+        InstanceManager.getDefault(TrainScheduleManager.class);
         this.setShutDownTask(this.getDefaultShutDownTask());
         // auto backup?
         if (Setup.isAutoBackupEnabled()) {
@@ -53,14 +54,15 @@ public final class OperationsManager {
     }
 
     /**
-     * Get the OperationsManager.
+     * Get the default instance of this class.
      *
-     * @return The OperationsManager default instance.
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public synchronized static OperationsManager getInstance() {
-        return InstanceManager.getOptionalDefault(OperationsManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(OperationsManager.class, new OperationsManager());
-        });
+        return InstanceManager.getDefault(OperationsManager.class);
     }
 
     /**
@@ -134,7 +136,7 @@ public final class OperationsManager {
                 try {
                     OperationsXml.save();
                 } catch (Exception ex) {
-                    log.warn("Error saving operations state: {}", ex);
+                    log.warn("Error saving operations state: {}", ex.getMessage());
                     log.debug("Details follow: ", ex);
                 }
                 return true;

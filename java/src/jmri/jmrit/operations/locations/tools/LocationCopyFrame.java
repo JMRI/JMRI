@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // text field
     JTextField loctionNameTextField = new javax.swing.JTextField(Control.max_len_string_location_name);
@@ -214,8 +215,8 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     }
 
     protected void moveRollingStock(Track fromTrack, Track toTrack) {
-        moveRollingStock(fromTrack, toTrack, CarManager.instance());
-        moveRollingStock(fromTrack, toTrack, EngineManager.instance());
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(CarManager.class));
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(EngineManager.class));
     }
 
     private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {

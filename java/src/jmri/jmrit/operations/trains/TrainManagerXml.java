@@ -2,10 +2,11 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.FileUtil;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2015
  */
-public class TrainManagerXml extends OperationsXml {
+public class TrainManagerXml extends OperationsXml implements InstanceManagerAutoDefault {
 
     private boolean fileLoaded = false;
     private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
@@ -43,25 +44,19 @@ public class TrainManagerXml extends OperationsXml {
     static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
 
     public TrainManagerXml() {
+        TrainManagerXml.this.load();
     }
 
     /**
-     * record the single instance 
-     * @return instance
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static synchronized TrainManagerXml instance() {
-        TrainManagerXml instance = jmri.InstanceManager.getNullableDefault(TrainManagerXml.class);
-        if (instance == null) {
-            log.debug("TrainManagerXml creating instance");
-            // create and load
-            instance = new TrainManagerXml();
-            jmri.InstanceManager.setDefault(TrainManagerXml.class,instance);
-            instance.load();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManagerXml returns instance " + instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(TrainManagerXml.class);
     }
 
     @Override
@@ -83,9 +78,9 @@ public class TrainManagerXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        TrainManager.instance().store(root);
-        TrainScheduleManager.instance().store(root);
-        AutomationManager.instance().store(root);
+        InstanceManager.getDefault(TrainManager.class).store(root);
+        InstanceManager.getDefault(TrainScheduleManager.class).store(root);
+        InstanceManager.getDefault(AutomationManager.class).store(root);
 
         writeXML(file, doc);
 
@@ -113,20 +108,20 @@ public class TrainManagerXml extends OperationsXml {
             return;
         }
 
-        TrainManager.instance().load(root);
-        TrainScheduleManager.instance().load(root);
+        InstanceManager.getDefault(TrainManager.class).load(root);
+        InstanceManager.getDefault(TrainScheduleManager.class).load(root);
 
         fileLoaded = true; // set flag trains are loaded
-        AutomationManager.instance().load(root);
+        InstanceManager.getDefault(AutomationManager.class).load(root);
 
         // now load train icons on panels
-        TrainManager.instance().loadTrainIcons();
+        InstanceManager.getDefault(TrainManager.class).loadTrainIcons();
 
         // loading complete run startup scripts
-        TrainManager.instance().runStartUpScripts();
+        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();
 
         log.debug("Trains have been loaded!");
-        TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
         setDirty(false); // clear dirty flag
     }
 
@@ -207,7 +202,7 @@ public class TrainManagerXml extends OperationsXml {
     public String getBackupManifestDirectoryName(String name) {
         return getBackupManifestDirectoryName() + File.separator + name + File.separator;
     }
-    
+
     public String getBackupSwitchListFileName(String name, String lastModified) {
         return getBackupSwitchListDirectoryName() +
                 name +
@@ -218,7 +213,7 @@ public class TrainManagerXml extends OperationsXml {
                 lastModified +
                 ".txt";// NOI18N
     }
-    
+
     public String getBackupSwitchListDirectoryName() {
         return OperationsXml.getFileLocation() +
                 OperationsXml.getOperationsDirectoryName() +
@@ -371,7 +366,7 @@ public class TrainManagerXml extends OperationsXml {
             }
         }
     }
-    
+
     /**
      * Save previous switch list file in a separate directory called
      * switchListBackups. Each switch list is saved in a unique directory using

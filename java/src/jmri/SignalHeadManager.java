@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SignalHeadManager extends Manager {
+public interface SignalHeadManager extends Manager<SignalHead> {
 
     // to free resources when no longer used
     @Override

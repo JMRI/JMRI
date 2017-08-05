@@ -23,7 +23,7 @@ import java.util.List;
  * <P>
  * @author Dave Duchamp Copyright (C) 2007
  */
-public interface ConditionalManager extends Manager {
+public interface ConditionalManager extends Manager<Conditional> {
 
     // to free resources when no longer used
     @Override

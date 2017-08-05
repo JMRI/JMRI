@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.Color;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
@@ -12,7 +13,7 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         super();
         setBackground(Color.GRAY);
         setRespectAspectRatio(true);
-        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isResizingWindow()) {
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()) {
             setResizingContainer(true);
         }
     }

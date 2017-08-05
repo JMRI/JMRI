@@ -97,6 +97,7 @@ public class SensorTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -145,9 +146,9 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            sysNameTextField.setName("sysNameTextField");
-            userName.setName("userName");
-            prefixBox.setName("prefixBox");
+            sysNameTextField.setName("sysNameTextField"); // NOI18N
+            userName.setName("userName"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
@@ -222,6 +223,10 @@ public class SensorTableAction extends AbstractTableAction {
         range.setSelected(false);
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         // Update tooltip in the Add Turnout pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         switch (connectionChoice) {
@@ -239,6 +244,7 @@ public class SensorTableAction extends AbstractTableAction {
             default: // LocoNet and others: "enter a number"
                 log.debug("Default tooltip");
                 sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
+                break;
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
@@ -257,12 +263,10 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSensorAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorSensorAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {

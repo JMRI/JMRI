@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
 
@@ -312,10 +313,10 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         TrainManifestText.setStringCabooseChange(cabooseChangeAtTextField.getText());
         TrainManifestText.setStringLocoAndCabooseChange(locoAndCabooseChangeAtTextField.getText());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
 
         // recreate all train manifests
-        TrainManager.instance().setTrainsModified();
+        InstanceManager.getDefault(TrainManager.class).setTrainsModified();
     }
 
     @Override

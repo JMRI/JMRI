@@ -3,16 +3,20 @@ package jmri;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.roster.RosterIconFactory;
 import jmri.managers.TurnoutManagerScaffold;
-import org.junit.Assert;
+import jmri.util.JUnitAppender;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test InstanceManager
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
@@ -57,7 +61,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // Testing new load store
     public void testGenericStoreAndGet() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
 
         InstanceManager.store(m1, PowerManager.class);
         m2 = InstanceManager.getDefault(PowerManager.class);
@@ -82,7 +86,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testGenericStoreAndGetTwoDifferentTypes() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
         TurnoutManager t1 = new TurnoutManagerScaffold();
         TurnoutManager t2;
 
@@ -97,7 +101,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testGenericStoreAndReset() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2 = null;
+        PowerManager m2;
 
         InstanceManager.store(m1, PowerManager.class);
         InstanceManager.reset(PowerManager.class);
@@ -137,13 +141,44 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         }
     }
 
+    public static class OkToDispose implements Disposable {
+
+        public static String message = "dispose called";
+        private static int times = 0;
+
+        @Override
+        public void dispose() {
+            times++;
+            log.warn(message + times);
+        }
+
+    }
+
+    public void testDisposable() {
+        OkToDispose d1 = new OkToDispose();
+
+        // register d1 in single list
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.deregister(d1, OkToDispose.class);
+        // dispose should have been called since registered in only one list
+        JUnitAppender.assertWarnMessage(OkToDispose.message + 1);
+        // register d1 in two lists
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.store(d1, Disposable.class);
+        InstanceManager.deregister(d1, OkToDispose.class);
+        // dispose should not have been called because removed from only one list
+        InstanceManager.deregister(d1, Disposable.class);
+        // dispose should be called again as removed from all lists
+        JUnitAppender.assertWarnMessage(OkToDispose.message + 2);
+    }
+
     /**
      * Test of types that have defaults, even with no system attached.
      */
     public void testAllDefaults() {
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance());
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance());
-        Assert.assertNotNull(InstanceManager.lightManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
@@ -157,14 +192,14 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.ConditionalManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.LogixManager.class));
-        Assert.assertNotNull(InstanceManager.timebaseInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(Timebase.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.ClockControl.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.ReporterManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(MemoryManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
-        Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
     }
 
     //
@@ -193,6 +228,54 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
         Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
+    }
+
+    @org.junit.Test
+    public void testClearAll() {
+        PowerManager pm1 = new PowerManagerScaffold();
+        PowerManager pm2 = new PowerManagerScaffold();
+        NoAutoCreate nac1 = new NoAutoCreate();
+        InstanceManager.store(pm1, PowerManager.class);
+        InstanceManager.store(pm2, PowerManager.class);
+        InstanceManager.store(nac1, NoAutoCreate.class);
+        // should contain two lists and calls for other lists should be empty
+        Assert.assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        InstanceManager.getDefault().clearAll();
+        // should contain only empty lists
+        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+    }
+
+    @org.junit.Test
+    public void testClear() {
+        PowerManager pm1 = new PowerManagerScaffold();
+        PowerManager pm2 = new PowerManagerScaffold();
+        NoAutoCreate nac1 = new NoAutoCreate();
+        InstanceManager.store(pm1, PowerManager.class);
+        InstanceManager.store(pm2, PowerManager.class);
+        InstanceManager.store(nac1, NoAutoCreate.class);
+        // should contain two lists and calls for other lists should be empty
+        Assert.assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        InstanceManager.getDefault().clear(PowerManager.class);
+        // should contain one list and calls for other lists should be empty
+        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        InstanceManager.getDefault().clear(NoAutoCreate.class);
+        // should contain only empty lists
+        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        InstanceManager.getDefault().clear(OkAutoCreate.class);
+        // verify that no exception was thrown
+        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
     }
 
     // from here down is testing infrastructure
@@ -225,4 +308,5 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         apps.tests.Log4JFixture.tearDown();
     }
 
+    private final static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class);
 }
