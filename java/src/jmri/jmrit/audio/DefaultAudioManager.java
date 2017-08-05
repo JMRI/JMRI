@@ -235,7 +235,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 
     @ServiceProvider(service = InstanceInitializer.class)
-    public class Initializer extends AbstractInstanceInitializer {
+    public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         public <T> Object getDefault(Class<T> type) {
