@@ -30,6 +30,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
@@ -333,7 +334,7 @@ public class MultiSensorIconAdder extends IconAdder {
         valueChanged(null);
         if (!_update) {
             _defaultIcons.addLeaf(label, path);
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
         makeIconPanel(!_update);
         this.invalidate();
@@ -377,7 +378,7 @@ public class MultiSensorIconAdder extends IconAdder {
 //                    break;
                 }
             }
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
         makeIconPanel(!_update);
     }

@@ -42,7 +42,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             return;
         }
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            DirectorySearcher.instance().openDirectory();
+            InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
         });
         java.awt.Container pane = findContainer(Bundle.getMessage("openDirMenu"));
         Assert.assertNotNull("FileChooser not found", pane);
@@ -56,7 +56,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         long time = System.currentTimeMillis();
         System.out.println("Start testPreviewDialog: time = "+time+"ms");
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            DirectorySearcher.instance().searchFS();
+            InstanceManager.getDefault(DirectorySearcher.class).searchFS();
         });
         ComponentFinder finder = new ComponentFinder(JFileChooser.class);
         JUnitUtil.waitFor(() -> {
