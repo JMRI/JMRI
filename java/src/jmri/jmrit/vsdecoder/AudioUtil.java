@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  *
  * @author Mark Underwood copyright (c) 2009, 2013
  */
-import com.jogamp.openal.AL;
+import com.jogamp.openal.ALConstants;
 import com.jogamp.openal.ALException;
 import com.jogamp.openal.util.ALut;
 import java.io.InputStream;
@@ -79,7 +79,7 @@ public class AudioUtil {
 
         // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
         // I'll have to figure out later how to extend this to multiple data formats.
-        if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
+        if ((format[0] != ALConstants.AL_FORMAT_MONO8) && (format[0] != ALConstants.AL_FORMAT_MONO16)) {
             log.warn("Invalid Format for splitting! Failing out." + parseFormat(format[0]));
             return null;
         }
@@ -134,7 +134,7 @@ public class AudioUtil {
         }
         // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
         // I'll have to figure out later how to extend this to multiple data formats.
-        if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
+        if ((format[0] != ALConstants.AL_FORMAT_MONO8) && (format[0] != ALConstants.AL_FORMAT_MONO16)) {
             log.warn("Invalid Format! Failing out." + parseFormat(format[0]));
             return 0;
         }
@@ -235,11 +235,11 @@ public class AudioUtil {
             case AudioBuffer.FORMAT_16BIT_STEREO:
                 frameSize = 4;
                 break;
-            case AL.AL_FORMAT_MONO16:
-            case AL.AL_FORMAT_STEREO8:
+            case ALConstants.AL_FORMAT_MONO16:
+            case ALConstants.AL_FORMAT_STEREO8:
                 frameSize = 2;
                 break;
-            case AL.AL_FORMAT_MONO8:
+            case ALConstants.AL_FORMAT_MONO8:
             default:
                 // Note this will be wrong for all the modes we don't support.
                 frameSize = 1;
@@ -249,13 +249,13 @@ public class AudioUtil {
 
     private static String parseFormat(int fmt) {
         switch (fmt) {
-            case AL.AL_FORMAT_MONO8:
+            case ALConstants.AL_FORMAT_MONO8:
                 return "8-bit mono";
-            case AL.AL_FORMAT_MONO16:
+            case ALConstants.AL_FORMAT_MONO16:
                 return "16-bit mono";
-            case AL.AL_FORMAT_STEREO8:
+            case ALConstants.AL_FORMAT_STEREO8:
                 return "8-bit stereo";
-            case AL.AL_FORMAT_STEREO16:
+            case ALConstants.AL_FORMAT_STEREO16:
                 return "16-bit stereo";
             default:
                 return "Something Multichannel: val=" + fmt;
@@ -289,25 +289,25 @@ public class AudioUtil {
      * @format) and determines whether they represent a positive-going zero
      * crossing event.
      *
-     * Works only for AL.AL_FORMAT_MONO8 or AL.AL_FORMAT_MONO16. Returns false
+     * Works only for ALConstants.AL_FORMAT_MONO8 or ALConstants.AL_FORMAT_MONO16. Returns false
      * otherwise.
      *
      * @param buf    : (minimum) 3-sample buffer of WAV data
      * @param len    : size of buf. Minimum 3 bytes for 8-bit, 6 bytes for
      *               16-bit mono data.
-     * @param format : AL.format identifier.
+     * @param format : ALConstants.format identifier.
      * @param order  : ByteOrder of data in buf
      *
      * @return true if a zero crossing is detected.
      */
     private static Boolean isZeroCross(byte[] buf, int len, int format, ByteOrder order) {
-        if (format == AL.AL_FORMAT_MONO8) {
+        if (format == ALConstants.AL_FORMAT_MONO8) {
             if (len < 3) {
                 return false;
             } else {
                 return (((0xFF & buf[len - 3]) < 128) && ((0xFF & buf[len - 2]) < 128) && ((0xFF & buf[len - 1]) >= 128));
             }
-        } else if (format == AL.AL_FORMAT_MONO16) {
+        } else if (format == ALConstants.AL_FORMAT_MONO16) {
             if (len < 6) {
                 return false;
             }
