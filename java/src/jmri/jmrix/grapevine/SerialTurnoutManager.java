@@ -62,9 +62,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    //Turnout address format is more than a simple number.
-    public boolean allowMultipleAdditions() {
-        return false;
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return false; //Turnout address format is more than a simple number.
     }
 
     @Override
@@ -144,6 +144,23 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         } else {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
         }
+    }
+
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{2,6}$"; // examples 3455, see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());

@@ -65,6 +65,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * Public method to notify user of Turnout creation error.
      */
@@ -162,5 +167,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-
