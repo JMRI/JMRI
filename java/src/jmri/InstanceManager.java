@@ -749,11 +749,17 @@ public final class InstanceManager {
 
     /**
      * Clear all managed instances from this InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to reduce risk.
      */
     public void clearAll() {
         log.debug("Clearing InstanceManager");
-        managerLists.keySet().forEach((type) -> {
-            clear(type);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            managerLists.keySet().forEach((type) -> {
+                clear(type);
+             } );
         });
     }
 
