@@ -63,44 +63,60 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             }
             blocks.addContent(new Element("defaultspeed").addContent(tm.getDefaultSpeed()));
 
-            // write out first set of blocks without contents
-            while (iter.hasNext()) {
-                try {
-                    String sname = iter.next();
-                    if (sname == null) {
-                        log.error("System name null during store");
-                    } else {
-                        Block b = tm.getBySystemName(sname);
-                        // the following null check is to catch a null pointer exception that sometimes was found to happen
-                        if (b == null) {
-                            log.error("Null block during store - sname = " + sname);
+            //TODO: The block info saved includes paths that at load time might
+            // reference blocks that haven't yet been loaded. In the past the
+            // workaround was to write all the blocks out twice: once with just
+            // the system and user names and then again with everything so that
+            // at load time the first set of (minimum) blocks would create all 
+            // the blocks before the second pass loaded the path information.
+            // To remove the necessity of doing this (and having duplicate
+            // blocks in the saved file) we've changed the load routine to make 
+            // two passes: once only creating the blocks (with system & user 
+            // names) and then a second pass with everything (including the 
+            // paths). At some point in the future (after a major release?) we 
+            // can remove writing the first set of blocks without contents 
+            // (and this (now way overly verbose) comment).
+            
+            if (true) {
+                // write out first set of blocks without contents
+                while (iter.hasNext()) {
+                    try {
+                        String sname = iter.next();
+                        if (sname == null) {
+                            log.error("System name null during store");
                         } else {
-                            Element elem = new Element("block");
-                            elem.addContent(new Element("systemName").addContent(sname));
-
-                            // As a work-around for backward compatibility, store systemName as attribute.
-                            // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                            elem.setAttribute("systemName", sname);
-
+                            Block b = tm.getBySystemName(sname);
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
-                            String uname = b.getUserName();
-                            if ((uname != null) && (!uname.equals(""))) {
-                                elem.addContent(new Element("userName").addContent(b.getUserName()));
-                            }
-                            if (log.isDebugEnabled()) {
-                                log.debug("initial store Block " + sname);
-                            }
+                            if (b == null) {
+                                log.error("Null block during store - sname = " + sname);
+                            } else {
+                                Element elem = new Element("block");
+                                elem.addContent(new Element("systemName").addContent(sname));
 
-                            // and put this element out
-                            blocks.addContent(elem);
+                                // As a work-around for backward compatibility, store systemName as attribute.
+                                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                                elem.setAttribute("systemName", sname);
+
+                                // the following null check is to catch a null pointer exception that sometimes was found to happen
+                                String uname = b.getUserName();
+                                if ((uname != null) && (!uname.equals(""))) {
+                                    elem.addContent(new Element("userName").addContent(b.getUserName()));
+                                }
+                                if (log.isDebugEnabled()) {
+                                    log.debug("initial store Block " + sname);
+                                }
+
+                                // and put this element out
+                                blocks.addContent(elem);
+                            }
                         }
+                    } catch (Exception e) {
+                        log.error(e.toString());
                     }
-                } catch (Exception e) {
-                    log.error(e.toString());
                 }
             }
 
-            // write out again with contents
+            // write out with contents
             iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -240,9 +256,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
         //BlockManager tm = InstanceManager.getDefault(jmri.BlockManager.class);
 
-        for (int i = 0; i < list.size(); i++) {
-            Element block = list.get(i);
-            loadBlock(block);
+        // first pass don't load full contents (just create all the blocks)
+        for (Element block : list) {
+            loadBlock(block, false);
+        }
+
+        // second pass load full contents
+        for (Element block : list) {
+            loadBlock(block, true);
         }
         return result;
     }   // load
@@ -256,7 +277,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      *                                                     schematically invalid
      *                                                     XMl
      */
+    // default optional contentsFlag parameter to true
     public void loadBlock(Element element) throws JmriConfigureXmlException {
+        loadBlock(element, true);
+    }
+
+    private void loadBlock(Element element, boolean contentsFlag) throws JmriConfigureXmlException {
         String sysName = getSystemName(element);
         String userName = getUserName(element);
         if (log.isDebugEnabled()) {
@@ -274,6 +300,9 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
         if (userName != null) {
             block.setUserName(userName);
+        }
+        if (!contentsFlag) {
+            return;
         }
         if (element.getAttribute("length") != null) {
             // load length in millimeters
