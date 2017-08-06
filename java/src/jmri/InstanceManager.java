@@ -720,7 +720,7 @@ public final class InstanceManager {
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
     public <T> List<T> getInstances(@Nonnull Class<T> type) {
-        log.debug("Get list of type {}", type.getName());
+        log.trace("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
             pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
@@ -749,27 +749,41 @@ public final class InstanceManager {
 
     /**
      * Clear all managed instances from this InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        log.debug("Clearing InstanceManager");
-        managerLists.keySet().forEach((type) -> {
-            clear(type);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            log.debug("Clearing InstanceManager");
+            managerLists.keySet().forEach((type) -> {
+                clear(type);
+             } );
         });
     }
 
     /**
      * Clear all managed instances of a particular type from this
      * InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects 
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        log.debug("Clearing managers of {}", type.getName());
-        getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
-            dispose((Disposable) o);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            log.trace("Clearing managers of {}", type.getName());
+            getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
+                dispose((Disposable) o);
+            });
+            // Should this be sending notifications of removed instances to listeners?
+            managerLists.put(type, new ArrayList<>());
         });
-        // Should this be sending notifications of removed instances to listeners?
-        managerLists.put(type, new ArrayList<>());
     }
 
     /**

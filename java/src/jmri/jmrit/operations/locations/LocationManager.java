@@ -438,7 +438,6 @@ public class LocationManager implements InstanceManagerAutoDefault, PropertyChan
 
     /**
      * There aren't any current property changes being monitored
-     * <p>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
