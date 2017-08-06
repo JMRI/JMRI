@@ -189,7 +189,7 @@ public class AbstractAutomatonTest {
         AbstractAutomaton a = new AbstractAutomaton(){
             public boolean handle() {
                 running = true;
-                waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4});
+                waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4}); // not same as precheck
                 done = true;
                 return false; // done
             }
@@ -198,10 +198,8 @@ public class AbstractAutomatonTest {
         a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
         log.debug("before start test automat testWaitChangeBadPreCheck");
         a.start();
-        JUnitUtil.waitFor(()->{return running;}, "waiting");
-        
-        a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
-        
+        JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
+                
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
         
