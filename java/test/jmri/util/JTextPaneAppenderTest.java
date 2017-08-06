@@ -15,9 +15,24 @@ import org.slf4j.LoggerFactory;
 public class JTextPaneAppenderTest {
 
     @Test
-    public void testCTor() {
+    public void testCtor() {
         JTextPaneAppender t = new JTextPaneAppender();
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testAppend() {
+        org.apache.log4j.Layout myLayout = new org.apache.log4j.PatternLayout("%d{HH:mm:ss.SSS} (%6r) %-5p [%-7t] %F:%L %x - %m%n");
+
+        JTextPaneAppender t = new JTextPaneAppender(myLayout, "name", null, new javax.swing.JTextPane());
+        
+        t.append(new org.apache.log4j.spi.LoggingEvent(
+                "jmri.util.JTextPaneAppenderTest",
+                org.apache.log4j.Logger.getLogger("jmri.util.JTextPaneAppenderTest"),
+                org.apache.log4j.Priority.DEBUG,
+                "Test message", 
+                new Exception("Test exception")
+            ));
     }
 
     // The minimal setup for log4J
@@ -33,6 +48,6 @@ public class JTextPaneAppenderTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JTextPaneAppenderTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JTextPaneAppenderTest.class.getName());
 
 }
