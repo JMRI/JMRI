@@ -19,7 +19,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 /**
  * Implements a log4j appender which writes to a swing JTextPane
- *
+ * <p>
  * This code was copied from
  * "jakarta-log4j-1.2.15\apache-log4j-1.2.15\contribs\SvenReimers\gui\TextPaneAppender.java"
  * (which did not work properly, not even compile) and adapted for my needs.
@@ -65,13 +65,11 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
-     * @see org.apache.log4j.AppenderSkeleton#close()
+     * {@inheritDoc}
+     * @see org.apache.log4j.Appender#close()
      */
-    // original source had this marked as an over-ride, but it isn't
-    //@Override
     @Override
     public void close() {
-        //
     }
 
     private void createAttributes() {
@@ -100,6 +98,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
+     * {@inheritDoc}
      * @see
      * org.apache.log4j.AppenderSkeleton#append(org.apache.log4j.spi.LoggingEvent)
      */
@@ -123,17 +122,15 @@ public class JTextPaneAppender extends AppenderSkeleton {
         }
         final String text = temp;
 
-        StyledDocument myDoc = myTextPane.getStyledDocument();
-
-            jmri.util.ThreadingUtil.runOnGUI( ()->{ 
-                try {
-                    myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
-                } catch (BadLocationException badex) {
-                    System.err.println(badex);  // can't log this, as it would be recursive error
-                }
-            } ); 
-
-        myTextPane.setCaretPosition(myDoc.getLength());
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            try {
+                StyledDocument myDoc = myTextPane.getStyledDocument();
+                myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
+                myTextPane.setCaretPosition(myDoc.getLength());
+            } catch (BadLocationException badex) {
+                System.err.println(badex);  // can't log this, as it would be recursive error
+            }
+        } ); 
     }
 
     /**
@@ -337,11 +334,9 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
-     * @see org.apache.log4j.AppenderSkeleton#requiresLayout()
+     * {@inheritDoc}
+     * @see org.apache.log4j.Appender#requiresLayout()
      */
-    // original code had this marked as an override, but it isn't,
-    // at least for Log4J 1.2.15
-    //@Override
     @Override
     public boolean requiresLayout() {
         return true;
