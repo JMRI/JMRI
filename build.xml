@@ -672,8 +672,9 @@
     <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
         <!-- Compile the java code from ${source} into ${target} -->
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <mkdir dir="${java.target.directory}"/>
         <javac srcdir="${java.source.directory}"
-               destdir="${target}"
+               destdir="${java.target.directory}"
                source="${source_version}"
                target="${jre_version}"
                includeantruntime="false"
@@ -682,7 +683,7 @@
                 <pathelement path="${libdir}/ecj.jar"/>
             </compilerclasspath>
             <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-            <classpath refid="compile.class.path"/>
+            <classpath refid="${java.class.path}"/>
         </javac>
     </target>
 
@@ -691,6 +692,8 @@
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${source}"/>
+          <param name="java.target.directory" value="${target}"/>
+          <param name="java.class.path" value="compile.class.path"/>
         </antcall>
     </target>
 
@@ -699,6 +702,8 @@
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${test}"/>
+          <param name="java.target.directory" value="${testtarget}"/>
+          <param name="java.class.path" value="test.class.path"/>
         </antcall>
     </target>
 
@@ -2294,7 +2299,7 @@
 
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2305,7 +2310,7 @@
     </target>
 
     <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2317,7 +2322,7 @@
 
 
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
-        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />
             <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>

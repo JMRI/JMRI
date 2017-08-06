@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public XNetSystemConnectionMemo(XNetTrafficController xt) {
-        super("X", "XpressNet");
+        super("X", Bundle.getMessage("MenuXpressNet"));
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         register(); // registers general type
@@ -41,7 +41,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public XNetSystemConnectionMemo() {
-        super("X", "XpressNet");
+        super("X", Bundle.getMessage("MenuXpressNet"));
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2009
  */
-public abstract class AbstractAudioManager extends AbstractManager
+public abstract class AbstractAudioManager extends AbstractManager<Audio>
         implements AudioManager {
 
     @Override

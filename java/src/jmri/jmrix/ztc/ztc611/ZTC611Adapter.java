@@ -30,8 +30,8 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
 
     public ZTC611Adapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("ZTC611 connection uses : ", validOption1));
+        option1Name = "FlowControl"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("CSTypeZtc640")), validOption1));
     }
 
     @Override
@@ -88,60 +88,38 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             return;
                     }
                 }
@@ -290,11 +268,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
     protected int[] validSpeedValues = new int[]{19200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"no flow control (recommended)", "hardware flow control "};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new Sensor
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @deprecated Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
+ * @deprecated As of JMRI 2.14.1 (2008) Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
@@ -96,44 +96,6 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    /*public AddSensorPanel() {
-     // to make location for accessibility & testing easier
-     sysName.setName("sysName");
-     userName.setName("userName");
-
-     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-     JPanel p;
-     p = new JPanel();
-     p.setLayout(new FlowLayout());
-     p.setLayout(new java.awt.GridBagLayout());
-     java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-     c.gridwidth  = 1;
-     c.gridheight = 1;
-     c.gridx = 0;
-     c.gridy = 0;
-     c.anchor = java.awt.GridBagConstraints.EAST;
-     p.add(sysNameLabel,c);
-     c.gridy = 1;
-     p.add(userNameLabel,c);
-     c.gridx = 1;
-     c.gridy = 0;
-     c.anchor = java.awt.GridBagConstraints.WEST;
-     c.weightx = 1.0;
-     c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-     p.add(sysName,c);
-     c.gridy = 1;
-     p.add(userName,c);
-     add(p);
-
-     JButton ok;
-     add(ok = new JButton(Bundle.getMessage("ButtonAddSensor")));
-     ok.addActionListener(new ActionListener() {
-     public void actionPerformed(ActionEvent e) {
-     okPressed(e);
-     }
-     });
-     }
-     */
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
@@ -184,7 +146,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                 //The next address is already in use, therefore we stop.
                 break;
             }
-            //We have found another turnout with the same address, therefore we need to go onto the next address.
+            // We have found another sensor with the same address, therefore we need to go on to the next address.
             sName = sensorPrefix + senManager.typeLetter() + curAddress;
             Sensor s = null;
             try {
@@ -211,13 +173,12 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(AddSensorPanel.this,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSensorAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(AddSensorPanel.this,
+                Bundle.getMessage("ErrorSensorAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
+
 }

@@ -132,7 +132,7 @@ public class NmraPacketTest {
         // expect this to throw exception
         boolean threw = false;
         try {
-            byte[] ba = NmraPacket.accDecoderPkt(addr, 0, 0);
+            NmraPacket.accDecoderPkt(addr, 0, 0);
             Assert.fail("Expected IllegalArgumentException not thrown");
         } catch (IllegalArgumentException ex) {
             threw = true;
@@ -1462,7 +1462,7 @@ public class NmraPacketTest {
     public void testToStringNoPacket() {
         boolean thrown = false;
         try {
-            String display = NmraPacket.toString(new byte[]{});
+            NmraPacket.toString(new byte[]{});
         } catch (IllegalArgumentException e) {
             thrown = true;
         }

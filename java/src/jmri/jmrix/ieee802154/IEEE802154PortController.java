@@ -32,7 +32,5 @@ public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerial
     // check that this object is ready to operate
     @Override
     public abstract boolean status();
+
 }
-
-
-

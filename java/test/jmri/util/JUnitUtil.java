@@ -115,7 +115,9 @@ public class JUnitUtil {
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -262,18 +264,8 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // clear system connections
-        jmri.jmrix.SystemConnectionMemo.reset();
-
-        // create a new instance manager & use initializer to clear static list of state
-        new InstanceManager() {
-            {
-                managerLists.clear();
-            }
-        };
-
-        // add the NamedBeanHandleManager, which is always needed
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        // clear all instances from the static InstanceManager
+        InstanceManager.getDefault().clearAll();
     }
 
     public static void resetTurnoutOperationManager() {

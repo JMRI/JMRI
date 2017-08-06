@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonDataModel class
  *
  * @author Paul Bender Copyright (C) 2017	
  */
@@ -36,6 +37,6 @@ public class StackMonDataModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StackMonDataModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StackMonDataModelTest.class.getName());
 
 }

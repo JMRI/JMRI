@@ -5,9 +5,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -19,29 +20,27 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
  */
-public class RouteManager {
+public class RouteManager implements InstanceManagerAutoDefault {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N
 
     public RouteManager() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(RouteManagerXml.class); // load routes
     }
 
     private int _id = 0;
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized RouteManager instance() {
-        RouteManager instance = jmri.InstanceManager.getNullableDefault(RouteManager.class);
-        if (instance == null) {
-            log.debug("RouteManager creating instance");
-            // create and load
-            instance = new RouteManager();
-            jmri.InstanceManager.setDefault(RouteManager.class,instance);
-            OperationsSetupXml.instance(); // load setup
-            RouteManagerXml.instance(); // load routes
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManager returns instance {}", instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(RouteManager.class);
     }
 
     public void dispose() {
@@ -75,6 +74,7 @@ public class RouteManager {
     /**
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
+     *
      * @param name The string name of the new Route.
      *
      *
@@ -95,6 +95,7 @@ public class RouteManager {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param route The Route to add.
      */
     public void register(Route route) {
@@ -111,6 +112,7 @@ public class RouteManager {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param route The Route to delete.
      */
     public void deregister(Route route) {
@@ -206,9 +208,9 @@ public class RouteManager {
      * Copy route, returns a new route named routeName. If invert is true the
      * reverse of the route is returned.
      *
-     * @param route The route to be copied
+     * @param route     The route to be copied
      * @param routeName The name of the new route
-     * @param invert If true, return the inversion of route
+     * @param invert    If true, return the inversion of route
      * @return A copy of the route
      */
     public Route copyRoute(Route route, String routeName, boolean invert) {
@@ -233,7 +235,7 @@ public class RouteManager {
     }
 
     private void copyRouteLocation(Route newRoute, RouteLocation rl, RouteLocation rlNext, boolean invert) {
-        Location loc = LocationManager.instance().getLocationByName(rl.getName());
+        Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName(rl.getName());
         RouteLocation rlNew = newRoute.addLocation(loc);
         // now copy the route location objects we want
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
@@ -310,12 +312,10 @@ public class RouteManager {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        RouteManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
 
 }
-
-

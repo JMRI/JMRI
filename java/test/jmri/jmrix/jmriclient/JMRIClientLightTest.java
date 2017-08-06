@@ -41,6 +41,6 @@ public class JMRIClientLightTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientLightTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JMRIClientLightTest.class.getName());
 
 }

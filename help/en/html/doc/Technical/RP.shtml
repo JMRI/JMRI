@@ -53,25 +53,29 @@
 
         <li>Take a few moments to learn about the the different
         types of <a href=
-        "http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html">
-        Java collections</a> that are available (<a href=
-        "http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">List</a>,
-        <a href=
-        "http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html">
-        HashMap</a>, etc) in the <a href="">java.util package</a>.
-        Not everything needs to be a Vector or an array!</li>
+        "https://docs.oracle.com/javase/tutorial/collections/intro/">
+        Java collections</a> that are available (
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
+        etc) in the 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
+        Not everything needs to be an array! A 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+        can be a good default solution to holding data that won't ever contain 'null'.
+        </li>
 
         <li>JMRI uses <a href=
-        "http://java.sun.com/docs/books/tutorial/java/generics/index.html">
+        "https://docs.oracle.com/javase/tutorial/java/generics/">
         Java generics</a> extensively to <a href=
-        "http://java.sun.com/docs/books/tutorial/java/generics/generics.html">
+        "https://docs.oracle.com/javase/tutorial/java/generics/">
         reduce errors and improve understanding</a>. With lots of
         people writing and sharing code, using generics instead of
         casts makes it much easier to understand the code, and
         allows the compiler to catch many misunderstandings about
         how things should be used. Most of the important
         information on them can be found on <a href=
-        "http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html">
+        "https://docs.oracle.com/javase/tutorial/java/generics/">
         this page</a> from the Java Tutorial.</li>
 
         <li>If you need to use comma-separated variable (CSV)

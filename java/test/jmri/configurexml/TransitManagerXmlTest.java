@@ -18,8 +18,7 @@ public class TransitManagerXmlTest {
 
    @Test
    public void BaseTest(){
-      TransitManagerXml tmx;
-      Assert.assertNotNull("Constructor", tmx = new TransitManagerXml());
+      Assert.assertNotNull("Constructor", new TransitManagerXml());
    }
 
    @Test

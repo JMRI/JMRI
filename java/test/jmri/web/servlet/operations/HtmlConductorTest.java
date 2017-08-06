@@ -39,6 +39,6 @@ public class HtmlConductorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class.getName());
 
 }

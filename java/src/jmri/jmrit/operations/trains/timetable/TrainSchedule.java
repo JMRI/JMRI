@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -152,7 +153,7 @@ public class TrainSchedule {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 

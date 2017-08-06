@@ -53,6 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(StoreXmlConfigActionTest.class));
         suite.addTest(new JUnit4TestAdapter(StoreXmlUserActionTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(ErrorMemoTest.class));
         return suite;
     }
 

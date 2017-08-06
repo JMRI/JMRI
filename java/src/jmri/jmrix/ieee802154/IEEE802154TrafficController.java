@@ -55,6 +55,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     *
      * @param length length for new message
      * @return null since this method should be over-ridden
      */
@@ -229,7 +230,8 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to identify a SerialNode from its node address Note: 'addr'
      * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * the specified address was not found.
+     *
      * @param ia int array of node address
      * @return null if not found, otherwise serial address
      */
@@ -251,7 +253,8 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to identify a SerialNode from its node address Note: 'addr'
      * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * the specified address was not found.
+     *
      * @param ba array of bytes in hex address
      * @return null if not found, otherwise serial node id
      */
@@ -291,6 +294,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to delete a node by the string representation of it's
      * address.
+     *
      * @param nodeAddress text of hex node address
      */
     public synchronized void deleteNode(String nodeAddress) {

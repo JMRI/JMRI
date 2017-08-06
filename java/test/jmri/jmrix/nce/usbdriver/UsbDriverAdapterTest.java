@@ -33,6 +33,6 @@ public class UsbDriverAdapterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapterTest.class.getName());
 
 }

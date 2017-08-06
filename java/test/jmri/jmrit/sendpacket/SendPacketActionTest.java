@@ -33,6 +33,6 @@ public class SendPacketActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SendPacketActionTest.class.getName());
 
 }

@@ -80,6 +80,11 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {

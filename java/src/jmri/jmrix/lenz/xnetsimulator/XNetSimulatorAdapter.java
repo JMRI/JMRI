@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
  *
  * Currently, the XNetSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
- *
- **NOTE: Most XpressNet commands are still unsupported in this implementation.
- *
+ * <p>
+ * NOTE: Most XpressNet commands are still unsupported in this implementation.
+ * <p>
  * Normally controlled by the lenz.XNetSimulator.XNetSimulatorFrame class.
- *
+ * <p>
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
@@ -60,7 +60,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int MomentaryGroup5 = 0;
 
     public XNetSimulatorAdapter() {
-        setPort("None");
+        setPort(Bundle.getMessage("None"));
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -83,9 +83,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     /**
-     * we need a way to say if the output buffer is empty or full this should
-     * only be set to false by external processes
-     *
+     * Tell if the output buffer is empty or full this should
+     * only be set to false by external processes.
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
@@ -101,21 +100,17 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     @Override
     public boolean okToSend() {
         if (CheckBuffer) {
-            if (log.isDebugEnabled()) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-            }
+            log.debug("Buffer Empty: {}", OutputBufferEmpty);
             return (OutputBufferEmpty && super.okToSend() );
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("No Flow Control or Buffer Check");
-            }
+            log.debug("No Flow Control or Buffer Check");
             return (super.okToSend());
         }
     }
 
     /**
-     * set up all of the other objects to operate with a XNetSimulator connected
-     * to this port
+     * Set up all of the other objects to operate with a XNetSimulator connected
+     * to this port.
      */
     @Override
     public void configure() {
@@ -134,6 +129,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     // base class methods for the XNetSimulatorPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -174,22 +170,16 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread Started");
-        }
+        log.debug("Simulator Thread Started");
         ConnectionStatus.instance().setConnectionState(
                    this.getSystemConnectionMemo().getUserName(),
                    this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             XNetMessage m = readMessage();
-            if (log.isDebugEnabled()) {
-                log.debug("Simulator Thread received message " + m.toString());
-            }
+            log.debug("Simulator Thread received message {}", m.toString());
             XNetReply r = generateReply(m);
             writeReply(r);
-            if (log.isDebugEnabled()) {
-                log.debug("Simulator Thread sent Reply" + r.toString());
-            }
+            log.debug("Simulator Thread sent Reply {}", r.toString());
         }
     }
 

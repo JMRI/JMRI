@@ -36,6 +36,6 @@ public class SpeedProfileFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfileFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedProfileFrameTest.class.getName());
 
 }

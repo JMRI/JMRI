@@ -49,6 +49,6 @@ public class Mx1ComponentFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1ComponentFactoryTest.class.getName());
 
 }

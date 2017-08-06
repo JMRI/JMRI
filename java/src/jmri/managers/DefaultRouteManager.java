@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class DefaultRouteManager extends AbstractManager
+public class DefaultRouteManager extends AbstractManager<Route>
         implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public DefaultRouteManager() {

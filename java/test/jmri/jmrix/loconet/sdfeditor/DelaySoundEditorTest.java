@@ -33,6 +33,6 @@ public class DelaySoundEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DelaySoundEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DelaySoundEditorTest.class.getName());
 
 }

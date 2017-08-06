@@ -188,7 +188,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
-            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "M")); // override tooltip with bean specific letter, doesn't work
+            sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);
@@ -273,12 +273,10 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorMemoryAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorMemoryAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -292,4 +290,5 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
+
 }

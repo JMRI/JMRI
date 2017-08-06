@@ -33,6 +33,6 @@ public class JmriSRCPServiceHandlerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServiceHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriSRCPServiceHandlerTest.class.getName());
 
 }

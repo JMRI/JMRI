@@ -33,6 +33,6 @@ public class SignalMastRepeaterPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class.getName());
 
 }

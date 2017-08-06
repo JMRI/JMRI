@@ -158,12 +158,14 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
 
     /**
      * Get a list of all the valid aspects that have not been disabled.
+     * Sorted alphabetically for useful display in GUI.
      *
-     * @return list of valid aspects; may be empty
+     * @return list of valid aspects (as Vector); may be empty
      */
     @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
+        // copy List to Vector
         Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();

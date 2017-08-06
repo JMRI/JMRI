@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 
 /**
  * Action to reset the all of the schedule item hit counts for all schedules
@@ -16,6 +17,6 @@ public class SchedulesResetHitsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ScheduleManager.instance().resetHitCounts();
+        InstanceManager.getDefault(ScheduleManager.class).resetHitCounts();
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -94,8 +95,8 @@ public class TrainScriptFrame extends OperationsFrame {
         _train = parent._train;
 
         // load managers
-        manager = TrainManager.instance();
-        managerXml = TrainManagerXml.instance();
+        manager = InstanceManager.getDefault(TrainManager.class);
+        managerXml = InstanceManager.getDefault(TrainManagerXml.class);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 

@@ -33,6 +33,6 @@ public class BDL16PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BDL16PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BDL16PanelTest.class.getName());
 
 }

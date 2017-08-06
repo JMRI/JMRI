@@ -41,6 +41,6 @@ public class NetMessageTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NetMessageTest.class.getName());
 
 }
