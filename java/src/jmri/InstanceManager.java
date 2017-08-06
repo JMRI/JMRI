@@ -720,7 +720,7 @@ public final class InstanceManager {
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
     public <T> List<T> getInstances(@Nonnull Class<T> type) {
-        log.debug("Get list of type {}", type.getName());
+        log.trace("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
             pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
@@ -764,7 +764,7 @@ public final class InstanceManager {
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        log.debug("Clearing managers of {}", type.getName());
+        log.trace("Clearing managers of {}", type.getName());
         getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
             dispose((Disposable) o);
         });
