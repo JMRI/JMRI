@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.utilities;
 
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.EcosListener;

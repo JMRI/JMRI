@@ -14,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -26,7 +27,6 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +98,7 @@ public class PrintRosterEntry implements PaneContainer {
         if (log.isDebugEnabled()) {
             log.debug("found {} matches", l.size());
         }
-        if (l.size() == 0) {
+        if (l.isEmpty()) {
             log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);

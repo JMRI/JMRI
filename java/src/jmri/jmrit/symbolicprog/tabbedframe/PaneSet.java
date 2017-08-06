@@ -3,6 +3,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;

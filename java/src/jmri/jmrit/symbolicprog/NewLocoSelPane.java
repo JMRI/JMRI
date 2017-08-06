@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -48,7 +49,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
     }
 
     ProgModeSelector selector;
-    
+
     public void init() {
         JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

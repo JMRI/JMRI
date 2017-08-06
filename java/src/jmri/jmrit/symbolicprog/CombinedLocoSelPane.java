@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ListIterator;
+import javax.annotation.*;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -23,7 +25,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import javax.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     ProgModeSelector selector;
-    
+
     /**
      * Create the panel used to select the decoder
      *
@@ -593,7 +594,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param progName    name of the programmer (Layout connection) being used
      */
     // TODO: Fix inheritance.  This is both a base class (where startProgrammer really isn't part of the contract_
-    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be 
+    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be
     //       made abstract:  CombinedLocoSelListPane and CombinedLocoSelTreePane have no need for it.
     protected void startProgrammer(@CheckForNull DecoderFile decoderFile, @Nonnull RosterEntry r, @Nonnull String progName) {
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
