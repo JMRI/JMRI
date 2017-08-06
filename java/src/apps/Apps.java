@@ -265,10 +265,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configOK = false;
         }
 
-        //Install Entry Exit Pairs Manager
-        //   Done after load config file so that connection-system-specific Managers are defined and usable
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
-
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
