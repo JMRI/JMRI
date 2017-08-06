@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -32,9 +33,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014
+ * 2014
  */
-public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     private static final String NONE = "";
 
@@ -70,8 +71,6 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
     public TrainManager() {
-        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
-        InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 
     private int _id = 0; // train ids
@@ -308,6 +307,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
     /**
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
+     *
      * @param name The train's name.
      *
      *
@@ -328,6 +328,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param train The Train to be added.
      */
     public void register(Train train) {
@@ -345,6 +346,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param train The Train to delete.
      */
     public void deregister(Train train) {
@@ -409,7 +411,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
 
     /**
      *
-     * @param car The car looking for a train.
+     * @param car         The car looking for a train.
      * @param buildReport The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
@@ -420,7 +422,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
 
     /**
      *
-     * @param car The car looking for a train.
+     * @param car          The car looking for a train.
      * @param excludeTrain The only train not to try.
      * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
@@ -434,7 +436,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
                     .getMessage("trainFindForCar"), new Object[]{car.toString(), car.getLocationName(),
-                            car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
+                car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
         }
         for (Train train : getTrainsByIdList()) {
             if (train == excludeTrain) {
@@ -713,7 +715,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
      * Makes a copy of an existing train. Only the train's description isn't
      * copied.
      *
-     * @param train the train to copy
+     * @param train     the train to copy
      * @param trainName the name of the new train
      * @return a copy of train
      */
@@ -863,6 +865,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
     /**
      * Sets the switch list status for all built trains. Used for switch lists
      * in consolidated mode.
+     *
      * @param status Train.PRINTED, Train.UNKNOWN
      */
     public void setTrainsSwitchListStatus(String status) {
@@ -913,11 +916,11 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
                 if (isBuildMessagesEnabled()) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                             .getMessage("NeedToBuildBeforePrinting"), new Object[]{train.getName(),
-                                    (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                            : Bundle.getMessage("print"))}),
+                        (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                        : Bundle.getMessage("print"))}),
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
                                     new Object[]{isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print")}),
+                                                .getMessage("print")}),
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -935,8 +938,8 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
                     status = false;
                     int response = JOptionPane.showConfirmDialog(null, Bundle
                             .getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
-                                    .getMessage("TerminateTrain"),
-                                    new Object[]{train.getName(), train.getDescription()}),
+                            .getMessage("TerminateTrain"),
+                            new Object[]{train.getName(), train.getDescription()}),
                             JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
                         train.terminate();
@@ -975,12 +978,12 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
                     _runFile = a.getValue().equals(Xml.TRUE);
                 }
                 // verify that the Trains Window action is valid
-                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null &&
-                        (a.getValue().equals(TrainsTableFrame.MOVE) ||
-                                a.getValue().equals(TrainsTableFrame.RESET) ||
-                                a.getValue().equals(TrainsTableFrame.TERMINATE) ||
-                                a.getValue().equals(
-                                        TrainsTableFrame.CONDUCTOR))) {
+                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null
+                        && (a.getValue().equals(TrainsTableFrame.MOVE)
+                        || a.getValue().equals(TrainsTableFrame.RESET)
+                        || a.getValue().equals(TrainsTableFrame.TERMINATE)
+                        || a.getValue().equals(
+                                TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
             }
@@ -1042,6 +1045,7 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     *
      * @param root common Element for operations-trains.dtd.
      *
      */
@@ -1103,16 +1107,16 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
     /**
      * Check for car type and road name replacements. Also check for engine type
      * replacement.
-     *
+     * <p>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: " +
-                e.getPropertyName() +
-                " old: " +
-                e.getOldValue() +
-                " new " +
-                e.getNewValue()); // NOI18N
+        log.debug("TrainManager sees property change: "
+                + e.getPropertyName()
+                + " old: "
+                + e.getOldValue()
+                + " new "
+                + e.getNewValue()); // NOI18N
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
         // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
@@ -1134,9 +1138,12 @@ public class TrainManager implements InstanceManagerAutoDefault, PropertyChangeL
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManager.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
+    }
 
 }
-
-

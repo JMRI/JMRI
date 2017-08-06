@@ -1,19 +1,16 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
-import java.util.Set;
-import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractInstanceInitializer;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManagerXml extends OperationsXml {
+public class EngineManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public EngineManagerXml() {
     }
@@ -118,32 +115,9 @@ public class EngineManagerXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
-
-        @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(EngineManagerXml.class)) {
-                log.debug("EngineManagerXml creating instance");
-                // create and load
-                EngineManagerXml instance = new EngineManagerXml();
-                instance.load();
-                log.debug("Engines have been loaded!");
-                if (Control.SHOW_INSTANCE) {
-                    log.debug("EngineManagerXml returns instance {}", instance);
-                }
-                return instance;
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
-            set.add(EngineManagerXml.class);
-            return set;
-        }
-
+    @Override
+    public void initialize() {
+        load();
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -25,13 +26,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2013
  */
-public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class ScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
 
     public ScheduleManager() {
-        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
     }
 
     private int _id = 0;
@@ -85,6 +84,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     *
      * @param name The string name for this schedule
      *
      *
@@ -105,6 +105,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param schedule The Schedule to add.
      */
     public void register(Schedule schedule) {
@@ -120,6 +121,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param schedule The Schedule to delete.
      */
     public void deregister(Schedule schedule) {
@@ -269,7 +271,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
     /**
      * Replaces car loads in all schedules with specific car type.
      *
-     * @param type car type.
+     * @param type    car type.
      * @param oldLoad car load to be replaced.
      * @param newLoad replacement car load.
      */
@@ -347,7 +349,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
 
     /**
      * Check for car type and road name changes.
-     *
+     * <p>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -381,6 +383,10 @@ public class ScheduleManager implements InstanceManagerAutoDefault, PropertyChan
 
     private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
 
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+    }
+
 }
-
-

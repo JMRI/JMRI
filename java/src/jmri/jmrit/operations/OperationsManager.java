@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -24,33 +25,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood 2014
  */
-public final class OperationsManager implements InstanceManagerAutoDefault {
+public final class OperationsManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     private ShutDownTask shutDownTask = null;
 
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
     public OperationsManager() {
-        // ensure the default instance of all operations managers
-        // are initialized by calling their instance() methods
-        // Is there a different, more optimal order for this?
-        InstanceManager.getDefault(CarManager.class);
-        InstanceManager.getDefault(EngineManager.class);
-        InstanceManager.getDefault(TrainManager.class);
-        InstanceManager.getDefault(LocationManager.class);
-        InstanceManager.getDefault(RouteManager.class);
-        InstanceManager.getDefault(ScheduleManager.class);
-        InstanceManager.getDefault(TrainScheduleManager.class);
-        this.setShutDownTask(this.getDefaultShutDownTask());
-        // auto backup?
-        if (Setup.isAutoBackupEnabled()) {
-            try {
-                AutoBackup backup = new AutoBackup();
-                backup.autoBackup();
-            } catch (IOException ex) {
-                log.debug("Auto backup after enabling Auto Backup flag.", ex);
-            }
-        }
     }
 
     /**
@@ -102,7 +83,7 @@ public final class OperationsManager implements InstanceManagerAutoDefault {
 
     /**
      * Register the non-default {@link jmri.ShutDownTask}.
-     *
+     * <p>
      * Replaces the existing operations ShutDownTask with the new task. Use a
      * null value to prevent an operations ShutDownTask from being run when JMRI
      * shuts down. Use {@link #getDefaultShutDownTask() } to use the default
@@ -142,5 +123,29 @@ public final class OperationsManager implements InstanceManagerAutoDefault {
                 return true;
             }
         };
+    }
+
+    @Override
+    public void initialize() {
+        // ensure the default instance of all operations managers
+        // are initialized by calling their instance() methods
+        // Is there a different, more optimal order for this?
+        InstanceManager.getDefault(CarManager.class);
+        InstanceManager.getDefault(EngineManager.class);
+        InstanceManager.getDefault(TrainManager.class);
+        InstanceManager.getDefault(LocationManager.class);
+        InstanceManager.getDefault(RouteManager.class);
+        InstanceManager.getDefault(ScheduleManager.class);
+        InstanceManager.getDefault(TrainScheduleManager.class);
+        this.setShutDownTask(this.getDefaultShutDownTask());
+        // auto backup?
+        if (Setup.isAutoBackupEnabled()) {
+            try {
+                AutoBackup backup = new AutoBackup();
+                backup.autoBackup();
+            } catch (IOException ex) {
+                log.debug("Auto backup after enabling Auto Backup flag.", ex);
+            }
+        }
     }
 }
