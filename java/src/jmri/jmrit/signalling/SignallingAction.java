@@ -13,14 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SignallingAction extends AbstractAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
-
     public SignallingAction(String s) {
         super(s);
     }
 
     public SignallingAction() {
-        super(rb.getString("SignallingPairs"));
+        super(Bundle.getMessage("SignallingPairs"));  // NOI18N
     }
 
     public void setMast(jmri.SignalMast source, jmri.SignalMast dest) {
@@ -37,7 +35,7 @@ public class SignallingAction extends AbstractAction {
         try {
             f.initComponents(source, dest);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: " + ex.toString());  // NOI18N
             ex.printStackTrace();
         }
         f.setVisible(true);

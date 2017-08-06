@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SignallingFrameAction extends AbstractAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
-
     /**
      * Create an action with the supplied name.
      *
@@ -28,7 +26,7 @@ public class SignallingFrameAction extends AbstractAction {
      * Create an action with a preset name, localizable via the Bundle mechanism.
      */
     public SignallingFrameAction() {
-        super(rb.getString("SignallingPairs"));
+        super(Bundle.getMessage("SignallingPairs"));  // NOI18N
     }
 
     @Override
@@ -37,7 +35,7 @@ public class SignallingFrameAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: " + ex.toString());  // NOI18N
             ex.printStackTrace();
         }
         f.setVisible(true);
