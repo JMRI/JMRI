@@ -131,6 +131,9 @@
         the <em>next</em> that execution hits a blocking call, that call will 
         immediately get an interrupt too. Perhaps it can handle it better!
     </ol>
+    
+    For more background, please read 
+    <a href="https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
 
 <h3>Other Items of Interest</h3>    
 
