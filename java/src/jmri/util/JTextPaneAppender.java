@@ -41,7 +41,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
      */
     public JTextPaneAppender(Layout aLayout, String aName, Filter[] aFilterArray, JTextPane aTextPane) {
         this();
-        new Exception("JTextPaneAppender created").printStackTrace();
         this.layout = aLayout;
         this.name = aName;
         myTextPane = aTextPane;
@@ -62,7 +61,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
      */
     public JTextPaneAppender() {
         super();
-        new Exception("JTextPaneAppender created").printStackTrace();
         createAttributes();
     }
 
