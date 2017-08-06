@@ -28,13 +28,7 @@ import org.apache.log4j.spi.LoggingEvent;
  */
 public class JTextPaneAppender extends AppenderSkeleton {
 
-    /**
-     *
-     */
     JTextPane myTextPane;
-    /**
-     *
-     */
     Hashtable<String, MutableAttributeSet> myAttributeSet;
 
     /**
@@ -47,6 +41,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
      */
     public JTextPaneAppender(Layout aLayout, String aName, Filter[] aFilterArray, JTextPane aTextPane) {
         this();
+        new Exception("JTextPaneAppender created").printStackTrace();
         this.layout = aLayout;
         this.name = aName;
         myTextPane = aTextPane;
@@ -67,6 +62,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
      */
     public JTextPaneAppender() {
         super();
+        new Exception("JTextPaneAppender created").printStackTrace();
         createAttributes();
     }
 
@@ -110,31 +106,34 @@ public class JTextPaneAppender extends AppenderSkeleton {
      * org.apache.log4j.AppenderSkeleton#append(org.apache.log4j.spi.LoggingEvent)
      */
     @Override
-    public void append(LoggingEvent event) {
+    public void append(final LoggingEvent event) {
         if (myTextPane == null) {
             LogLog.warn("TextPane is not initialized");
             return;
         } // if myTextPane == null
 
-        String text = this.layout.format(event);
+        String temp = this.layout.format(event);
         String[] stackTrace = event.getThrowableStrRep();
         if (stackTrace != null) {
-            StringBuffer sb = new StringBuffer(text);
+            StringBuffer sb = new StringBuffer(temp);
 
             for (int i = 0; i < stackTrace.length; i++) {
                 sb.append("    ").append(stackTrace[i]).append("\n");
             } // for i
 
-            text = sb.toString();
+            temp = sb.toString();
         }
+        final String text = temp;
 
         StyledDocument myDoc = myTextPane.getStyledDocument();
 
-        try {
-            myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
-        } catch (BadLocationException badex) {
-            System.err.println(badex);  // can't log this, as it would be recursive error
-        }
+            jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+                try {
+                    myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
+                } catch (BadLocationException badex) {
+                    System.err.println(badex);  // can't log this, as it would be recursive error
+                }
+            } ); 
 
         myTextPane.setCaretPosition(myDoc.getLength());
     }
