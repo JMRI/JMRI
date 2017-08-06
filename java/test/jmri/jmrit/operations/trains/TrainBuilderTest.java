@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -3277,7 +3278,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Staging Test Caboose CP12345679 SetLocation 2s5 for real", "okay", c2
                 .setLocation(loc1, loc1trk1));
 
-        // Staging track has e2 + 
+        // Staging track has e2 +
         Assert.assertEquals("Staging Location Westend Used Length", 363, loc1.getUsedLength());
         Assert.assertEquals("Staging Location Midtown Used Length", 228, loc2.getUsedLength());
         Assert.assertEquals("Staging Location Eastend Used Length", 0, loc3.getUsedLength());
@@ -3904,7 +3905,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // request a loaded car and load it with Tin
         sch1Item3.setReceiveLoadName("L");
         sch1Item3.setShipLoadName("Tin");
-        CarLoads.instance().addName("Gon", "Tin"); // Allows c13 which is part of a kernel to get a new load
+        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Tin"); // Allows c13 which is part of a kernel to get a new load
 
         Schedule sch2 = smanager.newSchedule("Schedule 2");
         ScheduleItem sch2Item1 = sch2.addItem("Coil Car");
@@ -4255,7 +4256,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item2.setReceiveLoadName("Metal 2");
         sch1Item3.setReceiveLoadName("Metal 3");
 
-        CarLoads.instance().addName("Gon", "Metal 3"); // Allows c13 which is part of a kernel to get a new load
+        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3"); // Allows c13 which is part of a kernel to get a new load
 
         train1.setRoute(rte3);
         train1.setName("BCW");
@@ -4932,7 +4933,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("train 3 should accept Boxcar", train3.acceptsTypeName("Boxcar"));
 
         // now test road name replace
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("CP");
 
         loc1trk1.setRoadOption(Track.INCLUDE_ROADS);
@@ -5175,7 +5176,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 3", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 3", "Boston Engine Yard", e2.getDestinationTrackName());
-        
+
         // now try to find a caboose with "similar" (hyphen feature) road name to engine
         c1.setRoadName("UP-1");
         train1.reset();
@@ -6015,7 +6016,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     public void testCarBlockingFromStaging() {
 
-        // create 5 locations with tracks        
+        // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
         Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
         loc1trk1.setLength(1000);
@@ -6046,7 +6047,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc5trk1.setBlockCarsEnabled(true);
 
         // create two trains, one into staging, the other out of staging
-
         // Create route with 5 location
         Setup.setCarMoves(20); // set default to 20 moves per location
 
@@ -6197,7 +6197,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car departed Chelmsford", chelmsford.getId(), c11.getLastLocationId());
 
         // now build a train that departs staging
-
         Route rte2 = rmanager.newRoute("Route Westford Staging to Harvard");
         rte2.addLocation(westford); // staging
 
@@ -6307,7 +6306,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         EngineTypes et = new EngineTypes();
         et.addName("Diesel");
 
-        // create 5 locations with tracks        
+        // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
         Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
         loc1trk1.setLength(1000);
@@ -6421,7 +6420,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setSecondLegEngineRoad("UP");
         train1.setSecondLegEngineModel("GP40");
 
-        // change out 1 engine with 3 "SP" engines at Chelmsford       
+        // change out 1 engine with 3 "SP" engines at Chelmsford
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
         train1.setThirdLegNumberEngines("3");
         train1.setThirdLegStartLocation(rlChelmsford);
@@ -6473,7 +6472,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // test confirms the order cabooses are assigned to the train
         Setup.setBuildAggressive(true);
 
-        // create 5 locations with tracks        
+        // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
         Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
         loc1trk1.setLength(80);
@@ -6553,7 +6552,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setSecondLegStartLocation(rlArlington);
         train1.setSecondLegCabooseRoad("XYZ");
 
-        // swap out caboose at Chelmsford       
+        // swap out caboose at Chelmsford
         train1.setThirdLegOptions(Train.ADD_CABOOSE);
         train1.setThirdLegStartLocation(rlChelmsford);
         train1.setThirdLegCabooseRoad("XYZ");
@@ -6650,7 +6649,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         EngineTypes et = new EngineTypes();
         et.addName("Diesel");
 
-        // create 5 locations with tracks        
+        // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
         Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
         loc1trk1.setLength(1000);
@@ -6748,7 +6747,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setTypeName("Boxcar");
         c1.setLength("40");
         c1.setWeightTons("400"); // 400 tons loaded
-        c1.setLoadName(CarLoads.instance().getDefaultLoadName());
+        c1.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(harvard, loc1trk1));
 
         train1.reset();
@@ -6766,7 +6765,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setTypeName("Boxcar");
         c2.setLength("40");
         c2.setWeightTons("200"); // 200 tons loaded
-        c2.setLoadName(CarLoads.instance().getDefaultLoadName());
+        c2.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(arlington, loc2trk1));
 
         train1.reset();
@@ -6785,7 +6784,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setBuildAggressive(true);
         Setup.setStagingTrackImmediatelyAvail(false);
 
-        EngineTypes et = EngineTypes.instance();
+        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
@@ -7438,37 +7437,37 @@ public class TrainBuilderTest extends OperationsTestCase {
     // reset managers
     private void resetManagers() {
         // Need to clear out TrainManager global variables
-        TrainManager.instance().dispose();
-        CarManager.instance().dispose();
-        EngineManager.instance().dispose();
-        LocationManager.instance().dispose();
-        RouteManager.instance().dispose();
-        ScheduleManager.instance().dispose();
-        CarRoads.instance().dispose();
-        CarColors.instance().dispose();
-        CarLengths.instance().dispose();
-        CarOwners.instance().dispose();
-        CarRoads.instance().dispose();
-        CarLoads.instance().dispose();
-        CarTypes.instance().dispose();
-        EngineTypes.instance().dispose();
-        EngineModels.instance().dispose();
+        InstanceManager.getDefault(TrainManager.class).dispose();
+        InstanceManager.getDefault(CarManager.class).dispose();
+        InstanceManager.getDefault(EngineManager.class).dispose();
+        InstanceManager.getDefault(LocationManager.class).dispose();
+        InstanceManager.getDefault(RouteManager.class).dispose();
+        InstanceManager.getDefault(ScheduleManager.class).dispose();
+        InstanceManager.getDefault(CarRoads.class).dispose();
+        InstanceManager.getDefault(CarColors.class).dispose();
+        InstanceManager.getDefault(CarLengths.class).dispose();
+        InstanceManager.getDefault(CarOwners.class).dispose();
+        InstanceManager.getDefault(CarRoads.class).dispose();
+        InstanceManager.getDefault(CarLoads.class).dispose();
+        InstanceManager.getDefault(CarTypes.class).dispose();
+        InstanceManager.getDefault(EngineTypes.class).dispose();
+        InstanceManager.getDefault(EngineModels.class).dispose();
 
-        // setup new managers 
-        tmanager = TrainManager.instance();
-        rmanager = RouteManager.instance();
-        lmanager = LocationManager.instance();
-        emanager = EngineManager.instance();
-        cmanager = CarManager.instance();
-        smanager = ScheduleManager.instance();
-        cc = CarColors.instance();
-        cl = CarLengths.instance();
-        co = CarOwners.instance();
-        cr = CarRoads.instance();
-        cld = CarLoads.instance();
-        ct = CarTypes.instance();
-        et = EngineTypes.instance();
-        em = EngineModels.instance();
+        // setup new managers
+        tmanager = InstanceManager.getDefault(TrainManager.class);
+        rmanager = InstanceManager.getDefault(RouteManager.class);
+        lmanager = InstanceManager.getDefault(LocationManager.class);
+        emanager = InstanceManager.getDefault(EngineManager.class);
+        cmanager = InstanceManager.getDefault(CarManager.class);
+        smanager = InstanceManager.getDefault(ScheduleManager.class);
+        cc = InstanceManager.getDefault(CarColors.class);
+        cl = InstanceManager.getDefault(CarLengths.class);
+        co = InstanceManager.getDefault(CarOwners.class);
+        cr = InstanceManager.getDefault(CarRoads.class);
+        cld = InstanceManager.getDefault(CarLoads.class);
+        ct = InstanceManager.getDefault(CarTypes.class);
+        et = InstanceManager.getDefault(EngineTypes.class);
+        em = InstanceManager.getDefault(EngineModels.class);
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);

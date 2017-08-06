@@ -1,6 +1,5 @@
 package jmri;
 
-import apps.gui3.TabbedPreferences;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +12,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -496,17 +494,6 @@ public final class InstanceManager {
     @Deprecated
     static public ReporterManager reporterManagerInstance() {
         return getDefault(ReporterManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default roster icon factory. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public RosterIconFactory rosterIconFactoryInstance() {
-        return getDefault(RosterIconFactory.class);
     }
 
     /**

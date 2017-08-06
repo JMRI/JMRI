@@ -3,6 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
@@ -18,8 +19,8 @@ public class EngineSetFrame extends RollingStockSetFrame implements
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-    EngineManager manager = EngineManager.instance();
-    EngineManagerXml managerXml = EngineManagerXml.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+    EngineManagerXml managerXml = InstanceManager.getDefault(EngineManagerXml.class);
 
     Engine _engine;
 

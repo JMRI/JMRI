@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -59,7 +60,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     JLabel textCarType = new JLabel(Empty);
 
     // combo boxes
-    JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+    JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
 
     // selected location
     Location _location;
@@ -86,7 +87,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     public void initComponents(String carType) {
 
         // load managers
-        manager = LocationManager.instance();
+        manager = InstanceManager.getDefault(LocationManager.class);
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -133,7 +134,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         addCheckBoxAction(copyCheckBox);
 
         manager.addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -267,7 +268,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
     private void updateComboBox() {
         log.debug("update combobox");
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
     }
 
     private void selectCheckboxes(boolean select) {
@@ -344,7 +345,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     @Override
     public void dispose() {
         manager.removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         removePropertyChangeLocations();
         super.dispose();
     }

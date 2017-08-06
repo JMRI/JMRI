@@ -218,12 +218,13 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     /**
-     * static function returning the AcelaSensorManager instance to use.
+     * Static function returning the AcelaSensorManager instance to use.
      *
      * @return The registered AcelaSensorManager instance for general use, if
      *         need be creating one.

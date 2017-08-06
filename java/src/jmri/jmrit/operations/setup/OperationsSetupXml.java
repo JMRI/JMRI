@@ -1,7 +1,10 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
+import java.util.Set;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
@@ -9,6 +12,7 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,21 +27,15 @@ public class OperationsSetupXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static OperationsSetupXml _instance = null;
-
+    @Deprecated
     public static synchronized OperationsSetupXml instance() {
-        if (_instance == null) {
-            log.debug("OperationsSetupXml creating instance");
-            // create and load
-            _instance = new OperationsSetupXml();
-            _instance.load();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("OperationsSetupXml returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(OperationsSetupXml.class);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class OperationsSetupXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        // add top-level elements         
+        // add top-level elements
         root.addContent(Setup.store());
         // add manifest header text strings
         root.addContent(TrainManifestHeaderText.store());
@@ -114,10 +112,24 @@ public class OperationsSetupXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
-    public void dispose() {
-        _instance = null;
-    }
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
 
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(OperationsSetupXml.class)) {
+                OperationsSetupXml instance = new OperationsSetupXml();
+                instance.load();
+                return instance;
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set set = super.getInitalizes();
+            set.add(OperationsSetupXml.class);
+            return set;
+        }
+    }
 }
