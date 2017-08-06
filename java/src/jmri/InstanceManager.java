@@ -46,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * For initialization of more complex default objects, see the
  * {@link InstanceInitializer} mechanism and its default implementation in
  * {@link jmri.managers.DefaultInstanceInitializer}.
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>

@@ -349,7 +349,6 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
 
     /**
      * Check for car type and road name changes.
-     * <p>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {

@@ -388,24 +388,18 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      * The sort priority is as follows:
      * <ol>
      * <li>Caboose or car with FRED to the end of the list
-     * <p>
      * <li>Passenger cars to the end of the list, but before cabooses or car
      * with FRED. Passenger cars have blocking numbers which places them
      * relative to each other.
-     * <p>
      * <li>Car's destination (alphabetical by location and track name or by
      * track blocking order)
-     * <p>
      * <li>Car's current location (alphabetical by location and track name)
-     * <p>
      * <li>Car's final destination (alphabetical by location and track name)
-     * <p>
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
      * Cars in a kernel are placed together by their kernel blocking numbers.
      * The kernel's position in the list is based on the lead car in the kernel.
-     * <p>
      * <p>
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.

@@ -1107,7 +1107,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     /**
      * Check for car type and road name replacements. Also check for engine type
      * replacement.
-     * <p>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
