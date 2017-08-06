@@ -21,6 +21,7 @@ public class XNetThrottleTest{
     public void testCtor() {
         XNetThrottle t = new XNetThrottle(memo, tc);
         Assert.assertNotNull(t);
+        t.throttleDispose();
     }
 
     // Test the constructor with an address specified.
@@ -28,6 +29,7 @@ public class XNetThrottleTest{
     public void testCtorWithArg() throws Exception {
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
+        t.throttleDispose();
     }
 
     // Test the initilization sequence.
@@ -106,6 +108,7 @@ public class XNetThrottleTest{
         Assert.assertFalse("F10 off",t.getF10());
         Assert.assertFalse("F11 off",t.getF11());
         Assert.assertFalse("F12 off",t.getF12());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -196,6 +199,7 @@ public class XNetThrottleTest{
         Assert.assertFalse("F9 off",t.getF9());
         Assert.assertFalse("F10 off",t.getF10());
         Assert.assertFalse("F11 off",t.getF11());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -270,6 +274,7 @@ public class XNetThrottleTest{
 
         // test that the direction value is the expected value
         Assert.assertFalse("Direction Reverse",t.getIsForward());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -361,6 +366,7 @@ public class XNetThrottleTest{
         Assert.assertFalse("F9 off",t.getF9());
         Assert.assertFalse("F10 off",t.getF10());
         Assert.assertFalse("F11 off",t.getF11());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -453,6 +459,7 @@ public class XNetThrottleTest{
         Assert.assertFalse("F9 off",t.getF9());
         Assert.assertFalse("F10 off",t.getF10());
         Assert.assertFalse("F11 off",t.getF11());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -536,6 +543,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -708,6 +716,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -794,6 +803,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
     }
 
 
@@ -878,6 +888,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -963,6 +974,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1027,6 +1039,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1096,6 +1109,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1220,6 +1234,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1361,6 +1376,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1445,6 +1461,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1529,6 +1546,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1618,6 +1636,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1706,6 +1725,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
 
     }
 
@@ -1819,6 +1839,7 @@ public class XNetThrottleTest{
 
         // and finaly, verify that getIsForward() returns false, like we set it.
         Assert.assertFalse("Direction Set",t.getIsForward());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -1906,6 +1927,7 @@ public class XNetThrottleTest{
 
         // and finaly, verify that getIsForward() returns false, like we set it.
         Assert.assertTrue("Direction Set",t.getIsForward());
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -1990,6 +2012,7 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -2079,6 +2102,7 @@ public class XNetThrottleTest{
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
         Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -2168,6 +2192,7 @@ public class XNetThrottleTest{
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode28,t.getSpeedStepMode());
         Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_28_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -2257,6 +2282,7 @@ public class XNetThrottleTest{
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode27,t.getSpeedStepMode());
         Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_27_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        t.throttleDispose();
     }
 
     @Test(timeout=1000)
@@ -2346,6 +2372,7 @@ public class XNetThrottleTest{
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode14,t.getSpeedStepMode());
         Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_14_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        t.throttleDispose();
     }
 
     // The minimal setup for log4J
