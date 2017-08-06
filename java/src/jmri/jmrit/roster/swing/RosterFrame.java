@@ -1673,6 +1673,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     class rosterPopupListener extends MouseAdapter {
 
+        // does clickTimer still actually do anything in this code?
+        // it looks like it just starts and stops, without
+        // invoking anything
+        
         javax.swing.Timer clickTimer = null;
 
         @Override
