@@ -524,7 +524,7 @@ public class AbstractAutomaton implements Runnable {
 
             mSensors[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
-                    log.debug("notify waitSensorState[] of property change");
+                    log.trace("notify waitSensorState[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             });
@@ -569,7 +569,7 @@ public class AbstractAutomaton implements Runnable {
         PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
-                log.debug("notify waitWarrantRunState of property change");
+                log.trace("notify waitWarrantRunState of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -611,7 +611,7 @@ public class AbstractAutomaton implements Runnable {
         PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
-                log.debug("notify waitWarrantBlock of property change");
+                log.trace("notify waitWarrantBlock of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -668,7 +668,7 @@ public class AbstractAutomaton implements Runnable {
                 blockChanged = true;
             }
             synchronized (self) {
-                log.debug("notify waitWarrantBlockChange of property change");
+                log.trace("notify waitWarrantBlockChange of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -713,7 +713,7 @@ public class AbstractAutomaton implements Runnable {
 
             mTurnouts[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
-                    log.debug("notify waitTurnoutConsistent[] of property change");
+                    log.trace("notify waitTurnoutConsistent[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             });
@@ -798,7 +798,7 @@ public class AbstractAutomaton implements Runnable {
         
         if (recreate) {
             // here, have to create a new state array
-            log.debug("recreate state array");
+            log.trace("recreate state array");
             tempState = new int[mInputs.length];
             for (i = 0 ; i < mInputs.length; i++) {
                 tempState[i] = mInputs[i].getState();
@@ -821,7 +821,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        log.debug("waitChange[] listeners registered");
+        log.trace("waitChange[] listeners registered");
         
         // queue a check for whether there was a change while registering
         jmri.util.ThreadingUtil.runOnLayoutEventually(
@@ -829,7 +829,7 @@ public class AbstractAutomaton implements Runnable {
                 log.trace("start separate waitChange check");
                 for (int j = 0 ; j < mInputs.length; j++) {
                     if ( initialState[j] != mInputs[j].getState() ) {
-                        log.debug("notify that input {} changed when initial on-layout check was finally done", j);
+                        log.trace("notify that input {} changed when initial on-layout check was finally done", j);
                         waitChangeQueue.offer(new PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState()));
                         break;
                     }
@@ -858,7 +858,7 @@ public class AbstractAutomaton implements Runnable {
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].removePropertyChangeListener(listeners[i]);
         }
-        log.debug("waitChange[] listeners removed");
+        log.trace("waitChange[] listeners removed");
         endWait();
     }
 
@@ -900,7 +900,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors Array of sensors to watch
      */
-    public synchronized void waitSensorChange(Sensor[] mSensors) {
+    public void waitSensorChange(Sensor[] mSensors) {
         waitChange(mSensors);
     }
 

@@ -255,7 +255,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingActiveTimer(timer);
             }
         }
@@ -270,7 +270,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingInActiveTimer(timer);
             }
         }

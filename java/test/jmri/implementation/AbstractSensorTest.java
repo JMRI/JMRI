@@ -106,9 +106,9 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         t.setSensorDebounceGoingInActiveTimer(31L);
         Assert.assertEquals("timer", 31L, t.getSensorDebounceGoingInActiveTimer());
         
-        Assert.assertEquals("initial default", false, t.useDefaultTimerSettings());
-        t.useDefaultTimerSettings(true);
-        Assert.assertEquals("initial default", true, t.useDefaultTimerSettings());
+        Assert.assertEquals("initial default", false, t.getUseDefaultTimerSettings());
+        t.setUseDefaultTimerSettings(true);
+        Assert.assertEquals("initial default", true, t.getUseDefaultTimerSettings());
                 
     }
 
