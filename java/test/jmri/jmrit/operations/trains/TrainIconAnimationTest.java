@@ -1,20 +1,12 @@
 package jmri.jmrit.operations.trains;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -23,15 +15,18 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
-import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 import jmri.util.JmriJFrame;
-import java.util.List;
-
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainIconAnimationTest {
 
@@ -46,8 +41,8 @@ public class TrainIconAnimationTest {
         Route r1 = new Route("1", "Southbound Main Route");
         RouteLocation rl1 = new RouteLocation("1r1", l1);
         r1.register(rl1);
-        TrainIconAnimation t = new TrainIconAnimation(ti,rl1,null);
-        Assert.assertNotNull("exists",t);
+        TrainIconAnimation t = new TrainIconAnimation(ti, rl1, null);
+        Assert.assertNotNull("exists", t);
         es.dispose();
     }
 
@@ -56,11 +51,11 @@ public class TrainIconAnimationTest {
     @Test
     public void testTrainIconAnimation() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainManager tmanager = TrainManager.instance();
-        RouteManager rmanager = RouteManager.instance();
-        LocationManager lmanager = LocationManager.instance();
-        EngineManager emanager = EngineManager.instance();
-        EngineTypes et = EngineTypes.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
+        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
 
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
@@ -337,7 +332,7 @@ public class TrainIconAnimationTest {
         // X=0 to X=25 25/2 * 3 = 38 mSec
         // Y=0 to Y=25 25/2 * 3 = 38 mSec
         // need to wait for icon to finish moving
-        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 25 && ti2.getY() == 25),"Train 2 Move 0");
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 25 && ti2.getY() == 25), "Train 2 Move 0");
 
         Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -349,7 +344,7 @@ public class TrainIconAnimationTest {
 
         // icon uses TrainIconAnimation 2 pixels every 3 mSec
         // need to wait for icon to finish moving
-        jmri.util.JUnitUtil.waitFor(() -> (ti1.getX() == 75 && ti1.getY() == 25),"Train 1 Move");
+        jmri.util.JUnitUtil.waitFor(() -> (ti1.getX() == 75 && ti1.getY() == 25), "Train 1 Move");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -360,7 +355,7 @@ public class TrainIconAnimationTest {
         train2.move();
 
         // need to wait for icon to finish moving
-        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 75 && ti2.getY() == 25),"Train 2 Move");
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 75 && ti2.getY() == 25), "Train 2 Move");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -370,7 +365,7 @@ public class TrainIconAnimationTest {
         train2.move();
 
         // need to wait for icon to finish moving
-        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 125 && ti2.getY() == 35),"Train 2 Move 2");
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 125 && ti2.getY() == 35), "Train 2 Move 2");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());

@@ -1,4 +1,3 @@
-//NceTournoutMonitor.java
 package jmri.jmrix.nce;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -7,26 +6,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * Polls NCE Command Station for turnout discrepancies
  *
  * This implementation reads the NCE Command Station (CS) memory that stores the
  * state of all accessories thrown by cabs or though the comm port using the new
  * binary switch command. The accessory states are storied in 256 byte array
  * starting at address 0xEC00.
- *
+ * <p>
  * byte 0, bit 0 = ACCY 1, bit 1 = ACCY 2 byte 1, bit 0 = ACCY 9, bit 1 = ACCY
  * 10
- *
+ * <p>
  * byte 255, bit 0 = ACCY 2041, bit 3 = ACCY 2044 (last valid addr)
- *
+ * <p>
  * ACCY bit = 0 turnout thrown, 1 = turnout closed
- *
+ * <p>
  * Block reads (16 bytes) of the NCE CS memory are performed to minimize impact
  * to the NCE CS. Data from the CS is then compared to the JMRI turnout
  * (accessory) state and if a discrepancy is discovered, the JMRI turnout state
  * is modified to match the CS.
- *
  *
  * @author Daniel Boudreau (C) 2007
  */
@@ -202,7 +199,6 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         } else {
             log.warn("wrong number of read bytes for memory poll");
         }
-
     }
 
     // Thread to process turnout changes, protects receive and xmt threads
@@ -472,8 +468,6 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(NceTurnoutMonitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutMonitor.class.getName());
 
 }
-

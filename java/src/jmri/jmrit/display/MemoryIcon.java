@@ -17,6 +17,7 @@ import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -232,7 +233,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
                     tf.getAddressPanel().setRosterEntry(re);
                 }
@@ -254,7 +255,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                                //Just brings up the standard allocate extra frame, this could be expanded in the future
                                 //As a point and click operation.
                                 df.allocateExtraSection(e, at);
                             }
@@ -405,7 +406,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     protected Object updateIconFromRosterVal(RosterEntry roster) {
         re = roster;
-        javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
+        javax.swing.ImageIcon icon = jmri.InstanceManager.getDefault(RosterIconFactory.class).getIcon(roster);
         if (icon == null || icon.getIconWidth() == -1 || icon.getIconHeight() == -1) {
             //the IconPath is still at default so no icon set
             return roster.titleString();

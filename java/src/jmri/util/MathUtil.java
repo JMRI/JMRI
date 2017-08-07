@@ -489,6 +489,24 @@ public final class MathUtil {
     }
 
     /**
+     * returns the origin (top left) of the rectangle
+     * @param r the rectangle
+     * @return the origin of the rectangle
+     */
+    public static Point2D origin(Rectangle2D r) {
+        return new Point2D.Double(r.getX(), r.getY());
+    }
+
+    /**
+     * returns the size of the rectangle
+     * @param r the rectangle
+     * @return the size of the rectangle
+     */
+    public static Point2D size(Rectangle2D r) {
+        return new Point2D.Double(r.getWidth(), r.getHeight());
+    }
+
+    /**
      * calculate the center of the rectangle
      * @param r the rectangle
      * @return the center of the rectangle

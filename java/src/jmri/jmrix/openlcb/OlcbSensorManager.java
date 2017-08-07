@@ -60,7 +60,8 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return s;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 

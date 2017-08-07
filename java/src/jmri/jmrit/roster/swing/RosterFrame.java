@@ -324,7 +324,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
             tf.getAddressPanel().setRosterEntry(re);
         });
@@ -1164,7 +1164,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                     //Still more than one possible loco, so check against the decoder family
                     List<RosterEntry> l3 = new ArrayList<>();
-                    List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
+                    List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
                     ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {
@@ -1275,7 +1275,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
-            ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
             tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
             tf.getAddressPanel().setRosterEntry(re);
@@ -1673,6 +1673,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     class rosterPopupListener extends MouseAdapter {
 
+        // does clickTimer still actually do anything in this code?
+        // it looks like it just starts and stops, without
+        // invoking anything
+        
         javax.swing.Timer clickTimer = null;
 
         @Override

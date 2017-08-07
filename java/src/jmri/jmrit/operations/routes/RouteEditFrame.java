@@ -64,7 +64,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     JTextField commentTextField = new JTextField(35);
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -84,7 +84,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         String routeName = null;
 
         // load managers
-        routeManager = RouteManager.instance();
+        routeManager = InstanceManager.getDefault(RouteManager.class);
 
         // Set up the jtable in a Scroll Pane..
         routePane = new JScrollPane(routeTable);
@@ -213,7 +213,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
 
         // set frame size and route for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
@@ -403,7 +403,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void updateComboBoxes() {
-        LocationManager.instance().updateComboBox(locationBox);
+        InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
     }
 
     // if the route has a departure time in the first location set the showDepartTime radio button

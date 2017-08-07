@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -18,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +106,7 @@ public class TrainIcon extends LocoIcon {
     jmri.jmrit.throttle.ThrottleFrame _tf = null;
 
     private void createThrottle() {
-        _tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
         if (getConsistNumber() > 0) {
             _tf.getAddressPanel().setAddress(getConsistNumber(), false); // use consist address
             if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("SendFunctionCommands"), Bundle
@@ -124,7 +126,7 @@ public class TrainIcon extends LocoIcon {
         if (route == null) {
             return routeMenu;
         }
-        List<RollingStock> carList = CarManager.instance().getByTrainList(_train);
+        List<RollingStock> carList = InstanceManager.getDefault(CarManager.class).getByTrainList(_train);
         for (RouteLocation rl : route.getLocationsBySequenceList()) {
             int pickupCars = 0;
             int dropCars = 0;
@@ -235,7 +237,7 @@ public class TrainIcon extends LocoIcon {
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());         
+            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);

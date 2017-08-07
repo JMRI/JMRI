@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -369,13 +370,13 @@ public class Route implements java.beans.PropertyChangeListener {
             }
         }
         // check to see if this route is used by a train that is built
-        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getRoute() == this && train.isBuilt()) {
                 return TRAIN_BUILT;
             }
         }
         // check to see if this route is used by a train
-        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getRoute() == this) {
                 return OKAY;
             }
@@ -384,7 +385,7 @@ public class Route implements java.beans.PropertyChangeListener {
     }
     
     private void addTrainListeners() {
-        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getRoute() == this) {
                 train.addPropertyChangeListener(this);
             }
@@ -392,7 +393,7 @@ public class Route implements java.beans.PropertyChangeListener {
     }
     
     private void removeTrainListeners() {
-        for (Train train : TrainManager.instance().getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             train.removePropertyChangeListener(this);
         }
     }
@@ -517,7 +518,7 @@ public class Route implements java.beans.PropertyChangeListener {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        RouteManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 

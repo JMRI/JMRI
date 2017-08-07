@@ -89,7 +89,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET) ? Integer.parseInt(Bundle
             .getMessage("DrawBarLengthFeet")) : Integer.parseInt(Bundle.getMessage("DrawBarLengthMeter")); // stocks TODO catch empty/non-integer value
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public RollingStock() {
         _lastDate = (new java.util.GregorianCalendar()).getGregorianChange(); // set to change date of the Gregorian Calendar. 
@@ -1199,9 +1199,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         setTrain(null);
         setDestination(null, null);
         setLocation(null, null);
-        CarRoads.instance().removePropertyChangeListener(this);
-        CarOwners.instance().removePropertyChangeListener(this);
-        CarColors.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         if (getIdTag() != null) {
             getIdTag().removePropertyChangeListener(_tagListener);
         }
@@ -1276,9 +1276,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             _lastLocationId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
-            setTrain(TrainManager.instance().getTrainById(a.getValue()));
+            setTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
         } else if ((a = e.getAttribute(Xml.TRAIN)) != null) {
-            setTrain(TrainManager.instance().getTrainByName(a.getValue()));
+            setTrain(InstanceManager.getDefault(TrainManager.class).getTrainByName(a.getValue()));
         }
         if (getTrain() != null &&
                 getTrain().getRoute() != null &&
@@ -1413,9 +1413,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     private void addPropertyChangeListeners() {
-        CarRoads.instance().addPropertyChangeListener(this);
-        CarOwners.instance().addPropertyChangeListener(this);
-        CarColors.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
     }
 
     // rolling stock listens for changes in a location name or if a location is deleted

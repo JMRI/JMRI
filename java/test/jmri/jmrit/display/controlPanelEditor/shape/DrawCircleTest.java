@@ -24,6 +24,8 @@ public class DrawCircleTest {
         ShapeDrawer s = new ShapeDrawer(frame);
         DrawCircle t = new DrawCircle("newShape","Circle",s);
         Assert.assertNotNull("exists",t);
+        t.dispose();
+        frame.dispose();
     }
 
     // The minimal setup for log4J
@@ -31,10 +33,12 @@ public class DrawCircleTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetWindows(true);  // log existing windows in setup
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

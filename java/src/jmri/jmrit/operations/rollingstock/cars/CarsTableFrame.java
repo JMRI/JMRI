@@ -46,7 +46,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     boolean showAllCars;
     String locationName;
     String trackName;
-    CarManager carManager = CarManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
     // labels
     JLabel numCars = new JLabel();
@@ -136,7 +136,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         if (Setup.isRfidEnabled()) {
             movep.add(sortByRfid);
         }
-        if (ScheduleManager.instance().numEntries() > 0) {
+        if (InstanceManager.getDefault(ScheduleManager.class).numEntries() > 0) {
             movep.add(sortByWait);
             movep.add(sortByPickup);
         }
@@ -402,7 +402,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     private void updateNumCars() {
-        String totalNumber = Integer.toString(CarManager.instance().getNumEntries());
+        String totalNumber = Integer.toString(InstanceManager.getDefault(CarManager.class).getNumEntries());
         if (showAllCars) {
             numCars.setText(totalNumber);
             return;

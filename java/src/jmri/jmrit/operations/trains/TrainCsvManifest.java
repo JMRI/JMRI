@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -33,16 +34,16 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 
-    EngineManager engineManager = EngineManager.instance();
-    CarManager carManager = CarManager.instance();
-    LocationManager locationManager = LocationManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public TrainCsvManifest(Train train) {
         // create comma separated value manifest file
-        File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainCsvManifestFile(train.getName());
 
         PrintWriter fileOut;
 
@@ -174,7 +175,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 if (car.getRouteDestination() == rl) {
                     cars--;
                     newWork = true;
-                    if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
                             CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
                     }
@@ -189,7 +190,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 }
             }
             // car holds
-            List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
+            List<RollingStock> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
             List<Car> cList = new ArrayList<Car>();
             for (RollingStock rs : rsByLocation) {
                 if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {

@@ -1,23 +1,25 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations CarTypes class Last manually cross-checked
- * on 20090131
- *
- * Derived from prevous "OperationsCarTest" to include only the tests related to * CarTypes.
+ * Tests for the Operations CarTypes class Last manually cross-checked on
+ * 20090131
+ * <p>
+ * Derived from previous "OperationsCarTest" to include only the tests related
+ * to CarTypes.
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarTypesTest extends OperationsTestCase {
 
     public void testCarTypes() {
-        CarTypes ct1 = CarTypes.instance();
+        CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
         Assert.assertTrue("Car Types Predefined Boxcar", ct1.containsName("Boxcar"));
@@ -43,6 +45,7 @@ public class CarTypesTest extends OperationsTestCase {
         ct1.deleteName("Type New1");
         Assert.assertFalse("Car Types Delete New1", ct1.containsName("Type New1"));
     }
+
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
@@ -68,6 +71,6 @@ public class CarTypesTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

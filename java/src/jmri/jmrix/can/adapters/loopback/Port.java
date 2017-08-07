@@ -16,7 +16,7 @@ public class Port extends AbstractSerialPortController {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
-        mPort = "(None)";
+        mPort = "(none)";
     }
 
     @Override

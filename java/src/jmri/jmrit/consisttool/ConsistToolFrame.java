@@ -398,7 +398,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         addLocoButtonActionPerformed(e);
         // Create a throttle object with the
         ThrottleFrame tf
-                = ThrottleFrameManager.instance().createThrottleFrame();
+                = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
         DccLocoAddress address = adrSelector.getAddress();
 
         /*
