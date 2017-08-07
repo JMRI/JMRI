@@ -127,5 +127,6 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     public void initialize() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load setup
         InstanceManager.getDefault(LocationManagerXml.class); // load locations
+        CarManagerXml.this.load();
     }
 }
