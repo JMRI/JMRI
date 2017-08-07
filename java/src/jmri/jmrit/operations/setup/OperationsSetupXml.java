@@ -1,10 +1,9 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
-import java.util.Set;
-import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractInstanceInitializer;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
@@ -12,7 +11,6 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
-public class OperationsSetupXml extends OperationsXml {
+public class OperationsSetupXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public OperationsSetupXml() {
     }
@@ -112,24 +110,8 @@ public class OperationsSetupXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
-
-        @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(OperationsSetupXml.class)) {
-                OperationsSetupXml instance = new OperationsSetupXml();
-                instance.load();
-                return instance;
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
-            set.add(OperationsSetupXml.class);
-            return set;
-        }
+    @Override
+    public void initialize() {
+        load();
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.Control;
@@ -22,16 +23,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager implements InstanceManagerAutoDefault {
+public class EngineManager extends RollingStockManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
 
     public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
-        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
-        // create manager to load engines and their attributes
-        InstanceManager.getDefault(EngineManagerXml.class);
     }
 
     /**
@@ -359,6 +357,12 @@ public class EngineManager extends RollingStockManager implements InstanceManage
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineManager.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        // create manager to load engines and their attributes
+        InstanceManager.getDefault(EngineManagerXml.class);
+    }
 }

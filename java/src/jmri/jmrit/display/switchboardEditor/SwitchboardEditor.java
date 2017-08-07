@@ -32,7 +32,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,7 +44,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
@@ -58,6 +56,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -1192,7 +1191,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         public void doMouseClicked(java.awt.event.MouseEvent e) {
-            log.debug("Switch clicked", e);
+            log.debug("Switch clicked");
             //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             //    return;
             //}
@@ -1473,7 +1472,7 @@ public class SwitchboardEditor extends Editor {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
 
@@ -1875,7 +1874,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load switch shape.
      *
-     * @param switchShape name of switch shape 
+     * @param switchShape name of switch shape
      */
     public void setSwitchShape(String switchShape) {
         int shape;

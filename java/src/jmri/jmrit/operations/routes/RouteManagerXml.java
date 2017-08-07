@@ -1,16 +1,13 @@
 package jmri.jmrit.operations.routes;
 
 import java.io.File;
-import java.util.Set;
-import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractInstanceInitializer;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009
  */
-public class RouteManagerXml extends OperationsXml {
+public class RouteManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public RouteManagerXml() {
     }
@@ -104,31 +101,8 @@ public class RouteManagerXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
 
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
-
-        @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(RouteManagerXml.class)) {
-                log.debug("RouteManagerXml creating instance");
-                // create and load
-                RouteManagerXml instance = new RouteManagerXml();
-                instance.load();
-                log.debug("Routes have been loaded!");
-                if (Control.SHOW_INSTANCE) {
-                    log.debug("RouteManagerXml returns instance {}", instance);
-                }
-                return instance;
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
-            set.add(RouteManagerXml.class);
-            return set;
-        }
-
+    @Override
+    public void initialize() {
+        load();
     }
 }
