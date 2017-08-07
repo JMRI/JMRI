@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.Arrays;
 import java.util.Set;
 import jmri.BlockManager;
-import jmri.CatalogTreeManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
 import jmri.IdTagManager;
@@ -26,7 +25,6 @@ import jmri.Timebase;
 import jmri.TurnoutManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
-import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -56,10 +54,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
-
-        if (type == CatalogTreeManager.class) {
-            return new DefaultCatalogTreeManager();
-        }
 
         if (type == ClockControl.class) {
             return new DefaultClockControl();
@@ -153,7 +147,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
                 BlockManager.class,
-                CatalogTreeManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
                 IdTagManager.class,

@@ -292,9 +292,9 @@ public class NXFrame extends WarrantRoute {
                     return;
                 }
                 if (_speedUnits.getText().equals("Mph")) {
-                    num = num * 447.04f;                        
+                    num = num * 447.04f / _scale;                        
                 } else {
-                    num = num * 277.7778f;                        
+                    num = num * 277.7778f / _scale;                        
                 }
                 float throttle = profile.getThrottleSetting(num, isForward);
                 if (throttle > 0.0f) {
@@ -606,34 +606,43 @@ public class NXFrame extends WarrantRoute {
         } catch (NumberFormatException nfe) {
             return Bundle.getMessage("MustBeFloat", text);
         }
+
         BlockOrder bo = _orders.get(0);
+        float len = getPathLength(bo);
+        if (len <= 0) {
+            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
+        }
         if (_originUnits.getText().equals("In")){
-            float len = bo.getPath().getLengthIn();
+            oDist *= 25.4f;
             if (oDist > 0 && oDist < len) {
-                _startDist = oDist * 25.4f;
+                _startDist = oDist;
             } else {
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
-            float len = bo.getPath().getLengthCm();
+            oDist *= 10f;
             if (oDist > 0 && oDist < len) {
-                _startDist = oDist * 10f;
+                _startDist = oDist;
             } else {
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }
         }
         bo = _orders.get(_orders.size()-1);
+        len = getPathLength(bo);
+        if (len <= 0) {
+            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
+        }
         if (_destUnits.getText().equals("In")) {
-            float len = bo.getPath().getLengthIn();
+            dDist *= 25.4f;
             if (dDist > 0 && dDist < len) {
-                _stopDist = dDist * 25.4f;
+                _stopDist = dDist;
             } else {
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
             }
         } else {
-            float len = bo.getPath().getLengthCm();
+            dDist *= 10f;
             if (dDist > 0 && dDist < len) {
-                _stopDist = dDist * 10f;
+                _stopDist = dDist;
             } else {
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
             }
@@ -654,13 +663,32 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("MustBeFloat", dist);  // positive message                                    
         } else {
             if (isInches) {
+                pathLen /= 25.4;
+                dist /= 25.4;
                 return Bundle.getMessage("BadLengthIn", pathName, blockName, pathLen, dist);                                        
             } else {
+                pathLen /= 10;
+                dist /= 10;
                 return Bundle.getMessage("BadLengthCm", pathName, blockName, pathLen, dist);                                        
             }
         }
      }
 
+    private float getPathLength(BlockOrder bo) {
+        float len = bo.getPath().getLengthMm();
+        if (len <= 0) {
+            String sLen = JOptionPane.showInputDialog(this, 
+                    Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
+                    + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            try {
+                len = Float.parseFloat(sLen);                    
+            } catch (NumberFormatException nfe) {
+                len = -1.0f;
+            }
+        }
+        return len;
+    }
     /*
      * Return length of warrant route in mm.  Assume start and end is in the middle of first
      * and last blocks.  Use a default length for blocks with unspecified length.
@@ -671,10 +699,10 @@ public class NXFrame extends WarrantRoute {
         _totalLen = _startDist;
         for (int i = 1; i < orders.size() - 1; i++) {
             BlockOrder bo = orders.get(i);
-            float len = bo.getPath().getLengthMm();
+            float len = getPathLength(bo);
             if (len <= 0) {
                 return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
-            }
+             }
             _totalLen += len;
         }
         _totalLen += _stopDist;
@@ -822,8 +850,11 @@ public class NXFrame extends WarrantRoute {
                             blockName, curDistance, blockLen, curThrottle, remRamp);
                 }
                 bo = orders.get(nextIdx++);
+                blockLen = getPathLength(bo);
+                if (blockLen <= 0) {
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
+                 }
                 blockName = bo.getBlock().getDisplayName();
-                blockLen = bo.getPath().getLengthMm();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) log.debug("Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
@@ -839,8 +870,11 @@ public class NXFrame extends WarrantRoute {
             _totalLen -= blockLen;
             if (nextIdx < orders.size()) {    // not the last block
                 bo = orders.get(nextIdx++);
+                blockLen = getPathLength(bo);
+                if (blockLen <= 0) {
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
+                 }
                 blockName = bo.getBlock().getDisplayName();
-                blockLen = bo.getPath().getLengthMm();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
@@ -861,8 +895,11 @@ public class NXFrame extends WarrantRoute {
                             + ", curDistance=" + curDistance + ", blockLen= " + blockLen + ", totalLen= " + _totalLen);
                 }
                 bo = orders.get(nextIdx++);
+                blockLen = getPathLength(bo);
+                if (blockLen <= 0) {
+                    return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
+                 }
                 blockName = bo.getBlock().getDisplayName();
-                blockLen = bo.getPath().getLengthMm();
                 if (nextIdx == orders.size()) {
                     blockLen /= 2;
                 }
@@ -924,12 +961,15 @@ public class NXFrame extends WarrantRoute {
                             blockName, curDistance, blockLen, curThrottle, remRamp);
                 }
                 bo = orders.get(nextIdx++);
-                blockName = bo.getBlock().getDisplayName();
                 if (nextIdx == orders.size()) {
                     blockLen = _stopDist;
                 } else {
-                    blockLen = bo.getPath().getLengthMm();                    
+                    blockLen = getPathLength(bo);
+                    if (blockLen <= 0) {
+                        return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
+                     }
                 }
+                blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {

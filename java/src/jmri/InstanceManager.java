@@ -46,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * For initialization of more complex default objects, see the
  * {@link InstanceInitializer} mechanism and its default implementation in
  * {@link jmri.managers.DefaultInstanceInitializer}.
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -213,10 +212,14 @@ public final class InstanceManager {
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 try {
-                    l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
+                    T obj = (T) type.getConstructor((Class[]) null).newInstance((Object[]) null);
+                    l.add(obj);
+                    if (obj instanceof InstanceManagerAutoInitialize) {
+                        ((InstanceManagerAutoInitialize) obj).initialize();
+                    }
                     log.debug("      auto-created default of {}", type.getName());
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
+                    log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
                     return null;
                 }
                 return l.get(l.size() - 1);
@@ -229,6 +232,9 @@ public final class InstanceManager {
                     T obj = (T) getDefault().initializers.get(type).getDefault(type);
                     log.debug("      initializer created default of {}", type.getName());
                     l.add(obj);
+                    if (obj instanceof InstanceManagerAutoInitialize) {
+                        ((InstanceManagerAutoInitialize) obj).initialize();
+                    }
                     return l.get(l.size() - 1);
                 } catch (IllegalArgumentException ex) {
                     log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
@@ -266,7 +272,7 @@ public final class InstanceManager {
      * @see #getNullableDefault(java.lang.Class)
      */
     @Nonnull
-    static public <T> Optional<T> getOptionalDefault(@Nonnull Class<T> type) {
+    static public <T> Optional<T> getOptionalDefault(@Nonnull Class< T> type) {
         return Optional.ofNullable(InstanceManager.getNullableDefault(type));
     }
 
@@ -284,7 +290,8 @@ public final class InstanceManager {
      * @return The default for type (normally this is the item passed in)
      */
     @Nonnull
-    static public <T> T setDefault(@Nonnull Class<T> type, @Nonnull T item) {
+    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item
+    ) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
@@ -451,11 +458,11 @@ public final class InstanceManager {
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
     //   2) Remove the setter from here, get tests to build & run
     //   3) Remove the accessor from here, get tests to build & run
-
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default block manager. May not be the only instance. In use by scripts.
+     * @return the default block manager. May not be the only instance. In use
+     *         by scripts.
      * @deprecated 4.5.1
      */
     @Deprecated
@@ -723,7 +730,7 @@ public final class InstanceManager {
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
     public <T> List<T> getInstances(@Nonnull Class<T> type) {
-        log.debug("Get list of type {}", type.getName());
+        log.trace("Get list of type {}", type.getName());
         if (managerLists.get(type) == null) {
             managerLists.put(type, new ArrayList<>());
             pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
@@ -752,27 +759,41 @@ public final class InstanceManager {
 
     /**
      * Clear all managed instances from this InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        log.debug("Clearing InstanceManager");
-        managerLists.keySet().forEach((type) -> {
-            clear(type);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            log.debug("Clearing InstanceManager");
+            managerLists.keySet().forEach((type) -> {
+                clear(type);
+             } );
         });
     }
 
     /**
      * Clear all managed instances of a particular type from this
      * InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects 
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        log.debug("Clearing managers of {}", type.getName());
-        getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
-            dispose((Disposable) o);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            log.trace("Clearing managers of {}", type.getName());
+            getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
+                dispose((Disposable) o);
+            });
+            // Should this be sending notifications of removed instances to listeners?
+            managerLists.put(type, new ArrayList<>());
         });
-        // Should this be sending notifications of removed instances to listeners?
-        managerLists.put(type, new ArrayList<>());
     }
 
     /**

@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(ThreadingUtilTest.suite());
+        suite.addTest(ThreadingDemoAndTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(AlphanumComparatorTest.suite());
         suite.addTest(ColorUtilTest.suite());
@@ -47,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
+        suite.addTest(jmri.util.PropertyChangeEventQueueTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.prefs.PackageTest.class));

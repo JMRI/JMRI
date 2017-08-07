@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.Reporter;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -22,13 +23,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
  */
-public class LocationManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class LocationManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
 
     public LocationManager() {
-        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
-        InstanceManager.getDefault(LocationManagerXml.class); // load locations
     }
 
     private int _id = 0;
@@ -437,8 +436,7 @@ public class LocationManager implements InstanceManagerAutoDefault, PropertyChan
     }
 
     /**
-     * There aren't any current property changes being monitored
-     * <p>
+     * There aren't any current property changes being monitored.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -464,4 +462,9 @@ public class LocationManager implements InstanceManagerAutoDefault, PropertyChan
 
     private final static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
 
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(LocationManagerXml.class); // load locations
+    }
 }

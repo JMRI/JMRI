@@ -15,6 +15,12 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
         super();
         this.prefix = prefix;
     }
+
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
 }
 
 

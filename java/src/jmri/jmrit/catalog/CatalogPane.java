@@ -11,6 +11,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class CatalogPane extends JPanel {
         super(true);
 
         // create basic GUI
-        dTree = new JTree(CatalogTreeModel.instance());
+        dTree = new JTree(InstanceManager.getDefault(CatalogTreeModel.class));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // build the tree GUI

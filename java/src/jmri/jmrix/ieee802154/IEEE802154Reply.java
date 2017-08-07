@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154;
 
-
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
  * payload.
@@ -281,5 +280,3 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-

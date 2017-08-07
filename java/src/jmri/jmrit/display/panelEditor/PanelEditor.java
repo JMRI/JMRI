@@ -164,7 +164,7 @@ public class PanelEditor extends Editor implements ItemListener {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
@@ -173,7 +173,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
+                ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
             }

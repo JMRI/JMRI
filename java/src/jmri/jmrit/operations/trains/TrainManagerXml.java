@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2015
  */
-public class TrainManagerXml extends OperationsXml implements InstanceManagerAutoDefault {
+public class TrainManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     private boolean fileLoaded = false;
     private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
@@ -44,7 +45,6 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
 
     public TrainManagerXml() {
-        TrainManagerXml.this.load();
     }
 
     /**
@@ -131,6 +131,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
     /**
      * Store the train's build report
+     *
      * @param name Full path name for train build report
      * @return Build report File.
      */
@@ -144,18 +145,19 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String defaultBuildReportFileName(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                BUILD_STATUS +
-                File.separator +
-                BUILD_REPORT_FILE_NAME +
-                name +
-                FILE_TYPE_TXT; // NOI18N
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + BUILD_STATUS
+                + File.separator
+                + BUILD_REPORT_FILE_NAME
+                + name
+                + FILE_TYPE_TXT; // NOI18N
     }
 
     /**
      * Creates the train's manifest file.
+     *
      * @param name Full path name for manifest file.
      * @return Manifest File.
      */
@@ -170,33 +172,33 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getDefaultManifestFileName(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                MANIFESTS +
-                File.separator +
-                MANIFEST_FILE_NAME +
-                name +
-                FILE_TYPE_TXT;// NOI18N
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + MANIFESTS
+                + File.separator
+                + MANIFEST_FILE_NAME
+                + name
+                + FILE_TYPE_TXT;// NOI18N
     }
 
     public String getBackupManifestFileName(String name, String lastModified) {
-        return getBackupManifestDirectoryName() +
-                name +
-                File.separator +
-                MANIFEST_FILE_NAME +
-                name +
-                ") " +
-                lastModified +
-                ".txt";// NOI18N
+        return getBackupManifestDirectoryName()
+                + name
+                + File.separator
+                + MANIFEST_FILE_NAME
+                + name
+                + ") "
+                + lastModified
+                + ".txt";// NOI18N
     }
 
     public String getBackupManifestDirectoryName() {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                MANIFESTS_BACKUPS +
-                File.separator;
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + MANIFESTS_BACKUPS
+                + File.separator;
     }
 
     public String getBackupManifestDirectoryName(String name) {
@@ -204,22 +206,22 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getBackupSwitchListFileName(String name, String lastModified) {
-        return getBackupSwitchListDirectoryName() +
-                name +
-                File.separator +
-                SWITCH_LIST_FILE_NAME +
-                name +
-                ") " +
-                lastModified +
-                ".txt";// NOI18N
+        return getBackupSwitchListDirectoryName()
+                + name
+                + File.separator
+                + SWITCH_LIST_FILE_NAME
+                + name
+                + ") "
+                + lastModified
+                + ".txt";// NOI18N
     }
 
     public String getBackupSwitchListDirectoryName() {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                SWITCH_LISTS_BACKUPS +
-                File.separator;
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + SWITCH_LISTS_BACKUPS
+                + File.separator;
     }
 
     public String getBackupSwitchListDirectoryName(String name) {
@@ -228,6 +230,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
     /**
      * Store the CSV train manifest
+     *
      * @param name Full path name to CSV train manifest file.
      * @return Train CSV manifest File.
      */
@@ -258,8 +261,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
     /**
      * Store the Json manifest for a train
+     *
      * @param name file name
-     * @param ext file extension to use
+     * @param ext  file extension to use
      * @return Json manifest File
      */
     public File createManifestFile(String name, String ext) {
@@ -276,6 +280,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
     /**
      * Store the switch list for a location
+     *
      * @param name The location's name, to become file name.
      * @return Switch list File.
      */
@@ -290,18 +295,19 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getDefaultSwitchListName(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                SWITCH_LISTS +
-                File.separator +
-                SWITCH_LIST_FILE_NAME +
-                name +
-                FILE_TYPE_TXT; // NOI18N
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + SWITCH_LISTS
+                + File.separator
+                + SWITCH_LIST_FILE_NAME
+                + name
+                + FILE_TYPE_TXT; // NOI18N
     }
 
     /**
      * Store the CSV switch list for a location
+     *
      * @param name Location's name, to become file name.
      * @return CSV switch list File.
      */
@@ -397,6 +403,11 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
+
+    @Override
+    public void initialize() {
+        load();
+    }
 
 }

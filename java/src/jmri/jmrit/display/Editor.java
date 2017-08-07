@@ -64,6 +64,7 @@ import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.jmrit.catalog.CatalogPanel;
+import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -1167,6 +1168,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return true;
         //}
         //return false;
+    }
+
+    /**
+     * Display the rotation of the Positionable item and
+     * provide a dialog menu item to edit it.
+     *
+     * @param p     The item to add the menu item to
+     * @param popup The menu item to add the action to
+     * @return always returns true
+     */
+    public boolean setShowRotationMenu(Positionable p, JPopupMenu popup) {
+        JMenu edit = new JMenu(Bundle.getMessage("Rotation", "..."));
+        JMenuItem jmi = edit.add(Bundle.getMessage("Rotation", " = " + p.getDegrees()));
+        jmi.setEnabled(false);
+        edit.add(CoordinateEdit.getRotateEditAction(p));
+        popup.add(edit);
+        return true;
     }
 
     /**
@@ -2452,7 +2470,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
-        log.debug("makeAddIconFrame for {}, add= {}, table= ", name, add, table);
+        log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
         String BundleName;
         JFrameItem frame = new JFrameItem(name, editor);
@@ -2512,7 +2530,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ImageIndexEditor ii = ImageIndexEditor.instance(editor);
+                    ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                     ii.pack();
                     ii.setVisible(true);
                 }
@@ -2531,7 +2549,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                    InstanceManager.getDefault(DirectorySearcher.class).searchFS();
                     ea.addDirectoryToCatalog();
                 }
 

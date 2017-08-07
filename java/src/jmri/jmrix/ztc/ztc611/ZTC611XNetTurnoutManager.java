@@ -26,8 +26,11 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManager.class.getName());
 
 }
-
-

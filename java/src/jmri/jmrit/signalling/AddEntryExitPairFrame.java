@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -33,15 +34,18 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
         nxPanel = new AddEntryExitPairPanel(panel);
 
-        setTitle(Bundle.getMessage("AddEntryExitPoints"));
+        setTitle(Bundle.getMessage("AddEntryExitPoints"));  // NOI18N
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(nxPanel);
 
-        JMenuBar menuBar = new JMenuBar(); //getJMenuBar();
-        JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
-        menuBar.add(options);
-        options.addActionListener(new ActionListener() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu optMenu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
+        JMenuItem optItem = new JMenuItem(Bundle.getMessage("MenuOptions"));  // NOI18N
+        optMenu.add(optItem);
+        menuBar.add(optMenu);
+
+        optItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 nxPanel.optionWindow(event);
@@ -49,7 +53,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
         });
 
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.signalling.EntryExitFrame", true);
+        addHelpMenu("package.jmri.jmrit.signalling.EntryExitFrame", true);  // NOI18N
         // pack for display
         pack();
     }

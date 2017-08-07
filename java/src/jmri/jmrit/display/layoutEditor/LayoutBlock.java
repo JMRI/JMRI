@@ -922,9 +922,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         if (getOccupancySensor() != null) {
             if (sensorDebounceGlobalCheck.isSelected()) {
-                getOccupancySensor().useDefaultTimerSettings(true);
+                getOccupancySensor().setUseDefaultTimerSettings(true);
             } else {
-                getOccupancySensor().useDefaultTimerSettings(false);
+                getOccupancySensor().setUseDefaultTimerSettings(false);
                 if (!sensorDebounceInactiveField.getText().trim().equals("")) {
                     getOccupancySensor().setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
                 }
