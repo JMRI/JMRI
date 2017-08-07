@@ -22,6 +22,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
@@ -127,7 +128,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             }
         });
 
-//      Mouselistener for doubleclick activation of programmer   
+//      Mouselistener for doubleclick activation of programmer
         dTree.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -204,7 +205,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * Reads the available decoders and loads them into the dModel tree model.
      */
     void createDecoderTypeContents() {
-        List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
+        List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, null);
         int len = decoders.size();
         DecoderTreeNode mfgElement = null;
         DecoderTreeNode familyElement = null;
@@ -223,7 +224,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
                 mfgElement = new DecoderTreeNode(mfg,
-                        "CV8 = " + DecoderIndexFile.instance().mfgIdFromName(mfg), "");
+                        "CV8 = " + InstanceManager.getDefault(DecoderIndexFile.class).mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyNameNode = new HashMap<String, DecoderTreeNode>();
                 familyElement = null;
@@ -275,7 +276,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                 decoderNameNode.setShowable(decoder.getShowable());
                 dModel.insertNodeInto(decoderNameNode, familyElement, familyElement.getChildCount());
             }
-        }  // end of loop over decoders       
+        }  // end of loop over decoders
     }
 
     /**
@@ -346,7 +347,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         }
 
-        // set everybody not identified 
+        // set everybody not identified
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) { // loop over the tree
             DecoderTreeNode node = e.nextElement();

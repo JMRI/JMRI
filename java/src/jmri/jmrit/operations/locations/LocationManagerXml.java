@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import org.jdom2.Document;
@@ -16,10 +17,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
  */
-public class LocationManagerXml extends OperationsXml implements InstanceManagerAutoDefault {
+public class LocationManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public LocationManagerXml() {
-        LocationManagerXml.this.load();
     }
 
     /**
@@ -103,5 +103,10 @@ public class LocationManagerXml extends OperationsXml implements InstanceManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
+
+    @Override
+    public void initialize() {
+        this.load();
+    }
 
 }

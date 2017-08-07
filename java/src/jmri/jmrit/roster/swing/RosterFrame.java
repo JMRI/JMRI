@@ -1164,7 +1164,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                     //Still more than one possible loco, so check against the decoder family
                     List<RosterEntry> l3 = new ArrayList<>();
-                    List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
+                    List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
                     ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {

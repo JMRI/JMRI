@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -20,13 +21,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
  */
-public class RouteManager implements InstanceManagerAutoDefault {
+public class RouteManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N
 
     public RouteManager() {
-        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
-        InstanceManager.getDefault(RouteManagerXml.class); // load routes
     }
 
     private int _id = 0;
@@ -317,5 +316,11 @@ public class RouteManager implements InstanceManagerAutoDefault {
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(RouteManagerXml.class); // load routes
+    }
 
 }

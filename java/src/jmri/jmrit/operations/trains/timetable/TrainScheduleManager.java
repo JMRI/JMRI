@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
@@ -27,12 +28,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class TrainScheduleManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class TrainScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
 
     public TrainScheduleManager() {
-        InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 
     private int _id = 0;
@@ -318,5 +318,10 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Propert
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class.getName());
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
+    }
 
 }
