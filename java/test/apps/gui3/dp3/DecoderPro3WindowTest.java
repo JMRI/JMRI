@@ -38,6 +38,6 @@ public class DecoderPro3WindowTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class.getName());
 
 }

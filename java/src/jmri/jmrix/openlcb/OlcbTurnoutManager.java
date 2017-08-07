@@ -82,7 +82,8 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 

@@ -49,7 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
         hostNameField.setText("localhost");
         hostNameField.setEnabled(false); // always localhost.
         portField.setEnabled(false); // we don't change this on the simulator.
-        portFieldLabel.setText(Bundle.getMessage("CommunicationPort"));
+        portFieldLabel.setText(Bundle.getMessage("CommunicationPortLabel"));
         portField.setText(String.valueOf(adapter.getPort()));
         portField.setEnabled(false); // we can't change this now.
     }

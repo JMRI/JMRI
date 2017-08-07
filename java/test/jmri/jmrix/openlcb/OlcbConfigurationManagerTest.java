@@ -33,6 +33,6 @@ public class OlcbConfigurationManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class.getName());
 
 }

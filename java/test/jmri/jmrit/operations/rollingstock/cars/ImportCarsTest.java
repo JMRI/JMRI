@@ -33,6 +33,6 @@ public class ImportCarsTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class.getName());
 
 }

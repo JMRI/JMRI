@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.Bundle {
+public class Bundle extends jmri.jmrix.ieee802154.Bundle {
 
     @Nullable
-    private static final String name = null; // NOI18N
+    private static final String name = "jmri.jmrix.ieee802154.xbee.XBeeBundle";
 
     //
     // below here is boilerplate to be copied exactly

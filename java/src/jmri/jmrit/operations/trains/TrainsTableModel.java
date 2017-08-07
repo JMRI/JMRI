@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    TrainManager trainManager = TrainManager.instance(); // There is only one manager
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
 
     // Defines the columns
     private static final int IDCOLUMN = 0;

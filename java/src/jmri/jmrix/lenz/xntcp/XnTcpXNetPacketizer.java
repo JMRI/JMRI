@@ -51,7 +51,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
                 }
                 // Store the byte.
                 msg.setElement(i++, (byte) char1 & 0xFF);
-                log.debug("XnTcpNetPacketizer: received " + Integer.toHexString(char1 & 0xff));
+                log.debug("XnTcpNetPacketizer: received {}", Integer.toHexString(char1 & 0xff));
                 // If the XpressNet packet is completed, exit the loop
                 if (endOfMessage(msg)) {
                     break;
@@ -73,6 +73,5 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class.getName());
+
 }
-
-

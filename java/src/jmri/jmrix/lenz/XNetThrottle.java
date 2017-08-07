@@ -547,8 +547,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     int b3 = l.getElement(3);
                     int b4 = l.getElement(4);
 
-                    parseSpeedandAvailability(b1);
-                    parseSpeedandDirection(b2);
+                    parseSpeedAndAvailability(b1);
+                    parseSpeedAndDirection(b2);
                     parseFunctionInformation(b3, b4);
 
                     //We've processed this request, so set the status to Idle.
@@ -575,8 +575,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     log.debug("Locomotive " + getDccAddress() + "in consist " + b5);
                 }
 
-                parseSpeedandAvailability(b1);
-                parseSpeedandDirection(b2);
+                parseSpeedAndAvailability(b1);
+                parseSpeedAndDirection(b2);
                 parseFunctionInformation(b3, b4);
 
                 // We've processed this request, so set the status to Idle.
@@ -606,8 +606,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                             + "in Double Header with " + address2);
                 }
 
-                parseSpeedandAvailability(b1);
-                parseSpeedandDirection(b2);
+                parseSpeedAndAvailability(b1);
+                parseSpeedAndDirection(b2);
                 parseFunctionInformation(b3, b4);
 
                 // We've processed this request, so set the status to Idle.
@@ -624,8 +624,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 int b1 = l.getElement(1);
                 int b2 = l.getElement(2);
 
-                parseSpeedandAvailability(b1);
-                parseSpeedandDirection(b2);
+                parseSpeedAndAvailability(b1);
+                parseSpeedAndDirection(b2);
 
                 //We've processed this request, so set the status to Idle.
                 requestState = THROTTLEIDLE;
@@ -728,7 +728,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Get SpeedStep and availability information.
      */
-    protected void parseSpeedandAvailability(int b1) {
+    protected void parseSpeedAndAvailability(int b1) {
         /* the first data bite indicates the speed step mode, and
          if the locomotive is being controlled by another throttle */
 
@@ -787,7 +787,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Get Speed and Direction information.
      */
-    protected void parseSpeedandDirection(int b2) {
+    protected void parseSpeedAndDirection(int b2) {
         /* the second byte indicates the speed and direction setting */
 
         if ((b2 & 0x80) == 0x80 && this.isForward == false) {

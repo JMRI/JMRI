@@ -28,13 +28,14 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      * @param station Station to which this Section belongs
      */
     public MaintainerCallSection(String inputSensor, String layoutOutput, Station station) {
+        this.station = station;
+
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         hInputSensor = hm.getNamedBeanHandle(inputSensor, sm.provideSensor(inputSensor));
         hLayoutOutput = hm.getNamedBeanHandle(layoutOutput, tm.provideTurnout(layoutOutput));
-        this.station = station;
         
         // aligns at start
         codeValueDelivered(codeSendStart());

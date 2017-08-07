@@ -38,6 +38,6 @@ public class AbstractMessageTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractMessageTest.class.getName());
 
 }

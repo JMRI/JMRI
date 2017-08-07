@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
+public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -107,6 +107,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public final static int PROMPTUSER = 0x00;
     public final static int AUTOCLEAR = 0x01;
     public final static int AUTOCANCEL = 0x02;
+    public final static int AUTOSTACK = 0x03;
 
     int routeClearOption = PROMPTUSER;
 
@@ -166,40 +167,40 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             point = providePoint(source, layout.get(i));
         }
         if (point == null) {
-            log.error("Unable to find a location on any panel for item " + source.getDisplayName());
+            log.error("Unable to find a location on any panel for item " + source.getDisplayName());  // NOI18N
             return;
         }
     }
 
     public void addNXSourcePoint(NamedBean source, LayoutEditor panel) {
         if (source == null) {
-            log.error("source bean supplied is null");
+            log.error("source bean supplied is null");  // NOI18N
             return;
         }
         if (panel == null) {
-            log.error("panel supplied is null");
+            log.error("panel supplied is null");  // NOI18N
             return;
         }
         PointDetails point;
         point = providePoint(source, panel);
         if (point == null) {
-            log.error("Unable to find a location on the panel " + panel.getLayoutName() + " for item " + source.getDisplayName());
+            log.error("Unable to find a location on the panel " + panel.getLayoutName() + " for item " + source.getDisplayName());  // NOI18N
             return;
         }
     }
 
     public Object getEndPointLocation(NamedBean source, LayoutEditor panel) {
         if (source == null) {
-            log.error("Source bean past is null");
+            log.error("Source bean past is null");  // NOI18N
             return null;
         }
         if (panel == null) {
-            log.error("panel past is null");
+            log.error("panel passed is null");  // NOI18N
             return null;
         }
         PointDetails sourcePoint = getPointDetails(source, panel);
         if (sourcePoint == null) {
-            log.error("Point is not located");
+            log.error("Point is not located");  // NOI18N
             return null;
         }
         return sourcePoint.getRefLocation();
@@ -210,7 +211,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return ENTRYEXIT;
     }
 
-    public NamedBean getBySystemName(String systemName) {
+    public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
             if (pd != null) {
@@ -221,12 +222,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public DestinationPoints getBeanBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public DestinationPoints getBeanByUserName(String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -237,8 +238,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public NamedBean getNamedBean(String name) {
-        NamedBean b = getBeanByUserName(name);
+    public DestinationPoints getNamedBean(String name) {
+        DestinationPoints b = getBeanByUserName(name);
         if (b != null) {
             return b;
         }
@@ -247,17 +248,17 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     @Override
     public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     @Override
     public char typeLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     @Override
     public String makeSystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /**
@@ -276,7 +277,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     @Override
     public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     @Override
@@ -285,18 +286,18 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<DestinationPoints> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     @Override
-    public void register(NamedBean n) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void register(DestinationPoints n) {
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     @Override
-    public void deregister(NamedBean n) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void deregister(DestinationPoints n) {
+        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     public void setClearDownOption(int i) {
@@ -325,7 +326,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
             List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, panel);
             if ((facing == null) && (protecting == null)) {
-                log.error("Unable to find facing and protecting block");
+                log.error("Unable to find facing and protecting block");  // NOI18N
                 return null;
             }
             sourcePoint = providePoint(facing, protecting, panel);
@@ -504,7 +505,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             ((DestinationPoints) e.getSource()).removePropertyChangeListener(this);
             if (e.getPropertyName().equals("active")) {
                 processRoutesToSet();
-            } else if (e.getPropertyName().equals("stacked") || e.getPropertyName().equals("failed") || e.getPropertyName().equals("noChange")) {
+            } else if (e.getPropertyName().equals("stacked") || e.getPropertyName().equals("failed") || e.getPropertyName().equals("noChange")) {  // NOI18N
                 removeRemainingRoute();
             }
         }
@@ -568,16 +569,16 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id) {
         if (source == null) {
-            log.error("no source Object provided");
+            log.error("no source Object provided");  // NOI18N
             return;
         }
         if (destination == null) {
-            log.error("no destination Object provided");
+            log.error("no destination Object provided");  // NOI18N
             return;
         }
         PointDetails sourcePoint = providePoint(source, panel);
         if (sourcePoint == null) {
-            log.error("source point for " + source.getDisplayName() + " not created addNXDes");
+            log.error("source point for " + source.getDisplayName() + " not created addNXDes");  // NOI18N
             return;
         }
 
@@ -593,7 +594,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             nxpair.get(sourcePoint).addDestination(destPoint, id);
         }
 
-        firePropertyChange("length", null, null);
+        firePropertyChange("length", null, null);  // NOI18N
     }
 
     public ArrayList<Object> getDestinationList(Object obj, LayoutEditor panel) {
@@ -611,7 +612,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         PointDetails sourcePoint = getPointDetails(source, panel);
         if (sourcePoint == null) {
             if (log.isDebugEnabled()) {
-                log.debug("source " + source.getDisplayName() + " does not exist so can not delete pair");
+                log.debug("source " + source.getDisplayName() + " does not exist so can not delete pair");  // NOI18N
             }
             return;
         }
@@ -619,19 +620,19 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         PointDetails destPoint = getPointDetails(destination, panel);
         if (destPoint == null) {
             if (log.isDebugEnabled()) {
-                log.debug("destination " + destination.getDisplayName() + " does not exist so can not delete pair");
+                log.debug("destination " + destination.getDisplayName() + " does not exist so can not delete pair");  // NOI18N
             }
             return;
         }
 
         if (nxpair.containsKey(sourcePoint)) {
             nxpair.get(sourcePoint).removeDestination(destPoint);
-            firePropertyChange("length", null, null);
+            firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().size() == 0) {
                 nxpair.remove(sourcePoint);
             }
         } else if (log.isDebugEnabled()) {
-            log.debug("source " + source.getDisplayName() + " is not a valid source so can not delete pair");
+            log.debug("source " + source.getDisplayName() + " is not a valid source so can not delete pair");  // NOI18N
         }
 
     }
@@ -781,13 +782,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
      */
     public String getPointAsString(NamedBean obj, LayoutEditor panel) {
         if (obj == null) {
-            return "null";
+            return "null";  // NOI18N
         }
         PointDetails valid = getPointDetails(obj, panel);  //was just plain getPoint
         if (valid != null) {
             return valid.getDisplayName();
         }
-        return "empty";
+        return "empty";  // NOI18N
     }
 
     ArrayList<StackDetails> stackList = new ArrayList<StackDetails>();
@@ -810,7 +811,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         }
         if (stackDialog == null) {
             stackDialog = new JDialog();
-            stackDialog.setTitle(Bundle.getMessage("WindowTitleStackRoutes"));
+            stackDialog.setTitle(Bundle.getMessage("WindowTitleStackRoutes"));  // NOI18N
             stackDialog.add(stackPanel);
         }
         stackPanel.updateGUI();
@@ -972,13 +973,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         runWhenStabilised = false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
-            throw new JmriException("advanced routing not enabled");
+            throw new JmriException("advanced routing not enabled");  // NOI18N
         }
         if (!lbm.routingStablised()) {
             runWhenStabilised = true;
             toUseWhenStable = editor;
             interlockTypeToUseWhenStable = interlockType;
-            log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");
+            log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");  // NOI18N
             return;
         }
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
@@ -998,13 +999,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             }
         }
 
-        firePropertyChange("autoGenerateComplete", null, null);
+        firePropertyChange("autoGenerateComplete", null, null);  // NOI18N
     }
 
     protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("topology")) {
+            if (e.getPropertyName().equals("topology")) {  // NOI18N
                 //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
@@ -1037,13 +1038,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     @Override
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(DestinationPoints bean, String property) throws java.beans.PropertyVetoException {
 
     }
 
     @Override
     public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");
+        return Bundle.getMessage("BeanNameTransit");  // NOI18N
     }
 
     // initialize logging

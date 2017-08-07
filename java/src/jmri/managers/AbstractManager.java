@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractManager implements Manager, PropertyChangeListener, VetoableChangeListener {
+abstract public class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
 
     public AbstractManager() {
         registerSelf();
@@ -58,7 +58,8 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     abstract public int getXMLOrder();
 
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         return getSystemPrefix() + typeLetter() + s;
     }
 
@@ -73,8 +74,8 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
         _tuser.clear();
     }
 
-    protected Hashtable<String, NamedBean> _tsys = new Hashtable<>();   // stores known Turnout instances by system name
-    protected Hashtable<String, NamedBean> _tuser = new Hashtable<>();   // stores known Turnout instances by user name
+    protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known Turnout instances by system name
+    protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known Turnout instances by user name
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -83,9 +84,9 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * because Java doesn't have polymorphic return types.
      *
      * @param systemName the system name
-     * @return requested Turnout object or null if none exists
+     * @return requested NamedBean object or null if none exists
      */
-    protected Object getInstanceBySystemName(String systemName) {
+    protected E getInstanceBySystemName(String systemName) {
         return _tsys.get(systemName);
     }
 
@@ -98,7 +99,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @param userName the user name
      * @return requested Turnout object or null if none exists
      */
-    protected Object getInstanceByUserName(String userName) {
+    protected E getInstanceByUserName(String userName) {
         return _tuser.get(NamedBean.normalizeUserName(userName));
     }
 
@@ -110,7 +111,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @return requested NamedBean object or null if none exists
      */
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public E getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
     }
 
@@ -122,7 +123,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @return requested NamedBean object or null if none exists
      */
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public E getBeanByUserName(String userName) {
         return _tuser.get(NamedBean.normalizeUserName(userName));
     }
 
@@ -134,8 +135,8 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @return requested NamedBean object or null if none exists
      */
     @Override
-    public NamedBean getNamedBean(String name) {
-        NamedBean b = getBeanByUserName(NamedBean.normalizeUserName(name));
+    public E getNamedBean(String name) {
+        E b = getBeanByUserName(NamedBean.normalizeUserName(name));
         if (b != null) {
             return b;
         }
@@ -157,7 +158,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull E bean, @Nonnull String property) throws PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
         } catch (PropertyVetoException e) {
@@ -178,7 +179,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void register(NamedBean s) {
+    public void register(E s) {
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
 
@@ -195,7 +196,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      *
      * @param s the bean to register
      */
-    protected void registerUserName(NamedBean s) {
+    protected void registerUserName(E s) {
         String userName = s.getUserName();
         if (userName == null) {
             return;
@@ -213,7 +214,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      *
      * @param s the bean to register
      */
-    protected void handleUserNameUniqueness(NamedBean s) {
+    protected void handleUserNameUniqueness(E s) {
         String userName = s.getUserName();
         if (userName != null) {
             // enforce uniqueness of user names
@@ -234,7 +235,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void deregister(NamedBean s) {
+    public void deregister(E s) {
         s.removePropertyChangeListener(this);
         String systemName = s.getSystemName();
         _tsys.remove(systemName);
@@ -260,7 +261,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
-            NamedBean t = (NamedBean) e.getSource();
+            E t = (E) e.getSource();
             if (old != null) {
                 _tuser.remove(old); // remove old name for this bean
             }
@@ -310,7 +311,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
+    public List<E> getNamedBeanList() {
         return new ArrayList<>(_tsys.values());
     }
 

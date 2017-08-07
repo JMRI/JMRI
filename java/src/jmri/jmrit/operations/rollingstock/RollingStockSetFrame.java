@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -41,8 +42,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
     RollingStockManager manager;
 
-    protected LocationManager locationManager = LocationManager.instance();
-    protected TrainManager trainManager = TrainManager.instance();
+    protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+    protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     RollingStock _rs;
     protected boolean _disableComboBoxUpdate = false;
@@ -56,13 +57,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
-    protected JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> trackLocationBox = new JComboBox<>();
-    protected JComboBox<Location> destinationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> destinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> trackDestinationBox = new JComboBox<>();
-    protected JComboBox<Location> finalDestinationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> finalDestinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> finalDestTrackBox = new JComboBox<>();
-    protected JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
+    protected JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
 
     // check boxes
     protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -245,7 +246,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         ignoreTrainCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
         // get notified if train combo box gets modified
         trainManager.addPropertyChangeListener(this);
 
@@ -792,7 +793,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         if (_rs != null) {
             _rs.removePropertyChangeListener(this);
         }
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         super.dispose();
     }

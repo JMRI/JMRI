@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(ThreadingUtilTest.suite());
+        suite.addTest(ThreadingDemoAndTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(AlphanumComparatorTest.suite());
         suite.addTest(ColorUtilTest.suite());
@@ -47,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
+        suite.addTest(jmri.util.PropertyChangeEventQueueTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.prefs.PackageTest.class));
@@ -76,6 +78,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoAddressComparatorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MouseInputAdapterInstallerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NamedBeanComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NonNullArrayListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NoArchiveFileFilterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OrderedPropertiesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PhysicalLocationPanelTest.class));
@@ -93,6 +96,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(JLogoutputFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));

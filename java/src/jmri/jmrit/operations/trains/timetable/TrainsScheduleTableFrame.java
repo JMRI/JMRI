@@ -45,9 +45,9 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    TrainManager trainManager = TrainManager.instance();
-    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
-    LocationManager locationManager = LocationManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    TrainScheduleManager trainScheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     TrainsScheduleTableModel trainsScheduleModel = new TrainsScheduleTableModel();
     javax.swing.JTable trainsScheduleTable = new javax.swing.JTable(trainsScheduleModel);
@@ -274,12 +274,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
+                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
+                            InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -296,13 +296,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.instance().addCVSFile(csvFile);
+                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.instance().process();
+            InstanceManager.getDefault(TrainCustomManifest.class).process();
         }
         if (ae.getSource() == switchListsButton) {
             trainScheduleManager.buildSwitchLists();

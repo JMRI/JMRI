@@ -120,6 +120,11 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         return (AcelaAddress.convertSystemNameToAlternate(systemName));
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * Allow access to AcelaLightManager
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure

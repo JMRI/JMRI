@@ -23,8 +23,10 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
@@ -33,10 +35,9 @@ import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpServlet;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide JSON formatted responses for requests to requests for information
@@ -138,7 +139,7 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         if (type != null) {
             response.setContentType(UTF8_APPLICATION_JSON);
-            ServletUtil.getDefault().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
@@ -222,12 +223,12 @@ public class JsonServlet extends WebSocketServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Json.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "JsonTitle")
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath())
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath())
             ));
 
         }
@@ -238,7 +239,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getDefault().setNonCachingHeaders(response);
+        InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
@@ -325,7 +326,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getDefault().setNonCachingHeaders(response);
+        InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
@@ -402,7 +403,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletUtil.getDefault().setNonCachingHeaders(response);
+        InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;

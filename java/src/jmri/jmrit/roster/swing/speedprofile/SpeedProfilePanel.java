@@ -750,7 +750,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             if (table != null) {
                 table.dispose();
             }
-            table = new SpeedProfileTable(tmpRe);
+            table = new SpeedProfileTable(tmpSp, tmpRe.getId());
             table.setVisible(true);
             return;
         }
@@ -802,7 +802,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 if (table != null) {
                     table.dispose();
                 }
-                table = new SpeedProfileTable(tmpRe);
+                table = new SpeedProfileTable(speedProfile, tmpRe.getId());
                 table.setVisible(true);
                 return;
             }
@@ -827,7 +827,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 if (table != null) {
                     table.dispose();
                 }
-                table = new SpeedProfileTable(re);
+                table = new SpeedProfileTable(re.getSpeedProfile(), re.getId());
                 table.setVisible(true);
                 return;
             }
@@ -896,19 +896,19 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
         SensorDetails(Sensor sen) {
             sensor = sen;
-            usingGlobal = sen.useDefaultTimerSettings();
+            usingGlobal = sen.getUseDefaultTimerSettings();
             activeDelay = sen.getSensorDebounceGoingActiveTimer();
             inactiveDelay = sen.getSensorDebounceGoingInActiveTimer();
         }
 
         void setupSensor() {
-            sensor.useDefaultTimerSettings(false);
+            sensor.setUseDefaultTimerSettings(false);
             sensor.setSensorDebounceGoingActiveTimer(0);
             sensor.setSensorDebounceGoingInActiveTimer(0);
         }
 
         void resetDetails() {
-            sensor.useDefaultTimerSettings(usingGlobal);
+            sensor.setUseDefaultTimerSettings(usingGlobal);
             sensor.setSensorDebounceGoingActiveTimer(activeDelay);
             sensor.setSensorDebounceGoingInActiveTimer(inactiveDelay);
         }

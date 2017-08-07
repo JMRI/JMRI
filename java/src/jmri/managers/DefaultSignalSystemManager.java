@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalSystemManager extends AbstractManager
+public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         implements SignalSystemManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalSystemManager() {

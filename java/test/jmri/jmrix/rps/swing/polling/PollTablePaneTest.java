@@ -37,6 +37,6 @@ public class PollTablePaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollTablePaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PollTablePaneTest.class.getName());
 
 }

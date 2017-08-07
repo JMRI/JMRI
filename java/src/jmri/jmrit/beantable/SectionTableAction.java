@@ -359,9 +359,9 @@ public class SectionTableAction extends AbstractTableAction {
         if ((blockManager.getSystemNameList().size()) > 0) {
             addEditPressed();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, rbx
+            JOptionPane.showMessageDialog(null, rbx
                     .getString("Message1"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -708,9 +708,9 @@ public class SectionTableAction extends AbstractTableAction {
             return; // without creating any 
         }
         if (curSection == null) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message2"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         sysName.setText(curSection.getSystemName());
@@ -722,12 +722,10 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorSectionAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
     
     void cancelPressed(ActionEvent e) {
@@ -749,9 +747,10 @@ public class SectionTableAction extends AbstractTableAction {
             // check that new user name is unique
             Section tSection = sectionManager.getByUserName(uName);
             if (tSection != null) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message2"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(addFrame,
+                        rbx.getString("Message2"),
+                        Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -766,9 +765,9 @@ public class SectionTableAction extends AbstractTableAction {
 
     private boolean checkSectionInformation() {
         if (blockList.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message6"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check entry points
@@ -779,9 +778,9 @@ public class SectionTableAction extends AbstractTableAction {
             }
         }
         if (unknownPresent) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message10"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check direction sensors
@@ -795,9 +794,9 @@ public class SectionTableAction extends AbstractTableAction {
                     forwardSensorField.setText(fSensor.getSystemName());
                 }
             } catch (IllegalArgumentException ex) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message7"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -811,16 +810,16 @@ public class SectionTableAction extends AbstractTableAction {
                     reverseSensorField.setText(rSensor.getSystemName());
                 }
             } catch (IllegalArgumentException ex) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message8"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
         if ((fSensor != null) && (fSensor == rSensor)) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message9"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check stopping sensors
@@ -834,9 +833,9 @@ public class SectionTableAction extends AbstractTableAction {
                     forwardStopSensorField.setText(fStopSensor.getSystemName());
                 }
             } catch (IllegalArgumentException ex) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message7"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -850,9 +849,9 @@ public class SectionTableAction extends AbstractTableAction {
                     reverseStopSensorField.setText(rStopSensor.getSystemName());
                 }
             } catch (IllegalArgumentException ex) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message8"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -863,9 +862,9 @@ public class SectionTableAction extends AbstractTableAction {
         curSection.removeAllBlocksFromSection();
         for (int i = 0; i < blockList.size(); i++) {
             if (!curSection.addBlock(blockList.get(i))) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message4"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
         curSection.setForwardBlockingSensorName(forwardSensorField.getText());
@@ -896,9 +895,9 @@ public class SectionTableAction extends AbstractTableAction {
 
     void addBlockPressed(ActionEvent e) {
         if (blockBoxList.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message5"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = blockBox.getSelectedIndex();

@@ -20,7 +20,7 @@ public class AbstractMonPaneTest {
            @Override
            public String getTitle(){
               return "test";
-           };
+           }
            @Override
            public void init(){
            }
@@ -42,6 +42,6 @@ public class AbstractMonPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMonPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractMonPaneTest.class.getName());
 
 }

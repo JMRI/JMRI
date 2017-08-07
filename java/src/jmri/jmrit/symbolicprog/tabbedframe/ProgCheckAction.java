@@ -11,7 +11,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.NameFile;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -107,7 +109,7 @@ public class ProgCheckAction extends AbstractAction {
             if (log.isDebugEnabled()) {
                 log.debug("found " + varList.size() + " display elements");
             }
-            jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
+            NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
             String warnings = "";
 
@@ -178,7 +180,7 @@ public class ProgCheckAction extends AbstractAction {
             if (log.isDebugEnabled()) {
                 log.debug("found " + varList.size() + " display elements");
             }
-            jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
+            NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
             String warnings = "";
 
