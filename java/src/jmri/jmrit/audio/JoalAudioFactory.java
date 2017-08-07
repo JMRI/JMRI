@@ -208,6 +208,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 //            alcContext = alc.alcCreateContext(alcDevice, null);
 //            alc.alcMakeContextCurrent(alcContext);
 //
+            log.error("Initializing JOAL audio...");
             ALut.alutInit();
             al = ALFactory.getAL();
             al.alGetError();
