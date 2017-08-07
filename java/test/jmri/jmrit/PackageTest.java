@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
         suite.addTest(new JUnit4TestAdapter(SoundTest.class));
-        suite.addTest(XmlFileTest.suite());
+        suite.addTest(new JUnit4TestAdapter(XmlFileTest.class));
 
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.automat.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
