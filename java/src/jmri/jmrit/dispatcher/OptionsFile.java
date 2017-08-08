@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * dispatcheroptions.xml file is present when Dispatcher is started, it is read
  * and options set accordingly
  * <p>
- * <P>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under

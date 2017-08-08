@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Dispatcher functionality, working with Sections, Transits and ActiveTrain.
  * <p>
- * <P>
  * Dispatcher serves as the manager for ActiveTrains. All allocation of Sections
  * to ActiveTrains is performed here.
  * <P>
