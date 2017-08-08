@@ -996,6 +996,8 @@ public class JmriUserPreferencesManagerTest {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
+        // ensure no existing UserPreferencesManager interferes with this test
+        InstanceManager.reset(UserPreferencesManager.class);
     }
 
     @After
