@@ -457,9 +457,11 @@ public class ConditionalEditBase {
 
     /**
      * Set the pick list tab based on the variable or action type
+     * If there is not a corresponding tab, hide the picklist
      * @param curType is the current type
      */
     void setPickListTab(int curType) {
+        boolean tabSet = true;
         if (_pickTables == null) {
             return;
         }
@@ -468,7 +470,7 @@ public class ConditionalEditBase {
         }
         if (_pickTabPane != null) {
             // Convert variable/action type to the corresponding tab index
-            int tabIndex;
+            int tabIndex = 0;
             switch (curType) {
                 case 1:     // sensor
                     tabIndex = 1;
@@ -498,10 +500,15 @@ public class ConditionalEditBase {
                     tabIndex = 9;
                     break;
                 default:
-                    tabIndex = 0;
+                    // No tab found
+                    tabSet = false;
             }
-            _pickTabPane.setSelectedIndex(tabIndex);
+            if (tabSet) {
+                _pickTabPane.setSelectedIndex(tabIndex);
+            }
         }
+        _pickTables.setVisible(tabSet);
+        return;
     }
 
     /**

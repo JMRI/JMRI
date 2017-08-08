@@ -1987,12 +1987,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _selectLogixBox.removeActionListener(selectLogixBoxListener);
         _selectConditionalBox.removeActionListener(selectConditionalBoxListener);
 
-        if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType);
-        } else if (_selectionMode == SelectionMode.USECOMBO) {
+        if (_selectionMode == SelectionMode.USECOMBO) {
             _variableComboNamePanel.setVisible(false);
         } else if (_selectionMode == SelectionMode.USESINGLE) {
             createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType));
+        } else {
+            // Default and USEMULTI
+            setPickListTab(itemType);
         }
 
         switch (itemType) {
@@ -3085,14 +3086,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionNameField.removeActionListener(actionSignalHeadNameListener);
         _actionNameField.removeActionListener(actionSignalMastNameListener);
 
-        if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType);
-        } else
         if (_selectionMode == SelectionMode.USECOMBO) {
             _actionComboNamePanel.setVisible(false);
-        } else
-        if (_selectionMode == SelectionMode.USESINGLE) {
+        } else if (_selectionMode == SelectionMode.USESINGLE) {
             createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType));
+        } else {
+            // Default and USEMULTI
+            setPickListTab(itemType);
         }
 
         switch (itemType) {

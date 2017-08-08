@@ -822,7 +822,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case "Variable":     // NOI18N
                 _labelPanel.add(_variableLabel);
-                if (_selectionMode == SelectionMode.USEMULTI) {
+                if (_selectionMode == SelectionMode.USEMULTI && _pickTables == null) {
                     openPickListTable();
                 }
                 _curVariable = _variableList.get(_curNodeRow);
@@ -838,7 +838,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case "Action":     // NOI18N
                 _labelPanel.add(_actionLabel);
-                if (_selectionMode == SelectionMode.USEMULTI) {
+                if (_selectionMode == SelectionMode.USEMULTI && _pickTables == null) {
                     openPickListTable();
                 }
 
@@ -3299,9 +3299,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         _actionItemTypeBox.setSelectedIndex(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
-        if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType);
-        }
         switch (itemType) {
             case Conditional.TYPE_NONE:
                 _actionNameField.setText("");
