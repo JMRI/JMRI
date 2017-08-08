@@ -309,6 +309,19 @@ public final class InstanceManager {
     }
 
     /**
+     * Check if a default has been set for the given type.
+     *
+     * @param <T>  The type of the class
+     * @param type The class type
+     * @return true if an item is available as a default for the given type;
+     *         false otherwise
+     */
+    static public <T> boolean containsDefault(@Nonnull Class<T> type) {
+        List<T> l = getList(type);
+        return !l.isEmpty();
+    }
+
+    /**
      * Dump generic content of InstanceManager by type.
      *
      * @return A formatted multiline list of managed objects
@@ -757,17 +770,16 @@ public final class InstanceManager {
     /**
      * Clear all managed instances from this InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects
-     * and combination of objects
-     * held by the InstanceManager are threadsafe.  This call
-     * therefore defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             log.debug("Clearing InstanceManager");
             managerLists.keySet().forEach((type) -> {
                 clear(type);
-             } );
+            });
         });
     }
 
@@ -775,15 +787,14 @@ public final class InstanceManager {
      * Clear all managed instances of a particular type from this
      * InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects 
-     * and combination of objects
-     * held by the InstanceManager are threadsafe.  This call
-     * therefore defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             log.trace("Clearing managers of {}", type.getName());
             getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
                 dispose((Disposable) o);
