@@ -25,6 +25,16 @@ public class OBlockTest {
     }*/
 
     @Test
+    public void testCTor(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01"));
+    }
+ 
+   @Test
+    public void testCTor2Param(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01","test OBlock"));
+    }
+
+    @Test
     public void testSeparateCoding() {
         Assert.assertTrue("Block.OCCUPIED != OBlock.ALLOCATED", Block.OCCUPIED != OBlock.ALLOCATED);
         Assert.assertTrue("Block.OCCUPIED != OBlock.RUNNING", Block.OCCUPIED != OBlock.RUNNING);
