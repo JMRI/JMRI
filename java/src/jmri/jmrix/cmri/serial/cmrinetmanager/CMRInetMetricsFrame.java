@@ -7,9 +7,6 @@ import java.awt.FlowLayout;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.activation.DataHandler;
-
-import java.util.ResourceBundle;
 
 import javax.swing.border.Border;
 import javax.swing.*;
@@ -17,8 +14,6 @@ import javax.swing.table.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -30,8 +25,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame for CMRInet Network Metrics.
- * @author	 Chuck Catania   Copyright (C) 2016, 2017
- * @version	 $Revision: 17977 $
+ * @author  Chuck Catania   Copyright (C) 2016, 2017
  */
 public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     

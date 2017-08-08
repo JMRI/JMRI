@@ -12,7 +12,6 @@ import javax.swing.AbstractAction;
  * CMRInet Network Metrics
  * 
  * @author  Chuck Catania  2016, 2017
- * @version
  */
 public class CMRInetMetricsAction extends AbstractAction {
 

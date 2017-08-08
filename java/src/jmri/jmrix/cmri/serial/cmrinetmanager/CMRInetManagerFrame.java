@@ -34,7 +34,6 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Frame for a table view to manage a CMRInet network.
  * @author	 Chuck Catania   Copyright (C) 2014, 2015, 2016, 2017
- * @version	 $Revision: 17977 $
  */
 public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 

@@ -10,7 +10,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * CMRInet Serial monitor packet filter
  * 
  * @author                      Chuck Catania  2016
- * @version
  */
 public class SerialFilterAction extends AbstractAction {
 

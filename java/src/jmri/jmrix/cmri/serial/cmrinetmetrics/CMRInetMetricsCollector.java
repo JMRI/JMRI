@@ -6,11 +6,12 @@ import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Listener class for collecting CMRInet network traffic and error messages
- * @author	    Chuck Catania  Copyright (C) 2016, 2017
- * @version         $Revision: 17977 $
+ * @author Chuck Catania  Copyright (C) 2016, 2017
  */
 
 public class CMRInetMetricsCollector implements SerialListener {
@@ -122,7 +123,7 @@ public class CMRInetMetricsCollector implements SerialListener {
        }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetMetricsCollector.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
 }
 
 /* @(#)CMRInetMetricsCollector.java */

@@ -5,7 +5,6 @@ package jmri.jmrix.cmri.serial.cmrinetmanager;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * CMRInetManagerAction object
  *
  * @author	Chuck Catania    Copyright (C) 2014, 2015, 2016, 2017
- * @version	$Revision: 17977 $
  */
 public class CMRInetManagerAction extends AbstractAction {
 	
@@ -42,7 +40,7 @@ public class CMRInetManagerAction extends AbstractAction {
         f.setLocation(20,40);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CMRInetManagerAction.class.getName());
 //   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetManagerFrame.class.getName());
 }
 

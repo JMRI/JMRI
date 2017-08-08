@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * @author	 Bob Jacobsen   Copyright (C) 2004
  * @author	 Dave Duchamp   Copyright (C) 2004
  * @author	 Chuck Catania  Copyright (C) 2013, 2014, 2015, 2016, 2017
- * @version	 $Revision: 17977 $
  */
 
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {

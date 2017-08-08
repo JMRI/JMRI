@@ -7,7 +7,6 @@ package jmri.jmrix.cmri.serial.cmrinetmetrics;
  * The metric data is not persistent between runs.
  * 
  * @author	    Chuck Catania  Copyright (C) 2016
- * @version         $Revision: 17977 $
  */
     public class CMRInetMetricsData
     {

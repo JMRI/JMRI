@@ -24,7 +24,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * Frame for a message filter for CMRInet network packets.
  * @author	 Chuck Catania   Copyright (C) 2016
- * @version	 $Revision: 17977 $
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
