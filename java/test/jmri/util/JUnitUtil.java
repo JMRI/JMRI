@@ -266,6 +266,8 @@ public class JUnitUtil {
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
+        // ensure the auto-defeault UserPreferencesManager is not created
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
     public static void resetTurnoutOperationManager() {
@@ -278,6 +280,9 @@ public class JUnitUtil {
     }
 
     public static void initDefaultUserMessagePreferences() {
+        // remove the existing user preferences manager (if present)
+        InstanceManager.reset(UserPreferencesManager.class);
+        // create a test user preferences manager
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
