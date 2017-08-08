@@ -42,8 +42,6 @@ import org.slf4j.LoggerFactory;
 
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
-//    ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerBundle");
-
     ArrayList<SerialNode> cmriNode = new  ArrayList<>();  //c2
     public int numConfigNodes = 0;
     
@@ -61,9 +59,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     // node table pane items
     protected JPanel nodeTablePanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
-//    protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-//                                                                    Bundle.getMessage("ConfiguredNodes"),
-//                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+
     protected NodeTableModel nodeTableModel = null;
     protected JTable nodeTable = null;
 
@@ -157,7 +153,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JCheckBox cbx_cpnodeopt_BIT8 = new JCheckBox(Bundle.getMessage("cpnodeOpt8"));
     protected JCheckBox cbx_cpnodeopt_BIT15 = new JCheckBox(Bundle.getMessage("cpnodeOpt15"));
 
-     private CMRISystemConnectionMemo _memo = null;
+    private CMRISystemConnectionMemo _memo = null;
 
     /**
      * Constructor method
@@ -182,7 +178,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception
     {
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle")+" [Connection "+_memo.getUserName()+"]");
+        setTitle(Bundle.getMessage("WindowTitle"));
         setSize(500,150);
 
         Container contentPane = getContentPane();        
@@ -524,7 +520,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             cmriNode.clear();
         }
             
-//	SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
 	SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)
@@ -881,10 +876,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");       //c2 
         
-    //-------------------------------------------------------------
-    //  Hide the menu item until we are ready to release the cpMega    
-        nodeTypeBox.addItem("CPMEGA");    
-    //-------------------------------------------------------------                                
+    //---------------------------------------------------------------
+    //  Hide the menu item until MRCS are ready to release the cpMega    
+    //  nodeTypeBox.addItem("CPMEGA");    
+    //---------------------------------------------------------------                                
         
         /**
          *   Here add code for other types of nodes
