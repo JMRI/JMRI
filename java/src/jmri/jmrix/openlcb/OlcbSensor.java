@@ -140,12 +140,12 @@ public class OlcbSensor extends AbstractSensor {
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            sensorListener.setFromOwner(true);
+            sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            sensorListener.setFromOwner(false);
+            sensorListener.setFromOwnerWithForceNotify(false);
         }
     }
 
