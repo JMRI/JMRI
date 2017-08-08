@@ -113,7 +113,7 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a connection system specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -122,7 +122,7 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a connection specific regex for the Add new item beantable pane.
+     * Provide a connection system specific regex for the Add new item beantable pane.
      * @see jmri.jmrix.can.cbus.CbusAddress
      */
     @Override
