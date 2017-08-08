@@ -17,4 +17,5 @@ public interface AcelaInterface {
     boolean status();   // true if the implementation is operational
 
     void sendAcelaMessage(AcelaMessage m, AcelaListener l);  // 2nd arg gets the reply
+
 }

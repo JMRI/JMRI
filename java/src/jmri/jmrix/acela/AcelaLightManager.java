@@ -124,4 +124,5 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class.getName());
+
 }

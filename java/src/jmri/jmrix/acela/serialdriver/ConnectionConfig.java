@@ -5,11 +5,10 @@ import javax.swing.JPanel;
 import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
+ * Definition of objects to handle configuring a CTI Acele (LocoBuffer?) layout connection
  * via an NCE SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
-  *
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
@@ -30,7 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    JButton b = new JButton("Configure nodes");
+    JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
@@ -55,4 +54,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             adapter = new SerialDriverAdapter();
         }
     }
+
 }

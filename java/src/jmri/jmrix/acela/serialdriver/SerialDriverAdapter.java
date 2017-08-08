@@ -168,7 +168,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     public String[] validBaudRates() {
 // Really just want 9600 Baud for Acela
 //      return new String[]{"9,600 bps", "19,200 bps", "38,400 bps", "57,600 bps"};
-        return new String[]{"9,600 bps"};
+        return new String[]{Bundle.getMessage("Baud9600")};
     }
 
     /**
@@ -202,4 +202,5 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+
 }

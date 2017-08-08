@@ -20,7 +20,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction() {
-        this("Configure Acela Nodes",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("ConfigNodesTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     @Override
@@ -34,5 +34,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
 }
