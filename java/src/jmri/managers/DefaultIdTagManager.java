@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class DefaultIdTagManager extends AbstractManager
+public class DefaultIdTagManager extends AbstractManager<IdTag>
         implements IdTagManager {
 
     private static boolean initialised = false;
@@ -229,13 +229,13 @@ public class DefaultIdTagManager extends AbstractManager
     }
 
     @Override
-    public void register(NamedBean s) {
+    public void register(IdTag s) {
         super.register(s);
         IdTagManagerXml.instance().setDirty(true);
     }
 
     @Override
-    public void deregister(NamedBean s) {
+    public void deregister(IdTag s) {
         super.deregister(s);
         IdTagManagerXml.instance().setDirty(true);
     }
@@ -284,7 +284,7 @@ public class DefaultIdTagManager extends AbstractManager
 
         // First create a list of all tags seen by specified reporter
         // and record the time most recently seen
-        for (NamedBean n : _tsys.values()) {
+        for (IdTag n : _tsys.values()) {
             IdTag t = (IdTag) n;
             if (t.getWhereLastSeen() == reporter) {
                 out.add(t);

@@ -49,7 +49,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
-import jmri.NamedBeanHandleManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
@@ -210,14 +209,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install configuration manager and Swing error handler
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
-        // Install a history manager
-        InstanceManager.store(new FileHistory(), FileHistory.class);
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
 
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -268,10 +264,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
             configOK = false;
         }
-
-        //Install Entry Exit Pairs Manager
-        //   Done after load config file so that connection-system-specific Managers are defined and usable
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // populate GUI
         log.debug("Start UI");
@@ -388,7 +380,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             @Override
             public void run() {
                 try {
-                    DecoderIndexFile.instance();
+                    InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize decoder index file {}", ex.toString());
                 }

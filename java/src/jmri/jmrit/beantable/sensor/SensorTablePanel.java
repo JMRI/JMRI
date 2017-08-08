@@ -3,8 +3,10 @@ package jmri.jmrit.beantable.sensor;
 import java.awt.event.ActionEvent;
 
 /**
- * Swing action to create and register a SensorTable GUI in a JPanel
+ * Swing action to create and register a SensorTable GUI in a JPanel.
+ * Only used in single pane applications.
  *
+ * @see jmri.jmrit.beantable.SensorTableAction#createModel()
  * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {

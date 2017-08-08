@@ -62,23 +62,21 @@ import org.slf4j.LoggerFactory;
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
-
     JmriBeanComboBox sourceMastBox;
     JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")));
-    JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")));
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton updateButton = new JButton(rb.getString("UpdateLogic"));
-    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
-    JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
-    JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
-    JCheckBox useLayoutEditorBlock = new JCheckBox(rb.getString("UseBlockDetails"));
-    JCheckBox allowAutoMastGeneration = new JCheckBox(rb.getString("AllowAutomaticSignalMast"));
-    JCheckBox lockTurnouts = new JCheckBox(rb.getString("LockTurnouts"));
-    JButton Sizer = new JButton("Sizer");
+    JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")));  // NOI18N
+    JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")));  // NOI18N
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+    JButton updateButton = new JButton(Bundle.getMessage("UpdateLogicButton"));  // NOI18N
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));  // NOI18N
+    JCheckBox useLayoutEditor = new JCheckBox(Bundle.getMessage("UseLayoutEditorPaths"));  // NOI18N
+    JCheckBox useLayoutEditorTurnout = new JCheckBox(Bundle.getMessage("UseTurnoutDetails"));  // NOI18N
+    JCheckBox useLayoutEditorBlock = new JCheckBox(Bundle.getMessage("UseBlockDetails"));  // NOI18N
+    JCheckBox allowAutoMastGeneration = new JCheckBox(Bundle.getMessage("AllowAutomaticSignalMast"));  // NOI18N
+    JCheckBox lockTurnouts = new JCheckBox(Bundle.getMessage("LockTurnouts"));  // NOI18N
+    JButton Sizer = new JButton("Sizer");  // NOI18N
 
     // fields to store the items currently being configured
     SignalMast sourceMast;
@@ -134,13 +132,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
             Float pathSpeed = sml.getMaximumSpeed(dest);
             if (pathSpeed == 0.0f) {
-                mastSpeed.setText(rb.getString("PathSpeed") + " : " + rb.getString("NoneSet"));
+                mastSpeed.setText(Bundle.getMessage("PathSpeed") + " : " + Bundle.getMessage("NoneSet"));  // NOI18N
             } else {
                 String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(pathSpeed);
                 if (speed != null) {
-                    mastSpeed.setText(rb.getString("PathSpeed") + " : " + speed);
+                    mastSpeed.setText(Bundle.getMessage("PathSpeed") + " : " + speed);  // NOI18N
                 } else {
-                    mastSpeed.setText(rb.getString("PathSpeed") + " : " + Float.toString(pathSpeed));
+                    mastSpeed.setText(Bundle.getMessage("PathSpeed") + " : " + Float.toString(pathSpeed));  // NOI18N
                 }
             }
         } else if (dest == null) {
@@ -176,10 +174,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                         boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(),
                                 destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if (!valid) {
-                            JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
                         }
                     } catch (jmri.JmriException je) {
-                        JOptionPane.showMessageDialog(null, rb.getString("WarningUnabletoValidate"));
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
                     }
                 }
             }
@@ -210,10 +208,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                         int response;
 
-                        response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
+                        response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));  // NOI18N
                         if (response == 0) {
                             InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                            JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));  // NOI18N
                         }
                     }
 
@@ -227,10 +225,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(),
                                     destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if (!valid) {
-                                JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
+                                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
                             }
                         } catch (jmri.JmriException je) {
-                            JOptionPane.showMessageDialog(null, rb.getString("WarningUnabletoValidate"));
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
                         }
                     }
                 }
@@ -241,9 +239,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(allowAutoMastGeneration);
         header.add(lockTurnouts);
         JPanel py = new JPanel();
-        py.add(new JLabel(Bundle.getMessage("Show")));
+        py.add(new JLabel(Bundle.getMessage("Show")));  // NOI18N
         selGroup = new ButtonGroup();
-        allButton = new JRadioButton(Bundle.getMessage("All"), true);
+        allButton = new JRadioButton(Bundle.getMessage("All"), true);  // NOI18N
         selGroup.add(allButton);
         py.add(allButton);
         allButton.addActionListener(new ActionListener() {
@@ -259,7 +257,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
+        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);  // NOI18N
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
@@ -276,16 +274,16 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        py.add(new JLabel("  " + Bundle.getMessage("Elements")));
+        py.add(new JLabel("  " + Bundle.getMessage("Elements")));  // NOI18N
         header.add(py);
 
         containerPanel.add(header, BorderLayout.NORTH);
 
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());
-        detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());
-        detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());
-        detailsTab.add(Bundle.getMessage("SignalMasts"), buildSignalMastPanel());
+        detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());  // NOI18N
+        detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());  // NOI18N
+        detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());  // NOI18N
+        detailsTab.add(Bundle.getMessage("SignalMasts"), buildSignalMastPanel());  // NOI18N
 
         containerPanel.add(detailsTab, BorderLayout.CENTER);
 
@@ -309,7 +307,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 updatePressed(e);
             }
         });
-        updateButton.setToolTipText(rb.getString("UpdateButtonToolTip"));
+        updateButton.setToolTipText(Bundle.getMessage("UpdateButtonToolTip"));  // NOI18N
         updateButton.setVisible(true);
 
         //Apply (and Close) button
@@ -320,7 +318,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 applyPressed(e);
             }
         });
-        applyButton.setToolTipText(rb.getString("ApplyButtonToolTip"));
+        applyButton.setToolTipText(Bundle.getMessage("ApplyButtonToolTip"));  // NOI18N
         applyButton.setVisible(true);
 
         containerPanel.add(footer, BorderLayout.SOUTH);
@@ -416,12 +414,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel p2xc = new JPanel();  // this hides a field
         JPanel p2xcSpace = new JPanel();
         p2xcSpace.setLayout(new BoxLayout(p2xcSpace, BoxLayout.Y_AXIS));
-        p2xcSpace.add(new JLabel("XXX"));
+        p2xcSpace.add(new JLabel("XXX"));  // NOI18N
         p2xc.add(p2xcSpace);
 
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Blocks"))));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Blocks"))));  // NOI18N
         p2xc.add(p21c);
 
         _blockModel = new BlockModel();
@@ -441,7 +439,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn includeColumnC = _manualBlockColumnModel.
                 getColumn(BlockModel.INCLUDE_COLUMN);
         includeColumnC.setResizable(false);
-        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60
+        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60  // NOI18N
         includeColumnC.setMaxWidth(includeColumnC.getMinWidth() + 5);
 
         TableColumn sNameColumnC = _manualBlockColumnModel.
@@ -467,12 +465,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         JPanel p2xaSpace = new JPanel();
         p2xaSpace.setLayout(new BoxLayout(p2xaSpace, BoxLayout.Y_AXIS));
-        p2xaSpace.add(new JLabel("XXX"));
+        p2xaSpace.add(new JLabel("XXX"));  // NOI18N
         p2xb.add(p2xaSpace);
 
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Blocks"))));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Blocks"))));  // NOI18N
         p2xb.add(p21a);
 
         _autoBlockModel = new AutoBlockModel();
@@ -547,12 +545,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xt = new JPanel();
         JPanel p2xcSpace = new JPanel();
         p2xcSpace.setLayout(new BoxLayout(p2xcSpace, BoxLayout.Y_AXIS));
-        p2xcSpace.add(new JLabel("XXX"));
+        p2xcSpace.add(new JLabel("XXX"));  // NOI18N
         p2xt.add(p2xcSpace);
 
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Turnouts"))));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Turnouts"))));  // NOI18N
         p2xt.add(p21c);
 
         _turnoutModel = new TurnoutModel();
@@ -572,7 +570,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn includeColumnC = _manualTurnoutColumnModel.
                 getColumn(TurnoutModel.INCLUDE_COLUMN);
         includeColumnC.setResizable(false);
-        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60
+        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60  // NOI18N
         includeColumnC.setMaxWidth(includeColumnC.getMinWidth() + 5);
 
         TableColumn sNameColumnC = _manualTurnoutColumnModel.
@@ -599,12 +597,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         JPanel p2xaSpace = new JPanel();
         p2xaSpace.setLayout(new BoxLayout(p2xaSpace, BoxLayout.Y_AXIS));
-        p2xaSpace.add(new JLabel("XXX"));
+        p2xaSpace.add(new JLabel("XXX"));  // NOI18N
         p2xa.add(p2xaSpace);
 
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Turnouts"))));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Turnouts"))));  // NOI18N
         p2xa.add(p21a);
 
         _autoTurnoutModel = new AutoTurnoutModel();
@@ -660,19 +658,19 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 String userName = ss.getUserName();
                 _manualSensorList.add(new ManualSensorList(systemName, userName));
             } else {
-                log.error("Failed to get sensor {}", systemName);
+                log.error("Failed to get sensor {}", systemName);  // NOI18N
             }
         }
 
         p2xs = new JPanel();
         JPanel p2xsSpace = new JPanel();
         p2xsSpace.setLayout(new BoxLayout(p2xsSpace, BoxLayout.Y_AXIS));
-        p2xsSpace.add(new JLabel("XXX"));
+        p2xsSpace.add(new JLabel("XXX"));  // NOI18N
         p2xs.add(p2xsSpace);
 
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Sensors"))));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Sensors"))));  // NOI18N
         p2xs.add(p21c);
 
         _sensorModel = new SensorModel();
@@ -692,7 +690,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn includeColumnC = _manualSensorColumnModel.
                 getColumn(SensorModel.INCLUDE_COLUMN);
         includeColumnC.setResizable(false);
-        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60
+        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60  // NOI18N
         includeColumnC.setMaxWidth(includeColumnC.getMinWidth() + 5);
 
         TableColumn sNameColumnC = _manualSensorColumnModel.
@@ -742,12 +740,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xm = new JPanel();
         JPanel p2xmSpace = new JPanel();
         p2xmSpace.setLayout(new BoxLayout(p2xmSpace, BoxLayout.Y_AXIS));
-        p2xmSpace.add(new JLabel("XXX"));
+        p2xmSpace.add(new JLabel("XXX"));  // NOI18N
         p2xm.add(p2xmSpace);
 
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("SignalMasts"))));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("SignalMasts"))));  // NOI18N
         p2xm.add(p21c);
 
         _signalMastModel = new SignalMastModel();
@@ -765,7 +763,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn includeColumnC = _manualSignalMastColumnModel.
                 getColumn(SignalMastModel.INCLUDE_COLUMN);
         includeColumnC.setResizable(false);
-        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60
+        includeColumnC.setMinWidth(9 * Bundle.getMessage("Include").length()); // was fixed 60  // NOI18N
         includeColumnC.setMaxWidth(includeColumnC.getMinWidth() + 5);
         TableColumn sNameColumnC = _manualSignalMastColumnModel.
                 getColumn(SignalMastModel.SNAME_COLUMN);
@@ -776,7 +774,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn stateColumnC = _manualSignalMastColumnModel.
                 getColumn(SensorModel.STATE_COLUMN);
         stateColumnC.setResizable(false);
-        stateColumnC.setMinWidth(9 * ("Diverging Approach Medium").length() + 20);
+        stateColumnC.setMinWidth(9 * ("Diverging Approach Medium").length() + 20);  // NOI18N
         stateColumnC.setMaxWidth(stateColumnC.getMinWidth() + 10); // was fixed 100
         // remaining space is filled by UserName
         _manualSignalMastScrollPane = new JScrollPane(manualSignalMastTable);
@@ -794,7 +792,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("SignalMasts"))));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("SignalMasts"))));  // NOI18N
         p2xsm.add(p21a);
 
         _autoSignalMastModel = new AutoMastModel();
@@ -844,9 +842,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         destOK = true;
 
         if (sourceMast == destMast || fixedSourceMastLabel.getText() == destMast.getDisplayName()) {
-            JOptionPane.showMessageDialog(null, rb.getString("ErrorSignalMastIdentical"));
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSignalMastIdentical"));  // NOI18N
             destOK = false;
-            log.debug("Destination Mast check failed, keep pane open");
+            log.debug("Destination Mast check failed, keep pane open");  // NOI18N
             return;
         }
         if ((sml == null) && (useLayoutEditor.isSelected())) {
@@ -855,11 +853,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
                         destMast, LayoutBlockConnectivityTools.MASTTOMAST);
                 if (!valid) {
-                    JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
                     return;
                 }
             } catch (jmri.JmriException je) {
-                JOptionPane.showMessageDialog(null, rb.getString("WarningUnabletoValidate"));
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
             }
         }
 
@@ -871,8 +869,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 sml.setDestinationMast(destMast);
             } else {
                 // show replace/update dialog
-                int mes = JOptionPane.showConfirmDialog(null, rb.getString("WarningExistingPair"),
-                        Bundle.getMessage("WarningTitle"),
+                int mes = JOptionPane.showConfirmDialog(null, Bundle.getMessage("WarningExistingPair"),  // NOI18N
+                        Bundle.getMessage("WarningTitle"),  // NOI18N
                         JOptionPane.YES_NO_OPTION);
                 if (mes == JOptionPane.NO_OPTION) {
                     return;
@@ -940,9 +938,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         for (int i = 0; i < _includedManualSignalMastList.size(); i++) {
             if (_includedManualSignalMastList.get(i).getMast() == sourceMast || _includedManualSignalMastList.get(i).getMast() == destMast) {
                 // warn user that control mast is either source or destination mast of this pair, but allow as a valid choice
-                int mes = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("SignalMastCriteriaOwn"),
+                int mes = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(Bundle.getMessage("SignalMastCriteriaOwn"),  // NOI18N
                         new Object[]{_includedManualSignalMastList.get(i).getMast().getDisplayName()}),
-                        rb.getString("SignalMastCriteriaOwnTitle"),
+                        Bundle.getMessage("SignalMastCriteriaOwnTitle"),  // NOI18N
                         JOptionPane.YES_NO_OPTION);
                 if (mes == 0) { // Yes
                     hashSignalMasts.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
@@ -960,8 +958,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         sml.initialise(destMast);
         if (smlPairAdded) {
-            log.debug("New SML");
-            firePropertyChange("newDestination", null, destMastBox.getSelectedBean()); // to show new SML in underlying table
+            log.debug("New SML");  // NOI18N
+            firePropertyChange("newDestination", null, destMastBox.getSelectedBean()); // to show new SML in underlying table  // NOI18N
         }
     }
 
@@ -1000,7 +998,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         int result = jmri.util.StringUtil.getStateFromName(mode, blockInputModeValues, blockInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in blockMode: " + mode);
+            log.warn("unexpected mode string in blockMode: " + mode);  // NOI18N
             throw new IllegalArgumentException();
         }
         return result;
@@ -1011,7 +1009,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         box.setSelectedItem(result);
     }
 
-    private static String[] blockInputModes = new String[]{rb.getString("UnOccupied"), rb.getString("Occupied")};
+    private static String[] blockInputModes = new String[]{Bundle.getMessage("UnOccupied"), Bundle.getMessage("Occupied")};  // NOI18N
     private static int[] blockInputModeValues = new int[]{Block.UNOCCUPIED, Block.OCCUPIED};
 
     /**
@@ -1098,14 +1096,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private boolean showAll = true;   // false indicates show only included items
 
-    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
-    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");  // NOI18N
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");  // NOI18N
     private static String SET_TO_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private static String SET_TO_UNOCCUPIED = rb.getString("UnOccupied");
-    private static String SET_TO_OCCUPIED = rb.getString("Occupied");
-    private static String SET_TO_ANY = rb.getString("AnyState");
+    private static String SET_TO_UNOCCUPIED = Bundle.getMessage("UnOccupied");  // NOI18N
+    private static String SET_TO_OCCUPIED = Bundle.getMessage("Occupied");  // NOI18N
+    private static String SET_TO_ANY = Bundle.getMessage("AnyState");  // NOI18N
 
     private static int ROW_HEIGHT;
 
@@ -1533,11 +1531,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
+            if (e.getPropertyName().equals("length")) {  // NOI18N
                 // a new NamedBean is available in the manager
                 fireTableDataChanged();
             }
-            if (e.getPropertyName().indexOf("Inconsistent") < 0 || e.getPropertyName().indexOf("Unknown") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {
+            if (e.getPropertyName().indexOf("Inconsistent") < 0 || e.getPropertyName().indexOf("Unknown") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {  // NOI18N
                 if (e.getSource() instanceof NamedBean) {
                     String name = ((NamedBean) e.getSource()).getSystemName();
                     // since we can add columns, the entire row is marked as updated
@@ -1560,15 +1558,15 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return Bundle.getMessage("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");  // NOI18N
                 case UNAME_COLUMN:
-                    return Bundle.getMessage("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");  // NOI18N
                 case INCLUDE_COLUMN:
-                    return Bundle.getMessage("Include");
+                    return Bundle.getMessage("Include");  // NOI18N
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
+                    return Bundle.getMessage("ColumnState"); // pick up via SignallingBundle as it is a different "State" label than non-signal tables  // NOI18N
                 default:
-                    return "unknown";
+                    return "unknown";  // NOI18N
             }
         }
 
@@ -1589,7 +1587,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected void configStateColumn(JTable table) {
             // have the state column hold a JPanel with a JComboBox for States
             // add extras, override BeanTableDataModel
-            log.debug("Bean configStateColumn (I am {})", super.toString());
+            log.debug("Bean configStateColumn (I am {})", super.toString());  // NOI18N
             table.setDefaultEditor(RowComboBoxPanel.class, new StateComboBoxPanel());
             table.setDefaultRenderer(RowComboBoxPanel.class, new StateComboBoxPanel()); // use same class for the renderer
             // Set more things?
@@ -1611,7 +1609,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
                 this.editor.revalidate();
                 SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-                log.debug("eventEditorMousePressed in row: {})", this.currentRow);
+                log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
             }
 
             /**
@@ -1639,7 +1637,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JComboBox getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
-            editCombo.addItem(Bundle.getMessage("None"));
+            editCombo.addItem(Bundle.getMessage("None"));  // NOI18N
             return editCombo;
         }
         // end of methods to display STATE_COLUMN ComboBox
@@ -1686,8 +1684,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             // some error checking
             if (r >= blockList.size()) {
-                log.debug("row index is greater than block list");
-                return "error";
+                log.debug("row index is greater than block list");  // NOI18N
+                return "error";  // NOI18N
             }
             switch (c) {
                 case INCLUDE_COLUMN:
@@ -1719,9 +1717,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN:
-                    return rb.getString("ColumnSpeed");
+                    return Bundle.getMessage("ColumnSpeed");  // NOI18N
                 case PERMISSIVE_COLUMN:
-                    return rb.getString("ColumnPermissive");
+                    return Bundle.getMessage("ColumnPermissive");  // NOI18N
                 default:
                     // fall out
                     break;
@@ -1742,7 +1740,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     blockList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case STATE_COLUMN:
-                    log.debug("State = " + type);
+                    log.debug("State = " + type);  // NOI18N
                     blockList.get(r).setSetToState((String) type);
                     break;
                 default:
@@ -1796,8 +1794,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             // some error checking
             if (r >= turnoutList.size()) {
-                log.debug("row index is greater than turnout list");
-                return "error";
+                log.debug("row index is greater than turnout list");  // NOI18N
+                return "error";  // NOI18N
             }
             switch (c) {
                 case INCLUDE_COLUMN:
@@ -1827,7 +1825,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     turnoutList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case STATE_COLUMN:
-                    log.debug("State = " + type);
+                    log.debug("State = " + type);  // NOI18N
                     if ((String) type != null){
                     turnoutList.get(r).setSetToState((String) type);
                     fireTableRowsUpdated(r, r); // use new value
@@ -1884,7 +1882,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             // some error checking
             if (r >= sensorList.size()) {
-                log.debug("row index is greater than sensor list");
+                log.debug("row index is greater than sensor list");  // NOI18N
                 return null;
             }
             switch (c) {
@@ -1967,8 +1965,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             // some error checking
             if (r >= signalMastList.size()) {
-                log.debug("row index is greater than mast list");
-                return "error";
+                log.debug("row index is greater than mast list");  // NOI18N
+                return "error";  // NOI18N
             }
             switch (c) {
                 case INCLUDE_COLUMN:
@@ -1982,8 +1980,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                         return signalMastList.get(r).getSetToState();
                     } catch (java.lang.NullPointerException e) {
                         //Aspect not set
-                        log.debug("Aspect for mast {} not set", r);
-                        return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
+                        log.debug("Aspect for mast {} not set", r);  // NOI18N
+                        return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table  // NOI18N
                     }
                 default:
                     return null;
@@ -2002,7 +2000,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case STATE_COLUMN:
                     if ((String) type != null) {
                         //convertRowIndexToModel(row) not needed
-                        log.debug("setValueAt (rowConverted={}; value={})", r, type);
+                        log.debug("setValueAt (rowConverted={}; value={})", r, type);  // NOI18N
                         signalMastList.get(r).setSetToState((String) type);
                         fireTableRowsUpdated(r, r);
                     }
@@ -2035,7 +2033,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         @Override
         public String getColumnName(int col) {
             if (col == STATE_COLUMN) {
-                return rb.getString("ColumnAspect"); // cf. line 1356 for general/other bean types
+                return Bundle.getMessage("ColumnAspect"); // cf. line 1356 for general/other bean types  // NOI18N
             } else {
                 return super.getColumnName(col);
             }
@@ -2049,7 +2047,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected void configStateColumn(JTable table) {
             // have the state column hold a JPanel with a JComboBox for Aspects
             // add extras, override BeanTableDataModel
-            log.debug("Mast configStateColumn (I am {})", super.toString());
+            log.debug("Mast configStateColumn (I am {})", super.toString());  // NOI18N
             table.setDefaultEditor(RowComboBoxPanel.class, new AspectComboBoxPanel());
             table.setDefaultRenderer(RowComboBoxPanel.class, new AspectComboBoxPanel()); // use same class for the renderer
             // Set more things?
@@ -2070,7 +2068,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
                 this.editor.revalidate();
                 SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-                log.debug("eventEditorMousePressed in row: {}; me = {})", this.currentRow, this.toString());
+                log.debug("eventEditorMousePressed in row: {}; me = {})", this.currentRow, this.toString());  // NOI18N
             }
 
             /**
@@ -2257,14 +2255,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return Bundle.getMessage("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");  // NOI18N
                 case UNAME_COLUMN:
-                    return Bundle.getMessage("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");  // NOI18N
                 case STATE_COLUMN:
-                    return rb.getString("ColumnAspect"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
+                    return Bundle.getMessage("ColumnAspect"); // pick up via SignallingBundle as it is a different "State" label than non-signal tables  // NOI18N
 
                 default:
-                    return "unknown";
+                    return "unknown";  // NOI18N
             }
         }
 
@@ -2306,9 +2304,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN:
-                    return rb.getString("ColumnSpeed");
+                    return Bundle.getMessage("ColumnSpeed");  // NOI18N
                 case PERMISSIVE_COLUMN:
-                    return rb.getString("ColumnPermissive");
+                    return Bundle.getMessage("ColumnPermissive");  // NOI18N
                 default:
                     // fall out
                     break;
@@ -2318,7 +2316,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("autoblocks")) {
+            if (e.getPropertyName().equals("autoblocks")) {  // NOI18N
                 // a new NamedBean is available in the manager
                 initializeIncludedList();
                 fireTableDataChanged();
@@ -2382,7 +2380,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("autoturnouts")) {
+            if (e.getPropertyName().equals("autoturnouts")) {  // NOI18N
                 // a new NamedBean is available in the manager
                 initializeIncludedList();
                 fireTableDataChanged();
@@ -2420,7 +2418,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("automasts")) {
+            if (e.getPropertyName().equals("automasts")) {  // NOI18N
                 // a new NamedBean is available in the manager
                 initializeIncludedList();
                 fireTableDataChanged();

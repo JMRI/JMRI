@@ -479,6 +479,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         super.setIcon(_namedIcon);
         updateSize();
+        repaint();
     }
 
     /**
@@ -500,7 +501,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
+            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthogonal")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -596,6 +597,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditorFrame = null;
         _iconEditor = null;
         invalidate();
+        repaint();
     }
 
     public jmri.util.JmriJFrame _paletteFrame;
@@ -622,8 +624,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (_displayLevel > Editor.BKG) {
-            popup.add(CoordinateEdit.getRotateEditAction(this));
-            return true;
+//             popup.add(CoordinateEdit.getRotateEditAction(this));
+            return _editor.setShowRotationMenu(this, popup);
         }
         return false;
     }
@@ -671,6 +673,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             _namedIcon.scale(s, this);
             super.setIcon(_namedIcon);
             updateSize();
+            repaint();
         }
     }
 
@@ -759,6 +762,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.setIcon(_namedIcon);
         }
         updateSize();
+        repaint();
     }   // rotate
 
     /**
@@ -822,8 +826,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
             if (_popupUtil.hasBackground()) {
@@ -908,8 +912,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
             if (_popupUtil.hasBackground()) {
@@ -1037,8 +1041,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                         RenderingHints.VALUE_ANTIALIAS_ON);
                 g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                         RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             }
 
             switch (_popupUtil.getOrientation()) {
@@ -1102,5 +1106,4 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
-
 }

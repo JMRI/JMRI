@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
@@ -38,9 +39,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     public RoutesTableModel() {
         super();
-        routemanager = RouteManager.instance();
+        routemanager = InstanceManager.getDefault(RouteManager.class);
         routemanager.addPropertyChangeListener(this);
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
         updateList();
     }
 
@@ -253,7 +254,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             ref.dispose();
         }
         routemanager.removePropertyChangeListener(this);
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         removePropertyChangeRoutes();
     }
 

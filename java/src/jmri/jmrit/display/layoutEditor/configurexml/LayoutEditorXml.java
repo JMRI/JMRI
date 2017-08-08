@@ -235,7 +235,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         return panel;
-    }
+    }   // store
 
     @Override
     public void load(Element element, Object o) {
@@ -639,7 +639,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         return result;
-    }
+    }   // load
 
     @Override
     public int loadOrder() {

@@ -22,7 +22,7 @@ import java.util.List;
  * <P>
  * @author Dave Duchamp Copyright (C) 2007
  */
-public interface LogixManager extends Manager {
+public interface LogixManager extends Manager<Logix> {
 
     /**
      * Method to create a new Logix if the Logix does not exist.

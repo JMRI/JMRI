@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager implements PropertyChangeListener {
+public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public SectionManager() {
         super();
@@ -96,8 +96,8 @@ public class SectionManager extends AbstractManager implements PropertyChangeLis
         y = new Section(sName, userName);
         // save in the maps
         register(y);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps trace of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IY:AUTO:")) {
             try {
@@ -130,7 +130,7 @@ public class SectionManager extends AbstractManager implements PropertyChangeLis
      * @param y the section to remove
      */
     public void deleteSection(Section y) {
-        // delete the Section    
+        // delete the Section
         deregister(y);
         y.dispose();
     }
@@ -273,13 +273,13 @@ public class SectionManager extends AbstractManager implements PropertyChangeLis
         }
     }
 
-    static SectionManager _instance = null;
-
-    static public SectionManager instance() {
-        if (_instance == null) {
-            _instance = new SectionManager();
-        }
-        return (_instance);
+    /**
+     * @deprecated since 4.9.1; use
+     * {@link InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
+    static private SectionManager instance() {
+        return InstanceManager.getDefault(SectionManager.class);
     }
 
     @Override

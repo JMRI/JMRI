@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -22,10 +23,10 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     //final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private void CreateTestLocations() {
         // Clear out any previous locations
-        LocationManager.instance().dispose();
+        InstanceManager.getDefault(LocationManager.class).dispose();
 
         // Create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
 
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
@@ -44,7 +45,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     }
 
 //	private void AddTestSidings() {
-//		LocationManager lManager = LocationManager.instance();
+//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
 //
 //		Location l1 = lManager.getLocationByName("Test Loc C");
 //		Track t;
@@ -56,7 +57,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 //	}
 //
 //	private void AddTestInterchanges() {
-//		LocationManager lManager = LocationManager.instance();
+//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
 //		Location l1 = lManager.getLocationByName("Test Loc C");
 //
 //		Track t;
@@ -69,7 +70,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 //	}
 //
 //	private void AddTestYardTracks() {
-//		LocationManager lManager = LocationManager.instance();
+//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
 //		Location l1 = lManager.getLocationByName("Test Loc C");
 //
 //		Track t;
@@ -88,7 +89,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 //	}
 //
 //	private void AddTestStagingTracks() {
-//		LocationManager lManager = LocationManager.instance();
+//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
 //		Location l1 = lManager.getLocationByName("Test Loc A");
 //
 //		Track t;
@@ -144,21 +145,21 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
     @Test
     @Ignore("commented out as JUnit3 Test")
- 	public void testOpenWithNullTrack() throws Exception {
-		// See what happens when a null track is passed in.
-		try {
-			PoolTrackFrame f = new PoolTrackFrame((Track) null);
-			Assert.fail("NullPointerException not thrown");
+    public void testOpenWithNullTrack() throws Exception {
+        // See what happens when a null track is passed in.
+        try {
+            PoolTrackFrame f = new PoolTrackFrame((Track) null);
+            Assert.fail("NullPointerException not thrown");
 
-			f.initComponents();
-			f.setVisible(true);
+            f.initComponents();
+            f.setVisible(true);
 
-			// close windows
-			f.dispose();
-		} catch (NullPointerException e) {
-			// Here we don't do anything, as this was expected.
-		}
-	}
+            // close windows
+            f.dispose();
+        } catch (NullPointerException e) {
+            // Here we don't do anything, as this was expected.
+        }
+    }
 
     @Test
     public void testAddNewPoolName() throws Exception {
@@ -334,7 +335,6 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // elf.dispose();
     //
     // }
-
     @Test
     @Ignore("Not sure if we need this one....")
     public void testVerifyStatusPanel() {

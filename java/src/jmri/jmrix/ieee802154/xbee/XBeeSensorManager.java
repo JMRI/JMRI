@@ -199,7 +199,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Sensor s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -239,6 +239,24 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public boolean isPullResistanceConfigurable(){
        return true;
+    }
+
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"; // XBee example 4:3
+        // see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());

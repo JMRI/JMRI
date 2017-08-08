@@ -63,7 +63,7 @@ public class EcosLocoToRoster implements EcosListener {
     RosterEntry re;
     String filename = null;
     DecoderFile pDecoderFile = null;
-    DecoderIndexFile decoderind = DecoderIndexFile.instance();
+    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
     String _ecosObject;
     int _ecosObjectInt;
     Label _statusLabel = null;
@@ -531,13 +531,13 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     private void okayButton() {
-        pDecoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+        pDecoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         SelectedDecoder(pDecoderFile);
         frame.dispose();
     }
 
     private void SelectedDecoder(DecoderFile pDecoderFile) {
-        //pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+        //pDecoderFile=InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
 
@@ -629,7 +629,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         };
         dTree.setToolTipText("");
-        List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
+        List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, null);
         int len = decoders.size();
         DefaultMutableTreeNode mfgElement = null;
         DefaultMutableTreeNode familyElement = null;
@@ -647,7 +647,7 @@ public class EcosLocoToRoster implements EcosListener {
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
                 mfgElement = new DecoderTreeNode(mfg,
-                        "CV8 = " + DecoderIndexFile.instance().mfgIdFromName(mfg), "");
+                        "CV8 = " + InstanceManager.getDefault(DecoderIndexFile.class).mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyElement = null;
             }
@@ -782,7 +782,7 @@ public class EcosLocoToRoster implements EcosListener {
     protected void selectDecoder(String mfgID, String modelID) {
 
         // locate a decoder like that.
-        List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, mfgID, modelID, null, null);
+        List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, mfgID, modelID, null, null);
         if (log.isDebugEnabled()) {
             log.debug("selectDecoder found " + temp.size() + " matches");
         }
@@ -790,7 +790,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = DecoderIndexFile.instance().mfgNameFromId(mfgID);
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(mfgID);
             int intMfgID = Integer.parseInt(mfgID);
             int intModelID = Integer.parseInt(modelID);
             if (mfg == null) {
@@ -978,12 +978,12 @@ public class EcosLocoToRoster implements EcosListener {
  cv8 - mfgIdFromName
  cv7 - Version/family
 
- tmp1 = jmri.jmrit.decoderdefn.DecoderIndexFile.instance()
+ tmp1 = jmri.jmrit.decoderdefn.InstanceManager.getDefault(DecoderIndexFile.class)
  print tmp1.matchingDecoderList(None, None, cv8, None, None, None)
 
  matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model )
 
- tmp1 = jmri.jmrit.decoderdefn.DecoderIndexFile.instance()
+ tmp1 = jmri.jmrit.decoderdefn.InstanceManager.getDefault(DecoderIndexFile.class)
  list = tmp1.matchingDecoderList(None, None, "153", "16", None, None
  returns decoderfile.java
  print list[0].getMfg()

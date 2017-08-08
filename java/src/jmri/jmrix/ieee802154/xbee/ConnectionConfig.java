@@ -27,7 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    JButton b = new JButton("Configure XBee noddes");
+    JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
@@ -40,7 +40,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "XBee Network";
+        return Bundle.getMessage("XBeeNetworkTitle");
     }
 
     public boolean isOptList1Advanced() {

@@ -146,7 +146,7 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Light s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -172,6 +172,23 @@ public class XBeeLightManager extends AbstractLightManager {
             }
         }
 
+    }
+
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"; // examples 4:3, see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
