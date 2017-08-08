@@ -27,6 +27,9 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.picker.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PickFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PickSinglePanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PickPanelTest.class));
 
         return suite;
     }

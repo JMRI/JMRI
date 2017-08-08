@@ -99,7 +99,7 @@ public class PointDetails {
     };
 
     private void nxButtonStateChange(PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("KnownState")) {
+        if (!e.getPropertyName().equals("KnownState")) {  // NOI18N
             return;
         }
         int now = ((Integer) e.getNewValue()).intValue();
@@ -315,7 +315,7 @@ public class PointDetails {
         } else if (refObj instanceof SignalHead) {
             return ((SignalHead) refObj).getDisplayName();
         }
-        return "no display name";
+        return "no display name";  // NOI18N
     }
 
     transient Thread nxButtonTimeOutThr;
@@ -340,13 +340,13 @@ public class PointDetails {
                         Thread.sleep(60000);  //timeout after a minute waiting for the sml to set.
                     }
                 } catch (InterruptedException ex) {
-                    log.debug("Flash timer cancelled");
+                    log.debug("Flash timer cancelled");  // NOI18N
                 }
                 setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             }
         }
         ButtonTimeOut t = new ButtonTimeOut();
-        nxButtonTimeOutThr = new Thread(t, "NX Button Timeout " + getSensor().getDisplayName());
+        nxButtonTimeOutThr = new Thread(t, "NX Button Timeout " + getSensor().getDisplayName());  // NOI18N
 
         nxButtonTimeOutThr.start();
     }
@@ -560,7 +560,7 @@ public class PointDetails {
         NamedBean signal = null;
 
         if (getRefObject() == null) {
-            log.error("Signal not found at point");
+            log.error("Signal not found at point");  // NOI18N
             return null;
         } else if (getRefObject() instanceof SignalMast) {
             signal = getRefObject();

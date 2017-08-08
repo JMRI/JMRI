@@ -31,7 +31,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         CarSetFrame f = new CarSetFrame();
         f.setTitle("Test Car Set Frame");
         f.initComponents();
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         Car c3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadCar(c3);
 
@@ -39,7 +39,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
     }
 
     private void loadCars() {
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // remove previous cars
         cManager.dispose();
         // add 5 cars to table

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Set;
 import jmri.AudioManager;
 import jmri.BlockManager;
-import jmri.CatalogTreeManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
 import jmri.IdTagManager;
@@ -28,8 +27,6 @@ import jmri.TurnoutManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
-import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -62,10 +59,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == AudioManager.class) {
             return DefaultAudioManager.instance();
-        }
-
-        if (type == CatalogTreeManager.class) {
-            return new DefaultCatalogTreeManager();
         }
 
         if (type == ClockControl.class) {
@@ -102,10 +95,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ReporterManager.class) {
             return new jmri.managers.ProxyReporterManager();
-        }
-
-        if (type == RosterIconFactory.class) {
-            return RosterIconFactory.instance();
         }
 
         if (type == RouteManager.class) {
@@ -165,7 +154,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         set.addAll(Arrays.asList(
                 AudioManager.class,
                 BlockManager.class,
-                CatalogTreeManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
                 IdTagManager.class,
@@ -175,7 +163,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 ProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
-                RosterIconFactory.class,
                 RouteManager.class,
                 SensorManager.class,
                 SignalGroupManager.class,

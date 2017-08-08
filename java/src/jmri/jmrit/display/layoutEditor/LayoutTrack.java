@@ -33,9 +33,9 @@ public abstract class LayoutTrack {
     public static final int NONE = 0;
     public static final int POS_POINT = 1;
     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
-    public static final int TURNOUT_B = 3;  // continuing route for RH or LH turnouts
-    public static final int TURNOUT_C = 4;  // diverging route for RH or LH turnouts
-    public static final int TURNOUT_D = 5;  // double-crossover or single crossover only
+    public static final int TURNOUT_B = 3;  // continuing route for RH and LH turnouts
+    public static final int TURNOUT_C = 4;  // diverging route for RH and LH turnouts
+    public static final int TURNOUT_D = 5;  // 4th route for crossovers;
     public static final int LEVEL_XING_A = 6;
     public static final int LEVEL_XING_B = 7;
     public static final int LEVEL_XING_C = 8;
@@ -53,11 +53,18 @@ public abstract class LayoutTrack {
     public static final int SLIP_CENTER = 20; //
 =======
     public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
+<<<<<<< HEAD
 >>>>>>> JMRI/master
     public static final int SLIP_A = 21; // offset for slip connection points
     public static final int SLIP_B = 22; // offset for slip connection points
     public static final int SLIP_C = 23; // offset for slip connection points
     public static final int SLIP_D = 24; // offset for slip connection points
+=======
+    public static final int SLIP_A = 21;
+    public static final int SLIP_B = 22;
+    public static final int SLIP_C = 23;
+    public static final int SLIP_D = 24;
+>>>>>>> JMRI/master
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
 <<<<<<< HEAD
@@ -74,7 +81,6 @@ public abstract class LayoutTrack {
 =======
     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
-    //NOTE: if(/when) you need another control/hit point type leave at least four (if not eight) unused here (for more Bezier control points)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     protected String ident = "";

@@ -367,23 +367,23 @@ public class PositionablePopupUtil {
     protected JMenu makeFontSizeMenu() {
         JMenu sizeMenu = new JMenu("Font Size");
         ButtonGroup buttonGrp = new ButtonGroup();
-        addFontMenuEntry(sizeMenu, buttonGrp, 6);
-        addFontMenuEntry(sizeMenu, buttonGrp, 8);
-        addFontMenuEntry(sizeMenu, buttonGrp, 10);
-        addFontMenuEntry(sizeMenu, buttonGrp, 11);
-        addFontMenuEntry(sizeMenu, buttonGrp, 12);
-        addFontMenuEntry(sizeMenu, buttonGrp, 14);
-        addFontMenuEntry(sizeMenu, buttonGrp, 16);
-        addFontMenuEntry(sizeMenu, buttonGrp, 18);
-        addFontMenuEntry(sizeMenu, buttonGrp, 20);
-        addFontMenuEntry(sizeMenu, buttonGrp, 24);
-        addFontMenuEntry(sizeMenu, buttonGrp, 28);
-        addFontMenuEntry(sizeMenu, buttonGrp, 32);
-        addFontMenuEntry(sizeMenu, buttonGrp, 36);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 6);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 8);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 10);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 11);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 12);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 14);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 16);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 18);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 20);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 24);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 28);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 32);
+        addFontSizeMenuEntry(sizeMenu, buttonGrp, 36);
         return sizeMenu;
     }
 
-    void addFontMenuEntry(JMenu menu, ButtonGroup fontButtonGroup, final int size) {
+    void addFontSizeMenuEntry(JMenu menu, ButtonGroup fontButtonGroup, final int size) {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem("" + size);
         r.addActionListener((ActionEvent e) -> {
             setFontSize(size);

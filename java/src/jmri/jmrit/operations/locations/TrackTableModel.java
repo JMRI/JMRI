@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -315,7 +316,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case DESTINATION_COLUMN: {
                 int size = track.getDestinationListSize();
                 if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
-                    size = LocationManager.instance().getNumberOfLocations() - size;
+                    size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
                 }
                 return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
                         .getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));

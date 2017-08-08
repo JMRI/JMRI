@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -68,7 +69,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
         }
         String printerName = Location.NONE;
         if (_train != null) {
-            Location departs = LocationManager.instance().getLocationByName(_train.getTrainDepartsName());
+            Location departs = InstanceManager.getDefault(LocationManager.class).getLocationByName(_train.getTrainDepartsName());
             if (departs != null) {
                 printerName = departs.getDefaultPrinterName();
             }
@@ -80,9 +81,9 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     // Get file to read from
     protected File getFile() {
-        String pathName = TrainManagerXml.instance().getBackupManifestDirectoryName();
+        String pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName();
         if (_train != null) {
-            pathName = TrainManagerXml.instance().getBackupManifestDirectoryName(_train.getName());
+            pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
         fc.addChoosableFileFilter(new FileFilter());

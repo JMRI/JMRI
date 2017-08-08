@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class PrintRoutesAction extends PrintRouteAction {
         }
         try {
             writer.write(" "); // prevents exception when using Preview and no routes
-            List<Route> routes = RouteManager.instance().getRoutesByNameList();
+            List<Route> routes = InstanceManager.getDefault(RouteManager.class).getRoutesByNameList();
             for (int i = 0; i < routes.size(); i++) {
                 Route route = routes.get(i);
                 writer.write(route.getName() + NEW_LINE);

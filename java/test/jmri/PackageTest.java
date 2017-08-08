@@ -123,8 +123,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TransitManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerTest.class));
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+>>>>>>> JMRI/master
+=======
+        suite.addTest(new JUnit4TestAdapter(EntryPointTest.class));
 >>>>>>> JMRI/master
         return suite;
     }

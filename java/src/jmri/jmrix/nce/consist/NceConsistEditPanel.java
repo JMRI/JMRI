@@ -16,8 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
@@ -66,7 +68,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private static final int CONSIST_MAX = 127;
     private static final int LOC_ADR_MIN = 0;    // loco address range
     private static final int LOC_ADR_MAX = 10239;
-    private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address 
+    private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address
 
     private int consistNum = 0;     // consist being worked
     private boolean newConsist = true;    // new consist is displayed
@@ -81,9 +83,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private int[] locoVerifyList = new int[6]; // list of locos to verify
     private int verifyType;      // type of verification
     private static final int VERIFY_DONE = 0;
-    private static final int VERIFY_LEAD_REAR = 1;  // lead or rear loco  
-    private static final int VERIFY_MID_FWD = 2;  // mid loco foward 
-    private static final int VERIFY_MID_REV = 4;  // mid loco reverse 
+    private static final int VERIFY_LEAD_REAR = 1;  // lead or rear loco
+    private static final int VERIFY_MID_FWD = 2;  // mid loco foward
+    private static final int VERIFY_MID_REV = 4;  // mid loco reverse
     private static final int VERIFY_ALL = 8;  // verify all locos
 
     private int replyLen = 0;      // expected byte length
@@ -444,7 +446,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             }
             consistNum = validConsist(consistTextField.getText());
             jmri.jmrit.throttle.ThrottleFrame tf
-                    = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+                    = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.getAddressPanel().setAddress(consistNum, false); // use consist address
             if (JOptionPane.showConfirmDialog(null,
                     rb.getString("DIALOG_Funct2Lead"), rb.getString("DIALOG_NceThrottle"),
@@ -1471,7 +1473,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                             return;
                         }
                     } else if (rC != 0 && consistCount > 0) {
-                        // found a consist! 
+                        // found a consist!
                         consistSearchNext = false;
                         readConsistMemory(consistNum, LEAD);
                         return;

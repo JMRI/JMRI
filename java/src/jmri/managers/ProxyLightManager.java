@@ -5,7 +5,7 @@ import jmri.LightManager;
 import jmri.NamedBean;
 
 /**
- * Implementation of a LightManager that can serves as a proxy for multiple
+ * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
@@ -207,9 +207,26 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         }
         return false;
     }
+    /**
+     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
+    }
 
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }
+
 }

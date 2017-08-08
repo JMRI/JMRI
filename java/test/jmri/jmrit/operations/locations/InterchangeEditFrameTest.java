@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import org.junit.After;
@@ -62,7 +63,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
-        Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
+        Assert.assertEquals("Direction All before change", ALL, t.getTrainDirections());
 
         // deselect east and south check boxes
         enterClickAndLeave(f.eastCheckBox);
@@ -151,7 +152,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -174,10 +175,10 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         loadLocations();
 
         // add UP road name
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("UP");
 
-        lManager = LocationManager.instance();
+        lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
     }
 

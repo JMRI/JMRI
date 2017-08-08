@@ -39,6 +39,11 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used; convert to JMRI multi-system support structure
      */

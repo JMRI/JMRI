@@ -130,8 +130,8 @@ public class LayoutTurnout extends LayoutTrack {
     public static final int DOUBLE_XOVER = 4;
     public static final int RH_XOVER = 5;
     public static final int LH_XOVER = 6;
-    public static final int SINGLE_SLIP = 7; // used for LayoutSlip which extends this class
-    public static final int DOUBLE_SLIP = 8; // used for LayoutSlip which extends this class
+    public static final int SINGLE_SLIP = 7;    // used for LayoutSlip which extends this class
+    public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
 
     // defined constants - link types
     public static final int NO_LINK = 0;
@@ -162,11 +162,14 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> namedTurnout = null;
     //Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
+
     protected LayoutBlock block = null;
     protected LayoutBlock blockB = null;  // Xover - second block, if there is one
     protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
     protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
+
     protected LayoutEditor layoutEditor = null;
+
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
@@ -357,7 +360,6 @@ public class LayoutTurnout extends LayoutTrack {
         dispC = pt;
 
         defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
-
     }
 
 <<<<<<< HEAD
@@ -1054,15 +1056,15 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Turnout getSecondTurnout() {
+        Turnout result = null;
         if (secondNamedTurnout == null) {
             // set physical turnout if possible and needed
             setSecondTurnout(secondTurnoutName);
-
-            if (secondNamedTurnout == null) {
-                return null;
-            }
         }
-        return secondNamedTurnout.getBean();
+        if (secondNamedTurnout != null) {
+            result = secondNamedTurnout.getBean();
+        }
+        return result;
     }
 
     public void setSecondTurnout(String tName) {

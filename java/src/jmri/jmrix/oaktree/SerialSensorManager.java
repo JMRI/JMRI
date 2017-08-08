@@ -142,7 +142,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * static function returning the SerialSensorManager instance to use.
+     * Static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
@@ -154,7 +154,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return _instance;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

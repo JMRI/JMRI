@@ -1277,7 +1277,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             boolean found = false;
 
             if (nb instanceof SignalHead) {
-                if (getDrivenSignalNamedBean() != null && getDrivenSignalNamedBean().getBean().equals(nb)) {
+                if (getDrivenSignalNamedBean().getBean().equals(nb)) {
                     message.append("<br><b>This SSL will be deleted</b>");
                     throw new java.beans.PropertyVetoException(message.toString(), evt);
                 }
@@ -1335,7 +1335,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
             if (nb instanceof SignalHead) {
-                if (getDrivenSignalNamedBean() != null && getDrivenSignalNamedBean().getBean().equals(nb)) {
+                if (getDrivenSignalNamedBean().getBean().equals(nb)) {
                     stop();
                     bblList.remove(this);
                 }

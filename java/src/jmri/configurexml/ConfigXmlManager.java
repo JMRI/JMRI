@@ -93,14 +93,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 >>>>>>> JMRI/master
      */
     static public String currentClassName(String name) {
-        if (!classMigrationBundle.containsKey(name)) {
-            return name;
-        }
-        String migratedName = classMigrationBundle.getString(name);
-        log.debug("Using migrated class name {} for {}", migratedName, name);
-        return migratedName;
+        return InstanceManager.getDefault(ClassMigrationManager.class).getClassName(name);
     }
-    static java.util.ResourceBundle classMigrationBundle = java.util.ResourceBundle.getBundle("jmri.configurexml.ClassMigration");
 
     /**
      * Remove the registered preference items. This is used, for example, when a
@@ -263,7 +257,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Handle failure to load adapter class. Although only a one-liner in this
      * class, it is a separate member to facilitate testing.
-     * 
+     *
      * @param ex the exception throw failing to load adapterName as o
      * @param adapterName name of the adapter class
      * @param o adapter object

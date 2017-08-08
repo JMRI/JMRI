@@ -5,7 +5,7 @@ import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid IEEE 802.15.4 Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2013
   *

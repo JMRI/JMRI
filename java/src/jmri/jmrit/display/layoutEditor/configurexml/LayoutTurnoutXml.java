@@ -189,7 +189,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         try {
             version = element.getAttribute("ver").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert layoutturnout b coords attribute");
+            log.error("failed to convert layoutturnout version attribute");
         } catch (java.lang.NullPointerException e) {
             //can be ignored as panel file may not support method
         }

@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This class is responsible for generating polling messages for the
  * NceTrafficController, see nextAiuPoll()
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
-  */
+ */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
 
@@ -390,7 +390,6 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
         }
         return prefix + typeLetter() + iName;
-
     }
 
     int aiucab = 0;
@@ -431,7 +430,25 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
 
     }
+
+    /**
+     * Provide a connection specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,2}[:]{0,1}[0-9]{1,2}$"; // NCE examples 4:14, 50
+        // see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
+
 }
-
-

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
-    RouteManager routeManager = RouteManager.instance();
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     // labels
     JLabel textEastX = new JLabel("   X  ");
@@ -55,7 +56,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     //Spinners  
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
@@ -296,7 +297,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         if (locationBox.getSelectedItem() == null) {
             return;
         }
-        Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
                     Bundle.getMessage("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
@@ -344,7 +345,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     public void updateTrainIconCoordinates(Location l) {
-        for (Route route : RouteManager.instance().getRoutesByIdList()) {
+        for (Route route : InstanceManager.getDefault(RouteManager.class).getRoutesByIdList()) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 if (rl.getName().equals(l.getName())) {
                     log.debug("Updating train icon for route location {} in route {}", rl.getName(), route.getName());

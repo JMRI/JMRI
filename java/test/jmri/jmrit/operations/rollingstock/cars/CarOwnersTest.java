@@ -1,10 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -15,7 +16,7 @@ import junit.framework.TestSuite;
 public class CarOwnersTest extends OperationsTestCase {
 
     public void testCarOwners() {
-        CarOwners co1 = CarOwners.instance();
+        CarOwners co1 = InstanceManager.getDefault(CarOwners.class);
 
         co1.addName("Rich Guy 1");
         Assert.assertTrue("Car Owner Add", co1.containsName("Rich Guy 1"));
@@ -60,6 +61,6 @@ public class CarOwnersTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

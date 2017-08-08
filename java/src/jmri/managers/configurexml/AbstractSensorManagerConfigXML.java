@@ -70,7 +70,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             storeCommon(s, elem);
 
             log.debug("store sensor " + sname);
-            if (s.useDefaultTimerSettings()) {
+            if (s.getUseDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
             } else {
                 if (s.getSensorDebounceGoingActiveTimer() > 0 || s.getSensorDebounceGoingInActiveTimer() > 0) {
@@ -220,7 +220,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
             if (sensorList.get(i).getChild("useGlobalDebounceTimer") != null) {
                 if (sensorList.get(i).getChild("useGlobalDebounceTimer").getText().equals("yes")) {
-                    s.useDefaultTimerSettings(true);
+                    s.setUseDefaultTimerSettings(true);
                 }
             }
             s.setInverted(inverted);

@@ -35,6 +35,11 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * @return null
      * @deprecated since 4.3.6
