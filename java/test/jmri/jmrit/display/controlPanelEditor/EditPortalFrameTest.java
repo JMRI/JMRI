@@ -25,6 +25,7 @@ public class EditPortalFrameTest {
         OBlock ob = new OBlock("OB01");
         EditPortalFrame t = new EditPortalFrame("Edit Portal Frame",cb,ob,false);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

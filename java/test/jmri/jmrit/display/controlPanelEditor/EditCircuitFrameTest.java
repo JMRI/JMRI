@@ -25,6 +25,7 @@ public class EditCircuitFrameTest {
         OBlock ob = new OBlock("OB01");
         EditCircuitFrame t = new EditCircuitFrame("Edit Circuit Frame",cb,ob);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

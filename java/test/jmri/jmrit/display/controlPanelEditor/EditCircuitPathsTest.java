@@ -25,6 +25,7 @@ public class EditCircuitPathsTest {
         OBlock ob = new OBlock("OB01");
         EditCircuitPaths t = new EditCircuitPaths("Edit Circuit Paths",cb,ob);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J

@@ -25,6 +25,7 @@ public class EditPortalDirectionTest {
         OBlock ob = new OBlock("OB01");
         EditPortalDirection t = new EditPortalDirection("Edit Portal Direction",cb,ob);
         Assert.assertNotNull("exists",t);
+        frame.dispose();
     }
 
     // The minimal setup for log4J
