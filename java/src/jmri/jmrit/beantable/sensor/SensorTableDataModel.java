@@ -233,7 +233,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 return false;
             } else {
                 return true;
@@ -261,7 +261,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             boolean val = s.getInverted();
             return Boolean.valueOf(val);
         } else if (col == USEGLOBALDELAY) {
-            boolean val = s.useDefaultTimerSettings();
+            boolean val = s.getUseDefaultTimerSettings();
             return Boolean.valueOf(val);
         } else if (col == ACTIVEDELAY) {
             return s.getSensorDebounceGoingActiveTimer();
@@ -301,7 +301,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             s.setInverted(b);
         } else if (col == USEGLOBALDELAY) {
             boolean b = ((Boolean) value).booleanValue();
-            s.useDefaultTimerSettings(b);
+            s.setUseDefaultTimerSettings(b);
         } else if (col == ACTIVEDELAY) {
             String val = (String) value;
             long goingActive = Long.valueOf(val);

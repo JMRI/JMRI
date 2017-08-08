@@ -203,21 +203,20 @@
 
       <h3><a id="setup" name="setup"></a>Checking out code</h3>
 
-      <ul>
-        <li>In NetBeans, under the "Team" menu, select Git, then
-        Clone Repository. Enter the
-        https://github.com/JMRI/JMRI.git repository URL from the
-        <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
-        on the NetBeans form under "Repository URL". We recommend
-        that you also enter your GitHub user name and password on
-        the form, so we can attribute your contributions to you
-        later. Click "Next". Make sure that the "master*" box is
-        checked to pull down the main version of the code. Click
-        "Next", and then click "Finish".
+      In NetBeans, under the "Team" menu, select Git, then
+      Clone Repository. Enter the
+      https://github.com/JMRI/JMRI.git repository URL from the
+      <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
+      on the NetBeans form under "Repository URL". We recommend
+      that you also enter your GitHub user name and password on
+      the form, so we can attribute your contributions to you
+      later. Click "Next". Make sure that the "master*" box is
+      checked to pull down the main version of the code. Click
+      "Next", and then click "Finish".
 
-          <p>It'll take a long time to pull down a copy of the code
-          (note the progress bar in the lower right), but then
-          you're good to go.</p>
+      <p>It'll take a long time to pull down a copy of the code
+      (note the progress bar in the lower right), but then
+      you're good to go.</p>
 
           <h3>Local Commits</h3>When using Git, the "commit"
           operation is local to your computer. It doesn't make any
@@ -225,8 +224,9 @@
 
           <p>You're encouraged to commit often, so that your
           changes are safely stored away from your working
-          directory and that each small change is separately
-          recorded.</p>
+          directory. Having each small change separately
+          recorded can be incredibly helpful later on if you
+          have to track down where a problem was introduced.</p>
 
           <h3><a id="updating" name="updating"></a>Updating the
           code from Git</h3>
@@ -523,8 +523,7 @@
             you selected will contain the patches, along with an
             information header.</li>
           </ul><!--#include virtual="/Footer" -->
-        </li>
-      </ul>
+
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -102,7 +103,7 @@ public class ExportTrains extends XmlFile {
 
         int count = 0;
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
             if (!train.isBuildEnabled())
                 continue;
             count++;
@@ -152,7 +153,7 @@ public class ExportTrains extends XmlFile {
                 Bundle.getMessage("Attributes");
         fileOut.println(header);
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
             if (!train.isBuildEnabled())
                 continue;
 

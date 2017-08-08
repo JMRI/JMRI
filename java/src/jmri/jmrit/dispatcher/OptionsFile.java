@@ -56,7 +56,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
         // check if file exists
         if (checkFile(defaultFileName)) {
-            // file is present, 
+            // file is present,
             log.debug("Reading Dispatcher options from file {}", defaultFileName);
             root = rootFromName(defaultFileName);
             dispatcher = f;
@@ -70,7 +70,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                         String leName = options.getAttribute("lename").getValue();
                         // get list of Layout Editor panels
                         ArrayList<LayoutEditor> layoutEditorList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-                        if (layoutEditorList.size() == 0) {
+                        if (layoutEditorList.isEmpty()) {
                             log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
                         } else {
                             boolean found = false;
@@ -81,7 +81,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                                 }
                             }
                             if (!found) {
-                                log.warn("Layout Editor panel - " + leName + " - not found.");
+                                log.warn("Layout Editor panel - {} - not found.", leName);
                             }
                         }
                     }
@@ -214,7 +214,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
         doc = newDocument(root, dtdLocation + "dispatcher-options.dtd");
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation + "dispatcheroptions.xsl");
         org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
@@ -264,7 +264,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
             // write content to file
             writeXML(findFile(defaultFileName), doc);
         } catch (java.io.IOException ioe) {
-            log.error("IO Exception " + ioe);
+            log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
         }
     }

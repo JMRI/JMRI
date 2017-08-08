@@ -32,7 +32,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );}
+     * {@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -48,7 +48,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );}
+     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -64,7 +64,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); }, 1000 );}
+     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); }, 1000 );   }
      *
      * @param ta What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -87,7 +87,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );}
+     * {@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -117,7 +117,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );}
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );   }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -134,7 +134,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000 );}
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000 );   }
      *
      * @param ta What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -158,6 +158,33 @@ public class ThreadingUtil {
     static public boolean isGUIThread() {
         return SwingUtilities.isEventDispatchThread();
     }
+    
+    /** 
+     * Check whether a specific thread is running (or able to run) 
+     * right now.
+     * @return true is the specified thread is or could be running right now
+     */
+     static public boolean canThreadRun(Thread t) {
+        Thread.State s = t.getState();
+        return s.equals(Thread.State.RUNNABLE);
+     }
 
+    /** 
+     * Check whether a specific thread is currently waiting.
+     * <p>
+     * Note: This includes both waiting due to an explicit wait() call, and 
+     *  due to being blocked attempting to synchronize.
+     * <p>
+     * Note: {@link #canThreadRun(Thread)} and {@link #isThreadWaiting(Thread)}
+     *  should never simultanously be true, but it might look that way due to 
+     *  sampling delays when checking on another thread.
+     * 
+     * @return true is the specified thread is or could be running right now
+     */
+     static public boolean isThreadWaiting(Thread t) {
+        Thread.State s = t.getState();
+        return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
+     }
+     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class.getName());
 }

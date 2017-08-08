@@ -192,8 +192,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
         // can we find a roster entry?
         if ((rosterEntry == null)
-                && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
-                && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch())
+                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
+                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isEnablingRosterSearch())
                 && addrSelector.getAddress() != null) {
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + addrSelector.getAddress().getNumber(), null, null, null, null);
             if (l.size() > 0) {

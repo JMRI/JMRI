@@ -163,7 +163,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                 protected void openNewLoco() {
                     log.debug("openNewLoco");
                     // find the decoderFile object
-                    DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                    DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
                     log.debug("decoder file: {}", decoderFile.getFilename()); // NOI18N
                     if (rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) { // NOI18N
                         re = new RosterEntry();
@@ -214,7 +214,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                                 go2.setRequestFocusEnabled(true);
                                 go2.requestFocus();
                                 go2.setToolTipText(SymbolicProgBundle.getMessage("TipClickToOpen")); // NOI18N
-                                decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                                decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
                                 setUpRosterPanel();
                             } else {
                                 decoderFile = null;
