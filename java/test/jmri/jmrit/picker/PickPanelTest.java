@@ -26,7 +26,7 @@ public class PickPanelTest {
             PickListModel.warrantPickModelInstance(),
             PickListModel.oBlockPickModelInstance(),
             PickListModel.entryExitPickModelInstance(),};
-        PickPanel t = new PickPanel(PickListModel);
+        PickPanel t = new PickPanel(models);
         Assert.assertNotNull("exists",t);
     }
 
