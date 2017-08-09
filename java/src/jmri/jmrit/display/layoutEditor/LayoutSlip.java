@@ -625,26 +625,26 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     public void setCoordsA(Point2D p) {
-        dispC = MathUtil.subtract(center, p);
         pointA = p;
+        dispC = MathUtil.subtract(pointA, center);
     }
 
     @Override
     public void setCoordsB(Point2D p) {
-        dispB = MathUtil.subtract(p, center);
         pointB = p;
+        dispB = MathUtil.subtract(pointB, center);
     }
 
     @Override
     public void setCoordsC(Point2D p) {
-        dispC = MathUtil.subtract(p, center);
         pointC = p;
+        dispC = MathUtil.subtract(center, pointC);
     }
 
     @Override
     public void setCoordsD(Point2D p) {
-        dispB = MathUtil.subtract(center, p);
         pointD = p;
+        dispB = MathUtil.subtract(center, pointD);
     }
 
     @Override
@@ -1434,7 +1434,6 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
-
             LayoutBlock b = getLayoutBlock();
             Color mainColourA = defaultTrackColor;
             Color subColourA = defaultTrackColor;
