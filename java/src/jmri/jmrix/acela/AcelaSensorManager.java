@@ -110,10 +110,10 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public void reply(AcelaReply r) {
-        // Determine which state we are in: Initiallizing Acela Network or Polling Sensors
+        // Determine which state we are in: Initializing Acela Network or Polling Sensors
         boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
-        //  false == Initiallizing Acela Network
+        //  false == Initializing Acela Network
         //  true == Polling Sensors
         if (!currentstate) {
             int replysize = r.getNumDataElements();

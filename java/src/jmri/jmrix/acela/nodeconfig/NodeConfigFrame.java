@@ -19,6 +19,7 @@ import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.acela.AcelaNode;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
+    private AcelaSystemConnectionMemo _memo = null;
 
     protected Container contentPane;
     protected NodeConfigModel d8outputConfigModel;
@@ -161,7 +162,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Constructor method
      */
-    public NodeConfigFrame(jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
+    public NodeConfigFrame(AcelaSystemConnectionMemo memo) {
         super();
         _memo = memo;
     }
@@ -174,9 +175,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     // though it would be good to fix it if you're working in this area
     @Override
     public void initComponents() {
-        setTitle(Bundle.getMessage("NodeConfigTitle"));
+        setTitle(Bundle.getMessage("ConfigNodesTitle"));
 
-//        Container contentPane = getContentPane();
         contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 

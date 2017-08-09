@@ -8,7 +8,6 @@ import jmri.jmrix.ConnectionTypeList;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class AcelaConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
