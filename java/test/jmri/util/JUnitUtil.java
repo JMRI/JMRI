@@ -264,6 +264,8 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
+        // close any open windows
+        resetWindows(true);
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
         // ensure the auto-defeault UserPreferencesManager is not created
