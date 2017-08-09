@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,19 +44,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A LayoutSlip is a crossing of two straight tracks designed in such a way
- * as to allow trains to change from one straight track to the other, as well as
+ * A LayoutSlip is a crossing of two straight tracks designed in such a way as
+ * to allow trains to change from one straight track to the other, as well as
  * going straight across.
  * <P>
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
  * <P>
- * ==A==-==D==
- *    \\ //
- *      X
- *    // \\
- * ==B==-==C==
+ * ==A==-==D== \\ // X // \\ ==B==-==C==
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -620,31 +617,33 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setCoordsCenter(Point2D p) {
         center = p;
+        pointA = MathUtil.subtract(center, dispC);
+        pointB = MathUtil.add(center, dispB);
+        pointC = MathUtil.add(center, dispC);
+        pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
     public void setCoordsA(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispC = new Point2D.Double(-x, -y);
+        dispC = MathUtil.subtract(center, p);
         pointA = p;
     }
 
     @Override
     public void setCoordsB(Point2D p) {
+        dispB = MathUtil.subtract(p, center);
         pointB = p;
     }
 
     @Override
     public void setCoordsC(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispC = new Point2D.Double(x, y);
+        dispC = MathUtil.subtract(p, center);
         pointC = p;
     }
 
     @Override
     public void setCoordsD(Point2D p) {
+        dispB = MathUtil.subtract(center, p);
         pointD = p;
     }
 
@@ -722,8 +721,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
     }
-*/
-    
+     */
     JPopupMenu popup = null;
     LayoutEditorTools tools = null;
 
@@ -736,6 +734,9 @@ public class LayoutSlip extends LayoutTurnout {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
+        }
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
         }
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
@@ -839,16 +840,21 @@ public class LayoutSlip extends LayoutTurnout {
                 );
             }
             if (blockAssigned) {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSlipFromMenu((LayoutSlip) instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
-                });
+                };
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addLayoutSlipSignalHeadInfoToMenu(instance, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
+
             }
 
             final String[] boundaryBetween = getBlockBoundaries();
@@ -863,18 +869,12 @@ public class LayoutSlip extends LayoutTurnout {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSignalMastsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSensorsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });

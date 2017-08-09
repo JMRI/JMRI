@@ -2146,6 +2146,9 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
+        }
 
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
@@ -2160,13 +2163,13 @@ public class LayoutTurnout extends LayoutTrack {
                     jmi = popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    jmi = popup.add(rb.getString("DoubleCrossOver"));
+                    jmi = popup.add(rb.getString("DoubleCrossover"));
                     break;
                 case RH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("RightCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("RightCrossover"));
                     break;
                 case LH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("LeftCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("LeftCrossover"));
                     break;
                 default:
                     break;
@@ -2289,13 +2292,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             });
+
             if (getTurnout() != null) {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
                             tools.setSignalsAtXoverTurnoutFromMenu(instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
@@ -2313,7 +2314,15 @@ public class LayoutTurnout extends LayoutTrack {
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         }
                     }
-                });
+                };
+
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addLayoutTurnoutSignalHeadInfoToMenu(turnoutName, linkedTurnoutName, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
             }
             if (!blockName.equals("")) {
                 final String[] boundaryBetween = getBlockBoundaries();
@@ -2380,10 +2389,6 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (tools == null) {
-                                tools = new LayoutEditorTools(layoutEditor);
-                            }
-
                             tools.setSignalMastsAtTurnoutFromMenu(instance,
                                     boundaryBetween);
                         }
@@ -2391,10 +2396,6 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (tools == null) {
-                                tools = new LayoutEditorTools(layoutEditor);
-                            }
-
                             tools.setSensorsAtTurnoutFromMenu(instance,
                                     boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                         }
