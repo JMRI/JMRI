@@ -48,17 +48,17 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             _logixTable.actionPerformed(null);
         });
 
-        ThreadingUtil.runOnGUI(() -> {
-            _logixTable.addPressed(null);
-        });
-
-        _logixTable._addUserName.setText("TestLogix");
-        _logixTable._systemName.setText("IX123");
-        _logixTable._autoSystemName.setSelected(false);
-        ThreadingUtil.runOnGUI(() -> {
-            _logixTable.createPressed(null);
-        });
-
+//         ThreadingUtil.runOnGUI(() -> {
+//             _logixTable.addPressed(null);
+//         });
+// 
+//         _logixTable._addUserName.setText("TestLogix");
+//         _logixTable._systemName.setText("IX123");
+//         _logixTable._autoSystemName.setSelected(false);
+//         ThreadingUtil.runOnGUI(() -> {
+//             _logixTable.createPressed(null);
+//         });
+// 
 //         ThreadingUtil.runOnGUI(() -> {
 //             _logixTable.donePressed(null);
 //         });

@@ -321,8 +321,9 @@ public class ConditionalEditBase {
      * @since 4.7.3
      * @param itemType The selected variable or action type
      * @param listener The listener to be assigned to the picklist
+     * @param actionType True if Action, false if Variable.
      */
-    void createSinglePanelPickList(int itemType, PickSingleListener listener) {
+    void createSinglePanelPickList(int itemType, PickSingleListener listener, boolean actionType) {
         if (_pickListener != null) {
             int saveType = _pickListener.getItemType();
             if (saveType != itemType) {
@@ -352,6 +353,13 @@ public class ConditionalEditBase {
                 break;
             case Conditional.ITEM_TYPE_MEMORY:      // 6
                 _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_LOGIX:      // 7 -- can be either Logix or Conditional
+                if (!actionType) {
+                    // State Variable
+                    return;
+                }
+                _pickSingle = new PickSinglePanel(PickListModel.logixPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_WARRANT:     // 8
                 _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
@@ -459,8 +467,9 @@ public class ConditionalEditBase {
      * Set the pick list tab based on the variable or action type
      * If there is not a corresponding tab, hide the picklist
      * @param curType is the current type
+     * @param actionType True if Action, false if Variable.
      */
-    void setPickListTab(int curType) {
+    void setPickListTab(int curType, boolean actionType) {
         boolean tabSet = true;
         if (_pickTables == null) {
             return;
@@ -472,31 +481,39 @@ public class ConditionalEditBase {
             // Convert variable/action type to the corresponding tab index
             int tabIndex = 0;
             switch (curType) {
-                case 1:     // sensor
+                case Conditional.ITEM_TYPE_SENSOR:    // 1
                     tabIndex = 1;
                     break;
-                case 2:     // turnout
+                case Conditional.ITEM_TYPE_TURNOUT:   // 2
                     tabIndex = 0;
                     break;
-                case 3:     // light
+                case Conditional.ITEM_TYPE_LIGHT:     // 3
                     tabIndex = 6;
                     break;
-                case 4:     // signal head
+                case Conditional.ITEM_TYPE_SIGNALHEAD:            // 4
                     tabIndex = 2;
                     break;
-                case 5:     // signal mast
+                case Conditional.ITEM_TYPE_SIGNALMAST:            // 5
                     tabIndex = 3;
                     break;
-                case 6:     // memory
+                case Conditional.ITEM_TYPE_MEMORY:    // 6
                     tabIndex = 4;
                     break;
-                case 8:     // warrent
+                case Conditional.ITEM_TYPE_LOGIX:     // 7 Conditional (Variable) or Logix (Action)
+                    if (actionType) {
+                        tabIndex = 10;
+                    } else {
+                        // State Variable
+                        tabSet = false;
+                    }
+                    break;
+                case Conditional.ITEM_TYPE_WARRANT:   // 8
                     tabIndex = 7;
                     break;
-                case 10:     // oblock
+                case Conditional.ITEM_TYPE_OBLOCK:    // 10
                     tabIndex = 8;
                     break;
-                case 11:     // entry exit
+                case Conditional.ITEM_TYPE_ENTRYEXIT: // 11
                     tabIndex = 9;
                     break;
                 default:

@@ -15,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.LogixManager;
 import jmri.Manager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
@@ -478,6 +479,16 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new EntryExitPickModel();
     }
 
+    public static PickListModel logixPickModelInstance() {
+        Integer num = _listMap.get("logix");
+        if (num != null) {
+            _listMap.put("logix", num + 1);
+        } else {
+            _listMap.put("logix", 1);
+        }
+        return new LogixPickModel();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
 
     static class TurnoutPickModel extends PickListModel {
@@ -849,6 +860,36 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
                 return Bundle.getMessage("ColumnUserName");
             }
             return "";
+        }
+    }
+
+    static class LogixPickModel extends PickListModel {
+
+        LogixManager manager;
+
+        LogixPickModel() {
+           _name = rb.getString("TitleLogixTable");
+        }
+
+        @Override
+        public Manager getManager() {
+            manager = InstanceManager.getDefault(jmri.LogixManager.class);
+            return manager;
+        }
+
+        @Override
+        public NamedBean addBean(String name) {
+            return null;
+        }
+
+        @Override
+        public NamedBean addBean(String sysName, String userName) {
+            return null;
+        }
+
+        @Override
+        public boolean canAddBean() {
+            return false;
         }
     }
 }

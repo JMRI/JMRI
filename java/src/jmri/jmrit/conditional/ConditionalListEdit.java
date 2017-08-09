@@ -1990,10 +1990,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_selectionMode == SelectionMode.USECOMBO) {
             _variableComboNamePanel.setVisible(false);
         } else if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType));
+            createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType), false);
         } else {
             // Default and USEMULTI
-            setPickListTab(itemType);
+            setPickListTab(itemType, false);
         }
 
         switch (itemType) {
@@ -3089,10 +3089,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_selectionMode == SelectionMode.USECOMBO) {
             _actionComboNamePanel.setVisible(false);
         } else if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType));
+            createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType), true);
         } else {
             // Default and USEMULTI
-            setPickListTab(itemType);
+            setPickListTab(itemType, true);
         }
 
         switch (itemType) {

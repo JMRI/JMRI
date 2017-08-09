@@ -2308,9 +2308,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         _detailGrid.setVisible(false);
         if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType));
+            createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType), false);
         } else if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType);
+            setPickListTab(itemType, false);
         }
 
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
@@ -3533,9 +3533,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
 
         if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType));
+            createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType), true);
         } else if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType);
+            setPickListTab(itemType, true);
         }
 
         switch (itemType) {
