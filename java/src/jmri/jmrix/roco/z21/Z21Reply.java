@@ -84,6 +84,10 @@ public class Z21Reply extends AbstractMRReply {
 
     public String toMonitorString() {
         switch(getOpCode()){
+<<<<<<< HEAD
+           case 0x0040:
+               return "XPressNet Tunnel Reply: " + getXNetReply().toMonitorString();
+=======
            case 0x0010:
                int serialNo = getElement(4) + (getElement(5) << 8) +
                      (getElement(6) << 16) + (getElement(7) << 24);
@@ -98,6 +102,7 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+>>>>>>> JMRI/master
            default:
         }
 

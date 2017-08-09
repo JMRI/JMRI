@@ -24,11 +24,25 @@ public class DCCppInitializationManagerTest extends TestCase {
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
 
         DCCppInitializationManager m = new DCCppInitializationManager(memo) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+            @Override
+            protected int getInitTimeout() {
+                return 50;   // shorten, because this will fail & delay test
+            }
+        };
+=======
+=======
+>>>>>>> JMRI/master
                 @Override
                 protected int getInitTimeout() {
                     return 50;   // shorten, because this will fail & delay test
                 }
             };
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);

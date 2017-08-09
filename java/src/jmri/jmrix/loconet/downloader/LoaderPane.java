@@ -38,7 +38,11 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
+<<<<<<< HEAD
+ * @author B. Milhaupt Copyright (C) 2013, 2014
+=======
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
+>>>>>>> JMRI/master
   */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {

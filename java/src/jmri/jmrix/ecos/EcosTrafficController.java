@@ -108,9 +108,13 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     protected boolean unsolicitedSensorMessageSeen = false;
 
+<<<<<<< HEAD
+    //Ecos doesn't support this function.
+=======
     /**
      *  ECoS doesn't support this function.
      */
+>>>>>>> JMRI/master
     @Override
     protected AbstractMRMessage enterProgMode() {
         return EcosMessage.getProgMode();

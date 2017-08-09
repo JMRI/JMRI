@@ -299,6 +299,15 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
             /**
              * Overridden to prevent empty cells from being selected
              */
+<<<<<<< HEAD
+<<<<<<< HEAD
+            public void changeSelection(int row, int col, boolean toggle, boolean extend) {
+                if (this.getValueAt(row, col) != null)
+                    super.changeSelection(row, col, toggle, extend);
+        }};
+=======
+=======
+>>>>>>> JMRI/master
             @Override
             public void changeSelection(int row, int col, boolean toggle, boolean extend) {
                 if (this.getValueAt(row, col) != null) {
@@ -306,6 +315,10 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
                 }
             }
         };
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
@@ -473,8 +486,25 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         return new WarrantPickModel();
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    public static PickListModel conditionalPickModelInstance() {
+        Integer num = _listMap.get("conditional");
+        if (num != null) {
+            _listMap.put("conditional", num + 1);
+        } else {
+            _listMap.put("conditional", 1);
+        }
+        return new ConditionalPickModel();
+    }
+
+=======
+>>>>>>> JMRI/master
+    public static PickListModel entryExitPickModelInstance() {
+=======
     @Nonnull
     public static PickListModel<DestinationPoints> entryExitPickModelInstance() {
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         Integer num = _listMap.get("entryExit");
         if (num != null) {
             _listMap.put("entryExit", num + 1);
@@ -810,6 +840,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName, false, 0);
+<<<<<<< HEAD
         }
 
         @Override
@@ -818,7 +849,68 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         }
     }
 
+<<<<<<< HEAD
+    static class ConditionalPickModel extends PickListModel {
+
+        ConditionalManager manager;
+
+        ConditionalPickModel() {
+            _name = rb.getString("TitleConditionalTable");
+        }
+
+        @Override
+        public Manager getManager() {
+            manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
+            return manager;
+        }
+
+        @Override
+        public NamedBean addBean(String name) {
+            return manager.createNewConditional(name, null);
+        }
+
+        @Override
+        public NamedBean addBean(String sysName, String userName) {
+            return manager.createNewConditional(sysName, userName);
+=======
+>>>>>>> JMRI/master
+        }
+
+        @Override
+        public boolean canAddBean() {
+            return false;
+        }
+<<<<<<< HEAD
+
+        @Override
+        public JTable makePickTable() {
+            JTable table = super.makePickTable();
+            TableColumn column = new TableColumn(PickListModel.POSITION_COL);
+            column.setResizable(true);
+            column.setMinWidth(100);
+            column.setHeaderValue("Logix");
+            table.addColumn(column);
+            return table;
+        }
+
+        @Override
+        public Object getValueAt(int r, int c) {
+            if (c == POSITION_COL) {
+                jmri.Logix l = manager.getParentLogix(_pickList.get(r).getSystemName());
+                if (l != null) {
+                    return l.getDisplayName();
+                }
+            }
+            return super.getValueAt(r, c);
+        }
+=======
+>>>>>>> JMRI/master
+    }
+
+    static class EntryExitPickModel extends PickListModel {
+=======
     static class EntryExitPickModel extends PickListModel<DestinationPoints> {
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 

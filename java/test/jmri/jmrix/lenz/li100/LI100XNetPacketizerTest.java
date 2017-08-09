@@ -22,6 +22,16 @@ public class LI100XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+<<<<<<< HEAD
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        tc = null;
+        apps.tests.Log4JFixture.tearDown();
+=======
+>>>>>>> JMRI/master
     }
 
 }

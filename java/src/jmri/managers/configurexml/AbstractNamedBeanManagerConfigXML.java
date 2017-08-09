@@ -3,7 +3,10 @@ package jmri.managers.configurexml;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import javax.annotation.Nonnull;
+<<<<<<< HEAD
+=======
 import jmri.InstanceManager;
+>>>>>>> JMRI/master
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
@@ -105,6 +108,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
+<<<<<<< HEAD
+     * Get the user name from an Element defining a NamedBean.
+=======
      * Service method to load a user name, check it for validity, and if need be notify 
      * about errors.
      * <p>
@@ -112,6 +118,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * <p>
      * There's no check to make sure the name corresponds to an existing bean, as sometimes
      * this is used to check validity before creating the bean.
+>>>>>>> JMRI/master
      * <ul>
      * <li>Before 2.9.6, this was stored as an attribute
      * <li>Starting in 2.9.6, this was stored as both attribute and element
@@ -189,6 +196,8 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Service method to load a reference to a NamedBean by name, check it for validity, and if need be notify 
      * about errors.
      * <p>
@@ -241,6 +250,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
+>>>>>>> JMRI/master
      * Load the comment attribute into a NamedBean from one element of a list of
      * Elements defining NamedBeans
      *

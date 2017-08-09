@@ -84,9 +84,13 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
+<<<<<<< HEAD
+    // listen for turnouts, creating them as needed
+=======
     /**
      * Listen for turnouts, creating them as needed.
      */
+>>>>>>> JMRI/master
     @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
@@ -102,16 +106,24 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

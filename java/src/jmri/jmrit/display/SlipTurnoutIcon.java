@@ -537,8 +537,16 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
         tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
+<<<<<<< HEAD
+        tristateItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setTristate(tristateItem.isSelected());
+            }
+=======
         tristateItem.addActionListener((java.awt.event.ActionEvent e) -> {
             setTristate(tristateItem.isSelected());
+>>>>>>> JMRI/master
         });
     }
 
@@ -806,8 +814,16 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
         _iconEditor.makeIconPanel(true);
 
+<<<<<<< HEAD
+        ActionListener addIconAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateTurnout();
+            }
+=======
         ActionListener addIconAction = (ActionEvent a) -> {
             updateTurnout();
+>>>>>>> JMRI/master
         };
         _iconEditor.complete(addIconAction, true, true, true);
     }
@@ -1127,6 +1143,21 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         } else {
             JMenuItem LWUE = new JMenuItem(lowerWestToUpperEastText);
             if ((turnoutType == THREEWAY) && (!singleSlipRoute)) {
+<<<<<<< HEAD
+                LWUE.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setLowerWestToLowerEast();
+                    }
+                });
+
+            } else {
+                LWUE.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setLowerWestToUpperEast();
+                    }
+=======
                 LWUE.addActionListener((ActionEvent e) -> {
                     setLowerWestToLowerEast();
                 });
@@ -1134,45 +1165,93 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             } else {
                 LWUE.addActionListener((ActionEvent e) -> {
                     setLowerWestToUpperEast();
+>>>>>>> JMRI/master
                 });
             }
             popup.add(LWUE);
             JMenuItem UWLE = new JMenuItem(upperWestToLowerEastText);
+<<<<<<< HEAD
+            UWLE.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setUpperWestToLowerEast();
+                }
+=======
             UWLE.addActionListener((ActionEvent e) -> {
                 setUpperWestToLowerEast();
+>>>>>>> JMRI/master
             });
             popup.add(UWLE);
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (!singleSlipRoute))) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
+<<<<<<< HEAD
+                LWLE.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setLowerWestToLowerEast();
+                    }
+=======
                 LWLE.addActionListener((ActionEvent e) -> {
                     setLowerWestToLowerEast();
+>>>>>>> JMRI/master
                 });
                 popup.add(LWLE);
             }
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (singleSlipRoute))) {
                 JMenuItem UWUE = new JMenuItem(upperWestToUpperEastText);
+<<<<<<< HEAD
+                UWUE.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setUpperWestToUpperEast();
+                    }
+=======
                 UWUE.addActionListener((ActionEvent e) -> {
                     setUpperWestToUpperEast();
+>>>>>>> JMRI/master
                 });
                 popup.add(UWUE);
             }
             if (turnoutType == THREEWAY) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
                 if (!singleSlipRoute) {
+<<<<<<< HEAD
+                    LWLE.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            setLowerWestToUpperEast();
+                        }
+                    });
+                } else {
+                    LWLE.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            setLowerWestToLowerEast();
+                        }
+=======
                     LWLE.addActionListener((ActionEvent e) -> {
                         setLowerWestToUpperEast();
                     });
                 } else {
                     LWLE.addActionListener((ActionEvent e) -> {
                         setLowerWestToLowerEast();
+>>>>>>> JMRI/master
                     });
                 }
                 popup.add(LWLE);
             }
             if (turnoutType == SCISSOR) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
+<<<<<<< HEAD
+                LWLE.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setLowerWestToLowerEast();
+                    }
+=======
                 LWLE.addActionListener((ActionEvent e) -> {
                     setLowerWestToLowerEast();
+>>>>>>> JMRI/master
                 });
                 popup.add(LWLE);
             }
@@ -1291,6 +1370,10 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         //This is used to set the two turnouts, with a delay of 250ms between each one.
+<<<<<<< HEAD
+        @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+=======
+>>>>>>> JMRI/master
         @Override
         public void run() {
 

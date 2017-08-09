@@ -1,5 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
+<<<<<<< HEAD
+import com.digi.xbee.api.packet.XBeePacket;
+=======
+>>>>>>> JMRI/master
 import com.digi.xbee.api.packet.UnknownXBeePacket;
 import com.digi.xbee.api.packet.XBeePacket;
 

@@ -117,7 +117,11 @@ public class LevelXing extends LayoutTrack {
         center = c;
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
     // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "LevelXing " + ident;
     }
@@ -125,6 +129,13 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
+<<<<<<< HEAD
+    public String getID() {
+        return ident;
+    }
+
+=======
+>>>>>>> JMRI/master
     public String getBlockNameAC() {
         return blockNameAC;
     }
@@ -576,6 +587,10 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+<<<<<<< HEAD
+    public Object getConnection(int location) throws jmri.JmriException {
+        switch (location) {
+=======
     /**
      * get the object connected to this track for the specified connection type
      * @param connectionType the specified connection type
@@ -585,6 +600,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public Object getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
+>>>>>>> JMRI/master
             case LEVEL_XING_A:
                 return connectA;
             case LEVEL_XING_B:
@@ -594,13 +610,25 @@ public class LevelXing extends LayoutTrack {
             case LEVEL_XING_D:
                 return connectD;
             default:
+<<<<<<< HEAD
+                log.warn("Unhandled loc: {}", location);
+=======
                 log.warn("Unhandled loc: {}", connectionType);
+>>>>>>> JMRI/master
                 break;
         }
         log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
+<<<<<<< HEAD
+    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to layoutturnout - " + type);
+            throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
+        }
+        switch (location) {
+=======
     /**
      * set the object connected to this turnout for the specified connection type
      * @param connectionType the connection type (where it is connected to the us)
@@ -615,6 +643,7 @@ public class LevelXing extends LayoutTrack {
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
         }
         switch (connectionType) {
+>>>>>>> JMRI/master
             case LEVEL_XING_A:
                 connectA = o;
                 break;
@@ -1305,7 +1334,17 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(block1NameComboBox, false, true);
+            } else {
+                block1NameComboBox.setEditable(true);
+                block1NameComboBox.getEditor().setItem("");
+                block1NameComboBox.setSelectedIndex(-1);
+            }
+=======
             layoutEditor.setupComboBox(block1NameComboBox, false, true);
+>>>>>>> JMRI/master
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
 
@@ -1315,7 +1354,17 @@ public class LevelXing extends LayoutTrack {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(block2NameComboBox, false, true);
+            } else {
+                block2NameComboBox.setEditable(true);
+                block2NameComboBox.getEditor().setItem("");
+                block2NameComboBox.setSelectedIndex(-1);
+            }
+=======
             layoutEditor.setupComboBox(block2NameComboBox, false, true);
+>>>>>>> JMRI/master
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
 
@@ -1424,7 +1473,11 @@ public class LevelXing extends LayoutTrack {
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
+<<<<<<< HEAD
+            newName = (null != newName) ? newName.trim() : "";
+=======
             newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
+>>>>>>> JMRI/master
         }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -1657,11 +1710,14 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+<<<<<<< HEAD
+=======
     /**
      * draw this level crossing
      *
      * @param g2 the graphics port to draw to
      */
+>>>>>>> JMRI/master
     public void draw(Graphics2D g2) {
         if (isMainlineBD() && (!isMainlineAC())) {
             drawXingAC(g2);
@@ -1670,6 +1726,22 @@ public class LevelXing extends LayoutTrack {
             drawXingBD(g2);
             drawXingAC(g2);
         }
+<<<<<<< HEAD
+    }   // draw(Graphics2D g2)
+
+
+    private void drawXingAC(Graphics2D g2) {
+        // set color - check for an AC block
+        LayoutBlock b = getLayoutBlockAC();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        // set track width for AC block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
+        // draw AC segment
+=======
     }   // drawHidden(Graphics2D g2)
 
     private void drawXingAC(Graphics2D g2) {
@@ -1678,11 +1750,26 @@ public class LevelXing extends LayoutTrack {
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
         // drawHidden AC segment
+>>>>>>> JMRI/master
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
 
     private void drawXingBD(Graphics2D g2) {
         // set color - check for an BD block
+<<<<<<< HEAD
+        LayoutBlock b = getLayoutBlockBD();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        // set track width for BD block
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
+        // draw BD segment
+        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    }
+
+=======
         setColorForTrackBlock(g2, getLayoutBlockBD());
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
@@ -1727,5 +1814,6 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
+>>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 }

@@ -37,10 +37,20 @@
       objects (hardware and software), and how user-readable names
       are used.
 
+<<<<<<< HEAD
+      <b>As of February 2017, we are considering a change to 
+        the allowable user names: They can't have leading or trailing
+        spaces.  If this change is made, the names will be "trimmed"
+        whenever entered.  If you have a copy of the code 
+        checked out, you can test this by modifying the jmri.NamedBean
+        class following the instructions in the normalizeUserName(..) routine,
+        rebuilding and running </b> 
+=======
       <span class="since">Since JMRI 4.7.4</span>
         <b>As of March 2017, we have changed
         the allowable user names: They can't have leading or trailing spaces.  
         If leading or trailing spaces are entered, they'll be "trimmed" off.</b> 
+>>>>>>> JMRI/master
         
       <h2>What's in a name?</h2>Why do we need names at all, rather
       than just references within the code? There are several
@@ -820,7 +830,14 @@ knows to look for routes of this name.
         understand what the program is trying to do.</li>
       </ul>
       
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
       <a name="programmers" id="programmers"></a>
+>>>>>>> JMRI/master
+=======
+      <a name="programmers" id="programmers"></a>
+>>>>>>> JMRI/master
       <h2>For Programmers</h2>
       
           The code to make sure that names are in normal form 
@@ -845,7 +862,15 @@ knows to look for routes of this name.
         <li>JComboBox format:
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
             
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <pre><code>
+=======
             <code><pre>
+>>>>>>> JMRI/master
+=======
+            <code><pre>
+>>>>>>> JMRI/master
         import jmri.util.swing.JmriBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
@@ -854,16 +879,32 @@ knows to look for routes of this name.
                                                     currentSensor, 
                                                     <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
         
+<<<<<<< HEAD
+        // to get the selected item
+        selectComboBox.getSelectedItem()                                         
+<<<<<<< HEAD
+            </code></pre>
+
+        <li>Table format:
+            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
+            <pre><code>
+=======
+=======
         // to get the selected item, depending on what you want:
         selectComboBox.getNamedBean()                                       
         selectComboBox.getSystemName()                                       
         selectComboBox.getUserName()                                        
         selectComboBox.getDisplayName()                                       
+>>>>>>> JMRI/master
             </pre></code>
 
         <li>Table format:
             <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
             <code><pre>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
 
         import jmri.jmrit.picker.*;
         <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
@@ -878,7 +919,15 @@ knows to look for routes of this name.
         public void valueChanged(ListSelectionEvent e) {
             System.out.println("  Selected: "+panel.getSelectedBeanHandle());
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+            </code></pre>
+=======
             </pre></code>
+>>>>>>> JMRI/master
+=======
+            </pre></code>
+>>>>>>> JMRI/master
         This allows the user to select either the system name or (non-blank) user name in a row,
         which then becomes the preferred name for the resulting 
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.

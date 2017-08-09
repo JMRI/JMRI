@@ -127,6 +127,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Regex patterns to derive the logix system name from the conditional system name
      * The 3 route patterns deal with Route Logix names that end with a number,
      * such as Logix RTX123 with Conditional RTX1231T.
@@ -139,6 +141,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     };
 
     /**
+>>>>>>> JMRI/master
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.  For sensor groups, the parent
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
@@ -220,11 +223,14 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return c;
     }
 
+<<<<<<< HEAD
+=======
     /*
      * Conditional user names are NOT unique.
      * @param key The user name
      * @return the conditional or null when not found or a duplicate
      */
+>>>>>>> JMRI/master
     @Override
     public Conditional getByUserName(String key) {
         if (key == null) {

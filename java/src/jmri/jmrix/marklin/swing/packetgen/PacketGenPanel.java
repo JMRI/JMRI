@@ -40,6 +40,37 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     public void initComponents() throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
+<<<<<<< HEAD
+        {
+            jLabel1.setText("Command: ");
+            jLabel1.setVisible(true);
+
+            jLabel2.setText("Reply: ");
+            jLabel2.setVisible(true);
+
+            sendButton.setText("Send");
+            sendButton.setVisible(true);
+            sendButton.setToolTipText("Send packet");
+
+            packetTextField.setText("");
+            packetTextField.setToolTipText("Enter command");
+            packetTextField.setMaximumSize(new Dimension(packetTextField
+                    .getMaximumSize().width, packetTextField.getPreferredSize().height));
+
+            add(jLabel1);
+            add(packetTextField);
+            add(jLabel2);
+            add(packetReplyField);
+            add(sendButton);
+
+            sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    sendButtonActionPerformed(e);
+                }
+            });
+        }
+=======
 
         JPanel entrybox = new JPanel();
         entryLabel.setText(Bundle.getMessage("CommandLabel"));
@@ -78,6 +109,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
                 sendButtonActionPerformed(e);
             }
         });
+>>>>>>> JMRI/master
     }
 
     @Override

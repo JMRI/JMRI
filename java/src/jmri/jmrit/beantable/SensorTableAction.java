@@ -450,7 +450,11 @@ public class SensorTableAction extends AbstractTableAction {
                 showDebounceChanged();
             }
         });
+<<<<<<< HEAD
+        f.addToBottomBox(showPullUpBox, systemPrefix); 
+=======
         f.addToBottomBox(showPullUpBox, systemPrefix);
+>>>>>>> JMRI/master
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
         showPullUpBox.addActionListener(new ActionListener() {
             @Override

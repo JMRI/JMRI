@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+<<<<<<< HEAD
+=======
 import javax.annotation.Nonnull;
+>>>>>>> JMRI/master
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -547,6 +550,8 @@ public class JUnitUtil {
         org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
     }
 
+<<<<<<< HEAD
+=======
     public static void resetWindows(boolean logWindow) {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
@@ -567,5 +572,6 @@ public class JUnitUtil {
         }
     }
 
+>>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }

@@ -1,5 +1,12 @@
 package jmri.jmrit.beantable;
 
+<<<<<<< HEAD
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+=======
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
@@ -12,11 +19,16 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+>>>>>>> JMRI/master
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
+ *
+=======
  * Tests for the jmri.jmrit.beantable.SensorTableAction class.
+>>>>>>> JMRI/master
  * @author Paul Bender Copyright (C) 2017	
  */
 public class SensorTableActionTest extends AbstractTableActionBase {
@@ -47,6 +59,8 @@ public class SensorTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+<<<<<<< HEAD
+=======
     /**
      * Check graphic state presentation.
      * @since 4.7.4
@@ -92,21 +106,28 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         _s1Table.dispose();
     }
 
+>>>>>>> JMRI/master
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+<<<<<<< HEAD
+=======
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+>>>>>>> JMRI/master
         a = new SensorTableAction();
     }
 
     @Override
     @After
     public void tearDown() {
+<<<<<<< HEAD
+=======
         a = null;
+>>>>>>> JMRI/master
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

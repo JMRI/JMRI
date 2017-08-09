@@ -209,7 +209,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
+<<<<<<< HEAD
+        } catch (Exception ex) {
+=======
         } catch (IOException | TooManyListenersException ex) {
+>>>>>>> JMRI/master
             log.error("Unexpected exception while opening port {} trace follows:", portName, ex); // NOI18N
             return "Unexpected error while opening port " + portName + ": " + ex;
         }

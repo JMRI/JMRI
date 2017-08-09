@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
  * Implement turnout manager for Lenz (XPresssNet) connections.
  * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
+<<<<<<< HEAD
+ * <P>
+=======
  *
+>>>>>>> JMRI/master
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
@@ -32,7 +36,10 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected String prefix = null;
 
     // XNet-specific methods
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -41,9 +48,13 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return t;
     }
 
+<<<<<<< HEAD
+    // listen for turnouts, creating them as needed
+=======
     /**
      * Listen for turnouts, creating them as needed.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {

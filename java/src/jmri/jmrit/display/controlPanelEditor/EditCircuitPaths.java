@@ -103,9 +103,18 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel.setLayout(new FlowLayout());
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+<<<<<<< HEAD
+        doneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                if (!findErrors()) {
+                    closingEvent();
+                }
+=======
         doneButton.addActionListener((ActionEvent a) -> {
             if (!findErrors()) {
                 closingEvent();
+>>>>>>> JMRI/master
             }
         });
         panel.add(doneButton);
@@ -141,8 +150,16 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel.setLayout(new FlowLayout());
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
+<<<<<<< HEAD
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                clearListSelection();
+            }
+=======
         clearButton.addActionListener((ActionEvent a) -> {
             clearListSelection();
+>>>>>>> JMRI/master
         });
         clearButton.setToolTipText(Bundle.getMessage("ToolTipClearList"));
         panel.add(clearButton);
@@ -157,22 +174,46 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
+<<<<<<< HEAD
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                addPath();
+            }
+=======
         addButton.addActionListener((ActionEvent a) -> {
             addPath();
+>>>>>>> JMRI/master
         });
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
+<<<<<<< HEAD
+        changeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                changePathName();
+            }
+=======
         changeButton.addActionListener((ActionEvent a) -> {
             changePathName();
+>>>>>>> JMRI/master
         });
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
+<<<<<<< HEAD
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                deletePath();
+            }
+=======
         deleteButton.addActionListener((ActionEvent a) -> {
             deletePath();
+>>>>>>> JMRI/master
         });
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePath"));
         panel.add(deleteButton);
@@ -186,6 +227,21 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pp.add(CircuitBuilder.makeTextBoxPanel(
                 false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
+<<<<<<< HEAD
+        _length.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                _pathChange = true;
+            }            
+        });
+        _units = new JToggleButton("", !_block.isMetric());
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
+        _units.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                changeUnits();
+            }
+=======
         _length.addActionListener((ActionEvent event) -> {
             _pathChange = true;
         });
@@ -193,6 +249,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener((ActionEvent event) -> {
             changeUnits();
+>>>>>>> JMRI/master
         });
         pp.add(_units);
         pathPanel.add(pp);
@@ -476,7 +533,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             if (setting1.size() != setting2.size()) {
                 return false;
             }
+<<<<<<< HEAD
+            if (setting1.size() == 0) {  // no turnouts in paths, but portals the same
+=======
             if (setting1.isEmpty()) {  // no turnouts in paths, but portals the same
+>>>>>>> JMRI/master
                 return true;
             }
             Iterator<BeanSetting> it = setting1.iterator();

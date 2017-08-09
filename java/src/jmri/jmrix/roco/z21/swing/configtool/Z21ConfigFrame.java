@@ -228,9 +228,13 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
+<<<<<<< HEAD
+    // listen for responses from the Z21
+=======
     /**
      * Listen for responses from the Z21.
      */
+>>>>>>> JMRI/master
     @Override
     public void reply(Z21Reply zr) {
        switch(zr.getOpCode()){
@@ -276,9 +280,13 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
        }
     }
 
+<<<<<<< HEAD
+    // listen for the messages sent to the Z21
+=======
     /**
      * Listen for the messages sent to the Z21.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(Z21Message zm) {
     }

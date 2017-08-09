@@ -43,7 +43,10 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     int _cv; // remember the cv being read/written
 
     // programming interface
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
     @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {

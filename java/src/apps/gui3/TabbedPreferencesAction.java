@@ -78,6 +78,16 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         }
 
         if (f == null) {
+<<<<<<< HEAD
+            f = new TabbedPreferencesFrame() {};
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        setWait(true);
+                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                            Thread.sleep(50);
+=======
             f = new TabbedPreferencesFrame();
             new Thread(() -> {
                 final Object waiter = new Object();
@@ -86,6 +96,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                     while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
                         synchronized (waiter) {
                             waiter.wait(50);
+>>>>>>> JMRI/master
                         }
                     }
                     SwingUtilities.updateComponentTreeUI(f);

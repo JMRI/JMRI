@@ -41,23 +41,56 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
     // except for adding the call to controller.recover() at the bottom in the "catch"
     //
     @Override
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
+            justification = "Two locks needed for synchronization here, this is OK")
+=======
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},justification = "Two locks needed for synchronization here, this is OK")
+>>>>>>> JMRI/master
+=======
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},justification = "Two locks needed for synchronization here, this is OK")
+>>>>>>> JMRI/master
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         // forward the message to the registered recipients,
         // which includes the communications monitor, except the sender.
         // Schedule notification via the Swing event queue to ensure order
         Runnable r = new XmtNotifier(m, mLastSender, this);
         SwingUtilities.invokeLater(r);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         // add data content
         int len = m.getNumDataElements();
         for (int i = 0; i < len; i++) {

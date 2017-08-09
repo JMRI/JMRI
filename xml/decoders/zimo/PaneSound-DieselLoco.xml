@@ -25,12 +25,19 @@
     <display item="Engine Speed Fallback when changing gear">
       <!--label>Engine Speed Fallback when changing gear</label-->
       <!--label xml:lang="it">Decremento Velocità  prima del cambio di marcia</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Pokles otáček spalovacího motoru při řazení mechanické převodovky nahoru</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum speed before upshifting">
       <!--label>Maximum speed before upshifting</label-->
       <!--label xml:lang="it">Velocità Max. prima del passaggio alla marcia superiore</label-->
+<<<<<<< HEAD
+    </display>
+=======
       <!--label xml:lang="cs">Maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label-->    </display>
+>>>>>>> JMRI/master
   </column>
   <column>
     <label>
@@ -40,6 +47,14 @@
 
     <display item="Influence of Acceleration on Diesel Sound Steps">
         <!--label>Influence of Acceleration on Diesel Sound Steps</label-->
+<<<<<<< HEAD
+        </display>
+    <display item="Influence of Deceleration on Diesel Sound Steps">
+        <!--label>Influence of Deceleration on Diesel Sound Steps</label-->
+        </display>
+    <display item="Limitation of Acceleration on Diesel Sound Steps">
+        <!--label>Limitation of Acceleration on Diesel Sound Steps</label-->
+=======
         <!--label xml:lang="cs">Vliv zrychlení na zvuk stupňů spalovacího motoru</label-->
         </display>
     <display item="Influence of Deceleration on Diesel Sound Steps">
@@ -49,6 +64,7 @@
     <display item="Limitation of Acceleration on Diesel Sound Steps">
         <!--label>Limitation of Acceleration on Diesel Sound Steps</label-->
         <!--label xml:lang="cs">Omezení zrychlení na zvuk stupňů spalovacího motoru</label-->
+>>>>>>> JMRI/master
         </display>
     
     <label>    
@@ -57,6 +73,17 @@
     
     <display item="Fn key driving solo">
         <!--label>Fn key driving solo</label-->
+<<<<<<< HEAD
+        </display>
+    <display item="Solo unhindered rpm">
+        <!--label>Solo unhindered rpm</label-->
+        </display>
+    <display item="Solo change momentum">
+        <!--label>Solo change momentum</label-->
+        </display>
+    <display item="Solo change idle only">
+        <!--label>Solo change idle only</label-->
+=======
         <!--label xml:lang="cs">Funkční klávesa pro strojovou jízdu</label-->
         </display>
     <display item="Solo unhindered rpm">
@@ -70,16 +97,23 @@
     <display item="Solo change idle only">
         <!--label>Solo change idle only</label-->
         <!--label xml:lang="cs">Strojová jízda volnoběh</label-->
+>>>>>>> JMRI/master
         </display>
         
         
     <display item="Momentum reduction when driving solo">
         <!--label>Momentum reduction when driving solo</label-->
+<<<<<<< HEAD
+        </display>
+    <display item="Driving idle sound speed step threshold">
+        <!--label>Driving idle sound speed step threshold</label-->
+=======
         <!--label xml:lang="cs">Snížení hybnosti při strojové jízdě</label-->
         </display>
     <display item="Driving idle sound speed step threshold">
         <!--label>Driving idle sound speed step threshold</label-->
         <!--label xml:lang="cs">Práh rychlostního stupně pro jízdu na volnoběh</label-->
+>>>>>>> JMRI/master
         </display>
         
     <label>
@@ -95,7 +129,10 @@
 
     <display item="Automatic Coasting Speed Steps">
         <!--label>Speed change for automatic coasting</label-->
+<<<<<<< HEAD
+=======
         <!--label xml:lang="cs">Změna rychlosti pro automatický výběh</label-->
+>>>>>>> JMRI/master
         </display>
     
   </column>
@@ -113,37 +150,58 @@
     <display item="Maximum volume of Turbocharger">
       <!--label>Maximum volume of Turbocharger</label-->
       <!--label xml:lang="it">Volume Max. Turbocompressore</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Maximální hlasitost turbodmychadla</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Turbocharger dependence on speed">
       <!--label>Turbocharger dependence on speed</label-->
       <!--label xml:lang="it">Turbocompressore in funzione della Velocità</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Závislost otáček turbodmychadla na rychlosti</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Turbocharger dependence on acceleration">
       <!--label>Turbocharger dependence on acceleration</label-->
       <!--label xml:lang="it">Turbocompressore in funzione della accellerazione</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Závislost otáček turbodmychadla na zrychlení</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Minimum load on the Turbocharger">
       <!--label>Minimum load on the Turbocharger</label-->
       <!--label xml:lang="it">Carico Min. Turbocompressore</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Minimální zatížení pro slyšitelnost turbodmychadla</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Increase in frequency of the Turbocharger">
       <!--label>Increase in frequency of the Turbocharger</label-->
       <!--label xml:lang="it">Incremento frequenza Turbocompressore</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Nárůst frekvence turbodmychadla</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Decrease in frequency of the Turbocharger">
       <!--label>Decrease in frequency of the Turbocharger</label-->
       <!--label xml:lang="it">Decremento frequenza Turbocompressore</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Pokles frekvence turbodmychadla</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Drop one speed step to lower turbocharger">
       <!--label>Drop one speed step to lower turbocharger</label-->
       <!--label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label-->
+<<<<<<< HEAD
+=======
       <!--label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label-->
+>>>>>>> JMRI/master
     </display>
   </column>
 </pane>

@@ -12,6 +12,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+<<<<<<< HEAD
+public class JsonTimeServerTest {
+
+    @Test
+    public void testCTor() {
+=======
 public class JsonTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
 
     // The minimal setup for log4J
@@ -19,6 +25,7 @@ public class JsonTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+>>>>>>> JMRI/master
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -28,12 +35,27 @@ public class JsonTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
                     }
                 });
         JsonConnection jc = new JsonConnection(output);
+<<<<<<< HEAD
+        JsonTimeServer t = new JsonTimeServer(jc);
+        Assert.assertNotNull("exists",t);
+    }
+
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+=======
         a = new JsonTimeServer(jc);
+>>>>>>> JMRI/master
     }
 
     @After
     public void tearDown() {
+<<<<<<< HEAD
+=======
         a = null;
+>>>>>>> JMRI/master
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

@@ -113,7 +113,15 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (powerManager == null) {
             powerManager = new DCCppPowerManager(this);
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+ log.debug("power manager created: {}", powerManager);
+=======
         log.debug("power manager created: {}", powerManager);
+>>>>>>> JMRI/master
+=======
+        log.debug("power manager created: {}", powerManager);
+>>>>>>> JMRI/master
         return powerManager;
         
     }
@@ -202,6 +210,25 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private MultiMeter multiMeter = null;
     
     public MultiMeter getMultiMeter() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+ return(multiMeter);
+=======
+        return(multiMeter);
+>>>>>>> JMRI/master
+    }
+    
+    public void setMultiMeter(MultiMeter m) {
+<<<<<<< HEAD
+ multiMeter = m;
+    }
+
+=======
+        multiMeter = m;
+    }
+    
+>>>>>>> JMRI/master
+=======
         return(multiMeter);
     }
     
@@ -209,6 +236,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         multiMeter = m;
     }
     
+>>>>>>> JMRI/master
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -227,7 +255,15 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return false;
             }
             return p.isAddressedModePossible();
+<<<<<<< HEAD
+<<<<<<< HEAD
+     //TODO: Update return value of the following as Managers are brought online.
+=======
             //TODO: Update return value of the following as Managers are brought online.
+>>>>>>> JMRI/master
+=======
+            //TODO: Update return value of the following as Managers are brought online.
+>>>>>>> JMRI/master
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
@@ -242,8 +278,18 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
+<<<<<<< HEAD
+<<<<<<< HEAD
+ } else if (type.equals(jmri.MultiMeter.class)) {
+     return true;
+=======
         } else if (type.equals(jmri.MultiMeter.class)) {
             return true;
+>>>>>>> JMRI/master
+=======
+        } else if (type.equals(jmri.MultiMeter.class)) {
+            return true;
+>>>>>>> JMRI/master
         } else {
             return false; // nothing, by default
         }
@@ -285,12 +331,30 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+ if (T.equals(jmri.MultiMeter.class)) {
+     return (T) getMultiMeter();
+ }
+        return null; // nothing, by default
+    }
+
+=======
         if (T.equals(jmri.MultiMeter.class)) {
             return (T) getMultiMeter();
         }
         return null; // nothing, by default
     }
     
+>>>>>>> JMRI/master
+=======
+        if (T.equals(jmri.MultiMeter.class)) {
+            return (T) getMultiMeter();
+        }
+        return null; // nothing, by default
+    }
+    
+>>>>>>> JMRI/master
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppActionListBundle");

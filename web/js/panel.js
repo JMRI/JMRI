@@ -22,13 +22,28 @@
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
+<<<<<<< HEAD
+ *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
+ *  TODO: add support for LayoutSlip, slipturnouticon (one2beros)
+=======
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO: add support for slipturnouticon (one2beros)
+>>>>>>> JMRI/master
  *  TODO: improve handling of layoutBlock with systemname != username
  *
  **********************************************************************************************/
 
 //persistent (global) variables
+<<<<<<< HEAD
+var $gWidgets = {}; //array of all widget objects, key=CSSId
+var $gPanelList = {}; 	//store list of available panels
+var $gPanel = {}; 	//store overall panel info
+var whereUsed = {};   // associative array of array of elements indexed by systemName or userName
+var occupancyNames = {};   // associative array of array of elements indexed by occupancysensor name
+var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
+var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
+var $gCtx;  		//persistent context of canvas layer   
+=======
 var $gWidgets = {};         //array of all widget objects, key=CSSId
 var $gPanelList = {};       //store list of available panels
 var $gPanel = {};           //store overall panel info
@@ -37,6 +52,7 @@ var occupancyNames = {};    //associative array of array of elements indexed by 
 var $gPts = {};             //array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {};            //array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gCtx;                  //persistent context of canvas layer
+>>>>>>> JMRI/master
 var $gDashArray = [12, 12]; //on,off of dashed lines
 var DOWNEVENT = 'touchstart mousedown';  //check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
@@ -895,7 +911,11 @@ function $handleMultiClick(e) {
     e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
     var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
+<<<<<<< HEAD
+    var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );   
+=======
     var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );
+>>>>>>> JMRI/master
     jmri.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
 
     //increment or decrement based on where the click occurred on image
@@ -916,6 +936,21 @@ function $handleMultiClick(e) {
     }
     var next;  //determine which is the next one to be set active (loop around only if click outside object)
     if (dec) {
+<<<<<<< HEAD
+    	next = displaying - 1;
+    	if (next < 0)
+    		if (missed) 
+    			next = i;
+    		else 
+    			next = 0;
+    } else {
+    	next = displaying * 1 + 1;        
+    	if (next > i)
+    		if (missed) 
+    			next = 0;
+    		else 
+    			next = i;
+=======
         next = displaying - 1;
         if (next < 0)
             if (missed)
@@ -929,6 +964,7 @@ function $handleMultiClick(e) {
                 next = 0;
             else
                 next = i;
+>>>>>>> JMRI/master
     }
     for (i in $widget.siblings) {  //loop through siblings and send changes as needed
         if (i == next) {
@@ -1688,6 +1724,22 @@ var $setWidgetPosition = function(e) {
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
     if (typeof $widget !== "undefined" && $widget.widgetType !== "beanswitch") {  //don't bother if widget not found or BeanSwitch
+<<<<<<< HEAD
+    	
+    	var $height = 0;
+    	var $width  = 0;
+    	//use html5 original sizes if available
+    	if (typeof e[0].naturalHeight !== "undefined") {
+    		$height = e[0].naturalHeight * $widget.scale;
+    	} else {
+    		$height = e.height() * $widget.scale;
+    	}
+    	if (typeof e[0].naturalWidth !== "undefined") {
+    		$width = e[0].naturalWidth * $widget.scale;
+    	} else {
+    		$width = e.width() * $widget.scale;
+    	}
+=======
 
         var $height = 0;
         var $width  = 0;
@@ -1702,6 +1754,7 @@ var $setWidgetPosition = function(e) {
         } else {
             $width = e.width() * $widget.scale;
         }
+>>>>>>> JMRI/master
         if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
             $width = $getElementWidth(e) * $widget.scale;
         }
@@ -2077,7 +2130,11 @@ var $getWidgetFamily = function($widget, $element) {
         case "memoryInputIcon" :
         case "fastclock" :
         case "BlockContentsIcon" :
+<<<<<<< HEAD
+//	case "reportericon" :
+=======
 //  case "reportericon" :
+>>>>>>> JMRI/master
         case "beanswitch" :
             return "text";
             break;
@@ -2167,9 +2224,14 @@ var $drawAllIconWidgets = function() {
 };
 
 function updateWidgets(name, state, data) {
+<<<<<<< HEAD
+	//update all widgets based on the element that changed, using systemname 
+    if (whereUsed[name]) {
+=======
     //update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
+>>>>>>> JMRI/master
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
@@ -2184,6 +2246,14 @@ function updateWidgets(name, state, data) {
         });
 //    } else {
 //      jmri.log("userName " + name + " not found, can't set state to " + state);
+    }
+	//update all widgets based on the element that changed, using username
+    if (whereUsed[data.userName]) {
+        $.each(whereUsed[data.userName], function(index, widgetId) {
+            $setWidgetState(widgetId, state);
+        });
+//    } else {
+//    	jmri.log("userName " + name + " not found, can't set state to " + state);
     }
 }
 

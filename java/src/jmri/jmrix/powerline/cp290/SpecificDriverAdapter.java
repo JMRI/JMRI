@@ -233,7 +233,11 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     /**
      * Local method to do specific port configuration
+<<<<<<< HEAD
+     * @throws gnu.io.UnsupportedCommOperationException for invalid options
+=======
      * @throws purejavacomm.UnsupportedCommOperationException for invalid options
+>>>>>>> JMRI/master
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

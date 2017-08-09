@@ -55,6 +55,16 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+<<<<<<< HEAD
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        tc = null;
+        apps.tests.Log4JFixture.tearDown();
+=======
+>>>>>>> JMRI/master
     }
 
 }

@@ -2,8 +2,11 @@ package jmri.implementation;
 
 import java.util.Arrays;
 import javax.annotation.CheckReturnValue;
+<<<<<<< HEAD
+=======
 import java.util.Timer;
 import java.util.TimerTask;
+>>>>>>> JMRI/master
 
 import jmri.InstanceManager;
 import jmri.JmriException;

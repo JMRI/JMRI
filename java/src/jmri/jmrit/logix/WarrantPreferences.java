@@ -35,7 +35,10 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
+<<<<<<< HEAD
+=======
 @ServiceProvider(service = PreferencesManager.class)
+>>>>>>> JMRI/master
 public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
@@ -120,14 +123,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private String _fileName;
     private float _scale = 87.1f;
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
+<<<<<<< HEAD
+    private float _throttleScale = 0.75f;  // factor to approximate throttle setting to track speed
+=======
     private float _throttleScale = 0.90f;  // factor to approximate throttle setting to track speed
+>>>>>>> JMRI/master
 
     private final LinkedHashMap<String, Float> _speedNames = new LinkedHashMap<>();
     private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
     private int _msIncrTime = 500;          // time in milliseconds between speed changes ramping up or down
+<<<<<<< HEAD
+    private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
+=======
     private float _throttleIncr = 0.03f;    // throttle increment for each ramp speed change
+>>>>>>> JMRI/master
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
@@ -222,7 +233,11 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String name = it.next();
             names.put(name, map.getSpeed(name));
         }
+<<<<<<< HEAD
+        this.setSpeedNames(names);
+=======
         this.setSpeedNames(names);  // OK, no firePropertyChange
+>>>>>>> JMRI/master
 
         Enumeration<String> en = map.getAppearanceIterator();
         LinkedHashMap<String, String> heads = new LinkedHashMap<>();
@@ -230,12 +245,20 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String name = en.nextElement();
             heads.put(name, map.getAppearanceSpeed(name));
         }
+<<<<<<< HEAD
+        this.setAppearances(heads);
+        setTimeIncrement(map.getStepDelay());
+        setThrottleIncrement(map.getStepIncrement());
+    }
+
+=======
         this.setAppearances(heads);  // no firePropertyChange
         this._msIncrTime = map.getStepDelay();
         this._throttleIncr = map.getStepIncrement();
     }
 
     // Avoid firePropertyChange until SignalSpeedMap is completely loaded
+>>>>>>> JMRI/master
     private boolean loadSpeedMap(Element child) {
         if (child == null) {
             return false;
@@ -302,7 +325,11 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             map.put(name, speed);
         }
+<<<<<<< HEAD
+        this.setSpeedNames(map);
+=======
         this.setSpeedNames(map);    // no firePropertyChange
+>>>>>>> JMRI/master
 
         rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
@@ -315,15 +342,29 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String speed = list.get(i).getText();
             heads.put(name, speed);
         }
+<<<<<<< HEAD
+        this.setAppearances(heads);
+
+<<<<<<< HEAD
+=======
+        // SignalSpeedMap not fully instanciated at load time. some property changes missed
+        SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        speedMap.setRampParams(_msIncrTime, _msIncrTime);
+=======
         this.setAppearances(heads); // no firePropertyChange
 
         // Now set SignalSpeedMap members.
         SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         speedMap.setRampParams(_throttleIncr, _msIncrTime);
+>>>>>>> JMRI/master
         speedMap.setDefaultThrottleFactor(_throttleScale);
         speedMap.setLayoutScale(_scale);
         speedMap.setAspects(new HashMap<>(this._speedNames), _interpretation);
         speedMap.setAppearances(new HashMap<>(this._headAppearances));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         return true;
     }
 
@@ -557,6 +598,16 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         return new HashMap<>(this._speedNames);
     }
 
+<<<<<<< HEAD
+    public void setSpeedNames(@Nonnull HashMap<String, Float> map) {
+        LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
+        _speedNames.clear();
+        _speedNames.putAll(map);
+        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
+    }
+
+    void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+=======
     // Only called directly at load time
     private void setSpeedNames(@Nonnull HashMap<String, Float> map) {
         _speedNames.clear();
@@ -565,14 +616,19 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     // Called when preferences is updated from panel
     protected void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+>>>>>>> JMRI/master
         LinkedHashMap<String, Float> map = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
             map.put(dp.getKey(), dp.getValue());
         }
+<<<<<<< HEAD
+        this.setSpeedNames(map);
+=======
         LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
         this.setSpeedNames(map);
         this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
+>>>>>>> JMRI/master
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
@@ -609,6 +665,16 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         return new HashMap<>(this._headAppearances);
     }
 
+<<<<<<< HEAD
+    public void setAppearances(HashMap<String, String> map) {
+        LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
+        this._headAppearances.clear();
+        this._headAppearances.putAll(map);
+        this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
+    }
+
+    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+=======
     // Only called directly at load time
     private void setAppearances(HashMap<String, String> map) {
         this._headAppearances.clear();
@@ -617,14 +683,19 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     // Called when preferences are updated
     protected void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+>>>>>>> JMRI/master
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
             map.put(dp.getKey(), dp.getValue());
         }
+<<<<<<< HEAD
+        this.setAppearances(map);
+=======
         LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
         this.setAppearances(map);
         this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
+>>>>>>> JMRI/master
     }
 
     public int getInterpretation() {

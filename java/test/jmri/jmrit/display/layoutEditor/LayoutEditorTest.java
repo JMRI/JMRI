@@ -64,6 +64,15 @@ public class LayoutEditorTest {
     }
 
     @Test
+    public void testGetSetZoom() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutEditor e = new LayoutEditor();
+        Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
+        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
+        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
+    }
+
+    @Test
     public void testGetOpenDispatcherOnLoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
@@ -395,7 +404,10 @@ public class LayoutEditorTest {
         LayoutEditor e = new LayoutEditor();
         // defaults to 4.
         Assert.assertEquals("turnout circle size", 4, e.getTurnoutCircleSize());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -404,7 +416,10 @@ public class LayoutEditorTest {
         LayoutEditor e = new LayoutEditor();
         e.setTurnoutCircleSize(11);
         Assert.assertEquals("turnout circle size after set", 11, e.getTurnoutCircleSize());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test

@@ -212,9 +212,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 JOptionPane.INFORMATION_MESSAGE, null);
     }
 
+<<<<<<< HEAD
+    //Turnout format is more than a simple format.
+=======
     /**
      * Turnout format is more than a simple format.
      */
+>>>>>>> JMRI/master
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;

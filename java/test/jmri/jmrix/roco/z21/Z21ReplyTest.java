@@ -85,6 +85,9 @@ public class Z21ReplyTest {
     public void MonitorStringXPressNetReply(){
         byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Z21Reply m = new Z21Reply(msg,7);
+<<<<<<< HEAD
+        Assert.assertEquals("Monitor String","XPressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
+=======
         Assert.assertEquals("Monitor String","XpressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
     }
 
@@ -105,6 +108,7 @@ public class Z21ReplyTest {
         Assert.assertEquals("7th byte", 0x00, x.getElement(7) & 0xFF);
         Assert.assertEquals("8th byte", 0x00, x.getElement(8) & 0xFF);
         Assert.assertEquals("9th byte", 0x78, x.getElement(9) & 0xFF);
+>>>>>>> JMRI/master
     }
 
     //Test RailCom related methods.

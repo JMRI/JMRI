@@ -612,7 +612,11 @@ public class XNetMessageTest{
     @Test
     public void testToMonitorStringDisolveDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getDisolveDoubleHeaderMsg(1234);
+<<<<<<< HEAD
+       Assert.assertEquals("Monitor String","Double Header Request: Disolve Double Header that includes mobile decoder 1234",m.toMonitorString());
+=======
        Assert.assertEquals("Monitor String","Double Header Request: Dissolve Double Header that includes mobile decoder 1234",m.toMonitorString());
+>>>>>>> JMRI/master
     }
 
     @Test

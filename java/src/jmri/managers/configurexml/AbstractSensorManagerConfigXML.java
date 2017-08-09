@@ -84,6 +84,12 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                // store the sensor's value for pull resistance.
                elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
             }
+<<<<<<< HEAD
+
+            // store common part
+            storeCommon(s, elem);
+=======
+>>>>>>> JMRI/master
 
             sensors.addContent(elem);
 

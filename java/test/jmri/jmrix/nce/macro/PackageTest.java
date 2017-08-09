@@ -10,8 +10,12 @@ import org.slf4j.LoggerFactory;
     NceMacroEditPanelTest.class,
     NceMacroGenPanelTest.class,
     NceMacroBackupTest.class,
+<<<<<<< HEAD
+    NceMacroRestoreTest.class
+=======
     NceMacroRestoreTest.class,
     BundleTest.class
+>>>>>>> JMRI/master
 })
 
 /**

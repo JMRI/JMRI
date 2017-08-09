@@ -12,7 +12,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
+<<<<<<< HEAD
+ * LayoutTurntable, LevelXing, TrackSegment)
+=======
  * LayoutTurntable, LevelXing, TrackSegment &amp; PositionablePoint)
+>>>>>>> JMRI/master
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -21,7 +25,11 @@ public abstract class LayoutTrack {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
+<<<<<<< HEAD
+    // connection types
+=======
     // hit location (& connection) types
+>>>>>>> JMRI/master
     public static final int NONE = 0;
     public static final int POS_POINT = 1;
     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
@@ -41,13 +49,36 @@ public abstract class LayoutTrack {
     public static final int MULTI_SENSOR = 16;
     public static final int MARKER = 17;
     public static final int TRACK_CIRCLE_CENTRE = 18;
+<<<<<<< HEAD
+    public static final int SLIP_CENTER = 20; //
+=======
     public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+    public static final int SLIP_A = 21; // offset for slip connection points
+    public static final int SLIP_B = 22; // offset for slip connection points
+    public static final int SLIP_C = 23; // offset for slip connection points
+    public static final int SLIP_D = 24; // offset for slip connection points
+=======
     public static final int SLIP_A = 21;
     public static final int SLIP_B = 22;
     public static final int SLIP_C = 23;
     public static final int SLIP_D = 24;
+>>>>>>> JMRI/master
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
+<<<<<<< HEAD
+    public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
+
+<<<<<<< HEAD
+=======
+    protected String ident = "";
+
+>>>>>>> JMRI/master
+    // dashed line parameters
+    //private static int minNumDashes = 3;
+    //private static double maxDashLength = 10;
+=======
     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
@@ -58,6 +89,7 @@ public abstract class LayoutTrack {
     //protected static int minNumDashes = 3;
     //protected static double maxDashLength = 10;
 
+>>>>>>> JMRI/master
     public Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
@@ -72,6 +104,13 @@ public abstract class LayoutTrack {
      */
     public LayoutTrack() {
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    /**
+     * accessor method
+     */
+=======
 
     /**
      * accessor methods
@@ -84,10 +123,25 @@ public abstract class LayoutTrack {
         return ident;
     }
 
+>>>>>>> JMRI/master
     public static void setDefaultTrackColor(Color color) {
         defaultTrackColor = color;
     }
 
+<<<<<<< HEAD
+    //NOTE: not public because "center" is a member variable
+=======
+
+    /**
+     * accessor methods
+     */
+    public String getID() {
+        return ident;
+    }
+
+    public static void setDefaultTrackColor(Color color) {
+        defaultTrackColor = color;
+=======
     protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock b, boolean forceTrack) {
         Color result = defaultTrackColor;
         if (b != null) {
@@ -113,6 +167,17 @@ public abstract class LayoutTrack {
      */
     public boolean isHidden() {
         return hidden;
+>>>>>>> JMRI/master
+    }
+
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+<<<<<<< HEAD
+     */
+    public boolean isHidden() {
+        return hidden;
     }
 
     /**
@@ -133,6 +198,24 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
+
+>>>>>>> JMRI/master
+=======
+     * @deprecated since 4.7.2; use {@link #isHidden()} instead
+     */
+    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hide) {
+        hidden = hide;
+    }
+
+    /*
+     * non-accessor methods
+     */
+>>>>>>> JMRI/master
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -143,6 +226,35 @@ public abstract class LayoutTrack {
         return new Point2D.Double(x, y);
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     * @deprecated since 4.7.2; use {@link #isHidden()} instead
+     */
+    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hide) {
+        hidden = hide;
+=======
+    public void reCheckBlockBoundary() {
+        log.error("virtual method: override in sub-classes; don't call [super ...].");
+>>>>>>> JMRI/master
+=======
     /**
      * find the hit (location) type for a point (abstract: should be overridden by ALL subclasses)
      * @param p the point
@@ -359,6 +471,7 @@ public abstract class LayoutTrack {
             }
         }
         return result;
+>>>>>>> JMRI/master
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

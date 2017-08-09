@@ -10,8 +10,12 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.ecos.networkdriver.configurexml.PackageTest.class,
+<<<<<<< HEAD
+   NetworkDriverAdapterTest.class
+=======
    NetworkDriverAdapterTest.class,
    BundleTest.class
+>>>>>>> JMRI/master
 })
 /**
  * Tests for the jmri.jmrix.ecos.networkdriver package.

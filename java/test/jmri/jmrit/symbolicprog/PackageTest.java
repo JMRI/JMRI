@@ -62,6 +62,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.symbolicframe.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(QualifierCombinerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConstantValueTest.class));
+<<<<<<< HEAD
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndexedEnumVariableValueTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndexedVariableValueTest.class));
+=======
+>>>>>>> JMRI/master
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelPaneTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NameFileTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NewLocoSelPaneTest.class));

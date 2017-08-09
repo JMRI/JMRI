@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+<<<<<<< HEAD
+import javax.swing.JTextField;
+=======
+>>>>>>> JMRI/master
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.InstanceManager;
@@ -37,17 +41,26 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     ButtonGroup modeGroup = new ButtonGroup();
     HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<>();
     JComboBox<AddressedProgrammerManager> progBox;
+<<<<<<< HEAD
+    ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
+=======
     ArrayList<JRadioButton> buttonPool = new ArrayList<>();
+>>>>>>> JMRI/master
     // JTextField mAddrField = new JTextField(4);
     // use JSpinner for CV number input
     SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10239, 1); // 10239 is highest DCC Long Address documented by NMRA as per 2017
     JSpinner mAddrField = new JSpinner(model);
+<<<<<<< HEAD
+    int oldAddrValue = 3; // Default start value
+    JCheckBox mLongAddrCheck = new JCheckBox(Bundle.getMessage("LongAddress"));
+=======
     int lowAddrLimit = 0;
     int highAddrLimit = 10239;
     int oldAddrValue = 3; // Default start value
     ButtonGroup addrGroup = new ButtonGroup();
     JRadioButton shortAddrButton = new JRadioButton(Bundle.getMessage("ShortAddress"));
     JRadioButton longAddrButton = new JRadioButton(Bundle.getMessage("LongAddress"));
+>>>>>>> JMRI/master
     boolean oldLongAddr = false;
     boolean opsAccyMode = false;
     boolean oldOpsAccyMode = false;
@@ -61,6 +74,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
+<<<<<<< HEAD
+        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getValue().equals(oldAddrValue)) {
+=======
         log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={})",
                 longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode);
         if ((longAddrButton.isSelected() == oldLongAddr)
@@ -68,6 +84,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 && opsAccyMode == oldOpsAccyMode
                 && opsSigMode == oldOpsSigMode) {
             log.debug("getProgrammer hasn't changed");
+>>>>>>> JMRI/master
             // hasn't changed
             if (opsAccyMode || opsSigMode) {
                 return facadeProgrammer;
@@ -78,11 +95,16 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
         // here values have changed, try to create a new one
         AddressedProgrammerManager pm = ((AddressedProgrammerManager) progBox.getSelectedItem());
+<<<<<<< HEAD
+        oldLongAddr = mLongAddrCheck.isSelected();
+        oldAddrValue = (Integer) mAddrField.getValue();
+=======
         oldLongAddr = longAddrButton.isSelected();
         oldAddrValue = (Integer) mAddrField.getValue();
         oldOpsAccyMode = opsAccyMode;
         oldOpsSigMode = opsSigMode;
         setAddrParams();
+>>>>>>> JMRI/master
 
         if (pm != null) {
             int address = 3;
@@ -134,7 +156,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * Constructor for the Programming settings pane.
+<<<<<<< HEAD
+=======
      *
+>>>>>>> JMRI/master
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
      */
@@ -144,10 +169,16 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * Constructor for the Programming settings pane.
+<<<<<<< HEAD
+     * @param direction controls layout, either BoxLayout.X_AXIS or
+     *                  BoxLayout.Y_AXIS
+     * @param group A set of JButtons to display programming modes
+=======
      *
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
      * @param group     A set of JButtons to display programming modes
+>>>>>>> JMRI/master
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
@@ -191,6 +222,13 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 //        mAddrField.addActionListener(new java.awt.event.ActionListener() {
 //            @Override
 //            public void actionPerformed(java.awt.event.ActionEvent e) {
+<<<<<<< HEAD
+                // new programmer selection
+//                programmerSelected(); // in case it has valid address now
+//            }
+//        });
+        mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
+=======
         // new programmer selection
 //                programmerSelected(); // in case it has valid address now
 //            }
@@ -204,6 +242,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         });
 
         longAddrButton.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> JMRI/master
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
@@ -231,7 +270,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         buttonMap.clear();
 
         // require new programmer if possible
+<<<<<<< HEAD
+        oldAddrValue = 0;
+=======
         oldAddrValue = -1;
+>>>>>>> JMRI/master
 
         // configure buttons
         int index = 0;
@@ -278,7 +321,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * Listen to buttons for mode changes.
+<<<<<<< HEAD
+=======
      *
+>>>>>>> JMRI/master
      * @param e ActionEvent heard
      */
     @Override
@@ -312,11 +358,17 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * Change the programmer (mode).
+<<<<<<< HEAD
+     * @param programmer The type of programmer (i.e. Byte Mode)
+     */
+    void setProgrammerFromGui(Programmer programmer) {
+=======
      *
      * @param programmer The type of programmer (i.e. Byte Mode)
      */
     void setProgrammerFromGui(Programmer programmer
     ) {
+>>>>>>> JMRI/master
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (buttonMap.get(mode).isSelected()) {
                 if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
@@ -338,12 +390,19 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * Listen to programmer for mode changes.
+<<<<<<< HEAD
+     * @param e ActionEvent heard
+     */
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+=======
      *
      * @param e ActionEvent heard
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e
     ) {
+>>>>>>> JMRI/master
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             if (isSelected()) {  // only change mode if we have a selected mode, in case some other selector with shared group has the selection
@@ -439,7 +498,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+<<<<<<< HEAD
+    // Free up memory from no longer needed stuff, disconnect if still connected.
+=======
 // Free up memory from no longer needed stuff, disconnect if still connected.
+>>>>>>> JMRI/master
     @Override
     public void dispose() {
     }

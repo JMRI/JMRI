@@ -1,10 +1,24 @@
 package jmri.jmrit.automat.monitor;
 
+<<<<<<< HEAD
+=======
 import java.awt.GraphicsEnvironment;
+>>>>>>> JMRI/master
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+<<<<<<< HEAD
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
+
+/**
+ *
+ * @author Paul Bender Copyright (C) 2017	
+=======
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class AutomatTableFrameTest {
 
@@ -19,8 +34,12 @@ public class AutomatTableFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomatTableFrame t = new AutomatTableFrame(new AutomatTableDataModel());
+<<<<<<< HEAD
+        Assert.assertNotNull("exists",t);
+=======
         Assert.assertNotNull("exists", t);
         t.dispose();
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J

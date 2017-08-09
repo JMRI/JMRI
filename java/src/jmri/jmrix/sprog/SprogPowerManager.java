@@ -65,9 +65,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         return power;
     }
 
+<<<<<<< HEAD
+    // to free resources when no longer used
+=======
     /**
      * Free resources when no longer used.
      */
+>>>>>>> JMRI/master
     @Override
     public void dispose() throws JmriException {
         trafficController.removeSprogListener(this);
@@ -80,9 +84,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         }
     }
 
+<<<<<<< HEAD
+    // to listen for status changes from Sprog system
+=======
     /**
      * Listen for status changes from Sprog system.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyReply(SprogReply m) {
         if (waiting) {

@@ -43,7 +43,22 @@ public final class OperationsManager implements InstanceManagerAutoDefault, Inst
      */
     @Deprecated
     public synchronized static OperationsManager getInstance() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        OperationsManager instance = jmri.InstanceManager.getNullableDefault(OperationsManager.class);
+        if (instance == null) {
+            instance = new OperationsManager();
+            jmri.InstanceManager.setDefault(OperationsManager.class,instance);
+        }
+        return instance;
+=======
+        return InstanceManager.getOptionalDefault(OperationsManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(OperationsManager.class, new OperationsManager());
+        });
+>>>>>>> JMRI/master
+=======
         return InstanceManager.getDefault(OperationsManager.class);
+>>>>>>> JMRI/master
     }
 
     /**

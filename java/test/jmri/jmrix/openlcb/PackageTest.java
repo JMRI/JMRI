@@ -22,9 +22,13 @@ import org.junit.runners.Suite;
         jmri.jmrix.openlcb.configurexml.PackageTest.class,
         LinkNodeInventoryTest.class,
         OlcbConnectionTypeListTest.class,
+<<<<<<< HEAD
+        OlcbConstantsTest.class
+=======
         OlcbConstantsTest.class,
         OlcbConfigurationManagerTest.class,
         OpenLcbMenuTest.class
+>>>>>>> JMRI/master
 })
 
 

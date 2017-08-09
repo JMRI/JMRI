@@ -38,8 +38,12 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         sendButton.setVisible(true);
         sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
+<<<<<<< HEAD
+        packetTextField.setToolTipText("Enter packet as hex pairs, for example, 82 7D");
+=======
         packetTextField.setPreferredSize(new JButton("XXXXXXXXXXXXXXXXXXXXXXXXX").getPreferredSize());
         packetTextField.setToolTipText(Bundle.getMessage("EnterHexBytesToolTip"));
+>>>>>>> JMRI/master
         packetTextField.setMaximumRowCount(5); // set the maximum number of items in the history.
         packetTextField.setEditable(true);
         packetPane.add(packetTextField);

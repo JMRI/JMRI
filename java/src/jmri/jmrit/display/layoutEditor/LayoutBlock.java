@@ -199,7 +199,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
     // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "LayoutBlock " + getDisplayName();
     }
@@ -3135,7 +3139,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> JMRI/master
+=======
+
+>>>>>>> JMRI/master
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
@@ -3205,21 +3217,53 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
         if ((null != nxtBlock) && (null != dstBlock)) {
             ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+            if (rtr.size() == 0) {
+                log.info("From {}, no routes returned for getRouteByNeighbour({})",
+                        this.getDisplayName(),
+                        nxtBlock.getDisplayName());
+
+=======
+=======
+>>>>>>> JMRI/master
 
             if (rtr.size() == 0) {
                 log.debug("From {}, no routes returned for getRouteByNeighbour({})",
                         this.getDisplayName(),
                         nxtBlock.getDisplayName());
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
                 return null;
             }
 
             for (Routes rt : rtr) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+                log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
+                        + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
+                        + " required dest " + dstBlock.getDisplayName());
+                if (rt.getDestBlock() == dstBlock) {
+                    log.trace("   From " + this.getDisplayName() + " matched");
+                    return rt;
+                }
+            }
+=======
+=======
+>>>>>>> JMRI/master
                 if (rt.getDestBlock() == dstBlock) {
                     log.debug("From " + this.getDisplayName() + ", found dest " + dstBlock.getDisplayName() + ".");
                     return rt;
                 }
             }
             log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         } else {
             log.warn("getValidRoute({}, {}",
                 (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",

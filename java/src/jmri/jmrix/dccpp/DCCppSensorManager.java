@@ -37,8 +37,12 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         super.dispose();
     }
 
+<<<<<<< HEAD
+    // XPressNet specific methods
+=======
     // DCCpp specific methods
 
+>>>>>>> JMRI/master
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new DCCppSensor(systemName, userName, tc);
@@ -58,9 +62,13 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     }
 
+<<<<<<< HEAD
+    // listen for sensors, creating them as needed
+=======
     /**
      * Listen for sensors, creating them as needed.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(DCCppReply l) {
         int addr = -1;  // -1 flags that no sensor address was found in reply
@@ -96,16 +104,24 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         }
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(DCCppMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {

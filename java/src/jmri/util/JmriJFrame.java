@@ -1012,6 +1012,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
+<<<<<<< HEAD
+=======
     private static JmriJFrameManager getJmriJFrameManager() {
         return InstanceManager.getOptionalDefault(JmriJFrameManager.class).orElseGet(() -> {
             return InstanceManager.setDefault(JmriJFrameManager.class, new JmriJFrameManager());
@@ -1022,5 +1024,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
     }
 
+>>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

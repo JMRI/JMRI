@@ -22,7 +22,11 @@ import jmri.jmrix.can.TrafficController;
  * No actions active in buttons, as of JMRI 4.8
  *
  * @author Bob Jacobsen Copyright (C) 2008
+<<<<<<< HEAD
+  * @since 2.3.1
+=======
  * @since 2.3.1
+>>>>>>> JMRI/master
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 

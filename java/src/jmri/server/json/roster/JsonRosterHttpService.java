@@ -102,7 +102,11 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
     }
 
+<<<<<<< HEAD
+    public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) {
+=======
     public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) throws JsonException {
+>>>>>>> JMRI/master
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
             group = null;

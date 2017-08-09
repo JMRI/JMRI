@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<<<<<<< HEAD
+<<<<<<< HEAD
+  <!--Written by JMRI version 4.7.3ish+jake+20170415T2202Z+R6344d4702d on Sat Apr 15 15:02:29 PDT 2017 $Id$-->
+  <decoderIndex version="810">
+=======
+  <!--Written by JMRI version 4.7.8ish+jake+20170711T2319Z+R0a4f3f64c1 on Tue Jul 11 16:19:47 PDT 2017-->
+  <decoderIndex version="820">
+>>>>>>> JMRI/master
+=======
   <!--Written by JMRI version 4.9.1ish+jake+20170723T2130Z+R17742ddc35 on Sun Jul 23 14:30:27 PDT 2017-->
   <decoderIndex version="822">
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -22929,15 +22939,24 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
+<<<<<<< HEAD
+        <model model="WOW Diesel 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
+=======
         <model model="WOW Diesel 121 SS4" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
+>>>>>>> JMRI/master
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
           <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+<<<<<<< HEAD
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+=======
           <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
           <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
           <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic" />
           <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic" />
+>>>>>>> JMRI/master
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />

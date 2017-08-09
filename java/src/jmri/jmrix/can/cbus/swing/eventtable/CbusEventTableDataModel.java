@@ -182,9 +182,13 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
+<<<<<<< HEAD
+    // Capture new comments or node names
+=======
     /**
      * Capture new comments or node names.
      */
+>>>>>>> JMRI/master
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == NAMECOLUMN) {
@@ -236,6 +240,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Report whether table has changed.
      *
      */
+<<<<<<< HEAD
+=======
     public boolean isTableDirty() {
         return(_saved == false);
     }
@@ -243,6 +249,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * Capture node and event and add to table.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(CanMessage m) {
         log.debug("Received new message event: {}", m);

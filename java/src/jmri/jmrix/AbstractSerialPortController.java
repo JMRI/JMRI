@@ -34,7 +34,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return Localized message, in case separate presentation to user is desired
      */
     @Override
+<<<<<<< HEAD
+    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
+=======
     public String handlePortBusy(PortInUseException p, String portName, Logger log) {
+>>>>>>> JMRI/master
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/

@@ -35,11 +35,16 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainByCarTypeFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestOptionFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScriptFrameTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScriptFrameTest.class));
+>>>>>>> JMRI/master
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsByCarTypeActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsByCarTypeFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScriptFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableSetColorActionTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableSetColorFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCopyActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeDepartureTimesActionTest.class));
@@ -54,6 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainsByCarTypesActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestOptionActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScriptActionTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

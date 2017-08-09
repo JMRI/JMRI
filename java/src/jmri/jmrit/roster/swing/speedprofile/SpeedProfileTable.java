@@ -191,7 +191,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 entry = speeds.higherEntry(entry.getKey());
             }
         }
+<<<<<<< HEAD
+=======
         
+>>>>>>> JMRI/master
         @Override
         public int getColumnCount() {
             return NUMCOLS;

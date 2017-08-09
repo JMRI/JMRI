@@ -14,8 +14,11 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
 import javax.servlet.http.HttpServlet;
 import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 
 /**
  *
@@ -23,7 +26,10 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
+<<<<<<< HEAD
+=======
 @ServiceProvider(service = HttpServlet.class)
+>>>>>>> JMRI/master
 public class SwitchboardServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);

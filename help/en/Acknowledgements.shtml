@@ -69,6 +69,9 @@
         "http://www.editthis.info/JMRI/index.php/Main_Page">documentation
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
+        
+        <li>Chris Atkins helped improve the  
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
 
         <li>Chris Atkins helped improve the
         <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
@@ -208,7 +211,11 @@
         <li>Stephen Brooks, who did the initial testing of the
         Grapevine and Maple support</li>
 
+<<<<<<< HEAD
+        <li>Andy Brown, who helped solve a problem with NX 
+=======
         <li>Andy Brown, who helped solve a problem with NX
+>>>>>>> JMRI/master
         entry/exit pairs.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
@@ -531,7 +538,11 @@
         the Uhlenbrock 67800 servo decoder.</li>
 
         <li>Klaus Killinger, who improved the sound support</li>
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> JMRI/master
         <li>Scott Kitts, who helped debug the new communications
         library for Mac OS X</li>
 
@@ -575,7 +586,11 @@
 
         <li>Jim LeFevre, who did the testing on the TMCC
         implementation, including buying components so we could do
+<<<<<<< HEAD
+        a more complete job, and coded the function support. 
+=======
         a more complete job, and coded the function support.
+>>>>>>> JMRI/master
         He's also put a lot of work into test and development
         of the C/MRI support.</li>
 

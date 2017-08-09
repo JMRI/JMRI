@@ -218,6 +218,17 @@ abstract class AbstractPanelServlet extends HttpServlet {
         }
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /** build and return an "icons" element containing icon urls for all signalmast states.
+     *  Element names are cleaned-up aspect names, aspect attribute is actual name of aspect.
+     *
+     *  @param name user/system name of the signalMast using the icons
+     */
+    Element getSignalMastIconsElement(String name) {
+=======
+=======
+>>>>>>> JMRI/master
     /**
      * Build and return an "icons" element containing icon URLs for all
      * SignalMast states. Element names are cleaned-up aspect names, aspect
@@ -227,6 +238,10 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * @return an icons element containing icon URLs for SignalMast states
      */
     protected Element getSignalMastIconsElement(String name) {
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         Element icons = new Element("icons");
         jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         for (String aspect : signalMast.getValidAspects()) {

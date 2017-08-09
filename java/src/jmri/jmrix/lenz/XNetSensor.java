@@ -6,8 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
+ * Extend jmri.AbstractSensor for XPressNet layouts.
+ * <P>
+=======
  * Extend jmri.AbstractSensor for XpressNet layouts.
  *
+>>>>>>> JMRI/master
  * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
@@ -156,16 +161,24 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         return;
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

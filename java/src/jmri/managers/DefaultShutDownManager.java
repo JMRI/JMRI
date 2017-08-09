@@ -78,10 +78,14 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     @Override
     synchronized public void deregister(ShutDownTask s) {
+<<<<<<< HEAD
+        Objects.requireNonNull(s, "Shutdown task cannot be null.");
+=======
         if (s == null) {
             // silently ignore null task
             return;
         }
+>>>>>>> JMRI/master
         if (this.tasks.contains(s)) {
             this.tasks.remove(s);
         }

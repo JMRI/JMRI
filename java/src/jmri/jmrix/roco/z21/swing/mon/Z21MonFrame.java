@@ -32,7 +32,11 @@ public class Z21MonFrame extends jmri.jmrix.AbstractMonFrame implements Z21Liste
         return Bundle.getMessage("Z21TrafficTitle");
     }
 
+<<<<<<< HEAD
+    // ieee802.15.4 Listener methods
+=======
     // Z21 Listener methods
+>>>>>>> JMRI/master
     @Override
     public void message(Z21Message m) {
         nextLine(m.toMonitorString() + "\n", m.toString() + "\n");

@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+<<<<<<< HEAD
+=======
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +18,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+>>>>>>> JMRI/master
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +66,10 @@ import org.slf4j.LoggerFactory;
  * Based on SignalHeadTableAction.java
  *
  * @author Dave Duchamp Copyright (C) 2004
+<<<<<<< HEAD
+=======
  * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class LightTableAction extends AbstractTableAction {
 
@@ -270,6 +276,8 @@ public class LightTableAction extends AbstractTableAction {
                         boolean v = l.getEnabled();
                         l.setEnabled(!v);
                         break;
+<<<<<<< HEAD
+=======
                     case VALUECOL:
                         if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                             Light ll = (Light) getBySystemName((String) getValueAt(row, SYSNAMECOL));
@@ -278,6 +286,7 @@ public class LightTableAction extends AbstractTableAction {
                             break;
                         }
                         //$FALL-THROUGH$
+>>>>>>> JMRI/master
                     default:
                         super.setValueAt(value, row, col);
                         break;

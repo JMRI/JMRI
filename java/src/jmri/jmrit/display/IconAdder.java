@@ -558,8 +558,21 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNametext.setPreferredSize(
                     new Dimension(150, _sysNametext.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
+<<<<<<< HEAD
+<<<<<<< HEAD
+            _addTableButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    addToTable();
+                }
+=======
             _addTableButton.addActionListener((ActionEvent a) -> {
                 addToTable();
+>>>>>>> JMRI/master
+=======
+            _addTableButton.addActionListener((ActionEvent a) -> {
+                addToTable();
+>>>>>>> JMRI/master
             });
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
@@ -589,6 +602,22 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _addButton.setEnabled(true);
         if (changeIcon) {
             _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
+<<<<<<< HEAD
+<<<<<<< HEAD
+            _changeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    addCatalog();
+                }
+            });
+            p.add(_changeButton);
+            _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
+            _closeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    closeCatalog();
+                }
+=======
             _changeButton.addActionListener((ActionEvent a) -> {
                 addCatalog();
             });
@@ -596,6 +625,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
             _closeButton.addActionListener((ActionEvent a) -> {
                 closeCatalog();
+>>>>>>> JMRI/master
+=======
+            _changeButton.addActionListener((ActionEvent a) -> {
+                addCatalog();
+            });
+            p.add(_changeButton);
+            _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
+            _closeButton.addActionListener((ActionEvent a) -> {
+                closeCatalog();
+>>>>>>> JMRI/master
             });
             _closeButton.setVisible(false);
             p.add(_closeButton);

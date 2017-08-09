@@ -44,6 +44,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEnginesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEngineRosterActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteEngineRosterActionTest.class)); 
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEngineActionTest.class)); 
@@ -51,6 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetEngineMovesActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PrintEngineRosterActionTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

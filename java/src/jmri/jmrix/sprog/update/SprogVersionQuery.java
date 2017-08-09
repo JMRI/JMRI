@@ -106,7 +106,12 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
+<<<<<<< HEAD
+     * Notify all registered listeners of the SPROG version
+     * @param v version to send notify too
+=======
      * Notify all registered listeners of the SPROG version.
+>>>>>>> JMRI/master
      *
      * @param v version to send notify to
      */

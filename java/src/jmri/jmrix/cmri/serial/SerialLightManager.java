@@ -118,7 +118,11 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
+<<<<<<< HEAD
+        return (SerialAddress.convertSystemNameToAlternate(systemName));
+=======
         return _memo.convertSystemNameToAlternate(systemName);
+>>>>>>> JMRI/master
     }
 
     /**

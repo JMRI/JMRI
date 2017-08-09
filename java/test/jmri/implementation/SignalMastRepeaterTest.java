@@ -35,6 +35,10 @@ public class SignalMastRepeaterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
+    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterTest.class.getName());
+=======
     //private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterTest.class.getName());
+>>>>>>> JMRI/master
 
 }

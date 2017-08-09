@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -246,7 +247,12 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (turnoutFromMenu) {
                 JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
@@ -261,11 +267,28 @@ public class LayoutEditorTools {
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedSignalHeads = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedSignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    turnoutSignalsGetSaved(e);
+                }
+            );
+            getSavedSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
+            theContentPane.add(panel2);
+
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+=======
             getSavedSignalHeads.addActionListener((ActionEvent e) -> {
                 turnoutSignalsGetSaved(e);
             });
@@ -273,13 +296,21 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
 
             JPanel panel21 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel throatContinuingLabel = new JLabel(rb.getString("ThroatContinuing") + " : ");
             panel21.add(throatContinuingLabel);
             panel21.add(throatContinuingSignalHeadComboBox);
             theContentPane.add(panel21);
+<<<<<<< HEAD
+            throatContinuingField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+=======
             throatContinuingSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel22.add(new JLabel("   "));
             panel22.add(setThroatContinuing);
             setThroatContinuing.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -288,14 +319,26 @@ public class LayoutEditorTools {
             setupLogicThroatContinuing.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel22);
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel throatDivergingLabel = new JLabel(rb.getString("ThroatDiverging") + " : ");
             panel31.add(throatDivergingLabel);
             panel31.add(throatDivergingSignalHeadComboBox);
             theContentPane.add(panel31);
+<<<<<<< HEAD
+            throatDivergingField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+=======
             throatDivergingSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel32.add(new JLabel("   "));
             panel32.add(setThroatDiverging);
             setThroatDiverging.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -304,14 +347,26 @@ public class LayoutEditorTools {
             setupLogicThroatDiverging.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel32);
 
+<<<<<<< HEAD
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+=======
             JPanel panel41 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel continuingLabel = new JLabel(rb.getString("Continuing") + " : ");
             panel41.add(continuingLabel);
             panel41.add(continuingSignalHeadComboBox);
             theContentPane.add(panel41);
+<<<<<<< HEAD
+            continuingField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+=======
             continuingSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel42.add(new JLabel("   "));
             panel42.add(setContinuing);
             setContinuing.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -320,14 +375,26 @@ public class LayoutEditorTools {
             setupLogicContinuing.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel42);
 
+<<<<<<< HEAD
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+=======
             JPanel panel51 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel divergingLabel = new JLabel(rb.getString("Diverging") + " : ");
             panel51.add(divergingLabel);
             panel51.add(divergingSignalHeadComboBox);
             theContentPane.add(panel51);
+<<<<<<< HEAD
+            divergingField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+=======
             divergingSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel52.add(new JLabel("   "));
             panel52.add(setDiverging);
             setDiverging.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -337,21 +404,55 @@ public class LayoutEditorTools {
             theContentPane.add(panel52);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeSignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalsDonePressed(e);
+                }
+            );
+=======
             setSignalsDone.addActionListener((ActionEvent e) -> {
                 setSignalsDonePressed(e);
             });
+>>>>>>> JMRI/master
             setSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
+                    rootPane.setDefaultButton(setSignalsDone);
+                }
+            );
+
+            panel6.add(setSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
                 rootPane.setDefaultButton(setSignalsDone);
@@ -361,6 +462,7 @@ public class LayoutEditorTools {
             setSignalsCancel.addActionListener((ActionEvent e) -> {
                 setSignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1461,10 +1563,17 @@ public class LayoutEditorTools {
     }
 
     /*
+<<<<<<< HEAD
+     * Initializes a BlockBossLogic for creation of a signal logic for the signal
+     *  head named in "signalHeadName".
+     * Should not be called until enough informmation has been gathered to allow
+     *  configuration of the Simple Signal Logic.
+=======
 	 * Initializes a BlockBossLogic for creation of a signal logic for the signal
 	 *	head named in "signalHeadName".
 	 * Should not be called until enough informmation has been gathered to allow
 	 *	configuration of the Simple Signal Logic.
+>>>>>>> JMRI/master
      */
     public boolean initializeBlockBossLogic(String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
@@ -1488,6 +1597,21 @@ public class LayoutEditorTools {
     }
 
     /*
+<<<<<<< HEAD
+     * Returns the signal head at the end of the block "track" is assigned to.
+     *  "track" is the Track Segment leaving "object".
+     *  "object" must be either an anchor point or one of the connecting
+     *   points of a turnout or level crossing.
+     * Note: returns 'null' is signal is not present where it is expected, or
+     *  if an End Bumper is reached. To test for end bumper, use the
+     *      associated routine "reachedEndBumper()". Reaching a turntable ray
+     *  track connection is considered reaching an end bumper.
+     * Note: Normally this routine requires a signal at any turnout it finds.
+     *  However, if 'skipIncludedTurnout' is true, this routine will skip
+     *  over an absent signal at an included turnout, that is a turnout
+     *  with its throat track segment and its continuing track segment in
+     *  the same block. When this happens, the user is warned.
+=======
 	 * Returns the signal head at the end of the block "track" is assigned to.
 	 *	"track" is the Track Segment leaving "object".
 	 *	"object" must be either an anchor point or one of the connecting
@@ -1501,6 +1625,7 @@ public class LayoutEditorTools {
 	 *	over an absent signal at an included turnout, that is a turnout
 	 *	with its throat track segment and its continuing track segment in
 	 *	the same block. When this happens, the user is warned.
+>>>>>>> JMRI/master
      */
     public SignalHead getNextSignalFromObject(TrackSegment track, Object object,
             String signalHeadName, JmriJFrame frame) {
@@ -1837,21 +1962,36 @@ public class LayoutEditorTools {
     }
 
     /*
+<<<<<<< HEAD
+     * Returns 'true' if an end bumper was reached during the last call to
+     *  GetNextSignalFromObject. Also used in the odd case of reaching a
+     *  turntable ray track connection, which is treated as an end
+     *  bumper here.
+=======
 	 * Returns 'true' if an end bumper was reached during the last call to
 	 *	GetNextSignalFromObject. Also used in the odd case of reaching a
 	 *	turntable ray track connection, which is treated as an end
 	 *	bumper here.
+>>>>>>> JMRI/master
      */
     public boolean reachedEndBumper() {
         return hitEndBumper;
     }
 
     /*
+<<<<<<< HEAD
+     * Returns 'true' if "track" enters a block boundary at the west(north) end of
+     *  "point". Returns "false" otherwise. If track is neither horizontal or
+     *      vertical, assumes horizontal, as done when setting signals at block boundary.
+     * "track" is a TrackSegment connected to "point".
+     *  "point" is an anchor point serving as a block boundary.
+=======
 	 * Returns 'true' if "track" enters a block boundary at the west(north) end of
 	 *	"point". Returns "false" otherwise. If track is neither horizontal or
 	 *		vertical, assumes horizontal, as done when setting signals at block boundary.
 	 * "track" is a TrackSegment connected to "point".
 	 *	"point" is an anchor point serving as a block boundary.
+>>>>>>> JMRI/master
      */
     public boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -1917,8 +2057,13 @@ public class LayoutEditorTools {
                 return true;
             }
         }
+<<<<<<< HEAD
+        // track is not vertical or horizontal, assume horizontal
+//  log.error ("Track is not vertical or horizontal at anchor");
+=======
         // track is not primarily horizontal or vertical; assume horizontal
         //	log.error ("Track is not vertical or horizontal at anchor");
+>>>>>>> JMRI/master
         if (delX > 0.0) {
             return false;
         }
@@ -2001,7 +2146,12 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAtBoundaryFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
@@ -2015,7 +2165,12 @@ public class LayoutEditorTools {
             }
             theContentPane.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (boundaryFromMenu) {
                 if (boundary.getConnect2() != null) {
                     JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
@@ -2032,14 +2187,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getAnchorSavedSignalHeads = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getAnchorSavedSignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    getSavedAnchorSignals(e);
+                }
+            );
+=======
             getAnchorSavedSignalHeads.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSignals(e);
             });
+>>>>>>> JMRI/master
             getAnchorSavedSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
             if (showEast) {
@@ -2084,21 +2252,55 @@ public class LayoutEditorTools {
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSignalAtBoundaryIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeSignalAtBoundaryIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSignalAtBoundaryIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalAtBoundaryIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSignalAtBoundaryIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setSignalsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSignalsAtBoundaryDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalsAtBoundaryDonePressed(e);
+                }
+            );
+=======
             setSignalsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalsAtBoundaryDonePressed(e);
             });
+>>>>>>> JMRI/master
             setSignalsAtBoundaryDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBoundaryDone);
+                    rootPane.setDefaultButton(setSignalsAtBoundaryDone);
+                }
+            );
+
+            panel6.add(setSignalsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalsAtBoundaryCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalsAtBoundaryCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBoundaryDone);
                 rootPane.setDefaultButton(setSignalsAtBoundaryDone);
@@ -2108,6 +2310,7 @@ public class LayoutEditorTools {
             setSignalsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSignalsAtBoundaryCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSignalsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -2325,8 +2528,23 @@ public class LayoutEditorTools {
             }
         } else {
             if (delY > 0.0) {
+<<<<<<< HEAD
+                eastTrack = track1;  // south
+                westTrack = track2;  // north
+            } else {
+                eastTrack = track2;  // south
+                westTrack = track1;  // north
+            }
+        }
+        if (eastTrack == null) {
+            // did not meet the horizontal or vertical test, assume horizontal
+            if (delX > 0.0) {
+                eastTrack = track1;
+                westTrack = track2;
+=======
                 eastTrack = track1;	 // south
                 westTrack = track2;	 // north
+>>>>>>> JMRI/master
             } else {
                 eastTrack = track2;	 // south
                 westTrack = track1;	 // north
@@ -2625,16 +2843,38 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAtXoverFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel1.add(xoverTurnoutNameLabel);
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedXoverSignalHeads = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedXoverSignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    xoverTurnoutSignalsGetSaved(e);
+                }
+            );
+            getSavedXoverSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
+            theContentPane.add(panel2);
+
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+=======
             getSavedXoverSignalHeads.addActionListener((ActionEvent e) -> {
                 xoverTurnoutSignalsGetSaved(e);
             });
@@ -2642,13 +2882,21 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
 
             JPanel panel21 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel a1Label = new JLabel(Bundle.getMessage("XContinuing", "A") + " : ");
             panel21.add(a1Label);
             panel21.add(a1ComboBox);
             theContentPane.add(panel21);
+<<<<<<< HEAD
+            a1Field.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+=======
             a1ComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel22.add(new JLabel("   "));
             panel22.add(setA1Head);
             setA1Head.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -2673,14 +2921,26 @@ public class LayoutEditorTools {
                 theContentPane.add(panel24);
             }
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel b1Label = new JLabel(Bundle.getMessage("XContinuing", "B") + " : ");
             panel31.add(b1Label);
             panel31.add(b1ComboBox);
             theContentPane.add(panel31);
+<<<<<<< HEAD
+            b1Field.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+=======
             b1ComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel32.add(new JLabel("   "));
             panel32.add(setB1Head);
             setB1Head.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -2705,14 +2965,26 @@ public class LayoutEditorTools {
                 theContentPane.add(panel34);
             }
 
+<<<<<<< HEAD
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+=======
             JPanel panel41 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel c1Label = new JLabel(Bundle.getMessage("XContinuing", "C") + " : ");
             panel41.add(c1Label);
             panel41.add(c1ComboBox);
             theContentPane.add(panel41);
+<<<<<<< HEAD
+            c1Field.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+=======
             c1ComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel42.add(new JLabel("   "));
             panel42.add(setC1Head);
             setC1Head.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -2737,14 +3009,26 @@ public class LayoutEditorTools {
                 theContentPane.add(panel44);
             }
 
+<<<<<<< HEAD
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+=======
             JPanel panel51 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel d1Label = new JLabel(Bundle.getMessage("XContinuing", "D") + " : ");
             panel51.add(d1Label);
             panel51.add(d1ComboBox);
             theContentPane.add(panel51);
+<<<<<<< HEAD
+            d1Field.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+=======
             d1ComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel52.add(new JLabel("   "));
             panel52.add(setD1Head);
             setD1Head.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -2770,21 +3054,55 @@ public class LayoutEditorTools {
             }
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeXoverSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeXoverSignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeXoverSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXoverSignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeXoverSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setXoverSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setXoverSignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setXoverSignalsDonePressed(e);
+                }
+            );
+=======
             setXoverSignalsDone.addActionListener((ActionEvent e) -> {
                 setXoverSignalsDonePressed(e);
             });
+>>>>>>> JMRI/master
             setXoverSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
+                    rootPane.setDefaultButton(setXoverSignalsDone);
+                }
+            );
+
+            panel6.add(setXoverSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setXoverSignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setXoverSignalsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
                 rootPane.setDefaultButton(setXoverSignalsDone);
@@ -2794,6 +3112,7 @@ public class LayoutEditorTools {
             setXoverSignalsCancel.addActionListener((ActionEvent e) -> {
                 setXoverSignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXoverFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -3596,7 +3915,12 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAtXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (xingFromMenu) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
@@ -3611,7 +3935,12 @@ public class LayoutEditorTools {
             }
             theContentPane.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (xingFromMenu) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
@@ -3627,11 +3956,28 @@ public class LayoutEditorTools {
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedXingSignalHeads = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedXingSignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    xingSignalsGetSaved(e);
+                }
+            );
+            getSavedXingSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
+            theContentPane.add(panel2);
+
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+=======
             getSavedXingSignalHeads.addActionListener((ActionEvent e) -> {
                 xingSignalsGetSaved(e);
             });
@@ -3639,13 +3985,21 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
 
             JPanel panel21 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel aLabel = new JLabel(Bundle.getMessage("TrackXConnect", "A") + " : ");
             panel21.add(aLabel);
             panel21.add(aSignalHeadComboBox);
             theContentPane.add(panel21);
+<<<<<<< HEAD
+            aField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+=======
             aSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel22.add(new JLabel("   "));
             panel22.add(setAHead);
             setAHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -3654,14 +4008,26 @@ public class LayoutEditorTools {
             setupALogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel22);
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel bLabel = new JLabel(Bundle.getMessage("TrackXConnect", "B") + " : ");
             panel31.add(bLabel);
             panel31.add(bSignalHeadComboBox);
             theContentPane.add(panel31);
+<<<<<<< HEAD
+            bField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+=======
             bSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel32.add(new JLabel("   "));
             panel32.add(setBHead);
             setBHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -3670,14 +4036,26 @@ public class LayoutEditorTools {
             setupBLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel32);
 
+<<<<<<< HEAD
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+=======
             JPanel panel41 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel cLabel = new JLabel(Bundle.getMessage("TrackXConnect", "C") + " : ");
             panel41.add(cLabel);
             panel41.add(cSignalHeadComboBox);
             theContentPane.add(panel41);
+<<<<<<< HEAD
+            cField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+=======
             cSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel42.add(new JLabel("   "));
             panel42.add(setCHead);
             setCHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -3686,14 +4064,26 @@ public class LayoutEditorTools {
             setupCLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel42);
 
+<<<<<<< HEAD
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+=======
             JPanel panel51 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel dLabel = new JLabel(Bundle.getMessage("TrackXConnect", "D") + " : ");
             panel51.add(dLabel);
             panel51.add(dSignalHeadComboBox);
             theContentPane.add(panel51);
+<<<<<<< HEAD
+            dField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+=======
             dSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel52.add(new JLabel("   "));
             panel52.add(setDHead);
             setDHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -3703,21 +4093,55 @@ public class LayoutEditorTools {
             theContentPane.add(panel52);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeXingSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeXingSignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeXingSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXingSignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeXingSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setXingSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setXingSignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSignalsDonePressed(e);
+                }
+            );
+=======
             setXingSignalsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalsDonePressed(e);
             });
+>>>>>>> JMRI/master
             setXingSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
+                    rootPane.setDefaultButton(setXingSignalsDone);
+                }
+            );
+
+            panel6.add(setXingSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setXingSignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSignalsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
                 rootPane.setDefaultButton(setXingSignalsDone);
@@ -3727,6 +4151,7 @@ public class LayoutEditorTools {
             setXingSignalsCancel.addActionListener((ActionEvent e) -> {
                 setXingSignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -4399,6 +4824,38 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAtTToTFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+            JLabel turnout1NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 1 "
+                    + Bundle.getMessage("Name"));
+            panel1.add(turnout1NameLabel);
+            panel1.add(turnout1NameField);
+            turnout1NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
+            theContentPane.add(panel1);
+
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+            JLabel turnout2NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 2 "
+                    + Bundle.getMessage("Name"));
+            panel11.add(turnout2NameLabel);
+            panel11.add(turnout2NameField);
+            turnout2NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
+            theContentPane.add(panel11);
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            // Provide for retrieval of names of previously saved signal heads
+
+            JPanel panel2 = new JPanel();
+            JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
+            panel2.add(shTitle);
+            panel2.add(new JLabel("     "));
+            panel2.add(getSavedTToTSignalHeads = new JButton(rb.getString("GetSaved")));
+            getSavedTToTSignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    tToTTurnoutSignalsGetSaved(e);
+                }
+            );
+=======
             JPanel panel1a = new JPanel(new FlowLayout());
             if (false && ttotFromMenu) {
                 JLabel turnout1NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 1 "
@@ -4437,24 +4894,44 @@ public class LayoutEditorTools {
             getSavedTToTSignalHeads.addActionListener((ActionEvent e) -> {
                 tToTTurnoutSignalsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedTToTSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel20);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Signal heads located at turnout 1
 
+<<<<<<< HEAD
+            JPanel panel21x = new JPanel();
+            panel21x.setLayout(new FlowLayout());
+            panel21x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
+                    + rb.getString("ContinuingTrack")));
+            theContentPane.add(panel21x);
+
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+=======
             JPanel panel20a = new JPanel(new FlowLayout());
             panel20a.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel20a);
 
             JPanel panel21 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel21.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("ContinuingTrack") + " : "));
             panel21.add(a1TToTSignalHeadComboBox);
             theContentPane.add(panel21);
+<<<<<<< HEAD
+            a1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+            panel22.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "   "));
+=======
             a1TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
             panel22.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel22.add(setA1TToTHead);
             setA1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel22.add(new JLabel("  "));
@@ -4462,14 +4939,27 @@ public class LayoutEditorTools {
             setupA1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel22);
 
+<<<<<<< HEAD
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+=======
             JPanel panel23 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel23.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("DivergingTrack") + " : "));
             panel23.add(a2TToTSignalHeadComboBox);
             theContentPane.add(panel23);
+<<<<<<< HEAD
+            a2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel24 = new JPanel();
+            panel24.setLayout(new FlowLayout());
+            panel24.add(new JLabel("                "));
+=======
             a2TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel24 = new JPanel(new FlowLayout());
             panel24.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel24.add(setA2TToTHead);
             setA2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel24.add(new JLabel("  "));
@@ -4477,19 +4967,37 @@ public class LayoutEditorTools {
             setupA2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel24);
 
+<<<<<<< HEAD
+            JPanel panel31x = new JPanel();
+            panel31x.setLayout(new FlowLayout());
+=======
             JPanel panel31x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel31x);
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel31.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("ContinuingTrack") + " : "));
             panel31.add(b1TToTSignalHeadComboBox);
             theContentPane.add(panel31);
+<<<<<<< HEAD
+            b1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+            panel32.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "   "));
+=======
             b1TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
             panel32.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel32.add(setB1TToTHead);
             setB1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel32.add(new JLabel("  "));
@@ -4497,14 +5005,27 @@ public class LayoutEditorTools {
             setupB1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel32);
 
+<<<<<<< HEAD
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+=======
             JPanel panel33 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel33.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("DivergingTrack") + " : "));
             panel33.add(b2TToTSignalHeadComboBox);
             theContentPane.add(panel33);
+<<<<<<< HEAD
+            b2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel34 = new JPanel();
+            panel34.setLayout(new FlowLayout());
+            panel34.add(new JLabel("                "));
+=======
             b2TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel34 = new JPanel(new FlowLayout());
             panel34.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel34.add(setB2TToTHead);
             setB2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel34.add(new JLabel("  "));
@@ -4514,19 +5035,37 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Signal heads located at turnout 2
 
+<<<<<<< HEAD
+            JPanel panel41x = new JPanel();
+            panel41x.setLayout(new FlowLayout());
+=======
             JPanel panel41x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel41x);
 
+<<<<<<< HEAD
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+=======
             JPanel panel41 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel41.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("ContinuingTrack") + " : "));
             panel41.add(c1TToTSignalHeadComboBox);
             theContentPane.add(panel41);
+<<<<<<< HEAD
+            c1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+            panel42.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "   "));
+=======
             c1TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
             panel42.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel42.add(setC1TToTHead);
             setC1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel42.add(new JLabel("  "));
@@ -4534,14 +5073,27 @@ public class LayoutEditorTools {
             setupC1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel42);
 
+<<<<<<< HEAD
+            JPanel panel43 = new JPanel();
+            panel43.setLayout(new FlowLayout());
+=======
             JPanel panel43 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel43.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("DivergingTrack") + " : "));
             panel43.add(c2TToTSignalHeadComboBox);
             theContentPane.add(panel43);
+<<<<<<< HEAD
+            c2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel44 = new JPanel();
+            panel44.setLayout(new FlowLayout());
+            panel44.add(new JLabel("                "));
+=======
             c2TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel44 = new JPanel(new FlowLayout());
             panel44.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel44.add(setC2TToTHead);
             setC2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel44.add(new JLabel("  "));
@@ -4549,19 +5101,37 @@ public class LayoutEditorTools {
             setupC2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel44);
 
+<<<<<<< HEAD
+            JPanel panel51x = new JPanel();
+            panel51x.setLayout(new FlowLayout());
+=======
             JPanel panel51x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel51x);
 
+<<<<<<< HEAD
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+=======
             JPanel panel51 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel51.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("ContinuingTrack") + " : "));
             panel51.add(d1TToTSignalHeadComboBox);
             theContentPane.add(panel51);
+<<<<<<< HEAD
+            d1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+            panel52.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "   "));
+=======
             d1TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
             panel52.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel52.add(setD1TToTHead);
             setD1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel52.add(new JLabel("  "));
@@ -4569,14 +5139,27 @@ public class LayoutEditorTools {
             setupD1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel52);
 
+<<<<<<< HEAD
+            JPanel panel53 = new JPanel();
+            panel53.setLayout(new FlowLayout());
+=======
             JPanel panel53 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel53.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("DivergingTrack") + " : "));
             panel53.add(d2TToTSignalHeadComboBox);
             theContentPane.add(panel53);
+<<<<<<< HEAD
+            d2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel54 = new JPanel();
+            panel54.setLayout(new FlowLayout());
+            panel54.add(new JLabel("                "));
+=======
             d2TToTSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel54 = new JPanel(new FlowLayout());
             panel54.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel54.add(setD2TToTHead);
             setD2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel54.add(new JLabel("  "));
@@ -4585,21 +5168,55 @@ public class LayoutEditorTools {
             theContentPane.add(panel54);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeTToTSignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeTToTSignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setTToTSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setTToTSignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setTToTSignalsDonePressed(e);
+                }
+            );
+=======
             setTToTSignalsDone.addActionListener((ActionEvent e) -> {
                 setTToTSignalsDonePressed(e);
             });
+>>>>>>> JMRI/master
             setTToTSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
+                    rootPane.setDefaultButton(setTToTSignalsDone);
+                }
+            );
+
+            panel6.add(setTToTSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setTToTSignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setTToTSignalsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
                 rootPane.setDefaultButton(setTToTSignalsDone);
@@ -4609,6 +5226,7 @@ public class LayoutEditorTools {
             setTToTSignalsCancel.addActionListener((ActionEvent e) -> {
                 setTToTSignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtTToTFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -5543,6 +6161,15 @@ public class LayoutEditorTools {
     }   // setLogicTToT
 
     /*
+<<<<<<< HEAD
+     * Sets up a Logix to set a sensor active if a turnout is set against
+     *      a track.  This routine creates an internal sensor for the purpose.
+     * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+     *  TTT is the system name of the turnout, X is either C or T depending
+     *      on "continuing", and HHH is the system name of the signal head.
+     * Note: If there is any problem, a string of "" is returned, and a warning
+     *  message is issued.
+=======
 	 * Sets up a Logix to set a sensor active if a turnout is set against
 	 *		a track.  This routine creates an internal sensor for the purpose.
 	 * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
@@ -5550,6 +6177,7 @@ public class LayoutEditorTools {
 	 *		on "continuing", and HHH is the system name of the signal head.
 	 * Note: If there is any problem, a string of "" is returned, and a warning
 	 *	message is issued.
+>>>>>>> JMRI/master
      */
     private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing,
             SignalHead head) {
@@ -5595,7 +6223,11 @@ public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.ACTION_SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
+<<<<<<< HEAD
+            c.setAction(actionList);          // string data
+=======
             c.setAction(actionList);		  // string data
+>>>>>>> JMRI/master
             x.addConditional(cName, -1);
             x.activateLogix();
         }
@@ -5603,8 +6235,13 @@ public class LayoutEditorTools {
     }   // setupNearLogix
 
     /*
+<<<<<<< HEAD
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+     *  provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+=======
 	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
 	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+>>>>>>> JMRI/master
      */
     private void addNearSensorToLogic(String name) {
         if ((name != null) && !name.equals("")) {
@@ -5756,14 +6393,24 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAt3WayFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel turnoutANameLabel = new JLabel(rb.getString("TurnoutAName"));
             panel1.add(turnoutANameLabel);
             panel1.add(turnoutAComboBox);
             turnoutAComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel turnoutBNameLabel = new JLabel(rb.getString("TurnoutBName"));
             panel11.add(turnoutBNameLabel);
             panel11.add(turnoutBComboBox);
@@ -5772,31 +6419,59 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Provide for retrieval of names of previously saved signal heads
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
             panel2.add(new JLabel("		"));
             panel2.add(getSaved3WaySignalHeads = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSaved3WaySignalHeads.addActionListener(
+                (ActionEvent e) -> {
+                    getSaved3WaySignals(e);
+                }
+            );
+=======
             getSaved3WaySignalHeads.addActionListener((ActionEvent e) -> {
                 getSaved3WaySignals(e);
             });
+>>>>>>> JMRI/master
             getSaved3WaySignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Signal heads located at turnout A
 
+<<<<<<< HEAD
+            JPanel panel20 = new JPanel();
+            panel20.setLayout(new FlowLayout());
+            panel20.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " A "));
+            theContentPane.add(panel20);
+
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+            panel21.add(new JLabel("    " + rb.getString("Throat") + " - "
+=======
             JPanel panel20 = new JPanel(new FlowLayout());
             panel20.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " A "));
             theContentPane.add(panel20);
 
             JPanel panel21 = new JPanel(new FlowLayout());
             panel21.add(new JLabel("	" + rb.getString("Throat") + " - "
+>>>>>>> JMRI/master
                     + rb.getString("Continuing") + " : "));
             panel21.add(a1_3WaySignalHeadComboBox);
             a1_3WaySignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel21);
 
+<<<<<<< HEAD
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+=======
             JPanel panel22 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel22.add(new JLabel("   "));
             panel22.add(setA13WayHead);
             setA13WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5805,14 +6480,25 @@ public class LayoutEditorTools {
             setupA13WayLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel22);
 
+<<<<<<< HEAD
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+            panel23.add(new JLabel("    " + rb.getString("Throat") + " - "
+=======
             JPanel panel23 = new JPanel(new FlowLayout());
             panel23.add(new JLabel("	" + rb.getString("Throat") + " - "
+>>>>>>> JMRI/master
                     + Bundle.getMessage("Diverging_", "A") + " : "));
             panel23.add(a2_3WaySignalHeadComboBox);
             a2_3WaySignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel23);
 
+<<<<<<< HEAD
+            JPanel panel24 = new JPanel();
+            panel24.setLayout(new FlowLayout());
+=======
             JPanel panel24 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel24.add(new JLabel("   "));
             panel24.add(setA23WayHead);
             setA23WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5821,14 +6507,25 @@ public class LayoutEditorTools {
             setupA23WayLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel24);
 
+<<<<<<< HEAD
+            JPanel panel25 = new JPanel();
+            panel25.setLayout(new FlowLayout());
+            panel25.add(new JLabel("    " + rb.getString("Throat") + " - "
+=======
             JPanel panel25 = new JPanel(new FlowLayout());
             panel25.add(new JLabel("	" + rb.getString("Throat") + " - "
+>>>>>>> JMRI/master
                     + Bundle.getMessage("Diverging_", "B") + " : "));
             panel25.add(a3_3WaySignalHeadComboBox);
             a3_3WaySignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel25);
 
+<<<<<<< HEAD
+            JPanel panel26 = new JPanel();
+            panel26.setLayout(new FlowLayout());
+=======
             JPanel panel26 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel26.add(new JLabel("   "));
             panel26.add(setA33WayHead);
             setA33WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5837,6 +6534,17 @@ public class LayoutEditorTools {
             setupA33WayLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel26);
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+            panel31.add(new JLabel("        " + Bundle.getMessage("Diverging_", "A") + " : "));
+            panel31.add(b3WayField);
+            b3WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            theContentPane.add(panel31);
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
             panel31.add(new JLabel("		" + Bundle.getMessage("Diverging_", "A") + " : "));
             panel31.add(b_3WaySignalHeadComboBox);
@@ -5844,6 +6552,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel31);
 
             JPanel panel32 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel32.add(new JLabel("   "));
             panel32.add(setB3WayHead);
             setB3WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5854,6 +6563,22 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Signal heads located at turnout B
 
+<<<<<<< HEAD
+            JPanel panel40 = new JPanel();
+            panel40.setLayout(new FlowLayout());
+            panel40.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " B "));
+            theContentPane.add(panel40);
+
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+            panel41.add(new JLabel("        " + rb.getString("Continuing") + " : "));
+            panel41.add(c3WayField);
+            c3WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            theContentPane.add(panel41);
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+=======
             JPanel panel40 = new JPanel(new FlowLayout());
             panel40.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " B "));
             theContentPane.add(panel40);
@@ -5865,6 +6590,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel41);
 
             JPanel panel42 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel42.add(new JLabel("   "));
             panel42.add(setC3WayHead);
             setC3WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5873,6 +6599,17 @@ public class LayoutEditorTools {
             setupC3WayLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel42);
 
+<<<<<<< HEAD
+            JPanel panel43 = new JPanel();
+            panel43.setLayout(new FlowLayout());
+            panel43.add(new JLabel("        " + Bundle.getMessage("Diverging_", "B") + " : "));
+            panel43.add(d3WayField);
+            d3WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            theContentPane.add(panel43);
+
+            JPanel panel44 = new JPanel();
+            panel44.setLayout(new FlowLayout());
+=======
             JPanel panel43 = new JPanel(new FlowLayout());
             panel43.add(new JLabel("		" + Bundle.getMessage("Diverging_", "B") + " : "));
             panel43.add(d_3WaySignalHeadComboBox);
@@ -5880,6 +6617,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel43);
 
             JPanel panel44 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel44.add(new JLabel("   "));
             panel44.add(setD3WayHead);
             setD3WayHead.setToolTipText(rb.getString("PlaceHeadHint"));
@@ -5890,21 +6628,55 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // buttons
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(change3WaySignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            change3WaySignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(change3WaySignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             change3WaySignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             change3WaySignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(set3WaySignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            set3WaySignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    set3WaySignalsDonePressed(e);
+                }
+            );
+=======
             set3WaySignalsDone.addActionListener((ActionEvent e) -> {
                 set3WaySignalsDonePressed(e);
             });
+>>>>>>> JMRI/master
             set3WaySignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
+                    rootPane.setDefaultButton(set3WaySignalsDone);
+                }
+            );
+
+            panel6.add(set3WaySignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            set3WaySignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    set3WaySignalsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
                 rootPane.setDefaultButton(set3WaySignalsDone);
@@ -5914,6 +6686,7 @@ public class LayoutEditorTools {
             set3WaySignalsCancel.addActionListener((ActionEvent e) -> {
                 set3WaySignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAt3WayFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -6888,7 +7661,12 @@ public class LayoutEditorTools {
             JPanel header = new JPanel();
             header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
@@ -6902,7 +7680,12 @@ public class LayoutEditorTools {
             }
             header.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
@@ -6918,7 +7701,12 @@ public class LayoutEditorTools {
             header.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(header, BorderLayout.NORTH);
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
+
 
             JPanel main = new JPanel();
             main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
@@ -6927,9 +7715,17 @@ public class LayoutEditorTools {
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getAnchorSavedSensors = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getAnchorSavedSensors.addActionListener(
+                (ActionEvent e) -> {
+                    getSavedAnchorSensors(e);
+                }
+            );
+=======
             getAnchorSavedSensors.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSensors(e);
             });
+>>>>>>> JMRI/master
             getAnchorSavedSensors.setToolTipText(rb.getString("GetSavedHint"));
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 main.add(panel2);
@@ -6971,21 +7767,56 @@ public class LayoutEditorTools {
             main.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(main, BorderLayout.CENTER);
 
+<<<<<<< HEAD
+
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorAtBoundaryIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorAtBoundaryIcon.addActionListener(
+                (ActionEvent e) -> {
+                    sensorFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorAtBoundaryIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorAtBoundaryIcon.addActionListener((ActionEvent e) -> {
                 sensorFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSensorAtBoundaryIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setSensorsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSensorsAtBoundaryDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSensorsAtBoundaryDonePressed(e);
+                }
+            );
+=======
             setSensorsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSensorsAtBoundaryDonePressed(e);
             });
+>>>>>>> JMRI/master
             setSensorsAtBoundaryDone.setToolTipText(rb.getString("SensorDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBoundaryDone);
+                    rootPane.setDefaultButton(setSensorsAtBoundaryDone);
+                }
+            );
+
+            panel6.add(setSensorsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSensorsAtBoundaryCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSensorsAtBoundaryCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBoundaryDone);
                 rootPane.setDefaultButton(setSensorsAtBoundaryDone);
@@ -6995,6 +7826,7 @@ public class LayoutEditorTools {
             setSensorsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSensorsAtBoundaryCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSensorsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSensorsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -7424,7 +8256,12 @@ public class LayoutEditorTools {
             JPanel header = new JPanel();
             header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
@@ -7438,7 +8275,12 @@ public class LayoutEditorTools {
             }
             header.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
@@ -7455,17 +8297,32 @@ public class LayoutEditorTools {
             header.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(header, BorderLayout.NORTH);
 
+
             JPanel main = new JPanel();
             main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalMasts"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getAnchorSavedSignalMasts = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getAnchorSavedSignalMasts.addActionListener(
+                (ActionEvent e) -> {
+                    getSavedAnchorSignalMasts(e);
+                }
+            );
+=======
             getAnchorSavedSignalMasts.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSignalMasts(e);
             });
+>>>>>>> JMRI/master
             getAnchorSavedSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 main.add(panel2);
@@ -7507,15 +8364,41 @@ public class LayoutEditorTools {
             main.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(main, BorderLayout.CENTER);
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+            setSignalMastsAtBoundaryDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalMastsAtBoundaryDonePressed(e);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsAtBoundaryDonePressed(e);
             });
+>>>>>>> JMRI/master
             setSignalMastsAtBoundaryDone.setToolTipText(rb.getString("SignalMastDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBoundaryDone);
+                    rootPane.setDefaultButton(setSignalMastsAtBoundaryDone);
+                }
+            );
+
+            panel6.add(setSignalMastsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalMastsAtBoundaryCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalMastsAtBoundaryCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBoundaryDone);
                 rootPane.setDefaultButton(setSignalMastsAtBoundaryDone);
@@ -7525,6 +8408,7 @@ public class LayoutEditorTools {
             setSignalMastsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSignalMastsAtBoundaryCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSignalMastsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSignalMastsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8585,8 +9469,13 @@ public class LayoutEditorTools {
             Container theContentPane = signalMastsJmriFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
 
+>>>>>>> JMRI/master
             turnoutSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             turnoutSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
@@ -8611,14 +9500,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalMasts"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedSignalMasts = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedSignalMasts.addActionListener(
+                (ActionEvent e) -> {
+                    turnoutSignalMastsGetSaved(e);
+                }
+            );
+=======
             getSavedSignalMasts.addActionListener((ActionEvent e) -> {
                 turnoutSignalMastsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -8650,16 +9552,42 @@ public class LayoutEditorTools {
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.add(new JLabel("  "));
+            panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
+            setSignalMastsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalMastsDonePressed(e);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(new JLabel("	 "));
             panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsDonePressed(e);
             });
+>>>>>>> JMRI/master
             setSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
+<<<<<<< HEAD
+            SwingUtilities.invokeLater(
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
+                    rootPane.setDefaultButton(setSignalMastsDone);
+                }
+            );
+
+            panel6.add(setSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalMastsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSignalMastsCancelPressed(e);
+                }
+            );
+=======
             SwingUtilities.invokeLater(() -> {
                 JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
                 rootPane.setDefaultButton(setSignalMastsDone);
@@ -8669,12 +9597,17 @@ public class LayoutEditorTools {
             setSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setSignalMastsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsJmriFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
+<<<<<<< HEAD
+//     setSignalMastsCancelPressed(null);
+=======
 //	   setSignalMastsCancelPressed(null);
+>>>>>>> JMRI/master
                 }
             });
             if (turnoutFromMenu) {
@@ -9136,7 +10069,12 @@ public class LayoutEditorTools {
             Container theContentPane = signalMastsAtSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (slipMastFromMenu) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
@@ -9156,7 +10094,12 @@ public class LayoutEditorTools {
             }
             theContentPane.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (slipMastFromMenu) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
@@ -9167,14 +10110,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedSlipSignalMasts = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedSlipSignalMasts.addActionListener(
+                (ActionEvent e) -> {
+                    slipSignalMastsGetSaved(e);
+                }
+            );
+=======
             getSavedSlipSignalMasts.addActionListener((ActionEvent e) -> {
                 slipSignalMastsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedSlipSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -9205,11 +10161,31 @@ public class LayoutEditorTools {
 
             theContentPane.add(signalMastLayoutSlipPanel);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+<<<<<<< HEAD
+
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+=======
+>>>>>>> JMRI/master
 
             JPanel panel6 = new JPanel(new FlowLayout());
 
             panel6.add(new JLabel("	 "));
             panel6.add(setSlipSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSlipSignalMastsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSignalMastsDonePressed(e);
+                }
+            );
+            setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSlipSignalMastsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSignalMastsCancelPressed(e);
+                }
+            );
+=======
             setSlipSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsDonePressed(e);
             });
@@ -9218,6 +10194,7 @@ public class LayoutEditorTools {
             setSlipSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSlipSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -9628,7 +10605,12 @@ public class LayoutEditorTools {
             Container theContentPane = signalMastsAtXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (xingMastFromMenu) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
@@ -9648,7 +10630,12 @@ public class LayoutEditorTools {
             }
             theContentPane.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (xingMastFromMenu) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
@@ -9664,14 +10651,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedXingSignalMasts = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedXingSignalMasts.addActionListener(
+                (ActionEvent e) -> {
+                    xingSignalMastsGetSaved(e);
+                }
+            );
+=======
             getSavedXingSignalMasts.addActionListener((ActionEvent e) -> {
                 xingSignalMastsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedXingSignalMasts.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -9702,11 +10702,31 @@ public class LayoutEditorTools {
 
             theContentPane.add(signalMastLevelXingPanel);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+<<<<<<< HEAD
+
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+=======
+>>>>>>> JMRI/master
 
             JPanel panel6 = new JPanel(new FlowLayout());
 
             panel6.add(new JLabel("	 "));
             panel6.add(setXingSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setXingSignalMastsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSignalMastsDonePressed(e);
+                }
+            );
+            setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setXingSignalMastsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSignalMastsCancelPressed(e);
+                }
+            );
+=======
             setXingSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsDonePressed(e);
             });
@@ -9715,6 +10735,7 @@ public class LayoutEditorTools {
             setXingSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setXingSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -10129,7 +11150,12 @@ public class LayoutEditorTools {
             Container theContentPane = setSensorsFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             turnoutSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             turnoutSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             turnoutSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
@@ -10154,14 +11180,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("Sensors"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedSensors = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedSensors.addActionListener(
+                (ActionEvent e) -> {
+                    turnoutSensorsGetSaved(e);
+                }
+            );
+=======
             getSavedSensors.addActionListener((ActionEvent e) -> {
                 turnoutSensorsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -10196,14 +11235,39 @@ public class LayoutEditorTools {
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorIcon.addActionListener(
+                (ActionEvent e) -> {
+                    turnoutSensorFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorIcon.addActionListener((ActionEvent e) -> {
                 turnoutSensorFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSensorIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSensorsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSensorsDonePressed(e);
+                }
+            );
+            setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSensorsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSensorsCancelPressed(e);
+                }
+            );
+=======
             setSensorsDone.addActionListener((ActionEvent e) -> {
                 setSensorsDonePressed(e);
             });
@@ -10212,6 +11276,7 @@ public class LayoutEditorTools {
             setSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSensorsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSensorsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -10650,7 +11715,12 @@ public class LayoutEditorTools {
             Container theContentPane = sensorsAtXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             xingSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             xingSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             xingSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
@@ -10674,7 +11744,12 @@ public class LayoutEditorTools {
             }
             theContentPane.add(panel11);
 
+<<<<<<< HEAD
+            JPanel panel12 = new JPanel();
+            panel12.setLayout(new FlowLayout());
+=======
             JPanel panel12 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             if (xingSensorFromMenu) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
@@ -10690,14 +11765,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedXingSensors = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedXingSensors.addActionListener(
+                (ActionEvent e) -> {
+                    xingSensorsGetSaved(e);
+                }
+            );
+=======
             getSavedXingSensors.addActionListener((ActionEvent e) -> {
                 xingSensorsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedXingSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -10732,15 +11820,40 @@ public class LayoutEditorTools {
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorXingIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorXingIcon.addActionListener(
+                (ActionEvent e) -> {
+                    sensorXingFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorXingIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorXingIcon.addActionListener((ActionEvent e) -> {
                 sensorXingFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSensorXingIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("	 "));
             panel6.add(setXingSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setXingSensorsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSensorsDonePressed(e);
+                }
+            );
+            setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setXingSensorsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setXingSensorsCancelPressed(e);
+                }
+            );
+=======
             setXingSensorsDone.addActionListener((ActionEvent e) -> {
                 setXingSensorsDonePressed(e);
             });
@@ -10749,6 +11862,7 @@ public class LayoutEditorTools {
             setXingSensorsCancel.addActionListener((ActionEvent e) -> {
                 setXingSensorsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setXingSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -11187,7 +12301,12 @@ public class LayoutEditorTools {
             Container theContentPane = sensorsAtSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+=======
             JPanel panel11 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             slipSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             slipSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             slipSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
@@ -11212,14 +12331,27 @@ public class LayoutEditorTools {
             theContentPane.add(panel11);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+=======
             JPanel panel2 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
             panel2.add(getSavedSlipSensors = new JButton(rb.getString("GetSaved")));
+<<<<<<< HEAD
+            getSavedSlipSensors.addActionListener(
+                (ActionEvent e) -> {
+                    slipSensorsGetSaved(e);
+                }
+            );
+=======
             getSavedSlipSensors.addActionListener((ActionEvent e) -> {
                 slipSensorsGetSaved(e);
             });
+>>>>>>> JMRI/master
             getSavedSlipSensors.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
 
@@ -11263,15 +12395,40 @@ public class LayoutEditorTools {
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorSlipIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorSlipIcon.addActionListener(
+                (ActionEvent e) -> {
+                    sensorSlipFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorSlipIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorSlipIcon.addActionListener((ActionEvent e) -> {
                 sensorSlipFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeSensorSlipIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("	 "));
             panel6.add(setSlipSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSlipSensorsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSensorsDonePressed(e);
+                }
+            );
+            setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSlipSensorsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSensorsCancelPressed(e);
+                }
+            );
+=======
             setSlipSensorsDone.addActionListener((ActionEvent e) -> {
                 setSlipSensorsDonePressed(e);
             });
@@ -11280,6 +12437,7 @@ public class LayoutEditorTools {
             setSlipSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSensorsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSlipSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -11837,7 +12995,12 @@ public class LayoutEditorTools {
             Container theContentPane = setSignalsAtSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+=======
             JPanel panel1 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             JLabel turnout1NameLabel = new JLabel(rb.getString("Slip") + " "
                     + Bundle.getMessage("Name"));
             panel1.add(turnout1NameLabel);
@@ -11854,6 +13017,22 @@ public class LayoutEditorTools {
             } else {
                 slipNameCombo.setSelectedIndex(0);
             }
+<<<<<<< HEAD
+            slipNameCombo.addActionListener(
+                (ActionEvent e) -> {
+                    for (LayoutSlip slip : layoutEditor.slipList) {
+                        if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
+                            //slip1NameField.setText(slip.getDisplayName());
+                            getSlipTurnoutSignalsGetSaved(e);
+                            dblSlipC2SigPanel.setVisible(false);
+                            dblSlipB2SigPanel.setVisible(false);
+                            if (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
+                                dblSlipB2SigPanel.setVisible(true);
+                                dblSlipC2SigPanel.setVisible(true);
+                            }
+                            setSignalsAtSlipFrame.pack();
+                            return;
+=======
             slipNameCombo.addActionListener((ActionEvent e) -> {
                 for (LayoutSlip slip : layoutEditor.slipList) {
                     if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
@@ -11864,13 +13043,21 @@ public class LayoutEditorTools {
                         if (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
                             dblSlipB2SigPanel.setVisible(true);
                             dblSlipC2SigPanel.setVisible(true);
+>>>>>>> JMRI/master
                         }
                         setSignalsAtSlipFrame.pack();
                         return;
                     }
                 }
-            });
+            );
             theContentPane.add(panel1);
+<<<<<<< HEAD
+
+            JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+
+=======
+>>>>>>> JMRI/master
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             // Signal heads located at turnout 1
@@ -11879,14 +13066,27 @@ public class LayoutEditorTools {
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel21x);
 
+<<<<<<< HEAD
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+=======
             JPanel panel21 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel21.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("ContinuingTrack") + " : "));
             panel21.add(a1SlipSignalHeadComboBox);
             theContentPane.add(panel21);
+<<<<<<< HEAD
+            a1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+            panel22.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "   "));
+=======
             a1SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
             panel22.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel22.add(setA1SlipHead);
             setA1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel22.add(new JLabel("  "));
@@ -11894,14 +13094,27 @@ public class LayoutEditorTools {
             setupA1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel22);
 
+<<<<<<< HEAD
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+=======
             JPanel panel23 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel23.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("DivergingTrack") + " : "));
             panel23.add(a2SlipSignalHeadComboBox);
             theContentPane.add(panel23);
+<<<<<<< HEAD
+            a2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel24 = new JPanel();
+            panel24.setLayout(new FlowLayout());
+            panel24.add(new JLabel("                "));
+=======
             a2SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel24 = new JPanel(new FlowLayout());
             panel24.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel24.add(setA2SlipHead);
             setA2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel24.add(new JLabel("  "));
@@ -11909,19 +13122,37 @@ public class LayoutEditorTools {
             setupA2SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel24);
 
+<<<<<<< HEAD
+            JPanel panel31x = new JPanel();
+            panel31x.setLayout(new FlowLayout());
+=======
             JPanel panel31x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel31x);
 
+<<<<<<< HEAD
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+=======
             JPanel panel31 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel31.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("ContinuingTrack") + " : "));
             panel31.add(b1SlipSignalHeadComboBox);
             theContentPane.add(panel31);
+<<<<<<< HEAD
+            b1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+            panel32.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "   "));
+=======
             b1SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
             panel32.add(new JLabel(rb.getString("OrBoth") + " 2 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel32.add(setB1SlipHead);
             setB1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel32.add(new JLabel("  "));
@@ -11932,14 +13163,27 @@ public class LayoutEditorTools {
             dblSlipB2SigPanel = new JPanel(new FlowLayout());
             dblSlipB2SigPanel.setLayout(new BoxLayout(dblSlipB2SigPanel, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+=======
             JPanel panel33 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel33.add(new JLabel(rb.getString("ProtectsTurnout") + " 2 - " + rb.getString("DivergingTrack") + " : "));
             panel33.add(b2SlipSignalHeadComboBox);
             dblSlipB2SigPanel.add(panel33);
+<<<<<<< HEAD
+            b2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel34 = new JPanel();
+            panel34.setLayout(new FlowLayout());
+            panel34.add(new JLabel("                "));
+=======
             b2SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel34 = new JPanel(new FlowLayout());
             panel34.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel34.add(setB2SlipHead);
             setB2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel34.add(new JLabel("  "));
@@ -11952,19 +13196,37 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             // Signal heads located at turnout 2
 
+<<<<<<< HEAD
+            JPanel panel41x = new JPanel();
+            panel41x.setLayout(new FlowLayout());
+=======
             JPanel panel41x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel41x);
 
+<<<<<<< HEAD
+            JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+=======
             JPanel panel41 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel41.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("ContinuingTrack") + " : "));
             panel41.add(c1SlipSignalHeadComboBox);
             theContentPane.add(panel41);
+<<<<<<< HEAD
+            c1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+            panel42.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "   "));
+=======
             c1SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
             panel42.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel42.add(setC1SlipHead);
             setC1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel42.add(new JLabel("  "));
@@ -11974,14 +13236,27 @@ public class LayoutEditorTools {
             dblSlipC2SigPanel = new JPanel(new FlowLayout());
             dblSlipC2SigPanel.setLayout(new BoxLayout(dblSlipC2SigPanel, BoxLayout.Y_AXIS));
 
+<<<<<<< HEAD
+            JPanel panel43 = new JPanel();
+            panel43.setLayout(new FlowLayout());
+=======
             JPanel panel43 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel43.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("DivergingTrack") + " : "));
             panel43.add(c2SlipSignalHeadComboBox);
             dblSlipC2SigPanel.add(panel43);
+<<<<<<< HEAD
+            c2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel44 = new JPanel();
+            panel44.setLayout(new FlowLayout());
+            panel44.add(new JLabel("                "));
+=======
             c2SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel44 = new JPanel(new FlowLayout());
             panel44.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel44.add(setC2SlipHead);
             setC2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel44.add(new JLabel("  "));
@@ -11990,19 +13265,38 @@ public class LayoutEditorTools {
             dblSlipC2SigPanel.add(panel44);
             theContentPane.add(dblSlipC2SigPanel);
 
+<<<<<<< HEAD
+            JPanel panel51x = new JPanel();
+            panel51x.setLayout(new FlowLayout());
+=======
             JPanel panel51x = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel51x);
 
+<<<<<<< HEAD
+
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+=======
             JPanel panel51 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel51.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("ContinuingTrack") + " : "));
             panel51.add(d1SlipSignalHeadComboBox);
             theContentPane.add(panel51);
+<<<<<<< HEAD
+            d1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+            panel52.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "   "));
+=======
             d1SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
             panel52.add(new JLabel(rb.getString("OrBoth") + " 1 " + rb.getString("Tracks)") + "	  "));
+>>>>>>> JMRI/master
             panel52.add(setD1SlipHead);
             setD1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel52.add(new JLabel("  "));
@@ -12010,14 +13304,27 @@ public class LayoutEditorTools {
             setupD1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
             theContentPane.add(panel52);
 
+<<<<<<< HEAD
+            JPanel panel53 = new JPanel();
+            panel53.setLayout(new FlowLayout());
+=======
             JPanel panel53 = new JPanel(new FlowLayout());
+>>>>>>> JMRI/master
             panel53.add(new JLabel(rb.getString("ProtectsTurnout") + " 1 - " + rb.getString("DivergingTrack") + " : "));
             panel53.add(d2SlipSignalHeadComboBox);
             theContentPane.add(panel53);
+<<<<<<< HEAD
+            d2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+
+            JPanel panel54 = new JPanel();
+            panel54.setLayout(new FlowLayout());
+            panel54.add(new JLabel("                "));
+=======
             d2SlipSignalHeadComboBox.setToolTipText(rb.getString("SignalHeadNameHint"));
 
             JPanel panel54 = new JPanel(new FlowLayout());
             panel54.add(new JLabel("				"));
+>>>>>>> JMRI/master
             panel54.add(setD2SlipHead);
             setD2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
             panel54.add(new JLabel("  "));
@@ -12026,14 +13333,39 @@ public class LayoutEditorTools {
             theContentPane.add(panel54);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+<<<<<<< HEAD
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeTToTSignalIcon.addActionListener(
+                (ActionEvent e) -> {
+                    signalFrame.setVisible(true);
+                }
+            );
+=======
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeTToTSignalIcon.addActionListener((ActionEvent e) -> {
                 signalFrame.setVisible(true);
             });
+>>>>>>> JMRI/master
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
             panel6.add(setSlipSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
+<<<<<<< HEAD
+            setSlipSignalsDone.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSignalsDonePressed(e);
+                }
+            );
+            setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSlipSignalsCancel.addActionListener(
+                (ActionEvent e) -> {
+                    setSlipSignalsCancelPressed(e);
+                }
+            );
+=======
             setSlipSignalsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalsDonePressed(e);
             });
@@ -12042,6 +13374,7 @@ public class LayoutEditorTools {
             setSlipSignalsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalsCancelPressed(e);
             });
+>>>>>>> JMRI/master
             setSlipSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -12822,8 +14155,13 @@ public class LayoutEditorTools {
     }
 
     /*
+<<<<<<< HEAD
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+     *  provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+=======
 	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
 	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+>>>>>>> JMRI/master
      */
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.equals("")) {

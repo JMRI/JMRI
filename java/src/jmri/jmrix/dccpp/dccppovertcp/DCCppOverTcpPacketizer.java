@@ -253,6 +253,23 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     int firstidx = rxLine.indexOf("<");
                     int lastidx = rxLine.lastIndexOf(">");
                     log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+                    // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
+                    // need to be parsed. Indeed, trying to parse them will screw them up.
+                    // So instead, we de-@Deprecated the string constructor so that we can
+                    // directly create a DCCppReply from the incoming string without translation/parsing.
+
+                    //  Note: the substring call below also strips off the "< >"
+                    DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
+                            rxLine.lastIndexOf(">")));
+                    //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
+                    //                                rxLine.lastIndexOf(">")));
+=======
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
 
                     // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
@@ -278,6 +295,18 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     //final DCCppPacketizer thisTC = trafficController;
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+                        DCCppReply msgForLater = thisMsg;
+
+                        @Override
+                        public void run() {
+                            notifyReply(msgForLater, null);
+                        }
+                    };
+=======
+=======
+>>>>>>> JMRI/master
                             DCCppReply msgForLater = thisMsg;
                             
                             @Override
@@ -285,6 +314,10 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                                 notifyReply(msgForLater, null);
                             }
                         };
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
                     javax.swing.SwingUtilities.invokeLater(r);
                     // done with this one
                     //} catch (DCCppMessageException e) {
@@ -312,7 +345,15 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      * Captive class to handle transmission
      */
     class XmtHandler implements Runnable {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         @Override
         public void run() {
             

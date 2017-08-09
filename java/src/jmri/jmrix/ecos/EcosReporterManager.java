@@ -3,7 +3,13 @@ package jmri.jmrix.ecos;
 import jmri.Reporter;
 
 /**
+<<<<<<< HEAD
+ * EcosReporterManager implements the ReporterManager.
+ * <P>
+ * Description: Implement Reporter manager for ecos
+=======
  * EcosReporterManager implements the ReporterManager for ECoS
+>>>>>>> JMRI/master
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */

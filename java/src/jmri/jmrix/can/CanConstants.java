@@ -3,6 +3,11 @@ package jmri.jmrix.can;
 /**
  * Constants to represent CAN protocols and adapters
  *
+<<<<<<< HEAD
+ * Description: Constants to represent CAN protocols and adpters
+ *
+=======
+>>>>>>> JMRI/master
  * @author Andrew Crosland Copyright (C) 2008
  */
 public final class CanConstants {

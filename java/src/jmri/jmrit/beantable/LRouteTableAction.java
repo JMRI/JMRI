@@ -635,7 +635,11 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
+<<<<<<< HEAD
+                //boolean negated = variable.isNegated(); 
+=======
                 //boolean negated = variable.isNegated();
+>>>>>>> JMRI/master
                 int type;
                 switch (testState) {
                     case Conditional.TYPE_SENSOR_ACTIVE:

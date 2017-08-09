@@ -560,10 +560,17 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XPressNet Message is a communications error message.
+<<<<<<< HEAD
+     * the errors handeled are:
+     *  01 05 04  -- Timeslot Error
+     *      01 07 06  -- Timeslot Restored 
+     *      01 08 09  -- Data sent while there is no Timeslot
+=======
      * The errors handled are:
      *  01 05 04  -- Timeslot Error
      *  01 07 06  -- Timeslot Restored
      *  01 08 09  -- Data sent while there is no Timeslot
+>>>>>>> JMRI/master
      */
     public boolean isTimeSlotErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER

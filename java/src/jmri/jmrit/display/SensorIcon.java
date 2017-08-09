@@ -337,8 +337,16 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
             popup.add(momentaryItem);
             momentaryItem.setSelected(getMomentary());
+<<<<<<< HEAD
+            momentaryItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setMomentary(momentaryItem.isSelected());
+                }
+=======
             momentaryItem.addActionListener((java.awt.event.ActionEvent e) -> {
                 setMomentary(momentaryItem.isSelected());
+>>>>>>> JMRI/master
             });
         } else if (getPopupUtility() != null) {
             getPopupUtility().setAdditionalViewPopUpMenu(popup);
@@ -450,8 +458,16 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
+<<<<<<< HEAD
+        ActionListener updateAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+=======
         ActionListener updateAction = (ActionEvent a) -> {
             updateItem();
+>>>>>>> JMRI/master
         };
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
@@ -524,8 +540,16 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _iconEditor.makeIconPanel(false);
 
         // set default icons, then override with this turnout's icons
+<<<<<<< HEAD
+        ActionListener addIconAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateSensor();
+            }
+=======
         ActionListener addIconAction = (ActionEvent a) -> {
             updateSensor();
+>>>>>>> JMRI/master
         };
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(getSensor());
@@ -867,6 +891,18 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         flashStateOn = state1;
         flashStateOff = state2;
         if (taskPerformer == null) {
+<<<<<<< HEAD
+            taskPerformer = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    if (flashon) {
+                        flashon = false;
+                        displayState(flashStateOn);
+                    } else {
+                        flashon = true;
+                        displayState(flashStateOff);
+                    }
+=======
             taskPerformer = (ActionEvent evt) -> {
                 if (flashon) {
                     flashon = false;
@@ -874,6 +910,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 } else {
                     flashon = true;
                     displayState(flashStateOff);
+>>>>>>> JMRI/master
                 }
             };
         }

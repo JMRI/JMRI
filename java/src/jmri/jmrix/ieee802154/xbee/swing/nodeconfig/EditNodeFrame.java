@@ -9,12 +9,23 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
 import javax.swing.JPanel;
+>>>>>>> JMRI/master
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+<<<<<<< HEAD
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+
+
+=======
+>>>>>>> JMRI/master
 /**
  * Frame for Editing Nodes
  *
@@ -169,7 +180,11 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
+<<<<<<< HEAD
+    // Initilize the text boxes for the addresses.
+=======
     // Initialize the text boxes for the addresses.
+>>>>>>> JMRI/master
     @Override
     protected void initAddressBoxes() {
         nodeAddrField.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getUserAddress()));

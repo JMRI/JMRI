@@ -1,4 +1,4 @@
-@REM Start the InstallTest program from JMRI
+@REM Start the InstallTest program from JMRI ($Revision$)
 @REM @author Ken Cameron
 @REM @author Matthew Harris
 

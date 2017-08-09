@@ -73,6 +73,11 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
 
+<<<<<<< HEAD
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
+
+=======
+>>>>>>> JMRI/master
     private int macroNum = 0;      // macro being worked
     private int replyLen = 0;      // expected byte length
     private int waiting = 0;      // to catch responses not intended for this module
@@ -87,8 +92,13 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private static final String DELETE = Bundle.getMessage("Delete");
 
+<<<<<<< HEAD
+    private static final String EMPTY = rb.getString("empty"); // One of two accessory states
+    private static final String ACCESSORY = rb.getString("accessory");
+=======
     private static final String EMPTY = Bundle.getMessage("empty"); // One of two accessory states
     private static final String ACCESSORY = Bundle.getMessage("accessory");
+>>>>>>> JMRI/master
 
     private static final String LINK = Bundle.getMessage("LinkMacro");// Line 10 alternative to Delete
 
@@ -1336,9 +1346,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //   // Looking for proper response
     //   int recChar = r.getElement(0);
     //   if (recChar == '!')
+<<<<<<< HEAD
+    //    macroReply.setText(rb.getString("okay"));
+    //   if (recChar == '0')
+    //    macroReply.setText(rb.getString("macroEmpty"));
+=======
     //    macroReply.setText(Bundle.getMessage("okay"));
     //   if (recChar == '0')
     //    macroReply.setText(Bundle.getMessage("macroEmpty"));
+>>>>>>> JMRI/master
     //  }
     //  // Macro memory read
     //  if (replyLen == NceMessage.REPLY_16) {
@@ -1361,7 +1377,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //      }
     //     }
     //     // Macro is empty so init the accessory fields
+<<<<<<< HEAD
+    //     macroReply.setText(rb.getString("macroEmpty"));
+=======
     //     macroReply.setText(Bundle.getMessage("macroEmpty"));
+>>>>>>> JMRI/master
     //     initAccyFields();
     //     macroValid = true;
     //    } else {
@@ -1371,7 +1391,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //       macroSearchDec = false;
     //      }
     //     }
+<<<<<<< HEAD
+    //     macroReply.setText(rb.getString("macroFound"));
+=======
     //     macroReply.setText(Bundle.getMessage("macroFound"));
+>>>>>>> JMRI/master
     //     secondRead = loadAccy1to8(r);
     //     macroValid = true;
     //    }

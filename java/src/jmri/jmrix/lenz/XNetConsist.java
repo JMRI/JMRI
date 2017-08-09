@@ -445,9 +445,13 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         _state = REMOVEREQUESTSENTSTATE;
     }
 
+<<<<<<< HEAD
+    // Listeners for messages from the command station
+=======
     /**
      * Listeners for messages from the command station.
      */
+>>>>>>> JMRI/master
     @Override
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {

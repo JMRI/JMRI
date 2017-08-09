@@ -367,6 +367,123 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         return false;
     }
+<<<<<<< HEAD
+    private String _piCv = "";
+
+    public String piCv() {
+        return _piCv;
+    }
+    private String _siCv = "";
+
+    public String siCv() {
+        return _siCv;
+    }
+
+    /**
+     * Load one row in the IndexedVariableTableModel, by reading in the Element
+     * containing its definition.
+     * <p>
+     * Invoked from DecoderFile
+     *
+     * @param row       number of row to fill
+     * @param e         Element of type "variable"
+     * @param productID product ID of decoder, passed in so that subparts of the
+     *                  variable can use it for selection
+     */
+    public int setIndxRow(int row, Element e, String productID, String modelID, String familyID) {
+
+        // get the values for the VariableValue ctor
+        String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
+        if (log.isDebugEnabled()) {
+            log.debug("Starting to setIndexedRow \"" + name + "\" row " + row);
+        }
+        String cvName = e.getAttributeValue("CVname");
+        String item = (e.getAttribute("item") != null
+                ? e.getAttribute("item").getValue()
+                : null);
+        String comment = LocaleSelector.getAttribute(e, "comment");
+
+        int piVal = Integer.valueOf(e.getAttribute("PI").getValue()).intValue();
+        int siVal = (e.getAttribute("SI") != null
+                ? Integer.valueOf(e.getAttribute("SI").getValue()).intValue()
+                : -1);
+        String cv = e.getAttribute("CV").getValue();
+        String mask = null;
+        if (e.getAttribute("mask") != null) {
+            mask = e.getAttribute("mask").getValue();
+        } else {
+            mask = "VVVVVVVV";
+        }
+
+        boolean readOnly = e.getAttribute("readOnly") != null
+                ? e.getAttribute("readOnly").getValue().equals("yes") : false;
+        boolean infoOnly = e.getAttribute("infoOnly") != null
+                ? e.getAttribute("infoOnly").getValue().equals("yes") : false;
+        boolean writeOnly = e.getAttribute("writeOnly") != null
+                ? e.getAttribute("writeOnly").getValue().equals("yes") : false;
+        boolean opsOnly = e.getAttribute("opsOnly") != null
+                ? e.getAttribute("opsOnly").getValue().equals("yes") : false;
+
+        JButton br = new JButton("Read");
+        _readButtons.addElement(br);
+        JButton bw = new JButton("Write");
+        _writeButtons.addElement(bw);
+
+        setButtonsReadWrite(readOnly, infoOnly, writeOnly, bw, br, row);
+
+        if (_indxCvModel == null) {
+            log.error("IndexedCvModel reference is null; can not add variables");
+            return -1;
+        }
+
+        // add the information to the indexed CV model
+        int _newRow = _indxCvModel.addIndxCV(cvName, _piCv, piVal, _siCv, siVal, cv, readOnly, infoOnly, writeOnly);
+        if (_newRow != row) {
+            row = _newRow;
+            if (log.isDebugEnabled()) {
+                log.debug("new row is " + _newRow + ", row was " + row);
+            }
+        }
+
+        // Find and process the specific content types
+        VariableValue iv;
+        iv = createIndexedVariableFromElement(e, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID, modelID, familyID);
+
+        if (iv == null) {
+            // trouble reporting
+            reportBogus();
+            return -1;
+        }
+
+        processModifierElements(e, iv);
+
+        setToolTip(e, iv);
+
+        // record new variable, update state, hook up listeners
+        rowVector.addElement(iv);
+        iv.setState(VariableValue.FROMFILE);
+        iv.addPropertyChangeListener(this);
+
+        // set to default value if specified (CV load may later override this)
+        Attribute a;
+        if ((a = e.getAttribute("default")) != null) {
+            String val = a.getValue();
+            if (log.isDebugEnabled()) {
+                log.debug("Found default value: " + val + " for " + name);
+            }
+            iv.setIntValue(Integer.valueOf(val).intValue());
+            if (_indxCvModel.getCvByRow(row).getInfoOnly()) {
+                _indxCvModel.getCvByRow(row).setState(VariableValue.READ);
+            } else {
+                _indxCvModel.getCvByRow(row).setState(VariableValue.FROMFILE); // correct for transition to "edited"
+            }
+        } else {
+            _indxCvModel.getCvByRow(row).setState(VariableValue.UNKNOWN);
+        }
+        return row;
+    }
+=======
+>>>>>>> JMRI/master
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
         VariableValue v;

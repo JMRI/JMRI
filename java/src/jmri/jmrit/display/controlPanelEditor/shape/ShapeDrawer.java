@@ -28,6 +28,21 @@ public class ShapeDrawer {
 
         JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
+        shapeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newRectangle();
+            }
+        });
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
+        drawMenu.add(shapeItem);
+        shapeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newRoundRectangle();
+            }
+=======
         shapeItem.addActionListener((ActionEvent event) -> {
             newRectangle();
         });
@@ -35,16 +50,40 @@ public class ShapeDrawer {
         drawMenu.add(shapeItem);
         shapeItem.addActionListener((ActionEvent event) -> {
             newRoundRectangle();
+>>>>>>> JMRI/master
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
+        shapeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newPolygon();
+            }
+=======
         shapeItem.addActionListener((ActionEvent event) -> {
             newPolygon();
+>>>>>>> JMRI/master
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
+<<<<<<< HEAD
+        shapeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newCircle();
+            }
+        });
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
+        drawMenu.add(shapeItem);
+        shapeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newEllipse();
+            }
+=======
         shapeItem.addActionListener((ActionEvent event) -> {
             newCircle();
         });
@@ -52,6 +91,7 @@ public class ShapeDrawer {
         drawMenu.add(shapeItem);
         shapeItem.addActionListener((ActionEvent event) -> {
             newEllipse();
+>>>>>>> JMRI/master
         });
 
         return drawMenu;

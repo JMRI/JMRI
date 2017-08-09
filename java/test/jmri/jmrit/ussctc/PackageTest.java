@@ -36,6 +36,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(OsIndicatorFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(OsIndicatorPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
+<<<<<<< HEAD
+=======
         
         // new classes last
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.CombinedLockTest.class));
@@ -55,6 +57,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.TurnoutSectionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.ussctc.SignalHeadSectionTest.class));
         
+>>>>>>> JMRI/master
         return suite;
     }
 

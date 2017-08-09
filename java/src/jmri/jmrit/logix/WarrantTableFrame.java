@@ -266,7 +266,14 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     protected static void nxAction() {
+<<<<<<< HEAD
+        NXFrame nxFrame = NXFrame.getInstance();
+        if (nxFrame._controlPanel == null) {
+            nxFrame.init();
+        }
+=======
         NXFrame nxFrame = NXFrame.getDefault();
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         nxFrame.setVisible(true);
     }
 
@@ -409,7 +416,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     /**
      * Return error message if warrant cannot be run.
      *
+<<<<<<< HEAD
+     * @param w warrant
+=======
      * @param w    warrant
+>>>>>>> JMRI/master
      * @param mode running type
      * @return null if warrant is started
      */

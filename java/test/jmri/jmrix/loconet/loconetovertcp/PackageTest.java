@@ -9,15 +9,26 @@ import org.junit.runners.Suite;
    ConnectionConfigTest.class,
    jmri.jmrix.loconet.loconetovertcp.configurexml.PackageTest.class,
    LnOverTcpPacketizerTest.class,
+<<<<<<< HEAD
+   ServerTest.class,
+   ServerActionTest.class,
+   ServerFrameTest.class,
+   LnTcpDriverAdapterTest.class
+=======
    LnTcpServerTest.class,
    LnTcpServerActionTest.class,
    LnTcpServerFrameTest.class,
    LnTcpDriverAdapterTest.class,
    ClientRxHandlerTest.class,
+<<<<<<< HEAD
+   BundleTest.class
+>>>>>>> JMRI/master
+=======
    BundleTest.class,
    LnTcpPreferencesPanelTest.class,
    LnTcpPreferencesTest.class,
    LnTcpStartupActionFactoryTest.class
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.

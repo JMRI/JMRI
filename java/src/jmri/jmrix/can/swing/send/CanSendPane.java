@@ -68,8 +68,20 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         packetTextField.setToolTipText(Bundle.getMessage("PacketToolTip"));
         pane1.add(entry);
 
+<<<<<<< HEAD
+            sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    sendButtonActionPerformed(e);
+                }
+            });
+
+            add(pane1);
+        }
+=======
         pane1.add(sendButton);
         pane1.add(Box.createVerticalGlue());
+>>>>>>> JMRI/master
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             @Override

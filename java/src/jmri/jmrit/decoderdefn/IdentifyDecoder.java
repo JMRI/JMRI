@@ -22,7 +22,11 @@ import org.slf4j.LoggerFactory;
  * low byte of ID and CV158 is high byte of ID</li>
  * <li>TCS: (mfgID == 153) CV249 is ID</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
+<<<<<<< HEAD
+ * <li>SoundTraxx: (mfgID == 98, modelID == 70 or 71) CV253 is high byte, CV256
+=======
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
+>>>>>>> JMRI/master
  * is low byte of ID</li>
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)

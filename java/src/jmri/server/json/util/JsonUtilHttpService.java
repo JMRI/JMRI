@@ -3,6 +3,7 @@ package jmri.server.json.util;
 import static jmri.server.json.JSON.CONTROL_PANEL;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
+import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
 import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
@@ -26,6 +27,7 @@ import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
@@ -354,6 +356,10 @@ public class JsonUtilHttpService extends JsonHttpService {
             data.put(JSON.PREFIX, prefix);
             data.putNull(JSON.MFG);
             data.putNull(JSON.DESCRIPTION);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
             root.add(connection);
         }
         return root;
@@ -377,10 +383,58 @@ public class JsonUtilHttpService extends JsonHttpService {
             data.put(JSON.ID, p.getId());
             data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
             data.put(JSON.IS_AUTO_START, isAutoStart);
+>>>>>>> JMRI/master
             root.add(connection);
         }
         return root;
     }
+
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON configProfiles message.
+     */
+    public ArrayNode getConfigProfiles(Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
+
+        for (Profile p : ProfileManager.getDefault().getProfiles()) {
+            boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
+            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
+            ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
+            ObjectNode data = connection.putObject(JSON.DATA);
+            data.put(JSON.NAME, p.getName());
+            data.put(JSON.UNIQUE_ID, p.getUniqueId());
+            data.put(JSON.ID, p.getId());
+            data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
+            data.put(JSON.IS_AUTO_START, isAutoStart);
+>>>>>>> JMRI/master
+            root.add(connection);
+        }
+        return root;
+    }
+
+    /**
+    *
+    * @param locale the client's Locale.
+    * @return the JSON configProfiles message.
+    */
+   public JsonNode getConfigProfiles(Locale locale) {
+       ArrayNode root = mapper.createArrayNode();
+
+       for (Profile p : ProfileManager.getDefault().getProfiles()) {
+           boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
+           boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
+           ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
+           ObjectNode data = connection.putObject(JSON.DATA);
+           data.put(JSON.NAME, p.getName());
+           data.put(JSON.UNIQUE_ID, p.getUniqueId());
+           data.put(JSON.ID, p.getId());
+           data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
+           data.put(JSON.IS_AUTO_START, isAutoStart);
+           root.add(connection);
+       }
+       return root;
+   }
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form

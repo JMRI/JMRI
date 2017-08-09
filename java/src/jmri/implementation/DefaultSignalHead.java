@@ -84,8 +84,12 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic.
      *
+<<<<<<< HEAD
+     * @param newHeld new Held state, true if Held, to be compared with current Held state
+=======
      * @param newHeld new Held state, true if Held, to be compared with current
      *                Held state
+>>>>>>> JMRI/master
      */
     @Override
     public void setHeld(boolean newHeld) {
@@ -129,8 +133,16 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         // note that we don't force mFlashOn to be true at the start
         // of this; that way a flash in process isn't disturbed.
         if (timer == null) {
+<<<<<<< HEAD
+            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    timeout();
+                }
+=======
             timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
                 timeout();
+>>>>>>> JMRI/master
             });
             timer.setInitialDelay(delay);
             timer.setRepeats(true);
@@ -147,7 +159,11 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     /*
      * Stop the timer that controls flashing.
      * <p>
+<<<<<<< HEAD
+     * This is only a resource-saver; the actual use of 
+=======
      * This is only a resource-saver; the actual use of
+>>>>>>> JMRI/master
      * flashing happens elsewhere.
      */
     protected void stopFlash() {

@@ -246,7 +246,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
+<<<<<<< HEAD
+            result = (null != result) ? result.trim() : "";
+=======
             result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+>>>>>>> JMRI/master
 
             b = getNamedBean();
         } else {
@@ -270,7 +274,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         if (isEditable()) {
             result = getEditor().getItem().toString();
+<<<<<<< HEAD
+            result = (null != result) ? result.trim() : "";
+=======
             result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+>>>>>>> JMRI/master
 
             b = getNamedBean();
         } else {
@@ -283,6 +291,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   //getDisplayName
 
     /**
+<<<<<<< HEAD
+=======
      * Get the text from the editor for this JmriBeanComboBox
      *
      * @return the text
@@ -303,6 +313,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   // setText
 
     /**
+>>>>>>> JMRI/master
      * Get the display order of the combobox.
      *
      * @return the display order of this combobox
@@ -460,7 +471,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         jmri.Manager uDaManager = getManager();
 
         String comboBoxText = getEditor().getItem().toString();
+<<<<<<< HEAD
+        comboBoxText = (null != comboBoxText) ? comboBoxText.trim() : "";
+=======
         comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
+>>>>>>> JMRI/master
 
         //try user name
         result = uDaManager.getBeanByUserName(comboBoxText);
@@ -484,8 +499,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
 
+<<<<<<< HEAD
+            if (found) {    //if we found it there then…
+                //walk the namedBeanList…
+=======
             if (found) {    //if we found it there then...
                 //walk the namedBeanList...
+>>>>>>> JMRI/master
                 List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
 
                 for (NamedBean namedBean : namedBeanList) {
@@ -506,7 +526,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         return result;
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
     }   //getBean
 
     public enum DisplayOptions {

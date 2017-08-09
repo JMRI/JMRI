@@ -32,7 +32,11 @@ public class PR3Adapter extends LocoBufferAdapter {
      * @param activeSerialPort - the port to be configured
      */
     @Override
+<<<<<<< HEAD
+    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+=======
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
+>>>>>>> JMRI/master
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validBaudNumber().length; i++) {

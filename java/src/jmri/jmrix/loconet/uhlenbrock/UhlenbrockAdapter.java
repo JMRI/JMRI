@@ -83,7 +83,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
      * Local method to do specific configuration, overridden in class
      */
     @Override
+<<<<<<< HEAD
+    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+=======
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
+>>>>>>> JMRI/master
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,

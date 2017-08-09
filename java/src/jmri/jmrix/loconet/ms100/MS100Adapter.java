@@ -41,7 +41,10 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
+<<<<<<< HEAD
+=======
     @SuppressWarnings("unchecked")
+>>>>>>> JMRI/master
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
@@ -59,9 +62,86 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         return portNameVector;
     }
 
+<<<<<<< HEAD
+    class InnerSerial {
+
+        public Vector<String> getPortNames() {
+            // first, check that the comm package can be opened and ports seen
+            portNameVector = new Vector<String>();
+            try {
+                String[] names = SerialPortLocal.getPortList();
+                // accumulate the names in a vector
+                for (int i = 0; i < names.length; i++) {
+                    portNameVector.addElement(names[i]);
+                }
+            } catch (java.io.IOException e) {
+                log.error("IO exception listing ports: " + e); // NOI18N
+            } catch (java.lang.UnsatisfiedLinkError e) {
+                log.error("Exception listing ports: " + e); // NOI18N
+            }
+            return portNameVector;
+        }
+
+        public String openPort(String portName, String appName) throws java.io.IOException {
+            // get and open the primary port
+            SerialConfig config = new SerialConfig(portName);
+
+            // try to set it for LocoNet direct (e.g. via MS100)
+            // spec is 16600, says 16457 is OK also. We start with 16600,
+            // attempting to make that work.
+            config.setBitRate(16457);
+            config.setDataBits(SerialConfig.LN_8BITS);
+            config.setStopBits(SerialConfig.ST_1BITS);
+            config.setParity(SerialConfig.PY_NONE);
+            config.setHandshake(SerialConfig.HS_NONE);
+            Serialio.SerialPort activeSerialPort = new SerialPortLocal(config);
+
+            // set RTS high, DTR low to power the MS100
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(false);  // pin 1 in DIN8; on main connector, this is DTR
+
+            // get and save stream
+            serialInStream = new SerInputStream(activeSerialPort);
+            serialOutStream = new SerOutputStream(activeSerialPort);
+
+            // report status
+            if (log.isInfoEnabled()) {
+                log.info(portName + " port opened, sees " // NOI18N
+                        + " DSR: " + activeSerialPort.sigDSR() // NOI18N
+                        + " CTS: " + activeSerialPort.sigCTS() // NOI18N
+                        + "  CD: " + activeSerialPort.sigCD() // NOI18N
+                );
+            }
+            return null;
+        }
+    }
+
+    class InnerJavaComm {
+
+        @SuppressWarnings("unchecked")
+        public Vector<String> getPortNames() {
+            // first, check that the comm package can be opened and ports seen
+            portNameVector = new Vector<String>();
+            Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
+            // find the names of suitable ports
+            while (portIDs.hasMoreElements()) {
+                CommPortIdentifier id = portIDs.nextElement();
+                // filter out line printers 
+                if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+                {
+                    portNameVector.addElement(id.getName());
+                }
+            }
+            return portNameVector;
+        }
+
+        public String openPort(String portName, String appName) throws gnu.io.NoSuchPortException, gnu.io.UnsupportedCommOperationException,
+                java.io.IOException {
+=======
     @Override
     public String openPort(String portName, String appName) {
         try {
+>>>>>>> JMRI/master
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
@@ -108,7 +188,50 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             serialInStream = activeSerialPort.getInputStream();
             serialOutStream = activeSerialPort.getOutputStream();
 
+<<<<<<< HEAD
+            // report status?
+            if (log.isInfoEnabled()) {
+                log.info(portName + " port opened at " // NOI18N
+                        + activeSerialPort.getBaudRate() + " baud, sees " // NOI18N
+                        + " DTR: " + activeSerialPort.isDTR() // NOI18N
+                        + " RTS: " + activeSerialPort.isRTS() // NOI18N
+                        + " DSR: " + activeSerialPort.isDSR() // NOI18N
+                        + " CTS: " + activeSerialPort.isCTS() // NOI18N
+                        + "  CD: " + activeSerialPort.isCD() // NOI18N
+                );
+            }
+            return null;
+        }
+    }
+
+    @Override
+    public String openPort(String portName, String appName) {
+        try {
+            // this has to work through one of two sets of class. If
+            // Serialio.SerialConfig exists on this machine, we use that
+            // else we revert to gnu.io
+            try {
+                Class.forName("Serialio.SerialConfig"); // NOI18N
+                log.debug("openPort using SerialIO"); // NOI18N
+                InnerSerial inner = new InnerSerial();
+                String result = inner.openPort(portName, appName);
+                if (result != null) {
+                    return result;
+                }
+            } catch (ClassNotFoundException e) {
+                log.debug("openPort using gnu.io"); // NOI18N
+                InnerJavaComm inner = new InnerJavaComm();
+                String result = inner.openPort(portName, appName);
+                if (result != null) {
+                    return result;
+                }
+            }
+
+            // port is open, regardless of method, start work on the stream
+
+=======
             // port is open, start work on the stream
+>>>>>>> JMRI/master
             // purge contents, if any
             purgeStream(serialInStream);
 

@@ -24,7 +24,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.roco.Bundle {
 
     @Nullable
+<<<<<<< HEAD
+    private static final String name = "jmri.jmrix.roco.z21.z21ActionListBundle"; // NOI18N
+=======
     private static final String name = "jmri.jmrix.roco.z21.z21Bundle"; // NOI18N
+>>>>>>> JMRI/master
 
     //
     // below here is boilerplate to be copied exactly

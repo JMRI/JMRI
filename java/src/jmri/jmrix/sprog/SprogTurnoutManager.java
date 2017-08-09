@@ -22,7 +22,10 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     // Sprog-specific methods
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();

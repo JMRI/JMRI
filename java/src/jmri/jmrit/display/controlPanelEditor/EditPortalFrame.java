@@ -466,7 +466,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 msg = iconIntersectsBlock(icon, _adjacentBlock);
                 if (msg == null) {
                     _portalList.setSelectedValue(portal, true);
+<<<<<<< HEAD
+                    return true;  // no change  in connection                        
+=======
                     return true;  // no change  in connection
+>>>>>>> JMRI/master
                 }
             }
             if (_adjacentBlock == null) {

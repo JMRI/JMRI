@@ -61,9 +61,21 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public void displayState() {
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /**
+     * *************** Positionable methods *********************
+     */
+=======
     //
     // *************** Positionable methods *********************
     //
+>>>>>>> JMRI/master
+=======
+    //
+    // *************** Positionable methods *********************
+    //
+>>>>>>> JMRI/master
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
@@ -242,6 +254,15 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return true;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /**
+     * For over-riding in the using classes: add item specific menu choices
+     */
+=======
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     @Override
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
         return false;

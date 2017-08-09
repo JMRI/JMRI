@@ -279,10 +279,20 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      */
     // default optional contentsFlag parameter to true
     public void loadBlock(Element element) throws JmriConfigureXmlException {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        if (element.getAttribute("systemName") == null) {
+            log.warn("unexpected null in systemName " + element + " " + element.getAttributes());
+            return;
+        }
+=======
+>>>>>>> JMRI/master
+=======
         loadBlock(element, true);
     }
 
     private void loadBlock(Element element, boolean contentsFlag) throws JmriConfigureXmlException {
+>>>>>>> JMRI/master
         String sysName = getSystemName(element);
         String userName = getUserName(element);
         if (log.isDebugEnabled()) {

@@ -729,7 +729,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // tell help to use default browser for external types
         SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
+<<<<<<< HEAD
+        // use as main help menu 
+=======
         // use as main help menu
+>>>>>>> JMRI/master
         menuBar.add(helpMenu);
     }
 
@@ -952,7 +956,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     // TODO: Remove the "static" nature of much of the initialization someday.
     //       It exits to allow splash() to be called first-thing in main(), see
+<<<<<<< HEAD
+    //       apps.DecoderPro.DecoderPro.main(...) 
+=======
     //       apps.DecoderPro.DecoderPro.main(...)
+>>>>>>> JMRI/master
     //       Or maybe, just not worry about this here, in the older base class,
     //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
     static boolean debugFired = false;  // true if we've seen F8 during startup

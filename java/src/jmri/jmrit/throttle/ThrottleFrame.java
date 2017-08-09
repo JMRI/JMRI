@@ -185,7 +185,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             // don't save the loco address or consist address
 //   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
 //   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+<<<<<<< HEAD
+            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry 
+=======
             if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry
+>>>>>>> JMRI/master
             {
                 throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
             }

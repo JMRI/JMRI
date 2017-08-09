@@ -6,7 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
+ * Description: extend jmri.AbstractTurnout for XNet layouts
+=======
  * Extend jmri.AbstractTurnout for XNet layouts
+>>>>>>> JMRI/master
  * <P>
  * Turnout opperation on XpressNet based systems goes through the following
  * sequence:
@@ -100,7 +104,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  * NOTE: For LZ100 and LZV100 command stations prior to version 3.2, it may be
  * necessary to poll for the feedback response data.
+<<<<<<< HEAD
+ * </P>
+=======
  *
+>>>>>>> JMRI/master
  * @author Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  */
@@ -187,10 +195,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         return mNumber;
     }
 
+<<<<<<< HEAD
+    // Set the Commanded State.   This method overides setCommandedState in
+    // the Abstract Turnout class.
+=======
     /**
      * Set the Commanded State.
      * This method overides setCommandedState in the Abstract Turnout class.
      */
+>>>>>>> JMRI/master
     @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
@@ -211,9 +224,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
+<<<<<<< HEAD
+    // Handle a request to change state by sending an XPressNet command
+=======
     /**
      * Handle a request to change state by sending an XpressNet command.
      */
+>>>>>>> JMRI/master
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         if (s != _mClosed && s != _mThrown) {
@@ -344,16 +361,24 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     synchronized public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

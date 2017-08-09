@@ -160,6 +160,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
 
     private boolean mShown = false;
 
+<<<<<<< HEAD
+=======
     /**
      * Listen to outgoing messages.
      *
@@ -197,6 +199,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         }
     }
     
+>>>>>>> JMRI/master
     @Override
     public void addNotify() {
         super.addNotify();

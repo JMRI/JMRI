@@ -1,5 +1,11 @@
 /**
+<<<<<<< HEAD
+ * PacketGenAction.java
+ *
+ * Description: Swing action to create and register a XpressNet PacketGenFrame
+=======
  * Swing action to create and register a XpressNet PacketGenFrame
+>>>>>>> JMRI/master
  * object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002

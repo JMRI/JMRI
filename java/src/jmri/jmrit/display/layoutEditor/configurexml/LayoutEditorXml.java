@@ -444,6 +444,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
+<<<<<<< HEAD
+=======
         // second grid size parameter
         iz = 10; // this value is never used but it's the default
         a = shared.getAttribute("gridSize2nd");
@@ -457,6 +459,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
+>>>>>>> JMRI/master
         // set contents state
         String slValue = "both";
         if ((a = shared.getAttribute("sliders")) != null && a.getValue().equals("no")) {

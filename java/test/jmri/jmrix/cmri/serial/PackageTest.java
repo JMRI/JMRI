@@ -40,8 +40,12 @@ import org.slf4j.LoggerFactory;
    SerialTurnoutTest.class,
    SerialLightTest.class,
    SerialLightManagerTest.class,
+<<<<<<< HEAD
+   SerialSensorTest.class
+=======
    SerialSensorTest.class,
    BundleTest.class
+>>>>>>> JMRI/master
 })
 
 public class PackageTest{

@@ -43,6 +43,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupComboBoxTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupsPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterTableTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(CopyRosterGroupActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CreateRosterGroupActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteRosterGroupActionTest.class));
@@ -50,6 +52,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(RemoveRosterEntryToGroupActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterEntryToGroupActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RosterMenuTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

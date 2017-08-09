@@ -101,19 +101,90 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     }
 
     // The minimal setup for log4J
+<<<<<<< HEAD
+    @Override
+    protected void setUp() {
+=======
     @Before
     @Override
     public void setUp() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.setUp();
         t = new EasyDccTrafficControlScaffold();
         cm = new EasyDccConsistManager();
     }
 
+<<<<<<< HEAD
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    // service internal class to handle transmit/receive for tests
+    class EasyDccInterfaceScaffold extends EasyDccTrafficController {
+
+        public EasyDccInterfaceScaffold() {
+        }
+
+        // override some EasyDccInterfaceController methods for test purposes
+        @Override
+        public boolean status() {
+            return true;
+        }
+
+        /**
+         * record messages sent, provide access for making sure they are OK
+         */
+        public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
+
+        @Override
+        public void sendEasyDccMessage(EasyDccMessage m, jmri.jmrix.easydcc.EasyDccListener l) {
+            if (log.isDebugEnabled()) {
+                log.debug("sendEasyDccMessage [" + m + "]");
+            }
+            // save a copy
+            outbound.addElement(m);
+            lastSender = l;
+        }
+
+        jmri.jmrix.easydcc.EasyDccListener lastSender;
+        // test control member functions
+
+        /**
+         * forward a message to the listeners, e.g. test receipt
+         */
+        protected void sendTestMessage(EasyDccMessage m) {
+            // forward a test message to Listeners
+            if (log.isDebugEnabled()) {
+                log.debug("sendTestMessage    [" + m + "]");
+            }
+            notifyMessage(m, null);
+            return;
+        }
+
+        protected void sendTestReply(EasyDccReply m) {
+            // forward a test message to Listeners
+            if (log.isDebugEnabled()) {
+                log.debug("sendTestReply    [" + m + "]");
+            }
+            notifyReply(m, lastSender);
+            return;
+        }
+
+        /*
+         * Check number of listeners, used for testing dispose()
+         */
+        public int numListeners() {
+            return cmdListeners.size();
+        }
+
+=======
     @After
     @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         cm = null;
+>>>>>>> JMRI/master
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());

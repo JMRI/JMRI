@@ -29,12 +29,20 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "TURNOUT "+ t.getSystemName()+ " CLOSED\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
+<<<<<<< HEAD
+        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
+=======
+>>>>>>> JMRI/master
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "TURNOUT "+ t.getSystemName() + " THROWN\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
+<<<<<<< HEAD
+        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
+=======
+>>>>>>> JMRI/master
     }
 
     @Override

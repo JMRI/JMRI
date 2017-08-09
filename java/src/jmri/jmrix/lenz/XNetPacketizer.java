@@ -20,6 +20,10 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Bob Jacobsen Copyright (C) 2001
+<<<<<<< HEAD
+ *
+=======
+>>>>>>> JMRI/master
  */
 public class XNetPacketizer extends XNetTrafficController {
 

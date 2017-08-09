@@ -184,9 +184,21 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         return name;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /**
+     * ****** popup AbstractAction.actionPerformed method overrides ********
+     */
+=======
     //
     // ****** popup AbstractAction.actionPerformed method overrides ********
     //
+>>>>>>> JMRI/master
+=======
+    //
+    // ****** popup AbstractAction.actionPerformed method overrides ********
+    //
+>>>>>>> JMRI/master
     @Override
     protected void rotateOrthogonal() {
         off.setRotation(on.getRotation() + 1, this);
@@ -226,8 +238,21 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         _iconEditor.makeIconPanel(false);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        ActionListener addIconAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateLight();
+            }
+=======
         ActionListener addIconAction = (ActionEvent a) -> {
             updateLight();
+>>>>>>> JMRI/master
+=======
+        ActionListener addIconAction = (ActionEvent a) -> {
+            updateLight();
+>>>>>>> JMRI/master
         };
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(light);
@@ -289,6 +314,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      *
      * @param e the mouse click
      */
+<<<<<<< HEAD
+<<<<<<< HEAD
+    // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+=======
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

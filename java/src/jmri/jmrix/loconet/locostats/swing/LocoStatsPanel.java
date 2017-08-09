@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.locostats.swing;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
@@ -18,7 +17,6 @@ import jmri.jmrix.loconet.locostats.RawStatus;
 import jmri.jmrix.loconet.locostats.PR3MS100ModeStatus;
 import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,39 +50,22 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     
     LocoStatsFunc stats;
 
-    /**
-     * Provides a path to the help html for this tool
-     * 
-     * @return path
-     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; // NOI18N
     }
 
-    /**
-     * Provides the string for the title of the window
-     * 
-     * This is pulled from the properties file for the LocoNet menu entry for
-     * this tool, to ensure consistency between the menu and the window title.
-     * 
-     * @return an internationalized string containing the tool's LocoNet menu name
-     */
     @Override
     public String getTitle() {
-        return getTitle(Bundle.getMessage("MenuItemLocoStats"));
+        return getTitle("MenuItemLocoStats");
     }
 
-    /**
-     * Constructor
-     */
     public LocoStatsPanel() {
         super();
     }
 
-    /**
-     * GUI initializations
-     */
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.swing.LocoStatsBundle");
+
     @Override
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -92,7 +73,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         // add GUI items
         rawPanel = new JPanel();
         rawPanel.setLayout(new BoxLayout(rawPanel, BoxLayout.X_AXIS));
-        rawPanel.add(new JLabel(Bundle.getMessage("LabelRawData")));
+        rawPanel.add(new JLabel(rb.getString("LabelRawData")));
         rawPanel.add(r1);
         rawPanel.add(r2);
         rawPanel.add(r3);
@@ -104,35 +85,35 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         
         lb2Panel = new JPanel();
         lb2Panel.setLayout(new BoxLayout(lb2Panel, BoxLayout.X_AXIS));
-        lb2Panel.add(new JLabel(Bundle.getMessage("LabelVersion")));
+        lb2Panel.add(new JLabel(rb.getString("LabelVersion")));
         lb2Panel.add(version);
-        lb2Panel.add(new JLabel(Bundle.getMessage("LabelBreaks")));
+        lb2Panel.add(new JLabel(" Breaks:"));
         breaks.setPreferredSize(version.getPreferredSize());
         lb2Panel.add(breaks);
-        lb2Panel.add(new JLabel(Bundle.getMessage("LabelErrors")));
+        lb2Panel.add(new JLabel(" Errors:"));
         errors.setPreferredSize(version.getPreferredSize());
         lb2Panel.add(errors);
 
         pr2Panel = new JPanel();
         pr2Panel.setLayout(new BoxLayout(pr2Panel, BoxLayout.X_AXIS));
-        pr2Panel.add(new JLabel(Bundle.getMessage("LabelSerialNumber")));
+        pr2Panel.add(new JLabel(rb.getString("LabelSerialNumber")));
         pr2Panel.add(serial);
-        pr2Panel.add(new JLabel(Bundle.getMessage("LabelPR2Status")));
+        pr2Panel.add(new JLabel(" PR2 Status:"));
         pr2Panel.add(status);
-        pr2Panel.add(new JLabel(Bundle.getMessage("LabelCurrent")));
+        pr2Panel.add(new JLabel(" Current:"));
         pr2Panel.add(current);
-        pr2Panel.add(new JLabel(Bundle.getMessage("LabelHardwareVersion")));
+        pr2Panel.add(new JLabel(" Hardware Version:"));
         pr2Panel.add(hardware);
-        pr2Panel.add(new JLabel(Bundle.getMessage("LabelSoftwareVersion")));
+        pr2Panel.add(new JLabel(" Software Version:"));
         pr2Panel.add(software);
 
         ms100Panel = new JPanel();
         ms100Panel.setLayout(new BoxLayout(ms100Panel, BoxLayout.X_AXIS));
-        ms100Panel.add(new JLabel(Bundle.getMessage("LabelGoodCnt")));
+        ms100Panel.add(new JLabel(rb.getString("LabelGoodCnt")));
         ms100Panel.add(goodMsgCnt);
-        ms100Panel.add(new JLabel(Bundle.getMessage("LabelBadCnt")));
+        ms100Panel.add(new JLabel(rb.getString("LabelBadCnt")));
         ms100Panel.add(badMsgCnt);
-        ms100Panel.add(new JLabel(Bundle.getMessage("LabelMS100Status")));
+        ms100Panel.add(new JLabel(rb.getString("LabelMS100Status")));
         ms100Panel.add(ms100status);
 
         add(rawPanel);
@@ -160,11 +141,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         // will connect when memo is available
     }
 
-    /**
-     * Configure LocoNet connection
-     * 
-     * @param memo - specifies which LocoNet connection is used by this tool
-     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -172,32 +148,17 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         stats = new LocoStatsFunc(memo);
         stats.addLocoNetInterfaceStatsListener(this);
 
-        // request interface data from interface device
-        requestUpdate();
+        // request data
+        stats.getInterfaceStatus();
     }
-    
-    /**
-     * Destructor
-     */
-    @Override
-    public void dispose() {
-        // unregister listener
-        stats.removeLocoNetInterfaceStatsListener(this);
+
+    void report(String msg) {
+        log.error(msg);
     }
-    
-    /**
-     * Send LocoNet request for interface status.
-     * 
-     * Performs the send from the "Layout" thread, to avoid GUI-related 
-     * threading problems.
-     */
+
     public void requestUpdate() {
-        // Invoke the Loconet request send on the layout thread, not the GUI thread!
-        // Note - there is no guarantee that the LocoNet message will be sent 
-        // before execution returns to this method (but it might).
-        ThreadingUtil.runOnLayoutEventually(()->{  stats.sendLocoNetInterfaceStatusQueryMessage(); });
+        stats.sendLocoNetInterfaceStatusQueryMessage();
         updateRequestPending = true;
-        log.debug("Sending a ping");
     }
 
     JTextField r1 = new JTextField(5);
@@ -224,10 +185,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JTextField errors = new JTextField(6);
 
 
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonTextUpdate"));
+    JButton updateButton = new JButton("Update");
 
     /**
-     * Nested class to create one of these tools using old-style defaults
+     * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
@@ -245,16 +206,15 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
      * @param o a LocoNetStatus object
      */
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "GUI elements are created such that cast to JmriJFrame this is accurate")
     public void notifyChangedInterfaceStatus(Object o) {
-        log.debug("Update is being handled:" +o.toString());  // NOI18N
+        log.debug("Update is being handled:" +o.toString());
         if (!updateRequestPending) {
             return;
         }
         
         if (o.getClass() == LocoBufferIIStatus.class) {
             LocoBufferIIStatus s = (LocoBufferIIStatus) o;
-            version.setText((Integer.toHexString(s.version)));
+            version.setText((Integer.toString(s.version)));
             breaks.setText((Integer.toString(s.breaks)));
             errors.setText((Integer.toString(s.errors)));
             lb2Panel.setVisible(true);
@@ -303,8 +263,8 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             pr2Panel.setVisible(false);
             ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
-            }
         }
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

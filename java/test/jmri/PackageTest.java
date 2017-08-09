@@ -41,12 +41,27 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
+<<<<<<< HEAD
+<<<<<<< HEAD
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalMastLogicTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionActionTest.class));
+=======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new JUnit4TestAdapter(SectionTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.SignalMastLogicTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitSectionTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitSectionActionTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         suite.addTest(jmri.TurnoutTest.suite());
         suite.addTest(jmri.TurnoutOperationTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
@@ -70,6 +85,27 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.server.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.plaf.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
+<<<<<<< HEAD
+<<<<<<< HEAD
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AudioExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgrammerExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.spi.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriPluginTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MetadataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NoFeedbackTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RawTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScaleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SectionManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutOperationManagerTest.class));
+=======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new JUnit4TestAdapter(AudioExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(ProgrammerExceptionTest.class));
@@ -86,7 +122,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SensorTurnoutOperationTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerTest.class));
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
+=======
         suite.addTest(new JUnit4TestAdapter(EntryPointTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

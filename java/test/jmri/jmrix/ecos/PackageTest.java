@@ -40,6 +40,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosReplyTest.class));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosDccThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosDccThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosLocoAddressManagerTest.class));
@@ -50,6 +55,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosReporterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosTurnoutTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
 
         return suite;
     }

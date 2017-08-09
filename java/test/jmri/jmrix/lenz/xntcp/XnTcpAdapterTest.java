@@ -22,15 +22,25 @@ public class XnTcpAdapterTest {
     }
 
     // The minimal setup for log4J
+<<<<<<< HEAD
+    @Override
+    protected void setUp() {
+=======
     @Before
     public void setUp() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConnectionConfigManager();
     }
 
+<<<<<<< HEAD
+    @Override
+    protected void tearDown() {
+=======
     @After
     public void tearDown() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 

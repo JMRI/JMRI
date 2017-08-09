@@ -388,6 +388,8 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
 
     }
 
+<<<<<<< HEAD
+=======
     /**
      * Override the default port name patterns unless the
      * purejavacomm.portnamepattern property was set on the command line.
@@ -404,6 +406,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
     }
 
+>>>>>>> JMRI/master
     private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {
 
         ArrayList<InitializationException> exceptions = new ArrayList<>();

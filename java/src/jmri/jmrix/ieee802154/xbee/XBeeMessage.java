@@ -6,7 +6,12 @@ import com.digi.xbee.api.packet.XBeeAPIPacket;
 import com.digi.xbee.api.packet.common.ATCommandPacket;
 import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
+<<<<<<< HEAD
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+=======
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+>>>>>>> JMRI/master
 
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.

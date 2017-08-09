@@ -10,6 +10,11 @@ import jmri.jmrix.roco.z21.Z21TrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
+<<<<<<< HEAD
+    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
+
+=======
+>>>>>>> JMRI/master
     @Override
     public void initComponents() throws Exception {
         super.initComponents();

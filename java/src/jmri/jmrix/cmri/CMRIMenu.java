@@ -39,8 +39,19 @@ public class CMRIMenu extends JMenu {
 //        add(new jmri.jmrix.cmri.serial.assignment.ListAction(rb.getString("MenuItemAssignments")));
 //        add(new javax.swing.JSeparator());
 
+<<<<<<< HEAD
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(rb.getString("MenuCMRI"));
+        }
+
+        add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
+        add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
+=======
         add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"),_memo));
         add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"),_memo));
+>>>>>>> JMRI/master
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(Bundle.getMessage("MenuItemDiagnostics"),_memo));
         add(new javax.swing.JSeparator());

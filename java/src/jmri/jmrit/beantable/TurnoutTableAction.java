@@ -1,7 +1,10 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
+<<<<<<< HEAD
+=======
 import java.awt.BorderLayout;
+>>>>>>> JMRI/master
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -69,7 +72,14 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a TurnoutTable GUI.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
+=======
+ * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
@@ -163,10 +173,16 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownText = turnManager.getThrownText();
 
         // load graphic state column display preference
+<<<<<<< HEAD
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
+
+        // create the data model object that drives the table;
+=======
         // from apps/GuiLafConfigPane.java
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
         // create the data model object that drives the table
+>>>>>>> JMRI/master
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
 
@@ -669,9 +685,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return Bundle.getMessage("BeanNameTurnout");
             }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            /**
+             * Customize the turnout table Value (State) column to show an appropriate graphic for the turnout state
+             * if _graphicState = true, or just the localized state text
+=======
             /**
              * Customize the turnout table Value (State) column to show an appropriate graphic for the turnout state
              * if _graphicState = true, or (default) just show the localized state text
+>>>>>>> JMRI/master
              * when the TableDataModel is being called from ListedTableAction.
              *
              * @param table a JTable of Turnouts
@@ -679,17 +703,29 @@ public class TurnoutTableAction extends AbstractTableAction {
             @Override
             protected void configValueColumn(JTable table) {
                 // have the value column hold a JPanel (icon)
+<<<<<<< HEAD
+                //setColumnToHoldButton(table, VALUECOL, new JLabel("test")); // needed?
+                // add extras, override BeanTableDataModel
+                log.debug("Turnout configValueColumn (I am {})", super.toString());
+                if (_graphicState) { // load icons, only once
+                    table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
+=======
                 //setColumnToHoldButton(table, VALUECOL, new JLabel("12345678")); // for larger, wide round icon, but cannot be converted to JButton
                 // add extras, override BeanTableDataModel
                 log.debug("Turnout configValueColumn (I am {})", super.toString());
                 if (_graphicState) { // load icons, only once
                     table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // editor
+>>>>>>> JMRI/master
                     table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
                 } else {
                     super.configValueColumn(table); // classic text style state indication
                 }
             }
 
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
             @Override
             public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
                 JTable table = this.makeJTable(model);
@@ -804,6 +840,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 };
             }
 
+<<<<<<< HEAD
+=======
             /**
              * Visualize state in table as a graphic, customized for Turnouts (4 states).
              * Renderer and Editor are identical, as the cell contents are not actually edited,
@@ -812,6 +850,7 @@ public class TurnoutTableAction extends AbstractTableAction {
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
+>>>>>>> JMRI/master
             class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
                 protected JLabel label;
@@ -829,8 +868,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 public Component getTableCellRendererComponent(
                         JTable table, Object value, boolean isSelected,
                         boolean hasFocus, int row, int column) {
+<<<<<<< HEAD
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+=======
                     log.debug("Renderer Item = {}, State = {}", row, value);
                     if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+>>>>>>> JMRI/master
                         loadIcons();
                         log.debug("icons loaded");
                     }
@@ -841,8 +886,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 public Component getTableCellEditorComponent(
                         JTable table, Object value, boolean isSelected,
                         int row, int column) {
+<<<<<<< HEAD
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+=======
                     log.debug("Renderer Item = {}, State = {}", row, value);
                     if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+>>>>>>> JMRI/master
                         loadIcons();
                         log.debug("icons loaded");
                     }
@@ -894,10 +945,13 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return this.toString();
                 }
 
+<<<<<<< HEAD
+=======
                 /**
                  * Read and buffer graphics. Only called once for this table.
                  * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
                  */
+>>>>>>> JMRI/master
                 protected void loadIcons() {
                     try {
                         onImage = ImageIO.read(new File(onIconPath));
@@ -908,7 +962,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     log.debug("Success reading images");
                     int imageWidth = onImage.getWidth();
                     int imageHeight = onImage.getHeight();
+<<<<<<< HEAD
+                    // scale icons to fit in table rows
+=======
                     // scale icons 50% to fit in table rows
+>>>>>>> JMRI/master
                     Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
                     Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
                     onIcon = new ImageIcon(smallOnImage);
@@ -916,9 +974,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                     iconHeight = onIcon.getIconHeight();
                 }
 
+<<<<<<< HEAD
+            }// end of ImageIconRenderer class
+
+        };  // end of custom data model
+=======
             } // end of ImageIconRenderer class
 
         }; // end of custom data model
+>>>>>>> JMRI/master
     }
 
     private void updateClosedList() {
@@ -1098,7 +1162,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             try {
                 strings.insertElementAt(defStrings.elementAt(i), i + 2);
             } catch (java.lang.ArrayIndexOutOfBoundsException obe) {
+<<<<<<< HEAD
+                //            strings.insertElementAt(defStrings.elementAt(i),i+2);
+=======
                 // just catch it
+>>>>>>> JMRI/master
             }
         }
         for (int i = 0; i < strings.size(); ++i) {
@@ -1118,8 +1186,13 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Set the turnout's operation info based on the contents of the combo box.
      *
+<<<<<<< HEAD
+     * @param t  turnout
+     * @param cb JComboBox
+=======
      * @param t  turnout being configured
      * @param cb JComboBox for ops for t in the TurnoutTable
+>>>>>>> JMRI/master
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
         switch (cb.getSelectedIndex()) {

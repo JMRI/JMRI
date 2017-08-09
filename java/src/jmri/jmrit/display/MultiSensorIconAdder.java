@@ -246,6 +246,13 @@ public class MultiSensorIconAdder extends IconAdder {
         pack();
     }
 
+<<<<<<< HEAD
+    /**
+     * Override
+     *
+     */
+=======
+>>>>>>> JMRI/master
     @Override
     public void complete(ActionListener addIconAction, boolean changeIcon,
             boolean addToTable, boolean update) {
@@ -261,8 +268,16 @@ public class MultiSensorIconAdder extends IconAdder {
         p.add(_rightleft);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         JButton addIcon = new JButton(Bundle.getMessage("AddMultiSensorIcon"));
+<<<<<<< HEAD
+        addIcon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addIcon();
+            }
+=======
         addIcon.addActionListener((ActionEvent e) -> {
             addIcon();
+>>>>>>> JMRI/master
         });
         p.add(addIcon);
         this.add(p);

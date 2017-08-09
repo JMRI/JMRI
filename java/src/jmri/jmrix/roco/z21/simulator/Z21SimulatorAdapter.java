@@ -71,6 +71,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
        super.connect();
     }
 
+<<<<<<< HEAD
+=======
     /**
      * Terminate service thread
      *<p>
@@ -92,6 +94,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     volatile boolean threadStopRequest;
     volatile DatagramSocket socket;
     
+>>>>>>> JMRI/master
     @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,

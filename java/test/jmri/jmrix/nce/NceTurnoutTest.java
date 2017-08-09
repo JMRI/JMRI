@@ -1,11 +1,16 @@
 package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+<<<<<<< HEAD
+import org.junit.Assert;
+import org.junit.Before;
+=======
 import jmri.Turnout;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+>>>>>>> JMRI/master
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class

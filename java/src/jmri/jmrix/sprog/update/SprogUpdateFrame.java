@@ -187,6 +187,10 @@ abstract public class SprogUpdateFrame
     public void notifyMessage(SprogMessage m) {
     }
 
+<<<<<<< HEAD
+    // State machine to catch replies that calls functions to handle each state.
+    // These functions can be overridden for each SPROG type
+=======
     /**
      * State machine to catch replies that calls functions to handle each state.
      * <p>
@@ -194,6 +198,7 @@ abstract public class SprogUpdateFrame
      *
      * @param m the SprogReply received from the SPROG
      */
+>>>>>>> JMRI/master
     @Override
     synchronized public void notifyReply(SprogReply m) {
         reply = m;

@@ -773,6 +773,32 @@ public class NmraPacketTest {
     }
 
     @Test
+<<<<<<< HEAD
+    public void testAccDecoderPktOpsModeLegacy2037() {
+        int address = 2037;
+        int cv = 556;
+        int data = 175;
+        byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 5, ba.length);
+        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x0E, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x2B, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xAF, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x34, ba[4] & 0xFF);
+
+        // check packet type and reverse address lookup
+        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+    }
+
+    @Test
+    public void testAccDecoderPktOpsMode2037() {
+        int address = 2037;
+        int cv = 556;
+        int data = 175;
+=======
     public void testAccDecoderPktOpsMode252() {
         int address = 252;
         int cv = 999;
@@ -881,6 +907,7 @@ public class NmraPacketTest {
         int address = 2037;
         int cv = 556;
         int data = 175;
+>>>>>>> JMRI/master
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
@@ -915,6 +942,57 @@ public class NmraPacketTest {
         // check packet type and reverse address lookup
         Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
         Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+<<<<<<< HEAD
+    }
+
+    @Test
+    public void testAccDecoderPktOpsMode2040() {
+        int address = 2040;
+        int cv = 771;
+        int data = 102;
+        byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x8F, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x02, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xBA, ba[5] & 0xFF);
+
+        // check packet type and reverse address lookup
+        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
+        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+    }
+
+    @Test
+    public void testAccDecoderPktOpsModeLegacy2044() {
+        int address = 2044;
+        int cv = 1024;
+        int data = 151;
+        byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 5, ba.length);
+        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x0F, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xFF, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x97, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xD8, ba[4] & 0xFF);
+
+        // check packet type and reverse address lookup
+        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+    }
+
+    @Test
+    public void testAccDecoderPktOpsMode2044() {
+        int address = 2044;
+        int cv = 1024;
+        int data = 151;
+        byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
+=======
     }
 
     @Test
@@ -1139,15 +1217,28 @@ public class NmraPacketTest {
         int cv = 1024;
         int data = 151;
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
+>>>>>>> JMRI/master
 
         // the following values validated against NCE Power Pro output
         Assert.assertEquals("length", 6, ba.length);
         Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+<<<<<<< HEAD
+        Assert.assertEquals("byte 1", 0x8F, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x97, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xB7, ba[5] & 0xFF);
+
+        // check packet type and reverse address lookup
+        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
+        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+=======
         Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
         Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
         Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
         Assert.assertEquals("byte 4", 0x97, ba[4] & 0xFF);
         Assert.assertEquals("byte 5", 0x3F, ba[5] & 0xFF);
+>>>>>>> JMRI/master
     }
 
     @Test

@@ -75,6 +75,16 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         return "Send DCC4PC command";
     }
 
+<<<<<<< HEAD
+    @Override
+    public void initComponents(Dcc4PcSystemConnectionMemo memo) {
+        super.initComponents(memo);
+
+        //memo.getTrafficController().addDcc4PcListener(this);
+    }
+
+=======
+>>>>>>> JMRI/master
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
         String text = packetTextField.getText();

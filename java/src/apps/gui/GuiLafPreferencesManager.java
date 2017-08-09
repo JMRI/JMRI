@@ -99,7 +99,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
 
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
+>>>>>>> JMRI/master
+=======
+            this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
+>>>>>>> JMRI/master
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
             Locale.setDefault(this.getLocale());
@@ -158,7 +165,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
+>>>>>>> JMRI/master
+=======
+        preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
+>>>>>>> JMRI/master
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -364,11 +378,16 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
         this.setDirty(true);
-        this.setRestartRequired(true);
+        this.setRestartRequired(false);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
     }
 
     /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
      * @return the graphicTableState
      */
     public boolean isGraphicTableState() {
@@ -387,6 +406,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
+>>>>>>> JMRI/master
      * @return the lookAndFeel
      */
     public String getLookAndFeel() {

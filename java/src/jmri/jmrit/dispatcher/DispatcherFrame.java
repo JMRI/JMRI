@@ -765,6 +765,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * This method is for use to extend the allocation of a section to a active
+     * train Its use is to allow a dispatcher to manually route a train to its
+     * final destination
+     * @param s section to extend
+     * @param at active train
+     * @param jFrame display frame
+     * @return true on successful extension
+=======
+=======
+>>>>>>> JMRI/master
      * Extend the allocation of a section to a active train. Allows a dispatcher
      * to manually route a train to its final destination.
      *
@@ -772,6 +784,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * @param at     the associated train
      * @param jFrame the window to update
      * @return true if section was allocated; false otherwise
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     public boolean extendActiveTrainsPath(Section s, ActiveTrain at, JmriJFrame jFrame) {
         if (s.getEntryPointFromSection(at.getEndBlockSection(), Section.FORWARD) != null
@@ -965,7 +981,31 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * @param frame                           window request is from, or "null"
      *                                        if not from a window
      * <P>
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * Returns an ActiveTrain object if successful, returns "null" otherwise
+     * @param transitID transit for train to follow
+     * @param trainID train to make active
+     * @param tSource user, roster or operations
+     * @param startBlockName name of starting block
+     * @param startBlockSectionSequenceNumber starting point in sequence
+     * @param endBlockName name for finish block
+     * @param endBlockSectionSequenceNumber finish point in sequence
+     * @param autoRun auto or manual operation
+     * @param dccAddress loco address
+     * @param priority train priority value
+     * @param resetWhenDone setup to start over when done
+     * @param reverseAtEnd there and back again
+     * @param allocateAllTheWay allocation to destination
+     * @param showErrorMessages enable messages
+     * @param frame display jfram
+     * @return null if unsuccessful
+=======
      * @return a new ActiveTrain or null on failure
+>>>>>>> JMRI/master
+=======
+     * @return a new ActiveTrain or null on failure
+>>>>>>> JMRI/master
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
@@ -1166,7 +1206,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         ActiveTrain at = new ActiveTrain(t, trainID, tSource);
         //if (at==null) {
         // if (showErrorMessages) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        //  JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+=======
         //  JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(Bundle.getMessage(
+>>>>>>> JMRI/master
+=======
+        //  JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(Bundle.getMessage(
+>>>>>>> JMRI/master
         //    "Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
         //     JOptionPane.ERROR_MESSAGE);
         // }
@@ -1237,10 +1285,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * Terminates an Active Train and removes it from the Dispatcher The
+     * ActiveTrain object should not be used again after this method is called
+     * @param at active train object
+=======
+=======
+>>>>>>> JMRI/master
      * Terminate an Active Train and remove it from the Dispatcher. The
      * ActiveTrain object should not be used again after this method is called.
      *
      * @param at the train to terminate
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     public void terminateActiveTrain(ActiveTrain at) {
         // ensure there is a train to terminate
@@ -1299,6 +1359,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     /**
      * Creates an Allocation Request, and registers it with Dispatcher
      * <P>
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * @param activeTrain train requesting section
+     * @param section section to allocate
+     * @param direction which way to run the transit
+     * @param seqNumber section in transit or 99
+     * @param showErrorMessages "true" display detected errors
+     * @param frame window request is from, or "null" if not from a window
+     * @return true if allocation worked
+=======
+=======
+>>>>>>> JMRI/master
      * Required input entries:
      *
      * @param activeTrain       ActiveTrain requesting the allocation
@@ -1314,6 +1386,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * @param frame             window request is from, or "null" if not from a
      *                          window
      * @return true if successful; false otherwise
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
             int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
@@ -1405,6 +1481,26 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
     /**
      * Allocates a Section to an Active Train according to the information in an
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * AllocationRequest If successful, returns an AllocatedSection and removes
+     * the AllocationRequest from the queue. If not successful, returns null and
+     * leaves the AllocationRequest in the queue. To be allocatable, a Section
+     * must be FREE and UNOCCUPIED. If a Section is OCCUPIED, the allocation is
+     * rejected unless the dispatcher chooses to override this restriction. To
+     * be allocatable, the Active Train must not be waiting for its start time.
+     * If the start time has not been reached, the allocation is rejected,
+     * unless the dispatcher chooses to override the start time. The user may
+     * choose to specify the next Section by entering "ns". If this method is to
+     * determine the next Section, or if the next section is the last section,
+     * null should be entered for ns. Null should also be entered for ns if
+     * allocating an Extra Section that is not the Next Section.
+     * @param ar allocation request details
+     * @param ns next section or null next is last section
+     * @return allocated section if successful, null otherwise
+=======
+=======
+>>>>>>> JMRI/master
      * AllocationRequest.
      *
      * If successful, returns an AllocatedSection and removes the
@@ -1423,6 +1519,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      *           automatically determined, if the next section is the last
      *           section, of if an extra section is being allocated
      * @return the allocated section or null if not successful
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
         AllocatedSection as = null;
@@ -1825,7 +1925,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    
+    
+=======
 
+>>>>>>> JMRI/master
+=======
+
+>>>>>>> JMRI/master
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 ArrayList<Block> blas = as.getSection().getBlockList();
@@ -1841,6 +1950,29 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 // the blocklist for the section during the initial allocation.
                 //
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+                ArrayList<Block> bls = new ArrayList<Block>();
+                if(ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0){
+                    int j;
+                    if(ar.getSectionDirection()==Section.FORWARD){
+                        j = 0;
+                        for(int i = 0; i<s.getBlockList().size(); i++){
+                            if (j==0 && s.getBlockList().get(i).getState()==Block.OCCUPIED){
+                                j = 1;
+                            }
+                            if (j==1) bls.add(s.getBlockList().get(i));
+                        }    
+                    } else {
+                        j = 0;
+                        for(int i = s.getBlockList().size() - 1; i>=0 ;i--){
+                            if (j==0 && s.getBlockList().get(i).getState()==Block.OCCUPIED){
+                                j = 1;
+                            }
+                            if (j==1) bls.add(s.getBlockList().get(i));  
+=======
+=======
+>>>>>>> JMRI/master
                 ArrayList<Block> bls = new ArrayList<>();
                 if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
                     int j;
@@ -1863,13 +1995,29 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                             if (j == 1) {
                                 bls.add(s.getBlockList().get(i));
                             }
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
                         }
                     }
                 } else {
                     bls = s.getBlockList();
                 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+      
+             
+
+                for(Block b: bls){
+=======
 
                 for (Block b : bls) {
+>>>>>>> JMRI/master
+=======
+
+                for (Block b : bls) {
+>>>>>>> JMRI/master
                     if (blas.contains(b)) {
                         if (as.getSection().getOccupancy() == Block.OCCUPIED) {
                             //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
@@ -2050,11 +2198,25 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * Releases an allocated Section, and removes it from the Dispatcher Input
+     * consists of the AllocatedSection object (returned by "allocateSection")
+     * and whether this release is from a Terminate Train.
+     * @param as section to release
+     * @param terminatingTrain true if train is terminating
+=======
+=======
+>>>>>>> JMRI/master
      * Releases an allocated Section, and removes it from the Dispatcher Input.
      *
      * @param as               the section to release
      * @param terminatingTrain true if the associated train is being terminated;
      *                         false otherwise
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     public void releaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
         // check that section is not occupied if not terminating train
@@ -2130,14 +2292,36 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
         }
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+    private int nowMinutes = 0;    // last read fast clock minutes
+    private int nowHours = 0;  // last read fast clock hours
 
     /**
      * This method tests time assuming both times are on the same day (ignoring
+     * midnight) It also sets nowMinutes and nowHours to the latest fast clock
+     * values
+     * @param hr hour
+     * @param min minute
+     * @return true if fast time is past this
+=======
+
+    /**
+     * This method tests time assuming both times are on the same day (ignoring
+=======
+
+    /**
+     * This method tests time assuming both times are on the same day (ignoring
+>>>>>>> JMRI/master
      * midnight).
      *
      * @param hr  the hour to test against (0-23)
      * @param min the minute to test against (0-59)
      * @return true if fast clock time and tested time are in same day
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
      */
     protected boolean isFastClockTimeGE(int hr, int min) {
         Calendar now = Calendar.getInstance();

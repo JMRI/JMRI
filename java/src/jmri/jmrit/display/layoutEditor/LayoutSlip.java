@@ -1,5 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
+<<<<<<< HEAD
+import static jmri.util.MathUtil.lerp;
+import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.third;
+
+=======
+>>>>>>> JMRI/master
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -102,7 +109,11 @@ public class LayoutSlip extends LayoutTurnout {
         rotateCoords(rot);
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
     // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "LayoutSlip " + ident;
     }
@@ -169,6 +180,11 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+<<<<<<< HEAD
+    @Override
+    public Object getConnection(int location) throws jmri.JmriException {
+        switch (location) {
+=======
     /**
      * get the object connected to this track for the specified connection type
      *
@@ -180,6 +196,7 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public Object getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
+>>>>>>> JMRI/master
             case SLIP_A:
                 return connectA;
             case SLIP_B:
@@ -188,18 +205,30 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                // fall out
+                break;
         }
         log.error("Invalid Point Type " + connectionType); //I18IN
         throw new jmri.JmriException("Invalid Point");
     }
 
     @Override
+<<<<<<< HEAD
+    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+        if ((type != TRACK) && (type != NONE)) {
+            log.error("unexpected type of connection to layoutturnout - " + type);
+            throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
+        }
+        switch (location) {
+=======
     public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
         }
         switch (connectionType) {
+>>>>>>> JMRI/master
             case SLIP_A:
                 connectA = o;
                 break;
@@ -278,9 +307,23 @@ public class LayoutSlip extends LayoutTurnout {
                         currentState = STATE_BD;
                         break;
                     }
+<<<<<<< HEAD
+                }
+                break;
+            }
+            case SLIP_CENTER:   //note: this should "go away"
+            //(since SLIP_CENTER should have been replaced by SLIP_LEFT & SLIP_RIGHT everywhere)
+            default:
+            {
+                switch (currentState) {
+                    case STATE_AC: {
+                        if (singleSlipStraightEqual()) {
+                            currentState = STATE_BD;
+=======
                     case STATE_BD: {
                         if (type == SINGLE_SLIP) {
                             currentState = STATE_AC;
+>>>>>>> JMRI/master
                         } else {
                             currentState = STATE_BC;
                         }
@@ -664,8 +707,13 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Initialization method The above variables are initialized by
+<<<<<<< HEAD
+     * LayoutSlipXml, then the following method is called after the
+     * entire LayoutEditor is loaded to set the specific TrackSegment objects.
+=======
      * LayoutSlipXml, then the following method is called after the entire
      * LayoutEditor is loaded to set the specific TrackSegment objects.
+>>>>>>> JMRI/master
      */
     /*
     @Override
@@ -731,7 +779,11 @@ public class LayoutSlip extends LayoutTurnout {
      * Display popup menu for information and editing
      */
     @Override
+<<<<<<< HEAD
+    protected void showPopUp(MouseEvent e, boolean editable) {
+=======
     protected void showPopUp(MouseEvent e) {
+>>>>>>> JMRI/master
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -806,6 +858,38 @@ public class LayoutSlip extends LayoutTurnout {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(
+<<<<<<< HEAD
+                    (ActionEvent event) -> {
+                        boolean entering = true;
+                        boolean error = false;
+                        String newAngle = "";
+                        while (entering) {
+                            // prompt for rotation angle
+                            error = false;
+                            newAngle = JOptionPane.showInputDialog(layoutEditor,
+                                    rb.getString("EnterRotation") + " :");
+                            if (newAngle.length() < 1) {
+                                return;  // cancelled
+                            }
+                            double rot = 0.0;
+                            try {
+                                rot = Double.parseDouble(newAngle);
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                                        + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                error = true;
+                                newAngle = "";
+                            }
+                            if (!error) {
+                                entering = false;
+                                if (rot != 0.0) {
+                                    rotateCoords(rot);
+                                    layoutEditor.redrawPanel();
+                                }
+                            }
+                        }
+                    }
+=======
                         (ActionEvent event) -> {
                             boolean entering = true;
                             boolean error = false;
@@ -836,6 +920,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 }
                             }
                         }
+>>>>>>> JMRI/master
                 );
             }
             if (blockAssigned) {
@@ -969,7 +1054,11 @@ public class LayoutSlip extends LayoutTurnout {
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             turnoutAComboBox = new JmriBeanComboBox(
+<<<<<<< HEAD
+                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+=======
                     InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+>>>>>>> JMRI/master
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
@@ -977,7 +1066,11 @@ public class LayoutSlip extends LayoutTurnout {
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(
+<<<<<<< HEAD
+                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+=======
                     InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+>>>>>>> JMRI/master
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -1020,7 +1113,17 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
+=======
             layoutEditor.setupComboBox(blockNameComboBox, false, true);
+>>>>>>> JMRI/master
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
 
             contentPane.add(panel3);
@@ -1030,9 +1133,15 @@ public class LayoutSlip extends LayoutTurnout {
             // Edit Block
             panel4.add(turnoutEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             turnoutEditBlock.addActionListener(
+<<<<<<< HEAD
+                (ActionEvent event) -> {
+                    turnoutEditBlockPressed(event);
+                }
+=======
                     (ActionEvent event) -> {
                         turnoutEditBlockPressed(event);
                     }
+>>>>>>> JMRI/master
             );
             turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
 
@@ -1045,6 +1154,18 @@ public class LayoutSlip extends LayoutTurnout {
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(
+<<<<<<< HEAD
+                () -> {
+                    JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
+                    rootPane.setDefaultButton(slipEditDone);
+                }
+            );
+
+            slipEditDone.addActionListener(
+                (ActionEvent event) -> {
+                    slipEditDonePressed(event);
+                }
+=======
                     () -> {
                         JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
                         rootPane.setDefaultButton(slipEditDone);
@@ -1055,14 +1176,21 @@ public class LayoutSlip extends LayoutTurnout {
                     (ActionEvent event) -> {
                         slipEditDonePressed(event);
                     }
+>>>>>>> JMRI/master
             );
             slipEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             slipEditCancel.addActionListener(
+<<<<<<< HEAD
+                (ActionEvent event) -> {
+                    slipEditCancelPressed(event);
+                }
+=======
                     (ActionEvent event) -> {
                         slipEditCancelPressed(event);
                     }
+>>>>>>> JMRI/master
             );
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -1107,8 +1235,14 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
             if (getSlipType() == DOUBLE_SLIP) {
+<<<<<<< HEAD
+                g2.draw(new Line2D.Double(B, third(B, C)));
+
+                g2.draw(new Line2D.Double(C, third(C, B)));
+=======
                 g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
                 g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
+>>>>>>> JMRI/master
             }
         } else {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
@@ -1117,25 +1251,49 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (getSlipType() == DOUBLE_SLIP) {
             if (state == STATE_AC) {
+<<<<<<< HEAD
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
+
+                g2.setColor(Color.red);
+                g2.draw(new Line2D.Double(A, C));
+
+=======
                 g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
+>>>>>>> JMRI/master
             } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
             } else if (state == STATE_AD) {
                 g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
 
+<<<<<<< HEAD
+            } else if (state == STATE_AD) {
+                g2.draw(new Line2D.Double(B, third(B, C)));
+
+                g2.draw(new Line2D.Double(C, third(C, B)));
+=======
                 g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
+>>>>>>> JMRI/master
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
             } else if (state == STATE_BC) {
                 g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
 
+<<<<<<< HEAD
+            } else if (state == STATE_BC) {
+
+                g2.draw(new Line2D.Double(A, third(A, D)));
+
+                g2.draw(new Line2D.Double(D, third(D, A)));
+=======
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
+>>>>>>> JMRI/master
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, C));
             } else {
@@ -1146,6 +1304,20 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
+<<<<<<< HEAD
+            g2.draw(new Line2D.Double(D, third(D, A)));
+            if (state == STATE_AD) {
+                g2.setColor(Color.red);
+                g2.draw(new Line2D.Double(A, D));
+
+            } else if (state == STATE_AC) {
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
+
+                g2.setColor(Color.red);
+                g2.draw(new Line2D.Double(A, C));
+
+=======
             if (state == STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
@@ -1155,6 +1327,7 @@ public class LayoutSlip extends LayoutTurnout {
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
+>>>>>>> JMRI/master
             } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
@@ -1252,7 +1425,15 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        String newName = turnoutAComboBox.getUserName();
+=======
         String newName = turnoutAComboBox.getDisplayName();
+>>>>>>> JMRI/master
+=======
+        String newName = turnoutAComboBox.getDisplayName();
+>>>>>>> JMRI/master
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1262,7 +1443,15 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+        newName = turnoutBComboBox.getUserName();
+=======
         newName = turnoutBComboBox.getDisplayName();
+>>>>>>> JMRI/master
+=======
+        newName = turnoutBComboBox.getDisplayName();
+>>>>>>> JMRI/master
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1427,14 +1616,28 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+<<<<<<< HEAD
+=======
     /**
      * draw this slip
      *
      * @param g2 the graphics port to draw to
      */
+>>>>>>> JMRI/master
     public void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
 
+<<<<<<< HEAD
+            Color mainColour;
+            Color subColour;
+            LayoutBlock b = getLayoutBlock();
+            if (b != null) {
+                mainColour = b.getBlockColor();
+                subColour = b.getBlockTrackColor();
+            } else {
+                mainColour = defaultTrackColor;
+                subColour = defaultTrackColor;
+=======
             LayoutBlock b = getLayoutBlock();
             Color mainColourA = defaultTrackColor;
             Color subColourA = defaultTrackColor;
@@ -1465,10 +1668,114 @@ public class LayoutSlip extends LayoutTurnout {
             if (b != null) {
                 mainColourD = b.getBlockColor();
                 subColourD = b.getBlockTrackColor();
+>>>>>>> JMRI/master
             }
 
             float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
+<<<<<<< HEAD
+            g2.setColor(subColour);
+
+            g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+            g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+
+            g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+            g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+
+            if (getSlipType() == DOUBLE_SLIP) {
+                if (getSlipState() == STATE_AC) {
+                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointA, pointC));
+
+                } else if (getSlipState() == STATE_BD) {
+                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointB, pointD));
+
+                } else if (getSlipState() == STATE_AD) {
+                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointA, pointD));
+                } else if (getSlipState() == STATE_BC) {
+                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointB, pointC));
+                } else {
+                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                }
+            } else {
+                g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                if (getSlipState() == STATE_AD) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointA, pointD));
+                } else if (getSlipState() == STATE_BD) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointB, pointD));
+                    if (singleSlipStraightEqual()) {
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(pointA, pointC));
+                    }
+                } else if (getSlipState() == STATE_AC) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(pointA, pointC));
+                    if (singleSlipStraightEqual()) {
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(pointB, pointD));
+                    }
+                } else {
+                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                }
+            }
+        }   // if (!(getHidden() && !layoutEditor.isEditable()))
+    }
+
+    public void drawSlipCircles(Graphics2D g2) {
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+        Double leftFract = circleRadius / center.distance(leftCenter);
+        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
+
+        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+        Double rightFract = circleRadius / center.distance(rightCenter);
+        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
+    }
+
+    public void drawSlipRect(Graphics2D g2) {
+        // draw east/west turnout (control) circles
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+
+        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+        Double leftFract = circleRadius / center.distance(leftCenter);
+        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
+
+        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+        Double rightFract = circleRadius / center.distance(rightCenter);
+        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
+
+        Point2D pt = getCoordsA();
+=======
             boolean isMainA = (connectA != null) && (((TrackSegment) connectA).getMainline());
             boolean isMainB = (connectB != null) && (((TrackSegment) connectB).getMainline());
             boolean isMainC = (connectC != null) && (((TrackSegment) connectC).getMainline());
@@ -1558,34 +1865,58 @@ public class LayoutSlip extends LayoutTurnout {
     }   // drawControls(Graphics2D g2)
 
     public void drawEditControls(Graphics2D g2) {
+>>>>>>> JMRI/master
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
+<<<<<<< HEAD
+        g2.draw(layoutEditor.controlPointRectAt(pt));
+
+        pt = getCoordsB();
+=======
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
 
+>>>>>>> JMRI/master
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
+<<<<<<< HEAD
+        g2.draw(layoutEditor.controlPointRectAt(pt));
+
+        pt = getCoordsC();
+=======
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
 
+>>>>>>> JMRI/master
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
+<<<<<<< HEAD
+        g2.draw(layoutEditor.controlPointRectAt(pt));
+
+        pt = getCoordsD();
+=======
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
 
+>>>>>>> JMRI/master
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
+<<<<<<< HEAD
+        g2.draw(layoutEditor.controlPointRectAt(pt));
+    }   // public void drawSlipRects(Graphics2D g2)
+=======
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
     }   // drawEditControls(Graphics2D g2)
+>>>>>>> JMRI/master
 
     static class TurnoutState {
 
@@ -1681,6 +2012,8 @@ public class LayoutSlip extends LayoutTurnout {
 
     }
 
+<<<<<<< HEAD
+=======
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
@@ -1801,5 +2134,6 @@ public class LayoutSlip extends LayoutTurnout {
         return results;
     }   // getLayoutConnectivity()
 
+>>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 }

@@ -112,9 +112,13 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @After
     @Override
     public void tearDown() {
+<<<<<<< HEAD
+=======
         a = null;
+>>>>>>> JMRI/master
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
+        a = null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());

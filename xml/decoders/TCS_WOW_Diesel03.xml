@@ -18,8 +18,11 @@
 	<!-- Fix version IDs -->
 	<version author="Michael Mosher" version="3" lastUpdated="20170317"/>
 	<!-- update factory resets -->
+<<<<<<< HEAD
+=======
 	<version author="Michael Mosher" version="4" lastUpdated="20170616"/>
 	<!-- add funtion output 7 and 8 and update sound none number -->
+>>>>>>> JMRI/master
 	<decoder>
 		<family name="WOW Diesel Sound Set 3" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -1558,9 +1561,15 @@
 			</variable>
 		</variables>
 		<resets>
+<<<<<<< HEAD
+			<mode>PAGEMODE</mode>
+			<mode>DIRECTMODE</mode>
+			<mode>OPSBYTEMODE</mode>
+=======
       <mode>PAGEMODE</mode>
       <mode>DIRECTMODE</mode>
       <mode>OPSBYTEMODE</mode>
+>>>>>>> JMRI/master
 			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
 			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
 			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>

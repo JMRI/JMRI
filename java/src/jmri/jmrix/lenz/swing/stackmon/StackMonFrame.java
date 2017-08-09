@@ -241,10 +241,18 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // The XNet Listener Interface
+<<<<<<< HEAD
+<<<<<<< HEAD
+    // We need to be able to recieve information from the command station
+=======
+    // We need to be able to receive information from the command station
+>>>>>>> JMRI/master
+=======
 
     /**
      * Receive information from the command station.
      */
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
     @Override
     public void message(XNetReply r) {
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {

@@ -14,6 +14,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+=======
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor; // for iconLabel
 import javax.swing.Icon;
@@ -21,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+>>>>>>> JMRI/master
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
@@ -41,7 +48,10 @@ import org.slf4j.LoggerFactory;
  * Data model for a SensorTable.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009
+<<<<<<< HEAD
+=======
  * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 
@@ -193,10 +203,13 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return String.class;
            case PULLUPCOL:
               return JComboBox.class;
+<<<<<<< HEAD
+=======
            case VALUECOL:
                if (_graphicState) {
                     return JLabel.class; // use an image to show sensor state
                }
+>>>>>>> JMRI/master
            default:
               return super.getColumnClass(col);
         }
@@ -329,9 +342,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         } else if (col == PULLUPCOL) {
             JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
             s.setPullResistance((Sensor.PullResistance)cb.getSelectedItem());
+<<<<<<< HEAD
+=======
         } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
             clickOn(s);
             fireTableRowsUpdated(row, row);
+>>>>>>> JMRI/master
         } else {
             super.setValueAt(value, row, col);
         }

@@ -334,21 +334,45 @@ public class FileUtilSupportTest {
         this.instance = new FileUtilSupport();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         JUnitUtil.waitFor(() -> {
             return this.programTestFile.exists();
         }, "Create program test file");
+>>>>>>> JMRI/master
+=======
+        JUnitUtil.waitFor(() -> {
+            return this.programTestFile.exists();
+        }, "Create program test file");
+>>>>>>> JMRI/master
         File profile = new File(instance.getProfilePath());
         profile.mkdir();
         this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
         this.preferencesTestFile.createNewFile();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         JUnitUtil.waitFor(() -> {
             return this.preferencesTestFile.exists();
         }, "Create program test file");
+>>>>>>> JMRI/master
+=======
+        JUnitUtil.waitFor(() -> {
+            return this.preferencesTestFile.exists();
+        }, "Create program test file");
+>>>>>>> JMRI/master
     }
 
     @After
     public void tearDown() {
         this.programTestFile.delete();
+<<<<<<< HEAD
+<<<<<<< HEAD
+        this.preferencesTestFile.delete();
+=======
+=======
+>>>>>>> JMRI/master
         JUnitUtil.waitFor(() -> {
             return !this.programTestFile.exists();
         }, "Remove program test file");
@@ -356,6 +380,10 @@ public class FileUtilSupportTest {
         JUnitUtil.waitFor(() -> {
             return !this.preferencesTestFile.exists();
         }, "Remove program test file");
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 }

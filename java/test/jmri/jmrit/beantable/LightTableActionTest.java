@@ -1,5 +1,12 @@
 package jmri.jmrit.beantable;
 
+<<<<<<< HEAD
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+=======
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
@@ -12,11 +19,16 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+>>>>>>> JMRI/master
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
+ *
+=======
  * Tests for the jmri.jmrit.beantable.LightTableAction class.
+>>>>>>> JMRI/master
  * @author Paul Bender Copyright (C) 2017	
  */
 public class LightTableActionTest extends AbstractTableActionBase {
@@ -47,6 +59,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+<<<<<<< HEAD
+=======
     /**
      * Check graphic state presentation.
      * @since 4.7.4
@@ -102,14 +116,19 @@ public class LightTableActionTest extends AbstractTableActionBase {
         _l1Table.dispose();
     }
 
+>>>>>>> JMRI/master
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+<<<<<<< HEAD
+        jmri.util.JUnitUtil.resetInstanceManager();
+=======
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+>>>>>>> JMRI/master
         a = new LightTableAction();
     }
 
@@ -118,7 +137,10 @@ public class LightTableActionTest extends AbstractTableActionBase {
     public void tearDown() {
         a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
+<<<<<<< HEAD
+=======
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 

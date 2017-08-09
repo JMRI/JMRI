@@ -494,7 +494,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         Bundle.getMessage("pathsSet", w.getDisplayName()),
                         myGreen, false);
             } else {
-                w.deAllocate();
+//                w.deAllocate();
                 _frame.setStatusText(msg, myGold, false);
                 msg = null;
             }

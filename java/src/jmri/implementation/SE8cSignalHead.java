@@ -35,8 +35,13 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Primary ctor.
      *
+<<<<<<< HEAD
+     * @param lowTO  lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
+=======
      * @param lowTO    lower-numbered Turnout reference
      * @param highTO   higher-numbered Turnout reference
+>>>>>>> JMRI/master
      * @param userName user name for mast
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO,
@@ -69,9 +74,15 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name and user name.
      *
+<<<<<<< HEAD
+     * @param sname system name for mast
+     * @param lowTO  lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
+=======
      * @param sname    system name for mast
      * @param lowTO    lower-numbered Turnout reference
      * @param highTO   higher-numbered Turnout reference
+>>>>>>> JMRI/master
      * @param userName user name for mast
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO,
@@ -88,7 +99,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor specifying system name.
      *
+<<<<<<< HEAD
+     * @param sname system name for mast
+=======
      * @param sname  system name for mast
+>>>>>>> JMRI/master
      * @param lowTO  lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
@@ -105,7 +120,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Compatibility ctor.
      *
+<<<<<<< HEAD
+     * @param pNumber number (address) of low turnout
+=======
      * @param pNumber  number (address) of low turnout
+>>>>>>> JMRI/master
      * @param userName name to use for this signal head
      */
     public SE8cSignalHead(int pNumber, String userName) {
@@ -171,6 +190,9 @@ public class SE8cSignalHead extends DefaultSignalHead {
         // ensure default appearance
         mAppearance = DARK;  // start turned off
         updateOutput();
+
+        // Add listeners to track other changes on LocoNet
+        addListeners();
     }
 
     @Override
@@ -181,11 +203,18 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Type-specific routine to handle output to the layout hardware.
+<<<<<<< HEAD
+     * Implemented to handle a request to change state by sending a LocoNet command.
+     * <p>
+     * Does not notify listeners of changes; that's done elsewhere. Should consider
+     * the following variables to determine what to send:
+=======
      * Implemented to handle a request to change state by sending a LocoNet
      * command.
      * <p>
      * Does not notify listeners of changes; that's done elsewhere. Should
      * consider the following variables to determine what to send:
+>>>>>>> JMRI/master
      * <ul>
      * <li>mAppearance
      * <li>mLit
@@ -241,8 +270,51 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     @Override
     boolean isTurnoutUsed(Turnout t) {
+<<<<<<< HEAD
+        if (getLow() != null && t.equals(getLow().getBean())) {
+            return true;
+        }
+        if (getHigh() != null && t.equals(getHigh().getBean())) {
+            return true;
+        }
+        return false;
+    }
+
+    void addListeners() {
+        lowTurnout.getBean().addPropertyChangeListener(
+                new java.beans.PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                        // we're not tracking state, we're tracking changes in state
+                        if (e.getPropertyName().equals("KnownState")) {
+                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
+                                setAppearance(GREEN);
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != RED) {
+                                setAppearance(RED);
+                            }
+                        }
+                    }
+                }
+        );
+        highTurnout.getBean().addPropertyChangeListener(
+                new java.beans.PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                        // we're not tracking state, we're tracking changes in state
+                        if (e.getPropertyName().equals("CommandedState")) {
+                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
+                                setAppearance(DARK);
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
+                                setAppearance(YELLOW);
+                            }
+                        }
+                    }
+                }
+        );
+=======
         return (getLow() != null && t.equals(getLow().getBean()))
                 || (getHigh() != null && t.equals(getHigh().getBean()));
+>>>>>>> JMRI/master
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());

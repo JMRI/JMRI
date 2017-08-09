@@ -97,6 +97,19 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 return "" + labelVector.get(row);
             case "Name":
                 return "" + cv.cvName();
+<<<<<<< HEAD
+            case "PI":
+                return "" + cv.piCv();
+            case "PIvalue":
+                return "" + cv.piVal();
+            case "SI":
+                return "" + cv.siCv();
+            case "SIvalue":
+                return "" + cv.siVal();
+            case "CV":
+                return "" + cv.iCv();
+=======
+>>>>>>> JMRI/master
             case "Value":
                 return "" + cv.getValue();
             case "Write":
@@ -144,6 +157,40 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         rowVector.add(resetCV);
         labelVector.add(label);
         modeVector.add(getResetModeList(e, p));
+<<<<<<< HEAD
+    }
+
+    public void setIndxRow(int row, Element e, Element p, String model) {
+        decoderModel = model; // Save for use elsewhere
+        if (!_piCv.equals("") && !_siCv.equals("")) {
+            // get the values for the VariableValue ctor
+            String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
+            if (log.isDebugEnabled()) {
+                log.debug("Starting to setIndxRow \""
+                        + label + "\"");
+            }
+            String cvName = e.getAttributeValue("CVname");
+            int piVal = Integer.valueOf(e.getAttribute("PI").getValue());
+            int siVal = (e.getAttribute("SI") != null
+                    ? Integer.valueOf(e.getAttribute("SI").getValue())
+                    : -1);
+            String iCv = e.getAttribute("CV").getValue();
+            int icvVal = Integer.valueOf(e.getAttribute("default").getValue());
+
+            CvValue resetCV = new CvValue("" + row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
+            resetCV.addPropertyChangeListener(this);
+
+            JButton bw = new JButton("Write");
+            _writeButtons.add(bw);
+            resetCV.setValue(icvVal);
+            resetCV.setWriteOnly(true);
+            resetCV.setState(VariableValue.STORED);
+            rowVector.add(resetCV);
+            labelVector.add(label);
+            modeVector.add(getResetModeList(e, p));
+        }
+=======
+>>>>>>> JMRI/master
     }
 
     protected List<String> getResetModeList(Element e, Element p) {
@@ -275,6 +322,26 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     private static final int IDLE = 0;
     private static final int WRITING_CV = 3;
 
+<<<<<<< HEAD
+    public void indexedWrite() {
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+        }
+        // lets skip the SI step if SI is not used
+        if (_iCv.siVal() > 0) {
+            _progState = WRITING_PI;
+        } else {
+            _progState = WRITING_SI;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("invoke PI write for CV write");
+        }
+        // to write any indexed CV we must write the PI
+        _iCv.writePI(_status);
+    }
+
+=======
+>>>>>>> JMRI/master
     @Override
     public void propertyChange(PropertyChangeEvent e) {
 

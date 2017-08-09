@@ -355,10 +355,29 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             names.addAll(Arrays.asList(fp.list(new XmlFilenameFilter())));
         }
         // Sort the resulting array
+<<<<<<< HEAD
+<<<<<<< HEAD
+        if ((sp != null) && sp.length > 1) {
+            jmri.util.StringUtil.sort(sbox);
+        }
+// djd debugging - print list of TrainInfoFiles
+//  log.error("TrainInfoFilename list:");
+//  for (int j=0; j<sbox.length; j++) {
+//   log.error("   "+(j+1)+" "+sbox[j]);
+//        }
+// end djd debugging
+        return sbox;
+=======
+=======
+>>>>>>> JMRI/master
         names.sort((s1, s2) -> {
             return s1.compareTo(s2);
         });
         return names.toArray(new String[names.size()]);
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     }
 
     /**

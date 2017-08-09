@@ -58,7 +58,10 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a BlockTable GUI.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
+<<<<<<< HEAD
+=======
  * @author Egbert Broerse Copyright (C) 2017
+>>>>>>> JMRI/master
  */
 public class BlockTableAction extends AbstractTableAction {
 
@@ -982,7 +985,11 @@ public class BlockTableAction extends AbstractTableAction {
         }
         if (NumberOfBlocks >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
+<<<<<<< HEAD
+                    Bundle.getMessage("WarnExcessBeans", NumberOfBlocks),
+=======
                     Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Blocks"), NumberOfBlocks),
+>>>>>>> JMRI/master
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;

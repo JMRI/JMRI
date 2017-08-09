@@ -61,7 +61,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMultiMeterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutReplyCacheTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

@@ -1,13 +1,20 @@
 package jmri.jmrit.speedometer;
 
 import apps.tests.Log4JFixture;
+<<<<<<< HEAD
+=======
 import java.awt.GraphicsEnvironment;
+>>>>>>> JMRI/master
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+<<<<<<< HEAD
+import java.awt.GraphicsEnvironment;
+=======
+>>>>>>> JMRI/master
 
 /**
  * Test simple functioning of SpeedometerFrame

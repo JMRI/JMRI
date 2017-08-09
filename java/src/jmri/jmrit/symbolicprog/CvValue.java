@@ -348,6 +348,87 @@ public class CvValue extends AbstractValue implements ProgListener {
                 }
 
                 log.warn("Exception during CV read: " + e); // NOI18N
+<<<<<<< HEAD
+                setBusy(false);
+            }
+        } else {
+            if (status != null) {
+                status.setText(Bundle.getMessage("StateNoProgrammer"));
+            }
+            log.error("No programmer available!"); // NOI18N
+        }
+    }
+
+    @Deprecated // since 3.7.1
+    public void readIcV(JLabel status) {
+        setToRead(false);
+        // get a programmer reference and write an indexed CV
+        _status = status;
+
+        if (status != null) {
+            status.setText(
+                    java.text.MessageFormat.format(
+                            Bundle.getMessage("StateReadingIndexedCV"),
+                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
+        }
+
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = true;
+            _confirm = false;
+            try {
+                setState(UNKNOWN);
+                mProgrammer.readCV(_iCv, this);
+            } catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) {
+                    status.setText(
+                            java.text.MessageFormat.format(
+                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
+                                    new Object[]{e.toString()}));
+                }
+                log.warn("Exception during IndexedCV read: " + e); // NOI18N
+                setBusy(false);
+            }
+        } else {
+            if (status != null) {
+                status.setText(Bundle.getMessage("StateNoProgrammer"));
+            }
+            log.error("No programmer available!"); // NOI18N
+        }
+    }
+
+    @Deprecated // since 3.7.1
+    public void confirmIcV(JLabel status) {
+        setToRead(false);
+        // get a programmer reference and write an indexed CV
+        _status = status;
+
+        if (status != null) {
+            status.setText(
+                    java.text.MessageFormat.format(
+                            Bundle.getMessage("StateConfirmIndexedCV"),
+                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
+        }
+
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = false;
+            _confirm = true;
+            try {
+                setState(UNKNOWN);
+                mProgrammer.readCV(_iCv, this);
+            } catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) {
+                    status.setText(
+                            java.text.MessageFormat.format(
+                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
+                                    new Object[]{e.toString()}));
+                }
+                log.warn("Exception during IndexedCV read: " + e); // NOI18N
+=======
+>>>>>>> JMRI/master
                 setBusy(false);
             }
         } else {
@@ -431,6 +512,133 @@ public class CvValue extends AbstractValue implements ProgListener {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
             log.error("No programmer available!"); // NOI18N
+<<<<<<< HEAD
+        }
+    }
+
+    @Deprecated // since 3.7.1
+    public void writePI(JLabel status) {
+        if (log.isDebugEnabled()) {
+            log.debug("write call with PI number " + _piVal); // NOI18N
+        }
+        // get a programmer reference and write to the primary index
+        _status = status;
+        if (status != null) {
+            status.setText(
+                    java.text.MessageFormat.format(
+                            Bundle.getMessage("StateWritingPICV"),
+                            new Object[]{"" + _num}));
+        }
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = false;
+            _confirm = false;
+            try {
+                setState(UNKNOWN);
+                mProgrammer.writeCV(_piCv, _piVal, this);
+            } catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) {
+                    status.setText(
+                            java.text.MessageFormat.format(
+                                    Bundle.getMessage("StateExceptionDuringWrite"),
+                                    new Object[]{e.toString()}));
+                }
+                log.warn("Exception during CV write of '" + _piCv + "' to '" + _piVal + "'", e); // NOI18N
+                setBusy(false);
+            }
+        } else {
+            if (status != null) {
+                status.setText(Bundle.getMessage("StateNoProgrammer"));
+            }
+            log.error("No programmer available!"); // NOI18N
+        }
+    }
+
+    @Deprecated // since 3.7.1
+    public void writeSI(JLabel status) {
+        if (log.isDebugEnabled()) {
+            log.debug("write call with SI number " + _siVal); // NOI18N
+        }
+        // get a programmer reference and write to the secondary index
+        _status = status;
+        if (status != null) {
+            status.setText(
+                    java.text.MessageFormat.format(
+                            Bundle.getMessage("StateWritingSICV"),
+                            new Object[]{"" + _num}));
+        }
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = false;
+            _confirm = false;
+            try {
+                setState(UNKNOWN);
+                if (_siVal >= 0) {
+                    mProgrammer.writeCV(_siCv, _siVal, this);
+                } else { // just in case we get called without a real SI value
+                    mProgrammer.writeCV(_siCv, 0, this);
+                }
+            } catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) {
+                    status.setText(
+                            java.text.MessageFormat.format(
+                                    Bundle.getMessage("StateExceptionDuringWrite"),
+                                    new Object[]{e.toString()}));
+                }
+                log.warn("Exception during CV write: " + e); // NOI18N
+                setBusy(false);
+            }
+        } else {
+            if (status != null) {
+                status.setText(Bundle.getMessage("StateNoProgrammer"));
+            }
+            log.error("No programmer available!"); // NOI18N
+        }
+    }
+
+    @Deprecated // since 3.7.1
+    public void writeIcV(JLabel status) {
+        if (log.isDebugEnabled()) {
+            log.debug("write call with IndexedCv number " + _iCv); // NOI18N
+        }
+        setToWrite(false);
+        // get a programmer reference and write the indexed CV
+        _status = status;
+
+        if (status != null) {
+            status.setText(
+                    java.text.MessageFormat.format(
+                            Bundle.getMessage("StateWritingIndexedCV"),
+                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
+        }
+
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = false;
+            _confirm = false;
+            try {
+                setState(UNKNOWN);
+                mProgrammer.writeCV(_iCv, _value, this);
+            } catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) {
+                    status.setText(
+                            java.text.MessageFormat.format(
+                                    Bundle.getMessage("StateExceptionDuringIndexedWrite"),
+                                    new Object[]{e.toString()}));
+                }
+                log.warn("Exception during CV write: " + e); // NOI18N
+                setBusy(false);
+            }
+        } else {
+            if (status != null) {
+                status.setText(Bundle.getMessage("StateNoProgrammer"));
+            }
+            log.error("No programmer available!"); // NOI18N
+=======
+>>>>>>> JMRI/master
         }
     }
 

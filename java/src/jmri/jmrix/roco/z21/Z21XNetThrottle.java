@@ -180,6 +180,14 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         queueMessage(msg7, THROTTLEFUNCSENT);
     }
 
+<<<<<<< HEAD
+    // The Z21 Doesn't support the XPressNet directed emergency stop
+    // instruction, so override sendEmergencyStop in the parent, and
+    // just send speed step 0.
+    @Override
+    protected void sendEmergencyStop(){
+       setSpeedSetting(0);
+=======
     // The Z21 doesn't support setting the momentary/continuous status of
     // functions, so override the sending of all momentary/continuous 
     // from the parent class.
@@ -205,6 +213,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
     @Override
     synchronized protected void sendFunctionHighMomentaryStatusRequest() {
+>>>>>>> JMRI/master
     }
 
 

@@ -736,7 +736,10 @@
     <column>
         <display item="Speed Dependant Headlights">
           <!--label>Speed Dependant Headlights</label-->
+<<<<<<< HEAD
+=======
           <!--label xml:lang="cs">Světla závislá na rychlosti</label-->
+>>>>>>> JMRI/master
         </display>
       </column>
         <label>
@@ -752,7 +755,11 @@
           <text>When the (internal) speed step reaches this value the High Beam is turned on (0-255)</text>
           <text xml:lang="cs">Když (interní) rychlostní stupeň dosáhne této hodnoty tak se zapne dálkové světlo (0-255).</text>
           <text xml:lang="de">Wenn die (interne) Fahrstufe den Wert erreicht wird das Fernlicht eingeschaltet. (0-255)</text>
+<<<<<<< HEAD
+        </label>	
+=======
         </label>
+>>>>>>> JMRI/master
     </column>
     </row>
   </column>

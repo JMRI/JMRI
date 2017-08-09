@@ -7,8 +7,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     XNetMonPaneTest.class,
+<<<<<<< HEAD
+    XNetMonActionTest.class
+=======
     XNetMonActionTest.class,
     BundleTest.class
+>>>>>>> JMRI/master
 })
 
 /**

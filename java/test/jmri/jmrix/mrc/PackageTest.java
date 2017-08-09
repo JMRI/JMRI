@@ -18,6 +18,9 @@ import org.junit.runners.Suite;
    MrcMessageExceptionTest.class,
    MrcConnectionTypeListTest.class,
    MrcPacketizerTest.class,
+<<<<<<< HEAD
+   MrcPacketsTest.class
+=======
    MrcPacketsTest.class,
    MrcMessageTest.class,
    MrcOpsModeProgrammerTest.class,
@@ -30,6 +33,7 @@ import org.junit.runners.Suite;
    MrcTrafficListenerFilterTest.class,
    MrcTurnoutManagerTest.class,
    MrcTurnoutTest.class
+>>>>>>> JMRI/master
 })
 
 /**

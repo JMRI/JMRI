@@ -768,7 +768,11 @@
     <label>Pink Wire Timing</label>
     <label xml:lang="it">Temporizzazioni filo Rosa</label>
   </variable>
+<<<<<<< HEAD
+  <variable CV="58" minOut="8" item="Output 7 effect generated" default="0">
+=======
   <variable CV="58" minOut="8" item="Output 7 effect generated" default="0" include="132,172">
+>>>>>>> JMRI/master
     <enumVal>
       <enumChoice choice="F5 and F6 on/off constant bright">
       </enumChoice>

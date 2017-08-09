@@ -169,9 +169,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public synchronized void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

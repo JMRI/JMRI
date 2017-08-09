@@ -304,9 +304,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         queueMessage(msg, THROTTLESPEEDSENT);
     }
 
+<<<<<<< HEAD
+    /* When we set the direction, we're going to set the speed to
+     zero as well */
+=======
     /**
      *  When we set the direction, we're going to set the speed to zero as well.
      */
+>>>>>>> JMRI/master
     @Override
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
@@ -438,10 +443,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         return;
     }
 
+<<<<<<< HEAD
+    // to handle quantized speed. Note this can change! Valued returned is
+    // always positive.
+=======
     /**
      * Handle quantized speed. Note this can change!
      * Value returned is always positive.
      */
+>>>>>>> JMRI/master
     @Override
     public float getSpeedIncrement() {
         return speedIncrement;
@@ -697,16 +707,24 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         //sendQueuedMessage();
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

@@ -43,7 +43,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConfigurationManagerTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

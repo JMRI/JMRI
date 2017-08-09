@@ -31,7 +31,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
+<<<<<<< HEAD
+  */
+=======
  */
+>>>>>>> JMRI/master
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
@@ -48,17 +52,41 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         infoPane.add(new JLabel(Bundle.getMessage("CommandStationLabel")));
         infoPane.add(CSType);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        getContentPane().add(new JLabel(Bundle.getMessage("StatusLabel")));
+=======
+        getContentPane().add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
+>>>>>>> JMRI/master
+        getContentPane().add(CSStatus);
+=======
         infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
         infoPane.add(CSSoftwareVersion);
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         infoPane.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
         infoPane.add(CSStatus);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        getContentPane().add(new JLabel(Bundle.getMessage("LIHardwareVersionLabel")));
+        getContentPane().add(LIHardwareVersion);
+
+        getContentPane().add(new JLabel(Bundle.getMessage("LISoftwareVersionLabel")));
+=======
+        getContentPane().add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
+        getContentPane().add(LIHardwareVersion);
+
+        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
+>>>>>>> JMRI/master
+        getContentPane().add(LISoftwareVersion);
+=======
         infoPane.add(new JLabel(Bundle.getMessage("InterfaceLabel")));
         infoPane.add(LIType);
 
         infoPane.add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
         infoPane.add(LIHardwareVersion);
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
         infoPane.add(LISoftwareVersion);
@@ -117,7 +145,15 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     JLabel LISoftwareVersion = new JLabel("");
 
     JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
+<<<<<<< HEAD
+<<<<<<< HEAD
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
+=======
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
+>>>>>>> JMRI/master
+=======
     JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
     /**
      * Send Information request to LI100/LI101.
@@ -225,7 +261,11 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else {
+<<<<<<< HEAD
+            CSType.setText(Bundle.getMessage("CSTypeUNKNOWN"));
+=======
             CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
+>>>>>>> JMRI/master
         }
     }
 

@@ -767,9 +767,14 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     /**
      * Create an image of icon with overlaid text.
+<<<<<<< HEAD
+     * @param text the text to overlay
+     * @param ic the icon containing the image
+=======
      *
      * @param text the text to overlay
      * @param ic   the icon containing the image
+>>>>>>> JMRI/master
      * @return the icon overlaying text on ic
      */
     protected NamedIcon makeTextOverlaidIcon(String text, NamedIcon ic) {

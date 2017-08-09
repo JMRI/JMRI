@@ -5,9 +5,15 @@ import java.awt.GraphicsEnvironment;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+<<<<<<< HEAD
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+=======
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
+>>>>>>> JMRI/master
 import org.junit.Before;
 import org.junit.Test;
 
@@ -112,7 +118,10 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
     @After
     public void setUp() throws Exception {
         super.setUp();
+<<<<<<< HEAD
+=======
         JUnitUtil.initIdTagManager();
+>>>>>>> JMRI/master
     }
 
     @Override

@@ -104,6 +104,14 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
         try {
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
+<<<<<<< HEAD
+            if (sval.equals("PERCENTNORMAL")) {
+                _interpretation = PERCENT_NORMAL;
+            } else if (sval.equals("PERCENTTHROTTLE")) {
+                _interpretation = PERCENT_THROTTLE;
+            } else {
+                throw new JDOMException("invalid content for interpretation: " + sval);
+=======
             switch (sval) {
                 case "PERCENTNORMAL":
                     _interpretation = PERCENT_NORMAL;
@@ -113,6 +121,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                     break;
                 default:
                     throw new JDOMException("invalid content for interpretation: " + sval);
+>>>>>>> JMRI/master
             }
             log.debug("_interpretation= {}", _interpretation);
 
@@ -154,6 +163,15 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 _table.put(name, speed);
             }
 
+<<<<<<< HEAD
+            _headTable.clear();
+            List<Element> l = root.getChild("appearanceSpeeds").getChildren();
+            for (int i = 0; i < l.size(); i++) {
+                String name = l.get(i).getName();
+                String speed = l.get(i).getText();
+                _headTable.put(Bundle.getMessage(name), speed);
+                log.debug("Add {}={}, {} to AppearanceSpeed Table", name, Bundle.getMessage(name), speed);
+=======
             synchronized (this._headTable) {
                 _headTable.clear();
                 List<Element> l = root.getChild("appearanceSpeeds").getChildren();
@@ -163,6 +181,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                     _headTable.put(Bundle.getMessage(name), speed);
                     log.debug("Add {}={}, {} to AppearanceSpeed Table", name, Bundle.getMessage(name), speed);
                 }
+>>>>>>> JMRI/master
             }
         } catch (org.jdom2.JDOMException e) {
             log.error("error reading speed map elements due to: {}", e);
@@ -219,7 +238,16 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     public Vector<String> getValidSpeedNames() {
+<<<<<<< HEAD
+        Enumeration<String> e = this.getSpeedIterator();
+        Vector<String> v = new Vector<>();
+        while (e.hasMoreElements()) {
+            v.add(e.nextElement());
+        }
+        return v;
+=======
         return new Vector<>(this._table.keySet());
+>>>>>>> JMRI/master
     }
 
     public float getSpeed(@Nonnull String name) {
@@ -293,6 +321,13 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     public void setAppearances(@Nonnull HashMap<String, String> map) {
+<<<<<<< HEAD
+        HashMap<String, String> old = new HashMap<>(_headTable);
+        _headTable.clear();
+        _headTable.putAll(map);
+        if (!map.equals(old)) {
+            this.firePropertyChange("Appearances", old, new HashMap<>(_headTable));
+=======
         synchronized (this._headTable) {
             HashMap<String, String> old = new HashMap<>(_headTable);
             _headTable.clear();
@@ -300,16 +335,24 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
             if (!map.equals(old)) {
                 this.firePropertyChange("Appearances", old, new HashMap<>(_headTable));
             }
+>>>>>>> JMRI/master
         }
     }
 
     public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
+<<<<<<< HEAD
+        _headTable.clear();
+        while (iter.hasNext()) {
+            Entry<String, String> ent = iter.next();
+            _headTable.put(ent.getKey(), ent.getValue());
+=======
         synchronized (this._headTable) {
             _headTable.clear();
             while (iter.hasNext()) {
                 Entry<String, String> ent = iter.next();
                 _headTable.put(ent.getKey(), ent.getValue());
             }
+>>>>>>> JMRI/master
         }
     }
 

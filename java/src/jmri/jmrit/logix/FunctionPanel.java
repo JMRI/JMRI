@@ -358,8 +358,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt1Button.setText("Alt");
         alt1Button.setPreferredSize(new Dimension(FunctionButton.getButtonWidth(), FunctionButton.getButtonHeight()));
         alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
+<<<<<<< HEAD
+        alt1Button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                buttonActionCmdPerformed();
+            }
+=======
         alt1Button.addActionListener((java.awt.event.ActionEvent e) -> {
             buttonActionCmdPerformed();
+>>>>>>> JMRI/master
         });
         mainPanel.add(alt1Button);
 
@@ -496,7 +504,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     // update the state of this panel if any of the properties change
+<<<<<<< HEAD
+    // did not add f13 - f28 dboudreau, maybe I should have? 
+=======
     // did not add f13 - f28 dboudreau, maybe I should have?
+>>>>>>> JMRI/master
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String functionName = e.getPropertyName();

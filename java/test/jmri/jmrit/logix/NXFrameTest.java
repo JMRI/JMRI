@@ -39,7 +39,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         Assert.assertNotNull("NXFrame", nxFrame);
         nxFrame.dispose();
     }
@@ -75,7 +75,26 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
+<<<<<<< HEAD
+        NXFrame nxFrame = NXFrame.getInstance();
+        nxFrame.init();
+        nxFrame.setVisible(true);
+        nxFrame.setThrottleIncrement(0.075f);
+        nxFrame.setTimeInterval(1000);
+        nxFrame.setThrottleFactor(0.75f);
+        flushAWT();
+        pressButton(nxFrame, Bundle.getMessage("ButtonCancel"));
+
+        // wait to calm down after cancel
+        flushAWT();
+        flushAWT();
+
+        // after cancel, try again
+        nxFrame = NXFrame.getInstance();
+        nxFrame.init();
+=======
         NXFrame nxFrame = NXFrame.getDefault();
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         nxFrame.setVisible(true);
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");

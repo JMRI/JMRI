@@ -15,7 +15,11 @@ import org.slf4j.LoggerFactory;
  * is true, it is called with a "true paramter.
  *
  * @author Paul Bender Copyright (C) 2017
+<<<<<<< HEAD
+  */
+=======
  */
+>>>>>>> JMRI/master
 public class XNetTimeSlotListener implements XNetListener {
 
     private XNetPortController port = null;

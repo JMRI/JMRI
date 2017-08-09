@@ -7,9 +7,12 @@ import junit.framework.Assert;
 
 import jmri.Conditional;
 import jmri.ConditionalManager;
+<<<<<<< HEAD
+=======
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
+>>>>>>> JMRI/master
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
@@ -27,19 +30,35 @@ public class DefaultConditionalManagerTest extends TestCase {
 
         Conditional c1 = m.createNewConditional("IX01C01", "");        
         Conditional c2 = m.createNewConditional("IX01C02", "");
+<<<<<<< HEAD
+        
+        Assert.assertFalse(c1 == c2);
+        Assert.assertFalse(c1.equals(c2));
+        
+=======
 
         Assert.assertFalse(c1 == c2);
         Assert.assertFalse(c1.equals(c2));
+>>>>>>> JMRI/master
     }
 
     public void testUserNameOverlap() {
         ConditionalManager m = new DefaultConditionalManager();
 
+<<<<<<< HEAD
+        Conditional c1 = m.createNewConditional("IX01C01", "Foo");        
+        Conditional c2 = m.createNewConditional("IX01C02", "Foo");
+        
+        Assert.assertTrue(c1.getUserName().equals("Foo"));
+        Assert.assertTrue(c2.getUserName().equals("Foo"));
+        
+=======
         Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");
 
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
+>>>>>>> JMRI/master
     }
 
     // from here down is testing infrastructure

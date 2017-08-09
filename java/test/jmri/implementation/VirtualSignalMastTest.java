@@ -33,6 +33,10 @@ public class VirtualSignalMastTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastTest.class.getName());
+=======
     //private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastTest.class.getName());
+>>>>>>> JMRI/master
 
 }

@@ -7,17 +7,34 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
 import jmri.DccLocoAddress;
+>>>>>>> JMRI/master
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+<<<<<<< HEAD
+public class NceConsistManagerTest {
+=======
 public class NceConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
+>>>>>>> JMRI/master
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
 
+<<<<<<< HEAD
+    @Test
+    public void testCTor() {
+        NceConsistManager t = new NceConsistManager(memo);
+        Assert.assertNotNull("exists",t);
+    }
+
+    // The minimal setup for log4J
+    @Before
+=======
     @Override
     @Ignore("Causes error message reading consist memory")
     @Test
@@ -34,12 +51,19 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
     // The minimal setup for log4J
     @Before
     @Override
+>>>>>>> JMRI/master
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
+<<<<<<< HEAD
+    }
+
+    @After
+    public void tearDown() {
+=======
         cm = new NceConsistManager(memo);
     }
 
@@ -47,6 +71,7 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
     @Override
     public void tearDown() {
         cm = null;
+>>>>>>> JMRI/master
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

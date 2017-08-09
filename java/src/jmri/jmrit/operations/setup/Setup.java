@@ -357,11 +357,18 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setAutoSaveEnabled(boolean enabled) {
+<<<<<<< HEAD
+        boolean old = getDefault().autoSave;
+        getDefault().autoSave = enabled;
+        if (!old && enabled) {
+            new AutoSave();
+=======
         getDefault().autoSave = enabled;
         if (enabled) {
             new AutoSave().start();
         } else {
             new AutoSave().stop();
+>>>>>>> JMRI/master
         }
     }
 
@@ -875,6 +882,13 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().printValid;
     }
 
+<<<<<<< HEAD
+    public static void setSortByTrackEnabled(boolean enable) {
+        getDefault().sortByTrack = enable;
+    }
+
+    public static boolean isSortByTrackEnabled() {
+=======
     public static void setSortByTrackNameEnabled(boolean enable) {
         getDefault().sortByTrack = enable;
     }
@@ -884,6 +898,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
      * @return true if work at a location is to be sorted by track names.
      */
     public static boolean isSortByTrackNameEnabled() {
+>>>>>>> JMRI/master
         return getDefault().sortByTrack;
     }
 

@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+/**
+ * PowerManager implementation for controlling layout power
+ *
+<<<<<<< HEAD
+ * Description: PowerManager implementation for controlling layout power
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+  */
+=======
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+ */
+>>>>>>> JMRI/master
+=======
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -144,16 +161,24 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {

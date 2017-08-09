@@ -13,26 +13,62 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class ClientRxHandlerTest {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> JMRI/master
+=======
+    
+>>>>>>> JMRI/master
     @Test
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
         Assert.assertNotNull("exists",t);
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> JMRI/master
+=======
+    
+>>>>>>> JMRI/master
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> JMRI/master
+=======
+    
+>>>>>>> JMRI/master
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> JMRI/master
+=======
+    
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+    private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+=======
     // private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
 }

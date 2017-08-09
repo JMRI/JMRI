@@ -32,12 +32,20 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "a 10 1 0",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
+<<<<<<< HEAD
+        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
+=======
+>>>>>>> JMRI/master
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "a 10 1 1",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
+<<<<<<< HEAD
+        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
+=======
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -52,6 +60,16 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertEquals(42, num);
         
         int[] vals = DCCppTurnout.getModeValues();
+<<<<<<< HEAD
+        Assert.assertEquals(5, vals.length);
+        Assert.assertEquals(Turnout.MONITORING, vals[3]);
+        Assert.assertEquals(Turnout.EXACT, vals[4]);
+        
+        String[] names = DCCppTurnout.getModeNames();
+        Assert.assertEquals(5, names.length);
+        Assert.assertEquals("BSTURNOUT", names[3]);
+        Assert.assertEquals("BSOUTPUT", names[4]);
+=======
         Assert.assertEquals(6, vals.length);
         Assert.assertEquals(Turnout.MONITORING, vals[4]);
         Assert.assertEquals(Turnout.EXACT, vals[5]);
@@ -60,6 +78,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertEquals(6, names.length);
         Assert.assertEquals("BSTURNOUT", names[4]);
         Assert.assertEquals("BSOUTPUT", names[5]);
+>>>>>>> JMRI/master
         // TODO: CHeck some othr stuff
         
         // Check a few basic things

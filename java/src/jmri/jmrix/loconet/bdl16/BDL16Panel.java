@@ -63,21 +63,39 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
     /**
      * Gets the URL for the HTML help for this tool
      * 
      * @return URL
      */
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; // NOI18N
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
     /**
      * Get the name of the tool for use in the title of the window
      * 
      * @return String containing text for the title of the window
      */
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemBDL16Programmer"));
@@ -119,9 +137,18 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     /**
      * Update the GUI elements
      */
+>>>>>>> JMRI/master
+=======
+    /**
+     * Update the GUI elements
+     */
+>>>>>>> JMRI/master
     @Override
     protected void updateDisplay() {
         comboBox[1].setSelectedIndex(opsw[1]?1:0);
@@ -153,12 +180,21 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
     /**
      * Determine the next OpSw to be accessed
      * 
      * @param state - most-recently accessed OpSw
      * @return  - next OpSw to be accessed
      */
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     @Override
     protected int nextState(int state) {
         switch (state) {

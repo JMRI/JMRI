@@ -48,7 +48,11 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         disposed = true;
 
         // put a shutdown request on the queue after any existing
+<<<<<<< HEAD
+        Memo m = new Memo(null, calcSendTimeMSec(), TimeUnit.MILLISECONDS) {
+=======
         Memo m = new Memo(null, nowMSec(), TimeUnit.MILLISECONDS) {
+>>>>>>> JMRI/master
             @Override
             boolean requestsShutDown() {
                 return true;

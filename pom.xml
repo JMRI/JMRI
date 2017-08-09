@@ -16,7 +16,12 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
+<<<<<<< HEAD
+        <jetty.version>9.2.21.v20170120</jetty.version>
+        <powermock.version>1.6.6</powermock.version>
+=======
         <jetty.version>9.3.9.v20160517</jetty.version>
+>>>>>>> JMRI/master
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -29,9 +34,12 @@
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m</argLine>
+<<<<<<< HEAD
+=======
         <powermock.version>1.6.6</powermock.version>
         <surefire.version>2.20</surefire.version>
         <surefile.printSummary>false</surefile.printSummary>
+>>>>>>> JMRI/master
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -101,6 +109,37 @@
                             </sourceDirectories>
                         </configuration>
                     </plugin>
+<<<<<<< HEAD
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.8</version>
+                        <configuration>
+                            <dataFile>jacoco.exec</dataFile>
+                            <excludes>
+                                <File>**/*Test*.class</File>
+                                <!-- Exclude testing infrastructure classes -->
+                                <File>**/*Scaffold.class"</File>
+                                <File>**/*JUnit*.class</File>
+                                <File>**/*Demo.class</File>
+                                <File>**/*Mock*.class</File>
+                                <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                                <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                                <File>jmri/util/swing/SamplePane.class</File>
+                                <File>apps/tests/Log4JFixture.class</File>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+=======
+>>>>>>> JMRI/master
                 </plugins>
             </build>
         </profile>
@@ -306,11 +345,16 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
+<<<<<<< HEAD
+                        <!-- TEMPORARY since NCE tests sometimes fail to load classes -->
+                        <exclude>jmri.jmrix.nce.**</exclude>
+=======
                         <!-- ignore until #3340 is merged -->
                         <exclude>jmri.jmrix.nce.Nce*</exclude>
                         <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
+>>>>>>> JMRI/master
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
@@ -335,12 +379,22 @@
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
+<<<<<<< HEAD
+                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
+=======
+>>>>>>> JMRI/master
                     <forkCount>1</forkCount>
                     <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <reuseForks>false</reuseForks>
                     -->
                     <!-- uncomment to really ensure tests are independent -->
+<<<<<<< HEAD
+                    <runOrder>random</runOrder>
+<<<<<<< HEAD
+=======
+=======
                     <!-- <runOrder>random</runOrder> -->
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
@@ -348,6 +402,7 @@
                             <version>${surefire.version}</version>
                         </dependency>
                     </dependencies>
+>>>>>>> JMRI/master
                 </configuration>
             </plugin>
             <plugin>
@@ -414,7 +469,11 @@
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
                     <!-- change from default 100 warnings -->
+<<<<<<< HEAD
+                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 4000</additionalparam>
+=======
                     <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2350</additionalparam>
+>>>>>>> JMRI/master
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -476,6 +535,22 @@
                 ]]>
                     </bottom>
                     <links>
+<<<<<<< HEAD
+                        <link>http://java.sun.com/products/javacomm/reference/api/</link>
+                        <link>http://users.frii.com/jarvi/rxtx/doc/</link>
+                        <link>http://www.jdom.org/docs/apidocs/</link>
+                        <link>http://javacsv.sourceforge.net/</link>
+                        <link>http://fasterxml.github.io/jackson-databind/javadoc/2.0.6</link>
+                        <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
+                        <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
+                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.12</link>
+                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release</link>
+                    </links>
+                </configuration>
+            </plugin>
+            <!-- disable by default, enabled only in travis-coverage, for now
+=======
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
                         <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link>
@@ -490,6 +565,7 @@
                     </links>
                 </configuration>
             </plugin>
+>>>>>>> JMRI/master
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -550,6 +626,10 @@
                     </execution>
                 </executions>
             </plugin>
+<<<<<<< HEAD
+            -->
+=======
+>>>>>>> JMRI/master
         </plugins>
     </build>
     <reporting>
@@ -664,6 +744,14 @@
             <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
+<<<<<<< HEAD
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-rxtx-2.2</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+=======
+>>>>>>> JMRI/master
         <!--
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -699,6 +787,14 @@
             <version>5.0.2</version>
         </dependency>
         -->
+<<<<<<< HEAD
+        <dependency>
+            <groupId>com.serialio</groupId>
+            <artifactId>serialio</artifactId>
+            <version>1.0</version>
+        </dependency>
+=======
+>>>>>>> JMRI/master
         <!--
         <dependency>
             <groupId>org.jogamp.jogl</groupId>
@@ -735,7 +831,14 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
             <version>4.4.0</version>
+<<<<<<< HEAD
+<<<<<<< HEAD
+        </dependency>       
+=======
+=======
+>>>>>>> JMRI/master
         </dependency>
+>>>>>>> JMRI/master
         <dependency>
             <groupId>net.java.jinput</groupId>
             <artifactId>jinput</artifactId>
@@ -760,7 +863,11 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
+<<<<<<< HEAD
+            <version>0.7.14</version>
+=======
             <version>${openlcb.version}</version>
+>>>>>>> JMRI/master
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -794,6 +901,23 @@
             <artifactId>xbee-java-library</artifactId>
             <version>1.2.0</version>
             <exclusions>
+<<<<<<< HEAD
+<<<<<<< HEAD
+               <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-jdk14</artifactId>
+               </exclusion>
+               <exclusion>
+                  <groupId>com.digi</groupId>
+                  <artifactId>android-sdk</artifactId>
+               </exclusion>
+               <exclusion>
+                  <groupId>com.digi</groupId>
+                  <artifactId>android-sdk-addon</artifactId>
+               </exclusion>
+=======
+=======
+>>>>>>> JMRI/master
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-jdk14</artifactId>
@@ -806,6 +930,9 @@
                     <groupId>com.digi</groupId>
                     <artifactId>android-sdk-addon</artifactId>
                 </exclusion>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
                 <exclusion>
                     <groupId>org.rxtx</groupId>
                     <artifactId>rxtx</artifactId>
@@ -814,6 +941,7 @@
                     <groupId>org.rxtx</groupId>
                     <artifactId>rxtx-native</artifactId>
                 </exclusion>
+>>>>>>> JMRI/master
             </exclusions>
         </dependency>
         <dependency>
@@ -860,16 +988,21 @@
             <scope>test</scope>
         </dependency>
         -->
+<<<<<<< HEAD
+=======
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
             <scope>compile</scope>
         </dependency>
+>>>>>>> JMRI/master
     </dependencies>
 
     <repositories>
         <!--
+<<<<<<< HEAD
+=======
         Repository hosting NetBeans modules, especially APIs.
         Versions are based on IDE releases, e.g.: RELEASE691
         To create your own repository, use: nbm:populate-repository
@@ -880,6 +1013,7 @@
             <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
         </repository>
         <!--
+>>>>>>> JMRI/master
         Repository hosting libraries not available through maven.org
         -->
         <repository>

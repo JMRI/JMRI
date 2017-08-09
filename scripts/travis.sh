@@ -14,5 +14,9 @@ if [[ "$HEADLESS" == "true" ]] ; then
     mvn test -U -P travis-headless --batch-mode -Dsurefire.printSummary=${PRINT_SUMMARY} -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 else
     # run full GUI test suite and fail on coverage issues
+<<<<<<< HEAD
+    mvn test -U -P travis-coverage --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+=======
     mvn javadoc:javadoc verify -U -P travis-coverage --batch-mode -Dsurefire.printSummary=${PRINT_SUMMARY} -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+>>>>>>> JMRI/master
 fi

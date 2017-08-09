@@ -49,6 +49,33 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             log.debug("recieved message: " + l.toString());
         }
         if (l.isTurnoutReply()) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+     // parse message type
+     int addr = l.getTOIDInt();
+     if (addr >= 0) {
+  // check to see if the address has been operated before
+  // continuing.
+  if (log.isDebugEnabled()) {
+      log.debug("message has address: " + addr);
+  }
+  // reach here for switch command; make sure we know 
+  // about this one
+  String s = prefix + typeLetter() + addr;
+  if (null == getBySystemName(s)) {
+      // need to create a new one, and send the message on 
+      // to the newly created object.
+      ((DCCppTurnout) provideTurnout(s)).initmessage(l);
+  } else {
+      // The turnout exists, forward this message to the 
+      // turnout
+      ((DCCppTurnout) getBySystemName(s)).message(l);
+  }
+     }
+ }
+=======
+=======
+>>>>>>> JMRI/master
             // parse message type
             int addr = l.getTOIDInt();
             if (addr >= 0) {
@@ -71,6 +98,10 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 }
             }
         }
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     }
     
     /**

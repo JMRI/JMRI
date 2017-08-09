@@ -253,6 +253,21 @@ public class RosterSpeedProfile {
         float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
+<<<<<<< HEAD
+        
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
+        while (entry != null && higher<=0.0f) {
+            highStep = entry.getKey();
+            higher = entry.getValue().getForwardSpeed();
+            entry = speeds.higherEntry(highStep);
+        }
+        boolean nothingHigher = (higher<=0.0f);
+        
+        entry = speeds.lowerEntry(lowStep);
+        while (entry != null && lower<=0.0f) {
+            lowStep = entry.getKey();;
+            lower = entry.getValue().getForwardSpeed();
+=======
 
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
         while (entry != null && higher<=0.0f) {
@@ -272,6 +287,7 @@ public class RosterSpeedProfile {
             if (value > 0.0f) {
                 lower = value;
             }
+>>>>>>> JMRI/master
             entry = speeds.lowerEntry(lowStep);
         }
         if (log.isDebugEnabled()) log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}", 
@@ -314,6 +330,22 @@ public class RosterSpeedProfile {
         float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
+<<<<<<< HEAD
+        
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
+        while (entry != null && higher<=0.0f) {
+            highStep = entry.getKey();
+            higher = entry.getValue().getReverseSpeed();
+            entry = speeds.higherEntry(highStep);
+        }
+        boolean nothingHigher = (higher<=0.0f);
+        
+        entry = speeds.higherEntry(lowStep);
+        while (entry != null && lower<=0.0f) {
+            lowStep = entry.getKey();
+            lower = entry.getValue().getReverseSpeed();
+            entry = speeds.higherEntry(highStep);
+=======
         // Note there may be zero values interspersed in the tree
 
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
@@ -334,6 +366,7 @@ public class RosterSpeedProfile {
                lower = value;
            }
            entry = speeds.lowerEntry(lowStep);
+>>>>>>> JMRI/master
         }
         if (log.isDebugEnabled()) log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}", 
                 lowStep, lower, highStep, higher, iSpeedStep);
@@ -897,17 +930,87 @@ public class RosterSpeedProfile {
     public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
         return speeds;
     }
+<<<<<<< HEAD
+    
+    /**
+     * Get the throttle setting to achieve a track speed
+     * @param speed desired track speed
+=======
 
     /**
      * Get the throttle setting to achieve a track speed
+<<<<<<< HEAD
+     * @param speed desired track speed in mms
+>>>>>>> JMRI/master
+=======
      * @param speed desired track speed in mm/sec
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
      * @param isForward direction
      * @return throttle setting
      */
     public float getThrottleSetting(float speed, boolean isForward) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        int key = 0;
+        float slower = 0;
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(key);
+        // search through table until end or the entry is greater than
+        // what we are looking for. This leaves the previous lower value in key. and slower
+        while (entry != null && slower <= speed) {
+            key = entry.getKey();
+            if (isForward) {
+                slower = entry.getValue().getForwardSpeed();
+            } else {
+                slower = entry.getValue().getReverseSpeed();
+            }
+            entry = speeds.higherEntry(key);
+        }
+        int lowKey = key;
+        
+        float faster;
+        entry = speeds.higherEntry(key);
+        // If the entry is null, then we are asking faster than fastest.
+        // and we do not search for higher just set as slower 
+        if ( entry == null ) {
+            faster = slower;
+        } else {
+            key = entry.getKey();
+            if (isForward) {
+                faster = entry.getValue().getForwardSpeed();
+            } else {
+                faster = entry.getValue().getReverseSpeed();
+            }
+            log.debug("faster [" + faster + "]speed[" + speed + "]");
+            // serach starting from were we left off until entry is greater than the required speed
+            // in fact this is totally unnessary as the previous search
+            // left the entry in situ... but the code was already here so I fixed it
+            // it may help if the table is wonky
+            while (entry != null && faster <= speed) {
+                key = entry.getKey();
+                if (isForward) {
+                    faster = entry.getValue().getForwardSpeed();
+                } else {
+                    faster = entry.getValue().getReverseSpeed();
+                }
+                entry = speeds.higherEntry(key);
+            }
+        }
+        if (faster <= slower) {
+            return key / 1000;
+        }
+        // interpolate
+        float ratio = (speed - slower) / (faster - slower);
+        float setting = lowKey + (key - lowKey) * ratio / 1000;      
+        log.debug("Ratio[" + ratio + "]setting[" + setting + "] lowkey ["+ lowKey + "]key[" + key + "]");
+        return setting/1000;
+    }
+        
+=======
+=======
         if ((isForward && !_hasForwardSpeeds) || (!isForward && !_hasReverseSpeeds)) {
             return 0.0f;
         }
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         int slowerKey = 0;
         float slowerValue = 0;
         float fasterKey = 0;
@@ -988,6 +1091,7 @@ public class RosterSpeedProfile {
         return setting;
     }
 
+>>>>>>> JMRI/master
     /**
      * Get track speed in millimeters per second from throttle setting
      * @param speedStep - throttle setting

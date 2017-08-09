@@ -468,6 +468,18 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void generateReadCSStatusReply() {
         /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+ String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
+ DCCppReply r = new DCCppReply(s);
+ writeReply(r);
+ if (log.isDebugEnabled()) {
+     log.debug("Simulator Thread sent Reply" + r.toString());
+ }
+         */
+=======
+=======
+>>>>>>> JMRI/master
           String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
           DCCppReply r = new DCCppReply(s);
           writeReply(r);
@@ -475,6 +487,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
           log.debug("Simulator Thread sent Reply" + r.toString());
           }
         */
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         writeReply(r);
@@ -486,7 +502,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         // Generate the other messages too...
     }
 
@@ -496,9 +520,21 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
         Random valueGenerator = new Random();
         int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+        String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
+
+=======
         
         String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
         
+>>>>>>> JMRI/master
+=======
+        
+        String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
+        
+>>>>>>> JMRI/master
         DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
         if (log.isDebugEnabled()) {

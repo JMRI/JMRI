@@ -536,6 +536,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             // parse using ISO 8601 date format(s)
             this.setDateModified(new ISO8601DateFormat().parse(date));
+<<<<<<< HEAD
+        } catch (ParseException | IllegalArgumentException ex) {
+=======
         } catch (ParseException ex) {
             log.debug("ParseException in setDateModified");
             // parse using defaults since thats how it was saved if saved
@@ -544,6 +547,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
             log.error("IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes" );
+>>>>>>> JMRI/master
             // parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));

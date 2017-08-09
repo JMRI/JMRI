@@ -1,9 +1,17 @@
 package jmri;
 
+<<<<<<< HEAD
+import jmri.util.JUnitUtil;
+import org.junit.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+=======
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+>>>>>>> JMRI/master
 
 /**
  * Tests for the NamedBean interface
@@ -17,11 +25,18 @@ public class NamedBeanTest extends TestCase {
     public void testNormalizePassThrough() {
         String testString = "  foo ";
         String normalForm = NamedBean.normalizeUserName(testString);
+<<<<<<< HEAD
+        Assert.assertEquals(testString, normalForm);
+    }
+
+    
+=======
         //note: normalizeUserName now .trim()'s;
         Assert.assertEquals("foo", normalForm);
     }
 
 
+>>>>>>> JMRI/master
     // from here down is testing infrastructure
     public NamedBeanTest(String s) {
         super(s);

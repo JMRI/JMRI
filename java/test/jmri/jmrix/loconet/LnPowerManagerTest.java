@@ -1,7 +1,10 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTestBase;
+<<<<<<< HEAD
+=======
 import org.junit.After;
+>>>>>>> JMRI/master
 import org.junit.Before;
 
 /**

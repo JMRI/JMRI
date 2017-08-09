@@ -396,7 +396,10 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
+<<<<<<< HEAD
+=======
         PositionablePoint result = null;
+>>>>>>> JMRI/master
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getEastBoundSensorName().equals(sensorName)) {
                 result = p;
@@ -407,7 +410,10 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
+<<<<<<< HEAD
+=======
         PositionablePoint result = null;
+>>>>>>> JMRI/master
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getWestBoundSensorName().equals(sensorName)) {
                 result = p;
@@ -418,6 +424,14 @@ public class LayoutEditorFindItems {
     }
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
+<<<<<<< HEAD
+        if (name.length() <= 0) {
+            return null;
+        }
+        for (LayoutTurnout t : layoutEditor.turnoutList) {
+            if (t.getName().equals(name)) {
+                return t;
+=======
         LayoutTurnout result = null;
         if (name.length() > 0) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
@@ -425,24 +439,42 @@ public class LayoutEditorFindItems {
                     result = t;
                     break;
                 }
+>>>>>>> JMRI/master
             }
         }
         return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
+<<<<<<< HEAD
+        if (name.length() <= 0) {
+            return null;
+        }
+        for (LayoutTurnout t : layoutEditor.turnoutList) {
+            if (t.getTurnoutName().equals(name)) {
+                return t;
+=======
         LayoutTurnout result = null;
         if (name.length() > 0) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getTurnoutName().equals(name)) {
                     result = t;
                 }
+>>>>>>> JMRI/master
             }
         }
         return result;
     }
 
     public LevelXing findLevelXingByName(String name) {
+<<<<<<< HEAD
+        if (name.length() <= 0) {
+            return null;
+        }
+        for (LevelXing x : layoutEditor.xingList) {
+            if (x.getID().equals(name)) {
+                return x;
+=======
         LevelXing result = null;
         if (name.length() > 0) {
             for (LevelXing x : layoutEditor.xingList) {
@@ -450,12 +482,21 @@ public class LayoutEditorFindItems {
                     result = x;
                     break;
                 }
+>>>>>>> JMRI/master
             }
         }
         return result;
     }
 
     public LayoutSlip findLayoutSlipByName(String name) {
+<<<<<<< HEAD
+        if (name.length() <= 0) {
+            return null;
+        }
+        for (LayoutSlip x : layoutEditor.slipList) {
+            if (x.getName().equals(name)) {
+                return x;
+=======
         LayoutSlip result = null;
         if (name.length() > 0) {
             for (LayoutSlip x : layoutEditor.slipList) {
@@ -463,12 +504,21 @@ public class LayoutEditorFindItems {
                     result = x;
                     break;
                 }
+>>>>>>> JMRI/master
             }
         }
         return result;
     }
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
+<<<<<<< HEAD
+        if (name.length() <= 0) {
+            return null;
+        }
+        for (LayoutTurntable x : layoutEditor.turntableList) {
+            if (x.getID().equals(name)) {
+                return x;
+=======
         LayoutTurntable result = null;
         if (name.length() > 0) {
             for (LayoutTurntable x : layoutEditor.turntableList) {
@@ -476,6 +526,7 @@ public class LayoutEditorFindItems {
                     result = x;
                     break;
                 }
+>>>>>>> JMRI/master
             }
         }
         return result;
@@ -539,12 +590,16 @@ public class LayoutEditorFindItems {
         return null;
     }
 
+<<<<<<< HEAD
+    // This replacement routine for findObjectByTypeAndName (above)
+=======
     /**
      * find object by name
      * @param name the name of the object that you are looking for
      * @return object the named object
      */
     // NOTE: This replacement routine for findObjectByTypeAndName (above)
+>>>>>>> JMRI/master
     // uses the unique name prefixes to determine what type of item to find.
     // Currently this routine (like the one above that it replaces) is only
     // called by the setObjects routine in TrackSegment.java however in the
@@ -564,9 +619,15 @@ public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
+<<<<<<< HEAD
+            } else if (name.startsWith("T")) {
+                result = findTrackSegmentByName(name);
+            } else if (name.endsWith("-EB")) {
+=======
             } else if (name.startsWith("T")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
             } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.
+>>>>>>> JMRI/master
                 result = findPositionablePointByName(name);
             } else {
                 log.warn("findObjectByName({}): unknown type name prefix", name);

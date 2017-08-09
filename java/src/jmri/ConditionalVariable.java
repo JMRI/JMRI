@@ -778,6 +778,10 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return Bundle.getMessage("EntryExit"); // NOI18N
             default:
+<<<<<<< HEAD
+                log.warn("Invalid conditional item type: {}", t);
+=======
+>>>>>>> JMRI/master
                 return "";
         }
     }

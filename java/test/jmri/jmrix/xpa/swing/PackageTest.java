@@ -9,8 +9,13 @@ import org.junit.runners.Suite;
     jmri.jmrix.xpa.swing.xpaconfig.PackageTest.class,
     jmri.jmrix.xpa.swing.packetgen.PackageTest.class,
     XpaMenuTest.class,
+<<<<<<< HEAD
+    XpaComponentFactoryTest.class
+
+=======
     XpaComponentFactoryTest.class,
     BundleTest.class
+>>>>>>> JMRI/master
 })
 
 /**

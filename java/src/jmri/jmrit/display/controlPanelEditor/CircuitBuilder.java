@@ -175,9 +175,18 @@ public class CircuitBuilder {
 
         JMenu blockNeeds = new JMenu(Bundle.getMessage("blockNeedsIconsItem"));
         _todoMenu.add(blockNeeds);
+<<<<<<< HEAD
+        ActionListener editCircuitAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String sysName = event.getActionCommand();
+                editCircuitError(sysName);
+            }
+=======
         ActionListener editCircuitAction = (ActionEvent event) -> {
             String sysName = event.getActionCommand();
             editCircuitError(sysName);
+>>>>>>> JMRI/master
         };
         if (_bareBlock.size() > 0) {
             for (int i = 0; i < _bareBlock.size(); i++) {
@@ -217,10 +226,21 @@ public class CircuitBuilder {
         JMenuItem iconNeeds;
         if (_unconvertedTrack.size() > 0) {
             iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedConversionItem"));
+<<<<<<< HEAD
+            iconNeeds.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    ArrayList<Positionable> group = new ArrayList<Positionable>();
+                    for (int i = 0; i < _unconvertedTrack.size(); i++) {
+                        group.add(_unconvertedTrack.get(i));
+                    }
+                    _editor.setSelectionGroup(group);
+=======
             iconNeeds.addActionListener((ActionEvent event) -> {
                 ArrayList<Positionable> group = new ArrayList<>();
                 for (int i = 0; i < _unconvertedTrack.size(); i++) {
                     group.add(_unconvertedTrack.get(i));
+>>>>>>> JMRI/master
                 }
                 _editor.setSelectionGroup(group);
             });
@@ -231,10 +251,21 @@ public class CircuitBuilder {
 
         if (_darkTrack.size() > 0) {
             iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedsBlocksItem"));
+<<<<<<< HEAD
+            iconNeeds.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    ArrayList<Positionable> group = new ArrayList<Positionable>();
+                    for (int i = 0; i < _darkTrack.size(); i++) {
+                        group.add(_darkTrack.get(i));
+                    }
+                    _editor.setSelectionGroup(group);
+=======
             iconNeeds.addActionListener((ActionEvent event) -> {
                 ArrayList<Positionable> group = new ArrayList<>();
                 for (int i = 0; i < _darkTrack.size(); i++) {
                     group.add(_darkTrack.get(i));
+>>>>>>> JMRI/master
                 }
                 _editor.setSelectionGroup(group);
             });
@@ -249,9 +280,18 @@ public class CircuitBuilder {
 
         blockNeeds = new JMenu(Bundle.getMessage("portalsMisplaced"));
         _todoMenu.add(blockNeeds);
+<<<<<<< HEAD
+        ActionListener portalCircuitAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String portalName = event.getActionCommand();
+                portalCircuitError(portalName);
+            }
+=======
         ActionListener portalCircuitAction = (ActionEvent event) -> {
             String portalName = event.getActionCommand();
             portalCircuitError(portalName);
+>>>>>>> JMRI/master
         };
         if (_badPortalIcon.size() > 0) {
             Iterator<String> it = _badPortalIcon.keySet().iterator();
@@ -273,8 +313,16 @@ public class CircuitBuilder {
 
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         _todoMenu.add(pError);
+<<<<<<< HEAD
+        pError.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                errorCheck();
+            }
+=======
         pError.addActionListener((ActionEvent event) -> {
             errorCheck();
+>>>>>>> JMRI/master
         });
 
     }
@@ -298,8 +346,16 @@ public class CircuitBuilder {
 
         JMenuItem circuitItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(circuitItem);
+<<<<<<< HEAD
+        circuitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                newCircuit();
+            }
+=======
         circuitItem.addActionListener((ActionEvent event) -> {
             newCircuit();
+>>>>>>> JMRI/master
         });
 
         JMenuItem editCircuitItem = new JMenuItem(Bundle.getMessage("editCircuitItem"));
@@ -312,6 +368,39 @@ public class CircuitBuilder {
         _circuitMenu.add(editDirectionItem);
 
         if (_circuitMap.size() > 0) {
+<<<<<<< HEAD
+            editCircuitItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    editCircuit("editCircuitItem");
+                }
+            });
+            editPortalsItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    editPortals("editPortalsItem");
+                }
+            });
+            editCircuitPathsItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    editCircuitPaths("editCircuitPathsItem");
+                }
+            });
+            editDirectionItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    editPortalDirection("editDirectionItem");
+                }
+            });
+            // delay error detection until ControlPanelEditor is fully loaded
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("circuitErrorsItem"));
+            mi.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    checkCircuits();
+                }
+=======
             editCircuitItem.addActionListener((ActionEvent event) -> {
                 editCircuit("editCircuitItem");
             });
@@ -328,6 +417,7 @@ public class CircuitBuilder {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("circuitErrorsItem"));
             mi.addActionListener((ActionEvent event) -> {
                 checkCircuits();
+>>>>>>> JMRI/master
             });
             _circuitMenu.add(mi);
         } else {
@@ -623,26 +713,54 @@ public class CircuitBuilder {
         JButton doneButton;
         if (add) {
             doneButton = new JButton(Bundle.getMessage("ButtonAddCircuit"));
+<<<<<<< HEAD
+            doneButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    if (doAddAction()) {
+                        _dialog.dispose();
+                    }
+=======
             doneButton.addActionListener((ActionEvent a) -> {
                 if (doAddAction()) {
                     _dialog.dispose();
+>>>>>>> JMRI/master
                 }
             });
         } else {
             doneButton = new JButton(Bundle.getMessage("ButtonOpenCircuit"));
+<<<<<<< HEAD
+            doneButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    if (doOpenAction()) {
+                        _dialog.dispose();
+                    }
+=======
             doneButton.addActionListener((ActionEvent a) -> {
                 if (doOpenAction()) {
                     _dialog.dispose();
+>>>>>>> JMRI/master
                 }
             });
         }
         panel0.add(doneButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+<<<<<<< HEAD
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                _sysNameBox.setText("");
+                _currentBlock = null;
+                _dialog.dispose();
+            }
+=======
         cancelButton.addActionListener((ActionEvent a) -> {
             _sysNameBox.setText("");
             _currentBlock = null;
             _dialog.dispose();
+>>>>>>> JMRI/master
         });
         panel0.add(cancelButton);
         buttonPanel.add(panel0);
@@ -760,7 +878,11 @@ public class CircuitBuilder {
                         + selections.size() + " icons.");
             }
             NamedBeanHandle<OBlock> handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+<<<<<<< HEAD
+                                                .getNamedBeanHandle(block.getSystemName(), block);
+=======
                     .getNamedBeanHandle(block.getSystemName(), block);
+>>>>>>> JMRI/master
             for (int i = 0; i < selections.size(); i++) {
                 Positionable pos = selections.get(i);
                 if (pos instanceof IndicatorTrack) {
@@ -1145,16 +1267,32 @@ public class CircuitBuilder {
         if (pos instanceof TurnoutIcon) {
             makePaletteFrame("IndicatorTO");
             _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
+<<<<<<< HEAD
+            ActionListener updateAction = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    convertTO();
+                }
+=======
             ActionListener updateAction = (ActionEvent a) -> {
                 convertTO();
+>>>>>>> JMRI/master
             };
             _trackTOPanel.init(updateAction);
             _convertDialog.add(_trackTOPanel);
         } else {
             makePaletteFrame("IndicatorTrack");
             _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
+<<<<<<< HEAD
+            ActionListener updateAction = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    convertSeg();
+                }
+=======
             ActionListener updateAction = (ActionEvent a) -> {
                 convertSeg();
+>>>>>>> JMRI/master
             };
             _trackPanel.init(updateAction);
             _convertDialog.add(_trackPanel);
@@ -1196,7 +1334,11 @@ public class CircuitBuilder {
     private void convertTO() {
         IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
         t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
+<<<<<<< HEAD
+                             .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
+=======
                 .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
+>>>>>>> JMRI/master
         t.setTurnout(((TurnoutIcon) _oldIcon).getNamedTurnout());
         t.setFamily(_trackTOPanel.getFamilyName());
 
@@ -1219,8 +1361,13 @@ public class CircuitBuilder {
 
     private void convertSeg() {
         IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
+<<<<<<< HEAD
+        t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class) 
+                                .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
+=======
         t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
+>>>>>>> JMRI/master
         t.setFamily(_trackPanel.getFamilyName());
 
         HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
@@ -1390,7 +1537,11 @@ public class CircuitBuilder {
                         ic.remove(pos);
                         ((IndicatorTrack) pos).setOccBlockHandle(
                                 InstanceManager.getDefault(NamedBeanHandleManager.class)
+<<<<<<< HEAD
+                                     .getNamedBeanHandle(editBlock.getSystemName(), editBlock));
+=======
                                         .getNamedBeanHandle(editBlock.getSystemName(), editBlock));
+>>>>>>> JMRI/master
                         return true;
                     }
                     return false;

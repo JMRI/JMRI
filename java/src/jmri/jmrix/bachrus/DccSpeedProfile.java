@@ -101,8 +101,13 @@ public class DccSpeedProfile {
             today = new Date();
             result = formatter.format(today);
             // title 
+<<<<<<< HEAD
+            String annotate = "Bachrus MTS-DCC " + rb.getString("ProfileFor") + " "
+                    + address + " " + rb.getString("CreatedOn")
+=======
             String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
                     + address + " " + Bundle.getMessage("CreatedOn")
+>>>>>>> JMRI/master
                     + " " + result;
             p.print(annotate);
             p.println();

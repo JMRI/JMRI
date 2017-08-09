@@ -73,7 +73,11 @@ public class NullProfile extends Profile {
     @Override
     public int hashCode() {
         int hash = 7;
+<<<<<<< HEAD
+        hash = 71 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+=======
         hash = 71 * hash + this.getId().hashCode();
+>>>>>>> JMRI/master
         return hash;
     }
 
@@ -86,7 +90,11 @@ public class NullProfile extends Profile {
             return false;
         }
         final NullProfile other = (NullProfile) obj;
+<<<<<<< HEAD
+        return !((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()));
+=======
         return this.getId().equals(other.getId());
+>>>>>>> JMRI/master
     }
 
     /**

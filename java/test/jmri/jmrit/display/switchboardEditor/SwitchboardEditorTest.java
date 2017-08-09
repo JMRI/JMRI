@@ -28,7 +28,10 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor("Test Layout");
         Assert.assertNotNull("exists", e);
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -41,7 +44,10 @@ public class SwitchboardEditorTest {
         // numbers, but setSize expects integer parameters.
         Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
         Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
 //    @Test
@@ -59,7 +65,10 @@ public class SwitchboardEditorTest {
         SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false.
         Assert.assertFalse("isDirty", e.isDirty());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -69,7 +78,10 @@ public class SwitchboardEditorTest {
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
         Assert.assertTrue("isDirty after set", e.isDirty());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -79,7 +91,10 @@ public class SwitchboardEditorTest {
         // defaults to false, so set it to true.
         e.setDirty(true);
         Assert.assertTrue("isDirty after set", e.isDirty());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -91,7 +106,10 @@ public class SwitchboardEditorTest {
         // then call resetDirty, which sets it back to false.
         e.resetDirty();
         Assert.assertFalse("isDirty after reset", e.isDirty());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -99,7 +117,10 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
         Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
     @Test
@@ -108,7 +129,10 @@ public class SwitchboardEditorTest {
         SwitchboardEditor e = new SwitchboardEditor();
         e.setDefaultTextColor("pink");
         Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
+<<<<<<< HEAD
+=======
         e.dispose();
+>>>>>>> JMRI/master
     }
 
 //    @Test

@@ -39,9 +39,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public void loadDetails(JPanel details) {
 
         setInstance();
+<<<<<<< HEAD
+        b = new JButton("Configure C/MRI nodes");
+=======
         b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+=======
 //        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo())); //c2
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }

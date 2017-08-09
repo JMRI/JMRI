@@ -43,6 +43,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(RosterMediaPaneTest.class));
         suite.addTest(new JUnit4TestAdapter(RosterRecorderTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.roster.rostergroup.PackageTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new JUnit4TestAdapter(DeleteRosterItemActionTest.class));
         suite.addTest(new JUnit4TestAdapter(ExportRosterItemActionTest.class));
         suite.addTest(new JUnit4TestAdapter(FullBackupExportActionTest.class));
@@ -52,6 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PrintRosterEntryTest.class));
         suite.addTest(new JUnit4TestAdapter(UpdateDecoderDefinitionActionTest.class));
         suite.addTest(new JUnit4TestAdapter(RosterSpeedProfileTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

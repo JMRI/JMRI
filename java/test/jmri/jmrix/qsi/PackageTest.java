@@ -42,8 +42,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(QsiPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.swing.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(QSIConnectionTypeListTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new JUnit4TestAdapter(QSIMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(QsiProgrammerTest.class));
+>>>>>>> JMRI/master
 
         return suite;
     }

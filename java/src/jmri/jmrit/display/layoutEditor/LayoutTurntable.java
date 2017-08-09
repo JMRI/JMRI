@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -103,11 +105,19 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
     // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "LayoutTurntable " + ident;
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> JMRI/master
     /**
      * Accessor methods
      */
@@ -616,8 +626,13 @@ public class LayoutTurntable extends LayoutTrack {
             dccControlled.setSelected(isTurnoutControlled());
             dccControlled.addActionListener((ActionEvent e) -> {
                 setTurnoutControlled(dccControlled.isSelected());
+<<<<<<< HEAD
+                for (RayTrack ray : rayList) {
+                    ray.showTurnoutDetails();
+=======
                 for (RayTrack rt : rayList) {
                     rt.showTurnoutDetails();
+>>>>>>> JMRI/master
                 }
                 editTurntableFrame.pack();
             });
@@ -721,8 +736,13 @@ public class LayoutTurntable extends LayoutTrack {
         // scan rays to find the one to delete
         RayTrack closest = null;
         double bestDel = 360.0;
+<<<<<<< HEAD
+        for (int i = 0; i < rayList.size(); i++) {
+            double del = diffAngle(rayList.get(i).getAngle(), ang);
+=======
         for (RayTrack rt : rayList) {
             double del = MathUtil.absDiffAngleDEG(rt.getAngle(), ang);
+>>>>>>> JMRI/master
             if (del < bestDel) {
                 bestDel = del;
                 closest = rt;
@@ -1051,6 +1071,41 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
+<<<<<<< HEAD
+    private void draw(Graphics2D g2) {
+        // draw turntable circle - default track color, side track width
+        layoutEditor.setTrackStrokeWidth(g2, false);
+        double r = getRadius();
+        g2.setColor(defaultTrackColor);
+        g2.draw(new Ellipse2D.Double(
+                center.getX() - r, center.getY() - r, r + r, r + r));
+        // draw ray tracks
+        for (int j = 0; j < getNumberRays(); j++) {
+            Point2D pt = getRayCoordsOrdered(j);
+            TrackSegment t = getRayConnectOrdered(j);
+            if (t != null) {
+                layoutEditor.setTrackStrokeWidth(g2, t.getMainline());
+                LayoutBlock b = t.getLayoutBlock();
+                if (b != null) {
+                    g2.setColor(b.getBlockColor());
+                } else {
+                    g2.setColor(defaultTrackColor);
+                }
+            } else {
+                layoutEditor.setTrackStrokeWidth(g2, false);
+                g2.setColor(defaultTrackColor);
+            }
+            g2.draw(new Line2D.Double(new Point2D.Double(
+                    pt.getX() - ((pt.getX() - center.getX()) * 0.2),
+                    pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
+        }
+        if (isTurnoutControlled() && getPosition() != -1) {
+            Point2D pt = getRayCoordsIndexed(getPosition());
+            g2.draw(new Line2D.Double(new Point2D.Double(
+                    pt.getX() - ((pt.getX() - center.getX()) * 1.8/* 2 */),
+                    pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */
+                    )), pt));
+=======
     /**
      * draw this turntable
      *
@@ -1100,6 +1155,7 @@ public class LayoutTurntable extends LayoutTrack {
                 g2.setColor(Color.green);
             }
             g2.draw(layoutEditor.trackControlPointRectAt(pt));
+>>>>>>> JMRI/master
         }
     }
 

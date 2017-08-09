@@ -12,9 +12,13 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     PollTableActionTest.class,
     BundleTest.class,
+<<<<<<< HEAD
+    PollTableFrameTest.class
+=======
     PollTableFrameTest.class,
     PollDataModelTest.class,
     PollTablePaneTest.class
+>>>>>>> JMRI/master
 })
 public class PackageTest{
 }

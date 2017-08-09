@@ -6,7 +6,10 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
 import javax.swing.JPanel;
+>>>>>>> JMRI/master
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import org.slf4j.Logger;

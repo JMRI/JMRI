@@ -1,7 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BasicStroke;
+<<<<<<< HEAD
+=======
 import java.awt.Color;
+>>>>>>> JMRI/master
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -9,6 +12,10 @@ import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
+<<<<<<< HEAD
+import java.awt.geom.Ellipse2D;
+=======
+>>>>>>> JMRI/master
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -94,10 +101,26 @@ public class TrackSegment extends LayoutTrack {
         if ((c1 == null) || (c2 == null)) {
             log.error("Invalid object in TrackSegment constructor call - " + id);
         }
+<<<<<<< HEAD
+        connect1 = c1;
+        connect2 = c2;
+        if ((t1 < POS_POINT)
+                || (((t1 > LEVEL_XING_D) && (t1 < SLIP_A))
+                || ((t1 > SLIP_D) && (t1 < TURNTABLE_RAY_OFFSET)))) {
+            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
+        } else {
+            type1 = t1;
+        }
+        if ((t2 < POS_POINT)
+                || (((t2 > LEVEL_XING_D) && (t2 < SLIP_A))
+                || ((t2 > SLIP_D) && (t2 < TURNTABLE_RAY_OFFSET)))) {
+            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
+=======
 
         if (isConnectionType(t1)) {
             connect1 = c1;
             type1 = t1;
+>>>>>>> JMRI/master
         } else {
             log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
         }
@@ -133,17 +156,25 @@ public class TrackSegment extends LayoutTrack {
         hidden = hide;
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "TrackSegment " + ident;
+    }
+
     /**
      * Get debugging string for the TrackSegment.
      *
      * @return text showing id and connections of this segment
      */
+<<<<<<< HEAD
+=======
     public String toString() {
         return "TrackSegment " + ident
                 + " c1:{" + getConnect1Name() + " (" + type1 + "},"
                 + " c2:{" + getConnect2Name() + " (" + type2 + "}";
 
     }
+>>>>>>> JMRI/master
 
     /*
      * Accessor methods
@@ -285,6 +316,25 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private String getConnectName(Object o, int type) {
+<<<<<<< HEAD
+        if (type == POS_POINT) {
+            return ((PositionablePoint) o).getID();
+        }
+        if ((type == TURNOUT_A) || (type == TURNOUT_B)
+                || (type == TURNOUT_C) || (type == TURNOUT_D)) {
+            return ((LayoutTurnout) o).getName();
+        }
+        if ((type == LEVEL_XING_A) || (type == LEVEL_XING_B)
+                || (type == LEVEL_XING_C) || (type == LEVEL_XING_D)) {
+            return ((LevelXing) o).getID();
+        }
+        if ((type == SLIP_A) || (type == SLIP_B)
+                || (type == SLIP_C) || (type == SLIP_D)) {
+            return ((LayoutSlip) o).getName();
+        }
+        if (type >= TURNTABLE_RAY_OFFSET) {
+            return ((LayoutTurntable) o).getID();
+=======
         String result = null;
         if (null != o) {
             result = ((LayoutTrack) o).getName();
@@ -317,6 +367,7 @@ public class TrackSegment extends LayoutTrack {
             } else {
                 bezierControlPoints.add(p);
             }
+>>>>>>> JMRI/master
         }
     }
 
@@ -347,6 +398,13 @@ public class TrackSegment extends LayoutTrack {
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
+<<<<<<< HEAD
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        }
+        connect2 = p.getFinder().findObjectByName(tConnect2Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+=======
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
@@ -354,6 +412,7 @@ public class TrackSegment extends LayoutTrack {
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
+>>>>>>> JMRI/master
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -615,6 +674,10 @@ public class TrackSegment extends LayoutTrack {
         if (getArc() || getBezier()) {
             if (hideConstructionLines()) {
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
+<<<<<<< HEAD
+
+=======
+>>>>>>> JMRI/master
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
@@ -851,13 +914,31 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
+<<<<<<< HEAD
+<<<<<<< HEAD
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
+=======
             layoutEditor.setupComboBox(blockNameComboBox, false, true);
+>>>>>>> JMRI/master
+=======
+            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+>>>>>>> JMRI/master
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 
             contentPane.add(panel2);
 
+<<<<<<< HEAD
+            if (getArc() && getCircle()) {
+=======
             if (getArc() && circle) {
+>>>>>>> JMRI/master
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -1333,7 +1414,11 @@ public class TrackSegment extends LayoutTrack {
     /*
      * Calculate the initally parameters for drawing a circular track segment.
      */
+<<<<<<< HEAD
+    protected void calculateTrackSegmentAngle(/*Point2D pt1, Point2D pt2*/) {
+=======
     protected void calculateTrackSegmentAngle() {
+>>>>>>> JMRI/master
         Point2D pt1, pt2;
         if (getFlip()) {
             pt1 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1357,21 +1442,36 @@ public class TrackSegment extends LayoutTrack {
                 setTmpAngle(getAngle());
             }
             // Convert angle to radiants in order to speed up maths
+<<<<<<< HEAD
+            double halfAngleRAD = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
+=======
             double halfAngleRAD = Math.toRadians(getTmpAngle()) / 2.0D;
+>>>>>>> JMRI/master
 
             // Compute arc's chord
             double a = pt2x - pt1x;
             double o = pt2y - pt1y;
+<<<<<<< HEAD
+            double chord = java.lang.Math.sqrt(((a * a) + (o * o)));
+=======
             double chord = Math.hypot(a, o);
+>>>>>>> JMRI/master
             setChordLength(chord);
 
             // Make sure chord is not null
             // In such a case (ep1 == ep2), there is no arc to drawHidden
             if (chord > 0.0D) {
+<<<<<<< HEAD
+                double radius = (chord / 2) / java.lang.Math.sin(halfAngleRAD);
+                // Circle
+                double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
+                setStartadj(java.lang.Math.toDegrees(startRad));
+=======
                 double radius = (chord / 2) / Math.sin(halfAngleRAD);
                 // Circle
                 double startRad = Math.atan2(a, o) - halfAngleRAD;
                 setStartadj(Math.toDegrees(startRad));
+>>>>>>> JMRI/master
                 if (getCircle()) {
                     // Circle - Compute center
                     setCentreX(pt2x - Math.cos(startRad) * radius);
@@ -1383,11 +1483,18 @@ public class TrackSegment extends LayoutTrack {
                     setCX(getCentreX() - radius);
                     setCY(getCentreY() - radius);
 
+<<<<<<< HEAD
+                    // Compute the vlues for locating the circle
+                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));
+                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngleRAD) * radius);
+
+=======
                     // Compute where to locate the control circle on the circle segment
                     Point2D offset = new Point2D.Double(
                             +radius * Math.cos(startRad + halfAngleRAD),
                             -radius * Math.sin(startRad + halfAngleRAD));
                     setCentreSeg(MathUtil.add(getCentre(), offset));
+>>>>>>> JMRI/master
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
                     setStartadj(Math.round(getStartadj() / 90.0D) * 90.0D);
@@ -1407,6 +1514,29 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+<<<<<<< HEAD
+    public void draw(Graphics2D g2) {
+        LayoutBlock b = getLayoutBlock();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+            layoutEditor.getCoords(getConnect2(), getType2())));
+    }   // draw(Graphics2D g2)
+
+
+    public void drawDashed(Graphics2D g2, boolean mainline) {
+        if ((!isHidden()) && getDashed() && (mainline == getMainline())) {
+            LayoutBlock b = getLayoutBlock();
+            if (b != null) {
+                g2.setColor(b.getBlockColor());
+            } else {
+                g2.setColor(defaultTrackColor);
+            }
+=======
     public void drawHidden(Graphics2D g2) {
         setColorForTrackBlock(g2, getLayoutBlock());
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -1417,6 +1547,7 @@ public class TrackSegment extends LayoutTrack {
     public void drawDashed(Graphics2D g2, boolean mainline) {
         if ((!isHidden()) && getDashed() && (mainline == getMainline())) {
             setColorForTrackBlock(g2, getLayoutBlock());
+>>>>>>> JMRI/master
             float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
             if (getArc()) {
                 calculateTrackSegmentAngle();
@@ -1425,6 +1556,14 @@ public class TrackSegment extends LayoutTrack {
                 g2.setStroke(drawingStroke);
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
                 g2.setStroke(originalStroke);
+<<<<<<< HEAD
+            } else {
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+                double delX = end1.getX() - end2.getX();
+                double delY = end1.getY() - end2.getY();
+                double cLength = Math.sqrt((delX * delX) + (delY * delY));
+=======
             } else if (getBezier()) {
                 Stroke originalStroke = g2.getStroke();
                 Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
@@ -1452,6 +1591,7 @@ public class TrackSegment extends LayoutTrack {
                 double delY = end1.getY() - end2.getY();
                 double cLength = Math.hypot(delX, delY);
 
+>>>>>>> JMRI/master
                 // note: The preferred dimension of a dash (solid + blank space) is
                 //         5 * the track width - about 60% solid and 40% blank.
                 int nDashes = (int) (cLength / ((trackWidth) * 5.0));
@@ -1464,12 +1604,31 @@ public class TrackSegment extends LayoutTrack {
                 double begY = end1.getY();
                 for (int k = 0; k < nDashes; k++) {
                     g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
+<<<<<<< HEAD
+                            new Point2D.Double((begX + (delXDash * 0.5)), (begY + (delYDash * 0.5)))));
+=======
                             new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
+>>>>>>> JMRI/master
                     begX += delXDash;
                     begY += delYDash;
                 }
             }
         }
+<<<<<<< HEAD
+    }
+
+    public void drawSolid(Graphics2D g2, boolean isMainline) {
+        if ((!isHidden()) && (!getDashed()) && (isMainline == getMainline())) {
+            LayoutBlock b = getLayoutBlock();
+            if (b != null) {
+                g2.setColor(b.getBlockColor());
+            } else {
+                g2.setColor(defaultTrackColor);
+            }
+            if (getArc()) {
+                calculateTrackSegmentAngle();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+=======
     }   // drawDashed(Graphics2D g2, boolean mainline)
 
     public void drawSolid(Graphics2D g2, boolean isMainline) {
@@ -1486,6 +1645,7 @@ public class TrackSegment extends LayoutTrack {
                 Point2D pt1 = getBezierControlPoint(0);
                 Point2D pt2 = getBezierControlPoint(1);
                 MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
+>>>>>>> JMRI/master
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1493,6 +1653,45 @@ public class TrackSegment extends LayoutTrack {
             }
             trackRedrawn();
         }
+<<<<<<< HEAD
+    }
+
+    public void drawOvals(Graphics2D g2) {
+        LayoutBlock b = getLayoutBlock();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        if (getCircle()) {
+            if (showConstructionLinesLE()) {
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+                    new Point2D.Double(getCentreX(), getCentreY())));
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()),
+                    new Point2D.Double(getCentreX(), getCentreY())));
+                g2.draw(new Ellipse2D.Double(getCentreSegX() - controlPointSize2, getCentreSegY() - controlPointSize2,
+                    controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
+            }
+        } else {
+            Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+            double cX = (pt1.getX() + pt2.getX()) / 2.0D;
+            double cY = (pt1.getY() + pt2.getY()) / 2.0D;
+            if (showConstructionLinesLE()) { //draw track circles
+                g2.draw(new Ellipse2D.Double(
+                        cX - controlPointSize2, cY - controlPointSize2,
+                        controlPointSize2 + controlPointSize2,
+                        controlPointSize2 + controlPointSize2));
+            }
+            if (getArc()) {
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+                    layoutEditor.getCoords(getConnect2(), getType2())));
+            }
+        }
+        g2.setColor(defaultTrackColor);
+    }
+
+=======
     }   // drawSolid(Graphics2D g2, boolean isMainline)
 
     public void drawEditControls(Graphics2D g2) {
@@ -1685,5 +1884,6 @@ public class TrackSegment extends LayoutTrack {
         return results;
     }   // getLayoutConnectivity()
 
+>>>>>>> JMRI/master
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }

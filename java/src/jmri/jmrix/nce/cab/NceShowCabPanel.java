@@ -112,6 +112,11 @@ import org.slf4j.LoggerFactory;
  */
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
+<<<<<<< HEAD
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
+
+=======
+>>>>>>> JMRI/master
     private int replyLen = 0;      // expected byte length
     private int waiting = 0;      // to catch responses not
     // intended for this module
@@ -516,9 +521,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                  } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
                     cabData[currCabId].type = Bundle.getMessage("TypeProCab");
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_NODISP) {
+<<<<<<< HEAD
+                    cabData[currCabId].type = rb.getString("TypeCab04"); // Cab04 or Cab06
+                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+                    cabData[currCabId].type = rb.getString("TypeUSB"); // USB or Mini-Panel
+=======
                     cabData[currCabId].type = Bundle.getMessage("TypeCab04"); // Cab04 or Cab06
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     cabData[currCabId].type = Bundle.getMessage("TypeUSB"); // USB or Mini-Panel
+>>>>>>> JMRI/master
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_AIU) {
                     cabData[currCabId].type = Bundle.getMessage("TypeAIU");
                 } else {
@@ -832,9 +843,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
                     cabData[currCabId].type = Bundle.getMessage("TypeProCab");
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_NODISP) {
+<<<<<<< HEAD
+                    cabData[currCabId].type = rb.getString("TypeCab04"); // Cab04 or Cab06
+                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+                    cabData[currCabId].type = rb.getString("TypeUSB"); // USB or Mini-Panel
+=======
                     cabData[currCabId].type = Bundle.getMessage("TypeCab04"); // Cab04 or Cab06
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     cabData[currCabId].type = Bundle.getMessage("TypeUSB"); // USB or Mini-Panel
+>>>>>>> JMRI/master
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_AIU) {
                     cabData[currCabId].type = Bundle.getMessage("TypeAIU");
                 } else {

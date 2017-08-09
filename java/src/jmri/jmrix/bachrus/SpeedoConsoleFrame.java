@@ -771,7 +771,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     /**
      * Set the RosterEntry for this throttle.
+<<<<<<< HEAD
+=======
      *
+>>>>>>> JMRI/master
      * @param entry roster entry selected for throttle
      */
     public void setRosterEntry(RosterEntry entry) {

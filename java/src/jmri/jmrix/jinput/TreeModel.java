@@ -33,7 +33,11 @@ import org.slf4j.LoggerFactory;
  * constructor is still active.
  *
  * @author Bob Jacobsen Copyright 2008, 2010
+<<<<<<< HEAD
+  */
+=======
  */
+>>>>>>> JMRI/master
 public final class TreeModel extends DefaultTreeModel {
 
     private TreeModel() {
@@ -48,9 +52,15 @@ public final class TreeModel extends DefaultTreeModel {
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         // start the USB gathering
+<<<<<<< HEAD
+        Runner r = new Runner();
+        r.setName("TreeModel loader");
+        r.start();
+=======
         runner = new Runner();
         runner.setName("jinput.TreeModel loader");
         runner.start();
+>>>>>>> JMRI/master
     }
     Runner runner;
     

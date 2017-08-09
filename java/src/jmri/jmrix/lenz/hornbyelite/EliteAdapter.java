@@ -32,10 +32,21 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());
+<<<<<<< HEAD
+<<<<<<< HEAD
+        option1Name = "FlowControl";
+        options.put(option1Name, new Option("Elite connection uses : ", validOption1));
+        option2Name = "Buffer";
+        options.put(option2Name, new Option("Check Buffer : ", validOption2));
+=======
+        option1Name = Bundle.getMessage("FlowControlTitle");
+=======
         option1Name = "FlowControl"; // NOI18N
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
         option2Name = Bundle.getMessage("BufferTitle");
         options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
+>>>>>>> JMRI/master
         setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
@@ -208,7 +219,10 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     // base class methods for the XNetSerialPortController interface
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {

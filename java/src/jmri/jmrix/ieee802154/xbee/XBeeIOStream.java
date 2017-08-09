@@ -2,7 +2,10 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.TimeoutException;
+<<<<<<< HEAD
+=======
 import com.digi.xbee.api.exceptions.XBeeException;
+>>>>>>> JMRI/master
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;

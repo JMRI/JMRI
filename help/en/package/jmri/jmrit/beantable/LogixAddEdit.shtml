@@ -61,7 +61,13 @@
       names may be any useful text, provided the new user name is
       not used by another Conditional belonging to this Logix. It
       may be the same as the user name of another Logix's
+<<<<<<< HEAD
+      Conditional.  <strong>Note: The name must be unique among all
+      conditionals if it is going to be referred to by another
+      Logix.</strong> <em>When editing the user name (or any item in    
+=======
       Conditional. <em>When editing the user name (or any item in    
+>>>>>>> JMRI/master
       any JMRI table) please remember to move to another cell in
       the table so that the program is notified that you have
       finished your entry, otherwise the entry may not take

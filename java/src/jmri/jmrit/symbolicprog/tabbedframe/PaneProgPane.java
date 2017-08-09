@@ -878,6 +878,48 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
+        // found no CVs needing read, try indexed CVs
+        if (log.isDebugEnabled()) {
+            log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
+        }
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
+            int indxState = _varModel.getState(indxVarNum);
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
+            }
+            VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indexedCvListIndex++;
+            if (iCv.isToRead()) {
+                String sz = "start read of indexed cv "
+                        + (_indexedCvModel.getCvByRow(indexedCvListIndex - 1)).cvName();
+                if (log.isDebugEnabled()) {
+                    log.debug(sz);
+                }
+                setBusy(true);
+                if (_programmingIndexedCV != null) {
+                    log.error(
+                            "listener already set at read start");
+                }
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                // and make the read request
+                // _programmingIndexedCV.setToRead(false);  // CVs set this themselves
+                _programmingIndexedCV.readAll();
+                if (log.isDebugEnabled()) {
+                    log.debug(
+                            "return from starting indexed CV read");
+                }
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
+            }
+        }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextRead found nothing to do");
@@ -930,6 +972,44 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
+        // found no CVs needing read, try indexed CVs
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
+            int indxState = _varModel.getState(indxVarNum);
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
+            }
+            VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indexedCvListIndex++;
+            if (iCv.isToRead()) {
+                String sz = "start confirm of indexed cv "
+                        + (_indexedCvModel.getCvByRow(indexedCvListIndex - 1)).cvName();
+                if (log.isDebugEnabled()) {
+                    log.debug(sz);
+                }
+                setBusy(true);
+                if (_programmingIndexedCV != null) {
+                    log.error(
+                            "listener already set at confirm start");
+                }
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                // and make the compare request
+                _programmingIndexedCV.confirmAll();
+                if (log.isDebugEnabled()) {
+                    log.debug(
+                            "return from starting indexed CV confirm");
+                }
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
+            }
+        }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextConfirm found nothing to do");
@@ -1055,6 +1135,45 @@ public class PaneProgPane extends javax.swing.JPanel
                 return true;  // only make one request at a time!
             }
         }
+<<<<<<< HEAD
+        // check for Indexed CVs to handle (e.g. for Indexed CV table)
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
+            int indxState = _varModel.getState(indxVarNum);
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        "nextWrite indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
+            }
+            VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indexedCvListIndex++;
+            if (iCv.isToWrite()) {
+                String sz = "start write of indexed cv "
+                        + (_indexedCvModel.getCvByRow(indexedCvListIndex - 1)).cvName();
+                if (log.isDebugEnabled()) {
+                    log.debug(sz);
+                }
+
+                setBusy(true);
+                if (_programmingIndexedCV != null) {
+                    log.error(
+                            "listener already set at read start");
+                }
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                // _programmingIndexedCV.setToWrite(false);  // CVs set this themselves
+                // and make the write request
+                _programmingIndexedCV.writeAll();
+                if (log.isDebugEnabled()) {
+                    log.debug("return from starting indexed CV read");
+                }
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
+            }
+        }
+=======
+>>>>>>> JMRI/master
         // nothing to program, end politely
         if (log.isDebugEnabled()) {
             log.debug("nextWrite found nothing to do");
@@ -1227,6 +1346,21 @@ public class PaneProgPane extends javax.swing.JPanel
             //    }
             //}
             replyWhileProgrammingCV();
+<<<<<<< HEAD
+        } else if (e.getSource() == _programmingIndexedCV
+                && e.getPropertyName().equals("Busy")
+                && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+            if (_programmingIndexedCV.getState() == VariableValue.UNKNOWN) {
+                if (retry == 0) {
+                    indexedCvListIndex--;
+                    retry++;
+                } else {
+                    retry = 0;
+                }
+            }
+            replyWhileProgrammingIndxCV();
+=======
+>>>>>>> JMRI/master
         } else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) {
                 log.debug("ignoring change of Busy " + e.getNewValue()
@@ -1344,6 +1478,37 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
+            } else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight() * 14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" + _indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(in);
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -1532,6 +1697,37 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
+            } else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight() * 14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" + _indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(in);
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -1657,6 +1853,37 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
+            } else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight() * 14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" + _indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(in);
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {
@@ -1985,6 +2212,37 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeSoundLabel(e, c, g, cs);
             } else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
+<<<<<<< HEAD
+            } else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight() * 14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" + _indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(in);
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+=======
+>>>>>>> JMRI/master
             } else if (name.equals("fnmapping")) {
                 pickFnMapPanel(c, g, cs, modelElem);
             } else if (name.equals("dccaddress")) {

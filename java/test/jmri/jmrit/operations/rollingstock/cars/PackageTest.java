@@ -50,6 +50,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameActionTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarDeleteAttributeActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadAttributeActionTest.class));
@@ -64,6 +66,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(PrintCarRosterActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ExportCarsTest.class));
 
+>>>>>>> JMRI/master
         return suite;
     }
 

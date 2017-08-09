@@ -288,7 +288,15 @@ public class SimulatorAdapter extends NcePortController implements
         {
             return null;      // command less than 0x80 (times out)
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+        if (command < 0x80 || command > 0xBF) { // Command is out of range
+=======
         if (command > 0xBF) { // Command is out of range
+>>>>>>> JMRI/master
+=======
+        if (command > 0xBF) { // Command is out of range
+>>>>>>> JMRI/master
             reply.setElement(0, NCE_ERROR);  // Nce command not supported
             return reply;
         }
@@ -342,7 +350,23 @@ public class SimulatorAdapter extends NcePortController implements
                 accessoryCommand(m, reply);
                 break;
             case NceMessage.READ_DIR_CV_CMD:
+<<<<<<< HEAD
+<<<<<<< HEAD
+                reply.setElement(0, 123);   // dummy data
+                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
+                reply.setElement(1, NCE_OKAY);  // forces succeed
+                break;
             case NceMessage.READ_PAGED_CV_CMD:
+                reply.setElement(0, 123);   // dummy data
+                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
+                reply.setElement(1, NCE_OKAY);  // forces succeed
+                break;
+=======
+            case NceMessage.READ_PAGED_CV_CMD:
+>>>>>>> JMRI/master
+=======
+            case NceMessage.READ_PAGED_CV_CMD:
+>>>>>>> JMRI/master
             case NceMessage.READ_REG_CMD:
                 reply.setElement(0, 123);   // dummy data
                 //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail

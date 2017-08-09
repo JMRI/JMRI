@@ -47,6 +47,9 @@
         <a href="SystemStructure.shtml">intended system connection structure</a>
         which is documented 
         <a href="SystemStructure.shtml">documented on another page</a>.
+<<<<<<< HEAD
+
+=======
         
         <p>This mostly talks about a type that connected to one or more
         system connections, e.g. represents hardware-specific items.
@@ -57,6 +60,7 @@
     <!-- need to better document the proper package structure: jmri.managers vs jmri.implementations -->
     <!-- need to better document InstanceManager creation of default objects for non-specific types -->
     
+>>>>>>> JMRI/master
       <div class="list">
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also

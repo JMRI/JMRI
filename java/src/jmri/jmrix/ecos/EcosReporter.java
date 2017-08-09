@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
+<<<<<<< HEAD
+ * <P>
+=======
  *
+>>>>>>> JMRI/master
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {

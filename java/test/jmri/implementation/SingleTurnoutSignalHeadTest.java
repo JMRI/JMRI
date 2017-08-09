@@ -125,14 +125,24 @@ public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
     }
     
     // The minimal setup for log4J
+<<<<<<< HEAD
+    @Override
+    protected void setUp() {
+=======
     @Before
     public void setUp() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+<<<<<<< HEAD
+    @Override
+    protected void tearDown() {
+=======
     @After
     public void tearDown() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 

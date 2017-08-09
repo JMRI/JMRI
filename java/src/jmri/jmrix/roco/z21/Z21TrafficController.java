@@ -80,6 +80,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         return null;
     }
 
+<<<<<<< HEAD
+=======
     /**
      * enterProgMode() and enterNormalMode() return any message that
      * needs to be returned to the command station to change modes.
@@ -87,6 +89,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * @see #enterProgMode()
      * @return if no message is needed, you may return null.
      */
+>>>>>>> JMRI/master
     @Override
     protected Z21Message enterNormalMode() {
         return null;
@@ -214,6 +217,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 ConnectionStatus.instance().setConnectionState(
                         p.getSystemConnectionMemo().getUserName(),
                         ((Z21Adapter) controller).getHostName(), ConnectionStatus.CONNECTION_DOWN);
+<<<<<<< HEAD
             }
         }
         // and start threads
@@ -238,6 +242,32 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             public void run() {
                 receiveLoop();
             }
+=======
+            }
+        }
+        // and start threads
+        xmtThread = new Thread(xmtRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    transmitLoop();
+                } catch (Throwable e) {
+                    log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
+                    // ThreadDeath must be thrown per Java API JavaDocs
+                    if (e instanceof ThreadDeath) {
+                        throw e;
+                    }
+                }
+            }
+        });
+        xmtThread.setName("z21.Z21TrafficController Transmit thread");
+        xmtThread.start();
+        rcvThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                receiveLoop();
+            }
+>>>>>>> JMRI/master
         });
         rcvThread.setName("z21.Z21TrafficController Receive thread");
         int xr = rcvThread.getPriority();

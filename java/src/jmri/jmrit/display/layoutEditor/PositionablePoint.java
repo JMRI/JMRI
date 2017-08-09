@@ -58,7 +58,15 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+public class PositionablePoint extends LayoutTrack{
+=======
 public class PositionablePoint extends LayoutTrack {
+>>>>>>> JMRI/master
+=======
+public class PositionablePoint extends LayoutTrack {
+>>>>>>> JMRI/master
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -101,7 +109,11 @@ public class PositionablePoint extends LayoutTrack {
         coords = p;
     }
 
+<<<<<<< HEAD
+    // this should only be used for debugging…
+=======
     // this should only be used for debugging...
+>>>>>>> JMRI/master
     public String toString() {
         return "PositionablePoint " + ident;
     }
@@ -1008,8 +1020,13 @@ public class PositionablePoint extends LayoutTrack {
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
                 (ActionEvent a) -> {
+<<<<<<< HEAD
+            updateLink();
+        });
+=======
                     updateLink();
                 });
+>>>>>>> JMRI/master
 
         // make this button the default button (return or enter activates)
         // Note: We have to invoke this later because we don't currently have a root pane

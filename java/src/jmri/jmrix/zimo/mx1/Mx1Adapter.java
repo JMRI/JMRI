@@ -1,5 +1,12 @@
 package jmri.jmrix.zimo.mx1;
 
+<<<<<<< HEAD
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+=======
+>>>>>>> JMRI/master
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -223,9 +230,14 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     /**
      * Local method to do specific configuration.
      *
+<<<<<<< HEAD
+     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
+     *                                                  the serial port
+=======
      * @throws purejavacomm.UnsupportedCommOperationException if unable to
      *                                                        configure the
      *                                                        serial port
+>>>>>>> JMRI/master
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

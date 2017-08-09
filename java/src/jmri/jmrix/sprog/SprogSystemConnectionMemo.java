@@ -64,9 +64,15 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
+<<<<<<< HEAD
+     * Set the SPROG mode for this connection
+     * @param mode selected mode
+     * 
+=======
      * Set the SPROG mode for this connection.
      *
      * @param mode selected mode
+>>>>>>> JMRI/master
      */
     public void setSprogMode(SprogMode mode) {
         sprogMode = mode;
@@ -92,8 +98,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
+<<<<<<< HEAD
+     * Set the SPROG version object for this connection
+=======
      * Set the SPROG version object for this connection.
      *
+>>>>>>> JMRI/master
      * @param version type and version class
      */
     public void setSprogVersion(SprogVersion version) {
@@ -114,8 +124,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
+<<<<<<< HEAD
+     * Provides access to the TrafficController for this particular connection.
+=======
      * Provide access to the TrafficController for this particular connection.
      *
+>>>>>>> JMRI/master
      * @return current tc for this connection
      */
     public SprogTrafficController getSprogTrafficController() {

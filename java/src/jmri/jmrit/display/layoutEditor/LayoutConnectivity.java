@@ -65,8 +65,11 @@ public class LayoutConnectivity {
     final public static int XOVER_BOUNDARY_CD = 2;  // continuing
     final public static int XOVER_BOUNDARY_AC = 3;  // xed over
     final public static int XOVER_BOUNDARY_BD = 4;  // xed over
+<<<<<<< HEAD
+=======
     final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
     final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
+>>>>>>> JMRI/master
 
     // instance variables
     private LayoutBlock block1 = null;
@@ -96,6 +99,12 @@ public class LayoutConnectivity {
             result = result + ", xover: " + xover.getID() + ", xoverBoundaryType: " + xoverBoundaryType;
         }
         return result;
+    }
+
+    // this should only be used for debugging…
+    public String toString() {
+        return "between " + block1 + " and "
+                + block2 + " in direction " + Path.decodeDirection(direction);
     }
 
     /**

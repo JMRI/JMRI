@@ -227,12 +227,17 @@ public class Z21Message extends AbstractMRMessage {
 
     public String toMonitorString() {
         switch(getOpCode()){
+<<<<<<< HEAD
+           case 0x0040:
+               return "XPressNet Tunnel Message: " + new Z21XNetMessage(this).toMonitorString();       
+=======
            case 0x0010:
                return Bundle.getMessage("Z21MessageStringSerialNoRequest");
            case 0x001A:
                return Bundle.getMessage("Z21MessageStringVersionRequest");
            case 0x0040:
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
+>>>>>>> JMRI/master
            default:
         }
         return toString();

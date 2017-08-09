@@ -37,15 +37,21 @@ import jmri.web.server.WebServerPreferences;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
 import jmri.spi.PreferencesManager;
 import org.openide.util.lookup.ServiceProvider;
+>>>>>>> JMRI/master
 
 /**
  * Manager for the Angular JMRI Web Application.
  *
  * @author Randall Wood (C) 2016
  */
+<<<<<<< HEAD
+=======
 @ServiceProvider(service = PreferencesManager.class)
+>>>>>>> JMRI/master
 public class WebAppManager extends AbstractPreferencesManager {
 
     private final HashMap<Profile, WatchService> watcher = new HashMap<>();

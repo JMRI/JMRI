@@ -44,7 +44,11 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     }
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
+<<<<<<< HEAD
+        return new AbstractAction(Bundle.getMessage("SetXY")) {
+=======
         return new AbstractAction(Bundle.getMessage("SetXY", "")) {
+>>>>>>> JMRI/master
             @Override
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();

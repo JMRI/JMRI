@@ -182,6 +182,10 @@ public class SpecificTrafficController extends SerialTrafficController {
                     }
                     break;
                 default:
+<<<<<<< HEAD
+                    log.warn("Unhandled reply length: {}", msg.getNumDataElements());
+=======
+>>>>>>> JMRI/master
                     break;
             }
         }

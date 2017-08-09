@@ -10,7 +10,10 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+<<<<<<< HEAD
+=======
 import jmri.jmrix.AbstractNode;
+>>>>>>> JMRI/master
 import jmri.jmrix.cmri.serial.*;
 
 /**
@@ -110,6 +113,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         return n;
     }
 
+<<<<<<< HEAD
+        // create and register the ComponentFactory for the GUI
+        InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
+=======
     /**
      * Public static method to check and skip the System Prefix
      * string on a system name.
@@ -227,6 +235,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             nName = systemName.substring(0, offset + 1) + Integer.toString(nAddress) + "B" + Integer.toString(bitNum);
         }
         return nName;
+>>>>>>> JMRI/master
     }
 
     /**
@@ -272,6 +281,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         return altName;
     }
 
+<<<<<<< HEAD
+    /*
+     * Set the traffic controller instance associated with this connection memo.
+=======
     /**
      * Public static method to validate system name format returns 'true' if
      * system name has a valid format, else returns 'false'.
@@ -382,6 +395,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Public static method to construct a C/MRI system name from type
      * character, node address, and bit number.
+>>>>>>> JMRI/master
      * <p>
      * If the supplied character is not valid, or the node address is out of the
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
@@ -392,6 +406,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * the system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or CSnnnBxxxx
      * format. The returned name is normalized.
      */
+<<<<<<< HEAD
+    public void setTrafficController(SerialTrafficController s){
+        tc = s;
+=======
     public String makeSystemName(String type, int nAddress, int bitNum) {
         String nName = "";
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
@@ -412,6 +430,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             nName = getSystemPrefix() + type + Integer.toString(nAddress) + "B" + Integer.toString(bitNum);
         }
         return nName;
+>>>>>>> JMRI/master
     }
 
     /**
@@ -420,6 +439,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return 'null' if illegal systemName format or if the node is not found
      */
+<<<<<<< HEAD
+=======
     public AbstractNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
         // get the node address
         int ua;
@@ -548,6 +569,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     /*
      * Get the traffic controller instance associated with this connection memo.
      */
+>>>>>>> JMRI/master
     public SerialTrafficController  getTrafficController(){
         if (tc == null) {
             setTrafficController(new SerialTrafficController());
@@ -641,6 +663,31 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         }
         return lightManager;
     }
+<<<<<<< HEAD
+
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
+    }
+
+    @Override
+    public void dispose() {
+        InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
+        if (cf != null) {
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        }
+        if (turnoutManager != null) {
+            InstanceManager.deregister(turnoutManager, jmri.jmrix.cmri.serial.SerialTurnoutManager.class);
+        }
+        if (lightManager != null) {
+            InstanceManager.deregister(lightManager, jmri.jmrix.cmri.serial.SerialLightManager.class);
+        }
+        if (sensorManager != null) {
+            InstanceManager.deregister(sensorManager, jmri.jmrix.cmri.serial.SerialSensorManager.class);
+        }
+        super.dispose();
+    }
+=======
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -666,5 +713,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
+>>>>>>> JMRI/master
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
 }

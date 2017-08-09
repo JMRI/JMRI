@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
+<<<<<<< HEAD
+  */
+=======
  */
+>>>>>>> JMRI/master
 public class XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public XNetInitializationManager(XNetSystemConnectionMemo memo) {

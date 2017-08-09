@@ -250,7 +250,10 @@
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
         <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
+<<<<<<< HEAD
+=======
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+>>>>>>> JMRI/master
     </path>
 
     <!-- path to run regular executables -->
@@ -1279,9 +1282,15 @@
           </structure>
 
           <check>
+<<<<<<< HEAD
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+=======
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
+>>>>>>> JMRI/master
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1439,9 +1448,15 @@
           </structure>
 
           <check>
+<<<<<<< HEAD
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+=======
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
+>>>>>>> JMRI/master
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1465,9 +1480,15 @@
           </structure>
 
           <check>
+<<<<<<< HEAD
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+=======
               <rule>
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.70"/>
+>>>>>>> JMRI/master
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1621,7 +1642,15 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <arg value="2750"/><!-- change from default 100 warnings -->
+=======
+            <arg value="2430"/><!-- change from default 100 warnings -->
+>>>>>>> JMRI/master
+=======
             <arg value="2250"/><!-- change from default 100 warnings -->
+>>>>>>> JMRI/master
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1688,7 +1717,15 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <arg value="2750"/><!-- change from default 100 warnings -->
+=======
+            <arg value="2430"/><!-- change from default 100 warnings -->
+>>>>>>> JMRI/master
+=======
             <arg value="2250"/><!-- change from default 100 warnings -->
+>>>>>>> JMRI/master
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1719,14 +1756,31 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
+<<<<<<< HEAD
+            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <link href="http://javacsv.sourceforge.net/"/>
+<<<<<<< HEAD
+            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
+            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
+            <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
+            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
+            <link href="http://http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
+=======
+=======
             <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
+>>>>>>> JMRI/master
             <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="http://static.javadoc.io/org.openlcb/openlcb/0.7.11"/>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>

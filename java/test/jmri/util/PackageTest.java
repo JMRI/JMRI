@@ -92,11 +92,17 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemTypeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlFilenameFilterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.xml.PackageTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(JmriJFrameActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JLogoutputFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));

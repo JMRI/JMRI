@@ -7,11 +7,19 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
+<<<<<<< HEAD
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.Assert;
+import org.junit.Ignore;
+=======
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+>>>>>>> JMRI/master
 
 /**
  * Tests for the Operations PoolTrackFrame class
@@ -345,12 +353,20 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+<<<<<<< HEAD
+        apps.tests.Log4JFixture.setUp();
+=======
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J
     @After
     @Override
     public void tearDown() throws Exception {
+<<<<<<< HEAD
+        apps.tests.Log4JFixture.tearDown();
+=======
+>>>>>>> JMRI/master
         super.tearDown();
     }
 }

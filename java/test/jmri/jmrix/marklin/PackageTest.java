@@ -18,6 +18,9 @@ import org.slf4j.LoggerFactory;
    MarklinPortControllerTest.class,
    MarklinConstantsTest.class,
    MarklinMessageTest.class,
+<<<<<<< HEAD
+   MarklinReplyTest.class
+=======
    MarklinReplyTest.class,
    MarklinPowerManagerTest.class,
    MarklinSensorManagerTest.class,
@@ -27,6 +30,7 @@ import org.slf4j.LoggerFactory;
    MarklinTurnoutManagerTest.class,
    MarklinTurnoutTest.class,
    BundleTest.class
+>>>>>>> JMRI/master
 })
 /**
  * Tests for the jmri.jmrix.marklin package

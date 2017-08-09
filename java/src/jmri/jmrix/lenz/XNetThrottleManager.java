@@ -112,9 +112,13 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
                 | jmri.DccThrottle.SpeedStepMode14);
     }
 
+<<<<<<< HEAD
+    // Handle incoming messages for throttles.
+=======
     /**
      * Handle incoming messages for throttles.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetReply r) {
         // We want to check to see if a throttle has taken over an address
@@ -132,16 +136,24 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
 
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }
 
+<<<<<<< HEAD
+    // Handle a timeout notification
+=======
     /**
      * Handle a timeout notification.
      */
+>>>>>>> JMRI/master
     @Override
     public void notifyTimeout(XNetMessage msg) {
     }

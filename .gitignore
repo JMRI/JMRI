@@ -37,7 +37,10 @@ session.log
 # private / per-user configuration files
 /nbproject/private
 /web/app/nbproject/private
+<<<<<<< HEAD
+=======
 /scripts/config-portable/nbproject/private
+>>>>>>> JMRI/master
 /.idea/workspace.xml
 local.properties
 /test

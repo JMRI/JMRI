@@ -50,6 +50,8 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
 ; - Version 0.1.22.11
 ; - Remove outmoded lib\ch.ntb.usb.jar
 ; -------------------------------------------------------------------------
@@ -60,6 +62,7 @@
 ; - Remove outmoded lib\jna-4.2.2.jar and install jmri.conf
 ; - Remove RXTX and SerialIO files as now replaced by purejavacomm
 ; -------------------------------------------------------------------------
+>>>>>>> JMRI/master
 ; - Version 0.1.22.8
 ; - Remove outmoded jackson files
 ; -------------------------------------------------------------------------
@@ -456,12 +459,15 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
+<<<<<<< HEAD
+=======
     ; -- Delete old USB library files
     Delete "$OUTDIR\ch.ntb.usb.jar"
 
     ; -- Delete old PJC file for JMRI 4.7.5
     Delete "$OUTDIR\jna-4.2.2.jar"
 
+>>>>>>> JMRI/master
     ; -- Delete old jackson jar files as of JMRI 4.7.1
     Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
     Delete "$OUTDIR\jackson-core-2.0.6.jar"

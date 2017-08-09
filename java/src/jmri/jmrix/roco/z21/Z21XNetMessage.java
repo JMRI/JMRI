@@ -25,9 +25,13 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         super(len);
     }
 
+<<<<<<< HEAD
+    // construct from a Z21Message
+=======
     /**
      * Constructor from a Z21Message
      */
+>>>>>>> JMRI/master
     public Z21XNetMessage(Z21Message m) {
         super(m.getLength()-4);
         for(int i = 4; i< m.getLength() ; i++ ){
@@ -35,9 +39,13 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         }
     }
 
+<<<<<<< HEAD
+    // create messages of a particular form
+=======
     /**
      * Create messages of a particular form
      */
+>>>>>>> JMRI/master
     public static XNetMessage getZ21ReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(5);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);

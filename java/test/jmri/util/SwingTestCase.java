@@ -53,6 +53,20 @@ public class SwingTestCase extends JFCTestCase {
     }
 
     protected enum Pixel { // protected to limit leakage outside Swing tests
+<<<<<<< HEAD
+    
+        TRANSPARENT (0x00000000),
+        RED         (0xFFFF0000),
+        GREEN       (0xFF00FF00),
+        BLUE        (0xFF0000FF),
+        WHITE       (0xFFFFFFFF),
+        BLACK       (0xFF000000),
+        YELLOW      (0xFFFFFF00);
+    
+        @Override
+        public String toString() { return formatPixel(value); }
+        public boolean equals(int v) { return value == v; }
+=======
 
         TRANSPARENT(0x00000000),
         RED(0xFFFF0000),
@@ -70,6 +84,7 @@ public class SwingTestCase extends JFCTestCase {
         public boolean equals(int v) {
             return value == v;
         }
+>>>>>>> JMRI/master
         private final int value;
 
         private Pixel(int value) {
@@ -137,7 +152,11 @@ public class SwingTestCase extends JFCTestCase {
             awtSleep(20); // this is completely uncalibrated
         }
     }
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> JMRI/master
     @Override
     protected void setUp() throws Exception {
         super.setUp();

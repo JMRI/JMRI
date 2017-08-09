@@ -41,7 +41,11 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
+<<<<<<< HEAD
+ * @author B. Milhaupt Copyright (C) 2013, 2014
+=======
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
+>>>>>>> JMRI/master
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         implements ActionListener {
@@ -103,7 +107,11 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
+<<<<<<< HEAD
+            JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
+=======
             selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
+>>>>>>> JMRI/master
             selectButton.addActionListener((ActionEvent e) -> {
                 inputContent = new MemoryContents();
                 setDefaultFieldValues();

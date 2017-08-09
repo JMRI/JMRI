@@ -55,6 +55,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void dispose() {
         stopPolling = true;  // tell polling thread to go away
+<<<<<<< HEAD
+=======
         Thread thread = pollThread;
         if (thread != null) {
             try {
@@ -64,6 +66,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 log.warn("dispose interrupted");
             }
         }
+>>>>>>> JMRI/master
         tc.removeNceListener(listener);
         super.dispose();
     }

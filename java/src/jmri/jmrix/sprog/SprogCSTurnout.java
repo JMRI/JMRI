@@ -38,11 +38,15 @@ public class SprogCSTurnout extends AbstractTurnout {
         return _number;
     }
 
+<<<<<<< HEAD
+    // Handle a request to change state by sending a formatted DCC packet
+=======
     /**
      * Handle a request to change state by sending a formatted DCC packet.
      *
      * @param s commanded state to set
      */
+>>>>>>> JMRI/master
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states

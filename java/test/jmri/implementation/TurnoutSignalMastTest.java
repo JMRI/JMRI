@@ -33,6 +33,10 @@ public class TurnoutSignalMastTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
+<<<<<<< HEAD
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
+=======
     //private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
+>>>>>>> JMRI/master
 
 }

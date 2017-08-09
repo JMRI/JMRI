@@ -18,18 +18,28 @@ import org.slf4j.LoggerFactory;
 public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
     // The minimal setup for log4J
+<<<<<<< HEAD
+    @Override
+    protected void setUp() {
+=======
     @Before
     @Override
     public void setUp() {
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         cm = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
     }
 
+<<<<<<< HEAD
+    @Override
+    protected void tearDown() {
+=======
     @After
     @Override
     public void tearDown() {
         cm = null;
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 

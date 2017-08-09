@@ -9,7 +9,11 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author Karl Johan Lisby Copyright (C) 2015
+<<<<<<< HEAD
+  */
+=======
  */
+>>>>>>> JMRI/master
 public class EcosProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;

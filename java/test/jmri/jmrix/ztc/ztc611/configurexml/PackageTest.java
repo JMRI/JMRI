@@ -6,8 +6,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+<<<<<<< HEAD
+    ConnectionConfigXmlTest.class
+=======
     ConnectionConfigXmlTest.class,
     ZTC611XNetTurnoutManagerXmlTest.class
+>>>>>>> JMRI/master
 })
 
 /**

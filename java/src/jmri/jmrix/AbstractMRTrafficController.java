@@ -665,7 +665,11 @@ abstract public class AbstractMRTrafficController {
                     try {
                         transmitLoop();
                     } catch (Throwable e) {
+<<<<<<< HEAD
+                        log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+=======
                         if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+>>>>>>> JMRI/master
                         // ThreadDeath must be thrown per Java API Javadocs
                         if (e instanceof ThreadDeath) {
                             throw e;
@@ -679,9 +683,12 @@ abstract public class AbstractMRTrafficController {
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
                 +" Transmit thread");
+<<<<<<< HEAD
+=======
 
             xmtThread.setDaemon(true);
             xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
+>>>>>>> JMRI/master
             xmtThread.start();
 
             rcvThread = new Thread(new Runnable() {
@@ -694,9 +701,15 @@ abstract public class AbstractMRTrafficController {
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
                 +" Receive thread");
+<<<<<<< HEAD
+            int xr = rcvThread.getPriority();
+            xr++;
+            rcvThread.setPriority(xr);      //bump up the priority
+=======
 
             rcvThread.setPriority(Thread.MAX_PRIORITY);      //bump up the priority
             rcvThread.setDaemon(true);
+>>>>>>> JMRI/master
             rcvThread.start();
             
         } catch (Exception e) {

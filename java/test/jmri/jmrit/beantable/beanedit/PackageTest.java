@@ -35,7 +35,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorDebounceEditActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorEditActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutEditActionTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorPullUpEditActionTest.class));
+>>>>>>> JMRI/master
 
         return suite;
     }

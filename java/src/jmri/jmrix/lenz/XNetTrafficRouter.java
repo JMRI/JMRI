@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2010
+<<<<<<< HEAD
+ *
+=======
+>>>>>>> JMRI/master
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
 
@@ -57,9 +61,13 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
         notify(m);
     }
 
+<<<<<<< HEAD
+    // listen for the messages to the LI100/LI101
+=======
     /**
      * Listen for the messages to the LI100/LI101.
      */
+>>>>>>> JMRI/master
     @Override
     public void message(XNetMessage l) {
     }

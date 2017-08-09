@@ -29,8 +29,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfilePanelTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileTableTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileActionTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

@@ -429,6 +429,47 @@ public class DecoderFile extends XmlFile {
             variableModel.setConstant(e);
         }
 
+<<<<<<< HEAD
+        for (Element e : variablesElement.getChildren("ivariable")) {
+            try {
+                if (log.isDebugEnabled()) {
+                    log.debug("process iVar " + e.getAttribute("CVname"));
+                }
+                // if its associated with an inconsistent number of functions,
+                // skip creating it
+                if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
+                        && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
+                    log.debug("skip due to num functions");
+                    continue;
+                }
+                // if its associated with an inconsistent number of outputs,
+                // skip creating it
+                if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
+                        && getNumOutputs() < e.getAttribute("minOut").getIntValue()) {
+                    log.debug("skip due to num outputs");
+                    continue;
+                }
+                // if not correct productID, skip
+                if (!isProductIDok(e, extraInclude, extraExclude)) {
+                    continue;
+                }
+            } catch (DataConversionException ex) {
+                log.warn("Problem parsing minFn or minOut in decoder file, variable "
+                        + e.getAttribute("item") + " exception: " + ex);
+            }
+            // load each row
+            if (variableModel.setIndxRow(nextICvStoreIndex, e, _productID, _model, _family) == nextICvStoreIndex) {
+                // if this one existed, we will not update the row count.
+                nextICvStoreIndex++;
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("skipping entry for " + e.getAttribute("CVname"));
+                }
+            }
+        }
+
+=======
+>>>>>>> JMRI/master
         for (Element e : variablesElement.getChildren("variables")) {
             processVariablesElement(e, variableModel, extraInclude, extraExclude);
         }

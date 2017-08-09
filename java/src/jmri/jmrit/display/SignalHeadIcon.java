@@ -497,7 +497,11 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
+<<<<<<< HEAD
+            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap 
+=======
             NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap
+>>>>>>> JMRI/master
             if (log.isDebugEnabled()) {
                 log.debug("key= " + entry.getKey() + ", localKey= " + name
                         + ", newIcon= " + icon + ", oldIcon= " + oldIcon);

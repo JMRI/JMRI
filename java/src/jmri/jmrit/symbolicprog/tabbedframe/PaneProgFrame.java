@@ -79,7 +79,11 @@ import org.slf4j.LoggerFactory;
 abstract public class PaneProgFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener, PaneContainer {
 
+<<<<<<< HEAD
+    // members to contain working variable, CV values, Indexed CV values
+=======
     // members to contain working variable, CV values
+>>>>>>> JMRI/master
     JLabel progStatus = new JLabel(Bundle.getMessage("StateIdle"));
     CvTableModel cvModel = null;
     VariableTableModel variableModel;
@@ -865,7 +869,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             l = Roster.getDefault().matchingList(null, null, null, null, null, null, Bundle.getMessage("LabelNewDecoder"));
             x--;
             if (x == 0) {
+<<<<<<< HEAD
+                log.error("We have tried to remove all the entries, however an error has occured which has resulted in the entries not being deleted correctly");
+=======
                 log.error("We have tried to remove all the entries, however an error has occurred which has resulted in the entries not being deleted correctly");
+>>>>>>> JMRI/master
                 l = new ArrayList<>();
             }
         }

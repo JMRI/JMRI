@@ -5,8 +5,12 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.util.StringUtil;
+<<<<<<< HEAD
+import org.python.jline.internal.Log;
+=======
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+>>>>>>> JMRI/master
 
 /**
  * A utility class for formatting NCE binary command and replies into
@@ -14,7 +18,11 @@ import org.slf4j.LoggerFactory;
  * published November 2007 and is used with NCE's permission.
  *
  * @author Daniel Boudreau Copyright (C) 2012
+<<<<<<< HEAD
+ * 
+=======
  *
+>>>>>>> JMRI/master
  */
 public class NceMonBinary {
 
@@ -50,7 +58,11 @@ public class NceMonBinary {
             case (NceBinaryCommand.STOP_CLOCK_CMD):
                 return Bundle.getMessage("STOP_CLOCK_CMD");
             case (NceBinaryCommand.START_CLOCK_CMD):
+<<<<<<< HEAD
+                return rb.getString("START_CLOCK_CMD");
+=======
                 return Bundle.getMessage("START_CLOCK_CMD");
+>>>>>>> JMRI/master
             case (NceBinaryCommand.SET_CLOCK_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("SET_CLOCK_CMD"),
@@ -77,7 +89,11 @@ public class NceMonBinary {
             case (NceMessage.ENABLE_MAIN_CMD):
                 return Bundle.getMessage("ENABLE_MAIN_CMD");
             case (NceMessage.KILL_MAIN_CMD):
+<<<<<<< HEAD
+                return rb.getString("KILL_MAIN_CMD");
+=======
                 return Bundle.getMessage("KILL_MAIN_CMD");
+>>>>>>> JMRI/master
             case (NceBinaryCommand.WRITE_N_CMD):
                 if (m.getNumDataElements() == 20) {
                     return MessageFormat.format(Bundle.getMessage("WRITEn_CMD"),
@@ -144,7 +160,11 @@ public class NceMonBinary {
                 return Bundle.getMessage("ENTER_PROG_CMD");
             }
             case (NceMessage.EXIT_PROG_CMD):
+<<<<<<< HEAD
+                return rb.getString("EXIT_PROG_CMD");
+=======
                 return Bundle.getMessage("EXIT_PROG_CMD");
+>>>>>>> JMRI/master
             case (NceMessage.WRITE_PAGED_CV_CMD):
                 if (m.getNumDataElements() == 4) {
                     return MessageFormat.format(Bundle.getMessage("WRITE_PAGED_CV_CMD"),
@@ -219,7 +239,11 @@ public class NceMonBinary {
                             return MessageFormat.format(Bundle.getMessage("LOCO_CMD_Op1_17"),
                                     new Object[]{getLocoAddress(m), m.getElement(4)});
                         default:
+<<<<<<< HEAD
+                            Log.error("Unhandled loco cmd op1 code: {}", m.getElement(3));
+=======
                             log.error("Unhandled loco cmd op1 code: {}", m.getElement(3));
+>>>>>>> JMRI/master
                             break;
                     }
                 }
@@ -272,7 +296,11 @@ public class NceMonBinary {
                             return MessageFormat.format(Bundle.getMessage("ACC_CMD_Op1_05"),
                                     new Object[]{getNumber(m), m.getElement(4)});
                         default:
+<<<<<<< HEAD
+                            Log.error("Unhandled acc cmd op1 code: {}", m.getElement(3));
+=======
                             log.error("Unhandled acc cmd op1 code: {}", m.getElement(3));
+>>>>>>> JMRI/master
                             break;
                     }
                 }
@@ -302,14 +330,22 @@ public class NceMonBinary {
                 }
                 break;
             default:
+<<<<<<< HEAD
+                Log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
+=======
                 log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
+>>>>>>> JMRI/master
                 break;
         }
         // 2nd pass, check for messages that have a data reply
         replyType = REPLY_DATA;
         switch (m.getOpCode() & 0xFF) {
             case (NceBinaryCommand.READ_CLOCK_CMD):
+<<<<<<< HEAD
+                return rb.getString("READ_CLOCK_CMD");
+=======
                 return Bundle.getMessage("READ_CLOCK_CMD");
+>>>>>>> JMRI/master
             case (NceBinaryCommand.READ_AUI4_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(Bundle.getMessage("READ_AUI4_CMD"),
@@ -317,7 +353,11 @@ public class NceMonBinary {
                 }
                 break;
             case (NceBinaryCommand.DUMMY_CMD):
+<<<<<<< HEAD
+                return rb.getString("DUMMY_CMD");
+=======
                 return Bundle.getMessage("DUMMY_CMD");
+>>>>>>> JMRI/master
             case (NceBinaryCommand.READ16_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("READ16_CMD"),
@@ -355,9 +395,15 @@ public class NceMonBinary {
                 }
                 break;
             case (NceBinaryCommand.SW_REV_CMD):
+<<<<<<< HEAD
+                return rb.getString("SW_REV_CMD");
+            default:
+                Log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
+=======
                 return Bundle.getMessage("SW_REV_CMD");
             default:
                 log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
+>>>>>>> JMRI/master
                 break;
         }
         // this is one we don't know about or haven't coded it up
@@ -503,9 +549,15 @@ public class NceMonBinary {
                         case (REPLY_FOUR):
                             return Bundle.getMessage("NceReplyFour");
                         case (REPLY_OK):
+<<<<<<< HEAD
+                            return rb.getString("NceReplyOK");
+                        default:
+                            Log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
+=======
                             return Bundle.getMessage("NceReplyOK");
                         default:
                             log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
+>>>>>>> JMRI/master
                             break;
                     }
                 }
@@ -520,15 +572,25 @@ public class NceMonBinary {
                         case (REPLY_THREE):
                             return Bundle.getMessage("NceReplyThreeProg");
                         case (REPLY_OK):
+<<<<<<< HEAD
+                            return rb.getString("NceReplyOK");
+                        default:
+                            Log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
+=======
                             return Bundle.getMessage("NceReplyOK");
                         default:
                             log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
+>>>>>>> JMRI/master
                             break;
                     }
                 }
                 break;
             default:
+<<<<<<< HEAD
+                Log.error("Unhandled reply type code: {}", replyType);
+=======
                 log.error("Unhandled reply type code: {}", replyType);
+>>>>>>> JMRI/master
                 break;
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});

@@ -278,8 +278,14 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
+<<<<<<< HEAD
+        NXFrame nxFrame = NXFrame.getInstance();
+        if (nxFrame.isVisible()) {
+            nxFrame.mouseClickedOnBlock(block);
+=======
         if (_openFrame != null) {
             _openFrame.mouseClickedOnBlock(block);
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7
             return;
         }
 
@@ -309,7 +315,11 @@ public class WarrantTableAction extends AbstractAction {
      *
      * @param b the block to validate
      */
+<<<<<<< HEAD
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
+=======
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
+>>>>>>> JMRI/master
     public static void checkPathPortals(OBlock b) {
         if (log.isDebugEnabled()) {
             log.debug("checkPathPortals for " + b.getDisplayName());
@@ -425,7 +435,11 @@ public class WarrantTableAction extends AbstractAction {
         checkSharedTurnouts(b);
     }
 
+<<<<<<< HEAD
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
+=======
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
+>>>>>>> JMRI/master
     public static boolean checkSharedTurnouts(OBlock block) {
         boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
@@ -452,7 +466,11 @@ public class WarrantTableAction extends AbstractAction {
         return hasShared;
     }
 
+<<<<<<< HEAD
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
+=======
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OBlock extends Block")
+>>>>>>> JMRI/master
     private static boolean sharedTO(OPath myPath, OPath path) {
         List<BeanSetting> myTOs = myPath.getSettings();
         Iterator<BeanSetting> iter = myTOs.iterator();

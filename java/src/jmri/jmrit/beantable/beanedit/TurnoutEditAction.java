@@ -301,6 +301,21 @@ public class TurnoutEditAction extends BeanEditAction {
         BeanItemPanel lock = new BeanItemPanel();
         lock.setName(Bundle.getMessage("Lock"));
 
+<<<<<<< HEAD
+        lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockToolTip")));
+
+        String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
+
+        lockOperationBox = new JComboBox<String>(lockOperations);
+        lock.addItem(new BeanEditItem(lockOperationBox, Bundle.getMessage("LockMode"), Bundle.getMessage("LockModeToolTip")));
+        lockOperationBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lockOperationBox.getSelectedItem().equals(noneText)) {
+                    lockBox.setEnabled(false);
+                } else {
+                    lockBox.setEnabled(true);
+=======
         if (t.getPossibleLockModes() != 0) {
             // lock operations are available, configure pane for them
         
@@ -323,6 +338,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     } else {
                         lockBox.setEnabled(true);
                     }
+>>>>>>> JMRI/master
                 }
             });
 
@@ -332,6 +348,23 @@ public class TurnoutEditAction extends BeanEditAction {
 
             lock.setSaveItem(new AbstractAction() {
 
+<<<<<<< HEAD
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Turnout t = (Turnout) bean;
+                String lockOpName = (String) lockOperationBox.getSelectedItem();
+                if (lockOpName.equals(bothText)) {
+                    t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+                }
+                if (lockOpName.equals(cabOnlyText)) {
+                    t.enableLockOperation(Turnout.CABLOCKOUT, true);
+                    t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
+                }
+                if (lockOpName.equals(pushbutText)) {
+                    t.enableLockOperation(Turnout.CABLOCKOUT, false);
+                    t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+                }
+=======
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Turnout t = (Turnout) bean;
@@ -347,6 +380,7 @@ public class TurnoutEditAction extends BeanEditAction {
                         t.enableLockOperation(Turnout.CABLOCKOUT, false);
                         t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
                     }
+>>>>>>> JMRI/master
 
                     String decoderName = (String) lockBox.getSelectedItem();
                     t.setDecoderName(decoderName);
@@ -356,6 +390,22 @@ public class TurnoutEditAction extends BeanEditAction {
 
             lock.setResetItem(new AbstractAction() {
 
+<<<<<<< HEAD
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Turnout t = (Turnout) bean;
+                lockBox.setSelectedItem(t.getDecoderName());
+                lockBox.setEnabled(true);
+                if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+                    lockOperationBox.setSelectedItem(bothText);
+                } else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+                    lockOperationBox.setSelectedItem(pushbutText);
+                } else if (t.canLock(Turnout.CABLOCKOUT)) {
+                    lockOperationBox.setSelectedItem(cabOnlyText);
+                } else {
+                    lockOperationBox.setSelectedItem(noneText);
+                    lockBox.setEnabled(false);
+=======
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Turnout t = (Turnout) bean;
@@ -371,6 +421,7 @@ public class TurnoutEditAction extends BeanEditAction {
                         lockOperationBox.setSelectedItem(noneText);
                         lockBox.setEnabled(false);
                     }
+>>>>>>> JMRI/master
                 }
             });
          } else {

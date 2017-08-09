@@ -6,6 +6,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an SprogMessage
  *
+<<<<<<< HEAD
+ * Description: Carries the reply to an SprogMessage
+ *
+=======
+>>>>>>> JMRI/master
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2010
  */

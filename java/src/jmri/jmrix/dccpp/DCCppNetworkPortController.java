@@ -34,8 +34,18 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected boolean mTurnoutExtraSpace = false;
 
     protected int[] commandStationTypes = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+ DCCppConstants.DCCPP_UNO_1_0,
+ DCCppConstants.DCCPP_ARDUINO_1_1
+=======
         DCCppConstants.DCCPP_UNO_1_0,
         DCCppConstants.DCCPP_ARDUINO_1_1
+>>>>>>> JMRI/master
+=======
+        DCCppConstants.DCCPP_UNO_1_0,
+        DCCppConstants.DCCPP_ARDUINO_1_1
+>>>>>>> JMRI/master
     };
     
     protected String[] commandStationNames;
@@ -53,14 +63,35 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * Set config info from a name, which needs to be one of the valid ones.
      */
     public void setCommandStationType(String name) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+ for (int i = 0; i < commandStationNames.length; i++) {
+     if (commandStationNames[i].matches(name)) {
+  commandStationType = i;
+                return;
+     }
+ }
+ log.error("CommandStation Type not found: {}", name);
+ commandStationType = 0;
+=======
         for (int i = 0; i < commandStationNames.length; i++) {
             if (commandStationNames[i].matches(name)) {
                 commandStationType = i;
                 return;
+=======
+        for (int i = 0; i < commandStationNames.length; i++) {
+            if (commandStationNames[i].matches(name)) {
+                commandStationType = i;
+                return;
+>>>>>>> JMRI/master
             }
         }
         log.error("CommandStation Type not found: {}", name);
         commandStationType = 0;
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
     }
     
     /**

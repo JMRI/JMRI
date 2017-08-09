@@ -27,7 +27,11 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testGetClassDescription(){
+<<<<<<< HEAD
+         Assert.assertEquals("Turnout Table Action class description","Signal Group Table",a.getClassDescription());
+=======
          Assert.assertEquals("SignalMast Table Action class description","Signal Mast Table",a.getClassDescription());
+>>>>>>> JMRI/master
     }
 
     /**
@@ -52,7 +56,10 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
     @Override
     @After
     public void tearDown() {
+<<<<<<< HEAD
+=======
         a = null;
+>>>>>>> JMRI/master
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

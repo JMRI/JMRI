@@ -614,9 +614,14 @@ selects the different algorithm needed here.
         &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
+<<<<<<< HEAD
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
+          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory address.</li>
+=======
           <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory decoder address.</li>
           <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
           <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
+>>>>>>> JMRI/master
       </ul>
       <p>
         Note that this only works for
@@ -625,6 +630,9 @@ selects the different algorithm needed here.
         track).
       </p>
 
+<<<<<<< HEAD
+      <a name="indexedcap" id="indexedcap"></a></a>
+=======
       Note an element:
       <pre style="font-family: monospace;">
         &lt;variable &#8230; item="Short Address" &#8230;&gt;
@@ -650,6 +658,7 @@ selects the different algorithm needed here.
       </p>
 
       <a name="indexedcap" id="indexedcap"></a>
+>>>>>>> JMRI/master
       <h4>Indexed CV Access</h4>
       To access indexed CVs, include this
       capability element:

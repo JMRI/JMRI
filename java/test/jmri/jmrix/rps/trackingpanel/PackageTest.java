@@ -12,8 +12,12 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     RpsTrackingFrameTest.class,
     RpsTrackingPanelTest.class,
+<<<<<<< HEAD
+    RpsTrackingFrameActionTest.class
+=======
     RpsTrackingFrameActionTest.class,
     RpsTrackingControlPaneTest.class
+>>>>>>> JMRI/master
 })
 public class PackageTest {
 }

@@ -86,6 +86,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> JMRI/master
         suite.addTest(new JUnit4TestAdapter(Ib1ThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib1ThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib2ThrottleManagerTest.class));
@@ -103,6 +108,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SE8cSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotTest.class));
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
         return suite;
     }
 

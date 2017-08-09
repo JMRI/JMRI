@@ -1,5 +1,13 @@
 package jmri.jmrix.tmcc.serialdriver;
 
+<<<<<<< HEAD
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.UnsupportedCommOperationException;
+=======
+>>>>>>> JMRI/master
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -87,6 +95,50 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // arrange to notify later
+<<<<<<< HEAD
+<<<<<<< HEAD
+                activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
+                    public void serialEvent(SerialPortEvent e) {
+                        int type = e.getEventType();
+                        switch (type) {
+                            case SerialPortEvent.DATA_AVAILABLE:
+                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.CTS:
+                                log.info("SerialEvent: CTS is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.DSR:
+                                log.info("SerialEvent: DSR is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.RI:
+                                log.info("SerialEvent: RI is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.CD:
+                                log.info("SerialEvent: CD is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.OE:
+                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.PE:
+                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.FE:
+                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
+                                return;
+                            case SerialPortEvent.BI:
+                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
+                                return;
+                            default:
+                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
+                                return;
+                        }
+=======
+=======
+>>>>>>> JMRI/master
                 activeSerialPort.addEventListener((SerialPortEvent e) -> {
                     int type = e.getEventType();
                     switch (type) {
@@ -122,6 +174,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                             return;
                         default:
                             log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
                     }
                 });
                 try {
@@ -215,7 +271,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Local method to do specific port configuration.
      *
+<<<<<<< HEAD
+     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
+=======
      * @throws UnsupportedCommOperationException if unable to configure
+>>>>>>> JMRI/master
      *                                                  port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {

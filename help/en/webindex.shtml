@@ -1008,7 +1008,11 @@
 
   
 <li>
+<<<<<<< HEAD
+<a href="">Handling Errors </a>
+=======
 <a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
+>>>>>>> JMRI/master
 <ul></ul>
 </li>
 

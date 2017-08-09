@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
+<<<<<<< HEAD
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+=======
+>>>>>>> JMRI/master
 <title>N&amp;W 1981 Signaling Definition</title>
 
 <!-- Style -->

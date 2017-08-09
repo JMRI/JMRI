@@ -30,9 +30,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+<<<<<<< HEAD
+import java.net.URLDecoder;
+=======
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+>>>>>>> JMRI/master
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -168,7 +172,11 @@ public class RosterServlet extends HttpServlet {
             try {
                 out = new FileOutputStream(fileTemp);
                 fileContent = fm.getContent();
+<<<<<<< HEAD
+                int read = 0;
+=======
                 int read;
+>>>>>>> JMRI/master
                 final byte[] bytes = new byte[1024];
                 while ((read = fileContent.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
@@ -198,7 +206,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
+                        fileTemp.delete(); //get rid of temp file 
+=======
                         fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     } else {
                         fileNew.delete(); //delete the old file
                         if (fileTemp.renameTo(fileNew)) {
@@ -209,7 +221,11 @@ public class RosterServlet extends HttpServlet {
                             String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                             log.error(m);
                             msgList.add(m);
+<<<<<<< HEAD
+                            fileTemp.delete(); //get rid of temp file 
+=======
                             fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                         }
                     }
                 } else {
@@ -221,19 +237,31 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
+                        fileTemp.delete(); //get rid of temp file 
+=======
                         fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     }
 
                 }
             } else {
+<<<<<<< HEAD
+                RosterEntry reTemp = null; // create a temp rosterentry to check, based on uploaded file
+=======
                 RosterEntry reTemp; // create a temp rosterentry to check, based on uploaded file
+>>>>>>> JMRI/master
                 try {
                     reTemp = RosterEntry.fromFile(new File(tempFolderName + fm.getFileName()));
                 } catch (JDOMException e) { //handle XML failures
                     String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidXML"), fm.getFileName(), e.getMessage());
                     log.error(m);
                     msgList.add(m);
+<<<<<<< HEAD
+                    fileTemp.delete(); //get rid of temp file 
+=======
                     fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     break;
                 }
                 RosterEntry reOld = Roster.getDefault().getEntryForId(reTemp.getId()); //get existing entry if found
@@ -242,7 +270,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
                         msgList.add(m);
+<<<<<<< HEAD
+                        fileTemp.delete(); //get rid of temp file 
+=======
                         fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     } else { //replace specified
                         Roster.getDefault().removeEntry(reOld); //remove the old entry from roster
                         reTemp.updateFile(); //saves XML file to roster folder and makes backup
@@ -251,7 +283,11 @@ public class RosterServlet extends HttpServlet {
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryReplaced"), fm.getFileName(), reTemp.getDisplayName());
                         log.debug(m);
                         msgList.add(m);
+<<<<<<< HEAD
+                        fileTemp.delete(); //get rid of temp file 
+=======
                         fileTemp.delete(); //get rid of temp file
+>>>>>>> JMRI/master
                     }
                 } else {
                     fileTemp.renameTo(fileNew); //move the file to proper location
@@ -268,6 +304,10 @@ public class RosterServlet extends HttpServlet {
 
         //respond with a json list of messages from the upload attempts
         response.setContentType("application/json");
+<<<<<<< HEAD
+        ObjectMapper mapper = new ObjectMapper();
+=======
+>>>>>>> JMRI/master
         mapper.writeValue(response.getOutputStream(), msgList);
     }
 

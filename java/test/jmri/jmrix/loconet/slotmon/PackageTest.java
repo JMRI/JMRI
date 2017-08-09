@@ -11,8 +11,12 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
+<<<<<<< HEAD
+    SlotMonPaneTest.class
+=======
     SlotMonPaneTest.class,
     SlotMonDataModelTest.class
+>>>>>>> JMRI/master
 })
 public class PackageTest {
 }

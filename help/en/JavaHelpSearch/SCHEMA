@@ -1,2 +1,10 @@
 JavaSearch 1.0
+<<<<<<< HEAD
+<<<<<<< HEAD
+TMAP bs=2048 rt=75 fl=-1 id1=15011 id2=1
+=======
+TMAP bs=2048 rt=85 fl=-1 id1=15097 id2=1
+>>>>>>> JMRI/master
+=======
 TMAP bs=2048 rt=75 fl=-1 id1=15210 id2=1
+>>>>>>> 545759b85870ac697ea42c50d34c507c459011e7

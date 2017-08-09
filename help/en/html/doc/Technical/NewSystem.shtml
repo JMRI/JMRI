@@ -36,6 +36,17 @@
         e.g. Powerline devices, to JMRI.</p>
 
         <p>It uses as an example the addition of the "powerline"
+<<<<<<< HEAD
+        type in January 2008.</p>
+        
+        <p>Note that we don't do this very often, and 
+        the specifics are more important than the generalities
+        here.  You should should make sure you 
+        understand the 
+        <a href="SystemStructure.shtml">intended system connection structure</a>
+        which is documented 
+        <a href="SystemStructure.shtml">documented on another page</a>.
+=======
         type in January 2008.
         This was before
         several important migrations (SVN to Git;
@@ -55,6 +66,7 @@
         <a href="SystemStructure.shtml">intended system connection structure</a>
         which is documented on
         <a href="SystemStructure.shtml">another page</a>.
+>>>>>>> JMRI/master
       </div>
 
       <div class="list">

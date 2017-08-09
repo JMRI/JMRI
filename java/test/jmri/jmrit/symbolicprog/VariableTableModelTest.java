@@ -255,7 +255,11 @@ public class VariableTableModelTest extends TestCase {
     // Check creating bogus XML (unknown variable type)
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
+<<<<<<< HEAD
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
+=======
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)) {
+>>>>>>> JMRI/master
             @Override
             void reportBogus() {
             }
@@ -300,7 +304,11 @@ public class VariableTableModelTest extends TestCase {
     // Check can read simple file
     public void testVarTableLoadFileSimple() throws Exception {
         String[] args = {"CV", "Name"};
+<<<<<<< HEAD
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+=======
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+>>>>>>> JMRI/master
 
         // create a JDOM tree from file
         XmlFile file = new XmlFile(){};
@@ -319,7 +327,11 @@ public class VariableTableModelTest extends TestCase {
     // Check can read complex file
     public void testVarTableLoadFileComplex() throws Exception {
         String[] args = {"CV", "Name"};
+<<<<<<< HEAD
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+=======
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+>>>>>>> JMRI/master
 
         // create a JDOM tree from file
         XmlFile file = new XmlFile(){};

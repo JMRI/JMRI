@@ -1,8 +1,11 @@
 package jmri.jmrit.speedometer;
 
 import apps.tests.Log4JFixture;
+<<<<<<< HEAD
+=======
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+>>>>>>> JMRI/master
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

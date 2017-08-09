@@ -45,9 +45,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(InsteonSequenceTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
+<<<<<<< HEAD
+=======
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialX10LightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemMenuTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

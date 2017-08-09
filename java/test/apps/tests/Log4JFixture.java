@@ -5,7 +5,10 @@ import jmri.util.JUnitUtil;
 import jmri.util.Log4JUtil;
 import org.apache.log4j.Level;
 import org.junit.Assert;
+<<<<<<< HEAD
+=======
 import java.util.*;
+>>>>>>> JMRI/master
 
 public class Log4JFixture {
 
@@ -28,7 +31,10 @@ public class Log4JFixture {
         JUnitUtil.silenceGUITestOutput();
     }
 
+<<<<<<< HEAD
+=======
     static int count = 0;
+>>>>>>> JMRI/master
     public static void tearDown() {
         JUnitAppender.end();
         Level severity = Level.ERROR;
@@ -36,8 +42,11 @@ public class Log4JFixture {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", unexpectedMessageSeen);
+<<<<<<< HEAD
+=======
         
         // checkThreads(false);  // true means stop on 1st extra thread
+>>>>>>> JMRI/master
     }
 
     static List<String> threadNames = new ArrayList<String>(Arrays.asList(new String[]{

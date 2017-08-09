@@ -24,6 +24,13 @@ public class LocoStatsFrameTest {
             public void requestUpdate() {  // replace actual transmit
                 updateRequestPending = true;
             }
+<<<<<<< HEAD:java/test/jmri/jmrix/loconet/locostats/swing/LocoStatsFrameTest.java
+
+            @Override
+            public void report(String m) {
+            }  // suppress messages
+=======
+>>>>>>> JMRI/master:java/test/jmri/jmrix/loconet/locostats/swing/LocoStatsFrameTest.java
         };
         p.initComponents();
         f.getContentPane().add(p);

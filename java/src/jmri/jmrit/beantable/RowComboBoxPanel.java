@@ -307,11 +307,14 @@ public abstract class RowComboBoxPanel
         return super.isCellEditable(evt);
     }
 
+<<<<<<< HEAD
+=======
     /**
      * Get current contents (value) in cell.
      *
      * @return value (String in 4.6 applications)
      */
+>>>>>>> JMRI/master
     @Override
     public Object getCellEditorValue() {
         log.debug("getCellEditorValue, prevItem: {}; me = {})", prevItem, this.toString());
@@ -356,8 +359,13 @@ public abstract class RowComboBoxPanel
     }
 
     /**
+<<<<<<< HEAD
+     * Method for our own VALUECOL row specific JComboBox
+     * @param choice the selected item (Aspect/Appearance) in the list
+=======
      * Method for our own VALUECOL row specific JComboBox.
      * @param choice the selected item (Aspect/Appearance) in the combobox list
+>>>>>>> JMRI/master
      */
     protected void eventRowComboBoxActionPerformed(@Nonnull Object choice) {
         Object item = choice;

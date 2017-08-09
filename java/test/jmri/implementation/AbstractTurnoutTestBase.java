@@ -100,6 +100,8 @@ public abstract class AbstractTurnoutTestBase {
         ((AbstractTurnout)t).setKnownStateToCommanded();
         Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
         Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
+<<<<<<< HEAD
+=======
         checkThrownMsgSent();
     }
 
@@ -121,6 +123,7 @@ public abstract class AbstractTurnoutTestBase {
         ((AbstractTurnout)t).setKnownStateToCommanded();
         Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
         Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
+>>>>>>> JMRI/master
         checkThrownMsgSent();
     }
 

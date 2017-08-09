@@ -1,16 +1,26 @@
 package jmri.managers;
 
+<<<<<<< HEAD
+=======
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
+>>>>>>> JMRI/master
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+<<<<<<< HEAD
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+=======
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+>>>>>>> JMRI/master
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +32,16 @@ import org.slf4j.LoggerFactory;
 public class DefaultShutDownManagerTest {
 
     @Test
+<<<<<<< HEAD
+    @Ignore("Causes Exception and hang on appveyor")
+    public void testCTor() {
+        DefaultShutDownManager dsdm = new DefaultShutDownManager();
+=======
     public void testCTor() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
         // remove the default shutdown hook to prevent crashes stopping tests
         Runtime.getRuntime().removeShutdownHook(dsdm.shutdownHook);
+>>>>>>> JMRI/master
         Assert.assertNotNull("exists", dsdm);
     }
 
@@ -73,6 +89,11 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testIsShuttingDown() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
+<<<<<<< HEAD
+        Assert.assertFalse(dsdm.isShuttingDown());
+        dsdm.shutdown(0, false);
+        Assert.assertTrue(dsdm.isShuttingDown());
+=======
         Frame frame = null;
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new Frame("Shutdown test frame");
@@ -83,19 +104,28 @@ public class DefaultShutDownManagerTest {
         if (frame != null) {
             frame.dispose();
         }
+>>>>>>> JMRI/master
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+<<<<<<< HEAD
+        jmri.util.JUnitUtil.resetInstanceManager();
+=======
         JUnitUtil.resetWindows(true);
         JUnitUtil.resetInstanceManager();
+>>>>>>> JMRI/master
     }
 
     @After
     public void tearDown() {
+<<<<<<< HEAD
+        jmri.util.JUnitUtil.resetInstanceManager();
+=======
         JUnitUtil.resetInstanceManager();
+>>>>>>> JMRI/master
         apps.tests.Log4JFixture.tearDown();
     }
 

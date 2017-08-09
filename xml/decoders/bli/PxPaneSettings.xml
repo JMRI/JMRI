@@ -217,8 +217,59 @@
         <text> </text>
       </label>
       <row>
+<<<<<<< HEAD
+        <display item="Whistle Smoke Unit Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Whistle Smoke Unit Heater Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Whistle Smoke Unit Fan Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Whistle Smoke Unit Fan Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Depleting Coal Drop Time" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Depleting Coal Drop Time" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Motor Load Chuff Power Filter" layout="above" label="">
+          <label/>
+        </display>
+=======
         <display item="Grid Blower Brake Motor Decrease Time" layout="above" label=""/>
         <display item="Brake Squeal Decel Rate" layout="above" label=""/>
+>>>>>>> JMRI/master
         <label>
           <text> </text>
         </label>

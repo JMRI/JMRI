@@ -38,6 +38,13 @@
       <a href="#start">Getting Started with Layout Editor</a>. Then
       you may want to jump to <a href="#finish">Putting Finishing
       Touches on your Panel</a> to see more of what's possible
+<<<<<<< HEAD
+      before reading the various sections in detail.</p>
+      
+      <p>Notice:  The signal related portions have not been updated and
+	  apply mainly to signal heads.  Those discussions predate signal masts.
+	  </p>
+=======
       before reading the various other sections in detail.</p>
 
       <p>Notice:  The signal related portions of this help file have not
@@ -45,6 +52,7 @@
       discussions predate signal masts. <span class="since">since
       2.14</span> Masts are fully supported in Layout Editor Panels, but
       only described briefly. </p>
+>>>>>>> JMRI/master
 
       <ul>
         <li><a href="#intro">Introduction to Layout Editor
@@ -187,6 +195,19 @@
       them.) Move the cursor over the radio buttons, check boxes and
       entry fields in the tool bar, noting that each has a tool tip.</p>
 
+<<<<<<< HEAD
+      <p>3. To add a right-handed turnout, first, select RH for
+      Turnout Type in the top row of the tool bar. Then, while
+      depressing the shift key, click the mouse (left click on a
+      two-button mouse) on a point about one third down and one
+      third across from the upper left of your panel. A
+      right-handed turnout should appear. The three red squares at
+      the ends of the throat and the continuing and diverging legs
+      of the turnout are connection points for <b>Track
+      Segments</b>. The round circle at the center of the turnout
+      is where you should point to get the turnout's popup
+      menu.</p>
+=======
       <p>3. To add a right-handed turnout, first, select RH for Turnout
       Type in the top row of the tool bar. Then, while depressing the
       shift key, click the mouse (left click on a two-button mouse) on a
@@ -197,6 +218,7 @@
       the turnout are connection points for <b>Track Segments</b>. The
       round circle at the center of the turnout is where you should
       point to get the turnout's popup menu.</p>
+>>>>>>> JMRI/master
 
       <p>4. To add a left-handed turnout, first, select LH for
       turnout type. (Note that the selection is automatically turned
@@ -227,6 +249,27 @@
       pressed, click on a point a couple of inches below and
       slightly to the right of the turnout on your left.</p>
 
+<<<<<<< HEAD
+      <p>7. To connect this turnout with the upper passing track
+      and form a simple oval track diagram, select Anchor Point on
+      the third row of the tool bar. An <b>Anchor Point</b> is a
+      node in a track diagram that can accept two connecting track
+      segments; it's used to place connected track segments so that
+      they look reasonably nice (and also to divide blocks). While
+      holding shift down, click on a point exactly to the left of
+      the turnout on your upper left, and again on a point directly
+      below this one, but exactly to the left of the lower turnout.
+      Next click on a point about 1/2 inch to the left and 1/2 inch
+      below the upper anchor point, and again on a point 1/2 inch
+      to the left and 1/2 inch above the lower anchor point. You
+      should now have four anchor points outlining the left side of
+      the oval. Connect these four points and the turnout throat
+      connection points with track segments--select Track Segment,
+      then with shift pressed, click and drag to create each of the
+      five track segments needed. Note that the anchor point
+      rectangle will change from red to green when it has two
+      connections. Similarly repeat this procedure to draw the
+=======
       <p>7. To connect this turnout with the upper passing track and
       form a simple oval track diagram, select Anchor Point on the third
       row of the tool bar. An <b>Anchor Point</b> is a node in a track
@@ -246,6 +289,7 @@
       change from <strong><span style="color:red">red</span></strong> to
       <strong><span style="color:green">green</span></strong> when it
       has two connections. Similarly repeat this procedure to draw the
+>>>>>>> JMRI/master
       right side of the oval.</p>
 
       <p>8. Turnout positions and anchor point positions may be
@@ -255,6 +299,19 @@
       the position of a turnout, drag the center point of the
       turnout with the meta key pressed.</p>
 
+<<<<<<< HEAD
+      <p>9. Next complete the industry siding. The diverging
+      connection point of the lower turnout should be the only box
+      needing a connection (colored red). Select End Bumper in the
+      tool bar. An <b>End Bumper</b> is a node in a track diagram
+      that can accept only one connection. With shift pressed,
+      click on a point exactly to the right of the diverging
+      connection point of the lower turnout. Connect your end
+      bumper to the diverging connection point by holding shift
+      down, while pressing the mouse button on the diverging
+      connection point and dragging to the end bumper. Your track
+      diagram should look like the following:</p>
+=======
       <p>9. Next complete the industry siding. The diverging connection
       point of the lower turnout should be the only box needing a
       connection (colored <strong><span
@@ -266,6 +323,7 @@
       connection point by holding shift down, while pressing the mouse
       button on the diverging connection point and dragging to the end
       bumper. Your track diagram should look like the following:</p>
+>>>>>>> JMRI/master
 
       <p><a href="./images/OvalLayoutEditMode.gif"><img src=
       "./images/OvalLayoutEditMode.gif" align="middle" width="563"
@@ -557,6 +615,20 @@
       using a black background you may need to switch to white
       icons that are available in the same area, since the default
       icons have black borders.</p>
+<<<<<<< HEAD
+      <p>The <b>combo</b> boxes provide a list of availble items from
+      which to choose.  In some cases, as mentioned above, a new name can
+      be entered which will be used to create a new item.</p>
+
+      <a name="toolbox" id="toolbox"></a>
+
+      <h2>Using the Layout Editor Floating Tool Box</h2>
+
+      <p>The tradional toolbar resides next to the panel.  The
+      <b>tool box</b> floats on the screen and can be moved around.  It provides
+      all of the same functions as the tool bar.</p>
+      
+=======
 
       <a name="toolbox" id="toolbox"></a>
 
@@ -566,17 +638,27 @@
       <b>toolbox</b> floats on the screen and can be moved around.  It provides
       all of the same functions as the toolbar.</p>
 
+>>>>>>> JMRI/master
       <p>The radio buttons, checkboxes, combo boxes and labels are grouped
       together on 4 tabs:  <b>Turnouts</b>, <b>Track</b>, <b>Labels</b> and
       <b>Icons</b>. Below the tab section is a line that displays the current
       zoom factor and cursor location.  The title bar includes the name
       of the related panel.</p>
+<<<<<<< HEAD
+      
+      <p>Since the tool box is a standard window, it contains the Close
+	  and Minimize buttons.  The Close button <b><em>hides</em></b> the tool
+	  box, it does not delete it.  To show it again, select the tool box name
+	  from the <b>Window</b> menu.  The minimize button behaves in the
+	  tradtional manner with the tool box becoming an icon on the operating system task
+=======
 
       <p>Since the Toolbox is a standard window, it contains the Close
 	  and Minimize buttons.  The Close button <b><em>hides</em></b> the toolbox,
       it does not delete it.  To show it again, select the toolbox name
 	  from the <b>Window</b> menu.  The minimize button behaves in the
 	  traditional manner with the toolbox becoming an icon on the operating system task
+>>>>>>> JMRI/master
 	  bar.  Use the Window menu or click on the task bar icon to make it
 	  visible.
       </p>
@@ -621,13 +703,28 @@
       described below.</p>
 
       <ul>
+<<<<<<< HEAD
+        <li><b>Edit Mode</b> - When this item is checked, the tool
+        bar is displayed based on the ToolBar Side selection, and the track
+=======
         <li><b>Edit Mode</b> - When this item is checked, the toolbar
         is displayed based on the <b>ToolBar Side</b> selection, and the track
+>>>>>>> JMRI/master
         diagram displays connection points and edit circles.
         Uncheck <b>Edit Mode</b> to hide the toolbar and the help bar if
         it is displayed.</li>
 
         <li>
+<<<<<<< HEAD
+	      <b>ToolBar</b> - This sub-menu controls the ToolBar characteristics.
+	      It contains:
+
+          <ul>
+            <li><b>ToolBar Side...</b> - Set the location of the
+            tool bar.  The choices are Top, Left, Bottom and Right.
+            There is a fifth choice, <b>Float</b>, which replaces
+            the normal tool bar with a floating tool box.
+=======
 	      <b>ToolBar</b> - This sub-menu controls the Toolbar characteristics.
 	      It contains the following options: <span class="since">since 4.7.2</span>
 
@@ -636,6 +733,7 @@
             toolbar.  The choices are Top, Left, Bottom and Right.
             A fifth choice, <b>Float</b>, replaces
             the normal tool bar with a floating toolbox.
+>>>>>>> JMRI/master
             </li>
 
             <li><b>Wide ToolBar</b> - The Top and Bottom tool bars change
@@ -812,6 +910,23 @@
             visible when the diverging angle is small.</li>
           </ul>
         </li>
+<<<<<<< HEAD
+
+        <li><b>Automatically Assign Blocks to Track</b> - A block is created
+        for each piece of track as it is added.  The generated block names
+        are <b>AUTOBLK:n</b> where n is a number.</li>
+
+        <li><b>Hide Track Construction Lines</b> - Some track objects create
+        construction lines.  This mainly applieds to curved track.  If this
+        option is enabled, then those lines are not displayed,</li>
+
+        <li><b>Use Direct Turnout Control</b> - If enabled and edit mode
+        is not active, then the left mouse button sets a turnout closed and
+        the right mouse button sets the turnout thrown.</li>
+
+      </ul><a name="toolsmenu" id="toolsmenu"></a>
+=======
+>>>>>>> JMRI/master
 
         <li><b>Automatically Assign Blocks to Track</b> - A block is created
         for each piece of track as it is added.  The generated block names
@@ -1922,7 +2037,10 @@
       panel with blocks defined and signal heads placed can help in
       deciding where blocks and signal heads/masts should be placed before
       actually installing them on your layout.</p>
+<<<<<<< HEAD
+=======
 
+>>>>>>> JMRI/master
       <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
         PanelPro help page</a>.
       <!--#include virtual="/Footer" -->

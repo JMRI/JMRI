@@ -93,10 +93,23 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+                @Override
+                public void serialEvent(SerialPortEvent e) {
+                    int type = e.getEventType();
+                    switch (type) {
+=======
+=======
+>>>>>>> JMRI/master
                     @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+>>>>>>> JMRI/master
                         case SerialPortEvent.DATA_AVAILABLE:
                             if (log.isDebugEnabled()) {
                                 log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
@@ -198,9 +211,14 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             
             opened = true;
+<<<<<<< HEAD
+            
+        } catch (gnu.io.NoSuchPortException p) {
+=======
 
         } catch (NoSuchPortException p) {
 
+>>>>>>> JMRI/master
             return handlePortNotFound(p, portName, log);
         } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
@@ -218,7 +236,15 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
+<<<<<<< HEAD
+<<<<<<< HEAD
+ DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+=======
         DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+>>>>>>> JMRI/master
+=======
+        DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+>>>>>>> JMRI/master
         packets.connectPort(this);
 
         // start operation
@@ -236,11 +262,27 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         }
         return new BufferedReader(new InputStreamReader(serialStream));
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    @Override
+    public DataInputStream getInputStream() {
+ //log.error("Not Using DataInputStream version anymore!");
+     //return(null);
+=======
     
     @Override
     public DataInputStream getInputStream() {
         //log.error("Not Using DataInputStream version anymore!");
         //return(null);
+>>>>>>> JMRI/master
+=======
+    
+    @Override
+    public DataInputStream getInputStream() {
+        //log.error("Not Using DataInputStream version anymore!");
+        //return(null);
+>>>>>>> JMRI/master
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -251,7 +293,15 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         }
         return null;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> JMRI/master
+=======
+    
+>>>>>>> JMRI/master
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -289,7 +339,15 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         // set RTS high, DTR high - done early, so flow control can be configured after
         activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
         activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> JMRI/master
+=======
+        
+>>>>>>> JMRI/master
         // find and configure flow control
         //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         int flow = SerialPort.FLOWCONTROL_NONE;
@@ -317,7 +375,15 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     InputStream serialStream = null;
     
     @Deprecated
+<<<<<<< HEAD
+<<<<<<< HEAD
+ static public DCCppAdapter instance() {
+=======
     static public DCCppAdapter instance() {
+>>>>>>> JMRI/master
+=======
+    static public DCCppAdapter instance() {
+>>>>>>> JMRI/master
         if (mInstance == null) {
             mInstance = new DCCppAdapter();
         }

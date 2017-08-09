@@ -2,8 +2,12 @@ package jmri.jmrix.mrc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
+<<<<<<< HEAD
+import org.python.jline.internal.Log;
+=======
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+>>>>>>> JMRI/master
 
 /**
  * Some of the message formats used in this class are Copyright MRC, Inc. and
@@ -448,8 +452,12 @@ public class MrcPackets {
 
     /**
      * Adds the description of the clock's mode to a message being built
+<<<<<<< HEAD
+     * @param m clock info message
+=======
      *
      * @param m   clock info message
+>>>>>>> JMRI/master
      * @param txt build description of clock info onto this
      */
     @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
@@ -457,6 +465,30 @@ public class MrcPackets {
         int clockModeBits = m.getElement(2) & 0xC0;
         switch (clockModeBits) {
             case 0x00: // AM format
+<<<<<<< HEAD
+                txt.append((m.getElement(2) & 0x1F)
+                        + Bundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + Bundle.getMessage("MrcPacketsClockModeAm")); //IN18N
+                break;
+            case 0x40: // PM format
+                txt.append((m.getElement(2) & 0x1F)
+                        + Bundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + Bundle.getMessage("MrcPacketsClockModePm")); //IN18N
+                break;
+            case 0x80: // 24 hour format
+                txt.append(twoDigits.format(m.getElement(2) & 0x1F)
+                        + Bundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + Bundle.getMessage("MrcPacketsClockMode24"));//IN18N
+                break;
+            case 0xC0: // Unk format
+                txt.append(twoDigits.format(m.getElement(2) & 0x1F)
+                        + Bundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + Bundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
+=======
                 txt.append((m.getElement(2) & 0x1F))
                         .append(Bundle.getMessage("MrcPacketsClockTimeSep"))
                         .append(TWO_DIGITS.format(m.getElement(4)))
@@ -482,6 +514,10 @@ public class MrcPackets {
                 break;
             default:
                 log.warn("Unhandled clock mode code: {}", clockModeBits);
+>>>>>>> JMRI/master
+                break;
+            default:
+                Log.warn("Unhandled clock mode code: {}", clockModeBits);
                 break;
         }
     }
