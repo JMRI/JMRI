@@ -51,6 +51,11 @@ public class FirstTimeStartUpWizardTest {
             protected void installShutDownManager() {
                 JUnitUtil.initShutDownManager();
             }
+
+            @Override
+            public void createAndDisplayFrame() {
+                // called when wizard is disposed, but do nothing in tests
+            }
         };
         FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false), a);
         Assert.assertNotNull("exists", t);
