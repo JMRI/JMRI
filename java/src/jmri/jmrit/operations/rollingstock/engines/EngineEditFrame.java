@@ -233,7 +233,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList()
-                    .forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+                    .forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank in the list, for the default.
             rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
