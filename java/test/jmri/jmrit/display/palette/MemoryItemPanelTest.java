@@ -19,13 +19,18 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class MemoryItemPanelTest {
+        
+    private ItemPalette ip;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel tableModel = PickListModel.memoryPickModelInstance(); // N11N
-        ItemPalette ip = new ItemPalette();
         Editor editor = new EditorScaffold();
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+           ip = new ItemPalette("test palette",editor);
+           ip.pack();
+        });
         MemoryItemPanel t = new MemoryItemPanel(ip,"IM01","",tableModel,editor);
         Assert.assertNotNull("exists",t);
     }
