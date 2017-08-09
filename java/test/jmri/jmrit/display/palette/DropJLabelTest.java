@@ -2,6 +2,7 @@ package jmri.jmrit.display.palette;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.Icon;
 import java.awt.Graphics;
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -19,6 +21,7 @@ public class DropJLabelTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Icon i = new Icon(){
            @Override 
            public int getIconHeight(){
