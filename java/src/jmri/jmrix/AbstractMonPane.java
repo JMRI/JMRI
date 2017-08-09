@@ -2,7 +2,6 @@ package jmri.jmrix;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -57,16 +56,12 @@ public abstract class AbstractMonPane extends JmriPanel {
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
     @Override
     public void dispose() {
-        UserPreferencesManager pm = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-        if (pm != null) {
-            pm.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
-            pm.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
-            pm.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
-            pm.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
-            pm.setProperty(filterFieldCheck, filterFieldCheck, filterField.getText());
-        } else {
-            log.warn("No User Preferences Manager, not saving format");
-        }
+        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        pm.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
+        pm.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
+        pm.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
+        pm.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
+        pm.setProperty(filterFieldCheck, filterFieldCheck, filterField.getText());
         super.dispose();
     }
     // you'll also have to add the message(Foo) members to handle info to be logged.
@@ -184,7 +179,7 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     @Override
     public void initComponents() throws Exception {
-        UserPreferencesManager pm = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
 
         // the following code sets the frame's initial state
         clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
@@ -251,23 +246,17 @@ public abstract class AbstractMonPane extends JmriPanel {
         rawCheckBox.setText(Bundle.getMessage("ButtonShowRaw")); // NOI18N
         rawCheckBox.setVisible(true);
         rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
-        if (pm != null) {
-            rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
-        }
+        rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
 
         timeCheckBox.setText(Bundle.getMessage("ButtonShowTimestamps")); // NOI18N
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
-        if (pm != null) {
-            timeCheckBox.setSelected(pm.getSimplePreferenceState(timeStampCheck));
-        }
+        timeCheckBox.setSelected(pm.getSimplePreferenceState(timeStampCheck));
 
         alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
-        if (pm != null) {
-            alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
-        }
+        alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
@@ -298,9 +287,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
         autoScrollCheckBox.setVisible(true);
         autoScrollCheckBox.setToolTipText(Bundle.getMessage("TooltipAutoScroll")); // NOI18N
-        if (pm != null) {
-            autoScrollCheckBox.setSelected(!pm.getSimplePreferenceState(autoScrollCheck));
-        }
+        autoScrollCheckBox.setSelected(!pm.getSimplePreferenceState(autoScrollCheck));
 
         openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
@@ -342,52 +329,31 @@ public abstract class AbstractMonPane extends JmriPanel {
         add(paneA);
 
         // connect actions to buttons
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                clearButtonActionPerformed(e);
-            }
+        clearButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            clearButtonActionPerformed(e);
         });
-        startLogButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                startLogButtonActionPerformed(e);
-            }
+        startLogButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            startLogButtonActionPerformed(e);
         });
-        stopLogButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                stopLogButtonActionPerformed(e);
-            }
+        stopLogButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            stopLogButtonActionPerformed(e);
         });
-        openFileChooserButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openFileChooserButtonActionPerformed(e);
+        openFileChooserButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            openFileChooserButtonActionPerformed(e);
+        });
+
+        enterButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            enterButtonActionPerformed(e);
+        });
+
+        alwaysOnTopCheckBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (getTopLevelAncestor() != null) {
+                ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
         });
 
-        enterButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                enterButtonActionPerformed(e);
-            }
-        });
-
-        alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (getTopLevelAncestor() != null) {
-                    ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
-                }
-            }
-        });
-
-        autoScrollCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doAutoScroll(monTextPane, autoScrollCheckBox.isSelected());
-            }
+        autoScrollCheckBox.addActionListener((ActionEvent e) -> {
+            doAutoScroll(monTextPane, autoScrollCheckBox.isSelected());
         });
 
         // set file chooser to a default
@@ -436,7 +402,7 @@ public abstract class AbstractMonPane extends JmriPanel {
      */
     public void nextLineWithTime(Date timestamp, String line, String raw) {
 
-        StringBuffer sb = new StringBuffer(120);
+        StringBuilder sb = new StringBuilder(120);
 
         // display the timestamp if requested
         if (timeCheckBox.isSelected()) {
@@ -460,12 +426,10 @@ public abstract class AbstractMonPane extends JmriPanel {
                 String logLine = sb.toString();
                 if (!newline.equals("\n")) { // NOI18N
                     // have to massage the line-ends
-                    int i = 0;
                     int lim = sb.length();
-                    StringBuffer out = new StringBuffer(sb.length() + 10);  // arbitrary guess at space
-                    for (i = 0; i < lim; i++) {
-                        if (sb.charAt(i) == '\n') // NOI18N
-                        {
+                    StringBuilder out = new StringBuilder(sb.length() + 10);  // arbitrary guess at space
+                    for (int i = 0; i < lim; i++) {
+                        if (sb.charAt(i) == '\n') { // NOI18N
                             out.append(newline);
                         } else {
                             out.append(sb.charAt(i));
@@ -487,25 +451,21 @@ public abstract class AbstractMonPane extends JmriPanel {
             return;
         }
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                synchronized (AbstractMonPane.this) {
-                    monTextPane.append(linesBuffer.toString());
-                    int LineCount = monTextPane.getLineCount();
-                    if (LineCount > MAX_LINES) {
-                        LineCount -= MAX_LINES;
-                        try {
-                            int offset = monTextPane.getLineStartOffset(LineCount);
-                            monTextPane.getDocument().remove(0, offset);
-                        } catch (BadLocationException ex) {
-                        }
+        SwingUtilities.invokeLater(() -> {
+            synchronized (AbstractMonPane.this) {
+                monTextPane.append(linesBuffer.toString());
+                int LineCount = monTextPane.getLineCount();
+                if (LineCount > MAX_LINES) {
+                    LineCount -= MAX_LINES;
+                    try {
+                        int offset = monTextPane.getLineStartOffset(LineCount);
+                        monTextPane.getDocument().remove(0, offset);
+                    } catch (BadLocationException ex) {
                     }
-                    linesBuffer.setLength(0);
                 }
+                linesBuffer.setLength(0);
             }
-        };
-        javax.swing.SwingUtilities.invokeLater(r);
+        });
     }
 
     /**
@@ -577,7 +537,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             // Should instead use the profile directory, as "null" can default to
             // the JMRI program directory, which might not be user-writable.
             returnString = FileUtil.getUserFilesPath() + p.getFileName().toString();
-            log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to " + returnString);
+            log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to {}", returnString);
         } else {
             returnString = p.toString();
         }
@@ -589,8 +549,8 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (logStream == null) {  // successive clicks don't restart the file
             // start logging
             String filePathAndName = getFilePathAndName();
-            log.warn("startLogButtonActionPerformed: getSelectedFile() returns " + logFileChooser.getSelectedFile().getPath() + " " + logFileChooser.getSelectedFile().getName());
-            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name " + filePathAndName);
+            log.warn("startLogButtonActionPerformed: getSelectedFile() returns {} {}", logFileChooser.getSelectedFile().getPath(), logFileChooser.getSelectedFile().getName());
+            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name {}", filePathAndName);
             File logFile = new File(filePathAndName);
             try {
                 logStream = new PrintStream(new FileOutputStream(logFile));
@@ -602,8 +562,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                     }
                     logStream = null;
                 }
-                log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '" + logFileChooser.getSelectedFile().getName()
-                        + "'.  Exception: " + ex);
+                log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '{}'.  Exception: {}", logFileChooser.getSelectedFile().getName(), ex.getMessage());
                 JOptionPane.showMessageDialog(this,
                         (Bundle.getMessage("ErrorCannotOpenFileForWriting",
                                 logFileChooser.getSelectedFile().getName(),
@@ -651,6 +610,8 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Get access to the main text area. This is intended for use in e.g.
      * scripting to extend the behavior of the window.
+     *
+     * @return the main text area
      */
     public final synchronized JTextArea getTextArea() {
         return monTextPane;
@@ -671,15 +632,12 @@ public abstract class AbstractMonPane extends JmriPanel {
      * @param scroll True to move to end
      */
     private void doAutoScroll(final JTextArea ta, final boolean scroll) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                int len = ta.getText().length();
-                if (scroll) {
-                    ta.setCaretPosition(len);
-                } else if (ta.getCaretPosition() == len && len > 0) {
-                    ta.setCaretPosition(len - 1);
-                }
+        SwingUtilities.invokeLater(() -> {
+            int len = ta.getText().length();
+            if (scroll) {
+                ta.setCaretPosition(len);
+            } else if (ta.getCaretPosition() == len && len > 0) {
+                ta.setCaretPosition(len - 1);
             }
         });
     }
