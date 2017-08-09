@@ -125,7 +125,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public void incrementAcelaSensorInitCount() {
         acelaSensorInitCount++;
         log.debug("Number of Acela sensors initialized: " + getAcelaSensorInitCount());
-
     }
 
     public int getAcelaSensorInitCount() {
