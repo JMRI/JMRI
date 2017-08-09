@@ -88,12 +88,12 @@ public class LayoutSlip extends LayoutTurnout {
         layoutEditor = myPanel;
         ident = id;
         center = c;
-        Point2D delta = new Point2D.Double(-20.0, 0.0);
-        pointA = MathUtil.add(center, delta);
-        pointC = MathUtil.subtract(center, delta);
-        delta = new Point2D.Double(-14.0, 14.0);
-        pointB = MathUtil.add(center, delta);
-        pointD = MathUtil.subtract(center, delta);
+        dispA = new Point2D.Double(-20.0, 0.0);
+        pointA = MathUtil.add(center, dispA);
+        pointC = MathUtil.subtract(center, dispA);
+        dispB = new Point2D.Double(-14.0, 14.0);
+        pointB = MathUtil.add(center, dispB);
+        pointD = MathUtil.subtract(center, dispB);
 
         setSlipType(type);
         rotateCoords(rot);
@@ -617,34 +617,38 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setCoordsCenter(Point2D p) {
         center = p;
-        pointA = MathUtil.subtract(center, dispC);
+        pointA = MathUtil.add(center, dispA);
         pointB = MathUtil.add(center, dispB);
-        pointC = MathUtil.add(center, dispC);
+        pointC = MathUtil.subtract(center, dispA);
         pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
     public void setCoordsA(Point2D p) {
         pointA = p;
-        dispC = MathUtil.subtract(pointA, center);
+        dispA = MathUtil.subtract(pointA, center);
+        pointC = MathUtil.subtract(center, dispA);
     }
 
     @Override
     public void setCoordsB(Point2D p) {
         pointB = p;
         dispB = MathUtil.subtract(pointB, center);
+        pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
     public void setCoordsC(Point2D p) {
         pointC = p;
-        dispC = MathUtil.subtract(center, pointC);
+        dispA = MathUtil.subtract(center, pointC);
+        pointA = MathUtil.add(center, dispA);
     }
 
     @Override
     public void setCoordsD(Point2D p) {
         pointD = p;
         dispB = MathUtil.subtract(center, pointD);
+        pointB = MathUtil.add(center, dispB);
     }
 
     @Override
