@@ -27,6 +27,8 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
@@ -51,11 +53,10 @@ public abstract class AbstractMonPane extends JmriPanel {
      */
     protected abstract void init();
 
-    jmri.UserPreferencesManager pm;
-
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
     @Override
     public void dispose() {
+        UserPreferencesManager pm = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (pm != null) {
             pm.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
             pm.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
@@ -105,7 +106,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected void createDataPanes() {
         configureDataPane(monTextPane);
     }
-    
+
     /**
      * Do default configuration of a data pane
      * @param textPane a JTextArea into which the data pane will be placed
@@ -139,21 +140,21 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
         });
     }
-    
+
     /**
      * Provide initial preferred line length.
      * Used to size the initial GUI
      * @return preferred initial number of columns
      */
     protected int getInitialPreferredLineLength() { return 80; }
-    
+
     /**
      * Provide initial number of lines to display
      * Used to size the initial GUI
      * @return preferred initial number of rows
      */
     protected int getInitialPreferredLineCount() { return 10; }
-    
+
     /**
      * Put data pane(s) in the GUI
      */
@@ -174,11 +175,11 @@ public abstract class AbstractMonPane extends JmriPanel {
         p.add(jScrollPane1);
         add(p);
     }
-    
+
     @Override
     public void initComponents() throws Exception {
-        pm = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        
+        UserPreferencesManager pm = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+
         // the following code sets the frame's initial state
         clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
         clearButton.setVisible(true);
@@ -258,7 +259,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
             // this pane isn't yet part of a frame,
-            // which can be normal, but 
+            // which can be normal, but
             if (alwaysOnTopCheckBox.isSelected()) {
                 // in this case we want to access the enclosing frame to setAlwaysOnTop.  So defer for a bit....
                 log.debug("Cannot set Always On Top from preferences due to no Top Level Ancestor");
@@ -275,7 +276,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                             log.warn("Took too long to \"Set Always on Top\", failed");
                             timer.stop();
                         }
-                    }      
+                    }
                 });
                 timer.start();
             }
@@ -411,7 +412,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Handle display of traffic.
      *
-     * @param timestamp timestamp to be pre-pended to the output line (if 
+     * @param timestamp timestamp to be pre-pended to the output line (if
      *                  timestamping is enabled)
      * @param line The traffic in normal parsed form, ending with \n
      * @param raw The traffic in raw form, ending with \n
@@ -463,12 +464,12 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (freezeButton.isSelected()) {
             return;
         }
-        
+
         // if this message is filtered out, end
         if (isFiltered(raw)) {
             return;
         }
-        
+
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -493,7 +494,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Default filtering implementation, more of an example
      * than anything else, not clear it really works
-     * for any system.  Override this in system-specific subclasses to do something 
+     * for any system.  Override this in system-specific subclasses to do something
      * useful.
      * @param raw   A string containing the raw message hex information, in ASCII
      *              encoding, with some "header" information pre-pended.
@@ -517,18 +518,18 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         return false;
     }
-    
-    /** 
+
+    /**
      * Get hex opcode for filtering
-     * 
-     * Reports the "opcode" byte from the string containing the ASCII string 
-     * representation of the message.  Assumes that there is a generic header on 
+     *
+     * Reports the "opcode" byte from the string containing the ASCII string
+     * representation of the message.  Assumes that there is a generic header on
      * string, like "Tx - ", and ignores it.
-     * 
-     * @param raw   a String containing the generic raw hex information, with 
+     *
+     * @param raw   a String containing the generic raw hex information, with
      *              pre-pended header.
-     * 
-     * @return      a two character String containing only the hex representation 
+     *
+     * @return      a two character String containing only the hex representation
      *              of the opcode from the raw message.
      */
     protected String getOpCodeForFilter(String raw) {
@@ -537,7 +538,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             return raw.substring(5, 7);
         } else return null;
     }
-    
+
     String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -554,7 +555,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (p.getParent() == null) {
             // This case is a file path with a "parent" of "null"
             //
-            // Should instead use the profile directory, as "null" can default to 
+            // Should instead use the profile directory, as "null" can default to
             // the JMRI program directory, which might not be user-writable.
             returnString = FileUtil.getUserFilesPath()+p.getFileName().toString();
             log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to "+returnString);
@@ -584,7 +585,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                 }
                 log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '"+logFileChooser.getSelectedFile().getName() +
                         "'.  Exception: "+ex);
-                JOptionPane.showMessageDialog(this, 
+                JOptionPane.showMessageDialog(this,
                         (Bundle.getMessage("ErrorCannotOpenFileForWriting",
                             logFileChooser.getSelectedFile().getName(),
                             Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
@@ -628,7 +629,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         return monTextPane.getText();
     }
 
-    /** 
+    /**
      * Get access to the main text area. This is intended
      * for use in e.g. scripting to extend the behavior of the window.
      */
@@ -670,7 +671,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     protected StringBuffer linesBuffer = new StringBuffer();
-    static private int MAX_LINES = 500;
+    private static final int MAX_LINES = 500;
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class.getName());
 }
