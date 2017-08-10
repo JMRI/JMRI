@@ -1079,6 +1079,9 @@ public class LevelXing extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
+        }
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
             jmi.setEnabled(false);
@@ -1129,7 +1132,7 @@ public class LevelXing extends LayoutTrack {
                 }
             });
             if (blockACAssigned && blockBDAssigned) {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
@@ -1139,7 +1142,14 @@ public class LevelXing extends LayoutTrack {
                         tools.setSignalsAtLevelXingFromMenu(instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
-                });
+                };
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addLevelXingSignalHeadInfoToMenu(instance, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
             }
 
             final String[] boundaryBetween = getBlockBoundaries();
