@@ -99,11 +99,9 @@ import org.slf4j.LoggerFactory;
  * The title of the target and the editor panel are kept consistent via the
  * {#setTitle} method.
  * <p>
- * <p>
  * Mouse events are initial handled here, rather than in the individual
  * displayed objects, so that selection boxes for moving multiple objects can be
  * provided.
- * <p>
  * <p>
  * This class also implements an effective ToolTipManager replacement, because
  * the standard Swing one can't deal with the coordinate changes used to zoom a

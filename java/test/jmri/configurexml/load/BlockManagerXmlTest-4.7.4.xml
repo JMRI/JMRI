@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>7</minor>
-    <test>5</test>
+    <minor>9</minor>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -12,18 +12,6 @@
     <sensor inverted="false">
       <systemName>ISBO1</systemName>
       <userName>blocknorthwestoccupied</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISBO10</systemName>
-      <userName>blocksouthwestoccupied</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISBO11</systemName>
-      <userName>blockwestoccupied</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISBO12</systemName>
-      <userName>blockwestsidingoccupied</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISBO2</systemName>
@@ -58,19 +46,22 @@
       <userName>blocksouthsidingoccupied</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>ISBO10</systemName>
+      <userName>blocksouthwestoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO11</systemName>
+      <userName>blockwestoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO12</systemName>
+      <userName>blockwestsidingoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISSDIRF1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRF10</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRF11</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRF12</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISSDIRF2</systemName>
@@ -97,16 +88,16 @@
       <systemName>ISSDIRF9</systemName>
     </sensor>
     <sensor inverted="false">
+      <systemName>ISSDIRF10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF12</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISSDIRR1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRR10</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRR11</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSDIRR12</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISSDIRR2</systemName>
@@ -133,16 +124,16 @@
       <systemName>ISSDIRR9</systemName>
     </sensor>
     <sensor inverted="false">
+      <systemName>ISSDIRR10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR12</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISSSTOPF1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPF10</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPF11</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPF12</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISSSTOPF2</systemName>
@@ -169,16 +160,16 @@
       <systemName>ISSSTOPF9</systemName>
     </sensor>
     <sensor inverted="false">
+      <systemName>ISSSTOPF10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF12</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISSSTOPR1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPR10</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPR11</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISSSTOPR12</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISSSTOPR2</systemName>
@@ -203,6 +194,15 @@
     </sensor>
     <sensor inverted="false">
       <systemName>ISSSTOPR9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR12</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -679,5 +679,7 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:26:06 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <!--Written by JMRI version 4.7.5ish+jake+20170604T1810Z+Rcabd84d212 on Sun Jun 04 11:11:02 PDT 2017-->
+  <filehistory>
+  </filehistory>
+  <!--Written by JMRI version 4.8+Rbe0ff15 on Thu Aug 10 16:32:29 PDT 2017-->
 </layout-config>
