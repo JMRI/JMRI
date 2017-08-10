@@ -778,6 +778,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+ (address!=null?address.getNumber():getDisplayName()))));
         fireRunStatus("throttleFail", null, reason);
     }
+
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
     
     protected void releaseThrottle(DccThrottle throttle) {
         if (throttle != null) {
