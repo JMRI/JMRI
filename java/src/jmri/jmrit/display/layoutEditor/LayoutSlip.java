@@ -653,22 +653,17 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        center = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        pointA = new Point2D.Double(Math.round(pointA.getX() * xFactor),
-                Math.round(pointA.getY() * yFactor));
-        pointB = new Point2D.Double(Math.round(pointB.getX() * xFactor),
-                Math.round(pointB.getY() * yFactor));
-        pointC = new Point2D.Double(Math.round(pointC.getX() * xFactor),
-                Math.round(pointC.getY() * yFactor));
-        pointD = new Point2D.Double(Math.round(pointD.getX() * xFactor),
-                Math.round(pointD.getY() * yFactor));
+        center = MathUtil.granulize(MathUtil.multiply(center, xFactor), 1.0);
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, xFactor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, xFactor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, xFactor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, xFactor), 1.0);
     }
 
     /**
      * Initialization method The above variables are initialized by
      * LayoutSlipXml, then the following method is called after the entire
-     * LayoutEditor is loaded to set the specific TrackSegment objects.
+     * LayoutEditor is loaded to set the specific LayoutSlip objects.
      */
     /*
     @Override
