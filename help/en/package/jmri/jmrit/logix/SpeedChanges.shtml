@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Modifying Warrant Speeds</h1>
+      <h1>When Warrant Speeds Are Modified</h1>
 
       Regardless of the throttle setting and intended track
       speed in the command script of a warrant, track conditions
