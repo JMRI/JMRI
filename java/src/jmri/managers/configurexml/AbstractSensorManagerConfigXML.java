@@ -1,10 +1,12 @@
 package jmri.managers.configurexml;
 
+import java.util.Collections;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.util.AlphanumComparator;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +49,15 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             elem.addContent(new Element("goingInActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingInActive())));
             sensors.addContent(elem);
         }
-        java.util.Iterator<String> iter
-                = tm.getSystemNameList().iterator();
 
+        //TODO: dead code strip this
+//        java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
+        List<String> snl = tm.getSystemNameList();
+        AlphanumComparator ac = new AlphanumComparator();
+        Collections.sort(snl, (String s1, String s2) -> ac.compare(s1, s2));
+        java.util.Iterator<String> iter = snl.iterator();
+
+//
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
             return null;
@@ -80,9 +88,9 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
-            if(tm.isPullResistanceConfigurable()){
-               // store the sensor's value for pull resistance.
-               elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
+            if (tm.isPullResistanceConfigurable()) {
+                // store the sensor's value for pull resistance.
+                elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
             }
 
             sensors.addContent(elem);
@@ -179,7 +187,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
 
             Sensor s;
-            
+
             try {
                 s = tm.newSensor(sysName, userName);
             } catch (IllegalArgumentException e) {
@@ -219,12 +227,12 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
             s.setInverted(inverted);
 
-            if(sensorList.get(i).getChild("pullResistance")!=null){
-               String pull = sensorList.get(i).getChild("pullResistance")
-                                       .getText();
-               log.debug("setting pull to {} for sensor {}",pull,s);
-               s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
-           }
+            if (sensorList.get(i).getChild("pullResistance") != null) {
+                String pull = sensorList.get(i).getChild("pullResistance")
+                        .getText();
+                log.debug("setting pull to {} for sensor {}", pull, s);
+                s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+            }
         }
         return result;
     }

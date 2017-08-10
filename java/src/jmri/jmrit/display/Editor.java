@@ -20,6 +20,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -97,12 +98,12 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The title of the target and the editor panel are kept consistent via the
  * {#setTitle} method.
- *
+ * <p>
  * <p>
  * Mouse events are initial handled here, rather than in the individual
  * displayed objects, so that selection boxes for moving multiple objects can be
  * provided.
- *
+ * <p>
  * <p>
  * This class also implements an effective ToolTipManager replacement, because
  * the standard Swing one can't deal with the coordinate changes used to zoom a
@@ -367,7 +368,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     //
     /**
      * Set the target panel.
-     *
+     * <p>
      * An Editor may or may not choose to use 'this' as its frame or the
      * interior class 'TargetPane' for its targetPanel.
      *
@@ -996,7 +997,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     /**
      * Handle closing the target window.
-     *
+     * <p>
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
      *
@@ -1171,8 +1172,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Display the rotation of the Positionable item and
-     * provide a dialog menu item to edit it.
+     * Display the rotation of the Positionable item and provide a dialog menu
+     * item to edit it.
      *
      * @param p     The item to add the menu item to
      * @param popup The menu item to add the action to
@@ -2764,7 +2765,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /**
      * Relocate item.
-     *
+     * <p>
      * Note that items can not be moved past the left or top edges of the panel.
      *
      * @param p      The item to move.
@@ -2798,32 +2799,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
 //    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case")
     protected List<Positionable> getSelectedItems(MouseEvent event) {
-        double x;
-        double y;
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<Positionable>();
         for (Positionable p : _contents) {
-            x = event.getX();
-            y = event.getY();
+            Point2D where = new Point2D.Double(event.getX(), event.getY());
             rect = p.getBounds(rect);
             if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
+                Point2D center = MathUtil.center(rect);
                 // since this object is rotated we have to transform the point
                 // we're testing into the coordinate space of this object before
                 // we can test if it is in our objects bounds.
                 double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
-                double[] pt = new double[2];
-                // bit shift to avoid Findbugs paranoia
-                pt[0] = x - rect.x - (rect.width >>> 1);
-                pt[1] = y - rect.y - (rect.height >>> 1);
-                t.transform(pt, 0, pt, 0, 1);
-                x = pt[0] + rect.x + (rect.width >>> 1);
-                y = pt[1] + rect.y + (rect.height >>> 1);
+                if (true) {
+                    where = t.transform(where, where);
+//              } else {    //TODO: dead code strip this
+//                    double[] pt = new double[2];
+//                    pt[0] = x - center.getX();
+//                    pt[1] = y - center.getY();
+//                    t.transform(pt, 0, pt, 0, 1);
+//                    x = pt[0] + center.getX();
+//                    y = pt[1] + center.getY();
+//                    where = new Point2D.Double(x, y);
+                }
             }
             Rectangle2D rect2D = MathUtil.scale(MathUtil.RectangleToRectangle2D(rect), _paintScale);
             int level = p.getDisplayLevel();
-            if (rect2D.contains(x, y) && (level > BKG || event.isControlDown())) {
+            if (rect2D.contains(where) && (level > BKG || event.isControlDown())) {
                 boolean added = false;
                 for (int k = 0; k < selections.size(); k++) {
                     if (level >= selections.get(k).getDisplayLevel()) {
@@ -3325,7 +3328,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Get a list of currently-existing Editor objects that are specific
      * sub-classes of Editor.
-     *
+     * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
