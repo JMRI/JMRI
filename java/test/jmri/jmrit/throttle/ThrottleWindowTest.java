@@ -17,8 +17,9 @@ public class ThrottleWindowTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow panel = new ThrottleWindow();
-        Assert.assertNotNull("exists", panel);
+        ThrottleWindow frame = new ThrottleWindow();
+        Assert.assertNotNull("exists", frame);
+        frame.dispose();
     }
 
     @Before
