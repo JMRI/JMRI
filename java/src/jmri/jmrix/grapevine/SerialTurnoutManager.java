@@ -147,7 +147,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a connection system specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -156,7 +156,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a connection system specific regex for the Add new item beantable pane.
+     * Provide a manager-specific regex for the Add new item beantable pane.
      */
     @Override
     public String getEntryRegex() {
