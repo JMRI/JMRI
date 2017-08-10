@@ -36,4 +36,5 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerXml.class.getName());
+
 }

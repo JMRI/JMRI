@@ -34,11 +34,10 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        AcelaLightManager.instance();
         // load individual lights
         return loadLights(shared);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
+
 }

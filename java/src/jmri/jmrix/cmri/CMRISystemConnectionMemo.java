@@ -1,16 +1,17 @@
 package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
-import jmri.jmrix.SystemConnectionMemo;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.LightManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.SystemConnectionMemo;
+//import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.*;
 
 /**
@@ -21,8 +22,9 @@ import jmri.jmrix.cmri.serial.*;
 public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
-     * Public static method to the user name for a valid system name Returns ""
-     * (null string) if the system name is not valid or does not exist
+     * Public static method to the user name for a valid system name.
+     *
+     * @return "" (null string) if the system name is not valid or does not exist
      */
     public String getUserNameFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -126,7 +128,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to test if a C/MRI output bit is free for assignment
-     * Returns "" (null string) if the specified output bit is free for
+     * @return "" (null string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address or bit number are illegal.
      */
@@ -187,7 +189,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to normalize a C/MRI system name
+     * Public static method to normalize a C/MRI system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
@@ -523,11 +525,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         this("C", CMRIConnectionTypeList.CMRI);
     }
     
-    public CMRISystemConnectionMemo(String prefix, String userName) {
+    public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
         
         register(); // registers general type
-        jmri.InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
@@ -536,7 +538,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
-    /*
+    /**
      * Set the traffic controller instance associated with this connection memo.
      *
      * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
@@ -545,10 +547,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         tc = s;
     }
 
-    /*
+    /**
      * Get the traffic controller instance associated with this connection memo.
      */
-    public SerialTrafficController  getTrafficController(){
+    public SerialTrafficController getTrafficController(){
         if (tc == null) {
             setTrafficController(new SerialTrafficController());
             log.debug("Auto create of SerialTrafficController for initial configuration");

@@ -1,10 +1,10 @@
-package jmri.jmrix.grapevine.nodeconfig;
+package jmri.jmrix.acela.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import java.util.Locale;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -19,12 +19,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @since 4.3.6
+ * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.grapevine.Bundle {
+public class Bundle extends jmri.jmrix.acela.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.grapevine.nodeconfig.NodeConfigBundle"; // NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

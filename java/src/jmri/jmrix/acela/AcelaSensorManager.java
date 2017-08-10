@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * This is a AcelaListener to handle the replies to poll messages. Those are
  * forwarded to the specific AcelaNode object corresponding to their origin for
  * processing of the data.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
  *
@@ -110,10 +110,10 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public void reply(AcelaReply r) {
-        // Determine which state we are in: Initiallizing Acela Network or Polling Sensors
+        // Determine which state we are in: Initializing Acela Network or Polling Sensors
         boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
-        //  false == Initiallizing Acela Network
+        //  false == Initializing Acela Network
         //  true == Polling Sensors
         if (!currentstate) {
             int replysize = r.getNumDataElements();
@@ -184,7 +184,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             int replysize = r.getNumDataElements();
             if (replysize > 1) {  // Bob C: not good if only one sensor module !!
-                AcelaTrafficController.instance().updateSensorsFromPoll(r);
+                _memo.getTrafficController().updateSensorsFromPoll(r);
             }
         }
     }
