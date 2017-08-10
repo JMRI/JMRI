@@ -1,7 +1,8 @@
-package jmri.jmrix.cmri.serial.cmrinetmetrics;
+package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -10,23 +11,16 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of CMRInetMetricsCollector
+ * Test simple functioning of CMRInetManagerFrame
  *
  * @author	Chuck Catania Copyright (C) 2017
  */
-public class CMRInetMetricsCollectorTest {
+public class CMRInetManagerFrameTest {
 
     @Test
-    public void testStringCtor() {
+    public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsCollectorTest action = new CMRInetMetricsCollectorTest(); 
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsCollectorTest action = new CMRInetMetricsCollectorTest(); 
+        CMRInetManagerFrame action = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
         Assert.assertNotNull("exists", action);
     }
 

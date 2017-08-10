@@ -304,9 +304,9 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     // CMRInet Statistics button handler
     // ---------------------------------
     public void netStatsButtonActionPerformed(ActionEvent e) {
-        CMRInetMetricsAction f = new CMRInetMetricsAction(_memo);  
+//        CMRInetMetricsAction f = new CMRInetMetricsAction(_memo);  **********
         try {
-                f.actionPerformed(e);
+//                f.actionPerformed(e);
                 netStatsButton.setEnabled(false);
             }
         catch (Exception ex)

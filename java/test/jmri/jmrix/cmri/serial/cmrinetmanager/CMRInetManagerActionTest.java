@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri.serial.cmrimetrics;
+package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
@@ -11,16 +11,23 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of CMRInetMetricsData
- *
+ * Test simple functioning of CMRInetManagerAction
+ * Copied from Diagnostic
  * @author	Chuck Catania Copyright (C) 2017
  */
-public class CMRInetMetricsDataTest {
+public class CMRInetManagerActionTest {
 
     @Test
-    public void testMemoCtor() {
+    public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsDataTest action = new CMRInetMetricsDataTest(); 
+        CMRInetManagerAction action = new CMRInetManagerAction("CMRI test Action",new CMRISystemConnectionMemo()); 
+        Assert.assertNotNull("exists", action);
+    }
+
+    @Test
+    public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CMRInetManagerAction action = new CMRInetManagerAction(new CMRISystemConnectionMemo()); 
         Assert.assertNotNull("exists", action);
     }
 
