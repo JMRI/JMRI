@@ -5370,7 +5370,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
-
         } else if ((event.isMetaDown() || event.isAltDown())
                 && (!event.isShiftDown()) && (!event.isControlDown())) {
             //not in edit mode - check if moving a marker if there are any
