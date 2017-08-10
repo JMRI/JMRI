@@ -4,8 +4,6 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the owner names that cars can have.
@@ -76,6 +74,6 @@ public class CarOwners extends RollingStockAttribute implements InstanceManagerA
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
 
 }

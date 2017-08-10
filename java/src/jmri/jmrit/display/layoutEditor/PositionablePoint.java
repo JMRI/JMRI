@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -706,8 +707,8 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    JPopupMenu popup = null;
-    LayoutEditorTools tools = null;
+    private JPopupMenu popup = null;
+    private LayoutEditorTools tools = null;
 
     /**
      * For editing: only provides remove
@@ -718,6 +719,11 @@ public class PositionablePoint extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
+        }
+
         boolean blockBoundary = false;
         boolean endBumper = false;
         JMenuItem jmi = null;
@@ -822,42 +828,31 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         // bring up signals at block boundary tool dialog
                         tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
                     }
                 });
             } else {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         // bring up signals at level crossing tool dialog
                         tools.setSignalsAtBlockBoundaryFromMenu(instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
-                });
-                popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-                        // bring up signals at block boundary tool dialog
-                        tools.setSensorsAtBlockBoundaryFromMenu(instance,
-                                layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                    }
-                });
+                };
+
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addBlockBoundarySignalHeadInfoToMenu(instance, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
+
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         // bring up signals at block boundary tool dialog
                         tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
                     }
@@ -868,9 +863,6 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(new AbstractAction(rb.getString("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
-                    }
                     // bring up signals at block boundary tool dialog
                     tools.setSensorsAtBlockBoundaryFromMenu(instance,
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
@@ -879,9 +871,6 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
-                    }
                     // bring up signals at block boundary tool dialog
                     tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
                 }
