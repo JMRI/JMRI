@@ -164,7 +164,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(Server.class)) {
+            if (type.equals(ServerFrame.class)) {
                 ServerFrame instance = new ServerFrame();
                 Server server = InstanceManager.getDefault(Server.class);
                 server.setStateListner(instance);
