@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
@@ -20,6 +21,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -198,6 +201,9 @@ public class LayoutEditorTools {
             InstanceManager.getDefault(SignalHeadManager.class),
             null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
+    private JCheckBox setPlaceAllHeads = new JCheckBox(rb.getString("PlaceAllHeads"));
+    private JCheckBox setupAllLogic = new JCheckBox(rb.getString("SetAllLogic"));
+
     private JCheckBox setThroatContinuing = new JCheckBox(rb.getString("PlaceHead"));
     private JCheckBox setupLogicThroatContinuing = new JCheckBox(rb.getString("SetLogic"));
     private JCheckBox setThroatDiverging = new JCheckBox(rb.getString("PlaceHead"));
@@ -271,6 +277,32 @@ public class LayoutEditorTools {
             });
             getSavedSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
+
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setThroatContinuing.setSelected(isSelected);
+                setThroatDiverging.setSelected(isSelected);
+                setContinuing.setSelected(isSelected);
+                setDiverging.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupLogicThroatContinuing.setSelected(isSelected);
+                setupLogicThroatDiverging.setSelected(isSelected);
+                setupLogicContinuing.setSelected(isSelected);
+                setupLogicDiverging.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
 
             JPanel panel21 = new JPanel(new FlowLayout());
             JLabel throatContinuingLabel = new JLabel(rb.getString("ThroatContinuing") + " : ");
@@ -2640,6 +2672,40 @@ public class LayoutEditorTools {
             });
             getSavedXoverSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
+                        
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setA1Head.setSelected(isSelected);
+                setA2Head.setSelected(isSelected);
+                setB1Head.setSelected(isSelected);
+                setB2Head.setSelected(isSelected);
+                setC1Head.setSelected(isSelected);
+                setC2Head.setSelected(isSelected);
+                setD1Head.setSelected(isSelected);
+                setD2Head.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupA1Logic.setSelected(isSelected);
+                setupA2Logic.setSelected(isSelected);
+                setupB1Logic.setSelected(isSelected);
+                setupB2Logic.setSelected(isSelected);
+                setupC1Logic.setSelected(isSelected);
+                setupC2Logic.setSelected(isSelected);
+                setupD1Logic.setSelected(isSelected);
+                setupD2Logic.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
 
             JPanel panel21 = new JPanel(new FlowLayout());
             JLabel a1Label = new JLabel(Bundle.getMessage("XContinuing", "A") + " : ");
@@ -3637,6 +3703,32 @@ public class LayoutEditorTools {
             });
             getSavedXingSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
+                        
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setAHead.setSelected(isSelected);
+                setBHead.setSelected(isSelected);
+                setCHead.setSelected(isSelected);
+                setDHead.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupALogic.setSelected(isSelected);
+                setupBLogic.setSelected(isSelected);
+                setupCLogic.setSelected(isSelected);
+                setupDLogic.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
 
             JPanel panel21 = new JPanel(new FlowLayout());
             JLabel aLabel = new JLabel(Bundle.getMessage("TrackXConnect", "A") + " : ");
@@ -4353,7 +4445,7 @@ public class LayoutEditorTools {
     private TrackSegment connectorTrack = null;
 
     private boolean ttotFromMenu = false;
-    
+
     private String ttotTurnoutName1 = null;
     private String ttotTurnoutName2 = null;
 
@@ -4440,8 +4532,42 @@ public class LayoutEditorTools {
             getSavedTToTSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel20);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-            // Signal heads located at turnout 1
+                       
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setA1TToTHead.setSelected(isSelected);
+                setA2TToTHead.setSelected(isSelected);
+                setB1TToTHead.setSelected(isSelected);
+                setB2TToTHead.setSelected(isSelected);
+                setC1TToTHead.setSelected(isSelected);
+                setC2TToTHead.setSelected(isSelected);
+                setD1TToTHead.setSelected(isSelected);
+                setD2TToTHead.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupA1TToTLogic.setSelected(isSelected);
+                setupA2TToTLogic.setSelected(isSelected);
+                setupB1TToTLogic.setSelected(isSelected);
+                setupB2TToTLogic.setSelected(isSelected);
+                setupC1TToTLogic.setSelected(isSelected);
+                setupC2TToTLogic.setSelected(isSelected);
+                setupD1TToTLogic.setSelected(isSelected);
+                setupD2TToTLogic.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+            // Signal heads located at turnout 1
             JPanel panel20a = new JPanel(new FlowLayout());
             panel20a.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("ContinuingTrack")));
@@ -5609,19 +5735,19 @@ public class LayoutEditorTools {
     private void addNearSensorToLogic(String name) {
         if ((name != null) && !name.equals("")) {
             // return if a sensor by this name is already present
-            if (logic.getSensor1().equals(name)) {
+            if ((logic.getSensor1() != null) && (logic.getSensor1().equals(name))) {
                 return;
             }
-            if (logic.getSensor2().equals(name)) {
+            if ((logic.getSensor2() != null) && (logic.getSensor2().equals(name))) {
                 return;
             }
-            if (logic.getSensor3().equals(name)) {
+            if ((logic.getSensor3() != null) && (logic.getSensor3().equals(name))) {
                 return;
             }
-            if (logic.getSensor4().equals(name)) {
+            if ((logic.getSensor4() != null) && (logic.getSensor4().equals(name))) {
                 return;
             }
-            if (logic.getSensor5().equals(name)) {
+            if ((logic.getSensor5() != null) && (logic.getSensor5().equals(name))) {
                 return;
             }
             // add in the first available slot
@@ -5782,9 +5908,39 @@ public class LayoutEditorTools {
             });
             getSaved3WaySignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
+                       
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-            // Signal heads located at turnout A
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setA13WayHead.setSelected(isSelected);
+                setA23WayHead.setSelected(isSelected);
+                setA33WayHead.setSelected(isSelected);
+                setB3WayHead.setSelected(isSelected);
+                setC3WayHead.setSelected(isSelected);
+                setD3WayHead.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupA13WayLogic.setSelected(isSelected);
+                setupA23WayLogic.setSelected(isSelected);
+                setupA33WayLogic.setSelected(isSelected);
+                setupB3WayLogic.setSelected(isSelected);
+                setupC3WayLogic.setSelected(isSelected);
+                setupD3WayLogic.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
+            // Signal heads located at turnout A
             JPanel panel20 = new JPanel(new FlowLayout());
             panel20.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " A "));
             theContentPane.add(panel20);
@@ -7962,23 +8118,11 @@ public class LayoutEditorTools {
         }
     }
 
-    public void setIconOnPanel(PositionableIcon l, int rotation,
-            Point p) {
-        l.setLocation((int) p.getX(), (int) p.getY());
-        if (rotation > 0) {
-            l.rotate(rotation);
-        }
-        if (l instanceof SignalMastIcon) {
-            layoutEditor.putSignalMast((SignalMastIcon) l);
-        } else if (l instanceof SensorIcon) {
-            layoutEditor.putSensor((SensorIcon) l);
-        } else if (l instanceof SignalHeadIcon) {
-            layoutEditor.putSignal((SignalHeadIcon) l);
-        }
+    public void setIconOnPanel(PositionableIcon l, int rotation, Point p) {
+        setIconOnPanel(l, rotation, (int) p.getX(), (int) p.getY());
     }
 
-    public void setIconOnPanel(PositionableIcon l, int rotation,
-            int xLoc, int yLoc) {
+    public void setIconOnPanel(PositionableIcon l, int rotation, int xLoc, int yLoc) {
         l.setLocation(xLoc, yLoc);
         if (rotation > 0) {
             l.rotate(rotation);
@@ -7992,7 +8136,7 @@ public class LayoutEditorTools {
         }
     }
 
-    private void placeEastBoundIcon(PositionableIcon icon, boolean right, double fromPoint) {
+    private void placeEastBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
 
         Point2D p = boundary.getCoords();
 
@@ -8013,10 +8157,10 @@ public class LayoutEditorTools {
         } else {
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
-        setIconOnPanel(t, icon, dir, p, pt2, right, fromPoint);
+        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
     }
 
-    private void placeWestBoundIcon(PositionableIcon icon, boolean right, double fromPoint) {
+    private void placeWestBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
 
         Point2D p = boundary.getCoords();
 
@@ -8035,11 +8179,11 @@ public class LayoutEditorTools {
         } else {
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
-        setIconOnPanel(t, icon, dir, p, pt2, right, fromPoint);
+        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
     }
 
-    void setIconOnPanel(TrackSegment t, PositionableIcon l, boolean eastbound, Point2D pt1, Point2D pt2, boolean side, double fromPoint) {
+    void setIconOnPanel(TrackSegment t, PositionableIcon l, boolean isEastBound, Point2D pt1, Point2D pt2, boolean isRightSide, double fromPoint) {
         double pt1x = pt1.getX(), pt1y = pt1.getY();
         double pt2x = pt2.getX(), pt2y = pt2.getY();
 
@@ -8052,21 +8196,21 @@ public class LayoutEditorTools {
         Point loc = new Point(0, 0);
         if (triX == 0 || triX == 360) {
             //In a vertical Striaght Line
-            if (eastbound) {
+            if (isEastBound) {
                 log.debug("In a vertical striaghtline facing South");
-                loc = northToSouth(pt1, l, side, fromPoint);
+                loc = northToSouth(pt1, l, isRightSide, fromPoint);
             } else {
                 log.debug("In a vertical striaghtline facing North");
-                loc = southToNorth(pt1, l, side, fromPoint);
+                loc = southToNorth(pt1, l, isRightSide, fromPoint);
             }
         } else if (triY == 0 || triY == 360) {
             //In a Horizontal Straight Line
-            if (eastbound) {
+            if (isEastBound) {
                 log.debug("In a Horizontal striaghtline facing east");
-                loc = westToEast(pt1, l, side, fromPoint);
+                loc = westToEast(pt1, l, isRightSide, fromPoint);
             } else {
                 log.debug("In a Horizontal striaghtline facing west");
-                loc = eastToWest(pt1, l, side, fromPoint);
+                loc = eastToWest(pt1, l, isRightSide, fromPoint);
             }
         } else {
             // Compute arc's chord
@@ -8105,12 +8249,12 @@ public class LayoutEditorTools {
                     //"South East Corner"
                     rotateDEG = rotateDEG + 270;  //Correct for SM111, sm101, sm121, SM80
                     l.rotate(rotateDEG);
-                    loc = southEastToNorthWest(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
+                    loc = southEastToNorthWest(pt1, l, oldWidth, oldHeight, rotateDEG, isRightSide, fromPoint);
                 } else {
                     //"North East corner" //correct for sm110, sm70, sm131
                     rotateDEG = 270 - rotateDEG;
                     l.rotate(rotateDEG);
-                    loc = northEastToSouthWest(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
+                    loc = northEastToSouthWest(pt1, l, oldWidth, oldHeight, rotateDEG, isRightSide, fromPoint);
                 }
 
             } else {
@@ -8119,12 +8263,12 @@ public class LayoutEditorTools {
                     //South West //WORKING FOR SM141, sm130, SM71
                     l.rotate(rotateDEG - 90);
                     //South West
-                    loc = southWestToNorthEast(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
+                    loc = southWestToNorthEast(pt1, l, oldWidth, oldHeight, rotateDEG, isRightSide, fromPoint);
                 } else {
                     //North West //Working FOR SM140, SM81, sm120
                     rotateDEG = (180 - rotateDEG) + 90;
                     l.rotate(rotateDEG);
-                    loc = northWestToSouthEast(pt1, l, oldWidth, oldHeight, rotateDEG, side, fromPoint);
+                    loc = northWestToSouthEast(pt1, l, oldWidth, oldHeight, rotateDEG, isRightSide, fromPoint);
                 }
             }
         }
@@ -9049,31 +9193,31 @@ public class LayoutEditorTools {
     }
 
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equality is the unusual error condition")
-    private void placingBlock(PositionableIcon icon, boolean right, double fromPoint, Object obj, Point2D p) {
+    private void placingBlock(PositionableIcon icon, boolean isRightSide, double fromPoint, Object obj, Point2D p) {
         if (obj instanceof TrackSegment) {
-            TrackSegment t = (TrackSegment) obj;
-            Point2D end;
-            if (t.getConnect1() == layoutTurnout) {
-                end = layoutEditor.getCoords(t.getConnect2(), t.getType2());
+            TrackSegment ts = (TrackSegment) obj;
+            Point2D endPoint;
+            if (ts.getConnect1() == layoutTurnout) {
+                endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
             } else {
-                end = layoutEditor.getCoords(t.getConnect1(), t.getType1());
+                endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
             }
-            boolean east = false;
+            boolean isEast = false;
 
             // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-            if (end.getX() == p.getX()) {
+            if (endPoint.getX() == p.getX()) {
                 log.debug("X in both is the same");
-                if (end.getY() < p.getY()) {
+                if (endPoint.getY() < p.getY()) {
                     log.debug("Y end point is less than our point");
-                    east = true;
+                    isEast = true;
                 }
-            } else if (end.getX() < p.getX()) {
+            } else if (endPoint.getX() < p.getX()) {
                 log.debug("end X point is less than our point");
-                east = true;
+                isEast = true;
             }
 
-            log.debug("East set is " + east);
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
+            log.debug("East set is " + isEast);
+            setIconOnPanel(ts, icon, isEast, p, endPoint, isRightSide, fromPoint);
         }
         return;
     }
@@ -11872,6 +12016,40 @@ public class LayoutEditorTools {
             });
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+                     
+            JPanel panel2a = new JPanel(new FlowLayout());
+            panel2a.add(new JLabel("   "));
+            panel2a.add(setPlaceAllHeads);
+            setPlaceAllHeads.setToolTipText(rb.getString("PlaceAllHeadsHint"));
+            setPlaceAllHeads.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setPlaceAllHeads.isSelected();
+                // (de)select all checkboxes
+                setA1SlipHead.setSelected(isSelected);
+                setA2SlipHead.setSelected(isSelected);
+                setB1SlipHead.setSelected(isSelected);
+                setB2SlipHead.setSelected(isSelected);
+                setC1SlipHead.setSelected(isSelected);
+                setC2SlipHead.setSelected(isSelected);
+                setD1SlipHead.setSelected(isSelected);
+                setD2SlipHead.setSelected(isSelected);
+            });
+            panel2a.add(new JLabel("  "));
+            panel2a.add(setupAllLogic);
+            setupAllLogic.setToolTipText(rb.getString("SetAllLogicHint"));
+            setupAllLogic.addActionListener((ActionEvent e) -> {
+                boolean isSelected = setupAllLogic.isSelected();
+                // (de)select all checkboxes
+                setupA1SlipLogic.setSelected(isSelected);
+                setupA2SlipLogic.setSelected(isSelected);
+                setupB1SlipLogic.setSelected(isSelected);
+                setupB2SlipLogic.setSelected(isSelected);
+                setupC1SlipLogic.setSelected(isSelected);
+                setupC2SlipLogic.setSelected(isSelected);
+                setupD1SlipLogic.setSelected(isSelected);
+                setupD2SlipLogic.setSelected(isSelected);
+            });
+            theContentPane.add(panel2a);
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             // Signal heads located at turnout 1
             JPanel panel21x = new JPanel(new FlowLayout());
@@ -12543,40 +12721,179 @@ public class LayoutEditorTools {
 
     private void placeA1Slip(String signalHeadName) {
         // place head near the continuing track of turnout 1
-        placingBlock(getSignalHeadIcon(signalHeadName), false, 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+        //placingBlock(getSignalHeadIcon(signalHeadName), false, 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutSlip.getCoordsA();
+        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
+        double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
+        double diffDirDEG = MathUtil.diffAngleDEG(aDirDEG, dDirDEG);
+        double shiftX = 0.0;
+        if (diffDirDEG < 0.0) {
+            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+        }
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
+        delta = MathUtil.rotateDEG(delta, aDirDEG);
+        Point2D where = MathUtil.add(coordsA, delta);
+        setSignalHeadOnPanel(aDirDEG, signalHeadName, where);
     }
 
     private void placeA2Slip(String signalHeadName) {
-        SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
-        placingBlock(l, false, (4 + l.getHeight()), layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+        //SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
+        //placingBlock(l, false, (4 + l.getHeight()), layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsA = layoutSlip.getCoordsA();
+        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
+        double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
+        double diffDirDEG = MathUtil.diffAngleDEG(aDirDEG, dDirDEG);
+        double shiftX = 2.0 * shift;
+        if (diffDirDEG < 0.0) {
+            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+        }
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
+        delta = MathUtil.rotateDEG(delta, aDirDEG);
+        Point2D where = MathUtil.add(coordsA, delta);
+        setSignalHeadOnPanel(aDirDEG, signalHeadName, where);
     }
 
     private void placeB1Slip(String signalHeadName) {
-        placingBlock(getSignalHeadIcon(signalHeadName), true, 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+        //placingBlock(getSignalHeadIcon(signalHeadName), true, 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutTurnout.getCoordsB();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
+
+        Point2D delta = new Point2D.Double(+shift, -shift);
+        delta = MathUtil.rotateDEG(delta, bDirDEG);
+        Point2D where = MathUtil.add(coordsB, delta);
+        setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
     }
 
     private void placeB2Slip(String signalHeadName) {
-        SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
-        placingBlock(l, true, (4 + l.getHeight()), layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+        //SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
+        //placingBlock(l, true, (4 + l.getHeight()), layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutTurnout.getCoordsB();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
+
+        Point2D delta = new Point2D.Double(-shift, -shift);
+        delta = MathUtil.rotateDEG(delta, bDirDEG);
+        Point2D where = MathUtil.add(coordsB, delta);
+        setSignalHeadOnPanel(bDirDEG, signalHeadName, where);
     }
 
     private void placeC1Slip(String signalHeadName) {
-        placingBlock(getSignalHeadIcon(signalHeadName), false, 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+        //placingBlock(getSignalHeadIcon(signalHeadName), false, 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutSlip.getCoordsB();
+        Point2D coordsC = layoutSlip.getCoordsC();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
+        double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
+        double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
+        double shiftX = 0.0;
+        if (diffDirDEG < 0.0) {
+            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+        }
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
+        delta = MathUtil.rotateDEG(delta, cDirDEG);
+        Point2D where = MathUtil.add(coordsC, delta);
+        setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
     private void placeC2Slip(String signalHeadName) {
-        SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
-        placingBlock(l, false, (4 + l.getHeight()), layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+        //SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
+        //placingBlock(l, false, (4 + l.getHeight()), layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsB = layoutSlip.getCoordsB();
+        Point2D coordsC = layoutSlip.getCoordsC();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
+        double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
+        double diffDirDEG = MathUtil.diffAngleDEG(cDirDEG, bDirDEG);
+        double shiftX = 2.0 * shift;
+        if (diffDirDEG < 0.0) {
+            shiftX -= shift * Math.cos(Math.toRadians(diffDirDEG));
+        }
+        Point2D delta = new Point2D.Double(shiftX, -shift);
+
+        delta = MathUtil.rotateDEG(delta, cDirDEG);
+        Point2D where = MathUtil.add(coordsC, delta);
+        setSignalHeadOnPanel(cDirDEG, signalHeadName, where);
     }
 
     private void placeD1Slip(String signalHeadName) {
-        placingBlock(getSignalHeadIcon(signalHeadName), true, 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+        //placingBlock(getSignalHeadIcon(signalHeadName), true, 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
+        Point2D coordsD = layoutTurnout.getCoordsD();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
+
+        Point2D delta = new Point2D.Double(+shift, -shift);
+        delta = MathUtil.rotateDEG(delta, dDirDEG);
+        Point2D where = MathUtil.add(coordsD, delta);
+        setSignalHeadOnPanel(dDirDEG, signalHeadName, where);
     }
 
     private void placeD2Slip(String signalHeadName) {
-        SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
-        placingBlock(l, true, (4 + l.getHeight()), layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+        //SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
+        //placingBlock(l, true, (4 + l.getHeight()), layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+        if (testIcon == null) {
+            testIcon = signalIconEditor.getIcon(0);
+        }
+        double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
+
+        Point2D coordsD = layoutTurnout.getCoordsD();
+        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+
+        double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
+
+        Point2D delta = new Point2D.Double(-shift, -shift);
+        delta = MathUtil.rotateDEG(delta, dDirDEG);
+        Point2D where = MathUtil.add(coordsD, delta);
+        setSignalHeadOnPanel(dDirDEG, signalHeadName, where);
     }
 
     private void setLogicSlip(SignalHead head, TrackSegment track1, SignalHead secondHead, TrackSegment track2,
@@ -12876,5 +13193,218 @@ public class LayoutEditorTools {
         l.rotate(90);
         return l;
     }
+
+    protected Boolean addLayoutTurnoutSignalHeadInfoToMenu(String inTurnoutNameA, String inTurnoutNameB, JMenu inMenu) {
+        Boolean result = false; // assume failure (pessimist!)
+        // just so we won't have to test for null later…
+        inTurnoutNameA = (inTurnoutNameA == null) ? "" : inTurnoutNameA;
+        inTurnoutNameB = (inTurnoutNameB == null) ? "" : inTurnoutNameB;
+        // lookup turnouts
+        turnout = turnout1 = turnoutA = jmri.InstanceManager.turnoutManagerInstance().getTurnout(inTurnoutNameA);
+        turnout2 = turnoutB = jmri.InstanceManager.turnoutManagerInstance().getTurnout(inTurnoutNameB);
+        // map those to layout turnouts (if possible)
+        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+            Turnout to = lt.getTurnout();
+            if (to != null) {
+                String uname = to.getUserName();
+                String sname = to.getSystemName();
+                if ((inTurnoutNameA.length() > 0) && (sname.equals(inTurnoutNameA.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
+                    layoutTurnout = layoutTurnout1 = layoutTurnoutA = lt;
+                }
+                if ((inTurnoutNameB.length() > 0) && (sname.equals(inTurnoutNameB.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
+                    layoutTurnout2 = layoutTurnoutB = lt;
+                }
+            }
+        }
+
+        // convenience strings
+        String east = rb.getString("East");
+        String west = rb.getString("West");
+        String continuing = rb.getString("Continuing");
+        String diverging = rb.getString("Diverging");
+        String throat = rb.getString("Throat");
+        String throatContinuing = rb.getString("ThroatContinuing");
+        String throatDiverging = rb.getString("ThroatDiverging");
+
+        String diverging_ = rb.getString("Diverging_");
+        String divergingA = MessageFormat.format(diverging_, "A");
+        String divergingB = MessageFormat.format(diverging_, "B");
+
+        int before_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != 0) {
+            inMenu.add(new JSeparator());
+        }
+        int linkType = layoutTurnout.getLinkType();
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+            JMenuItem jmi = inMenu.add(rb.getString("Crossover"));
+            jmi.setEnabled(false);
+            inMenu.add(new JSeparator());
+            before_mcc += 2;
+            addInfoToMenu("A " + continuing, layoutTurnout.getSignalA1Name(), inMenu);
+            addInfoToMenu("A " + diverging, layoutTurnout.getSignalA2Name(), inMenu);
+            addInfoToMenu("B " + continuing, layoutTurnout.getSignalB1Name(), inMenu);
+            addInfoToMenu("B " + diverging, layoutTurnout.getSignalB2Name(), inMenu);
+            addInfoToMenu("C " + continuing, layoutTurnout.getSignalC1Name(), inMenu);
+            addInfoToMenu("C " + diverging, layoutTurnout.getSignalC2Name(), inMenu);
+            addInfoToMenu("D " + continuing, layoutTurnout.getSignalD1Name(), inMenu);
+            addInfoToMenu("D " + diverging, layoutTurnout.getSignalD2Name(), inMenu);
+        } else if (linkType == LayoutTurnout.NO_LINK) {
+            JMenuItem jmi = inMenu.add(rb.getString("Turnout"));
+            jmi.setEnabled(false);
+            inMenu.add(new JSeparator());
+            before_mcc += 2;
+            addInfoToMenu(throatContinuing, layoutTurnout.getSignalA1Name(), inMenu);
+            addInfoToMenu(throatDiverging, layoutTurnout.getSignalA2Name(), inMenu);
+            addInfoToMenu(continuing, layoutTurnout.getSignalB1Name(), inMenu);
+            addInfoToMenu(diverging, layoutTurnout.getSignalC1Name(), inMenu);
+        } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
+            String text = rb.getString("ThroatToThroat") + " (";
+            text += rb.getString("Turnout") + ", " + rb.getString("Route");
+            text += ", " + rb.getString("Signal") + ":)";
+            JMenuItem jmi = inMenu.add(text);
+            jmi.setEnabled(false);
+            inMenu.add(new JSeparator());
+            before_mcc += 2;
+            addInfoToMenu(east + ", " + continuing + ", " + continuing, layoutTurnout1.getSignalB1Name(), inMenu);
+            addInfoToMenu(east + ", " + continuing + ", " + diverging, layoutTurnout1.getSignalB2Name(), inMenu);
+            addInfoToMenu(east + ", " + diverging + ", " + continuing, layoutTurnout1.getSignalC1Name(), inMenu);
+            addInfoToMenu(east + ", " + diverging + ", " + diverging, layoutTurnout1.getSignalC2Name(), inMenu);
+            addInfoToMenu(west + ", " + continuing + ", " + continuing, layoutTurnout2.getSignalB1Name(), inMenu);
+            addInfoToMenu(west + ", " + continuing + ", " + diverging, layoutTurnout2.getSignalB2Name(), inMenu);
+            addInfoToMenu(west + ", " + diverging + ", " + continuing, layoutTurnout2.getSignalC1Name(), inMenu);
+            addInfoToMenu(west + ", " + diverging + ", " + diverging, layoutTurnout2.getSignalC2Name(), inMenu);
+        } else if (linkType == LayoutTurnout.FIRST_3_WAY) {
+            JMenuItem jmi = inMenu.add(rb.getString("ThreeWay"));
+            jmi.setEnabled(false);
+            inMenu.add(new JSeparator());
+            before_mcc += 2;
+            addInfoToMenu(throat + " " + continuing, layoutTurnoutA.getSignalA1Name(), inMenu);
+            addInfoToMenu(throat + " " + divergingA, layoutTurnoutA.getSignalA2Name(), inMenu);
+            addInfoToMenu(throat + " " + divergingB, layoutTurnoutA.getSignalA3Name(), inMenu);
+            addInfoToMenu(continuing, layoutTurnoutA.getSignalC1Name(), inMenu);
+            addInfoToMenu(divergingA, layoutTurnoutB.getSignalB1Name(), inMenu);
+            addInfoToMenu(divergingB, layoutTurnoutB.getSignalC1Name(), inMenu);
+        } else if (linkType == LayoutTurnout.SECOND_3_WAY) {
+            JMenuItem jmi = inMenu.add(rb.getString("ThreeWay"));
+            jmi.setEnabled(false);
+            inMenu.add(new JSeparator());
+            before_mcc += 2;
+            addInfoToMenu(throat + " " + continuing, layoutTurnoutB.getSignalA1Name(), inMenu);
+            addInfoToMenu(throat + " " + divergingA, layoutTurnoutB.getSignalA2Name(), inMenu);
+            addInfoToMenu(throat + " " + divergingB, layoutTurnoutB.getSignalA3Name(), inMenu);
+            addInfoToMenu(continuing, layoutTurnoutB.getSignalC1Name(), inMenu);
+            addInfoToMenu(divergingA, layoutTurnoutA.getSignalB1Name(), inMenu);
+            addInfoToMenu(divergingB, layoutTurnoutA.getSignalC1Name(), inMenu);
+        }
+        int after_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != after_mcc) {
+            inMenu.add(new JSeparator());
+            result = true;   // it's GOOD!
+        }
+        return result;
+    }   // addLayoutTurnoutSignalHeadInfoToMenu
+
+    protected Boolean addBlockBoundarySignalHeadInfoToMenu(PositionablePoint inPositionablePoint, JMenu inMenu) {
+        Boolean result = false; // assume failure (pessimist!)
+
+        int before_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != 0) {
+            inMenu.add(new JSeparator());
+        }
+
+        JMenuItem jmi = inMenu.add(rb.getString("BlockBoundary"));
+        jmi.setEnabled(false);
+        inMenu.add(new JSeparator());
+        before_mcc += 2;
+
+        addInfoToMenu(rb.getString("East/SouthBound"), inPositionablePoint.getEastBoundSignal(), inMenu);
+        addInfoToMenu(rb.getString("West/NorthBound"), inPositionablePoint.getWestBoundSignal(), inMenu);
+
+        int after_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != after_mcc) {
+            inMenu.add(new JSeparator());
+            result = true;   // it's GOOD!
+        }
+
+        return result;
+    }
+
+    protected Boolean addLevelXingSignalHeadInfoToMenu(LevelXing inLevelXing, JMenu inMenu) {
+        Boolean result = false; // assume failure (pessimist!)
+
+        int before_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != 0) {
+            inMenu.add(new JSeparator());
+        }
+
+        JMenuItem jmi = inMenu.add(rb.getString("LevelCrossing"));
+        jmi.setEnabled(false);
+        inMenu.add(new JSeparator());
+        before_mcc += 2;
+
+        addInfoToMenu(Bundle.getMessage("TrackXConnect", "A") + " : ", inLevelXing.getSignalAName(), inMenu);
+        addInfoToMenu(Bundle.getMessage("TrackXConnect", "B") + " : ", inLevelXing.getSignalBName(), inMenu);
+        addInfoToMenu(Bundle.getMessage("TrackXConnect", "C") + " : ", inLevelXing.getSignalCName(), inMenu);
+        addInfoToMenu(Bundle.getMessage("TrackXConnect", "D") + " : ", inLevelXing.getSignalDName(), inMenu);
+
+        int after_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != after_mcc) {
+            inMenu.add(new JSeparator());
+            result = true;   // it's GOOD!
+        }
+
+        return result;
+    }
+
+    protected Boolean addLayoutSlipSignalHeadInfoToMenu(LayoutTurnout inLayoutTurnout, JMenu inMenu) {
+        Boolean result = false; // assume failure (pessimist!)
+
+        int before_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != 0) {
+            inMenu.add(new JSeparator());
+        }
+
+        JMenuItem jmi = inMenu.add(rb.getString("Slip"));
+        jmi.setEnabled(false);
+        inMenu.add(new JSeparator());
+        before_mcc += 2;
+
+        String continuing = rb.getString("Continuing");
+        String diverging = rb.getString("Diverging");
+
+        addInfoToMenu("A " + continuing, inLayoutTurnout.getSignalA1Name(), inMenu);
+        addInfoToMenu("A " + diverging, inLayoutTurnout.getSignalA2Name(), inMenu);
+        addInfoToMenu("B " + continuing, inLayoutTurnout.getSignalB1Name(), inMenu);
+        addInfoToMenu("B " + diverging, inLayoutTurnout.getSignalB2Name(), inMenu);
+        addInfoToMenu("C " + continuing, inLayoutTurnout.getSignalC1Name(), inMenu);
+        addInfoToMenu("C " + diverging, inLayoutTurnout.getSignalC2Name(), inMenu);
+        addInfoToMenu("D " + continuing, inLayoutTurnout.getSignalD1Name(), inMenu);
+        addInfoToMenu("D " + diverging, inLayoutTurnout.getSignalD2Name(), inMenu);
+
+        int after_mcc = inMenu.getMenuComponentCount();
+        if (before_mcc != after_mcc) {
+            inMenu.add(new JSeparator());
+            result = true;   // it's GOOD!
+        }
+
+        return result;
+    }
+
+    private void addInfoToMenu(String title, String info, JMenu menu) {
+        if ((title != null) && (title.length() > 0) && (info != null) && (info.length() > 0)) {
+            addInfoToMenu(title + ": " + info, menu);
+        }
+    }
+
+    private void addInfoToMenu(String info, JMenu menu) {
+        if ((info != null) && (info.length() > 0)) {
+            JMenuItem jmi = new JMenuItem(info);
+            jmi.setEnabled(false);
+            menu.add(jmi);
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
 }

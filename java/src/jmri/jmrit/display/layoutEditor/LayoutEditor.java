@@ -170,12 +170,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton turnoutRHButton = new JRadioButton(rb.getString("RightHandAbbreviation"));
     private JRadioButton turnoutLHButton = new JRadioButton(rb.getString("LeftHandAbbreviation"));
     private JRadioButton turnoutWYEButton = new JRadioButton(rb.getString("WYEAbbreviation"));
-    private JRadioButton doubleXoverButton = new JRadioButton(rb.getString("DoubleCrossOverAbbreviation"));
-    private JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossOver")); //key is also used by Control Panel
+    private JRadioButton doubleXoverButton = new JRadioButton(rb.getString("DoubleCrossoverAbbreviation"));
+    private JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
     //Editor, placed in DisplayBundle
-    private JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossOver"));  //idem
-    private JRadioButton singleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
-    private JRadioButton doubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
+    private JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover"));  //idem
+    private JRadioButton layoutSingleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
+    private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
     private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
@@ -664,8 +664,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         itemGroup.add(rhXoverButton);
         itemGroup.add(lhXoverButton);
         itemGroup.add(levelXingButton);
-        itemGroup.add(singleSlipButton);
-        itemGroup.add(doubleSlipButton);
+        itemGroup.add(layoutSingleSlipButton);
+        itemGroup.add(layoutDoubleSlipButton);
         itemGroup.add(endBumperButton);
         itemGroup.add(anchorButton);
         itemGroup.add(edgeButton);
@@ -688,8 +688,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || doubleXoverButton.isSelected()
                     || rhXoverButton.isSelected()
                     || lhXoverButton.isSelected()
-                    || singleSlipButton.isSelected()
-                    || doubleSlipButton.isSelected());
+                    || layoutSingleSlipButton.isSelected()
+                    || layoutDoubleSlipButton.isSelected());
             log.debug("turnoutPropertiesPanel is " + (e ? "enabled" : "disabled"));
             turnoutNamePanel.setEnabled(e);
 
@@ -703,7 +703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             //second turnout property
-            e = (singleSlipButton.isSelected() || doubleSlipButton.isSelected());
+            e = (layoutSingleSlipButton.isSelected() || layoutDoubleSlipButton.isSelected());
             log.debug("extraTurnoutPanel is " + (e ? "enabled" : "disabled"));
 
             for (Component i : extraTurnoutPanel.getComponents()) {
@@ -725,8 +725,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || doubleXoverButton.isSelected()
                     || rhXoverButton.isSelected()
                     || lhXoverButton.isSelected()
-                    || singleSlipButton.isSelected()
-                    || doubleSlipButton.isSelected()
+                    || layoutSingleSlipButton.isSelected()
+                    || layoutDoubleSlipButton.isSelected()
                     || levelXingButton.isSelected()
                     || trackButton.isSelected());
             log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
@@ -774,8 +774,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rhXoverButton.addActionListener(selectionListAction);
         lhXoverButton.addActionListener(selectionListAction);
         levelXingButton.addActionListener(selectionListAction);
-        singleSlipButton.addActionListener(selectionListAction);
-        doubleSlipButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
         endBumperButton.addActionListener(selectionListAction);
         anchorButton.addActionListener(selectionListAction);
         edgeButton.addActionListener(selectionListAction);
@@ -795,11 +795,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutRHButton.setToolTipText(rb.getString("RHToolTip"));
         turnoutLHButton.setToolTipText(rb.getString("LHToolTip"));
         turnoutWYEButton.setToolTipText(rb.getString("WYEToolTip"));
-        doubleXoverButton.setToolTipText(rb.getString("DoubleCrossOverToolTip"));
-        rhXoverButton.setToolTipText(rb.getString("RHCrossOverToolTip"));
-        lhXoverButton.setToolTipText(rb.getString("LHCrossOverToolTip"));
-        singleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
-        doubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
+        doubleXoverButton.setToolTipText(rb.getString("DoubleCrossoverToolTip"));
+        rhXoverButton.setToolTipText(rb.getString("RHCrossoverToolTip"));
+        lhXoverButton.setToolTipText(rb.getString("LHCrossoverToolTip"));
+        layoutSingleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
+        layoutDoubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
 
         String turnoutNameString = Bundle.getMessage("Name");
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
@@ -1233,8 +1233,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.add(turnoutGroup2);
 
         JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.add(singleSlipButton);
-        turnoutGroup3.add(doubleSlipButton);
+        turnoutGroup3.add(layoutSingleSlipButton);
+        turnoutGroup3.add(layoutDoubleSlipButton);
         floatEditTurnout.add(turnoutGroup3);
 
         JPanel turnoutGroup4 = new JPanel(floatContentLayout);
@@ -1458,8 +1458,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             innerBorderPanel.add(vTop3Panel);
 
             JPanel vTop4Panel = new JPanel(verticalContentLayout);
-            vTop4Panel.add(singleSlipButton);
-            vTop4Panel.add(doubleSlipButton);
+            vTop4Panel.add(layoutSingleSlipButton);
+            vTop4Panel.add(layoutDoubleSlipButton);
             vTop4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop4Panel.getPreferredSize().height));
             innerBorderPanel.add(vTop4Panel);
 
@@ -1667,8 +1667,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop1Left.add(doubleXoverButton);
             hTop1Left.add(rhXoverButton);
             hTop1Left.add(lhXoverButton);
-            hTop1Left.add(singleSlipButton);
-            hTop1Left.add(doubleSlipButton);
+            hTop1Left.add(layoutSingleSlipButton);
+            hTop1Left.add(layoutDoubleSlipButton);
             hTop1Panel.add(hTop1Left);
 
             if (toolBarIsWide) {
@@ -1816,7 +1816,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             hTop6Panel.add(hTop6Left);
             editToolBarPanel.add(hTop6Panel);
-        }
+        } // if (toolBarIsVertical) {} else...
+
         editToolBarScroll = new JScrollPane(editToolBarPanel);
 
         if (toolBarIsVertical) {
@@ -4589,12 +4590,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             //set up selection rectangle
-            Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY,
-                    selectionWidth, selectionHeight);
+            double selX = Math.min(selectionX, selectionX + selectionWidth);
+            double selY = Math.min(selectionY, selectionY + selectionHeight);
+            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
+                    Math.abs(selectionWidth), Math.abs(selectionHeight));
 
             //set up undo information
-            undoRect = new Rectangle2D.Double(selectionX + xTranslation, selectionY + yTranslation,
-                    selectionWidth, selectionHeight);
+            undoRect = new Rectangle2D.Double(selX + xTranslation, selY + yTranslation,
+                    Math.abs(selectionWidth), Math.abs(selectionHeight));
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
@@ -4820,6 +4823,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
             String windowFrameRef = getWindowFrameRef();
 
+            //the restore code for this isn't working...
             prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
             prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
 
@@ -5740,9 +5744,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     addLayoutTurnout(LayoutTurnout.LH_XOVER);
                 } else if (levelXingButton.isSelected()) {
                     addLevelXing();
-                } else if (singleSlipButton.isSelected()) {
+                } else if (layoutSingleSlipButton.isSelected()) {
                     addLayoutSlip(LayoutSlip.SINGLE_SLIP);
-                } else if (doubleSlipButton.isSelected()) {
+                } else if (layoutDoubleSlipButton.isSelected()) {
                     addLayoutSlip(LayoutSlip.DOUBLE_SLIP);
                 } else if (endBumperButton.isSelected()) {
                     addEndBumper();
@@ -6710,8 +6714,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void createSelectionGroups() {
         List<Positionable> contents = getContents();
-        Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY,
-                selectionWidth, selectionHeight);
+        //set up selection rectangle
+        double selX = Math.min(selectionX, selectionX + selectionWidth);
+        double selY = Math.min(selectionY, selectionY + selectionHeight);
+        Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
+                Math.abs(selectionWidth), Math.abs(selectionHeight));
 
         for (Positionable c : contents) {
             if (selectRect.contains(c.getLocation())) {
@@ -6804,7 +6811,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                 }
             }
-        }
+        }   // for (LayoutTurnout t : turnoutList)
 
         // loop over all level crossings
         for (LevelXing x : xingList) {
@@ -9963,9 +9970,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return; //give up if no file selected
-        }//NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
-//inputFileChooser.getSelectedFile().getPath());
+        }
 
+        //NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
+        //inputFileChooser.getSelectedFile().getPath());
         String name = inputFileChooser.getSelectedFile().getPath();
 
         //convert to portable path
@@ -10286,6 +10294,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
         setLayoutDimensions(windowW, windowH, x, y, panelW, panelH, false);
     }
+
     public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH, boolean merge) {
         windowWidth = windowW;
         windowHeight = windowH;
@@ -10890,9 +10899,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawSelectionRect(Graphics2D g2) {
         if (selectionActive && (selectionWidth != 0.0) && (selectionHeight != 0.0)) {
+            //set up selection rectangle
+            double selX = Math.min(selectionX, selectionX + selectionWidth);
+            double selY = Math.min(selectionY, selectionY + selectionHeight);
+            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
+                    Math.abs(selectionWidth), Math.abs(selectionHeight));
             g2.setColor(defaultTrackColor);
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.draw(new Rectangle2D.Double(selectionX, selectionY, selectionWidth, selectionHeight));
+            g2.draw(selectRect);
         }
     }   //drawSelectionRect
 
@@ -10918,13 +10932,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int wideMod = gridSize1st * gridSize2nd;
         int wideMin = gridSize1st / 2;
 
-        //Dimension dim = getSize();
         // granulize puts these on gridSize1st increments
         double minX = MathUtil.granulize(upperLeftX, gridSize1st);
         double minY = MathUtil.granulize(upperLeftY, gridSize1st);
         double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
         double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
+        Point2D startPt = new Point2D.Double(0.0, gridSize1st);
+        Point2D stopPt = new Point2D.Double(maxX, gridSize1st);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -10932,27 +10947,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(narrow);
 
         //draw horizontal lines
-        double pix = minY + gridSize1st;
+        double pix = gridSize1st;
+
         while (pix < maxY) {
+            startPt.setLocation(0.0, pix);
+            stopPt.setLocation(maxX, pix);
+
             if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
-                g2.draw(new Line2D.Double(minX, pix, maxX, pix));
+                g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
             } else {
-                g2.draw(new Line2D.Double(minX, pix, maxX, pix));
+                g2.draw(new Line2D.Double(startPt, stopPt));
             }
             pix += gridSize1st;
         }
 
         //draw vertical lines
-        pix = minX + gridSize1st;
+        pix = gridSize1st;
+
         while (pix < maxX) {
+            startPt.setLocation(pix, 0.0);
+            stopPt.setLocation(pix, maxY);
+
             if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
-                g2.draw(new Line2D.Double(pix, minY, pix, maxY));
+                g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
             } else {
-                g2.draw(new Line2D.Double(pix, minY, pix, maxY));
+                g2.draw(new Line2D.Double(startPt, stopPt));
             }
             pix += gridSize1st;
         }
