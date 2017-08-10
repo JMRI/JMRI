@@ -4,8 +4,6 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the types of engines a railroad can have.
@@ -79,6 +77,6 @@ public class EngineTypes extends RollingStockAttribute implements InstanceManage
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineTypes.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineTypes.class.getName());
 
 }

@@ -212,7 +212,7 @@ public class EngineModels extends RollingStockAttribute {
 
         @Override
         public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
+            Set<Class<?>> set = super.getInitalizes();
             set.add(EngineModels.class);
             return set;
         }

@@ -4,8 +4,6 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the lengths that cars can have.
@@ -83,6 +81,6 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarLengths.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(CarLengths.class.getName());
 
 }
