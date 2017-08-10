@@ -105,4 +105,10 @@ public class Transmitter implements ThrottleListener {
     @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
     }
+
+    @Override
+    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
 }
