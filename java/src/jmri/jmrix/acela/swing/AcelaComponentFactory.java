@@ -28,4 +28,5 @@ public class AcelaComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new AcelaMenu(memo);
     }
+
 }

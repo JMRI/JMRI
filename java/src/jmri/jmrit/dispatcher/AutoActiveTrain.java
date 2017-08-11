@@ -306,6 +306,12 @@ public class AutoActiveTrain implements ThrottleListener {
         log.error("Throttle request failed for " + address + " because " + reason);
     }
 
+    @Override
+    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
+
     // more operational variables
     private ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<AllocatedSection>();
     private jmri.jmrit.display.layoutEditor.LayoutBlockManager _lbManager = null;

@@ -22,6 +22,7 @@ public class CircuitBuilderTest {
         ControlPanelEditor frame = new ControlPanelEditor();
         CircuitBuilder cb = new CircuitBuilder(frame);
         Assert.assertNotNull("exists", cb );
+        frame.dispose();
     }
 
     @Before

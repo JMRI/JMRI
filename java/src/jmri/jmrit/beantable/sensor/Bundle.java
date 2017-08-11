@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.beantable.Bundle {
 
     @Nullable
-    private static final String name = null;
+    private static final String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly

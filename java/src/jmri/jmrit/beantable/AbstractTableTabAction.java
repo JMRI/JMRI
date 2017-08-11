@@ -17,6 +17,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
@@ -187,6 +188,9 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
             sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
+            sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
 

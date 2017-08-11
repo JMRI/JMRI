@@ -1057,7 +1057,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         LinkedHashMap<Block, Integer> autoBlocks = new LinkedHashMap<Block, Integer>(0);
 
         ArrayList<Block> xingAutoBlocks = new ArrayList<Block>(0);
-        ArrayList<Block> dblCrossOverAutoBlocks = new ArrayList<Block>(0);
+        ArrayList<Block> dblCrossoverAutoBlocks = new ArrayList<Block>(0);
         SignalMast destination;
         boolean active = false;
         boolean destMastInit = false;
@@ -1475,7 +1475,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         ArrayList<Block> getAutoBlocksBetweenMasts() {
-            if (destList.get(destination).xingAutoBlocks.size() == 0 && destList.get(destination).dblCrossOverAutoBlocks.size() == 0) {
+            if (destList.get(destination).xingAutoBlocks.size() == 0 && destList.get(destination).dblCrossoverAutoBlocks.size() == 0) {
                 return getAutoBlocks();
             }
             ArrayList<Block> returnList = getAutoBlocks();
@@ -1485,7 +1485,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
             }
             for (Block blk : getAutoBlocks()) {
-                if (dblCrossOverAutoBlocks.contains(blk)) {
+                if (dblCrossoverAutoBlocks.contains(blk)) {
                     returnList.remove(blk);
                 }
             }
@@ -2297,20 +2297,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                 if (throwlist.get(x) == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
                                         if (lt.getLayoutBlockB() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
                                             block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
                                         }
                                         if (lt.getLayoutBlockD() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
                                             block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
                                         }
                                     } else if (lt.getLayoutBlockB() == lblks.get(i) || lt.getLayoutBlockD() == lblks.get(i)) {
                                         if (lt.getLayoutBlock() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlock().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlock().getBlock());
                                             block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
                                         }
                                         if (lt.getLayoutBlockC() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
                                             block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
                                         }
                                     }

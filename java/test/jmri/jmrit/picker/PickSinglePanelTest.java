@@ -1,23 +1,28 @@
-package jmri.jmrit.beantable.sensor;
+package jmri.jmrit.picker;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
+import jmri.Sensor;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SensorTablePanelTest {
+public class PickSinglePanelTest {
 
     @Test
     public void testCTor() {
-        SensorTablePanel t = new SensorTablePanel();
-        Assert.assertNotNull("exists",t);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PickListModel tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickSinglePanel panel = new PickSinglePanel<Sensor>(tableModel);
+        Assert.assertNotNull("exists",panel);
     }
 
     // The minimal setup for log4J
@@ -33,6 +38,6 @@ public class SensorTablePanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTablePanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PickSinglePanelTest.class.getName());
 
 }
