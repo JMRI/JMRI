@@ -78,9 +78,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -139,9 +138,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
 
@@ -198,9 +196,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
 
@@ -259,9 +256,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
@@ -318,9 +314,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -379,9 +374,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
 

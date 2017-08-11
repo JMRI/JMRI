@@ -286,7 +286,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();
         setUpDown(_itemPanel.getUpDown());
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

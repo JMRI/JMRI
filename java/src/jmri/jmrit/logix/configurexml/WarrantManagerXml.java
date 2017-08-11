@@ -177,8 +177,12 @@ public class WarrantManagerXml //extends XmlFile
             log.error("ThrottleSetting command has no bean name! {}", command);
         }
         elem.setAttribute("block", str);
-        
-        elem.setAttribute("speed", Float.toString(command.getSpeed()));
+
+        float speed = command.getSpeed();
+        if (speed > 0.0f) {
+            // ignore attribute to allow loading into pre-4.9.2 versions
+            elem.setAttribute("speed", Float.toString(speed));            
+        }
 
         return elem;
     }
@@ -298,7 +302,7 @@ public class WarrantManagerXml //extends XmlFile
     static void loadTrain(Element elem, Warrant warrant) {
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
-            speedUtil.setDccAddress(elem.getAttribute("trainId").getValue());
+            speedUtil.setRosterId(elem.getAttribute("trainId").getValue());
         }
         // if a RosterEntry exists "trainId" will be the Roster Id, otherwise a train name
         // Possible redundant call to setDccAddress() is OK

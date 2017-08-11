@@ -3,9 +3,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -19,10 +21,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class CarManagerXml extends OperationsXml implements InstanceManagerAutoDefault {
+public class CarManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public CarManagerXml() {
-        CarManagerXml.this.load();
     }
 
     /**
@@ -122,4 +123,10 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
 
     private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());
 
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(LocationManagerXml.class); // load locations
+        CarManagerXml.this.load();
+    }
 }

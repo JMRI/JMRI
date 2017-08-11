@@ -2,6 +2,8 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.ArrayList;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
@@ -17,10 +19,9 @@ import org.slf4j.LoggerFactory;
  * This class manipulates the files conforming to the dispatcher-options DTD
  * <p>
  * The file is written when the user requests that options be saved. If the
- * dispatcheroptions.xml file is present when Dispatcher is started, it is
- * read and options set accordingly
- *
- * <P>
+ * dispatcheroptions.xml file is present when Dispatcher is started, it is read
+ * and options set accordingly
+ * <p>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class OptionsFile extends jmri.jmrit.XmlFile {
+public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAutoDefault {
 
     public OptionsFile() {
         super();
@@ -56,7 +57,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
         // check if file exists
         if (checkFile(defaultFileName)) {
-            // file is present, 
+            // file is present,
             log.debug("Reading Dispatcher options from file {}", defaultFileName);
             root = rootFromName(defaultFileName);
             dispatcher = f;
@@ -70,7 +71,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                         String leName = options.getAttribute("lename").getValue();
                         // get list of Layout Editor panels
                         ArrayList<LayoutEditor> layoutEditorList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-                        if (layoutEditorList.size() == 0) {
+                        if (layoutEditorList.isEmpty()) {
                             log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
                         } else {
                             boolean found = false;
@@ -81,7 +82,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                                 }
                             }
                             if (!found) {
-                                log.warn("Layout Editor panel - " + leName + " - not found.");
+                                log.warn("Layout Editor panel - {} - not found.", leName);
                             }
                         }
                     }
@@ -214,7 +215,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
         doc = newDocument(root, dtdLocation + "dispatcher-options.dtd");
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation + "dispatcheroptions.xsl");
         org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
@@ -264,18 +265,20 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
             // write content to file
             writeXML(findFile(defaultFileName), doc);
         } catch (java.io.IOException ioe) {
-            log.error("IO Exception " + ioe);
+            log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
         }
     }
 
-    private static OptionsFile _instance = null;
-
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static OptionsFile instance() {
-        if (_instance == null) {
-            _instance = new OptionsFile();
-        }
-        return _instance;
+        return InstanceManager.getDefault(OptionsFile.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());

@@ -5,8 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
+import org.apache.log4j.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import java.util.*;
+import apps.tests.Log4JFixture;
+import jmri.util.JTextPaneAppender;
 
 /**
  *
@@ -29,10 +34,36 @@ public class LogOutputWindowActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
-    }
+        // remove any JTextPaneAppender objects that 
+        // have been added to logging
+        Enumeration<Object> en = LogManager.getCurrentLoggers();
 
-    // private final static Logger log = LoggerFactory.getLogger(LogOutputWindowActionTest.class.getName());
+        while (en.hasMoreElements()) {
+            Object o = en.nextElement();
+
+            if (o instanceof Logger) {
+                Logger logger = (Logger) o;
+                Enumeration<Appender> appenders = logger.getAllAppenders();
+                while (appenders.hasMoreElements()) {
+                    Appender a = appenders.nextElement();
+                    if (a instanceof JTextPaneAppender) {
+                        logger.removeAppender(a);
+                    }                        
+                }
+            } // if o instanceof Logger
+
+        } // while ( en )
+
+        Enumeration<Appender> appenders = LogManager.getRootLogger().getAllAppenders();
+        while (appenders.hasMoreElements()) {
+            Appender a = appenders.nextElement();
+            if (a instanceof JTextPaneAppender) {
+                LogManager.getRootLogger().removeAppender(a);
+            }                        
+        }
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
+    }
 
 }

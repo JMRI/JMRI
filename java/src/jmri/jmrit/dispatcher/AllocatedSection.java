@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +65,7 @@ public class AllocatedSection {
             }
         });
         setStoppingSensors();
-        if ((mActiveTrain.getAutoActiveTrain() == null) && !(DispatcherFrame.instance().getSupportVSDecoder())) {
+        if ((mActiveTrain.getAutoActiveTrain() == null) && !(InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder())) {
             // for manual running, monitor block occupancy for selected Blocks only
             if (mActiveTrain.getReverseAtEnd()
                     && ((mSequence == mActiveTrain.getEndBlockSectionSequenceNumber())
@@ -220,8 +221,8 @@ public class AllocatedSection {
     }
 
     public int getLength() {
-        return mSection.getLengthI(DispatcherFrame.instance().getUseScaleMeters(),
-                DispatcherFrame.instance().getScale());
+        return mSection.getLengthI(InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters(),
+                InstanceManager.getDefault(DispatcherFrame.class).getScale());
     }
 
     public void reset() {
@@ -253,7 +254,7 @@ public class AllocatedSection {
         //               mActiveTrain.setRestart();
         //           }
         //       }
-        DispatcherFrame.instance().sectionOccupancyChanged();
+        InstanceManager.getDefault(DispatcherFrame.class).sectionOccupancyChanged();
     }
 
     public synchronized void initializeMonitorBlockOccupancy() {
@@ -290,7 +291,7 @@ public class AllocatedSection {
                 Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
                 tBlockChange.start();
                 addToActiveBlockList(b);
-                if (DispatcherFrame.instance().getSupportVSDecoder()) {
+                if (InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder()) {
                     firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
                 }
             }
@@ -388,7 +389,7 @@ public class AllocatedSection {
                         // reverse direction of Allocated Sections
                         mActiveTrain.reverseAllAllocatedSections();
                     } else if ((_block == mActiveTrain.getStartBlock()) && mActiveTrain.getResetWhenDone()) {
-                        // reset the direction of Allocated Sections 
+                        // reset the direction of Allocated Sections
                         mActiveTrain.resetAllAllocatedSections();
                     }
                 }

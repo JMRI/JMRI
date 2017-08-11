@@ -21,8 +21,8 @@ public class AbstractAutomatonTest {
     Sensor sensor2;
     Sensor sensor3;
     Sensor sensor4;
-    boolean done;
-    boolean running;
+    volatile boolean done;
+    volatile boolean running;
     
     @Test
     public void testCTor() {
@@ -88,6 +88,33 @@ public class AbstractAutomatonTest {
         Assert.assertTrue("didn't complete handle", ! done);
     }
     
+    @Test
+    public void testWaitSensorChange() throws JmriException {
+        log.debug("start testWaitChange");
+        // more of a test of infrastructure
+        done = false;
+        sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        sensor2 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
+        sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
+        sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
+        AbstractAutomaton a = new AbstractAutomaton(){
+            public boolean handle() {
+                waitSensorChange(new Sensor[]{sensor1, sensor2, sensor3, sensor4});
+                done = true;
+                return false; // done
+            }
+        };
+        
+        log.debug("before start test automat testWaitChange");
+        a.start();
+        JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
+        
+        log.debug("after start test automat, before change sensor");
+        sensor2.setKnownState(Sensor.ACTIVE);
+        
+        log.debug("after change sensor, before waitFor");
+        JUnitUtil.waitFor(()->{return done;}, "done");
+    }
 
 
     @Test
@@ -189,7 +216,7 @@ public class AbstractAutomatonTest {
         AbstractAutomaton a = new AbstractAutomaton(){
             public boolean handle() {
                 running = true;
-                waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4});
+                waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4}); // not same as precheck
                 done = true;
                 return false; // done
             }
@@ -198,10 +225,8 @@ public class AbstractAutomatonTest {
         a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
         log.debug("before start test automat testWaitChangeBadPreCheck");
         a.start();
-        JUnitUtil.waitFor(()->{return running;}, "waiting");
-        
-        a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
-        
+        JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
+                
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
         

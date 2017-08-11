@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.text.NumberFormatter;
+import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -85,7 +86,7 @@ public class OptionsMenu extends JMenu {
 
     protected DispatcherFrame dispatcher = null;
 
-    // Option menu items 
+    // Option menu items
     private JCheckBoxMenuItem autoDispatchItem = null;
     private JCheckBoxMenuItem autoTurnoutsItem = null;
 
@@ -255,7 +256,7 @@ public class OptionsMenu extends JMenu {
             scaleMeters.setToolTipText(Bundle.getMessage("ScaleMetersHint"));
             scaleGroup.add(scaleMeters);
             optionsPane.add(p12);
-            
+
             JPanel p15 = new JPanel();
             p15.setLayout(new FlowLayout());
             p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + " :"));
@@ -285,7 +286,7 @@ public class OptionsMenu extends JMenu {
             p17.add(fullRampTimeTextField);
             p17.add(new JLabel(Bundle.getMessage("ms")));
             optionsPane.add(p17);
-            
+
             JPanel p14 = new JPanel();
             p14.setLayout(new FlowLayout());
             p14.add(openDispatcherWithPanel);
@@ -396,10 +397,10 @@ public class OptionsMenu extends JMenu {
 
     private void saveRequested(ActionEvent e) {
         try {
-            OptionsFile.instance().writeDispatcherOptions(dispatcher);
-        } //catch (org.jdom2.JDOMException jde) { 
-        // log.error("Exception writing Dispatcher options: "+jde); 
-        //}                           
+            InstanceManager.getDefault(OptionsFile.class).writeDispatcherOptions(dispatcher);
+        } //catch (org.jdom2.JDOMException jde) {
+        // log.error("Exception writing Dispatcher options: "+jde);
+        //}
         catch (java.io.IOException ioe) {
             log.error("Exception writing Dispatcher options: " + ioe);
         }

@@ -9,6 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.ColorUtil;
@@ -235,7 +236,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         return panel;
-    }
+    }   // store
 
     @Override
     public void load(Element element, Object o) {
@@ -631,7 +632,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             if (shared.getAttribute("openDispatcher") != null) {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);
-                    jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
                     df.loadAtStartup();
                 } else {
                     panel.setOpenDispatcherOnLoad(false);
@@ -639,7 +640,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         return result;
-    }
+    }   // load
 
     @Override
     public int loadOrder() {

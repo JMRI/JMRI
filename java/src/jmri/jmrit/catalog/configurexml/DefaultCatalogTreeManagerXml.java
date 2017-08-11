@@ -11,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -95,7 +96,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
                 // write content to file
                 writeXML(findFile(DEFAULT_FILE_NAME), doc);
                 // memory consistent with file
-                jmri.jmrit.catalog.ImageIndexEditor.indexChanged(false);
+                InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(false);
             } catch (java.io.IOException ioe) {
                 log.error("IO Exception " + ioe);
                 throw (ioe);
