@@ -55,19 +55,6 @@
                     <target>clean</target>
                     <target>debug</target>
                 </action>
-                <action name="compile.single">
-                    <script>nbproject/ide-file-targets.xml</script>
-                    <target>compile-selected-files-in-jmri</target>
-                    <context>
-                        <property>files</property>
-                        <folder>java/src/jmri</folder>
-                        <pattern>\.java$</pattern>
-                        <format>relative-path</format>
-                        <arity>
-                            <separated-files>,</separated-files>
-                        </arity>
-                    </context>
-                </action>
                 <action name="debug">
                     <script>nbproject/ide-targets.xml</script>
                     <target>debug-nb</target>
@@ -141,29 +128,16 @@
                         </arity>
                     </context>
                 </action>
-                <action name="compile.single">
-                    <script>nbproject/ide-file-targets.xml</script>
-                    <target>compile-selected-files-in-test</target>
+                <action name="run.single">
+                    <script>${ant.script}</script>
+                    <target>test-single</target>
                     <context>
-                        <property>files</property>
+                        <property>test.includes</property>
                         <folder>java/test</folder>
                         <pattern>\.java$</pattern>
-                        <format>relative-path</format>
+                        <format>java-name</format>
                         <arity>
-                            <separated-files>,</separated-files>
-                        </arity>
-                    </context>
-                </action>
-                <action name="compile.single">
-                    <script>nbproject/ide-file-targets.xml</script>
-                    <target>compile-selected-files-in-src</target>
-                    <context>
-                        <property>files</property>
-                        <folder>java/src</folder>
-                        <pattern>\.java$</pattern>
-                        <format>relative-path</format>
-                        <arity>
-                            <separated-files>,</separated-files>
+                            <one-file-only/>
                         </arity>
                     </context>
                 </action>
