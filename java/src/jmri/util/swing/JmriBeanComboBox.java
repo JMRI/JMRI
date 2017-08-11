@@ -506,7 +506,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         return result;
-
     }   //getBean
 
     public enum DisplayOptions {
