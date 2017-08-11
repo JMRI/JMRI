@@ -33,6 +33,6 @@ public class DefaultEditableListModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultEditableListModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultEditableListModelTest.class.getName());
 
 }

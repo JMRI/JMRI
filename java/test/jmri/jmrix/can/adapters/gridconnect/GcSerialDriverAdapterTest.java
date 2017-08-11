@@ -33,6 +33,6 @@ public class GcSerialDriverAdapterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class.getName());
 
 }

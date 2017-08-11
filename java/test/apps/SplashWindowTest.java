@@ -36,6 +36,6 @@ public class SplashWindowTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SplashWindowTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SplashWindowTest.class.getName());
 
 }

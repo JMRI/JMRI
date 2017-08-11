@@ -33,6 +33,6 @@ public class PR2SystemConnectionMemoTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class.getName());
 
 }

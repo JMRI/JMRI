@@ -33,6 +33,6 @@ public class JmriNullEntityResolverTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class.getName());
 
 }

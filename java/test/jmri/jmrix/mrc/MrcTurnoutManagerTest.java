@@ -38,6 +38,6 @@ public class MrcTurnoutManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcTurnoutManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcTurnoutManagerTest.class.getName());
 
 }

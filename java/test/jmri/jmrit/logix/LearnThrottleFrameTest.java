@@ -18,7 +18,7 @@ public class LearnThrottleFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "LearnThrottleFrameTestWarrant")));
+        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
         Assert.assertNotNull("exists",t);
         t.dispose();
     }
@@ -36,6 +36,6 @@ public class LearnThrottleFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LearnThrottleFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LearnThrottleFrameTest.class.getName());
 
 }

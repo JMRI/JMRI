@@ -23,10 +23,12 @@ import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox eStopCB;

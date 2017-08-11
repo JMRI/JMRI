@@ -124,20 +124,36 @@ public interface Sensor extends NamedBean {
     /**
      * Use the timers specified in the {@link jmri.SensorManager} for the
      * debounce delay.
+     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings(boolean)})
      *
      * @param flag true to set to current defaults if not previously true
      */
-    public void useDefaultTimerSettings(boolean flag);
+    public void setUseDefaultTimerSettings(boolean flag);
 
     /**
      * Does this sensor use the default timers values? (A remarkably unfortunate
      * name given the one above)
+     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings()})
      *
      * @return true if using default debounce values from the
      *         {@link jmri.SensorManager}
      */
-    public boolean useDefaultTimerSettings();
+    public boolean getUseDefaultTimerSettings();
 
+    /**
+     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
+     * @param flag true to set to current defaults if not previously true
+     */
+    @Deprecated
+    public void useDefaultTimerSettings(boolean flag);
+    
+    /**
+     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
+     * @return true if using default debounce values from the
+     *         {@link jmri.SensorManager}
+     */
+    @Deprecated
+    public boolean useDefaultTimerSettings();
     /**
      * Some sensor boards also serve the function of being able to report back
      * train identities via such methods as RailCom. The setting and creation of

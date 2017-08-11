@@ -25,6 +25,16 @@ public class OBlockTest {
     }*/
 
     @Test
+    public void testCTor(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01"));
+    }
+ 
+   @Test
+    public void testCTor2Param(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01","test OBlock"));
+    }
+
+    @Test
     public void testSeparateCoding() {
         Assert.assertTrue("Block.OCCUPIED != OBlock.ALLOCATED", Block.OCCUPIED != OBlock.ALLOCATED);
         Assert.assertTrue("Block.OCCUPIED != OBlock.RUNNING", Block.OCCUPIED != OBlock.RUNNING);
@@ -154,7 +164,7 @@ public class OBlockTest {
     @Test
     public void testAddPortal() {
         OBlock b = blkMgr.createNewOBlock("OB0", "");
-        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);;
+        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal p = portalMgr.providePortal("foop");
         b.addPortal(p);
         Assert.assertEquals("No portals", 0, b.getPortals().size());

@@ -922,9 +922,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         if (getOccupancySensor() != null) {
             if (sensorDebounceGlobalCheck.isSelected()) {
-                getOccupancySensor().useDefaultTimerSettings(true);
+                getOccupancySensor().setUseDefaultTimerSettings(true);
             } else {
-                getOccupancySensor().useDefaultTimerSettings(false);
+                getOccupancySensor().setUseDefaultTimerSettings(false);
                 if (!sensorDebounceInactiveField.getText().trim().equals("")) {
                     getOccupancySensor().setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
                 }
@@ -2663,7 +2663,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void stateUpdate() {
         //Need to find a way to fire off updates to the various tables
         if (enableUpdateRouteLogging) {
-            log.debug("From " + this.getDisplayName() + " A block state change (" + getBlockStatusString() + ") has occured");
+            log.debug("From " + this.getDisplayName() + " A block state change (" + getBlockStatusString() + ") has occurred");
         }
         RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, -1, -1, getBlockStatus(), getNextPacketID());
         firePropertyChange("routing", null, update);

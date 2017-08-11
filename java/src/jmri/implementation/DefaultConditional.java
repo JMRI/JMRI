@@ -1075,7 +1075,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
-                            w.getSpeedUtil().setTrainId(getActionString(action));
+                            w.getSpeedUtil().setDccAddress(getActionString(action));
                             actionCount++;
                         }
                         break;
@@ -1126,7 +1126,7 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
                             if (!w.controlRunTrain(action.getActionData())) {
-                                log.info("Train " + w.getSpeedUtil().getTrainId() + " not running  - " + devName);
+                                log.info("Train " + w.getSpeedUtil().getRosterId() + " not running  - " + devName);
                             }
                             actionCount++;
                         }

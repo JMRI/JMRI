@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This class is responsible for generating polling messages for the
  * NceTrafficController, see nextAiuPoll()
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
-  */
+ */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
 
@@ -55,6 +55,15 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void dispose() {
         stopPolling = true;  // tell polling thread to go away
+        Thread thread = pollThread;
+        if (thread != null) {
+            try {
+                thread.interrupt();
+                thread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            }
+        }
         tc.removeNceListener(listener);
         super.dispose();
     }
@@ -86,8 +95,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private static final int MAXAIU = 63;
     private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
-    Thread pollThread;
-    boolean stopPolling = false;
+    volatile Thread pollThread;
+    volatile boolean stopPolling = false;
     NceListener listener;
 
     // polling parameters and variables
@@ -227,6 +236,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(pollTimeout);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         }
                     }
                     int delay = shortCycleInterval;
@@ -246,6 +256,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(delay);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         } finally {
                             awaitingDelay = false;
                         }
@@ -376,7 +387,6 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
         }
         return prefix + typeLetter() + iName;
-
     }
 
     int aiucab = 0;
@@ -417,7 +427,25 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
 
     }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,2}[:]{0,1}[0-9]{1,2}$"; // NCE examples 4:14, 50
+        // see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
+
 }
-
-

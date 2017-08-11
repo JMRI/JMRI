@@ -64,6 +64,7 @@ import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.jmrit.catalog.CatalogPanel;
+import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -72,6 +73,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1166,6 +1168,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return true;
         //}
         //return false;
+    }
+
+    /**
+     * Display the rotation of the Positionable item and
+     * provide a dialog menu item to edit it.
+     *
+     * @param p     The item to add the menu item to
+     * @param popup The menu item to add the action to
+     * @return always returns true
+     */
+    public boolean setShowRotationMenu(Positionable p, JPopupMenu popup) {
+        JMenu edit = new JMenu(Bundle.getMessage("Rotation", "..."));
+        JMenuItem jmi = edit.add(Bundle.getMessage("Rotation", " = " + p.getDegrees()));
+        jmi.setEnabled(false);
+        edit.add(CoordinateEdit.getRotateEditAction(p));
+        popup.add(edit);
+        return true;
     }
 
     /**
@@ -2451,7 +2470,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
-        log.debug("makeAddIconFrame for {}, add= {}, table= ", name, add, table);
+        log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
         String BundleName;
         JFrameItem frame = new JFrameItem(name, editor);
@@ -2511,7 +2530,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ImageIndexEditor ii = ImageIndexEditor.instance(editor);
+                    ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                     ii.pack();
                     ii.setVisible(true);
                 }
@@ -2530,7 +2549,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                    InstanceManager.getDefault(DirectorySearcher.class).searchFS();
                     ea.addDirectoryToCatalog();
                 }
 
@@ -2789,6 +2808,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             rect = p.getBounds(rect);
             if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
+                // since this object is rotated we have to transform the point
+                // we're testing into the coordinate space of this object before
+                // we can test if it is in our objects bounds.
                 double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
                 double[] pt = new double[2];
@@ -2799,13 +2821,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 x = pt[0] + rect.x + (rect.width >>> 1);
                 y = pt[1] + rect.y + (rect.height >>> 1);
             }
-            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x * _paintScale,
-                    rect.y * _paintScale,
-                    rect.width * _paintScale,
-                    rect.height * _paintScale);
-            if (rect2D.contains(x, y) && (p.getDisplayLevel() > BKG || event.isControlDown())) {
+            Rectangle2D rect2D = MathUtil.scale(MathUtil.RectangleToRectangle2D(rect), _paintScale);
+            int level = p.getDisplayLevel();
+            if (rect2D.contains(x, y) && (level > BKG || event.isControlDown())) {
                 boolean added = false;
-                int level = p.getDisplayLevel();
                 for (int k = 0; k < selections.size(); k++) {
                     if (level >= selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);

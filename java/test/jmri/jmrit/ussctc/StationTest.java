@@ -28,6 +28,9 @@ public class StationTest {
             public void codeValueDelivered(CodeGroupTwoBits value) { }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;
@@ -48,6 +51,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
             public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
@@ -57,6 +63,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;
@@ -76,8 +85,8 @@ public class StationTest {
     int countCodeSend;
     int countCodeSend2;
     
-    CodeLine codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
-    CodeButton button = new CodeButton("IS21", "IS22");
+    CodeLine codeline;
+    CodeButton button;
         
     // The minimal setup for log4J
     @Before
@@ -88,6 +97,9 @@ public class StationTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        
+        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        button = new CodeButton("IS21", "IS22");
     }
 
     @After

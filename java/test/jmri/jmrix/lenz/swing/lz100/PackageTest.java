@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     LZ100FrameTest.class,
     LZ100InternalFrameTest.class,
-    LZ100ActionTest.class
+    LZ100ActionTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

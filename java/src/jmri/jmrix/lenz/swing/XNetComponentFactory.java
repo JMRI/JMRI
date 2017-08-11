@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.swing;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
- * Provide access to Swing components for the XPressNet subsystem.
+ * Provide access to Swing components for the XpressNet subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2010
@@ -18,7 +18,7 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     XNetSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -28,6 +28,4 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new XNetMenu(memo);
     }
 }
-
-
 

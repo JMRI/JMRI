@@ -26,7 +26,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for XPressNet
+     * Returns the system letter for DCC++
      */
     @Override
     public String getSystemPrefix() {
@@ -112,6 +112,23 @@ public class DCCppLightManager extends AbstractLightManager {
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,5}$"; // examples 345, see tooltip
     }
 
     /**

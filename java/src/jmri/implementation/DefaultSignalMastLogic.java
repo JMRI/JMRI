@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
+public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
 
     SignalMast source;
     SignalMast destination;
@@ -56,6 +56,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * @param source - The Signal Mast we are configuring an SML for
      */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
+        super(source.toString()); // default system name
         this.source = source;
         try {
             this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
@@ -1056,7 +1057,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         LinkedHashMap<Block, Integer> autoBlocks = new LinkedHashMap<Block, Integer>(0);
 
         ArrayList<Block> xingAutoBlocks = new ArrayList<Block>(0);
-        ArrayList<Block> dblCrossOverAutoBlocks = new ArrayList<Block>(0);
+        ArrayList<Block> dblCrossoverAutoBlocks = new ArrayList<Block>(0);
         SignalMast destination;
         boolean active = false;
         boolean destMastInit = false;
@@ -1474,7 +1475,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
 
         ArrayList<Block> getAutoBlocksBetweenMasts() {
-            if (destList.get(destination).xingAutoBlocks.size() == 0 && destList.get(destination).dblCrossOverAutoBlocks.size() == 0) {
+            if (destList.get(destination).xingAutoBlocks.size() == 0 && destList.get(destination).dblCrossoverAutoBlocks.size() == 0) {
                 return getAutoBlocks();
             }
             ArrayList<Block> returnList = getAutoBlocks();
@@ -1484,7 +1485,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 }
             }
             for (Block blk : getAutoBlocks()) {
-                if (dblCrossOverAutoBlocks.contains(blk)) {
+                if (dblCrossoverAutoBlocks.contains(blk)) {
                     returnList.remove(blk);
                 }
             }
@@ -2296,20 +2297,20 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                                 if (throwlist.get(x) == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
                                         if (lt.getLayoutBlockB() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
                                             block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
                                         }
                                         if (lt.getLayoutBlockD() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
                                             block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
                                         }
                                     } else if (lt.getLayoutBlockB() == lblks.get(i) || lt.getLayoutBlockD() == lblks.get(i)) {
                                         if (lt.getLayoutBlock() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlock().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlock().getBlock());
                                             block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
                                         }
                                         if (lt.getLayoutBlockC() != null) {
-                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
+                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
                                             block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
                                         }
                                     }
@@ -2741,7 +2742,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             }
 
             NamedBean getBean() {
-                return (NamedBean) namedBean.getBean();
+                return namedBean.getBean();
             }
 
             NamedBeanHandle<?> getNamedBean() {
@@ -2917,6 +2918,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
+
+    /**
+     * No valid integer state, always return a constant.
+     *
+     * @return Always zero
+     */
+    public int getState() { return 0; }
+    public void setState(int i) { }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
 }

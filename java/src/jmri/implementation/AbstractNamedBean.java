@@ -271,4 +271,5 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
+
 }

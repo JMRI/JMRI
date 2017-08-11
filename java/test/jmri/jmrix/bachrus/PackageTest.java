@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
    SpeedoMenuTest.class,
    SpeedoConsoleActionTest.class,
    SpeedoConsoleFrameTest.class,
+   BundleTest.class
 })
 
 /**

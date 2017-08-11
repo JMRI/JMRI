@@ -27,6 +27,7 @@ import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,7 @@ import org.slf4j.LoggerFactory;
     "/app/script",
     "/app/about"
 })
+@ServiceProvider(service = HttpServlet.class)
 public class WebAppServlet extends HttpServlet {
 
     private final static Logger log = LoggerFactory.getLogger(WebAppServlet.class);
@@ -91,7 +93,7 @@ public class WebAppServlet extends HttpServlet {
             // 9 = power menu title
             FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
-                    ServletUtil.getInstance().getRailroadName(false), // railroad name
+                    InstanceManager.getDefault(ServletUtil.class).getRailroadName(false), // railroad name
                     String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
                     String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
                     "<!-- -->", // body content (divs)

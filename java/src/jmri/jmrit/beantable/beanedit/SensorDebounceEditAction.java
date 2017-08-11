@@ -144,7 +144,7 @@ public class SensorDebounceEditAction extends BeanEditAction {
         timeVal = sensorDebounceInactiveField.getText();
         time = Integer.valueOf(timeVal).intValue();
         sen.setSensorDebounceGoingInActiveTimer(time);
-        sen.useDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
+        sen.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
     }
 
     protected void resetDebounceItems(ActionEvent e) {
@@ -154,8 +154,8 @@ public class SensorDebounceEditAction extends BeanEditAction {
         }
         enabled(true);
         Sensor sen = (Sensor) bean;
-        sensorDebounceGlobalCheck.setSelected(sen.useDefaultTimerSettings());
-        if (sen.useDefaultTimerSettings()) {
+        sensorDebounceGlobalCheck.setSelected(sen.getUseDefaultTimerSettings());
+        if (sen.getUseDefaultTimerSettings()) {
             sensorDebounceActiveField.setEnabled(false);
             sensorDebounceInactiveField.setEnabled(false);
         } else {

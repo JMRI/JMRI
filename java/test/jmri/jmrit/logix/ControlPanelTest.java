@@ -18,10 +18,9 @@ public class ControlPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "ControlPanelTestWarrant")));
+        LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
         ControlPanel t = new ControlPanel(f);
         Assert.assertNotNull("exists",t);
-        t.dispose();
         f.dispose();
     }
 
@@ -38,6 +37,6 @@ public class ControlPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class.getName());
 
 }

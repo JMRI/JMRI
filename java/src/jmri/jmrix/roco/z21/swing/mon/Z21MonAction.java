@@ -21,7 +21,7 @@ public class Z21MonAction extends AbstractAction {
     }
 
     public Z21MonAction(jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
-        this("Z21 Monitor", memo);
+        this(Bundle.getMessage("Z21MonitorTitle"), memo);
     }
 
     public Z21MonAction(String s) {
@@ -33,7 +33,7 @@ public class Z21MonAction extends AbstractAction {
     }
 
     public Z21MonAction() {
-        this("Z21 Monitor");
+        this(Bundle.getMessage("Z21MonitorTitle"));
     }
 
     @Override

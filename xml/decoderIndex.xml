@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.1ish+heap+20170628T0032Z+Rc41093b on Wed Jun 28 10:32:47 AEST 2017-->
-  <decoderIndex version="818">
+  <!--Written by JMRI version 4.9.2ish+jake+20170810T1519Z+R9929259a5a on Thu Aug 10 08:19:59 PDT 2017-->
+  <decoderIndex version="824">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12722,8 +12722,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12757,8 +12756,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12792,8 +12790,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12827,8 +12824,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -12862,8 +12858,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13215,8 +13210,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13252,8 +13246,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13289,8 +13282,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13326,8 +13318,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -13363,8 +13354,7 @@
           </output>
           <output name="13" label="|" />
           <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
+          <output name="14" label="Brake| " />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
           </output>
@@ -14141,6 +14131,130 @@
           </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
+        <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="292" comment="Model 885017">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="263" comment="Model 885018">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="294" comment="Model 885019">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
         <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
@@ -14548,6 +14662,41 @@
           </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
+        <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -14682,6 +14831,41 @@
             <label xml:lang="it">Accoppiatore| </label>
           </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -22681,13 +22865,15 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
-        <model model="WOW Diesel 121 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="3" highVersionID="3" productID="171">
-          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+        <model model="WOW Diesel 121 SS3" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="3" highVersionID="3" productID="171">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
+          <output name="7" label="Pnk/Pur" connection="plug" />
+          <output name="8" label="Grn/Brn" connection="plug" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -22743,13 +22929,15 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
-        <model model="WOW Diesel 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
+        <model model="WOW Diesel 121 SS4" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
           <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -28909,6 +29097,160 @@
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX658.xml">
         <model show="no" model="MX658N18 version 34+" replacementModel="MX644 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="25" width="10.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 36+)" mfg="Zimo" file="Zimo_Unified_software_v36_MX644.xml">
+        <model model="MX644 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 36+)" mfg="Zimo" file="Zimo_Unified_software_v36_MX645.xml">
+        <model model="MX645 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645R version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645F version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645P22 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 36+)" mfg="Zimo" file="Zimo_Unified_software_v36_MX646.xml">
+        <model model="MX646 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646R version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646F version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646N version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 36+)" mfg="Zimo" file="Zimo_Unified_software_v36_MX648.xml">
+        <model model="MX648 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648R version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648F version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX648N version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 36+)" mfg="Zimo" file="Zimo_Unified_software_v36_MX658.xml">
+        <model model="MX658N18 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />

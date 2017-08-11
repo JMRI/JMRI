@@ -35,6 +35,6 @@ public class ProgrammerConfigPaneTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneTest.class.getName());
 
 }

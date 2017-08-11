@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     NmraNetComponentFactoryTest.class,
-    NmraNetMenuTest.class
+    NmraNetMenuTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.nmranet.swing package.

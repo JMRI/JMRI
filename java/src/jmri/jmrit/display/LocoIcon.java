@@ -11,9 +11,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,7 +89,7 @@ public class LocoIcon extends PositionableLabel {
         super.setShowTooltip(false);
     }
 
-    // Markers are always positionable 
+    // Markers are always positionable
     @Override
     public void setPositionable(boolean enabled) {
         super.setPositionable(true);
@@ -110,7 +112,7 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.getAddressPanel().setRosterEntry(_entry);
                     tf.toFront();
                 }

@@ -33,6 +33,6 @@ public class ScaleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScaleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ScaleTest.class.getName());
 
 }

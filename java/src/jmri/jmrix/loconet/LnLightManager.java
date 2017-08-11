@@ -113,6 +113,23 @@ public class LnLightManager extends AbstractLightManager {
         return true;
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // LocoNet: "enter a number"
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
 
 }

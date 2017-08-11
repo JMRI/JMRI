@@ -211,7 +211,7 @@ public class LenzCommandStationTest extends TestCase {
   
     public void testGetUserName() {
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertEquals("XPressnet",c.getUserName()); // default.
+        Assert.assertEquals("XpressNet",c.getUserName()); // default.
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(new XNetInterfaceScaffold(c));
         c.setSystemConnectionMemo(memo);
         memo.setUserName("ABC");

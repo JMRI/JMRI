@@ -62,7 +62,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.throttle.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.audio.PackageTest.class));
-        suite.addTest(jmri.jmrit.turnoutoperations.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.turnoutoperations.PackageTest.class));
         suite.addTest(jmri.jmrit.dualdecoder.PackageTest.suite());
         suite.addTest(jmri.jmrit.nixieclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.simpleprog.PackageTest.suite());

@@ -604,7 +604,7 @@ public class LayoutBlockConnectivityTools {
                 if ((block == currentBlock) && (currentLBlock.getThroughPathIndex(preBlock, destBlock) == -1)) {
                     lastErrorMessage = "block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
                     log.debug(lastErrorMessage);
-                } else if ((validateOnly) || ((checkForDoubleCrossOver(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))) {
+                } else if ((validateOnly) || ((checkForDoubleCrossover(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))) {
                     if (log.isDebugEnabled()) {
                         log.debug(block.getDisplayName() + " not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not");
                         log.debug(currentBlock.getDisplayName() + " " + block.getDisplayName());
@@ -655,7 +655,7 @@ public class LayoutBlockConnectivityTools {
         return -1;
     }
 
-    private boolean checkForDoubleCrossOver(Block prevBlock, LayoutBlock curBlock, Block nextBlock) {
+    private boolean checkForDoubleCrossover(Block prevBlock, LayoutBlock curBlock, Block nextBlock) {
         LayoutEditor le = curBlock.getMaxConnectedPanel();
         ConnectivityUtil ct = le.getConnectivityUtil();
         ArrayList<LayoutTurnout> turnoutList = ct.getTurnoutList(curBlock.getBlock(), prevBlock, nextBlock);

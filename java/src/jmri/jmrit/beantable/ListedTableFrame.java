@@ -420,7 +420,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
             } catch (NullPointerException e) {
-                log.error("An error occured while trying to create the table for " + itemText + " " + e.toString());
+                log.error("An error occurred while trying to create the table for " + itemText + " " + e.toString());
                 e.printStackTrace();
             }
         }

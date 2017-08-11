@@ -20,7 +20,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
-        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
         n = new SerialNode(0, SerialNode.SMINI,tcis);

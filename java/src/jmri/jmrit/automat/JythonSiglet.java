@@ -39,7 +39,7 @@ public class JythonSiglet extends Siglet {
      * <LI>Run the python defineIO routine
      * </UL>
      * Initialization of the Python in the actual script file is deferred until
-     * the {@link #handle} method.
+     * the {@link #defineIO} method.
      */
     @Override
     public void defineIO() {

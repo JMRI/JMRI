@@ -73,7 +73,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
-            // deligate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
         }
         return null;
@@ -94,14 +94,14 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            return true;
         }
         if (_xnettunnel!=null) {
-            // deligate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
         }
         return false; // nothing, by default
     }
 
     /**
-     * Provide manager by class
+     * Provide manager by class.
      */
     @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
     @Override
@@ -113,7 +113,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T) getReporterManager();
         }
         if (_xnettunnel!=null) {
-            // delegate to the XPressnet tunnel.
+            // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
         }
         return null; // nothing, by default
@@ -138,7 +138,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
-        // add an XPressNet Tunnel.
+        // add an XpressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
 
         // set up the Reporter Manager
@@ -154,8 +154,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
     }
 
-    /*
-     * Provides access to the Command Station for this particular connection.
+    /**
+     * Provide access to the Command Station for this particular connection.
+     * <p>
      * NOTE: Command Station defaults to NULL
      */
     public CommandStation getCommandStation() {
@@ -168,9 +169,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private CommandStation commandStation = null;
 
-    /*
-     * Provides access to the Roco Z21 Command Station for this particular 
+    /**
+     * Provide access to the Roco Z21 Command Station for this particular
      * connection.
+     * <p>
      * NOTE: Command Station defaults to NULL
      */
     public RocoZ21CommandStation getRocoZ21CommandStation() {

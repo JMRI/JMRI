@@ -272,7 +272,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                         log.debug("Have to repeat attempt to set Always on Top");
                         timerCount++;
                         if (timerCount > 50) {
-                            log.debug("Set Always on Top failed");
+                            log.warn("Took too long to \"Set Always on Top\", failed");
                             timer.stop();
                         }
                     }      
@@ -626,6 +626,14 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized String getFrameText() {
         return monTextPane.getText();
+    }
+
+    /** 
+     * Get access to the main text area. This is intended
+     * for use in e.g. scripting to extend the behavior of the window.
+     */
+    public final synchronized JTextArea getTextArea() {
+        return monTextPane;
     }
 
     public synchronized String getFilterText() {

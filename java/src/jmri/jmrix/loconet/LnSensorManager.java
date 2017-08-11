@@ -38,6 +38,17 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
+        Thread t = thread;
+        if (t != null) {
+            try {
+                t.interrupt();
+                t.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            } finally {
+                thread = null;
+            }
+        }
         super.dispose();
     }
 
@@ -83,6 +94,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
+    volatile LnSensorUpdateThread thread;
+    
     /**
      * Requests status updates from all layout sensors.
      */
@@ -90,7 +103,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public void updateAll() {
         if (!busy) {
             setUpdateBusy();
-            LnSensorUpdateThread thread = new LnSensorUpdateThread(this, tc);
+            thread = new LnSensorUpdateThread(this, tc);
+            thread.setName("LnSensorUpdateThread");
             thread.start();
         }
     }
@@ -190,6 +204,24 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // LocoNet: "enter a number"
+        // see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 
     /**
@@ -223,6 +255,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
+                    sm.setUpdateNotBusy();
+                    return;
                 }
                 m.setElement(1, sw1[k]);
                 m.setElement(2, sw2[k]);

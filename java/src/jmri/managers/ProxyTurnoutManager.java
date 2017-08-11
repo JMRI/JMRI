@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
+public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implements TurnoutManager {
 
     public ProxyTurnoutManager() {
         super();
@@ -48,7 +48,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     @Override
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    protected Turnout makeBean(int i, String systemName, String userName) {
         return ((TurnoutManager) getMgr(i)).newTurnout(systemName, userName);
     }
 
@@ -282,6 +282,23 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return ((TurnoutManager) getMgr(0)).getDefaultClosedSpeed();
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
+    }
+
     @Override
     public int getXMLOrder() {
         return jmri.Manager.TURNOUTS;
@@ -294,4 +311,5 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
+
 }

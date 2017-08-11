@@ -75,9 +75,8 @@ public class SerialLightManager extends AbstractLightManager {
      * Public method to notify user of Light creation error.
      */
     public void notifyLightCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
-                + ", is currently assigned to " + conflict + ". Light cannot be created as "
-                + "you specified.", "C/MRI Assignment Conflict",
+        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
+                Bundle.getMessage("ErrorAssignLine2L"), Bundle.getMessage("ErrorAssignTitle"),
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
@@ -120,6 +119,23 @@ public class SerialLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return _memo.convertSystemNameToAlternate(systemName);
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,6}[:Bb]{0,1}[0-9]{1,3}$"; // examples 4B3, 4:3, see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());

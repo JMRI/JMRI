@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21.swing.configtool;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -19,10 +20,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying Version information and broadcast flags for Z21 hardware.
- * <P>
+ * <p>
  * This is a utility for reading the hardware and software versions of your 
  * Z21 command station and along with the flags and the serial number.
- * <P>
+ * <p>
  * @author	Paul Bender Copyright (C) 2016
  */
 public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener {
@@ -60,7 +61,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         super(Bundle.getMessage("Z21ConfigToolMenuItem"));
         tc = memo.getTrafficController();
         cs = memo.getRocoZ21CommandStation();
-        getContentPane().setLayout(new GridLayout(0, 1));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS)); // prevents strange stretching of content
 
         // build sub panel for version and serial number
         getContentPane().add(getSystemInfoPanel());
@@ -68,15 +69,13 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         // build sub panel for the flag list.
         getContentPane().add(getBroadcastFlagsPanel());
 
-
-
         // build sub panel with the read and close buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 2));
+        //buttonPanel.setLayout(new GridLayout(1, 2));
         
         getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
         getSystemInfoButton.setToolTipText(Bundle.getMessage("GetSystemInfoButtonToolTip"));
-        closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
+        closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
         closeButton.setToolTipText(Bundle.getMessage("CloseButtonToolTip"));
         buttonPanel.add(getSystemInfoButton);
         buttonPanel.add(closeButton);
@@ -111,12 +110,11 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         } else {
             log.warn("No Z21 connection, panel won't function");
         }
-
     }
 
     private JPanel getSystemInfoPanel(){
          JPanel panel = new JPanel();
-         panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SystemInformationLabel")));
+         panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SystemInformationTitle")));
          panel.setLayout(new GridLayout(0, 2));
 
          hardwareVersionLabel = new JLabel(Bundle.getMessage("HardwareVersionLabel"));
@@ -143,11 +141,11 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     
     private JPanel getBroadcastFlagsPanel(){
          JPanel panel = new JPanel();
-         panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BroadcastFlagsLabel")));
+         panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BroadcastFlagsTitle")));
          panel.setLayout(new GridLayout(0, 1));
     
-         XPressNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("XPressNetMessagesFlagLabel"),cs.getXPressNetMessagesFlag());
-         XPressNetMessagesCheckBox.setToolTipText(Bundle.getMessage("XPressNetMessagesFlagToolTip"));
+         XPressNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetMessagesFlagLabel"),cs.getXPressNetMessagesFlag());
+         XPressNetMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetMessagesFlagToolTip"));
          panel.add(XPressNetMessagesCheckBox);
 
          RMBusMessagesCheckBox = new JCheckBox(Bundle.getMessage("RMBusMessagesFlagLabel"),cs.getRMBusMessagesFlag());
@@ -158,8 +156,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
          SystemStatusMessagesCheckBox.setToolTipText(Bundle.getMessage("RMBusMessagesFlagToolTip"));
          panel.add(SystemStatusMessagesCheckBox);
 
-         XPressNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("XPressNetLocomotiveMessagesFlagLabel"),cs.getXPressNetLocomotiveMessagesFlag());
-         XPressNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("XPressNetLocomotiveMessagesFlagToolTip"));
+         XPressNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetLocomotiveMessagesFlagLabel"),cs.getXPressNetLocomotiveMessagesFlag());
+         XPressNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetLocomotiveMessagesFlagToolTip"));
          panel.add(XPressNetLocomotiveMessagesCheckBox);
 
          RailComMessagesCheckBox = new JCheckBox(Bundle.getMessage("RailComMessagesFlagLabel"),cs.getRailComMessagesFlag());
@@ -199,7 +197,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     }
     
     /**
-     * request command station information
+     * Request command station information.
      */
     private void getSystemInfo() {
         // request the version information
@@ -211,7 +209,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     }
 
     /**
-     * request command station information
+     * Request command station information.
      */
     private void writeSystemInfo() {
         // set the flags in the command station representation based on the 
@@ -230,7 +228,9 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
-    // listen for responses from the Z21
+    /**
+     * Listen for responses from the Z21.
+     */
     @Override
     public void reply(Z21Reply zr) {
        switch(zr.getOpCode()){
@@ -276,7 +276,9 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
        }
     }
 
-    // listen for the messages sent to the Z21
+    /**
+     * Listen for the messages sent to the Z21.
+     */
     @Override
     public void message(Z21Message zm) {
     }
@@ -289,18 +291,24 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         super.dispose();
     }
 
-    // read the versions displayed from the command station representation
+    /**
+     * Read the versions displayed from the command station representation.
+     */
     private void updateVersionInformation(){
          hardwareVersionTextField.setText("0x" + java.lang.Integer.toHexString(cs.getHardwareVersion()));
          softwareVersionTextField.setText("" + cs.getSoftwareVersion());
     }
 
-    // read the serial number from the command station representation
+    /**
+     * Read the serial number from the command station representation.
+     */
     private void updateSerialNumber(){
          serialNumTextField.setText("" + cs.getSerialNumber());
     }
 
-    // read the flags displayed from the command station representation
+    /**
+     * Read the flags displayed from the command station representation.
+     */
     private void updateFlagInformation(){
          XPressNetMessagesCheckBox.setSelected(cs.getXPressNetMessagesFlag());
          RMBusMessagesCheckBox.setSelected(cs.getRMBusMessagesFlag());

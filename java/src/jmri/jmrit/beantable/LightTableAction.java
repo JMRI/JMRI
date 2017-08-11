@@ -32,8 +32,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -49,6 +51,7 @@ import jmri.Turnout;
 import jmri.implementation.LightControl;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ValidatedTextField;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -372,6 +375,7 @@ public class LightTableAction extends AbstractTableAction {
              * Visualize state in table as a graphic, customized for Lights (2 states + ... for transitioning).
              * Renderer and Editor are identical, as the cell contents are not actually edited,
              * only used to toggle state using {@link #clickOn(NamedBean)}.
+             *
              * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
@@ -460,6 +464,7 @@ public class LightTableAction extends AbstractTableAction {
 
                 /**
                  * Read and buffer graphics. Only called once for this table.
+                 *
                  * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
                  */
                 protected void loadIcons() {
@@ -483,7 +488,6 @@ public class LightTableAction extends AbstractTableAction {
             } // end of ImageIconRenderer class
 
         }; // end of custom data model
-
     }
 
     @Override
@@ -505,12 +509,16 @@ public class LightTableAction extends AbstractTableAction {
     boolean inEditMode = false;
     private boolean lightControlChanged = false;
 
-    // items of add frame
-    JLabel systemLabel = new JLabel(Bundle.getMessage("LightSystem"));
+    // items of Add frame
+    JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JTextField fieldHardwareAddress = new JTextField(10);
-    JTextField fieldNumToAdd = new JTextField(5);
+    //JTextField fieldHardwareAddress = new JTextField(10);
+    ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
+            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Light pane");
+    // initially allow any 20 char string, updated by prefixBox selection
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
+    JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
@@ -535,6 +543,7 @@ public class LightTableAction extends AbstractTableAction {
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
+    String connectionChoice = "";
 
     // parts for supporting variable intensity, transition
     JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity") + "  ");
@@ -582,10 +591,13 @@ public class LightTableAction extends AbstractTableAction {
             panel1a.setLayout(new FlowLayout());
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(fieldHardwareAddress);
+            fieldHardwareAddress.setInvalidBackgroundColor(java.awt.Color.white);
+            // don't use strong colorization on ValidatedTextField like for CVs
             fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
-            panel1a.add(fieldNumToAdd);
-            fieldNumToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
+            panel1a.add(NumberToAdd);
+            NumberToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
             contentPane.add(panel1a);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
@@ -727,6 +739,9 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
+    private String addEntryToolTip;
+    private String addEntryRegex;
+
     protected void prefixChanged() {
         if (supportsVariableLights()) {
             setupVariableDisplay(true, true);
@@ -736,26 +751,58 @@ public class LightTableAction extends AbstractTableAction {
         if (canAddRange()) {
             addRangeBox.setVisible(true);
             labelNumToAdd.setVisible(true);
-            fieldNumToAdd.setVisible(true);
+            NumberToAdd.setVisible(true);
         } else {
             addRangeBox.setVisible(false);
             labelNumToAdd.setVisible(false);
-            fieldNumToAdd.setVisible(false);
+            NumberToAdd.setVisible(false);
         }
         addRangeBox.setSelected(false);
-        fieldNumToAdd.setText("");
-        fieldNumToAdd.setEnabled(false);
+        NumberToAdd.setValue(1);
+        NumberToAdd.setEnabled(false);
         labelNumToAdd.setEnabled(false);
+        // show tooltip for selected system connection
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
+        // Update tooltip in the Add Light pane to match system connection selected from combobox.
+        log.debug("Connection choice = [{}]", connectionChoice);
+        // get tooltip from ProxyLightManager
+        if (lightManager.getClass().getName().contains("ProxyLightManager")) {
+            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
+            List<Manager> managerList = proxy.getManagerList();
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
+            for (int x = 0; x < managerList.size(); x++) {
+                jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    // get tooltip from ProxyLightManager
+                    addEntryRegex = mgr.getEntryRegex();
+                    addEntryToolTip = mgr.getEntryToolTip();
+                    log.debug("L Add box set");
+                    break;
+                }
+            }
+        }
+        log.debug("DefaultLightManager tip: {}", addEntryToolTip);
+        // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
+        fieldHardwareAddress.setToolTipText("<html>" +
+                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
+                "<br>" + addEntryToolTip + "</html>");
+        // configure validation regexp for selected connection
+        fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+
         addFrame.pack();
         addFrame.setVisible(true);
     }
 
     protected void addRangeChanged() {
         if (addRangeBox.isSelected()) {
-            fieldNumToAdd.setEnabled(true);
+            NumberToAdd.setEnabled(true);
             labelNumToAdd.setEnabled(true);
         } else {
-            fieldNumToAdd.setEnabled(false);
+            NumberToAdd.setEnabled(false);
             labelNumToAdd.setEnabled(false);
         }
     }
@@ -797,15 +844,16 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create lights when the create button is pressed
+     * Create lights when the create button is pressed and entry is valis.
      *
      * @param e the button press action
      */
     void createPressed(ActionEvent e) {
-        //ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())
+
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
         String curAddress = fieldHardwareAddress.getText();
+        // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
             status1.setText(Bundle.getMessage("LightError17"));
@@ -822,7 +870,7 @@ public class LightTableAction extends AbstractTableAction {
         // Does System Name have a valid format
         if (!InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName)) {
             // Invalid System Name format
-            log.warn("Invalid Light system name format entered: " + suName);
+            log.warn("Invalid Light system name format entered: {}", suName);
             status1.setText(Bundle.getMessage("LightError3"));
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
@@ -886,7 +934,7 @@ public class LightTableAction extends AbstractTableAction {
                 getBySystemName(testSN);
         if (testT != null) {
             // Address is already used as a Turnout
-            log.warn("Requested Light " + sName + " uses same address as Turnout " + testT);
+            log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
             if (!noWarn) {
                 int selectedValue = JOptionPane.showOptionDialog(addFrame,
                         Bundle.getMessage("LightWarn5") + " " + sName + " " + Bundle.getMessage("LightWarn6") + " "
@@ -910,16 +958,16 @@ public class LightTableAction extends AbstractTableAction {
         int numberOfLights = 1;
         int startingAddress = 0;
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
-                && addRangeBox.isSelected() && (fieldNumToAdd.getText().length() > 0)) {
+                && addRangeBox.isSelected()) {
             // get number requested   
             try {
-                numberOfLights = Integer.parseInt(fieldNumToAdd.getText());
+                numberOfLights = (Integer) NumberToAdd.getValue();
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError4"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert " + fieldNumToAdd.getText() + " to a number - Number to add");
+                log.error("Unable to convert {} to a number - Number to add", (NumberToAdd.getValue() + ""));
                 return;
             }
             // convert numerical hardware address
@@ -930,7 +978,7 @@ public class LightTableAction extends AbstractTableAction {
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert " + fieldHardwareAddress.getText() + " to a number.");
+                log.error("Unable to convert {} to a number.", fieldHardwareAddress.getText());
                 return;
             }
             // check that requested address range is available
@@ -943,7 +991,7 @@ public class LightTableAction extends AbstractTableAction {
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
-                    log.error("Range not available - " + testAdd + " already exists.");
+                    log.error("Range not available - {} already exists.", testAdd);
                     return;
                 }
                 testAdd = turnoutPrefix + add;
@@ -952,7 +1000,7 @@ public class LightTableAction extends AbstractTableAction {
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
-                    log.error("Range not available - " + testAdd + " already exists.");
+                    log.error("Range not available - {} already exists.", testAdd);
                     return;
                 }
                 add++;
@@ -1028,7 +1076,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Edit button in the light table, window has already been
+     * Respond to the Edit button in the light table, window has already been
      * created
      */
     void editPressed() {
@@ -1101,16 +1149,14 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
-     * Responds to the Update button.
+     * Respond to the Update button.
      *
      * @param e the button press action
      */
@@ -1119,7 +1165,7 @@ public class LightTableAction extends AbstractTableAction {
         // Check if the User Name has been changed
         String uName = userName.getText();
         if (uName.equals("")) {
-            uName = null;   // a blank field means no user name
+            uName = null; // a blank field means no user name
         }
         String prevUName = g.getUserName();
         if ((uName != null) && !(uName.equals(prevUName))) {
@@ -1165,7 +1211,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button.
+     * Respond to the Cancel button.
      *
      * @param e the button press action
      */
@@ -1241,7 +1287,7 @@ public class LightTableAction extends AbstractTableAction {
     private JButton cancelControl;
 
     /**
-     * Responds to pressing the Add Control button
+     * Respond to pressing the Add Control button.
      *
      * @param e the event containing the press action
      */
@@ -1266,7 +1312,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Creates the Add/Edit control window
+     * Create the Add/Edit control window
      */
     private void addEditControlWindow() {
         if (addControlFrame == null) {
@@ -1793,7 +1839,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Formats time to hh:mm given integer hour and minute.
+     * Format time to hh:mm given integer hour and minute.
      *
      * @param hour   the hour from 0-23
      * @param minute the minute from 0-59
@@ -1884,7 +1930,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to Edit button on row in the Light Control Table
+     * Respond to Edit button on row in the Light Control Table.
      *
      * @param row the row containing the pressed button
      */
@@ -1961,7 +2007,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to Delete button on row in the Light Control Table
+     * Respond to Delete button on row in the Light Control Table.
      *
      * @param row the row containing the pressed button
      */
@@ -1972,7 +2018,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Light Controls in the Add/Edit Light window
+     * Table model for Light Controls in the Add/Edit Light window.
      */
     public class LightControlTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
@@ -2122,4 +2168,5 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+
 }

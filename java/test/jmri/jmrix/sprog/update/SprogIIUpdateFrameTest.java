@@ -38,6 +38,6 @@ public class SprogIIUpdateFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateFrameTest.class.getName());
 
 }

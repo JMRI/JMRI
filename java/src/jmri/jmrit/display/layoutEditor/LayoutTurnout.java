@@ -126,8 +126,8 @@ public class LayoutTurnout extends LayoutTrack {
     public static final int DOUBLE_XOVER = 4;
     public static final int RH_XOVER = 5;
     public static final int LH_XOVER = 6;
-    public static final int SINGLE_SLIP = 7; // used for LayoutSlip which extends this class
-    public static final int DOUBLE_SLIP = 8; // used for LayoutSlip which extends this class
+    public static final int SINGLE_SLIP = 7;    // used for LayoutSlip which extends this class
+    public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
 
     // defined constants - link types
     public static final int NO_LINK = 0;
@@ -158,11 +158,14 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> namedTurnout = null;
     //Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
+
     protected LayoutBlock block = null;
     protected LayoutBlock blockB = null;  // Xover - second block, if there is one
     protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
     protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
+
     protected LayoutEditor layoutEditor = null;
+
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
@@ -232,7 +235,7 @@ public class LayoutTurnout extends LayoutTrack {
     public boolean disableWhenOccupied = false;
 
     public Point2D dispB = new Point2D.Double(20.0, 0.0);
-    public Point2D dispC = new Point2D.Double(20.0, 10.0);
+    public Point2D dispA = new Point2D.Double(20.0, 10.0);
     public Point2D pointA = new Point2D.Double(0, 0);
     public Point2D pointB = new Point2D.Double(40, 0);
     public Point2D pointC = new Point2D.Double(60, 20);
@@ -277,13 +280,13 @@ public class LayoutTurnout extends LayoutTrack {
         // adjust initial coordinates
         if (type == LH_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispC.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
+            dispA.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
         } else if (type == RH_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispC.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
+            dispA.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
         } else if (type == WYE_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
-            dispC.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
+            dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
         } else if (type == DOUBLE_XOVER) {
             if (version == 2) {
                 center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
@@ -293,7 +296,7 @@ public class LayoutTurnout extends LayoutTrack {
                 setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispC.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
             }
             blockB = null;
             blockBName = "";
@@ -310,7 +313,7 @@ public class LayoutTurnout extends LayoutTrack {
                 setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
-                dispC.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
             }
             blockB = null;
             blockBName = "";
@@ -334,7 +337,7 @@ public class LayoutTurnout extends LayoutTrack {
                 setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispC.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
             }
             blockB = null;
             blockBName = "";
@@ -348,12 +351,11 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
                 Math.round(dispB.getY() * yFactor));
         dispB = pt;
-        pt = new Point2D.Double(Math.round(dispC.getX() * xFactor),
-                Math.round(dispC.getY() * yFactor));
-        dispC = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
 
         defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
-
     }
 
     // this should only be used for debugging...
@@ -376,9 +378,9 @@ public class LayoutTurnout extends LayoutTrack {
             double x = (cosineRot * dispB.getX()) - (sineRot * dispB.getY());
             double y = (sineRot * dispB.getX()) + (cosineRot * dispB.getY());
             dispB = new Point2D.Double(x, y);
-            x = (cosineRot * dispC.getX()) - (sineRot * dispC.getY());
-            y = (sineRot * dispC.getX()) + (cosineRot * dispC.getY());
-            dispC = new Point2D.Double(x, y);
+            x = (cosineRot * dispA.getX()) - (sineRot * dispA.getY());
+            y = (sineRot * dispA.getX()) + (cosineRot * dispA.getY());
+            dispA = new Point2D.Double(x, y);
         }
     }
 
@@ -1032,15 +1034,15 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Turnout getSecondTurnout() {
+        Turnout result = null;
         if (secondNamedTurnout == null) {
             // set physical turnout if possible and needed
             setSecondTurnout(secondTurnoutName);
-
-            if (secondNamedTurnout == null) {
-                return null;
-            }
         }
-        return secondNamedTurnout.getBean();
+        if (secondNamedTurnout != null) {
+            result = secondNamedTurnout.getBean();
+        }
+        return result;
     }
 
     public void setSecondTurnout(String tName) {
@@ -1239,17 +1241,11 @@ public class LayoutTurnout extends LayoutTrack {
             if (version == 2) {
                 return pointA;
             }
-            double x = center.getX() - dispC.getX();
-            double y = center.getY() - dispC.getY();
-            return new Point2D.Double(x, y);
+            return MathUtil.subtract(center, dispA);
         } else if (type == WYE_TURNOUT) {
-            double x = center.getX() - (0.5 * (dispB.getX() + dispC.getX()));
-            double y = center.getY() - (0.5 * (dispB.getY() + dispC.getY()));
-            return new Point2D.Double(x, y);
+            return MathUtil.subtract(center, MathUtil.midPoint(dispB, dispA));
         } else {
-            double x = center.getX() - dispB.getX();
-            double y = center.getY() - dispB.getY();
-            return new Point2D.Double(x, y);
+            return MathUtil.subtract(center, dispB);
         }
     }
 
@@ -1257,18 +1253,14 @@ public class LayoutTurnout extends LayoutTrack {
         if ((version == 2) && ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER))) {
             return pointB;
         }
-        double x = center.getX() + dispB.getX();
-        double y = center.getY() + dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispB);
     }
 
     public Point2D getCoordsC() {
         if ((version == 2) && ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER))) {
             return pointC;
         }
-        double x = center.getX() + dispC.getX();
-        double y = center.getY() + dispC.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispA);
     }
 
     public Point2D getCoordsD() {
@@ -1276,9 +1268,7 @@ public class LayoutTurnout extends LayoutTrack {
             return pointD;
         }
         // only allowed for single and double crossovers
-        double x = center.getX() - dispB.getX();
-        double y = center.getY() - dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.subtract(center, dispB);
     }
 
     /**
@@ -1384,8 +1374,8 @@ public class LayoutTurnout extends LayoutTrack {
         // remove the overall scale factor
         double bX = dispB.getX() / layoutEditor.getXScale();
         double bY = dispB.getY() / layoutEditor.getYScale();
-        double cX = dispC.getX() / layoutEditor.getXScale();
-        double cY = dispC.getY() / layoutEditor.getYScale();
+        double cX = dispA.getX() / layoutEditor.getXScale();
+        double cY = dispA.getY() / layoutEditor.getYScale();
         // calculate default parameters according to type of turnout
         double lenB = Math.sqrt((bX * bX) + (bY * bY));
         double lenC = Math.sqrt((cX * cX) + (cY * cY));
@@ -1741,20 +1731,17 @@ public class LayoutTurnout extends LayoutTrack {
     public void setCoordsCenter(Point2D p) {
         if (version == 2) {
             Point2D oldC = center;
-            double offsety = oldC.getY() - p.getY();
-            double offsetx = oldC.getX() - p.getX();
-            pointA = new Point2D.Double(pointA.getX() - offsetx, pointA.getY() - offsety);
-            pointB = new Point2D.Double(pointB.getX() - offsetx, pointB.getY() - offsety);
-            pointC = new Point2D.Double(pointC.getX() - offsetx, pointC.getY() - offsety);
-            pointD = new Point2D.Double(pointD.getX() - offsetx, pointD.getY() - offsety);
+            Point2D offset = MathUtil.subtract(oldC, p);
+            pointA = MathUtil.subtract(pointA, offset);
+            pointB = MathUtil.subtract(pointB, offset);
+            pointC = MathUtil.subtract(pointC, offset);
+            pointD = MathUtil.subtract(pointD, offset);
         }
         center = p;
     }
 
     private void reCalculateCenter() {
-        double centerX = (pointC.getX() + pointA.getX()) / 2;
-        double centerY = (pointC.getY() + pointA.getY()) / 2;
-        center = new Point2D.Double(centerX, centerY);
+        center = MathUtil.midPoint(pointA, pointC);
     }
 
     public void setCoordsA(Point2D p) {
@@ -1765,16 +1752,13 @@ public class LayoutTurnout extends LayoutTrack {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         if (type == DOUBLE_XOVER) {
-            dispC = new Point2D.Double(x, y);
+            dispA = new Point2D.Double(x, y);
             // adjust to maintain rectangle
-            double oldLength = Math.sqrt((dispB.getX() * dispB.getX())
-                    + (dispB.getY() * dispB.getY()));
-            double newLength = Math.sqrt((x * x) + (y * y));
-            x = dispB.getX() * newLength / oldLength;
-            y = dispB.getY() * newLength / oldLength;
-            dispB = new Point2D.Double(x, y);
+            double oldLength = MathUtil.length(dispB);
+            double newLength = Math.hypot(x, y);
+            dispB = MathUtil.multiply(dispB, newLength / oldLength);
         } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
-            dispC = new Point2D.Double(x, y);
+            dispA = new Point2D.Double(x, y);
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = -y;
@@ -1796,15 +1780,15 @@ public class LayoutTurnout extends LayoutTrack {
             dispB = new Point2D.Double(x, y);
         } else if (type == WYE_TURNOUT) {
             // modify both to maintain same angle at wye
-            double temX = (dispB.getX() + dispC.getX());
-            double temY = (dispB.getY() + dispC.getY());
-            double temXx = (dispB.getX() - dispC.getX());
-            double temYy = (dispB.getY() - dispC.getY());
+            double temX = (dispB.getX() + dispA.getX());
+            double temY = (dispB.getY() + dispA.getY());
+            double temXx = (dispB.getX() - dispA.getX());
+            double temYy = (dispB.getY() - dispA.getY());
             double tan = Math.sqrt(((temX * temX) + (temY * temY))
                     / ((temXx * temXx) + (temYy * temYy)));
             double xx = x + (y / tan);
             double yy = y - (x / tan);
-            dispC = new Point2D.Double(xx, yy);
+            dispA = new Point2D.Double(xx, yy);
             xx = x - (y / tan);
             yy = y + (x / tan);
             dispB = new Point2D.Double(xx, yy);
@@ -1820,26 +1804,23 @@ public class LayoutTurnout extends LayoutTrack {
         dispB = new Point2D.Double(-x, -y);
         if ((type == DOUBLE_XOVER) || (type == WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
-            double oldLength = Math.sqrt((dispC.getX() * dispC.getX())
-                    + (dispC.getY() * dispC.getY()));
-            double newLength = Math.sqrt((x * x) + (y * y));
-            x = dispC.getX() * newLength / oldLength;
-            y = dispC.getY() * newLength / oldLength;
-            dispC = new Point2D.Double(x, y);
+            double oldLength = MathUtil.length(dispA);
+            double newLength = Math.hypot(x, y);
+            dispA = MathUtil.multiply(dispA, newLength / oldLength);
         } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = y;
             double xi = 0.0;
             double yi = b;
-            if ((dispC.getX() - x) != 0.0) {
-                if ((-dispC.getX() + x) == 0) {
+            if ((dispA.getX() - x) != 0.0) {
+                if ((-dispA.getX() + x) == 0) {
                     /* we can in some situations eg 90' vertical end up with a 0 value,
                     so hence remove a small amount so that we
                     don't have a divide by zero issue */
                     x = x - 0.0000000001;
                 }
-                a = (dispC.getY() - y) / (dispC.getX() - x);
+                a = (dispA.getY() - y) / (dispA.getX() - x);
                 b = y - (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1851,7 +1832,7 @@ public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (x - xi));
                 y = yi - (3.0 * (y - yi));
             }
-            dispC = new Point2D.Double(x, y);
+            dispA = new Point2D.Double(x, y);
         }
     }
 
@@ -1862,15 +1843,12 @@ public class LayoutTurnout extends LayoutTrack {
         }
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
-        dispC = new Point2D.Double(-x, -y);
+        dispA = new Point2D.Double(-x, -y);
         if ((type == DOUBLE_XOVER) || (type == WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
-            double oldLength = Math.sqrt((dispB.getX() * dispB.getX())
-                    + (dispB.getY() * dispB.getY()));
-            double newLength = Math.sqrt((x * x) + (y * y));
-            x = dispB.getX() * newLength / oldLength;
-            y = dispB.getY() * newLength / oldLength;
-            dispB = new Point2D.Double(x, y);
+            double oldLength = MathUtil.length(dispB);
+            double newLength = Math.hypot(x, y);
+            dispB = MathUtil.multiply(dispB, newLength / oldLength);
         } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
             double a = 0.0;
             double b = -y;
@@ -1909,20 +1887,17 @@ public class LayoutTurnout extends LayoutTrack {
         dispB = new Point2D.Double(x, y);
         if (type == DOUBLE_XOVER) {
             // adjust to maintain rectangle
-            double oldLength = Math.sqrt((dispC.getX() * dispC.getX())
-                    + (dispC.getY() * dispC.getY()));
-            double newLength = Math.sqrt((x * x) + (y * y));
-            x = dispC.getX() * newLength / oldLength;
-            y = dispC.getY() * newLength / oldLength;
-            dispC = new Point2D.Double(x, y);
+            double oldLength = MathUtil.length(dispA);
+            double newLength = Math.hypot(x, y);
+            dispA = MathUtil.multiply(dispA, newLength / oldLength);
         } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = y;
             double xi = 0.0;
             double yi = b;
-            if ((dispC.getX() + x) != 0.0) {
-                a = (dispC.getY() + y) / (dispC.getX() + x);
+            if ((dispA.getX() + x) != 0.0) {
+                a = (dispA.getY() + y) / (dispA.getX() + x);
                 b = -y + (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1934,7 +1909,7 @@ public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
-            dispC = new Point2D.Double(x, y);
+            dispA = new Point2D.Double(x, y);
         }
     }
 
@@ -1955,9 +1930,9 @@ public class LayoutTurnout extends LayoutTrack {
             pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
                     Math.round(dispB.getY() * yFactor));
             dispB = pt;
-            pt = new Point2D.Double(Math.round(dispC.getX() * xFactor),
-                    Math.round(dispC.getY() * yFactor));
-            dispC = pt;
+            pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                    Math.round(dispA.getY() * yFactor));
+            dispA = pt;
         }
     }
 
@@ -2171,6 +2146,9 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
+        }
 
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
@@ -2185,13 +2163,13 @@ public class LayoutTurnout extends LayoutTrack {
                     jmi = popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    jmi = popup.add(rb.getString("DoubleCrossOver"));
+                    jmi = popup.add(rb.getString("DoubleCrossover"));
                     break;
                 case RH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("RightCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("RightCrossover"));
                     break;
                 case LH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("LeftCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("LeftCrossover"));
                     break;
                 default:
                     break;
@@ -2314,13 +2292,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             });
+
             if (getTurnout() != null) {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
                             tools.setSignalsAtXoverTurnoutFromMenu(instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
@@ -2338,7 +2314,15 @@ public class LayoutTurnout extends LayoutTrack {
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         }
                     }
-                });
+                };
+
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addLayoutTurnoutSignalHeadInfoToMenu(turnoutName, linkedTurnoutName, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
             }
             if (!blockName.equals("")) {
                 final String[] boundaryBetween = getBlockBoundaries();
@@ -2405,10 +2389,6 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (tools == null) {
-                                tools = new LayoutEditorTools(layoutEditor);
-                            }
-
                             tools.setSignalMastsAtTurnoutFromMenu(instance,
                                     boundaryBetween);
                         }
@@ -2416,10 +2396,6 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (tools == null) {
-                                tools = new LayoutEditorTools(layoutEditor);
-                            }
-
                             tools.setSensorsAtTurnoutFromMenu(instance,
                                     boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                         }
@@ -2778,11 +2754,11 @@ public class LayoutTurnout extends LayoutTrack {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        blockNameComboBox.getEditor().setItem(blockName);
+        blockNameComboBox.setText(blockName);
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-            blockBNameComboBox.getEditor().setItem(blockBName);
-            blockCNameComboBox.getEditor().setItem(blockCName);
-            blockDNameComboBox.getEditor().setItem(blockDName);
+            blockBNameComboBox.setText(blockBName);
+            blockCNameComboBox.setText(blockCName);
+            blockDNameComboBox.setText(blockDName);
         }
         firstTurnoutComboBox.setSelectedItem(turnoutName);
 
@@ -2962,7 +2938,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 namedTurnout = null;
                 turnoutName = "";
-                firstTurnoutComboBox.getEditor().setItem("");
+                firstTurnoutComboBox.setText("");
             }
             needRedraw = true;
         }

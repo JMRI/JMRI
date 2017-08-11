@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -41,7 +42,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     public LocationsTableModel() {
         super();
-        locationManager = LocationManager.instance();
+        locationManager = InstanceManager.getDefault(LocationManager.class);
         locationManager.addPropertyChangeListener(this);
         updateList();
     }

@@ -59,7 +59,6 @@ public class RouteLockTest {
         
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
-        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
         
         s.setState(SignalHead.YELLOW);
 
@@ -74,7 +73,6 @@ public class RouteLockTest {
         
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
-        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
         
         s.setState(SignalHead.YELLOW);
 
@@ -110,7 +108,6 @@ public class RouteLockTest {
     public void testBeanSettingMatch() throws JmriException {
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
-        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
 
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         t.setCommandedState(Turnout.CLOSED);
@@ -126,7 +123,6 @@ public class RouteLockTest {
     public void testBeanSettingoMatch() throws JmriException {
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
-        NamedBeanHandle<SignalHead> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IH1", s);
 
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         t.setCommandedState(Turnout.CLOSED);

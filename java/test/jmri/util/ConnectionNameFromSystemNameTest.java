@@ -33,6 +33,6 @@ public class ConnectionNameFromSystemNameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionNameFromSystemNameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionNameFromSystemNameTest.class.getName());
 
 }

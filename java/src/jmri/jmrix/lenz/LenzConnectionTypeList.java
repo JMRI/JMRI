@@ -1,12 +1,16 @@
 package jmri.jmrix.lenz;
 
+import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrix.ConnectionTypeList;
+
 /**
- * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ * Returns a list of valid lenz XPressNet Connection Types
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
+ *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class LenzConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ATLAS = "Atlas";

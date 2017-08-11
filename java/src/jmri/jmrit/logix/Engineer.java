@@ -44,7 +44,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private Sensor _waitSensor;
     private int _sensorWaitState;
     private ThrottleRamp _ramp;
-    final ReentrantLock _lock = new ReentrantLock(true);
+    final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
     private boolean _atHalt = false;
     private boolean _atClear = false;
     private SpeedUtil _speedUtil;
@@ -53,7 +53,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _warrant = warrant;
         _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
-        _speedUtil.makeSpeedTree();
         _idxCurrentCommand = 0;
         _idxNoSpeedCommand = -1;
         _throttle = throttle;
@@ -75,9 +74,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ThrottleSetting ts = _commands.get(_idxCurrentCommand);
             _runOnET = _setRunOnET;     // OK to set here
             long time = ts.getTime();
-            if (_speedUtil.getSpeed() > 0.0f) {
-                time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
-            }
             String command = ts.getCommand().toUpperCase();
             if (log.isDebugEnabled()) log.debug("Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}. Warrant {}",
                     _idxCurrentCommand+1, ts.getBeanDisplayName(), _warrant.getCurrentBlockName(), time, command, _warrant.getDisplayName());
@@ -89,10 +85,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             if (cmdBlockIdx < _warrant.getCurrentOrderIndex() || (command.equals("NOOP") && (cmdBlockIdx <= _warrant.getCurrentOrderIndex()))) {
                 // Train advancing too fast, need to process commands more quickly,
-                // allowing half second for whistle toots etc.
+                // allow some time for whistle toots etc.
                 if (log.isDebugEnabled()) log.debug("Train reached block \"{}\" before et={}ms . Warrant {}",
                         ts.getBeanDisplayName(), time, _warrant.getDisplayName());
-                time = Math.min(time, 250); // 1/4 sec per command should be enough for toots etc.
+                time = Math.min(time, 100); // 1/10 sec per command should be enough for toots etc.
             }
             if (_abort) {
                 break;
@@ -100,6 +96,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // actual playback total elapsed time is "ts.getTime()" before record time.
             // current block at playback may also be before current block at record
             synchronized (this) {
+                if (!Warrant.Normal.equals(_speedType)) {
+                    time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+                }                
                 try {
                     if (time > 0) {
                         wait(time);
@@ -122,12 +121,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 // commands are ahead of current train position
                 // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notifyAll() to free the wait
-                if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}",
-                        _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
-                ThreadingUtil.runOnLayoutEventually(() -> {
-                    _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
-                });
                 synchronized (this) {
+                    if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}",
+                            _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
+                    ThreadingUtil.runOnLayoutEventually(() -> {
+                        _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
+                    });
                     try {
                         _waitForSync = true;
                         wait();
@@ -192,19 +191,27 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             try {
                 if (command.equals("SPEED")) {
                     synchronized (this) {
-                      _lock.lock();
                         if (!_halt && !_waitForClear) {
-                            float speed = Float.parseFloat(ts.getValue());
-                            _normalSpeed = speed;
-                            float speedMod = _speedUtil.modifySpeed(speed, _speedType, _isForward);
-                            if (Math.abs(speed - speedMod) > .0001f) {
-                                _timeRatio = speed / speedMod;
+                            _lock.lock();
+                            float throttle = Float.parseFloat(ts.getValue());
+                            // If recording speed is known, get throttle setting for that speed
+                            float speed = ts.getSpeed();
+                            if (speed > 0.0f) {
+                                speed = _speedUtil.getThrottleSetting(speed);
+                                if (speed > 0.0f) {
+                                    throttle = speed;
+                                }
+                            }
+                            _normalSpeed = throttle;
+                            float speedMod = _speedUtil.modifySpeed(throttle, _speedType, _isForward);
+                            if (Math.abs(throttle - speedMod) > .0001f) {
+                                _timeRatio = throttle / speedMod;
                             } else {
                                 _timeRatio = 1.0f;
                             }
                             setSpeed(speedMod);
+                            _lock.unlock();
                         }
-                      _lock.unlock();
                     }
                 } else if (command.equals("SPEEDSTEP")) {
                     int step = Integer.parseInt(ts.getValue());
@@ -244,7 +251,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         // shut down
         ThreadingUtil.runOnLayout(() -> {
-            _warrant.stopWarrant(false);
+            _warrant.stopWarrant(_abort);
         });
     }
 
@@ -259,7 +266,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param idx index
      */
     protected void advanceToCommandIndex(int idx) {
-//        _idxNoSpeedCommand = idx;
+//        _idxNoSpeedCommand = idx; TODO
 //        if (log.isDebugEnabled()) log.debug("_idxCurrentCommand= {} _normalSpeed= {} _speedType= {} speed= {}",
 //                _idxCurrentCommand, _normalSpeed, _speedType, _throttle.getSpeedSetting());
     }
@@ -356,15 +363,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * do throttle setting
      * @param s throttle setting
      */
-
-    synchronized protected void setSpeed(float s) {
+     protected void setSpeed(float s) {
         if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
-        _speedUtil.speedChange();
+        _speedUtil.speedChange();   // call before changing throttle setting
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
+        String type = _speedType; // hope this saves findbug synch warning
         ThreadingUtil.runOnLayoutEventually(() -> {
-            _warrant.fireRunStatus("SpeedChange", null, _speedType);
+            _warrant.fireRunStatus("SpeedChange", null, type);
         });
         if (log.isDebugEnabled()) log.debug("Speed Set to {}, _speedType={},  _waitForClear= {} _waitForSync= {}, _halt= {}, warrant {}",
                 speed, _speedType,  _waitForClear, _waitForSync, _halt, _warrant.getDisplayName());
@@ -381,7 +388,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
-        Float speed = _speedUtil.getSpeed();
+        Float speed = _speedUtil.getSpeedSetting();
         if (Math.abs(speed - _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward)) < 0.0001f) {
             // already at speed, no need to reset throttle
             _speedType = speedType;
@@ -390,13 +397,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         cancelRamp();
 
-        synchronized (this) {
-            if (speedType.equals(Warrant.EStop)) {
-                setSpeed(-0.1f);        // always do immediate EStop
-                return false;
-            } else if (speedType.equals(Warrant.Stop)) {
-                return true;
-            } else {
+        if (speedType.equals(Warrant.EStop)) {
+            setSpeed(-0.1f);        // always do immediate EStop
+            return false;
+        } else if (speedType.equals(Warrant.Stop)) {
+            return true;
+        } else {
+            synchronized (this) {
                 _speedType = speedType;
                 float speedMod = _speedUtil.modifySpeed(1.0f, _speedType, _isForward);
                 if (Math.abs(1.0f - speedMod) > .0001f) {
@@ -438,8 +445,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("setHalt({}) calls notifyAll()", halt);
             }
         } else {
-            _halt = true;
             rampSpeedTo(Warrant.Stop);
+            _halt = true;
         }
         if (log.isDebugEnabled()) log.debug("setHalt({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
                 halt, _halt,  _throttle.getSpeedSetting(), _waitForClear, _waitForSync, _warrant.getDisplayName());
@@ -459,8 +466,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (log.isDebugEnabled()) log.debug("setWaitforClear({}) calls notifyAll()", stop);
             }
         } else {
-            _waitForClear = true;
             rampSpeedTo(Warrant.Stop);
+            _waitForClear = true;
         }
         if (log.isDebugEnabled()) log.debug("setWaitforClear({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
                 stop, _halt,  _throttle.getSpeedSetting(), _waitForClear, _waitForSync, _warrant.getDisplayName());
@@ -502,28 +509,25 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Flag from user to end run
+     * End running warrant.
+     * @param abort not normal shutdown
      */
-    public void abort() {
-        _abort = true;
+    public void stopRun(boolean abort) {
+        if (abort) {
+            _abort =true;            
+        }
         cancelRamp();
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
-        if (_throttle != null) {
+        if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
             for (int i = 0; i < 10; i++) {
                 setFunction(i, false);
             }
-            try {
-                InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _speedUtil);
-            } catch (Exception e) {
-                // null pointer catch and maybe other such.
-                log.warn("Throttle release and cancel threw: " + e);
-            }
+            _warrant.releaseThrottle(_throttle);
         }
-        if (log.isDebugEnabled()) log.debug("Abort called. Engineer shut down. warrant {}", _warrant.getDisplayName());
     }
 
     private void setFunction(int cmdNum, boolean isSet) {
@@ -843,7 +847,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             w.startupWarrant();
             msg = "Launching warrant \"" + _warrant.getDisplayName() + "\" again.";
         } else {
-            if (w.getSpeedUtil().getDccAddress().equals(_speedUtil.getDccAddress())) {
+            if (_speedUtil.getDccAddress().equals(_speedUtil.getDccAddress())) {
                 OBlock block = w.getfirstOrder().getBlock();
                 block.deAllocate(_warrant);     // insure w can start
             }
@@ -888,9 +892,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
             float endSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);   // requested endspeed
-            float speed = _speedUtil.getSpeed();
-            float incr = _speedUtil.getStepIncrement();
-            int delay = _speedUtil.getStepDelay();
+            float speed = _speedUtil.getSpeedSetting();
+            if (speed < 0.0f) {
+                speed = 0.0f;
+            }
+            float incr = _speedUtil.getRampThrottleIncrement();
+            int delay = _speedUtil.getRampTimeIncrement();
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
                     _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward), speed);
             // endSpeed should not exceed scripted speed modified by _speedType
@@ -920,7 +927,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             try {
                                 wait(delay);
                             } catch (InterruptedException ie) {
-                                log.error("ThrottleRamp interrupted " + ie);
+                                _lock.unlock();
                                 stop = true;
                             }
                             if (stop) {
@@ -937,7 +944,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             try {
                                 wait(delay);
                             } catch (InterruptedException ie) {
-                                log.error("ThrottleRamp interrupted " + ie);
+                                _lock.unlock();
                                 stop = true;
                             }
                             if (stop) {
@@ -947,22 +954,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     }
                     
                 } finally {
+                    _lock.unlock();
                     if (!endSpeedType.equals(Warrant.Stop) &&
-                            !endSpeedType.equals(Warrant.EStop) /*&& speed > 0.0001f */) {
-                        synchronized (this) {
-                            // speed restored, clear any stop waits
-                            if (_waitForClear) {
-                                setWaitforClear(false);
-                            }
-                            if (_halt) {
-                                setHalt(false);
-                            }
-                        }
+                            !endSpeedType.equals(Warrant.EStop)) {
+                        // speed restored, clear any stop waits
+                        // If flags already off, OK to repeat setting  (saves findbug synch warning) 
+                        setWaitforClear(false);
+                        setHalt(false);
                      }
                     if (stop) {
                         log.info("ThrottleRamp stopped before completion");
                     }
-                    _lock.unlock();
                 }
             }
             ThreadingUtil.runOnLayoutEventually(() -> {

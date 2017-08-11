@@ -33,6 +33,6 @@ public class EndSoundEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EndSoundEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EndSoundEditorTest.class.getName());
 
 }

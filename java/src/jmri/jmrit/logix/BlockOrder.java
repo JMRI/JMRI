@@ -169,8 +169,16 @@ public class BlockOrder {
         return 0;
     }
 
+    /**
+     * Get the signal protecting entry into the block of this blockorder
+     * @return signal
+     */
     protected jmri.NamedBean getSignal() {
-        return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);
+        Portal portal = getEntryPortal();
+        if (portal != null) {            
+            return portal.getSignalProtectingBlock(_block);
+        }
+        return null;
     }
     
 /* Why is this here?
@@ -180,7 +188,15 @@ public class BlockOrder {
 
     @Override
     public String toString() {
-        return Bundle.getMessage("BlockOrderString",
-                _block.getDisplayName(), _entryName, _pathName, _exitName);
+        StringBuilder sb = new StringBuilder("BlockOrder: Block \"");
+        sb.append( _block.getDisplayName());
+        sb.append("\" has Path \"");
+        sb.append("\" has Path \"");
+        sb.append("\" with Portals entry= \"");
+        sb.append(_entryName);
+        sb.append("\" and exit= \"");
+        sb.append(_exitName);
+        sb.append("\"");
+        return sb.toString();
     }
 }

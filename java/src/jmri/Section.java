@@ -3,6 +3,7 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -142,9 +143,9 @@ public class Section extends AbstractNamedBean {
     private String mReverseBlockingSensorName = "";
     private String mForwardStoppingSensorName = "";
     private String mReverseStoppingSensorName = "";
-    private final ArrayList<Block> mBlockEntries = new ArrayList<>();
-    private final ArrayList<EntryPoint> mForwardEntryPoints = new ArrayList<>();
-    private final ArrayList<EntryPoint> mReverseEntryPoints = new ArrayList<>();
+    private final jmri.util.NonNullArrayList<Block> mBlockEntries = new jmri.util.NonNullArrayList<>();
+    private final jmri.util.NonNullArrayList<EntryPoint> mForwardEntryPoints = new jmri.util.NonNullArrayList<>();
+    private final jmri.util.NonNullArrayList<EntryPoint> mReverseEntryPoints = new jmri.util.NonNullArrayList<>();
 
     /**
      * Operational instance variables (not saved between runs)
@@ -491,12 +492,7 @@ public class Section extends AbstractNamedBean {
             mFirstBlock = b;
         } else {
             // check that block is unique
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                if (mBlockEntries.get(i) == b) {
-                    // block is already present
-                    return false;
-                }
-            }
+            for (Block block : mBlockEntries) if (block == b) return false; // already present
             // Note: connectivity to current block is assumed to have been checked
         }
         // add Block to the Block list
@@ -552,8 +548,8 @@ public class Section extends AbstractNamedBean {
      */
     void handleBlockChange(PropertyChangeEvent e) {
         int o = UNOCCUPIED;
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            if (mBlockEntries.get(i).getState() == OCCUPIED) {
+        for (Block block : mBlockEntries) {
+            if (block.getState() == OCCUPIED) {
                 o = OCCUPIED;
                 break;
             }
@@ -602,8 +598,8 @@ public class Section extends AbstractNamedBean {
             initializeBlocks();
         }
         float length = 0.0f;
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            length = length + mBlockEntries.get(i).getLengthMm();
+        for (Block block : mBlockEntries) {
+            length = length + block.getLengthMm();
         }
         length = length / (float) (Scale.getScaleFactor(scale));
         if (meters) {
@@ -669,9 +665,7 @@ public class Section extends AbstractNamedBean {
     public void removeAllBlocksFromSection() {
         for (int i = mBlockEntries.size(); i > 0; i--) {
             Block b = mBlockEntries.get(i - 1);
-            if (b != null) {
-                b.removePropertyChangeListener(mBlockListeners.get(i - 1));
-            }
+            b.removePropertyChangeListener(mBlockListeners.get(i - 1));
             mBlockListeners.remove(i - 1);
             mBlockEntries.remove(i - 1);
         }
@@ -736,8 +730,8 @@ public class Section extends AbstractNamedBean {
     }
 
     public boolean containsBlock(Block b) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            if (b == mBlockEntries.get(i)) {
+        for (Block block : mBlockEntries) {
+            if (b == block) {
                 return true;
             }
         }
@@ -1270,8 +1264,10 @@ public class Section extends AbstractNamedBean {
      * should only happen if blocks are not set up correctly--if all connections
      * go to the same Block, or not all Blocks set. An error message is logged
      * if EntryPoint.UNKNOWN is returned.
+     * 
+     * @param t Actually of type LayoutSlip, this is the track segment to check.
      */
-    private int getDirectionSlip(LayoutSlip t, ConnectivityUtil cUtil) {
+    private int getDirectionSlip(LayoutTurnout t, ConnectivityUtil cUtil) {
         LayoutBlock aBlock = ((TrackSegment) t.getConnectA()).getLayoutBlock();
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
         LayoutBlock cBlock = ((TrackSegment) t.getConnectC()).getLayoutBlock();
@@ -1640,8 +1636,7 @@ public class Section extends AbstractNamedBean {
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
         ConnectivityUtil cUtil = panel.getConnectivityUtil();
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block cBlock = mBlockEntries.get(i);
+        for (Block cBlock : mBlockEntries) {
             LayoutBlock lBlock = layoutBlockManager.getByUserName(cBlock.getUserName());
             ArrayList<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
@@ -2231,7 +2226,7 @@ public class Section extends AbstractNamedBean {
                             }
                         }
                     } else if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP || t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                        int direction = getDirectionSlip((LayoutSlip) t, cUtil);
+                        int direction = getDirectionSlip(t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
                             altDirection = EntryPoint.REVERSE;
@@ -2355,12 +2350,9 @@ public class Section extends AbstractNamedBean {
         if (initializationNeeded) {
             initializeBlocks();
         }
-        Block eBlock = getEntryBlock();
-        ArrayList<EntryPoint> epList = getListOfForwardBlockEntryPoints(eBlock);
-        if (epList.size() > 0) {
 
-// djd debugging - need code to fully implement checkSignals
-        }
+        // need code to fully implement checkSignals if (getListOfForwardBlockEntryPoints(getEntryBlock()).size() > 0)
+
         return true;
     }
 
@@ -2503,8 +2495,7 @@ public class Section extends AbstractNamedBean {
      * @param set true to use alternate unoccupied color; false otherwise
      */
     public void setAlternateColor(boolean set) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
             if (lb != null) {
                 lb.setUseExtraColor(set);
@@ -2529,8 +2520,7 @@ public class Section extends AbstractNamedBean {
         if (!set || getState() == FREE || getState() == UNKNOWN) {
             setAlternateColor(set);
         } else if (getState() == FORWARD) {
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2542,8 +2532,7 @@ public class Section extends AbstractNamedBean {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (int i = mBlockEntries.size(); i < 0; i--) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2566,8 +2555,7 @@ public class Section extends AbstractNamedBean {
      * @param name the value to set all blocks to
      */
     public void setNameInBlocks(String name) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             b.setValue(name);
         }
     }
@@ -2578,20 +2566,17 @@ public class Section extends AbstractNamedBean {
      * @param value the name to set block values to
      */
     public void setNameInBlocks(Object value) {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             b.setValue(value);
         }
     }
 
     public void setNameFromActiveBlock(Object value) {
-        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
             setNameInBlocks(value);
         } else if (getState() == FORWARD) {
-            for (int i = 0; i < mBlockEntries.size(); i++) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2600,8 +2585,7 @@ public class Section extends AbstractNamedBean {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (int i = mBlockEntries.size(); i < 0; i--) {
-                Block b = mBlockEntries.get(i);
+            for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2619,8 +2603,7 @@ public class Section extends AbstractNamedBean {
      * This function clears the block values for blocks in this section.
      */
     public void clearNameInUnoccupiedBlocks() {
-        for (int i = 0; i < mBlockEntries.size(); i++) {
-            Block b = mBlockEntries.get(i);
+        for (Block b : mBlockEntries) {
             if (b.getState() == Block.UNOCCUPIED) {
                 b.setValue("  ");
             }
@@ -2689,9 +2672,8 @@ public class Section extends AbstractNamedBean {
                     throw new PropertyVetoException(Bundle.getMessage("VetoBlockInSection", getDisplayName()), e);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-
-        }
+        } 
+        // "DoDelete" case, if needed, should be handled here.
     }
 
     private final static Logger log = LoggerFactory.getLogger(Section.class.getName());

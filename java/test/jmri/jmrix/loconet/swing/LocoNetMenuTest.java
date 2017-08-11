@@ -40,6 +40,6 @@ public class LocoNetMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoNetMenuTest.class.getName());
 
 }

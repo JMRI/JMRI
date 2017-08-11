@@ -33,6 +33,6 @@ public class RestartActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RestartActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RestartActionTest.class.getName());
 
 }

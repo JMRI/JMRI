@@ -1,7 +1,7 @@
 package jmri.jmrix.xpa;
 
 /**
- * Define interface for sending and receiving messages from an XPressNet System
+ * Define interface for sending and receiving messages from an XpressNet System
  * using an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
@@ -27,6 +27,3 @@ public interface XpaInterface {
      */
     void sendXpaMessage(XpaMessage m, XpaListener l);
 }
-
-
-

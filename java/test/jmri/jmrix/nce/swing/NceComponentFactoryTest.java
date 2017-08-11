@@ -41,6 +41,6 @@ public class NceComponentFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceComponentFactoryTest.class.getName());
 
 }

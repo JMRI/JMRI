@@ -33,6 +33,6 @@ public class JsonServerPreferencesTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonServerPreferencesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonServerPreferencesTest.class.getName());
 
 }
