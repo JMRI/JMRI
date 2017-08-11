@@ -385,7 +385,6 @@ public class TrainIconAnimationTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
