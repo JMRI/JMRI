@@ -93,6 +93,7 @@ import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
@@ -3605,13 +3606,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
+            if (InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
                 //Inform the user that there are no Transits available, and don't open the window
                 javax.swing.JOptionPane.showMessageDialog(null,
                         ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").
                                 getString("NoTransitsMessage"));
             } else {
-                jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
 
                 if (!df.getNewTrainActive()) {
                     df.getActiveTrainFrame().initiateTrain(event, null, null);

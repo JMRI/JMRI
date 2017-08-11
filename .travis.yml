@@ -4,6 +4,7 @@ addons:
   apt:
     packages:
     - graphviz
+    - libalut0
 
 before_install:
   # ensure no unwanted defaults are set
@@ -23,7 +24,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
 
 script:
-  travis_wait 40 ./scripts/travis.sh
+  travis_wait 50 ./scripts/travis.sh
 
 cache:
   directories:

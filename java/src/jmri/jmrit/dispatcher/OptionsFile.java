@@ -2,6 +2,8 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.ArrayList;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
@@ -17,10 +19,9 @@ import org.slf4j.LoggerFactory;
  * This class manipulates the files conforming to the dispatcher-options DTD
  * <p>
  * The file is written when the user requests that options be saved. If the
- * dispatcheroptions.xml file is present when Dispatcher is started, it is
- * read and options set accordingly
- *
- * <P>
+ * dispatcheroptions.xml file is present when Dispatcher is started, it is read
+ * and options set accordingly
+ * <p>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class OptionsFile extends jmri.jmrit.XmlFile {
+public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAutoDefault {
 
     public OptionsFile() {
         super();
@@ -269,13 +270,15 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
         }
     }
 
-    private static OptionsFile _instance = null;
-
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static OptionsFile instance() {
-        if (_instance == null) {
-            _instance = new OptionsFile();
-        }
-        return _instance;
+        return InstanceManager.getDefault(OptionsFile.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());

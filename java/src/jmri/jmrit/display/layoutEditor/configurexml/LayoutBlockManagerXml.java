@@ -210,8 +210,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
 
         // register new one with InstanceManager
-        LayoutBlockManager pManager = LayoutBlockManager.instance();
-        InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        LayoutBlockManager pManager = InstanceManager.getDefault(LayoutBlockManager.class);
         // register new one for configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

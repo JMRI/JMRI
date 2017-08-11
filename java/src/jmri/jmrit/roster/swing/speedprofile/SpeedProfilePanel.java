@@ -604,7 +604,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         // this switching back a forward helps if the throttle was stolen.
         // the sleeps are needed as some systems dont like a speed setting right after a direction setting.
         //If we had guarenteed access to the dispatcher frame we could use
-        //         Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2)
+        //         Thread.sleep(InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval() * 2)
         try {
             Thread.sleep(250);
         } catch (InterruptedException e) {

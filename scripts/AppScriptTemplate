@@ -508,7 +508,8 @@ fi
 
 OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
+OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
+OPTIONS="${OPTIONS} -Djogamp.gluegen.UseTempJarCache=false"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
