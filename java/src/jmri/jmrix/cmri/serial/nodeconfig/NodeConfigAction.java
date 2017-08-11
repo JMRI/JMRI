@@ -2,9 +2,9 @@ package jmri.jmrix.cmri.serial.nodeconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a NodeConfigFrame object
@@ -13,7 +13,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    CMRISystemConnectionMemo _memo = null;
+    private CMRISystemConnectionMemo _memo = null;
 
     public NodeConfigAction(String s, CMRISystemConnectionMemo memo) {
         super(s);

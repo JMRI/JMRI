@@ -965,6 +965,12 @@ public class AbstractAutomaton implements Runnable {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+                // this is an automatically stealing impelementation.
+                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+            }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
                 .requestThrottle(address, longAddress, throttleListener);
@@ -1028,6 +1034,12 @@ public class AbstractAutomaton implements Runnable {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
+            }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+                // this is an automatically stealing impelementation.
+                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }
         };
         boolean ok = InstanceManager.throttleManagerInstance()
