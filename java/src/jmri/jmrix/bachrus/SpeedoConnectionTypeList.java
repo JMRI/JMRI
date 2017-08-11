@@ -4,7 +4,7 @@ import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
 
 /**
- * Returns a list of valid BAchrus Connection Types
+ * Returns a list of valid Bachrus Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

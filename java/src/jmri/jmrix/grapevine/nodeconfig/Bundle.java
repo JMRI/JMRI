@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.grapevine.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.grapevine.nodetable.NodeConfigBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.grapevine.nodeconfig.NodeConfigBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
