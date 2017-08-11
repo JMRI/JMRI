@@ -111,9 +111,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public Point2D getCoordsCenter() {
-        return center;
-    }
 
     public double getRadius() {
         return radius;
@@ -410,13 +407,26 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-    public void setCoordsCenter(Point2D p) {
-        center = p;
-    }
 
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
     }
 
     /**

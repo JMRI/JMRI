@@ -320,6 +320,45 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    /**
+     * Set Up a Layout Block for a Track Segment.
+     */
+    public void setLayoutBlock(LayoutBlock b) {
+        block = b;
+        if (b != null) {
+            blockName = b.getID();
+        }
+    }
+
+    public void setLayoutBlockByName(String name) {
+        blockName = name;
+    }
+
+    /*
+     * non-accessor methods
+     */
+
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
+    public void scaleCoords(float xFactor, float yFactor)
+    {
+        // Nothing to do here… move along…
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    public void translateCoords(float xFactor, float yFactor)
+    {
+        // Nothing to do here… move along…
+    }
+
+
     // initialization instance variables (used when loading a LayoutEditor)
     public String tBlockName = "";
     public String tConnect1Name = "";
@@ -356,20 +395,6 @@ public class TrackSegment extends LayoutTrack {
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
-    }
-
-    /**
-     * Set Up a Layout Block for a Track Segment.
-     */
-    public void setLayoutBlock(LayoutBlock b) {
-        block = b;
-        if (b != null) {
-            blockName = b.getID();
-        }
-    }
-
-    public void setLayoutBlockByName(String name) {
-        blockName = name;
     }
 
     protected void updateBlockInfo() {

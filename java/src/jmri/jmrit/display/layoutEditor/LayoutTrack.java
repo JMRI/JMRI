@@ -84,6 +84,14 @@ public abstract class LayoutTrack {
         return ident;
     }
 
+    public Point2D getCoordsCenter() {
+        return center;
+    }
+
+    public void setCoordsCenter(Point2D p) {
+        center = p;
+    }
+
     public static void setDefaultTrackColor(Color color) {
         defaultTrackColor = color;
     }
@@ -133,6 +141,21 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
+
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
+    public abstract void scaleCoords(float xFactor, float yFactor);
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    public abstract void translateCoords(float xFactor, float yFactor);
+
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
