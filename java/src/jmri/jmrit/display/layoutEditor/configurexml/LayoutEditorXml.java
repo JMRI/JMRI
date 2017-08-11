@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
@@ -19,7 +18,6 @@ import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-import jmri.util.AlphanumComparator;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -51,7 +49,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public Element store(Object o) {
         LayoutEditor p = (LayoutEditor) o;
 
-        AlphanumComparator ac = new AlphanumComparator();
+        //TODO: dead code strip: (don't sort - this is so JMRI preserves the order of things in the file)
+//        AlphanumComparator ac = new AlphanumComparator();
 
         Element panel = new Element("LayoutEditor");
 
@@ -119,7 +118,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();
         if (true) {
-            Collections.sort(contents, (Positionable p1, Positionable p2) -> ac.compare(p1.getNameString(), p2.getNameString()));
+//            Collections.sort(contents, (Positionable p1, Positionable p2) -> ac.compare(p1.getNameString(), p2.getNameString()));
 
             for (Positionable sub : contents) {
                 if (sub != null && sub.storeItem()) {
@@ -163,7 +162,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if (true) {
             List<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>(p.turnoutList);
-            Collections.sort(turnoutList, (LayoutTurnout lt1, LayoutTurnout lt2) -> ac.compare(lt1.getName(), lt2.getName()));
+//            Collections.sort(turnoutList, (LayoutTurnout lt1, LayoutTurnout lt2) -> ac.compare(lt1.getName(), lt2.getName()));
 
             for (Object sub : turnoutList) {
                 try {
@@ -198,7 +197,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         if (true) {
             List<TrackSegment> trackList = new ArrayList<TrackSegment>(p.trackList);
-            Collections.sort(trackList, (TrackSegment ts1, TrackSegment ts2) -> ac.compare(ts1.getName(), ts2.getName()));
+//            Collections.sort(trackList, (TrackSegment ts1, TrackSegment ts2) -> ac.compare(ts1.getName(), ts2.getName()));
 
             for (Object sub : trackList) {
                 try {
@@ -233,7 +232,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         if (true) {
             List<PositionablePoint> pointList = new ArrayList<PositionablePoint>(p.pointList);
-            Collections.sort(pointList, (PositionablePoint ts1, PositionablePoint ts2) -> ac.compare(ts1.getName(), ts2.getName()));
+//            Collections.sort(pointList, (PositionablePoint ts1, PositionablePoint ts2) -> ac.compare(ts1.getName(), ts2.getName()));
 
             for (Object sub : pointList) {
                 try {
@@ -268,7 +267,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         if (true) {
             List<LevelXing> xingList = new ArrayList<LevelXing>(p.xingList);
-            Collections.sort(xingList, (LevelXing lx1, LevelXing lx2) -> ac.compare(lx1.getName(), lx2.getName()));
+//            Collections.sort(xingList, (LevelXing lx1, LevelXing lx2) -> ac.compare(lx1.getName(), lx2.getName()));
 
             for (Object sub : xingList) {
                 try {
@@ -303,7 +302,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         if (true) {
             List<LayoutSlip> slipList = new ArrayList<LayoutSlip>(p.slipList);
-            Collections.sort(slipList, (LayoutSlip ls1, LayoutSlip ls2) -> ac.compare(ls1.getName(), ls2.getName()));
+//            Collections.sort(slipList, (LayoutSlip ls1, LayoutSlip ls2) -> ac.compare(ls1.getName(), ls2.getName()));
 
             for (Object sub : slipList) {
                 try {
@@ -338,7 +337,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         if (true) {
             List<LayoutTurntable> turntableList = new ArrayList<LayoutTurntable>(p.turntableList);
-            Collections.sort(turntableList, (LayoutTurntable lt1, LayoutTurntable lt2) -> ac.compare(lt1.getName(), lt2.getName()));
+//            Collections.sort(turntableList, (LayoutTurntable lt1, LayoutTurntable lt2) -> ac.compare(lt1.getName(), lt2.getName()));
 
             for (Object sub : turntableList) {
                 try {
