@@ -71,9 +71,12 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         _endRange.setEnabled(false);
 
         // add status bar above buttons
-        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * statusBar.getFont().getSize())); // a bit smaller
+        JPanel panelStatus = new JPanel();
+        panelStatus.setLayout(new FlowLayout());
+        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * sysAddressLabel.getFont().getSize())); // a bit smaller
         statusBar.setForeground(Color.gray);
-        add(statusBar);
+        panelStatus.add(statusBar);
+        add(panelStatus);
 
         // cancel + add buttons at bottom of window
         JPanel panelBottom = new JPanel();

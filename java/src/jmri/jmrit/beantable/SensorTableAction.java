@@ -89,7 +89,7 @@ public class SensorTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
 
     ValidatedTextField sysNameTextField = new ValidatedTextField(40, false,
-            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Turnout pane");
+            "^[0-9a-zA-Z_]{1,20}$", Bundle.getMessage("LightError3"));
     // initially allow any 20 char string, updated by prefixBox selection
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
@@ -100,7 +100,7 @@ public class SensorTableAction extends AbstractTableAction {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
     String connectionChoice = "";

@@ -948,7 +948,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
 
     ValidatedTextField sysNameTextField = new ValidatedTextField(40, false,
-            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Turnout pane");
+            "^[0-9a-zA-Z_]{1,20}$", Bundle.getMessage("LightError3")); // error message Illegal format
     // initially allow any 20 char string, updated by prefixBox selection
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
@@ -959,7 +959,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
 
@@ -1540,6 +1540,11 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame = null;
     }
 
+    /**
+     * Respond to Add new item pressed on Add Turnout pane
+     *
+     * @param e the click event
+     */
     void okPressed(ActionEvent e) {
 
         int numberOfTurnouts = 1;
@@ -1560,6 +1565,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String curAddress = sysNameTextField.getText().trim();
         // Add some entry pattern checking now, before assembling sName and handing it to the turnoutManager? TODO
+        String feedback = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
 
         int iType = 0;
         int iNum = 1;
@@ -1576,6 +1582,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             if (curAddress == null) {
                 //The next address is already in use, therefore we stop.
+                // Show message in statusBar first
+
                 break;
             }
             // We have found another turnout with the same address, therefore we need to go on to the next address.
@@ -1623,6 +1631,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
+                // Display message in statusBar first
+
                 return;
             } else {
 
@@ -1632,7 +1642,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(ex, sName); // displays message to the user
+                    handleCreateException(ex, sName); // displays message dialog to the user
+                    // add to statusBar as well
+
                     return; // without creating
                 }
 
@@ -1642,9 +1654,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user) == null)) {
                     t.setUserName(user);
-                } else if (user != null && !user.equals("") && InstanceManager.turnoutManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                } else if (user != null && !user.equals("") && InstanceManager.turnoutManagerInstance().getByUserName(user) != null &&
+                        !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
+                            showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user),
+                                    getClassName(), "duplicateUserName", false, true);
                 }
                 t.setNumberOutputBits(iNum);
                 // Ask about the type of turnout control if appropriate
@@ -1658,13 +1672,20 @@ public class TurnoutTableAction extends AbstractTableAction {
                             useLastType = true;
                         }
                     } else {
-                        useLastType = true;
+                        useLastType = false;
                     }
                 }
                 t.setControlType(iType);
+                // add name to feedback string
+                feedback = feedback + " " + sName + " (" + user + ")";
+                if (x < numberOfTurnouts - 1) feedback = feedback + ", "; // prevent extra comma after last item
             }
             // end of for loop creating range of Turnouts
         }
+        // provide feedback to user
+        statusBar.setText(feedback);
+        statusBar.setForeground(Color.gray);
+
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
 

@@ -212,7 +212,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager pref;
 
