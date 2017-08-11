@@ -105,8 +105,7 @@ public class LnLightManager extends AbstractLightManager {
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
-     *
+     * range box in the add Light window.
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

@@ -211,6 +211,8 @@ public class ReporterTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager pref;
 
@@ -261,7 +263,8 @@ public class ReporterTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, addButton,
+                    okListener, cancelListener, rangeListener, statusBar));
             canAddRange(null);
         }
         addFrame.pack();

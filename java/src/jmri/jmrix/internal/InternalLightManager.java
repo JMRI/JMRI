@@ -58,4 +58,21 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
         return true;
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9a-zA-Z_]{1,20}$"; // examples abc123+, see tooltip
+    }
+
 }

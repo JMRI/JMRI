@@ -958,6 +958,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
 
@@ -1016,9 +1018,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             // don't use strong colorization on ValidatedTextField like for CVs
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
-            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range,
+                    addButton, okListener, cancelListener, rangeListener, statusBar));
             // tooltip for sysNameTextField will be assigned later by canAddRange()
             canAddRange(null);
+
         }
         addFrame.pack();
         addFrame.setVisible(true);

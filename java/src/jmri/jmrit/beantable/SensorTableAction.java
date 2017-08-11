@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -98,6 +99,8 @@ public class SensorTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"));
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
@@ -154,7 +157,8 @@ public class SensorTableAction extends AbstractTableAction {
             // don't use strong colorization on ValidatedTextField like for CVs
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
-            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range,
+                    addButton, okListener, cancelListener, rangeListener, statusBar));
             // tooltip for sysNameTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
