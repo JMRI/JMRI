@@ -11,7 +11,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  *
  * @author   Dave Duchamp  Copyright (C) 2006
  * @author   Chuck Catania Copyright (C) 2014
- * @version	$Revision: 17977 $
  */
 public class NodeIOListAction extends AbstractAction {
     CMRISystemConnectionMemo _memo = null;
