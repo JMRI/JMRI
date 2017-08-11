@@ -617,8 +617,13 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }   // findHitPointType
 
-    /**
+    /*
      * Modify coordinates methods
+     */
+
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
      */
     @Override
     public void setCoordsCenter(Point2D p) {

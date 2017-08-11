@@ -1224,10 +1224,6 @@ public class LayoutTurnout extends LayoutTrack {
         return block;
     }
 
-    public Point2D getCoordsCenter() {
-        return center;
-    }
-
     public Point2D getCoordsA() {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             if (version == 2) {
@@ -1717,8 +1713,13 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    /**
+    /*
      * Modify coordinates methods
+     */
+
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
      */
     @Override
     public void setCoordsCenter(Point2D p) {

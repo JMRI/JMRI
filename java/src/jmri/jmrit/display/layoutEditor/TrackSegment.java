@@ -1294,10 +1294,19 @@ public class TrackSegment extends LayoutTrack {
         tmpangle = a;
     }
 
+    /**
+     * get center coordinates
+     *
+     * @return the center coordinates
+     */
     public Point2D getCoordsCenterCircle() {
         return new Point2D.Double(centreX, centreY);
     }
 
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
+     */
     public void setCoordsCenterCircle(Point2D p) {
         centreX = p.getX();
         centreY = p.getY();

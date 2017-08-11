@@ -84,10 +84,19 @@ public abstract class LayoutTrack {
         return ident;
     }
 
+    /**
+     * get center coordinates
+     *
+     * @return the center coordinates
+     */
     public Point2D getCoordsCenter() {
         return center;
     }
 
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
+     */
     public void setCoordsCenter(Point2D p) {
         center = p;
     }

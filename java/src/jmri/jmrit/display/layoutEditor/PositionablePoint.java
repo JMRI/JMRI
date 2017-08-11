@@ -118,7 +118,11 @@ public class PositionablePoint extends LayoutTrack {
      * get coordinates
      *
      * @return the coordinates
-     * @deprecated since 4.7.2; use {@link #getCoordsCenter()} instead
+     *
+     * @deprecated replaced by
+     * @see #getCoordsCenter()
+     * @since 4.9.2
+     *
      * note: done for Polymorphism so all LayoutTrack sub-classes use same method
      */
     @Deprecated
@@ -129,7 +133,11 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * set the coordinates
      * @param p the coordinates
-     * @deprecated since 4.7.2; use {@link #setCoordsCenter()} instead
+     *
+     * @deprecated replaced by
+     * @see #setCoordsCenter(Point2D)
+     * @since 4.9.2
+     *
      * note: done for Polymorphism so all LayoutTrack sub-classes use same method
      */
     @Deprecated
