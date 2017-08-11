@@ -42,6 +42,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -77,6 +78,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -619,8 +622,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        //TODO: Add code to set default save file name to name of currently loaded config/panel
-        //TODO: need to setSelectedFile
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
@@ -9957,10 +9958,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             inputFileChooser = new JFileChooser(System.getProperty(
                     "user.dir") + java.io.File.separator + "resources" + java.io.File.separator
                     + "icons");
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
-            filt.addExtension("gif");
-            filt.addExtension("jpg");
-            inputFileChooser.setFileFilter(filt);
+            if (false) {
+                // TODO: Discuss with jmri-developers
+                // this filter will allow any images supported by the current 
+                // operating system. This may not be desirable because it will
+                // allow images that may not be supported by operating systems 
+                // other than the current one. 
+                FileFilter filt = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
+                inputFileChooser.setFileFilter(filt);
+            } else {
+                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
+                filt.addExtension("gif");
+                filt.addExtension("jpg");
+                //TODO: discuss with jmri-developers - support png image files?
+                filt.addExtension("png");   
+                inputFileChooser.setFileFilter(filt);
+            }
         }
         inputFileChooser.rescanCurrentDirectory();
 

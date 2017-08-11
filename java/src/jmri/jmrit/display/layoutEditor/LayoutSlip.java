@@ -659,11 +659,12 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        center = MathUtil.granulize(MathUtil.multiply(center, xFactor), 1.0);
-        pointA = MathUtil.granulize(MathUtil.multiply(pointA, xFactor), 1.0);
-        pointB = MathUtil.granulize(MathUtil.multiply(pointB, xFactor), 1.0);
-        pointC = MathUtil.granulize(MathUtil.multiply(pointC, xFactor), 1.0);
-        pointD = MathUtil.granulize(MathUtil.multiply(pointD, xFactor), 1.0);
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
     }
 
     /**

@@ -415,9 +415,8 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        center = pt;
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
     }
 
     /**

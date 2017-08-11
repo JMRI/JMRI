@@ -963,15 +963,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        center = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                Math.round(dispA.getY() * yFactor));
-        dispA = pt;
-        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                Math.round(dispB.getY() * yFactor));
-        dispB = pt;
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
+        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
     }
 
     /**
