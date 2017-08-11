@@ -1,10 +1,12 @@
 package jmri.jmrix.acela;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,14 +146,14 @@ public class AcelaNode extends AbstractNode {
      * setNodeAddress, and actual node type using 'setNodeType'
      */
     public AcelaNode() {
-        this(0, UN,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class).getTrafficController());
+        this(0, UN, InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController());
     }
 
     /**
      * Creates a new AcelaNode and initialize default instance variables address
      * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
      */
-    public AcelaNode(int address, int type,AcelaTrafficController tc) {
+    public AcelaNode(int address, int type, AcelaTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -1198,7 +1200,7 @@ public class AcelaNode extends AbstractNode {
         addr = rawaddr - startingSensorAddress;
 
         hasActiveSensors = true;
-        AcelaTrafficController.instance().setAcelaSensorsState(true);
+        InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController().setAcelaSensorsState(true);
         if (startingSensorAddress < 0) {
             log.info("Trying to register sensor too early: AS" + rawaddr);
         } else {
@@ -1236,5 +1238,7 @@ public class AcelaNode extends AbstractNode {
         }
         timeout = 0;
     }
+
     private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
+
 }

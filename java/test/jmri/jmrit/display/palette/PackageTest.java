@@ -28,6 +28,7 @@ import org.junit.runners.Suite;
     SignalMastItemPanelTest.class,
     TableItemPanelTest.class,
     ReporterItemPanelTest.class,
+    DropJLabelTest.class,
 })
 public class PackageTest {
 }

@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Acela systems
+ * Implement turnout manager for Acela systems
  * <P>
- * System names are "ALnnn", where nnn is the bit number without padding.
- * <P>
- * Based in part on AcelaTurnoutManager.java
+ * System names are "ATnnn", where nnn is the bit number without padding.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
@@ -33,9 +31,12 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
-     * that a Light with this system name does not already exist
+     * Method to create a new Turnout based on the system name.
+     * <p>
+     * Assumes calling method has checked that a Turnout with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
      */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
@@ -55,8 +56,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);
          if ( conflict != "" ) {
-         log.error("Assignment conflict with "+conflict+".  Light not created.");
-         notifyLightCreationError(conflict,bitNum);
+         log.error("Assignment conflict with "+conflict+".  Turnout not created.");
+         notifyTurnoutCreationError(conflict,bitNum);
          return (null);
          }
          */
@@ -74,7 +75,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to notify user of Light creation error.
+     * Public method to notify user of Turnout creation error.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
@@ -126,7 +127,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Allow access to AcelaLightManager
+     * Allow access to AcelaTurnoutManager
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -135,4 +136,5 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class.getName());
+
 }

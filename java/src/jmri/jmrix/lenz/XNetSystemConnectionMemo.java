@@ -35,9 +35,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Created XNetSystemConnectionMemo");
-        }
+        log.debug("Created XNetSystemConnectionMemo");
     }
 
     public XNetSystemConnectionMemo() {
@@ -48,9 +46,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         // create and register the XNetComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Created XNetSystemConnectionMemo");
-        }
+        log.debug("Created XNetSystemConnectionMemo");
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
