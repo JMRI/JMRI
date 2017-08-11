@@ -274,6 +274,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit_action" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action"/>
 
+<mapID target="package.jmri.jmrit.logix.Warrant_CreateRoute" url="package/jmri/jmrit/logix/Warrant.shtml#CreateRoute"/>
+
 <mapID target="package.apps.TabbedPreferences_Simple Server" url="package/apps/TabbedPreferences.shtml#Simple Server"/>
 
 <mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml"/>
@@ -319,6 +321,8 @@
 <mapID target="manual.DecoderPro3.Main_RPS_Debugger" url="manual/DecoderPro3/Main_RPS.shtml#Debugger"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_switch" url="manual/JMRI_OPS_UsersGuide/Ops_Trains.shtml#switch"/>
+
+<mapID target="html.doc.Technical.Names_entrysummary" url="html/doc/Technical/Names.shtml#entrysummary"/>
 
 <mapID target="package.jmri.jmrit.roster.swing.RosterGroupTable" url="package/jmri/jmrit/roster/swing/RosterGroupTable.shtml"/>
 
@@ -1126,6 +1130,8 @@
 
 <mapID target="package.apps.AppConfigPanel_actions" url="package/apps/AppConfigPanel.shtml#actions"/>
 
+<mapID target="package.jmri.jmrit.logix.SpeedChanges_autoSpeedProfile" url="package/jmri/jmrit/logix/SpeedChanges.shtml#autoSpeedProfile"/>
+
 <mapID target="manual.DecoderPro3.Main_RPS" url="manual/DecoderPro3/Main_RPS.shtml"/>
 
 <mapID target="html.tools.index_systemSpecificTools" url="html/tools/index.shtml#systemSpecificTools"/>
@@ -1566,8 +1572,6 @@
 
 <mapID target="manual.DecoderPro.Comp_Analog" url="manual/DecoderPro/Comp_Analog.shtml"/>
 
-<mapID target="package.jmri.jmrit.logix.Warrant_SpeedMap" url="package/jmri/jmrit/logix/Warrant.shtml#SpeedMap"/>
-
 <mapID target="html.hardware.can.cbus.Names_documentation" url="html/hardware/can/cbus/Names.shtml#documentation"/>
 
 <mapID target="html.hardware.grapevine.index_limitations" url="html/hardware/grapevine/index.shtml#limitations"/>
@@ -1743,6 +1747,8 @@
 <mapID target="html.hardware.openlcb.Names" url="html/hardware/openlcb/Names.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_allocated" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#allocated"/>
+
+<mapID target="package.jmri.jmrit.logix.SpeedChanges" url="package/jmri/jmrit/logix/SpeedChanges.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_contents" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#contents"/>
 
@@ -1926,6 +1932,8 @@
 
 <mapID target="html.doc.Technical.getgitcode_view" url="html/doc/Technical/getgitcode.shtml#view"/>
 
+<mapID target="html.hardware.dcc4pc.index_tools" url="html/hardware/dcc4pc/index.shtml#tools"/>
+
 <mapID target="html.hardware.loconet.MS100" url="html/hardware/loconet/MS100.shtml"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_hwdataterm" url="html/hardware/loconet/StandaloneLocoNet.shtml#hwdataterm"/>
@@ -1933,6 +1941,8 @@
 <mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml"/>
 
 <mapID target="html.hardware.roco.z21.index_documentation" url="html/hardware/roco/z21/index.shtml#documentation"/>
+
+<mapID target="html.hardware.dcc4pc.index_hardware" url="html/hardware/dcc4pc/index.shtml#hardware"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SpurOption" url="package/jmri/jmrit/operations/Operations.shtml#SpurOption"/>
 
@@ -2286,8 +2296,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_MaximumNumberLocos" url="package/jmri/jmrit/operations/Operations.shtml#MaximumNumberLocos"/>
 
-<mapID target="package.jmri.jmrit.logix.Warrant_RampParams" url="package/jmri/jmrit/logix/Warrant.shtml#RampParams"/>
-
 <mapID target="html.tools.throttle.ThrottleToolBar" url="html/tools/throttle/ThrottleToolBar.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_NCE" url="manual/DecoderPro/Main_NCE.shtml"/>
@@ -2403,6 +2411,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_SynchronizeWithNCEConsists" url="package/jmri/jmrit/operations/Operations.shtml#SynchronizeWithNCEConsists"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Fields" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Fields"/>
+
+<mapID target="html.hardware.dcc4pc.index" url="html/hardware/dcc4pc/index.shtml"/>
 
 <mapID target="html.apps.DecoderPro.Ident" url="html/apps/DecoderPro/Ident.shtml"/>
 
