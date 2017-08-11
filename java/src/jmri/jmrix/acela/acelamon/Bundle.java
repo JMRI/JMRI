@@ -1,10 +1,10 @@
-package jmri.jmrit.beantable.sensor;
+package jmri.jmrix.acela.acelamon;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import java.util.Locale;
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.beantable.Bundle {
+public class Bundle extends jmri.jmrix.acela.Bundle {
 
     @Nullable
-    private static final String name = null; // no local resources
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -38,7 +38,7 @@ public class Bundle extends jmri.jmrit.beantable.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static public String getMessage(String key) {
+    static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
 
@@ -76,6 +76,7 @@ public class Bundle extends jmri.jmrit.beantable.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
+
 
     private final static Bundle b = new Bundle();
 

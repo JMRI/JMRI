@@ -283,7 +283,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -292,7 +292,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Provide a connection agnostic regex for the Add new item beantable pane.
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
      */
     @Override
     public String getEntryRegex() {

@@ -1,4 +1,4 @@
-package jmri.jmrit.beantable.sensor;
+package jmri.jmrix.acela.nodeconfig;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.beantable.Bundle {
+public class Bundle extends jmri.jmrix.acela.Bundle {
 
     @Nullable
-    private static final String name = null; // no local resources
+    private static final String name = "jmri.jmrix.acela.nodeconfig.NodeConfigBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -38,8 +38,22 @@ public class Bundle extends jmri.jmrit.beantable.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static public String getMessage(String key) {
+    static String getMessage(String key) {
         return b.handleGetMessage(key);
+    }
+
+    /**
+     * Provides a translated string for a given key in a given locale from the
+     * package resource bundle or parent.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key) {
+        return b.handleGetMessage(locale, key);
     }
 
     /**

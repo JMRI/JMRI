@@ -208,7 +208,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         return false;
     }
     /**
-     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -217,7 +217,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Provide a connection agnostic regex for the Add new item beantable pane.
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
      */
     @Override
     public String getEntryRegex() {

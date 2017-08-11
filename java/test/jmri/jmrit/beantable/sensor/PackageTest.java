@@ -30,10 +30,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AddSensorJFrameTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AddSensorPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTableDataModelTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTablePanelTest.class));
         return suite;
     }
 
