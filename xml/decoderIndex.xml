@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.2ish+jake+20170812T0058Z+Ra4291d08f3 on Fri Aug 11 17:58:30 PDT 2017-->
-  <decoderIndex version="826">
+  <!--Written by JMRI version 4.9.2ish+jake+20170812T2112Z+Rde4dd1b01e on Sat Aug 12 14:12:37 PDT 2017-->
+  <decoderIndex version="828">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -11846,6 +11846,40 @@
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode" file="RR-CirKits-WatchMan-basic.xml">
         <model model="WatchMan" comment="8 block detector plus 8 Line I/O Driver" lowVersionID="11" />
+      </family>
+      <family name="Train Decoders v10" mfg="Rautenhaus Digital Vertrieb" file="Rautenhaus_fw10_RMX992_993.xml">
+        <model model="RMX992/993" lowVersionID="10" highVersionID="10" numOuts="6" numFns="16" productID="RMX992" comment="RMX992/993" maxInputVolts="25V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+          <output name="1" label="Front|Light" maxcurrent="300mA" />
+          <output name="2" label="Rear|Light" maxcurrent="300mA" />
+          <output name="3" label="AUX|1" maxcurrent="300mA" />
+          <output name="4" label="AUX|2" maxcurrent="1.0A" />
+          <output name="5" label="AUX|3" maxcurrent="1.0A" />
+          <output name="6" label="AUX|4" maxcurrent="1.0A" />
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="24.7" width="12.9" height="3.9" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders v11" mfg="Rautenhaus Digital Vertrieb" file="Rautenhaus_fw11_RMX992_993.xml">
+        <model model="RMX992/993" lowVersionID="11" highVersionID="11" numOuts="6" numFns="16" productID="RMX992" comment="RMX992/993" maxInputVolts="25V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+          <output name="1" label="Front|Light" maxcurrent="300mA" />
+          <output name="2" label="Rear|Light" maxcurrent="300mA" />
+          <output name="3" label="AUX|1" maxcurrent="300mA" />
+          <output name="4" label="AUX|2" maxcurrent="1.0A" />
+          <output name="5" label="AUX|3" maxcurrent="1.0A" />
+          <output name="6" label="AUX|4" maxcurrent="1.0A" />
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="24.7" width="12.9" height="3.9" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
