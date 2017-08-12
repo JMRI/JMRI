@@ -35,6 +35,7 @@ import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +74,6 @@ public class LevelXing extends LayoutTrack {
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
     private LevelXing instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private String blockNameAC = "";
@@ -98,7 +98,7 @@ public class LevelXing extends LayoutTrack {
     private Object connectB = null;
     private Object connectC = null;
     private Object connectD = null;
-    private Point2D center = new Point2D.Double(50.0, 50.0);
+
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
@@ -697,32 +697,20 @@ public class LevelXing extends LayoutTrack {
         return blockBD;
     }
 
-    public Point2D getCoordsCenter() {
-        return center;
-    }
-
     public Point2D getCoordsA() {
-        double x = center.getX() + dispA.getX();
-        double y = center.getY() + dispA.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispA);
     }
 
     public Point2D getCoordsB() {
-        double x = center.getX() + dispB.getX();
-        double y = center.getY() + dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispB);
     }
 
     public Point2D getCoordsC() {
-        double x = center.getX() - dispA.getX();
-        double y = center.getY() - dispA.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.subtract(center, dispA);
     }
 
     public Point2D getCoordsD() {
-        double x = center.getX() - dispB.getX();
-        double y = center.getY() - dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.subtract(center, dispB);
     }
 
     /**
@@ -934,44 +922,44 @@ public class LevelXing extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-    public void setCoordsCenter(Point2D p) {
-        center = p;
-    }
 
     public void setCoordsA(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispA = new Point2D.Double(-x, -y);
+        dispA = MathUtil.subtract(p, center);
     }
 
     public void setCoordsB(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispB = new Point2D.Double(-x, -y);
+        dispB = MathUtil.subtract(p, center);
     }
 
     public void setCoordsC(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispA = new Point2D.Double(x, y);
+        dispA = MathUtil.subtract(center, p);
     }
 
     public void setCoordsD(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispB = new Point2D.Double(x, y);
+        dispB = MathUtil.subtract(center, p);
     }
 
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        center = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                Math.round(dispA.getY() * yFactor));
-        dispA = pt;
-        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                Math.round(dispB.getY() * yFactor));
-        dispB = pt;
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
+        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
     }
 
     /**
