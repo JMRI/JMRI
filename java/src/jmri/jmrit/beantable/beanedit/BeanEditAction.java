@@ -356,14 +356,14 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     public void save() {
+        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
+                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
+        // provide feedback to user, can be overwritten by save action error handler
+        statusBar.setText(feedback);
+        statusBar.setForeground(Color.gray);
         for (BeanItemPanel bi : bei) {
             bi.saveItem();
         }
-        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
-        // provide feedback to user
-        statusBar.setText(feedback);
-        statusBar.setForeground(Color.gray);
     }
 
     static boolean validateNumericalInput(String text) {

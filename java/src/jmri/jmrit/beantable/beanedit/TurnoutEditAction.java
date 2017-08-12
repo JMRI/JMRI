@@ -349,7 +349,6 @@ public class TurnoutEditAction extends BeanEditAction {
 
                     String decoderName = (String) lockBox.getSelectedItem();
                     t.setDecoderName(decoderName);
-
                 }
             });
 
@@ -372,6 +371,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     }
                 }
             });
+
          } else {
            // lock operations are not available for this kind of Turnout
             lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockModeUnavailable")));

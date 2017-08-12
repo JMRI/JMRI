@@ -859,7 +859,7 @@ public class LightTableAction extends AbstractTableAction {
 
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = fieldHardwareAddress.getText();
+        String curAddress = fieldHardwareAddress.getText().trim();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
