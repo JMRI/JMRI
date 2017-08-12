@@ -71,6 +71,13 @@
                    &lt;br/&gt;
                    &lt;strong&gt;&lt;em&gt;If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.&lt;/em&gt;
                 &lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;
+                   &lt;h2&gt;&lt;strong&gt;Wichtiger Hinweis: Vstart &amp; Vhigh sind in diesen Decodern &lt;em&gt;immer&lt;/em&gt; aktiv.&lt;/h2&gt;
+                   Alle Werte in der oberen Tabelle sind zwischen Vstart und Vhigh skaliert.&lt;br/&gt;
+                   Der Endpunkt kann nicht verändert werden. Gestalten Sie eine gleichmässige Kurve zwischen ihnen.&lt;br/&gt;
+                   &lt;br/&gt;
+                   &lt;strong&gt;&lt;em&gt;Wenn Loks zu schnell fahren setzen Sie zuerst Vstart &amp; Vhigh bevor Sie Werte in der Tabelle ändern&lt;/em&gt;
+                &lt;/html&gt;</text>
               </label>
             </griditem>
             <griditem gridx="NEXT" gridy="CURRENT" weightx="0" anchor="LINE_END">
