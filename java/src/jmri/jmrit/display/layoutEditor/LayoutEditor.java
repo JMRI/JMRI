@@ -57,6 +57,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -73,6 +74,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -82,6 +84,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicComboPopup;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -2034,18 +2037,39 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
+
+        // find the max height of all popup items
+        BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
+        JList list = popup.getList();
+        ListCellRenderer renderer = list.getCellRenderer();
+        int maxItemHeight = 12; // pick some absolute minimum here
+        for (int i = 0; i < inComboBox.getItemCount(); ++i) {
+            Object value = list.getModel().getElementAt(i);
+            Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
+            maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
+        }
+
+        // calculate the number of items that will fit on the screen
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        int itemsPerScreen = (int) screenDim.getHeight() / maxItemHeight;
+
+        // calculate an even division of the number of items (min 8)
+        // that will fit on the screen
         int c = Math.max(8, inComboBox.getItemCount());
-        while (c > 64) {
-            c /= 2;
+        while (c > itemsPerScreen) {
+            c /= 2; // keeps this a even division of the number of items
         };
         inComboBox.setMaximumRowCount(c);
+
         inComboBox.setSelectedIndex(-1);
-        //TODO: add code to disable entries that are already used
+        //TODO: add code to background color entries that are already used
         inComboBox.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 // This method is called before the popup menu becomes visible.
                 log.debug("PopupMenuWillBecomeVisible");
+                //note: this is how you set the background color of a menu item
+                //menuItem1.setBackground(Color.red); 
             }
 
             @Override
