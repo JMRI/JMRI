@@ -2,7 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.TestHelper;
+import jmri.util.ThreadingUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -36,7 +36,9 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         Assert.assertEquals(4, fob.length);
         flushAWT();
         // Ask to close add window
-        TestHelper.disposeWindow(doc, this);
+        ThreadingUtil.runOnGUI(() -> {
+            doc.dispose();
+        });
     }
 
     // from here down is testing infrastructure

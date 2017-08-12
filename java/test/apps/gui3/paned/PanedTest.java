@@ -1,20 +1,18 @@
 package apps.gui3.paned;
 
 import apps.AppsBase;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
+import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PanedTest {
 
@@ -23,7 +21,7 @@ public class PanedTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new Paned(args) {
-            // force the application to not actually start.  
+            // force the application to not actually start.
             // Just checking construction.
             @Override
             protected void start() {
@@ -58,6 +56,7 @@ public class PanedTest {
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
+        SwingTestCase.disposeFrame("Decoder Pro Wizard", true, true);
     }
 
     // The minimal setup for log4J
