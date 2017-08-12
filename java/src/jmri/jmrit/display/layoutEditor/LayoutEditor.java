@@ -78,6 +78,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.BlockManager;
@@ -2038,6 +2040,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         };
         inComboBox.setMaximumRowCount(c);
         inComboBox.setSelectedIndex(-1);
+        //TODO: add code to disable entries that are already used
+        inComboBox.addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                // This method is called before the popup menu becomes visible.
+                log.debug("PopupMenuWillBecomeVisible");
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                // This method is called before the popup menu becomes invisible
+                log.debug("PopupMenuWillBecomeInvisible");
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                // This method is called when the popup menu is canceled
+                log.debug("PopupMenuCanceled");
+            }
+        });
     }   //setupComboBox
 
     /**
