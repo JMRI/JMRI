@@ -7993,14 +7993,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             return false;
         }
 
+        log.debug("validatePhysicalTurnout('" + inTurnoutName + "')");
+
         //ensure that this turnout is unique among Layout Turnouts
         for (LayoutTurnout lt : turnoutList) {
-            log.debug("LT '" + lt.getName() + "', Turnout tested '" + lt.getTurnoutName() + "' ");
             t = lt.getTurnout();
             if (t != null) {
+                String sname = t.getSystemName();
                 String uname = t.getUserName();
+                log.debug(lt.getName() + ": Turnout tested '" + sname + "' and '" + uname + "'.");
 
-                if ((t.getSystemName().equals(inTurnoutName.toUpperCase()))
+                if ((sname.equals(inTurnoutName.toUpperCase()))
                         || ((uname != null) && (uname.equals(inTurnoutName)))) {
                     if (inOpenPane != null) {
                         JOptionPane.showMessageDialog(inOpenPane,
@@ -8018,9 +8021,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (lt.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
                 t = lt.getSecondTurnout();
                 if (t != null) {
+                    String sname = t.getSystemName();
                     String uname = t.getUserName();
+                    log.debug(lt.getName() + ": 2nd Turnout tested '" + sname + "' and '" + uname + "'.");
 
-                    if ((t.getSystemName().equals(inTurnoutName.toUpperCase()))
+                    if ((sname.equals(inTurnoutName.toUpperCase()))
                             || ((uname != null) && (uname.equals(inTurnoutName)))) {
                         if (inOpenPane != null) {
                             JOptionPane.showMessageDialog(inOpenPane,
@@ -8037,9 +8042,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip sl : slipList) {
             t = sl.getTurnout();
             if (t != null) {
+                String sname = t.getSystemName();
                 String uname = t.getUserName();
+                log.debug(sl.getName() + ": slip Turnout tested '" + sname + "' and '" + uname + "'.");
 
-                if (t.getSystemName().equals(inTurnoutName) || ((uname != null) && uname.equals(inTurnoutName))) {
+                if ((sname.equals(inTurnoutName.toUpperCase()))
+                        || ((uname != null) && (uname.equals(inTurnoutName)))) {
                     if (inOpenPane != null) {
                         JOptionPane.showMessageDialog(inOpenPane,
                                 java.text.MessageFormat.format(rb.getString("Error4"),
@@ -8049,12 +8057,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return false;
                 }
             }
+
             t = sl.getTurnoutB();
-
             if (t != null) {
+                String sname = t.getSystemName();
                 String uname = t.getUserName();
+                log.debug(sl.getName() + ": slip Turnout B tested '" + sname + "' and '" + uname + "'.");
 
-                if (t.getSystemName().equals(inTurnoutName) || ((uname != null) && uname.equals(inTurnoutName))) {
+                if ((sname.equals(inTurnoutName.toUpperCase()))
+                        || ((uname != null) && (uname.equals(inTurnoutName)))) {
                     if (inOpenPane != null) {
                         JOptionPane.showMessageDialog(inOpenPane,
                                 java.text.MessageFormat.format(rb.getString("Error4"),
