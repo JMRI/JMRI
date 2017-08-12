@@ -127,7 +127,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
     private int _msIncrTime = 1000;          // time in milliseconds between speed changes ramping up or down
-    private float _throttleIncr = 0.024f;    // throttle increment for each ramp speed change
+    private float _throttleIncr = 0.0238f;  // throttle increment for each ramp speed change - 3 steps
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles

@@ -122,8 +122,9 @@ public class NXFrame extends WarrantRoute {
         setThrottleIncrement(preferences.getThrottleIncrement());
 //        _mf = 1f - 22167 / ((_intervalTime / _throttleIncr) + 21667); // .1->.3 2->.9 *
 //        _mf = 1f - 33833 / ((_intervalTime / _throttleIncr) + 38333); // .1->.3 3->.9
-        _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
+//        _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
 //        _mf = 1f - 44571 / ((_intervalTime / _throttleIncr) + 45714); // .1->.2 4->.9
+        _mf = 1f - 100000 / ((_intervalTime / _throttleIncr) + 187409); // excel
         if (_mf < 0.45f) {
             _mf = 0.45f;            
         }
@@ -767,6 +768,21 @@ public class NXFrame extends WarrantRoute {
            if (dist <= 0.0f) {
                break;
            }
+           if (rampLength + dist >= _totalLen / 2) {
+               // remove first step's distance
+                float d = _speedUtil.getDistanceTraveled(_maxThrottle - _throttleIncr*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
+                if (rampLength >= d) {
+                    rampLength -= d;                    
+                } else {
+                    rampLength = 0f;
+                }
+               _maxThrottle -= _throttleIncr;      // modify
+               numSteps--;
+               if (log.isDebugEnabled()) {
+                   log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
+                           _maxThrottle);
+               }
+           }
            speed -= _throttleIncr;
            if (speed >= 0.0f) {
                rampLength += dist;
@@ -774,7 +790,7 @@ public class NXFrame extends WarrantRoute {
                rampLength += (speed + _throttleIncr) * dist / _throttleIncr;
                speed = 0.0f;
            }
-           numSteps++;
+           numSteps++;            
 /*           if (log.isDebugEnabled()) {
                log.debug("step " + numSteps + " dist= " + dist + " speed= " + speed
                        + " dnRampLength = " + rampLength);
@@ -816,8 +832,15 @@ public class NXFrame extends WarrantRoute {
         if (msg != null) {
             return msg;
         }
-        float upRampLength = getUpRampLength();
-        float dnRampLength = getDownRampLength();
+        float upRampLength;
+        float dnRampLength ;
+        if (_mf > 0.5f) {   // do longer ramp first
+            dnRampLength = getDownRampLength();            
+            upRampLength = getUpRampLength();            
+        } else {
+            upRampLength = getUpRampLength();
+            dnRampLength = getDownRampLength();            
+        }
 
         if (log.isDebugEnabled()) {
             if (hasProfileSpeeds) {
