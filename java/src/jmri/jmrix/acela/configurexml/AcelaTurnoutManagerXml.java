@@ -31,11 +31,10 @@ public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        AcelaTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
+
 }

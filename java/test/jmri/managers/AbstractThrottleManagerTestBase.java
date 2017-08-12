@@ -31,6 +31,7 @@ public abstract class AbstractThrottleManagerTestBase {
 
     protected boolean throttleFoundResult = false;
     protected boolean throttleNotFoundResult = false;
+    protected boolean throttleStealResult = false;
 
     protected class ThrottleListen implements ThrottleListener {
 
@@ -44,12 +45,17 @@ public abstract class AbstractThrottleManagerTestBase {
              throttleNotFoundResult = true;
        }
 
+       @Override
+       public void notifyStealThrottleRequired(DccLocoAddress address){
+            throttleStealResult = true;
+       }
     }
 
     @After
     public void postTestReset(){
        throttleFoundResult = false;
        throttleNotFoundResult = false;
+       throttleStealResult = false;
     }
 
     // start of common tests

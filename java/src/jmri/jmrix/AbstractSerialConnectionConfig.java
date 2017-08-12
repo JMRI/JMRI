@@ -57,7 +57,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractSerialConnectionConfig() {
@@ -649,8 +649,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * This is purely here for systems that do not implement the
-     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo
-     * {@literal &} RPS and can be removed one they have been migrated
+     * SystemConnectionMemo and can be removed once they have been migrated.
      *
      * @return Resource bundle for action model
      */
@@ -693,4 +692,5 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class.getName());
+
 }

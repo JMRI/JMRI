@@ -575,6 +575,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         setButtonStates(true);
     }
 
+    @Override
+    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
+
     PropertyChangeListener startListener = null;
     PropertyChangeListener finishListener = null;
     PropertyChangeListener middleListener = null;

@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>7</minor>
-    <test>5</test>
+    <minor>9</minor>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -721,5 +721,76 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:25:15 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <!--Written by JMRI version 4.7.5ish+jake+20170604T1810Z+Rcabd84d212 on Sun Jun 04 11:16:16 PDT 2017-->
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Aug 10 17:19:28 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Jun 17 22:25:15 PDT 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:15 PDT 2016</date>
+          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:16 PDT 2016</date>
+          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:37 PDT 2016</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Jun 17 22:25:46 PDT 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Aug 10 17:19:29 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Jun 17 22:25:15 PDT 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:15 PDT 2016</date>
+          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:16 PDT 2016</date>
+          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jun 17 22:25:37 PDT 2016</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Jun 17 22:25:46 PDT 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu Aug 10 17:19:29 PDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.8+Rbe0ff15 on Thu Aug 10 16:32:29 PDT 2017-->
 </layout-config>

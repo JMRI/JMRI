@@ -552,10 +552,9 @@ public final class MathUtil {
      * @param s the scale
      * @return the scaled rectangle
      */
+     //TODO: add test case
     public static Rectangle2D scale(Rectangle2D r, double s) {
-        Point2D c = center(r);
-        double w = r.getWidth() * s, h = r.getHeight() * s;
-        return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
+        return new Rectangle2D.Double(r.getX() * s, r.getY() * s, r.getWidth() * s, r.getHeight() * s);
     }
 
     /**

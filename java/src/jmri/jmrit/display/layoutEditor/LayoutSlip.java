@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,19 +44,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A LayoutSlip is a crossing of two straight tracks designed in such a way
- * as to allow trains to change from one straight track to the other, as well as
+ * A LayoutSlip is a crossing of two straight tracks designed in such a way as
+ * to allow trains to change from one straight track to the other, as well as
  * going straight across.
  * <P>
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
  * <P>
+ * {@literal
  * ==A==-==D==
  *    \\ //
  *      X
  *    // \\
  * ==B==-==C==
+ * literal}
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -91,12 +94,12 @@ public class LayoutSlip extends LayoutTurnout {
         layoutEditor = myPanel;
         ident = id;
         center = c;
-        Point2D delta = new Point2D.Double(-20.0, 0.0);
-        pointA = MathUtil.add(center, delta);
-        pointC = MathUtil.subtract(center, delta);
-        delta = new Point2D.Double(-14.0, 14.0);
-        pointB = MathUtil.add(center, delta);
-        pointD = MathUtil.subtract(center, delta);
+        dispA = new Point2D.Double(-20.0, 0.0);
+        pointA = MathUtil.add(center, dispA);
+        pointC = MathUtil.subtract(center, dispA);
+        dispB = new Point2D.Double(-14.0, 14.0);
+        pointB = MathUtil.add(center, dispB);
+        pointD = MathUtil.subtract(center, dispB);
 
         setSlipType(type);
         rotateCoords(rot);
@@ -620,52 +623,53 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setCoordsCenter(Point2D p) {
         center = p;
+        pointA = MathUtil.add(center, dispA);
+        pointB = MathUtil.add(center, dispB);
+        pointC = MathUtil.subtract(center, dispA);
+        pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
     public void setCoordsA(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispC = new Point2D.Double(-x, -y);
         pointA = p;
+        dispA = MathUtil.subtract(pointA, center);
+        pointC = MathUtil.subtract(center, dispA);
     }
 
     @Override
     public void setCoordsB(Point2D p) {
         pointB = p;
+        dispB = MathUtil.subtract(pointB, center);
+        pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
     public void setCoordsC(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispC = new Point2D.Double(x, y);
         pointC = p;
+        dispA = MathUtil.subtract(center, pointC);
+        pointA = MathUtil.add(center, dispA);
     }
 
     @Override
     public void setCoordsD(Point2D p) {
         pointD = p;
+        dispB = MathUtil.subtract(center, pointD);
+        pointB = MathUtil.add(center, dispB);
     }
 
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        center = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        pointA = new Point2D.Double(Math.round(pointA.getX() * xFactor),
-                Math.round(pointA.getY() * yFactor));
-        pointB = new Point2D.Double(Math.round(pointB.getX() * xFactor),
-                Math.round(pointB.getY() * yFactor));
-        pointC = new Point2D.Double(Math.round(pointC.getX() * xFactor),
-                Math.round(pointC.getY() * yFactor));
-        pointD = new Point2D.Double(Math.round(pointD.getX() * xFactor),
-                Math.round(pointD.getY() * yFactor));
+        center = MathUtil.granulize(MathUtil.multiply(center, xFactor), 1.0);
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, xFactor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, xFactor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, xFactor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, xFactor), 1.0);
     }
 
     /**
      * Initialization method The above variables are initialized by
      * LayoutSlipXml, then the following method is called after the entire
-     * LayoutEditor is loaded to set the specific TrackSegment objects.
+     * LayoutEditor is loaded to set the specific LayoutSlip objects.
      */
     /*
     @Override
@@ -722,8 +726,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
     }
-*/
-    
+     */
     JPopupMenu popup = null;
     LayoutEditorTools tools = null;
 
@@ -736,6 +739,9 @@ public class LayoutSlip extends LayoutTurnout {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
+        }
+        if (tools == null) {
+            tools = new LayoutEditorTools(layoutEditor);
         }
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
@@ -839,16 +845,21 @@ public class LayoutSlip extends LayoutTurnout {
                 );
             }
             if (blockAssigned) {
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSlipFromMenu((LayoutSlip) instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
-                });
+                };
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (tools.addLayoutSlipSignalHeadInfoToMenu(instance, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
+
             }
 
             final String[] boundaryBetween = getBlockBoundaries();
@@ -863,18 +874,12 @@ public class LayoutSlip extends LayoutTurnout {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSignalMastsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
                         tools.setSensorsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
@@ -1434,7 +1439,6 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
-
             LayoutBlock b = getLayoutBlock();
             Color mainColourA = defaultTrackColor;
             Color subColourA = defaultTrackColor;

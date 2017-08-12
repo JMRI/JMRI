@@ -163,6 +163,12 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
        }
     }
 
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
+
 
     // internal class used to propagate back end throttle changes
     // to the clients.
