@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -75,6 +76,7 @@ import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -818,8 +820,49 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
         turnoutNamePanel.add(turnoutNameComboBox);
 
+        // disable items that are already in use
+        PopupMenuListener pml = new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                // This method is called before the popup menu becomes visible.
+                log.debug("PopupMenuWillBecomeVisible");
+                Object o = e.getSource();
+                if (o instanceof JmriBeanComboBox) {
+                    JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
+                    jmri.Manager m = jbcb.getManager();
+                    if (m != null) {
+                        String[] systemNames = m.getSystemNameArray();
+                        for (int idx = 0; idx < systemNames.length; idx++) {
+                            String systemName = systemNames[idx];
+                            jbcb.setItemEnabled(idx, validatePhysicalTurnout(systemName, null));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                // This method is called before the popup menu becomes invisible
+                log.debug("PopupMenuWillBecomeInvisible");
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                // This method is called when the popup menu is canceled
+                log.debug("PopupMenuCanceled");
+            }
+        };
+
+        turnoutNameComboBox.addPopupMenuListener(pml);
+        turnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
+        turnoutNameComboBox.setDisabledColor(Color.red);
+
         setupComboBox(extraTurnoutNameComboBox, false, true);
         extraTurnoutNameComboBox.setToolTipText(rb.getString("SecondTurnoutNameToolTip"));
+        
+        extraTurnoutNameComboBox.addPopupMenuListener(pml);
+        extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
+        extraTurnoutNameComboBox.setDisabledColor(Color.red);
 
         //this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(rb.getString("SecondName"));
@@ -882,7 +925,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             String newName = blockIDComboBox.getDisplayName();
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
-
             if (b != null) {
                 //if there is an occupancy sensor assigned already
                 String sensorName = b.getOccupancySensorName();
@@ -2041,17 +2083,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // find the max height of all popup items
         BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
         JList list = popup.getList();
+        ListModel lm = list.getModel();
         ListCellRenderer renderer = list.getCellRenderer();
         int maxItemHeight = 12; // pick some absolute minimum here
-        for (int i = 0; i < inComboBox.getItemCount(); ++i) {
-            Object value = list.getModel().getElementAt(i);
+        for (int i = 0; i < lm.getSize(); ++i) {
+            Object value = lm.getElementAt(i);
             Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
 
         // calculate the number of items that will fit on the screen
-        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        int itemsPerScreen = (int) screenDim.getHeight() / maxItemHeight;
+        // note: this line returns the maximum available size, accounting all 
+        // taskbars etc. no matter where they are aligned:
+        Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        int itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
 
         // calculate an even division of the number of items (min 8)
         // that will fit on the screen
@@ -2062,28 +2107,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         inComboBox.setMaximumRowCount(c);
 
         inComboBox.setSelectedIndex(-1);
-        //TODO: add code to background color entries that are already used
-        inComboBox.addPopupMenuListener(new PopupMenuListener() {
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                // This method is called before the popup menu becomes visible.
-                log.debug("PopupMenuWillBecomeVisible");
-                //note: this is how you set the background color of a menu item
-                //menuItem1.setBackground(Color.red); 
-            }
 
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                // This method is called before the popup menu becomes invisible
-                log.debug("PopupMenuWillBecomeInvisible");
-            }
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-                // This method is called when the popup menu is canceled
-                log.debug("PopupMenuCanceled");
-            }
-        });
     }   //setupComboBox
 
     /**
@@ -3698,7 +3722,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 getString("NoTransitsMessage"));
             } else {
                 jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
-
                 if (!df.getNewTrainActive()) {
                     df.getActiveTrainFrame().initiateTrain(event, null, null);
                     df.setNewTrainActive(true);
@@ -4857,9 +4880,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
 
-        log.debug(
-                "setCurrentPositionAndSize Position - " + upperLeftX + "," + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight + " PanelSize - " + panelWidth + ","
-                + panelHeight);
+        log.debug("setCurrentPositionAndSize Position - " + upperLeftX + ","
+                + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight
+                + " PanelSize - " + panelWidth + "," + panelHeight);
         setDirty(true);
     }   //setCurrentPositionAndSize()
 
@@ -7946,28 +7969,45 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Validates that a physical turnout exists and is unique among Layout
      * Turnouts Returns true if valid turnout was entered, false otherwise
+     * @param inTurnoutName the (system or user) name of the turnout
+     * @param inOpenPane the pane over which to show dialogs (null to supress)
+     * @return true if valid
      */
-    public boolean validatePhysicalTurnout(String turnoutName, Component openPane) {
+    public boolean validatePhysicalTurnout(String inTurnoutName, Component inOpenPane) {
         //check if turnout name was entered
-        if (turnoutName.isEmpty()) {
+        if (inTurnoutName.isEmpty()) {
             //no turnout entered
             return false;
         }
 
+        //check that the unique turnout name corresponds to a defined physical turnout
+        Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(inTurnoutName);
+        if (t == null) {
+            //There is no turnout corresponding to this name
+            if (inOpenPane != null) {
+                JOptionPane.showMessageDialog(inOpenPane,
+                        java.text.MessageFormat.format(rb.getString("Error8"),
+                                new Object[]{inTurnoutName}),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            }
+            return false;
+        }
+
         //ensure that this turnout is unique among Layout Turnouts
-        for (LayoutTurnout t : turnoutList) {
-            log.debug("LT '" + t.getName() + "', Turnout tested '" + t.getTurnoutName() + "' ");
-            Turnout to = t.getTurnout();
+        for (LayoutTurnout lt : turnoutList) {
+            log.debug("LT '" + lt.getName() + "', Turnout tested '" + lt.getTurnoutName() + "' ");
+            t = lt.getTurnout();
+            if (t != null) {
+                String uname = t.getUserName();
 
-            if (to != null) {
-                String uname = to.getUserName();
-
-                if ((to.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((uname != null) && (uname.equals(turnoutName)))) {
-                    JOptionPane.showMessageDialog(openPane,
-                            java.text.MessageFormat.format(rb.getString("Error4"),
-                                    new Object[]{turnoutName}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                if ((t.getSystemName().equals(inTurnoutName.toUpperCase()))
+                        || ((uname != null) && (uname.equals(inTurnoutName)))) {
+                    if (inOpenPane != null) {
+                        JOptionPane.showMessageDialog(inOpenPane,
+                                java.text.MessageFormat.format(rb.getString("Error4"),
+                                        new Object[]{inTurnoutName}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
                     return false;
                 }
             }
@@ -7975,18 +8015,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // Only check for the second turnout if the type is a double cross over
             // otherwise the second turnout is used to throw an additional turnout at
             // the same time.
-            if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
-                Turnout to2 = t.getSecondTurnout();
+            if (lt.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
+                t = lt.getSecondTurnout();
+                if (t != null) {
+                    String uname = t.getUserName();
 
-                if (to2 != null) {
-                    String uname = to2.getUserName();
-
-                    if ((to2.getSystemName().equals(turnoutName.toUpperCase()))
-                            || ((uname != null) && (uname.equals(turnoutName)))) {
-                        JOptionPane.showMessageDialog(openPane,
-                                java.text.MessageFormat.format(rb.getString("Error4"),
-                                        new Object[]{turnoutName}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    if ((t.getSystemName().equals(inTurnoutName.toUpperCase()))
+                            || ((uname != null) && (uname.equals(inTurnoutName)))) {
+                        if (inOpenPane != null) {
+                            JOptionPane.showMessageDialog(inOpenPane,
+                                    java.text.MessageFormat.format(rb.getString("Error4"),
+                                            new Object[]{inTurnoutName}),
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        }
                         return false;
                     }
                 }
@@ -7994,44 +8035,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         for (LayoutSlip sl : slipList) {
-            Turnout to = sl.getTurnout();
+            t = sl.getTurnout();
+            if (t != null) {
+                String uname = t.getUserName();
 
-            if (to != null) {
-                String uname = to.getUserName();
-
-                if (to.getSystemName().equals(turnoutName) || ((uname != null) && uname.equals(turnoutName))) {
-                    JOptionPane.showMessageDialog(openPane,
-                            java.text.MessageFormat.format(rb.getString("Error4"),
-                                    new Object[]{turnoutName}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                if (t.getSystemName().equals(inTurnoutName) || ((uname != null) && uname.equals(inTurnoutName))) {
+                    if (inOpenPane != null) {
+                        JOptionPane.showMessageDialog(inOpenPane,
+                                java.text.MessageFormat.format(rb.getString("Error4"),
+                                        new Object[]{inTurnoutName}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
                     return false;
                 }
             }
-            to = sl.getTurnoutB();
+            t = sl.getTurnoutB();
 
-            if (to != null) {
-                String uname = to.getUserName();
+            if (t != null) {
+                String uname = t.getUserName();
 
-                if (to.getSystemName().equals(turnoutName) || ((uname != null) && uname.equals(turnoutName))) {
-                    JOptionPane.showMessageDialog(openPane,
-                            java.text.MessageFormat.format(rb.getString("Error4"),
-                                    new Object[]{turnoutName}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                if (t.getSystemName().equals(inTurnoutName) || ((uname != null) && uname.equals(inTurnoutName))) {
+                    if (inOpenPane != null) {
+                        JOptionPane.showMessageDialog(inOpenPane,
+                                java.text.MessageFormat.format(rb.getString("Error4"),
+                                        new Object[]{inTurnoutName}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
                     return false;
                 }
             }
-        }
-
-        //check that the unique turnout name corresponds to a defined physical turnout
-        Turnout to = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-
-        if (to == null) {
-            //There is no turnout corresponding to this name
-            JOptionPane.showMessageDialog(openPane,
-                    java.text.MessageFormat.format(rb.getString("Error8"),
-                            new Object[]{turnoutName}),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return false;
         }
         return true;
     }   //validatePhysicalTurnout
@@ -8210,16 +8242,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     public LayoutBlock getLayoutBlock(String blockID) {
         //check if this Layout Block already exists
-        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class
-        ).getByUserName(blockID);
-
+        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockID);
         if (blk == null) {
             log.error("LayoutBlock '" + blockID + "' not found when panel loaded");
-
             return null;
         }
         blk.addLayoutEditor(this);
-
         return blk;
     }   //getLayoutBlock
 

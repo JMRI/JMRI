@@ -59,7 +59,7 @@ public abstract class LayoutTrack {
     // dashed line parameters (unused)
     //protected static int minNumDashes = 3;
     //protected static double maxDashLength = 10;
-    public Point2D center = new Point2D.Double(50.0, 50.0);
+    protected Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
 

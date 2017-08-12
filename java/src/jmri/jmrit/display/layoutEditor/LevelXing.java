@@ -98,7 +98,7 @@ public class LevelXing extends LayoutTrack {
     private Object connectB = null;
     private Object connectC = null;
     private Object connectD = null;
-    private Point2D center = new Point2D.Double(50.0, 50.0);
+
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
@@ -698,27 +698,19 @@ public class LevelXing extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        double x = center.getX() + dispA.getX();
-        double y = center.getY() + dispA.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispA);
     }
 
     public Point2D getCoordsB() {
-        double x = center.getX() + dispB.getX();
-        double y = center.getY() + dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.add(center, dispB);
     }
 
     public Point2D getCoordsC() {
-        double x = center.getX() - dispA.getX();
-        double y = center.getY() - dispA.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.subtract(center, dispA);
     }
 
     public Point2D getCoordsD() {
-        double x = center.getX() - dispB.getX();
-        double y = center.getY() - dispB.getY();
-        return new Point2D.Double(x, y);
+        return MathUtil.subtract(center, dispB);
     }
 
     /**
@@ -932,27 +924,19 @@ public class LevelXing extends LayoutTrack {
      */
 
     public void setCoordsA(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispA = new Point2D.Double(-x, -y);
+        dispA = MathUtil.subtract(p, center);
     }
 
     public void setCoordsB(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispB = new Point2D.Double(-x, -y);
+        dispB = MathUtil.subtract(p, center);
     }
 
     public void setCoordsC(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispA = new Point2D.Double(x, y);
+        dispA = MathUtil.subtract(center, p);
     }
 
     public void setCoordsD(Point2D p) {
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
-        dispB = new Point2D.Double(x, y);
+        dispB = MathUtil.subtract(center, p);
     }
 
     /**
