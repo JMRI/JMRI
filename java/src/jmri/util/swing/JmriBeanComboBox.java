@@ -298,7 +298,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      */
     public void setText(String text) {
         getEditor().setItem(text);
-        setSelectedBeanByName(text);
+        if ((text != null) && !text.isEmpty()) {
+            setSelectedBeanByName(text);
+        } else {
+            setSelectedIndex(-1);
+        }
         validateText();
     }   // setText
 

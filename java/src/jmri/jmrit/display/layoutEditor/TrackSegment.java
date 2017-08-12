@@ -18,6 +18,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -67,7 +68,6 @@ public class TrackSegment extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     private LayoutBlock block = null;
     private TrackSegment instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
@@ -109,8 +109,10 @@ public class TrackSegment extends LayoutTrack {
         }
         instance = this;
         ident = id;
-        dashed = dash;
+
         mainline = main;
+        dashed = dash;
+
         arc = false;
         flip = false;
         angle = 0.0D;
@@ -128,8 +130,9 @@ public class TrackSegment extends LayoutTrack {
         type2 = t2;
         instance = this;
         ident = id;
-        dashed = dash;
+
         mainline = main;
+        dashed = dash;
         hidden = hide;
     }
 
@@ -183,7 +186,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setDashed(boolean dash) {
-        dashed = dash;
+        if (dashed != dash) {
+            dashed = dash;
+            layoutEditor.redrawPanel();
+        }
     }
 
     public boolean getMainline() {
@@ -191,7 +197,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setMainline(boolean main) {
-        mainline = main;
+        if (mainline != main) {
+            mainline = main;
+            layoutEditor.redrawPanel();
+        }
     }
 
     public boolean getArc() {
@@ -337,27 +346,25 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
-
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public void scaleCoords(float xFactor, float yFactor)
-    {
+    public void scaleCoords(float xFactor, float yFactor) {
         // Nothing to do here… move along…
     }
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public void translateCoords(float xFactor, float yFactor)
-    {
+    public void translateCoords(float xFactor, float yFactor) {
         // Nothing to do here… move along…
     }
-
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String tBlockName = "";
@@ -555,33 +562,31 @@ public class TrackSegment extends LayoutTrack {
         jmi = popup.add(ident);
         jmi.setEnabled(false);
 
-        if (!dashed) {
-            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
-        } else {
-            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
-        }
-        jmi.setEnabled(false);
-
-        if (!mainline) {
-            jmi = popup.add(rb.getString("NotMainline"));
-        } else {
-            jmi = popup.add(rb.getString("Mainline"));
-        }
-        jmi.setEnabled(false);
-
         if (blockName.equals("")) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
             jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
         jmi.setEnabled(false);
+        popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (hidden) {
-            jmi = popup.add(rb.getString("Hidden"));
-        } else {
-            jmi = popup.add(rb.getString("NotHidden"));
-        }
-        jmi.setEnabled(false);
+        mainlineCheckBoxMenuItem.setSelected(mainline);
+        popup.add(mainlineCheckBoxMenuItem);
+        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setMainline(mainlineCheckBoxMenuItem.isSelected());
+        });
+
+        hiddenCheckBoxMenuItem.setSelected(hidden);
+        popup.add(hiddenCheckBoxMenuItem);
+        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setHidden(hiddenCheckBoxMenuItem.isSelected());
+        });
+
+        dashedCheckBoxMenuItem.setSelected(dashed);
+        popup.add(dashedCheckBoxMenuItem);
+        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setDashed(dashedCheckBoxMenuItem.isSelected());
+        });
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
@@ -807,16 +812,24 @@ public class TrackSegment extends LayoutTrack {
 
     // variables for Edit Track Segment pane
     private JmriJFrame editTrackSegmentFrame = null;
-    private JComboBox<String> dashedBox = new JComboBox<String>();
-    private int dashedIndex;
-    private int solidIndex;
+
     private JComboBox<String> mainlineBox = new JComboBox<String>();
     private int mainlineTrackIndex;
     private int sideTrackIndex;
+
+    private JComboBox<String> dashedBox = new JComboBox<String>();
+    private int dashedIndex;
+    private int solidIndex;
+
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
+
+    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Mainline"));
+    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Dashed"));
+
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
     private JButton segmentEditDone;
     private JButton segmentEditCancel;
@@ -983,21 +996,16 @@ public class TrackSegment extends LayoutTrack {
     void segmentEditDonePressed(ActionEvent a) {
         // set dashed
         boolean oldDashed = dashed;
-        if (dashedBox.getSelectedIndex() == dashedIndex) {
-            dashed = true;
-        } else {
-            dashed = false;
-        }
+        setDashed(dashedBox.getSelectedIndex() == dashedIndex);
+
         // set mainline
         boolean oldMainline = mainline;
-        if (mainlineBox.getSelectedIndex() == mainlineTrackIndex) {
-            mainline = true;
-        } else {
-            mainline = false;
-        }
+        setMainline(mainlineBox.getSelectedIndex() == mainlineTrackIndex);
+
         // set hidden
         boolean oldHidden = hidden;
-        hidden = hiddenBox.isSelected();
+        setHidden(hiddenBox.isSelected());
+
         if (getArc()) {
             //setAngle(Integer.parseInt(arcField.getText()));
             //needsRedraw = true;
@@ -1305,6 +1313,7 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * set center coordinates
+     *
      * @param p the coordinates to set
      */
     public void setCoordsCenterCircle(Point2D p) {

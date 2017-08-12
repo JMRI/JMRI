@@ -74,7 +74,6 @@ public class LevelXing extends LayoutTrack {
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
     private LevelXing instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private String blockNameAC = "";

@@ -72,7 +72,6 @@ public class PositionablePoint extends LayoutTrack {
 
     // operational instance variables (not saved between sessions)
     private PositionablePoint instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private int type = 0;

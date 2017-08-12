@@ -166,8 +166,6 @@ public class LayoutTurnout extends LayoutTrack {
     protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
     protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
 
-    protected LayoutEditor layoutEditor = null;
-
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)

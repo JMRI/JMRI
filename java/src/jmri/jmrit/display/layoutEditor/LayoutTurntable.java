@@ -82,7 +82,6 @@ public class LayoutTurntable extends LayoutTrack {
     // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutTurntable instance = null;
-    private LayoutEditor layoutEditor = null;
 
     private boolean dccControlledTurnTable = false;
 
