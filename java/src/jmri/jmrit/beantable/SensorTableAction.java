@@ -243,7 +243,7 @@ public class SensorTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 // Show error message in statusBar
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBar.setForeground(Color.black);
+                statusBar.setForeground(Color.gray);
                 return;   // return without creating
             }
 
@@ -283,7 +283,6 @@ public class SensorTableAction extends AbstractTableAction {
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
-        log.debug("S add box disabled");
         range.setSelected(false);
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {

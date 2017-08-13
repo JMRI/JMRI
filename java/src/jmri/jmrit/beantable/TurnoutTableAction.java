@@ -958,8 +958,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
-    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
@@ -1643,7 +1641,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (selectedValue == 1) {
                         // Show error message in statusBar
                         errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
-                        statusBar.setForeground(Color.black);
+                        statusBar.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
                     if (selectedValue == 2) {
@@ -1739,7 +1737,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     private String addEntryToolTip;
-//    private String addEntryRegex;
 
     /**
      * Activate Add a range option if manager accepts adding more than 1 Turnout
