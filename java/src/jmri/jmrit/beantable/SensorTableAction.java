@@ -1,8 +1,11 @@
 package jmri.jmrit.beantable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -24,7 +27,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.ValidatedTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,20 +90,18 @@ public class SensorTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    ValidatedTextField sysNameTextField = new ValidatedTextField(40, false,
-            "^[0-9a-zA-Z_]{1,20}$", Bundle.getMessage("LightError3"));
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     // initially allow any 20 char string, updated by prefixBox selection
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
+    JLabel hwAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
-    String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
@@ -152,14 +152,13 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            sysNameTextField.setName("sysNameTextField"); // NOI18N
-            sysNameTextField.setInvalidBackgroundColor(java.awt.Color.white);
-            // don't use strong colorization on ValidatedTextField like for CVs
+            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
+            hardwareAddressTextField.setBackground(Color.white);
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
-            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userName, prefixBox, numberToAdd, range,
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userName, prefixBox, numberToAdd, range,
                     addButton, okListener, cancelListener, rangeListener, statusBar));
-            // tooltip for sysNameTextField will be assigned later by canAddRange()
+            // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
         addFrame.pack();
@@ -189,8 +188,18 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysNameTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim();
+        // initial check for empty entry
+        if (curAddress.length() < 1) {
+            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBar.setForeground(Color.red);
+            hardwareAddressTextField.setBackground(Color.red);
+            return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
+        }
 
+        // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
         for (int x = 0; x < numberOfSensors; x++) {
             try {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
@@ -229,7 +238,6 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     private String addEntryToolTip;
-    private String addEntryRegex;
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
@@ -249,7 +257,6 @@ public class SensorTableAction extends AbstractTableAction {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyTurnoutManager
-                    addEntryRegex = mgr.getEntryRegex();
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("S add box enabled1");
                     break;
@@ -259,23 +266,18 @@ public class SensorTableAction extends AbstractTableAction {
             range.setEnabled(true);
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
-            addEntryRegex = senManager.getEntryRegex();
             addEntryToolTip = senManager.getEntryToolTip();
             log.debug("SensorManager tip");
         }
-        // show sysName (HW address) field tooltip in the Add Sensor pane that matches system connection selected from combobox
-        sysNameTextField.setToolTipText("<html>" +
+        // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
+        hardwareAddressTextField.setToolTipText("<html>" +
                 Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
                 "<br>" + addEntryToolTip + "</html>");
-        // configure validation regexp for selected connection
-        if (addEntryRegex != null) {
-            sysNameTextField.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
-        }
     }
 
-    void handleCreateException(String sysName) {
+    void handleCreateException(String hwAddress) {
         JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorSensorAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
     }
@@ -470,6 +472,42 @@ public class SensorTableAction extends AbstractTableAction {
     public void setMessagePreferencesDetails() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
+    }
+
+    /**
+     * Extends JTextField to provide a data validation function.
+     *
+     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     */
+    public class CheckedTextField extends JTextField {
+
+        CheckedTextField fld;
+
+        /**
+         * Text entry field with an active key event checker.
+         *
+         * @param len field length
+         */
+        public CheckedTextField(int len) {
+            super("", len);
+            fld = this;
+            // set background color for invalid field data
+            fld.setBackground(Color.red);
+
+//            fld.addFocusListener(new FocusListener() {
+//                @Override
+//                public void focusGained(FocusEvent e) {
+//                    setEditable(true);
+//                    setEnabled(true);
+//                }
+//
+//                @Override
+//                public void focusLost(FocusEvent e) {
+//                    exitFieldColorizer();
+//                    setEditable(true);
+//                }
+//            });
+        }
     }
 
     @Override

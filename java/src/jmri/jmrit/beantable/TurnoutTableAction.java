@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Graphics;
@@ -60,7 +62,6 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
-//import jmri.util.swing.ValidatedTextField;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -962,7 +963,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
-//    String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
 
     @Override
@@ -1015,7 +1015,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("hardwareAddressTextField"); // NOI18N
+            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
@@ -1148,6 +1148,12 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Create action to edit a turnout in Edit pane.
+     * (also used in windowTest)
+     *
+     * @param the turnout to be edited
+     */
     void editButton(Turnout t) {
         jmri.jmrit.beantable.beanedit.TurnoutEditAction beanEdit = new jmri.jmrit.beantable.beanedit.TurnoutEditAction();
         beanEdit.setBean(t);
@@ -1588,7 +1594,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager?
+        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = new String();
         String lastSuccessfulAddress = "";

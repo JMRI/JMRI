@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
@@ -51,7 +53,6 @@ import jmri.Turnout;
 import jmri.implementation.LightControl;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.ValidatedTextField;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -602,6 +603,9 @@ public class LightTableAction extends AbstractTableAction {
             panel2.add(userNameLabel);
             panel2.add(userName);
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
+            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
+            userName.setName("userName"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
@@ -1146,7 +1150,7 @@ public class LightTableAction extends AbstractTableAction {
         systemLabel.setVisible(false);
         panel1a.setVisible(false);
         addRangeBox.setVisible(false);
-        // deactivate this light
+        // deactivate this Light
         curLight.deactivateLight();
         inEditMode = true;
         // get information for this Light
@@ -1159,6 +1163,7 @@ public class LightTableAction extends AbstractTableAction {
             fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100) + "  ");
             if (g.isTransitionAvailable()) {
                 fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    "); // displays i18n decimal separator eg. 0,00 in _nl
+            }
         }
         setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
 

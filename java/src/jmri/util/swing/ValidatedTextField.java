@@ -536,6 +536,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             source.selectAll();
         }
     }
+
     private java.awt.Color invalidBackgroundColor = null;
 
     /**
