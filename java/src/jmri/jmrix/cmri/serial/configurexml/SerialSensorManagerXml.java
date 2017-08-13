@@ -37,4 +37,5 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class.getName());
+
 }

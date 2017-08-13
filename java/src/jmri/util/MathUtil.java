@@ -102,6 +102,16 @@ public final class MathUtil {
     }
 
     /**
+     * multiply a point times a point
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the first point multiplied by the second
+     */
+    public static Point2D multiply(Point2D p1, Point2D p2) {
+        return new Point2D.Double(p1.getX() * p2.getX(), p1.getY() * p2.getY());
+    }
+
+    /**
      * divide a point times a scalar
      * @param p the point
      * @param s the scalar
@@ -552,10 +562,9 @@ public final class MathUtil {
      * @param s the scale
      * @return the scaled rectangle
      */
+     //TODO: add test case
     public static Rectangle2D scale(Rectangle2D r, double s) {
-        Point2D c = center(r);
-        double w = r.getWidth() * s, h = r.getHeight() * s;
-        return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
+        return new Rectangle2D.Double(r.getX() * s, r.getY() * s, r.getWidth() * s, r.getHeight() * s);
     }
 
     /**

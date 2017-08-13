@@ -345,6 +345,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             server.release(this);
         }
     }
+    
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
 
     private void sendErrorMessage(int code, String message, JsonThrottleServer server) {
         try {

@@ -27,7 +27,6 @@ import java.util.ArrayList;
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
  * @author	 Chuck Catania  Copyright (C) 2014, 2016, 2017
- * @version	 $Revision: 17977 $
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 

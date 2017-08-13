@@ -135,9 +135,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
                     }
-
-                    ActiveTrain at = createActiveTrain(info.getTransitName(), info.getTrainName(), tSource,
-                            startBlock, startBlockSeq, destinationBlock, destinationBlockSeq,
+                    
+                    ActiveTrain at = createActiveTrain(info.getTransitName().split("\\(")[0], info.getTrainName(), tSource,
+                            startBlock.split("\\(")[0], startBlockSeq, destinationBlock.split("\\(")[0], destinationBlockSeq,
                             info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
                             info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {

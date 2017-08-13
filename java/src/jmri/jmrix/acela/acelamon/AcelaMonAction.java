@@ -23,7 +23,7 @@ public class AcelaMonAction extends AbstractAction {
     }
 
     public AcelaMonAction() {
-        this("Acela message monitor",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("AcelaMonitorTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     @Override
@@ -37,5 +37,7 @@ public class AcelaMonAction extends AbstractAction {
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(AcelaMonAction.class.getName());
+
 }

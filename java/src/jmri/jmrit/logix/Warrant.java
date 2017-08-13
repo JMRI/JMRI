@@ -618,9 +618,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _student = null;
         }
         if (_engineer != null) {
-            _engineer.stopRun(abort);    // release throttle
+            _speedUtil.stopRun(!abort); // don't write speed profile measurements
+            _engineer.stopRun(abort);   // release throttle
             _engineer = null;
-            _speedUtil.stopRun(!abort);     // don't write speed profile measurements
         }
         deAllocate();
         int oldMode = _runMode;
@@ -777,6 +777,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         abortWarrant( Bundle.getMessage("noThrottle", (reason +" "+ (address!=null?address.getNumber():getDisplayName()))));
         fireRunStatus("throttleFail", null, reason);
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
     
     protected void releaseThrottle(DccThrottle throttle) {

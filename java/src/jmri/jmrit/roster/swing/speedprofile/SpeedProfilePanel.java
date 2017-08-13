@@ -179,7 +179,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         main.add(left);
 
         WarrantPreferences preferences = WarrantPreferences.getDefault();
-        warrentScaleLabel.setText("Scale Factor in Warrents:" + Float.toString(preferences.getLayoutScale()));
+        warrentScaleLabel.setText("Layout Scale: " + Float.toString(preferences.getLayoutScale()));
         warrentScaleLabel.setBackground(Color.white);
         left = makePadPanel(warrentScaleLabel);
         c.gridy = 11;
@@ -573,6 +573,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFailThrottleRequest"));
         log.error("Throttle request failed for " + address + " because " + reason);
         setButtonStates(true);
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     PropertyChangeListener startListener = null;

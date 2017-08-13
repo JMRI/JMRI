@@ -465,7 +465,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
     /**
      * Retrieve the current "validationRegExp".
-     * Used in eg. Add Turnout to attach a connection specific pattern without redrawing the pane
+     * Used in eg. Add Turnout to attach a manager-specific pattern without redrawing the pane
      * @see #setValidateRegExp(String)
      *
      * @return the current validation pattern
