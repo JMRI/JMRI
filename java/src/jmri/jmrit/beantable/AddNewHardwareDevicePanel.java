@@ -125,7 +125,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton cancel = new JButton(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Revert/Cancel
     JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));

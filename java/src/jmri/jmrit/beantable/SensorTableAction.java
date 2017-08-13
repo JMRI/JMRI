@@ -261,14 +261,16 @@ public class SensorTableAction extends AbstractTableAction {
             // get tooltip from sensor manager
             addEntryRegex = senManager.getEntryRegex();
             addEntryToolTip = senManager.getEntryToolTip();
-            log.debug("TurnoutManager tip");
+            log.debug("SensorManager tip");
         }
         // show sysName (HW address) field tooltip in the Add Sensor pane that matches system connection selected from combobox
         sysNameTextField.setToolTipText("<html>" +
                 Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
                 "<br>" + addEntryToolTip + "</html>");
         // configure validation regexp for selected connection
-        sysNameTextField.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        if (addEntryRegex != null) {
+            sysNameTextField.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        }
     }
 
     void handleCreateException(String sysName) {

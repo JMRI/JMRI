@@ -703,7 +703,7 @@ public class LightTableAction extends AbstractTableAction {
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonClose"))); // when Update has been clicked at least once, this is not Revert/Cancel
             cancel.addActionListener(this::cancelPressed);
             cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -771,7 +771,7 @@ public class LightTableAction extends AbstractTableAction {
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {
-            // Tab All or first time opening, default tooltip
+            // Tab All or first time opening, keep default tooltip
             connectionChoice = "TBD";
         }
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
@@ -791,15 +791,25 @@ public class LightTableAction extends AbstractTableAction {
                     break;
                 }
             }
+        } else if (lightManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
+            addRangeBox.setEnabled(true);
+            log.debug("L add box enabled2");
+            // get tooltip from light manager
+            addEntryRegex = lightManager.getEntryRegex();
+            addEntryToolTip = lightManager.getEntryToolTip();
+            log.debug("LightManager tip");
         }
         log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
-        fieldHardwareAddress.setToolTipText("<html>" +
-                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
-                "<br>" + addEntryToolTip + "</html>");
+        if (addEntryToolTip != null) {
+            fieldHardwareAddress.setToolTipText("<html>" +
+                    Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
+                    "<br>" + addEntryToolTip + "</html>");
+        }
         // configure validation regexp for selected connection
-        fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
-
+        if (addEntryRegex != null) {
+            fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
+        }
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -1059,7 +1069,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setTransitionTime(0.0);
         }
         // provide feedback to user
-        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + ", " + uName;
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + " (" + uName + ")";
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";
@@ -1231,7 +1241,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Cancel button.
+     * Respond to the Close button.
      *
      * @param e the button press action
      */
@@ -1401,7 +1411,7 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonClose"))); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
             cancelControl.addActionListener(this::cancelControlPressed);
             cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
