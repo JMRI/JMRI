@@ -36,7 +36,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         // include attributes
         element.setAttribute("ident", p.getID());
         element.setAttribute("type", "" + p.getType());
-        Point2D coords = p.getCoords();
+        Point2D coords = p.getCoordsCenter();
         element.setAttribute("x", "" + coords.getX());
         element.setAttribute("y", "" + coords.getY());
         if (p.getConnect1() != null) {
