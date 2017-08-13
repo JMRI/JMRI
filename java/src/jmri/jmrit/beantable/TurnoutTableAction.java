@@ -1597,7 +1597,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = new String();
-        String lastSuccessfulAddress = "";
+        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;
@@ -1606,7 +1606,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         for (int x = 0; x < numberOfTurnouts; x++) {
             try {
                 curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
-                if (curAddress != null) lastSuccessfulAddress = curAddress;
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
@@ -1623,6 +1622,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 break;
             }
 
+            lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
             sName = prefix + InstanceManager.turnoutManagerInstance().typeLetter() + curAddress;
 
@@ -1691,7 +1691,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                 String user = userNameTextField.getText().trim();
                 if ((x != 0) && user != null && !user.equals("")) {
-                    user = user + ":" + x;
+                    user = user + ":" + x; // add :x to user name starting with 2nd item
                 }
                 if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user) == null)) {
                     t.setUserName(user);
@@ -1718,7 +1718,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                 }
                 t.setControlType(iType);
-                // add firat and last names to statusMessage user feedback string
+
+                // add first and last names to statusMessage user feedback string
                 if (x == 0 || x == numberOfTurnouts - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
                 if (x == numberOfTurnouts - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
                 // only mention first and last of range added
@@ -1729,7 +1730,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         if (errorMessage.equals("")) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
-        } else { // some "errors" are overwritten by successfully created turnouts, fix
+        } else {
             statusBar.setText(errorMessage);
             // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }

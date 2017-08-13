@@ -725,6 +725,11 @@ public class LightTableAction extends AbstractTableAction {
                 cancelPressed(null);
             }
         });
+        hardwareAddressTextField.setBackground(Color.white);
+        // reset statusBar text
+        status1.setText(Bundle.getMessage("LightCreateInst"));
+        status1.setForeground(Color.gray);
+
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -918,8 +923,7 @@ public class LightTableAction extends AbstractTableAction {
             g = InstanceManager.getDefault(LightManager.class).getBySystemName(altName);
             if (g != null) {
                 // Light already exists
-                status1.setText(Bundle.getMessage("LightError10") + " '" + altName + "' "
-                        + Bundle.getMessage("LightError11"));
+                status1.setText(Bundle.getMessage("LightError10", altName));
                 status1.setForeground(Color.red);
                 status2.setVisible(false);
                 addFrame.pack();
@@ -961,8 +965,8 @@ public class LightTableAction extends AbstractTableAction {
             log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
             if (!noWarn) {
                 int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                        Bundle.getMessage("LightWarn5") + " " + sName + " " + Bundle.getMessage("LightWarn6") + " "
-                        + testSN + ".\n   " + Bundle.getMessage("LightWarn7"), Bundle.getMessage("WarningTitle"),
+                        Bundle.getMessage("LightWarn5", sName, testSN),
+                        Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
@@ -985,16 +989,8 @@ public class LightTableAction extends AbstractTableAction {
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
                 && addRangeBox.isSelected()) {
             // get number requested   
-            try {
-                numberOfLights = (Integer) NumberToAdd.getValue();
-            } catch (NumberFormatException ex) {
-                status1.setText(Bundle.getMessage("LightError4"));
-                status2.setVisible(false);
-                addFrame.pack();
-                addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number - Number to add", (NumberToAdd.getValue() + ""));
-                return;
-            }
+            numberOfLights = (Integer) NumberToAdd.getValue();
+
             // convert numerical hardware address
             try {
                 startingAddress = Integer.parseInt(hardwareAddressTextField.getText());

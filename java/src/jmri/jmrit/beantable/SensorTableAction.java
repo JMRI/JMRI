@@ -117,7 +117,7 @@ public class SensorTableAction extends AbstractTableAction {
             ActionListener okListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
+                    createPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
@@ -161,6 +161,11 @@ public class SensorTableAction extends AbstractTableAction {
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setBackground(Color.white);
+        // reset statusBar text
+        statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+        statusBar.setForeground(Color.gray);
+
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -171,7 +176,12 @@ public class SensorTableAction extends AbstractTableAction {
         addFrame = null;
     }
 
-    void okPressed(ActionEvent e) {
+    /**
+     * Respond to Create new item pressed on Add Turnout pane
+     *
+     * @param e the click event
+     */
+    void createPressed(ActionEvent e) {
 
         int numberOfSensors = 1;
 
@@ -200,19 +210,30 @@ public class SensorTableAction extends AbstractTableAction {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
+        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
+        String errorMessage = new String();
+        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
+                // directly add to statusBar (but never called?)
+                statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBar.setForeground(Color.red);
                 return;
             }
             if (curAddress == null) {
-                //The next address is already in use, therefore we stop.
+                log.debug("Error converting HW or getNextValidAddress");
+                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
+                statusBar.setForeground(Color.red);
+                // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
-            //We have found another sensor with the same address, therefore we need to go onto the next address.
+
+            lastSuccessfulAddress = curAddress;
+            // Compose the proposed system name from parts:
             sName = sensorPrefix + jmri.InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;
             try {
@@ -220,7 +241,10 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating
+                // Show error message in statusBar
+                errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setForeground(Color.black);
+                return;   // return without creating
             }
 
             String user = userName.getText().trim();
@@ -233,7 +257,25 @@ public class SensorTableAction extends AbstractTableAction {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
             }
+
+            // add first and last names to statusMessage user feedback string
+            if (x == 0 || x == numberOfSensors - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            if (x == numberOfSensors - 2)
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            // only mention first and last of range added
+
+            // end of for loop creating range of Sensors
         }
+
+        // provide feedback to user
+        if (errorMessage.equals("")) {
+            statusBar.setText(statusMessage);
+            statusBar.setForeground(Color.gray);
+        } else {
+            statusBar.setText(errorMessage);
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+        }
+
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
 
