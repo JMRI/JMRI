@@ -33,6 +33,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.util.MathUtil;
 import jmri.util.swing.JCBHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,13 +72,11 @@ public class PositionablePoint extends LayoutTrack {
 
     // operational instance variables (not saved between sessions)
     private PositionablePoint instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private int type = 0;
     private TrackSegment connect1 = null;
     private TrackSegment connect2 = null;
-    private Point2D coords = new Point2D.Double(10.0, 10.0);
 
     protected NamedBeanHandle<SignalHead> signalEastHeadNamed = null; // signal head for east (south) bound trains
     protected NamedBeanHandle<SignalHead> signalWestHeadNamed = null; // signal head for west (north) bound trains
@@ -99,7 +98,7 @@ public class PositionablePoint extends LayoutTrack {
             type = ANCHOR;
         }
         ident = id;
-        coords = p;
+        center = p;
     }
 
     // this should only be used for debugging...
@@ -114,6 +113,37 @@ public class PositionablePoint extends LayoutTrack {
         return type;
     }
 
+    /**
+     * get coordinates
+     *
+     * @return the coordinates
+     *
+     * @deprecated replaced by
+     * @see #getCoordsCenter()
+     * @since 4.9.2
+     *
+     * note: done for Polymorphism so all LayoutTrack sub-classes use same method
+     */
+    @Deprecated
+    public Point2D getCoords() {
+        return getCoordsCenter();
+    }
+
+    /**
+     * set the coordinates
+     * @param p the coordinates
+     *
+     * @deprecated replaced by
+     * @see #setCoordsCenter(Point2D)
+     * @since 4.9.2
+     *
+     * note: done for Polymorphism so all LayoutTrack sub-classes use same method
+     */
+    @Deprecated
+    public void setCoords(Point2D p) {
+        setCoordsCenter(p);
+    }
+
     public TrackSegment getConnect1() {
         return connect1;
     }
@@ -125,23 +155,33 @@ public class PositionablePoint extends LayoutTrack {
         return connect2;
     }
 
-    public Point2D getCoords() {
-        return coords;
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
+    public void scaleCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
     }
 
-    public void setCoords(Point2D p) {
-        coords = p;
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
     }
 
     /**
      * @return the bounds of this positional point
      */
     public Rectangle2D getBounds() {
-        Rectangle2D result;
-
-        Point2D pointA = getCoords();
-        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
-        return result;
+        Point2D c = getCoordsCenter();
+        return new Rectangle2D.Double(c.getX(), c.getY(), 0.0, 0.0);
     }
 
     private PositionablePoint linkedPoint;
@@ -941,8 +981,8 @@ public class PositionablePoint extends LayoutTrack {
             p1 = layoutEditor.getCoords(getConnect1().getConnect1(), getConnect1().getType1());
         }
 
-        double dh = getCoords().getX() - p1.getX();
-        double dv = getCoords().getY() - p1.getY();
+        double dh = getCoordsCenter().getX() - p1.getX();
+        double dv = getCoordsCenter().getY() - p1.getY();
         int dir = Path.NORTH;
         double tanA;
         if (dv != 0.0) {
@@ -1128,7 +1168,7 @@ public class PositionablePoint extends LayoutTrack {
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == PositionablePoint.ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoords());
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
             if (r.contains(p)) {
                 result = POS_POINT;
             }
@@ -1143,7 +1183,7 @@ public class PositionablePoint extends LayoutTrack {
      * @return the coordinates for the specified connection type
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
-        Point2D result = getCoords();
+        Point2D result = getCoordsCenter();
         if (connectionType != POS_POINT) {
             log.error("Invalid connection type " + connectionType); //I18IN
         }
@@ -1242,7 +1282,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }   //switch
         // drawHidden locater rectangle
-        Point2D pt = getCoords();
+        Point2D pt = getCoordsCenter();
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
 
@@ -1300,7 +1340,7 @@ public class PositionablePoint extends LayoutTrack {
 
                     //Need to find a way to compute the direction for this for a split over the panel
                     //In this instance work out the direction of the first track relative to the positionable poin.
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoords()));
+                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoordsCenter()));
                     // save Connections
                     lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
