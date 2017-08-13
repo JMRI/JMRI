@@ -1577,32 +1577,44 @@ public class TurnoutTableAction extends AbstractTableAction {
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
         String curAddress = hardwareAddressTextField.getText().trim();
-        // Add some entry pattern checking now, before assembling sName and handing it to the turnoutManager? TODO
+        // initial check for empty entry
+        if (curAddress.equals("")) {
+            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBar.setForeground(Color.red);
+            hardwareAddressTextField.setBackground(Color.red);
+            return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
+        }
+
+        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager?
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = new String();
-
+        String lastSuccessfulAddress = "";
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;
         boolean useLastType = false;
 
         for (int x = 0; x < numberOfTurnouts; x++) {
-            String lastSuccessfulAddress = curAddress;
             try {
                 curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
+                if (curAddress != null) lastSuccessfulAddress = curAddress;
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
+                // directly add to statusBar (but never called?)
+                statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBar.setForeground(Color.red);
                 return;
             }
             if (curAddress == null) {
-                //The next address is already in use, therefore we stop.
-                // Show error message in statusBar
-                errorMessage = "Existing Turnout clashed with new range. Stopped after adding: " + lastSuccessfulAddress;
+                log.debug("Error converting HW or getNextValidAddress");
+                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
                 statusBar.setForeground(Color.red);
+                // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
-            // We have found another turnout with the same address, therefore we need to go on to the next address.
 
             // Compose the proposed system name from parts:
             sName = prefix + InstanceManager.turnoutManagerInstance().typeLetter() + curAddress;
@@ -1616,14 +1628,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 log.warn("Requested Turnout " + sName + " uses same address as Light " + testSN);
                 if (!noWarn) {
                     int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                            Bundle.getMessage("TurnoutWarn1") + " " + sName + " " + Bundle.getMessage("TurnoutWarn2") + " "
-                            + testSN + ".\n   " + Bundle.getMessage("TurnoutWarn3"), Bundle.getMessage("WarningTitle"),
+                            Bundle.getMessage("TurnoutWarn1", sName, testSN) +
+                            ".\n" + Bundle.getMessage("TurnoutWarn3"), Bundle.getMessage("WarningTitle"),
                             JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                                 Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                     if (selectedValue == 1) {
                         // Show error message in statusBar
-                        errorMessage = "Turnout " + sName + " not created as name matched a Light";
+                        errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
                         statusBar.setForeground(Color.black);
                         return;   // return without creating if "No" response
                     }
@@ -1652,7 +1664,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBar
-                errorMessage = "2 Bits requested but not supported. Stopped after " + lastSuccessfulAddress;
+                errorMessage = Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress);
                 statusBar.setForeground(Color.red);
                 return;
             } else {
@@ -1665,7 +1677,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     // user input no good
                     handleCreateException(ex, sName); // displays message dialog to the user
                     // add to statusBar as well
-                    errorMessage = "Requested Turnouts not created. Check your entry against pattern (see ToolTip)";
+                    errorMessage = Bundle.getMessage("WarningInvalidEntry");
                     statusBar.setForeground(Color.red);
                     return; // without creating
                 }
@@ -1682,8 +1694,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                             showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user),
                                     getClassName(), "duplicateUserName", false, true);
                 }
-                errorMessage = Bundle.getMessage("ErrorDuplicateUserName", user);
-                statusBar.setForeground(Color.red);
 
                 t.setNumberOutputBits(iNum);
                 // Ask about the type of turnout control if appropriate
@@ -1701,20 +1711,21 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                 }
                 t.setControlType(iType);
-                // add name to statusMessage user feedback string
+                // add firat and last names to statusMessage user feedback string
                 if (x == 0 || x == numberOfTurnouts - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
-                if (x == numberOfTurnouts - 2) statusMessage = statusMessage + " up to "; // only show first and last of range added
+                if (x == numberOfTurnouts - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+                // only mention first and last of range added
             }
             // end of for loop creating range of Turnouts
         }
         // provide feedback to user
-//        if (errorMessage == "") {
-            statusBar.setText(statusMessage + errorMessage);
+        if (errorMessage.equals("")) {
+            statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
-//        } else { // some "errors" are overwritten by successfully created turnouts, fix
-//            statusBar.setText(errorMessage);
-//            statusBar.setForeground(Color.red);
-//        }
+        } else { // some "errors" are overwritten by successfully created turnouts, fix
+            statusBar.setText(errorMessage);
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+        }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
     }
@@ -1728,12 +1739,11 @@ public class TurnoutTableAction extends AbstractTableAction {
      */
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
-        log.debug("T add box disabled");
+        log.debug("T Add box disabled");
         range.setSelected(false);
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {
             // Tab All or first time opening, use default tooltip
-            log.debug("No connection selected");
             connectionChoice = "TBD";
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
