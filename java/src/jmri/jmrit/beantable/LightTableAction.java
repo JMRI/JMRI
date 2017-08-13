@@ -514,10 +514,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    //JTextField fieldHardwareAddress = new JTextField(10);
-    ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
-            "^[0-9a-zA-Z_]{1,20}$", "Invalid entry for system name in Add Light pane");
-    // initially allow any 20 char string, updated by prefixBox selection
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
@@ -591,10 +588,10 @@ public class LightTableAction extends AbstractTableAction {
             panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
-            panel1a.add(fieldHardwareAddress);
-            fieldHardwareAddress.setInvalidBackgroundColor(java.awt.Color.white);
-            // don't use strong colorization on ValidatedTextField like for CVs
-            fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            panel1a.add(hardwareAddressTextField);
+            hardwareAddressTextField.setBackground(Color.white);
+            // reset after possible error notification
+            hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(NumberToAdd);
@@ -747,7 +744,6 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private String addEntryToolTip;
-    private String addEntryRegex;
 
     protected void prefixChanged() {
         if (supportsVariableLights()) {
@@ -785,7 +781,6 @@ public class LightTableAction extends AbstractTableAction {
                 jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
-                    addEntryRegex = mgr.getEntryRegex();
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("L Add box set");
                     break;
@@ -795,20 +790,15 @@ public class LightTableAction extends AbstractTableAction {
             addRangeBox.setEnabled(true);
             log.debug("L add box enabled2");
             // get tooltip from light manager
-            addEntryRegex = lightManager.getEntryRegex();
             addEntryToolTip = lightManager.getEntryToolTip();
             log.debug("LightManager tip");
         }
         log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
         if (addEntryToolTip != null) {
-            fieldHardwareAddress.setToolTipText("<html>" +
+            hardwareAddressTextField.setToolTipText("<html>" +
                     Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
                     "<br>" + addEntryToolTip + "</html>");
-        }
-        // configure validation regexp for selected connection
-        if (addEntryRegex != null) {
-            fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
         }
         addFrame.pack();
         addFrame.setVisible(true);
@@ -869,16 +859,19 @@ public class LightTableAction extends AbstractTableAction {
 
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = fieldHardwareAddress.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
             status1.setText(Bundle.getMessage("LightError17"));
             status1.setForeground(Color.red);
             status2.setVisible(false);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
             return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
         }
         String suName = lightPrefix + curAddress;
         String uName = userName.getText();
@@ -893,9 +886,13 @@ public class LightTableAction extends AbstractTableAction {
             status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
+            hardwareAddressTextField.setBackground(Color.red);
             return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
         }
         // Format is valid, normalize it
         String sName = InstanceManager.getDefault(LightManager.class).normalizeSystemName(suName);
@@ -996,13 +993,13 @@ public class LightTableAction extends AbstractTableAction {
             }
             // convert numerical hardware address
             try {
-                startingAddress = Integer.parseInt(fieldHardwareAddress.getText());
+                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number.", fieldHardwareAddress.getText());
+                log.error("Unable to convert {} to a number.", hardwareAddressTextField.getText());
                 return;
             }
             // check that requested address range is available
@@ -1058,7 +1055,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         g.setMaxIntensity(Double.parseDouble(p) / 100);
 
-        p = fieldTransitionTime.getText();
+        p = fieldTransitionTime.getText(); // TODO BUG DecimalFormat i18n
         if (p.equals("")) {
             p = "0";
         }
@@ -1161,8 +1158,7 @@ public class LightTableAction extends AbstractTableAction {
             fieldMinIntensity.setText(oneDigit.format(g.getMinIntensity() * 100) + "  ");
             fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100) + "  ");
             if (g.isTransitionAvailable()) {
-                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    ");
-            }
+                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    "); // displays i18n decimal separator eg. 0,00 in _nl
         }
         setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
 
@@ -1220,7 +1216,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setMinIntensity(Double.parseDouble(fieldMinIntensity.getText()) / 100);
             g.setMaxIntensity(Double.parseDouble(fieldMaxIntensity.getText()) / 100);
             if (g.isTransitionAvailable()) {
-                g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText()));
+                g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText())); // TODO fix i18n decimal separator on reading value (DecimalFormat)
             }
         }
         g.activateLight();
@@ -2204,6 +2200,42 @@ public class LightTableAction extends AbstractTableAction {
             if (col == REMOVE_COLUMN) {
                 deleteControlAction(row);
             }
+        }
+    }
+
+    /**
+     * Extends JTextField to provide a data validation function.
+     *
+     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     */
+    public class CheckedTextField extends JTextField {
+
+        CheckedTextField fld;
+
+        /**
+         * Text entry field with an active key event checker.
+         *
+         * @param len field length
+         */
+        public CheckedTextField(int len) {
+            super("", len);
+            fld = this;
+            // set background color for invalid field data
+            fld.setBackground(Color.red);
+
+//            fld.addFocusListener(new FocusListener() {
+//                @Override
+//                public void focusGained(FocusEvent e) {
+//                    setEditable(true);
+//                    setEnabled(true);
+//                }
+//
+//                @Override
+//                public void focusLost(FocusEvent e) {
+//                    exitFieldColorizer();
+//                    setEditable(true);
+//                }
+//            });
         }
     }
 

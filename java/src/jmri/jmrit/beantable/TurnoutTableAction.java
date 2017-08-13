@@ -947,9 +947,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    CheckedTextField hardwareAddressTextField = new CheckedTextField(40);
-    SpinnerNumberModel addressSpinner = new SpinnerNumberModel(1, 1, 2048, 1); // initially configured for LocoNet
-    JSpinner hardwareAddressSpinner = new JSpinner(addressSpinner);
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
+    // add a JSpinner for numerical entry? TODO
+    // SpinnerNumberModel addressSpinner = new SpinnerNumberModel(1, 1, 2048, 1); // initially configured for LocoNet
+    // JSpinner hardwareAddressSpinner = new JSpinner(addressSpinner);
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
@@ -1578,7 +1579,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
         String curAddress = hardwareAddressTextField.getText().trim();
         // initial check for empty entry
-        if (curAddress.equals("")) {
+        if (curAddress.length() < 1) {
             statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
             statusBar.setForeground(Color.red);
             hardwareAddressTextField.setBackground(Color.red);
