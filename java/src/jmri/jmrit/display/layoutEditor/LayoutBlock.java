@@ -1254,6 +1254,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             colorCombo.addItem(Bundle.getMessage(colorText[i]));    //use higher level Bundle, removed duplicates
             //Colors are also used in Operations-, Display, EntryExitBundles
         }
+        colorCombo.setMaximumRowCount(numColors);
     }
 
     private void setColorCombo(JComboBox<String> colorCombo, Color color) {
