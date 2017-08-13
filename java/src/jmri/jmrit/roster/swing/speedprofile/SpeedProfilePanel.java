@@ -179,7 +179,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         main.add(left);
 
         WarrantPreferences preferences = WarrantPreferences.getDefault();
-        warrentScaleLabel.setText("Scale Factor in Warrents:" + Float.toString(preferences.getLayoutScale()));
+        warrentScaleLabel.setText("Layout Scale: " + Float.toString(preferences.getLayoutScale()));
         warrentScaleLabel.setBackground(Color.white);
         left = makePadPanel(warrentScaleLabel);
         c.gridy = 11;

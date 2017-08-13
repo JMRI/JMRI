@@ -52,7 +52,13 @@ import org.slf4j.LoggerFactory;
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
  * <P>
- * ==A==-==D== \\ // X // \\ ==B==-==C==
+ * {@literal
+ * ==A==-==D==
+ *    \\ //
+ *      X
+ *    // \\
+ * ==B==-==C==
+ * literal}
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -611,8 +617,13 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }   // findHitPointType
 
-    /**
+    /*
      * Modify coordinates methods
+     */
+
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
      */
     @Override
     public void setCoordsCenter(Point2D p) {
@@ -651,13 +662,34 @@ public class LayoutSlip extends LayoutTurnout {
         pointB = MathUtil.add(center, dispB);
     }
 
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        center = MathUtil.granulize(MathUtil.multiply(center, xFactor), 1.0);
-        pointA = MathUtil.granulize(MathUtil.multiply(pointA, xFactor), 1.0);
-        pointB = MathUtil.granulize(MathUtil.multiply(pointB, xFactor), 1.0);
-        pointC = MathUtil.granulize(MathUtil.multiply(pointC, xFactor), 1.0);
-        pointD = MathUtil.granulize(MathUtil.multiply(pointD, xFactor), 1.0);
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
+        pointA = MathUtil.add(pointA, factor);
+        pointB = MathUtil.add(pointB, factor);
+        pointC = MathUtil.add(pointC, factor);
+        pointD = MathUtil.add(pointD, factor);
     }
 
     /**

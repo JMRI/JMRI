@@ -641,9 +641,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _student = null;
         }
         if (_engineer != null) {
-            _engineer.stopRun(abort);    // release throttle
+            _speedUtil.stopRun(!abort); // don't write speed profile measurements
+            _engineer.stopRun(abort);   // release throttle
             _engineer = null;
-            _speedUtil.stopRun(!abort);     // don't write speed profile measurements
         }
         deAllocate();
         int oldMode = _runMode;

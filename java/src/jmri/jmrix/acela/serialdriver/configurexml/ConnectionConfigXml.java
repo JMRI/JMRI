@@ -326,7 +326,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             tc.initializeAcelaNode(node);
         }
         // Do not let the Acela network poll until we are really ready
-        ((AcelaTrafficController)adapter).setReallyReadyToPoll(true);
+
+        ((AcelaSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController().setReallyReadyToPoll(true);
     }
 
     /**
